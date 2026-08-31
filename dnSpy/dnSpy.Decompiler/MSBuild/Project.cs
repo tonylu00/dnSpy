@@ -447,10 +447,11 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (!Options.Decompiler.ShowMember(type))
 				return false;
 
-			if (type.IsGlobalModuleType && type.Methods.Count == 0 && type.Fields.Count == 0 &&
-				type.Properties.Count == 0 && type.Events.Count == 0 && type.NestedTypes.Count == 0) {
+			// The <Module> (global) type cannot be expressed in C# — the module
+			// initializer and module-level methods have no C# equivalent. Always
+			// skip it so generated projects stay compilable.
+			if (type.IsGlobalModuleType)
 				return false;
-			}
 
 			if (type.Namespace == "XamlGeneratedNamespace" && type.Name == "GeneratedInternalTypeHelper")
 				return false;
