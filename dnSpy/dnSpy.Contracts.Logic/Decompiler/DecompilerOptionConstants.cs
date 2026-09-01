@@ -80,6 +80,11 @@ namespace dnSpy.Contracts.Decompiler {
 		public static readonly string YieldReturn_NAME = "yield";
 
 		/// <summary />
+		public static readonly Guid DeclareStateMachines_GUID = new Guid("B1E2F3A4-5B6C-4D7E-8F90-1A2B3C4D5E6F");
+		/// <summary />
+		public static readonly string DeclareStateMachines_NAME = "declare-state-machines";
+
+		/// <summary />
 		public static readonly Guid AsyncAwait_GUID = new Guid("A85EDBC5-88C4-417F-9BE0-3AC3CB8107B7");
 		/// <summary />
 		public static readonly string AsyncAwait_NAME = "async";

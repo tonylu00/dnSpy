@@ -73,6 +73,11 @@ namespace dnSpy.Decompiler.ILSpy.Core.Settings {
 				Description = dnSpy_Decompiler_ILSpy_Core_Resources.DecompilerSettings_DecompileAsyncMethods,
 				Name = DecompilerOptionConstants.AsyncAwait_NAME,
 			};
+			yield return new DecompilerOption<bool>(DecompilerOptionConstants.DeclareStateMachines_GUID,
+						() => decompilerSettings.DeclareStateMachines, a => decompilerSettings.DeclareStateMachines = a) {
+				Description = "Declare async state machine types even when the method is decompiled as async",
+				Name = DecompilerOptionConstants.DeclareStateMachines_NAME,
+			};
 			yield return new DecompilerOption<bool>(DecompilerOptionConstants.AutomaticProperties_GUID,
 						() => decompilerSettings.AutomaticProperties, a => decompilerSettings.AutomaticProperties = a) {
 				Description = dnSpy_Decompiler_ILSpy_Core_Resources.DecompilerSettings_DecompileAutoProps,
