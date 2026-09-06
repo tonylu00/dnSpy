@@ -168,6 +168,11 @@ including operator evaluation order, getter effects, invalid casts, null and
 array bounds errors, checked overflow, and completed/suspended/faulted/cancelled
 awaits. It also checks parameters whose names collide with generated temporaries.
 
+`Invoke-InterfaceEventsRegression.ps1` renames explicit event rows and their
+accessors independently. Rebuilt subscriptions and removals must still dispatch
+through the original interfaces, including generic interfaces and an interface
+whose accessor methods have unconventional names.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
