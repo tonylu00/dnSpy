@@ -104,6 +104,8 @@ including nested types, constraints, abstract methods and interfaces. The export
 declarations and uses must agree, compile and preserve each argument's behavior.
 It also checks imported base types whose names match a namespace in the current
 or enclosing scope; those uses must retain enough qualification to select the type.
+Namespaces elsewhere in the assembly also participate in that lookup even when
+the exported file does not import or use any of their types.
 The source metadata fixture checks readonly conversion arguments, readonly reference
 methods and indexers, mutable reference writes, tuples, static operations on dynamic
 fields and stack allocation sizes. It removes the unsafe marker before export and

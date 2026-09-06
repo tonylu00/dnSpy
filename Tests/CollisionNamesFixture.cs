@@ -3,6 +3,16 @@ namespace Provider { public class Error { public int Code { get { return 17; } }
 namespace Cases.Error { public sealed class Consumer : Provider.Error { } }
 namespace Cases.Builder { public class Builder { public int Value { get { return 23; } } } }
 namespace Cases.Usage { public sealed class Build : Cases.Builder.Builder { } }
+namespace Cases.Session { public sealed class Marker { } }
+namespace Cases.DTO { public sealed class Session { public int Value; } }
+namespace Cases.Usage {
+    public interface IQuery { System.Collections.Generic.IEnumerable<Cases.DTO.Session> Read(); }
+    public sealed class Query : IQuery {
+        public System.Collections.Generic.IEnumerable<Cases.DTO.Session> Read() {
+            return new[] { new Cases.DTO.Session { Value = 29 } };
+        }
+    }
+}
 public interface ICombine {
     int Combine(int first, int second, int third);
 }
@@ -25,6 +35,7 @@ public class Container<A, B, C> {
 public static class Program {
     public static int Main() {
         if (new Cases.Error.Consumer().Code != 17 || new Cases.Usage.Build().Value != 23) return 4;
+        foreach (var session in ((Cases.Usage.IQuery)new Cases.Usage.Query()).Read()) if (session.Value != 29) return 5;
         if (new Container<int, string, double> { First = 3, Second = "four", Third = 5 }.Read() != "3|four|5") return 1;
         if (new Container<int, string, double>.Nested<long> { Outer = 6, Inner = 7 }.Read<string, int>("eight", 9) != "6|7|eight|9") return 2;
         ICombine combine = new Combiner();
