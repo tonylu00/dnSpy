@@ -22,6 +22,9 @@ public sealed class ReferenceValues {
 }
 public sealed class SignatureVisibility {
     internal struct HiddenValue { public int Number; }
+    internal delegate int HiddenCallback();
+    internal static int ReadCallback(HiddenCallback callback) { return callback(); }
+    public static int ExecuteCallback() { return ReadCallback(() => 17); }
     internal static int Read(HiddenValue value) { return value.Number; }
     public static int Execute() { return Read(new HiddenValue { Number = 17 }); }
 }
@@ -56,6 +59,7 @@ public static class Program {
         if (references.First() != 11 || references[0] + references[1] != 21) return 3;
         if (copied != 7 || alias != 11) return 4;
         if (SignatureVisibility.Execute() != 17) return 5;
+        if (SignatureVisibility.ExecuteCallback() != 17) return 13;
         if (ReadValue((Meter)Parts()) != 17) return 11;
         if (ReadValue(ConvertGeneric(17)) != 17) return 12;
         var guarded = new GuardedConstructor(3, 4);
