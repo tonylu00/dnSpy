@@ -38,6 +38,14 @@ public sealed class GuardedConstructor {
     private static int Record(int value) { Events += value; return value * 2; }
 }
 public static class Program {
+    public static int ZeroInitialized(int count) { return -1; } // Replaced with InitLocals IL by the fixture emitter.
+    public static T CastThroughIsInst<T>(object value) { return (T)value; }
+    public static T CastProduced<T>() { return (T)Produce(); }
+    public static int ProduceCount;
+    public static object Produce() { ProduceCount++; return 17; }
+    private delegate bool Parser<T>(string text, out T value);
+    private static T Resolve<T>(Dictionary<string, T> values, string key, T fallback) { return values.TryGetValue(key, out var value) ? value : fallback; }
+    private static int Parse(string text, Parser<int> parser) { return parser(text, out var value) ? value : 0; }
     private static bool IsEmpty(IEnumerable values) { foreach (object value in values) return false; return true; }
     private static int ReadValue(IValue value) { return value.Number; }
     private static IValue ConvertGeneric<T>(T value) { return (GenericValue<T>)value; }
@@ -53,6 +61,13 @@ public static class Program {
     public static int Main() {
         if (" a b ".Split((char[])null!, StringSplitOptions.RemoveEmptyEntries).Length != 2) return 14;
         if (!IsEmpty(new object[0]) || IsEmpty(new object[] { 17 })) return 15;
+        if (Resolve(new Dictionary<string, string> { { "a", "b" } }, "a", null!) != "b" || Parse("17", int.TryParse) != 17) return 16;
+        if (new Tuple<string>((string)null!).Item1 != null) return 22;
+        if (ZeroInitialized(4) != 6 || ZeroInitialized(0) != 0) return 17;
+        if (CastThroughIsInst<int>(17) != 17 || CastThroughIsInst<string>("test") != "test" || CastThroughIsInst<string>(17) != null) return 18;
+        if (CastThroughIsInst<int?>(null!) != null || CastThroughIsInst<int?>(17) != 17) return 19;
+        try { CastThroughIsInst<int>("wrong"); return 20; } catch (NullReferenceException) { }
+        if (CastProduced<int>() != 17 || CastProduced<string>() != null || ProduceCount != 2) return 21;
         Meter meter = Parts();
         if (meter.Value != 17 || PointerRead(7) != 17 || (int)(object)Current != 17 || Optional != null) return 1;
         var references = new ReferenceValues();

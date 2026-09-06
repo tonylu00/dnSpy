@@ -17,6 +17,7 @@ $dnlib = [Security.SecurityElement]::Escape((Join-Path (Split-Path ([IO.Path]::G
 @'
 using System.Linq;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 class Emitter {
     static void Main(string[] args) {
         if (args[0] == "check") {
@@ -30,6 +31,32 @@ class Emitter {
             return;
         }
         using var module = ModuleDefMD.Load(args[0]);
+        var program = module.GetTypes().Single(t => t.Name == "Program");
+        foreach (var name in new[] { "CastThroughIsInst", "CastProduced" }) {
+            var cast = program.Methods.Single(m => m.Name == name);
+            cast.Body = new CilBody();
+            var target = new TypeSpecUser(new GenericMVar(0, cast));
+            cast.Body.Instructions.Add(name == "CastProduced" ? Instruction.Create(OpCodes.Call, program.Methods.Single(m => m.Name == "Produce")) : Instruction.Create(OpCodes.Ldarg_0));
+            cast.Body.Instructions.Add(Instruction.Create(OpCodes.Isinst, target));
+            cast.Body.Instructions.Add(Instruction.Create(OpCodes.Unbox_Any, target));
+            cast.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        }
+        var initialized = module.GetTypes().Single(t => t.Name == "Program").Methods.Single(m => m.Name == "ZeroInitialized");
+        initialized.Body = new CilBody { InitLocals = true };
+        var sum = new Local(module.CorLibTypes.Int32);
+        var index = new Local(module.CorLibTypes.Int32);
+        initialized.Body.Variables.Add(sum);
+        initialized.Body.Variables.Add(index);
+        var loop = Instruction.Create(OpCodes.Ldloc, sum);
+        var condition = Instruction.Create(OpCodes.Ldloc, index);
+        foreach (var instruction in new[] {
+            Instruction.Create(OpCodes.Br, condition), loop, Instruction.Create(OpCodes.Ldloc, index),
+            Instruction.Create(OpCodes.Add), Instruction.Create(OpCodes.Stloc, sum),
+            Instruction.Create(OpCodes.Ldloc, index), Instruction.Create(OpCodes.Ldc_I4_1),
+            Instruction.Create(OpCodes.Add), Instruction.Create(OpCodes.Stloc, index), condition,
+            Instruction.Create(OpCodes.Ldarg_0), Instruction.Create(OpCodes.Blt, loop),
+            Instruction.Create(OpCodes.Ldloc, sum), Instruction.Create(OpCodes.Ret)
+        }) initialized.Body.Instructions.Add(instruction);
         module.GetTypes().Single(t => t.Name == "HiddenValue").Visibility = TypeAttributes.NestedPrivate;
         module.GetTypes().Single(t => t.Name == "HiddenCallback").Visibility = TypeAttributes.NestedPrivate;
         foreach (var attribute in module.CustomAttributes.Where(a => a.TypeFullName == "System.Security.UnverifiableCodeAttribute").ToArray())

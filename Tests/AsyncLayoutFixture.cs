@@ -21,6 +21,16 @@ public static class AsyncLayoutFixture {
         IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
     }
     static int iteratorDisposals;
+    static int nestedIteratorCleanup;
+    public static IEnumerable<int> IterateNested() {
+        try {
+            foreach (var outer in new[] { 1, 2 }) {
+                try { foreach (var inner in new[] { 3, 4 }) yield return outer * 10 + inner; }
+                finally { nestedIteratorCleanup++; }
+            }
+        }
+        finally { nestedIteratorCleanup += 10; }
+    }
     public static IEnumerable<int> IterateReordered() { return new ReorderedIterator(0); }
     [CompilerGenerated]
     sealed class ReorderedIterator : IEnumerable<int>, IEnumerator<int> {
@@ -342,6 +352,11 @@ public static class AsyncLayoutFixture {
         iteratorResult = 0;
         foreach (var value in IterateReordered()) iteratorResult = iteratorResult * 100 + value;
         if (iteratorResult != 1113) throw new Exception("Reordered iterator dispatch");
+        iteratorResult = 0;
+        foreach (var value in IterateNested()) iteratorResult += value;
+        if (iteratorResult != 74 || nestedIteratorCleanup != 12) throw new Exception("Nested iterator cleanup");
+        foreach (var value in IterateNested()) break;
+        if (nestedIteratorCleanup != 23) throw new Exception("Early iterator cleanup");
         Verify(Read);
         Verify(ReadWithGap);
         Verify(ReadFallback);
