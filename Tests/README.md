@@ -283,3 +283,13 @@ one and four export workers: lazy evaluation, every item, factory exception
 identity, early disposal, trailing work, exhaustion and independent enumerators.
 The current Roslyn disposal-state store and generic iterator kickoff patterns
 remain separate cases and are not covered by this reconstruction test.
+
+`Invoke-CachedArgumentRegression.ps1` checks cached delegates among multiple
+base/this constructor arguments. Its 294 checks cover left-to-right evaluation,
+lazy cache creation, delegate identity, volatile cache writes, generic base
+signatures, constructor-body effects and exceptions at every evaluated operation.
+Fallbacks and exception handlers must also observe the original null assignment
+to a local, including when that local is passed by reference. Both one-worker and
+four-worker exports are rebuilt and executed.
+Four methods also run through IL reconstruction with debug-span collection
+enabled to check the folded delegate and constructor paths used by the debugger.
