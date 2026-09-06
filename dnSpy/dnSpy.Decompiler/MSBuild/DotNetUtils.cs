@@ -20,6 +20,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace dnSpy.Decompiler.MSBuild {
 	static class DotNetUtils {
@@ -38,7 +39,27 @@ namespace dnSpy.Decompiler.MSBuild {
 		public static bool IsWinForm(TypeDef type) => IsType(type, "System.Windows.Forms.Control") && type.Methods.Any(x => x.Name == "InitializeComponent");
 		public static bool IsSystemWindowsApplication(TypeDef type) => IsType(type, "System.Windows.Application");
 		public static bool IsStartUpClass(TypeDef type) => type.Module.EntryPoint is not null && type.Module.EntryPoint.DeclaringType == type;
-		public static bool IsUnsafe(ModuleDef module) => module.CustomAttributes.IsDefined("System.Security.UnverifiableCodeAttribute");
+		public static bool IsUnsafe(ModuleDef module) {
+			if (module.CustomAttributes.IsDefined("System.Security.UnverifiableCodeAttribute")) return true;
+			// Protectors can remove the attribute without removing pointer operations.
+			foreach (var type in module.GetTypes()) {
+				if (type.Fields.Any(f => HasPointer(f.FieldType))) return true;
+				foreach (var method in type.Methods) {
+					if (HasPointer(method.ReturnType) || method.Parameters.Any(p => HasPointer(p.Type))) return true;
+					var body = method.Body;
+					if (body is null) continue;
+					if (body.Variables.Any(v => HasPointer(v.Type))) return true;
+					if (body.Instructions.Any(i => i.OpCode.Code == Code.Localloc || i.OpCode.Code == Code.Calli ||
+						i.OpCode.Code == Code.Cpblk || i.OpCode.Code == Code.Initblk)) return true;
+				}
+			}
+			return false;
+		}
+		static bool HasPointer(TypeSig? type) {
+			if (type is PtrSig || type is FnPtrSig) return true;
+			if (type is GenericInstSig generic && generic.GenericArguments.Any(HasPointer)) return true;
+			return type?.Next is not null && HasPointer(type.Next);
+		}
 		public static IEnumerable<FieldDef> GetFields(MethodDef method) => GetDefs(method).OfType<FieldDef>();
 
 		public static IEnumerable<IMemberDef> GetDefs(MethodDef method) {

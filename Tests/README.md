@@ -25,6 +25,12 @@ outside the repository (so repository build settings do not affect the fixtures)
 .\Tests\Invoke-DelegateReceiverRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-delegate-check
+.\Tests\Invoke-CollisionNamesRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-collision-check
+.\Tests\Invoke-SourceMetadataRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-source-metadata-check
 ```
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
@@ -55,6 +61,16 @@ pass `--app-config path\Application.exe.config`
 to use that host's binding redirects. Without this option, normal assembly
 resolution remains unchanged. File dependencies needed for overload resolution
 are included in both SDK and traditional project exports.
+
+The collision fixture rewrites metadata with repeated generic and parameter names,
+including nested types, constraints, abstract methods and interfaces. The exported
+declarations and uses must agree, compile and preserve each argument's behavior.
+The source metadata fixture checks readonly conversion arguments, readonly reference
+methods and indexers, mutable reference writes, tuples, static operations on dynamic
+fields and stack allocation sizes. It removes the unsafe marker before export and
+checks both execution and readonly return metadata after recompilation. Compiler
+reserved attributes are projected into C# syntax rather than emitted as illegal
+explicit attributes; the input assembly metadata is not changed.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.
