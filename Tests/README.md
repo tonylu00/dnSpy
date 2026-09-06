@@ -158,6 +158,11 @@ boundaries, signed and unsigned ordering, small enum promotion, signed shifts, b
 exceptions from the second operand. These IL operations need valid C# numeric
 operands while preserving their original width and evaluation order.
 
+`Invoke-DiscardedValuesRegression.ps1` checks 26 discarded-result outcomes,
+including operator evaluation order, getter effects, invalid casts, null and
+array bounds errors, checked overflow, and completed/suspended/faulted/cancelled
+awaits. It also checks parameters whose names collide with generated temporaries.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
