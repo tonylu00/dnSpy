@@ -234,5 +234,12 @@ handlers. It covers accepting, rejecting and throwing filters, exception identit
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
 operations that must bypass the filter.
 
+`Invoke-AwaitCatchRegression.ps1` rebuilds catch-all handlers containing awaits
+and conditional rethrows. Its 41 checks preserve retries, exception identity and
+stack, cancellation, callback failures, and wrapped non-Exception payloads.
+`Invoke-UsingLifetimeRegression.ps1` checks 37 outcomes for reused async resource
+storage, enumerator cleanup, initializer reads, nested disposal, shared closures
+and ref aliases. Both suites rebuild and execute exports with one and four workers.
+
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.
