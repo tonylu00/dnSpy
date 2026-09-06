@@ -21,6 +21,34 @@ public static class AsyncLayoutFixture {
         IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
     }
     static int iteratorDisposals;
+    public static IEnumerable<int> IterateReordered() { return new ReorderedIterator(0); }
+    [CompilerGenerated]
+    sealed class ReorderedIterator : IEnumerable<int>, IEnumerator<int> {
+        int state, current;
+        public ReorderedIterator(int state) { this.state = state; }
+        public int Current { get { return current; } }
+        object IEnumerator.Current { get { return current; } }
+        public bool MoveNext() {
+            int cachedState = state;
+            if (cachedState != 0) goto Dispatch;
+            state = -1;
+            current = 11;
+            state = 1;
+            return true;
+        Resume:
+            state = -1;
+            current = 13;
+            state = 2;
+            return true;
+        Dispatch:
+            if (cachedState == 1) goto Resume;
+            return false;
+        }
+        public void Reset() { throw new NotSupportedException(); }
+        public void Dispose() { }
+        public IEnumerator<int> GetEnumerator() { return this; }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+    }
     sealed class IteratorOwner {
         readonly int offset = 4;
         public IEnumerable<int> Range(int count) {
@@ -311,6 +339,9 @@ public static class AsyncLayoutFixture {
         iteratorResult = 0;
         foreach (var value in new IteratorOwner().Range(2)) iteratorResult = iteratorResult * 10 + value;
         if (iteratorResult != 45 || iteratorDisposals != 2) throw new Exception("Captured iterator fields");
+        iteratorResult = 0;
+        foreach (var value in IterateReordered()) iteratorResult = iteratorResult * 100 + value;
+        if (iteratorResult != 1113) throw new Exception("Reordered iterator dispatch");
         Verify(Read);
         Verify(ReadWithGap);
         Verify(ReadFallback);
