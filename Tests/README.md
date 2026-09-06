@@ -158,6 +158,8 @@ inside a try. Its rebuilt program checks that redirecting the entry preserves
 internal back edges and executes the finally only once.
 Forward and backward jumps from switches and conditional branches also preserve
 one shared local across their assignment and read sites (40 value/cleanup cases).
+Unrelated branch locals keep their own scopes, and sibling collection loops still
+reconstruct without conflicting with shared iterator storage.
 `Invoke-JumpLocalRegression.ps1` additionally exports and rebuilds 65 ordinary and
 retained-iterator scenarios covering value flow, evaluation counts, exception
 identity, resumption and disposal.

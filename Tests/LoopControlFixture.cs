@@ -43,7 +43,10 @@ public static class LoopControlFixture {
                 using (var first = Values(false).GetEnumerator()) { while (first.MoveNext()) sum += first.Current; }
                 return sum;
             case 1: goto prepare;
-            case 2: return 20;
+            case 2:
+                foreach (int value in Values(false)) sum += value;
+                foreach (int value in Values(false)) sum += value;
+                return sum;
             case 3: return 30;
             case 4: return 40;
             default: return -1;
@@ -134,6 +137,7 @@ public static class LoopControlFixture {
         try { PreparedCleanup(1, true); throw new Exception("Failure swallowed"); }
         catch (InvalidOperationException) { if (cleanupCount != 3) throw new Exception("Failure cleanup changed"); }
         if (PreparedCleanup(5, false) != -1 || cleanupCount != 3) throw new Exception("Skipped cleanup path changed");
+        if (PreparedCleanup(2, false) != 20 || cleanupCount != 5) throw new Exception("Sibling iterator scopes or cleanup changed");
         if (TailAssignment() != 1) throw new Exception("Continue executed the tail assignment");
         if (TailIncrement() != 4) throw new Exception("Continue executed the tail increment");
         if (TailCondition() != 32) throw new Exception("Continue evaluated the tail condition");

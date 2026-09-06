@@ -93,7 +93,8 @@ class Program {
             var methods = "";
             foreach (bool useSwitch in new[] { false, true }) foreach (bool backwards in new[] { false, true }) {
                 BlockStatement Branch(int value) => new BlockStatement {
-                    new AssignmentExpression(new IdentifierExpression("x"), new PrimitiveExpression(value)),
+                    new AssignmentExpression(new IdentifierExpression("scratch"), new PrimitiveExpression(value)),
+                    new AssignmentExpression(new IdentifierExpression("x"), new IdentifierExpression("scratch")),
                     new GotoStatement("shared")
                 };
                 Statement dispatch;
@@ -114,6 +115,7 @@ class Program {
                 };
                 var body = new BlockStatement {
                     new VariableDeclarationStatement(null, new PrimitiveType("int"), "x"),
+                    new VariableDeclarationStatement(null, new PrimitiveType("int"), "scratch"),
                     new TryCatchStatement {
                         TryBlock = new BlockStatement { dispatch, new ReturnStatement(new PrimitiveExpression(-1)),
                             new LabelStatement { Label = "shared" },
@@ -137,6 +139,8 @@ class Program {
                 }
                 using var module = new ModuleDefUser("JumpLocalFixture");
                 new DeclareVariables(new DecompilerContext(0, module)).Run(body);
+                Check(body.Descendants.OfType<VariableInitializer>().Count(v => v.Name == "scratch") == 2,
+                    "unrelated branch-local storage escaped its scopes");
                 methods += "static int " + (useSwitch ? "Switch" : "Branch") + (backwards ? "Back" : "") + "(int state, bool alternative) " + body;
             }
             File.WriteAllText(Path.Combine(args[0], "JumpScopeFixture.cs"),
