@@ -293,3 +293,22 @@ to a local, including when that local is passed by reference. Both one-worker an
 four-worker exports are rebuilt and executed.
 Four methods also run through IL reconstruction with debug-span collection
 enabled to check the folded delegate and constructor paths used by the debugger.
+
+`Invoke-RecordWithRegression.ps1` checks native record classes and `with`
+initializers, including renamed Reactor clone methods. Each input variant passes
+89 original/rebuilt checks with one and four workers: virtual copy dispatch,
+custom copy constructors, init-setter side effects, nulls, exception identity and
+order, sealed/abstract/generic/nested records, chained and conditional copies,
+equality and hash contracts. Reference-valued conditionals also exercise base,
+interface and differing generic branches without introducing a downcast.
+Two unchanged compiled-consumer checks verify virtual and generic clone calls
+against each rebuilt assembly. Eleven recognition guards reject changed equality
+or non-copying clone bodies; 25 methods retain debugger IL spans.
+
+Record reconstruction retains custom members, copy constructors and renamed
+clone aliases. Only verified compiler equality scaffolding is regenerated. A
+renamed record gains the compiler's native `<Clone>$` method beside its retained
+alias; the tests cover callers and the rebuilt inheritance hierarchy, not arbitrary
+external subclasses that override only the alias. The `RecordClasses` setting
+controls this C# output and is disabled by the Visual Basic frontend. This adds
+AST/output support; it does not add record parsing to the legacy NRefactory parser.

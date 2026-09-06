@@ -214,6 +214,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.VisualBasic {
 			if (currentModule is null)
 				currentModule = currentType?.Module;
 			settings = settings.Clone();
+			settings.RecordClasses = false;
 			if (isSingleMember)
 				settings.UsingDeclarations = false;
 			settings.IntroduceIncrementAndDecrement = false;
