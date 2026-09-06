@@ -43,6 +43,28 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		public abstract void Write();
 
+		List<(IAssembly Reference, AssemblyDef? Assembly)>? assemblyReferences;
+		protected IReadOnlyList<(IAssembly Reference, AssemblyDef? Assembly)> GetAssemblyReferences() {
+			if (assemblyReferences is not null) return assemblyReferences;
+			assemblyReferences = new List<(IAssembly, AssemblyDef?)>();
+			var pending = new Queue<(IAssembly Reference, ModuleDef Source)>();
+			foreach (var reference in project.Module.GetAssemblyRefs()) pending.Enqueue((reference, project.Module));
+			var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+			if (project.Module.Assembly is not null) seen.Add(project.Module.Assembly.FullNameToken);
+			while (pending.Count != 0) {
+				var item = pending.Dequeue();
+				var resolved = project.Module.Context.AssemblyResolver.Resolve(item.Reference, item.Source);
+				if (!seen.Add(resolved?.FullNameToken ?? item.Reference.FullNameToken)) continue;
+				assemblyReferences.Add((item.Reference, resolved));
+				// File references do not provide transitive compile references. Their
+				// public overloads can expose types from additional support libraries.
+				if (resolved is null || GetHintPath(resolved) is null) continue;
+				foreach (var reference in resolved.ManifestModule.GetAssemblyRefs())
+					pending.Enqueue((reference, resolved.ManifestModule));
+			}
+			return assemblyReferences;
+		}
+
 		protected TargetFrameworkInfo GetTargetFrameworkInfo() {
 			var info = TargetFrameworkInfo.Create(project.Module);
 			if (info.FromAttribute || !info.IsDotNetFramework)

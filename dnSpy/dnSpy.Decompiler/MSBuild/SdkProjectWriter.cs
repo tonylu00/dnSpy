@@ -131,8 +131,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				Write(writer, BuildAction.EmbeddedResource);
 
 				// Project references
-				var projRefs = project.Module.GetAssemblyRefs().
-					Select(a => project.Module.Context.AssemblyResolver.Resolve(a, project.Module)).
+				var projRefs = GetAssemblyReferences().Select(a => a.Assembly).
 					Select(a => a is null ? null : FindOtherProject(a.ManifestModule.Location)).
 					OfType<Project>().OrderBy(a => a.Filename, StringComparer.OrdinalIgnoreCase).ToArray();
 				if (projRefs.Length > 0) {
@@ -179,13 +178,14 @@ namespace dnSpy.Decompiler.MSBuild {
 					return true;
 				}
 
-				var gacRefs = project.Module.GetAssemblyRefs().Where(a => ReferenceFilter(a.Name)).OrderBy(a => a.Name.String, StringComparer.OrdinalIgnoreCase).ToArray();
+				var gacRefs = GetAssemblyReferences().Where(a => ReferenceFilter(a.Reference.Name)).OrderBy(a => a.Reference.Name.String, StringComparer.OrdinalIgnoreCase).ToArray();
 				var extraRefsWithoutImplicitRefs = project.ExtraAssemblyReferences.Where(ReferenceFilter).ToArray();
 				if (gacRefs.Length > 0 || extraRefsWithoutImplicitRefs.Length > 0) {
 					writer.WriteStartElement("ItemGroup");
 					var hash = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-					foreach (var r in gacRefs) {
-						var asm = project.Module.Context.AssemblyResolver.Resolve(r, project.Module);
+					foreach (var reference in gacRefs) {
+						var r = reference.Reference;
+						var asm = reference.Assembly;
 						if (asm is not null && ExistsInProject(asm.ManifestModule.Location))
 							continue;
 						hash.Add(r.Name);

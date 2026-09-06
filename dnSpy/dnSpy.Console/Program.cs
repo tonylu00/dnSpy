@@ -178,6 +178,7 @@ namespace dnSpy_Console {
 		int mdToken;
 		int spaces;
 		string? typeName;
+		string? applicationConfig;
 		ProjectVersion projectVersion = ProjectVersion.VS2010;
 		string? outputDir;
 		string slnName = "solution.sln";
@@ -334,6 +335,7 @@ namespace dnSpy_Console {
 		static readonly UsageInfo[] usageInfos = new UsageInfo[] {
 			new UsageInfo("--sdk-project", null, dnSpy_Console_Resources.CmdLineDescription_SdkProject),
 			new UsageInfo("--asm-path", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_AsmPath),
+			new UsageInfo("--app-config", dnSpy_Console_Resources.CmdLinePath, "use assembly binding redirects from the application's configuration file"),
 			new UsageInfo("--user-gac", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_UserGAC),
 			new UsageInfo("--no-gac", null, dnSpy_Console_Resources.CmdLineDescription_NoGAC),
 			new UsageInfo("--no-stdlib", null, dnSpy_Console_Resources.CmdLineDescription_NoStdLib),
@@ -431,6 +433,7 @@ namespace dnSpy_Console {
 			"lang",
 			"sdk-project",
 			"asm-path",
+			"app-config",
 			"user-gac",
 			"gac",
 			"stdlib",
@@ -504,6 +507,13 @@ namespace dnSpy_Console {
 							throw new ErrorException(string.Format(dnSpy_Console_Resources.LanguageDoesNotExist, language));
 						lang = null;
 						langDict = null;
+						break;
+
+					case "--app-config":
+						if (next is null || !File.Exists(next))
+							throw new ErrorException("--app-config requires an existing application configuration file.");
+						applicationConfig = Path.GetFullPath(next);
+						i++;
 						break;
 
 					case "--asm-path":
@@ -695,6 +705,11 @@ namespace dnSpy_Console {
 			foreach (var dir in userGacPaths)
 				AddSearchPath(dir);
 			assemblyResolver.UseGAC = useGac;
+			if (applicationConfig is not null) {
+				AddSearchPath(Path.GetDirectoryName(applicationConfig)!);
+				moduleContext.AssemblyResolver = new ApplicationConfigResolver(assemblyResolver, applicationConfig);
+				moduleContext.Resolver = new Resolver(moduleContext.AssemblyResolver);
+			}
 
 			var files = new List<ProjectModuleOptions>(GetDotNetFiles());
 			string guidStr = projectGuid.ToString();
@@ -958,7 +973,7 @@ namespace dnSpy_Console {
 
 		ProjectModuleOptions CreateProjectModuleOptions(ModuleDef mod) {
 			mod.EnableTypeDefFindCache = true;
-			((AssemblyResolver)moduleContext.AssemblyResolver).AddToCache(mod);
+			assemblyResolver.AddToCache(mod);
 			AddSearchPath(Path.GetDirectoryName(mod.Location)!);
 			var proj = new ProjectModuleOptions(mod, GetLanguage(), decompilationContext);
 			proj.DontReferenceStdLib = !addCorlibRef;
