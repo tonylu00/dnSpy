@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-public static class AsyncLayoutFixture {
+public static partial class AsyncLayoutFixture {
     public static IEnumerable<int> IterateFallback() { return new ManualIterator(new[] { 4, 9 }); }
     [CompilerGenerated]
     sealed class ManualIterator : IEnumerable<int>, IEnumerator<int> {
@@ -410,6 +410,7 @@ public static class AsyncLayoutFixture {
         if (finallyCount != 4) throw new Exception("Finally path");
         VerifyTwice();
         VerifyAwaitFinally();
+        VerifyDetachedAwaits();
         Console.WriteLine("PASS: completed, suspended, faulted, cancelled, unrelated-branch and finally async paths.");
         return 0;
     }
