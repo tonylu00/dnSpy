@@ -74,6 +74,9 @@ fields and stack allocation sizes. It removes the unsafe marker before export an
 checks both execution and readonly return metadata after recompilation. Compiler
 reserved attributes are projected into C# syntax rather than emitted as illegal
 explicit attributes; the input assembly metadata is not changed.
+It also covers private nested types exposed by helper signatures, guarded
+constructor argument preparation (including null rejection and side-effect order),
+and conversions through interfaces with substituted generic type arguments.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.

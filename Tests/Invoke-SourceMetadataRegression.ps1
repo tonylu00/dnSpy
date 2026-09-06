@@ -30,6 +30,7 @@ class Emitter {
             return;
         }
         using var module = ModuleDefMD.Load(args[0]);
+        module.GetTypes().Single(t => t.Name == "HiddenValue").Visibility = TypeAttributes.NestedPrivate;
         foreach (var attribute in module.CustomAttributes.Where(a => a.TypeFullName == "System.Security.UnverifiableCodeAttribute").ToArray())
             module.CustomAttributes.Remove(attribute);
         module.Write(args[1]);
