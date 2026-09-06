@@ -1,0 +1,91 @@
+param(
+    [Parameter(Mandatory)][string] $DnSpyConsole,
+    [Parameter(Mandatory)][string] $OutputDirectory
+)
+$ErrorActionPreference = 'Stop'
+$OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
+if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new regression output folder.' }
+New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
+$runtime = Split-Path ([IO.Path]::GetFullPath($DnSpyConsole))
+$references = ('ICSharpCode.NRefactory', 'ICSharpCode.NRefactory.CSharp', 'dnSpy.Contracts.Logic' | ForEach-Object {
+    $path = [Security.SecurityElement]::Escape((Join-Path $runtime ($_ + '.dll')))
+    "<Reference Include=`"$_`"><HintPath>$path</HintPath></Reference>"
+}) -join ''
+"<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><OutputType>Exe</OutputType><EnableDefaultItems>false</EnableDefaultItems></PropertyGroup><ItemGroup><Compile Include=`"Program.cs`"/>$references</ItemGroup></Project>" |
+    Set-Content (Join-Path $OutputDirectory 'Regression.csproj')
+@'
+using System;
+using System.Threading;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Analysis;
+class Program {
+    static readonly CancellationToken None = CancellationToken.None;
+    static ExpressionStatement Assign(string name) => new ExpressionStatement(new AssignmentExpression(new IdentifierExpression(name), new PrimitiveExpression(5)));
+    static BlockStatement DelayedAssignment(string name, int delay) {
+        var block = new BlockStatement();
+        for (int i = 0; i < delay; i++) block.Statements.Add(new EmptyStatement());
+        block.Statements.Add(Assign(name));
+        return block;
+    }
+    static void Check(bool value, string message) { if (!value) throw new Exception(message); }
+    static void Analyze(DefiniteAssignmentAnalysis analysis, string name) {
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+        analysis.Analyze(name, timeout.Token);
+    }
+    static void Main() {
+        int checks = 0;
+        // Delayed finally results used to inject both PA and DA into a later loop.
+        // Those two waves could circulate forever even in a small method.
+        foreach (int delay in new[] { 0, 3, 12, 35 }) foreach (int loopSize in new[] { 1, 4, 13 }) {
+            var body = new BlockStatement();
+            for (int i = 0; i < loopSize; i++) body.Statements.Add(new EmptyStatement());
+            var loop = new WhileStatement { Condition = new IdentifierExpression("again"), EmbeddedStatement = body };
+            var guarded = new TryCatchStatement { TryBlock = new BlockStatement { new EmptyStatement() }, FinallyBlock = DelayedAssignment("x", delay) };
+            var read = new ExpressionStatement(new IdentifierExpression("x"));
+            var root = new BlockStatement { guarded, loop, read };
+            var analysis = new DefiniteAssignmentAnalysis(root, None);
+            Analyze(analysis, "x");
+            Check(analysis.GetStatusBefore(loop) == DefiniteAssignmentStatus.DefinitelyAssigned, "finally assignment lost");
+            Check(analysis.UnassignedVariableUses.Count == 0, "assigned read marked unassigned");
+            Analyze(analysis, "missing");
+            Check(analysis.GetStatusBefore(loop) == DefiniteAssignmentStatus.PotentiallyAssigned, "analysis leaked previous variable state");
+            checks += 3;
+        }
+        foreach (bool conditional in new[] { false, true }) foreach (bool nested in new[] { false, true }) {
+            Statement assignment = Assign("x");
+            if (conditional) assignment = new IfElseStatement { Condition = new IdentifierExpression("choose"), TrueStatement = new BlockStatement { assignment } };
+            var cleanup = new BlockStatement { assignment };
+            if (nested) cleanup = new BlockStatement { new TryCatchStatement { TryBlock = new BlockStatement { new EmptyStatement() }, FinallyBlock = cleanup } };
+            var guarded = new TryCatchStatement { TryBlock = new BlockStatement { new GotoStatement("done") }, FinallyBlock = cleanup };
+            var label = new LabelStatement { Label = "done" };
+            var read = new ExpressionStatement(new IdentifierExpression("x"));
+            var root = new BlockStatement { guarded, label, read };
+            var analysis = new DefiniteAssignmentAnalysis(root, None);
+            Analyze(analysis, "x");
+            Check(analysis.GetStatusBefore(read) == (conditional ? DefiniteAssignmentStatus.PotentiallyAssigned : DefiniteAssignmentStatus.DefinitelyAssigned), "nested or conditional cleanup status changed");
+            Check((analysis.UnassignedVariableUses.Count != 0) == conditional, "conditional assignment incorrectly proved definite");
+            checks += 2;
+        }
+        {
+            var read = new ExpressionStatement(new IdentifierExpression("x"));
+            var guarded = new TryCatchStatement { TryBlock = new BlockStatement { new EmptyStatement() }, FinallyBlock = new BlockStatement { new ThrowStatement(new NullReferenceExpression()) } };
+            var analysis = new DefiniteAssignmentAnalysis(new BlockStatement { guarded, read }, None);
+            Analyze(analysis, "x");
+            Check(analysis.GetStatusBefore(read) == DefiniteAssignmentStatus.CodeUnreachable, "throwing finally reached its successor");
+            checks++;
+        }
+        {
+            var read = new ExpressionStatement(new IdentifierExpression("x"));
+            var analysis = new DefiniteAssignmentAnalysis(new BlockStatement { Assign("x"), read }, None);
+            using var cancelled = new CancellationTokenSource(); cancelled.Cancel();
+            try { analysis.Analyze("x", cancelled.Token); throw new Exception("cancellation ignored"); } catch (OperationCanceledException) { }
+            Analyze(analysis, "x");
+            Check(analysis.GetStatusBefore(read) == DefiniteAssignmentStatus.DefinitelyAssigned, "cancelled work queue polluted the next analysis");
+            checks++;
+        }
+        Console.WriteLine("PASS: " + checks + " finally assignment, loop convergence, reachability and cancellation checks.");
+    }
+}
+'@ | Set-Content (Join-Path $OutputDirectory 'Program.cs')
+dotnet run --project (Join-Path $OutputDirectory 'Regression.csproj') -c Release
+if ($LASTEXITCODE -ne 0) { throw 'Definite assignment regression failed.' }

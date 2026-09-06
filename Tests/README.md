@@ -37,6 +37,9 @@ outside the repository (so repository build settings do not affect the fixtures)
 .\Tests\Invoke-LargeMethodRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-large-method-check
+.\Tests\Invoke-DefiniteAssignmentRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-assignment-check
 ```
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
@@ -66,6 +69,9 @@ libraries from dnSpy's `net48` build; `-TasksExtensionsPath` can select another 
 The delegate fixture reproduces an object-typed field invoked without `castclass`
 in the input IL. It checks the returned value, invocation count and null failure
 before and after export and recompilation.
+It also removes receiver casts from generic field reads, writes and managed
+addresses, property and protected method calls, and reference returns. Rebuilt
+code must preserve mutations, reference identity, call counts and null failures.
 
 The application configuration fixture checks a signed library version redirect
 and a transitive dependency exposed by an overload in the newer library. The
@@ -106,6 +112,16 @@ initializers with shared references and conditional values. Original and rebuilt
 programs verify side-effect order, values and reference identity. Export time is
 recorded in `timing.json`; use `-Count 4000` for a larger performance comparison.
 There is no machine-dependent timing threshold in the regression.
+Use `-Guarded` to place the generated initialization inside a try/finally and
+check that cleanup still runs once. This exercises declaration indexing within
+a nested scope as well as at the method root.
+
+The definite-assignment fixture checks delayed finally assignments followed by
+loops of different sizes, nested and conditional cleanup, outward jumps,
+unreachable successors and reuse after cancellation. It reproduces an analysis
+loop found in ETS's device-copy operation. Assignment results from a leave must
+include its finally blocks before they reach the successor; temporary results
+can otherwise circulate indefinitely around a later loop.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.

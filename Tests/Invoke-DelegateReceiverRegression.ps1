@@ -12,12 +12,38 @@ New-Item -ItemType Directory -Path $inputDirectory,$emitterDirectory | Out-Null
     Set-Content (Join-Path $inputDirectory 'DelegateFixture.csproj')
 @'
 using System;
+public class ReceiverBase {
+    public int Calls;
+    protected int Advance(int value) { Calls++; return value + 1; }
+}
+public sealed class FieldReceiver<T> : ReceiverBase {
+    private T value;
+    public FieldReceiver(T value) { this.value = value; }
+    public T Value { get { return value; } }
+    public static T ErasedRead(ReceiverBase receiver) { return ((FieldReceiver<T>)receiver).value; }
+    public static void ErasedWrite(ReceiverBase receiver, T value) { ((FieldReceiver<T>)receiver).value = value; }
+    public static ref T ErasedAddress(ReceiverBase receiver) { return ref ((FieldReceiver<T>)receiver).value; }
+    public static T ErasedProperty(object receiver) { return ((FieldReceiver<T>)receiver).Value; }
+    public static int ErasedProtected(ReceiverBase receiver, int value) { return ((FieldReceiver<T>)receiver).Advance(value); }
+    public static FieldReceiver<T> ErasedReturn(object receiver) { return (FieldReceiver<T>)receiver; }
+}
 public static class DelegateFixture {
     static object callback;
     static int calls;
     static int Increment(int value) { calls++; return value + 1; }
     public static int Read(int value) { return ((Func<int, int>)callback)(value); }
     public static int Main() {
+        var receiver = new FieldReceiver<int>(17);
+        if (FieldReceiver<int>.ErasedRead(receiver) != 17 || FieldReceiver<int>.ErasedProperty(receiver) != 17) return 4;
+        FieldReceiver<int>.ErasedWrite(receiver, 23);
+        ref int address = ref FieldReceiver<int>.ErasedAddress(receiver);
+        address = 31;
+        if (FieldReceiver<int>.ErasedRead(receiver) != 31) return 5;
+        if (FieldReceiver<int>.ErasedProtected(receiver, 16) != 17 || receiver.Calls != 1) return 6;
+        if (!ReferenceEquals(FieldReceiver<int>.ErasedReturn(receiver), receiver)) return 7;
+        var text = new FieldReceiver<string>("captured");
+        if (FieldReceiver<string>.ErasedRead(text) != "captured") return 8;
+        try { FieldReceiver<int>.ErasedRead(null); return 9; } catch (NullReferenceException) { }
         callback = new Func<int, int>(Increment);
         if (Read(16) != 17 || calls != 1) return 1;
         callback = null;
@@ -42,6 +68,13 @@ class Emitter {
         var cast = method.Body.Instructions.Single(i => i.OpCode == OpCodes.Castclass);
         cast.OpCode = OpCodes.Nop;
         cast.Operand = null;
+        foreach (var receiverMethod in module.GetTypes().Where(t => t.Name.String.StartsWith("FieldReceiver`"))
+            .SelectMany(t => t.Methods).Where(m => m.Name.String.StartsWith("Erased"))) {
+            foreach (var erasedCast in receiverMethod.Body.Instructions.Where(i => i.OpCode == OpCodes.Castclass)) {
+                erasedCast.OpCode = OpCodes.Nop;
+                erasedCast.Operand = null;
+            }
+        }
         module.Write(args[1]);
     }
 }
