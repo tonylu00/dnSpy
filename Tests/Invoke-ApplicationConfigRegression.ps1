@@ -79,6 +79,22 @@ foreach ($format in @('sdk','legacy')) {
     }
 }
 
+# Redirect selection must precede choosing among loaded inputs: the old contract
+# may also be exported as a compatibility project in the same operation.
+foreach ($format in @('sdk','legacy')) {
+    $bothExport = Join-Path $OutputDirectory ('both-versions-' + $format)
+    $arguments = @('--no-color','--threads','4','--app-config',$config)
+    if ($format -eq 'sdk') { $arguments += '--sdk-project' }
+    & $DnSpyConsole @arguments -o $bothExport (Join-Path $old 'bin\Release\net48\Library.dll') (Join-Path $bin 'Consumer.exe') (Join-Path $bin 'Library.dll')
+    if ($LASTEXITCODE -ne 0) { throw 'Both-version redirect export failed.' }
+    $project = Join-Path $bothExport 'Consumer\Consumer.csproj'
+    $rebuilt = Join-Path $OutputDirectory ('both-versions-rebuilt-' + $format)
+    dotnet build $project -c Release -o $rebuilt --nologo -v quiet
+    if ($LASTEXITCODE -ne 0) { throw 'Both-version redirected source compilation failed.' }
+    & (Join-Path $rebuilt 'Consumer.exe')
+    if ($LASTEXITCODE -ne 23) { throw 'An exported old contract overrode the configured implementation.' }
+}
+
 # A host redirect must not silently substitute a different contract when its
 # identity or version range does not apply, or no host was explicitly selected.
 foreach ($scenario in @('no-config', 'wrong-token', 'wrong-culture', 'outside-range')) {

@@ -705,13 +705,15 @@ namespace dnSpy_Console {
 			foreach (var dir in userGacPaths)
 				AddSearchPath(dir);
 			assemblyResolver.UseGAC = useGac;
-			if (applicationConfig is not null) {
+			if (applicationConfig is not null)
 				AddSearchPath(Path.GetDirectoryName(applicationConfig)!);
-				moduleContext.AssemblyResolver = new ApplicationConfigResolver(assemblyResolver, applicationConfig);
-				moduleContext.Resolver = new Resolver(moduleContext.AssemblyResolver);
-			}
 
 			var files = new List<ProjectModuleOptions>(GetDotNetFiles());
+			IAssemblyResolver inputResolver = new InputAssemblyResolver(assemblyResolver, files.Select(f => f.Module));
+			if (applicationConfig is not null)
+				inputResolver = new ApplicationConfigResolver(inputResolver, applicationConfig);
+			moduleContext.AssemblyResolver = inputResolver;
+			moduleContext.Resolver = new Resolver(inputResolver);
 			string guidStr = projectGuid.ToString();
 			int guidNum = int.Parse(guidStr.Substring(36 - 8, 8), NumberStyles.HexNumber);
 			string guidFormat = guidStr.Substring(0, 36 - 8) + "{0:X8}";

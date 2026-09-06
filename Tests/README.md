@@ -352,3 +352,24 @@ names, malformed public keys, and repeated C#/VB export/keep-all/default modes
 against the same metadata. The .NET Framework parser reduces a full public key to
 a token; projection compares the full declared key instead and leaves invalid keys
 for diagnosis without aborting export.
+
+`Invoke-DuplicateAssemblyRegression.ps1` checks console batch export of two
+deployments with identical Runner/Plugin/Library assembly identities and different
+generic payload types and behavior. Each plugin resides in a subfolder, and a
+separately exported `Library_orig.dll` contains another implementation. All seven
+inputs must remain in the solution. Both applications rebuild and return their
+distinct expected results with SDK projects (one/four workers, reversed input
+order) and legacy projects. Another 564 checks use the deployed resolver to verify
+type resolution, self references including backups, identity mismatches and
+concurrent calls from different deployment folders.
+
+Console resolution selects exact identities from its input set before using the
+ordinary resolver. A file named for the assembly takes precedence over backup
+filenames. Matching copies are selected by source folder, parent folders, then
+nearby subfolders; unresolved ties use a stable path order. Self references stay
+with their own input. The index is built once, and selections are cached separately
+for each source module without re-reading assembly files. Explicit application
+redirects apply before this selection. The application-config regression also
+exports both the old and redirected libraries, then verifies SDK/legacy consumers
+still use the configured version. This change covers console resolution; the GUI
+document resolver has a separate implementation.
