@@ -208,6 +208,11 @@ from an assembly referenced only by BAML. SDK and traditional single/batch expor
 must retain a resolved binary or project reference. Both SDK outputs are rebuilt
 and executed, and the fixture verifies that no IL assembly reference masks the case.
 
+`Invoke-BamlTemplateScopeRegression.ps1` preserves dependency property owners inside
+templates instead of borrowing the enclosing style's target. Original and rebuilt
+resources retain absent/explicit template targets, trigger and setter identities,
+template bindings, and named trigger activation/reset on an isolated control.
+
 `Invoke-GacReferencesRegression.ps1` checks a System.Management dependency resolved
 from the installed GAC. The .NET Framework export retains its framework reference;
 the .NET Standard export retains the resolved file path. Both rebuilt libraries

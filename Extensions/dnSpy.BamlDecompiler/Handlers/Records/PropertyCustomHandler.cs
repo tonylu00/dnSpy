@@ -26,6 +26,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using dnlib.DotNet;
 using dnSpy.BamlDecompiler.Baml;
 using dnSpy.BamlDecompiler.Xaml;
 
@@ -143,11 +144,22 @@ namespace dnSpy.BamlDecompiler.Handlers {
 		}
 
 		static bool NeedsFullName(XamlProperty property, XElement elem) {
-			var p = elem.Parent;
-			while (p is not null && p.Annotation<XamlType>()?.ResolvedType.FullName != "System.Windows.Style")
-				p = p.Parent;
-			var type = p?.Annotation<TargetTypeAnnotation>()?.Type;
-			return type is null || property.IsAttachedTo(type);
+			for (var p = elem.Parent; p is not null; p = p.Parent) {
+				var type = p.Annotation<XamlType>()?.ResolvedType;
+				if (type?.FullName == "System.Windows.Style") {
+					var target = p.Annotation<TargetTypeAnnotation>()?.Type;
+					return target is null || property.IsAttachedTo(target);
+				}
+				while (type is not null) {
+					// A template has its own target and namescope. Its dependency
+					// property references cannot borrow the enclosing Style target.
+					// Preserve the serialized owner, including when TargetType is absent.
+					if (type.FullName == "System.Windows.FrameworkTemplate")
+						return true;
+					type = type.GetBaseType();
+				}
+			}
+			return true;
 		}
 
 		public BamlElement Translate(XamlContext ctx, BamlNode node, BamlElement parent) {
