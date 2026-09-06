@@ -59,6 +59,26 @@ $legacyProject = Get-ChildItem -LiteralPath $legacyExport -Recurse -Filter '*.cs
 $legacyXml = Get-Content -LiteralPath $legacyProject.FullName -Raw
 if ($legacyXml -notmatch 'Support.dll' -or $legacyXml -notmatch 'Library.dll') { throw 'Traditional export lost transitive file references.' }
 
+# Exporting the redirected library as a project must retain its binary support
+# dependencies in the consumer too. Overload resolution still needs their types.
+foreach ($format in @('sdk','legacy')) {
+    $batchExport = Join-Path $OutputDirectory ('batch-' + $format)
+    $batchArguments = @('--no-color','--threads','1','--app-config',$config)
+    if ($format -eq 'sdk') { $batchArguments += '--sdk-project' }
+    & $DnSpyConsole @batchArguments -o $batchExport (Join-Path $bin 'Consumer.exe') (Join-Path $bin 'Library.dll')
+    if ($LASTEXITCODE -ne 0) { throw 'Batch configured export failed.' }
+    $batchProject = Join-Path $batchExport 'Consumer\Consumer.csproj'
+    $batchXml = Get-Content -LiteralPath $batchProject -Raw
+    if ($batchXml -notmatch 'ProjectReference' -or $batchXml -notmatch 'Support.dll') { throw "$format batch export lost transitive binary dependencies." }
+    if ($format -eq 'sdk') {
+        $batchRebuilt = Join-Path $OutputDirectory 'batch-rebuilt'
+        dotnet build $batchProject -c Release -o $batchRebuilt --nologo -v quiet
+        if ($LASTEXITCODE -ne 0) { throw 'Batch configured source compilation failed.' }
+        & (Join-Path $batchRebuilt 'Consumer.exe')
+        if ($LASTEXITCODE -ne 23) { throw 'Batch configured behavior changed.' }
+    }
+}
+
 # A host redirect must not silently substitute a different contract when its
 # identity or version range does not apply, or no host was explicitly selected.
 foreach ($scenario in @('no-config', 'wrong-token', 'wrong-culture', 'outside-range')) {

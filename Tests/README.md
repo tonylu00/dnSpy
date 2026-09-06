@@ -96,6 +96,8 @@ pass `--app-config path\Application.exe.config`
 to use that host's binding redirects. Without this option, normal assembly
 resolution remains unchanged. File dependencies needed for overload resolution
 are included in both SDK and traditional project exports.
+Batch exports also follow dependencies through exported projects, so their
+consumers retain binary support libraries needed to compile overloads.
 
 The collision fixture rewrites metadata with repeated generic and parameter names,
 including nested types, constraints, abstract methods and interfaces. The exported

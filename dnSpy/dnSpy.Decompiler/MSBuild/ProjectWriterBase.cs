@@ -56,9 +56,10 @@ namespace dnSpy.Decompiler.MSBuild {
 				var resolved = project.Module.Context.AssemblyResolver.Resolve(item.Reference, item.Source);
 				if (!seen.Add(resolved?.FullNameToken ?? item.Reference.FullNameToken)) continue;
 				assemblyReferences.Add((item.Reference, resolved));
-				// File references do not provide transitive compile references. Their
-				// public overloads can expose types from additional support libraries.
-				if (resolved is null || GetHintPath(resolved) is null) continue;
+				// Public overloads can expose types from additional support libraries.
+				// Follow exported projects too: their binary references are not
+				// necessarily propagated to consumers by the generated project format.
+				if (resolved is null || IsGacPath(resolved.ManifestModule.Location)) continue;
 				foreach (var reference in resolved.ManifestModule.GetAssemblyRefs())
 					pending.Enqueue((reference, resolved.ManifestModule));
 			}
