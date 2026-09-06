@@ -156,6 +156,11 @@ can otherwise circulate indefinitely around a later loop.
 An emitted syntax tree also reproduces an external jump to the first instruction
 inside a try. Its rebuilt program checks that redirecting the entry preserves
 internal back edges and executes the finally only once.
+Forward and backward jumps from switches and conditional branches also preserve
+one shared local across their assignment and read sites (40 value/cleanup cases).
+`Invoke-JumpLocalRegression.ps1` additionally exports and rebuilds 65 ordinary and
+retained-iterator scenarios covering value flow, evaluation counts, exception
+identity, resumption and disposal.
 
 The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
 ordered boolean comparisons and unsigned negation. Its 230 checks cover integer

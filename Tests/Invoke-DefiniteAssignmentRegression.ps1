@@ -90,6 +90,60 @@ class Program {
         }
         Console.WriteLine("PASS: " + checks + " finally assignment, loop convergence, reachability and cancellation checks.");
         {
+            var methods = "";
+            foreach (bool useSwitch in new[] { false, true }) foreach (bool backwards in new[] { false, true }) {
+                BlockStatement Branch(int value) => new BlockStatement {
+                    new AssignmentExpression(new IdentifierExpression("x"), new PrimitiveExpression(value)),
+                    new GotoStatement("shared")
+                };
+                Statement dispatch;
+                if (useSwitch) {
+                    var selection = new SwitchStatement { Expression = new IdentifierExpression("state") };
+                    selection.SwitchSections.Add(new SwitchSection { CaseLabels = { new CaseLabel(new PrimitiveExpression(0)) }, Statements = { Branch(13) } });
+                    selection.SwitchSections.Add(new SwitchSection { CaseLabels = { new CaseLabel(new PrimitiveExpression(2)) }, Statements = { Branch(31) } });
+                    selection.SwitchSections.Add(new SwitchSection { CaseLabels = { new CaseLabel() }, Statements = { new BreakStatement() } });
+                    dispatch = selection;
+                }
+                else dispatch = new IfElseStatement {
+                    Condition = new BinaryOperatorExpression(new IdentifierExpression("state"), BinaryOperatorType.Equality, new PrimitiveExpression(0)),
+                    TrueStatement = Branch(13),
+                    FalseStatement = new BlockStatement { new IfElseStatement {
+                        Condition = new BinaryOperatorExpression(new IdentifierExpression("state"), BinaryOperatorType.Equality, new PrimitiveExpression(2)),
+                        TrueStatement = Branch(31)
+                    } }
+                };
+                var body = new BlockStatement {
+                    new VariableDeclarationStatement(null, new PrimitiveType("int"), "x"),
+                    new TryCatchStatement {
+                        TryBlock = new BlockStatement { dispatch, new ReturnStatement(new PrimitiveExpression(-1)),
+                            new LabelStatement { Label = "shared" },
+                            new IfElseStatement { Condition = new IdentifierExpression("alternative"),
+                                TrueStatement = new BlockStatement { new ReturnStatement(new BinaryOperatorExpression(new IdentifierExpression("x"), BinaryOperatorType.Multiply, new PrimitiveExpression(2))) },
+                                FalseStatement = new BlockStatement { new ReturnStatement(new BinaryOperatorExpression(new IdentifierExpression("x"), BinaryOperatorType.Subtract, new PrimitiveExpression(4))) } }
+                        },
+                        FinallyBlock = new BlockStatement { new UnaryOperatorExpression(UnaryOperatorType.PostIncrement, new IdentifierExpression("cleanups")) }
+                    }
+                };
+                if (backwards) {
+                    var guarded = body.Statements.OfType<TryCatchStatement>().Single().TryBlock;
+                    var statements = guarded.Statements.ToArray();
+                    foreach (var statement in statements) statement.Remove();
+                    guarded.Statements.Add(new GotoStatement("dispatch"));
+                    guarded.Statements.Add(statements[2]);
+                    guarded.Statements.Add(statements[3]);
+                    guarded.Statements.Add(new LabelStatement { Label = "dispatch" });
+                    guarded.Statements.Add(statements[0]);
+                    guarded.Statements.Add(statements[1]);
+                }
+                using var module = new ModuleDefUser("JumpLocalFixture");
+                new DeclareVariables(new DecompilerContext(0, module)).Run(body);
+                methods += "static int " + (useSwitch ? "Switch" : "Branch") + (backwards ? "Back" : "") + "(int state, bool alternative) " + body;
+            }
+            File.WriteAllText(Path.Combine(args[0], "JumpScopeFixture.cs"),
+                "public static class JumpScopeFixture { static int cleanups; " + methods +
+                " public static int Main() { foreach (int state in new[] {-1,0,1,2,3}) foreach (bool alt in new[] {false,true}) { int x = state == 0 ? 13 : 31; int expected = state != 0 && state != 2 ? -1 : alt ? x * 2 : x - 4; cleanups = 0; if (Switch(state,alt) != expected || Branch(state,alt) != expected || SwitchBack(state,alt) != expected || BranchBack(state,alt) != expected || cleanups != 4) return 1; } System.Console.WriteLine(\"PASS: 40 forward/backward jump scope value and cleanup scenarios.\"); return 0; } }");
+        }
+        {
             var enter = new GotoStatement("restart");
             var repeat = new GotoStatement("restart");
             var label = new LabelStatement { Label = "restart" };
@@ -119,3 +173,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Definite assignment regression failed.' }
     Set-Content (Join-Path $OutputDirectory 'EntryFixture.csproj')
 dotnet run --project (Join-Path $OutputDirectory 'EntryFixture.csproj') -c Release
 if ($LASTEXITCODE -ne 0) { throw 'Protected entry cleanup behavior changed.' }
+'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><EnableDefaultItems>false</EnableDefaultItems></PropertyGroup><ItemGroup><Compile Include="JumpScopeFixture.cs"/></ItemGroup></Project>' |
+    Set-Content (Join-Path $OutputDirectory 'JumpScopeFixture.csproj')
+dotnet run --project (Join-Path $OutputDirectory 'JumpScopeFixture.csproj') -c Release
+if ($LASTEXITCODE -ne 0) { throw 'Jump scope compilation or behavior changed.' }
