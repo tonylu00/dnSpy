@@ -342,6 +342,29 @@ public static class AsyncLayoutFixture {
         try { return await Read(input); }
         finally { finallyCount++; }
     }
+    public static async Task<int> AwaitFinally(Task<int> input, Func<Task> cleanup) {
+        try { return await input; }
+        finally { await cleanup(); }
+    }
+    static void VerifyAwaitFinally() {
+        int cleanups = 0;
+        Verify(input => AwaitFinally(input, () => { cleanups++; return Task.CompletedTask; }));
+        if (cleanups != 4) throw new Exception("Async cleanup must run on every exit");
+        var pendingCleanup = new TaskCompletionSource<int>();
+        var result = AwaitFinally(Task.FromResult(31), () => pendingCleanup.Task);
+        if (result.IsCompleted) throw new Exception("Async cleanup did not suspend");
+        pendingCleanup.SetResult(0);
+        if (result.GetAwaiter().GetResult() != 31) throw new Exception("Return after async cleanup");
+        foreach (bool bodyFaults in new[] { false, true }) {
+            var cleanupError = new ApplicationException("cleanup");
+            result = AwaitFinally(bodyFaults ? Task.FromException<int>(new InvalidOperationException("body")) : Task.FromResult(17), () => Task.FromException(cleanupError));
+            try { result.GetAwaiter().GetResult(); throw new Exception("Missing cleanup failure"); }
+            catch (ApplicationException actual) { if (!ReferenceEquals(actual, cleanupError)) throw; }
+        }
+        result = AwaitFinally(Task.FromException<int>(new InvalidOperationException("body")), () => Task.FromCanceled(new CancellationToken(true)));
+        try { result.GetAwaiter().GetResult(); throw new Exception("Missing cleanup cancellation"); }
+        catch (OperationCanceledException) { if (!result.IsCanceled) throw new Exception("Cleanup cancellation state"); }
+    }
     public static int Main() {
         int iteratorResult = 0;
         foreach (var value in IterateFallback()) iteratorResult = iteratorResult * 10 + value;
@@ -373,6 +396,7 @@ public static class AsyncLayoutFixture {
         Verify(ReadFinally);
         if (finallyCount != 4) throw new Exception("Finally path");
         VerifyTwice();
+        VerifyAwaitFinally();
         Console.WriteLine("PASS: completed, suspended, faulted, cancelled, unrelated-branch and finally async paths.");
         return 0;
     }

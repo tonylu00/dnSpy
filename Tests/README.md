@@ -34,6 +34,9 @@ outside the repository (so repository build settings do not affect the fixtures)
 .\Tests\Invoke-LoopControlRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-loop-control-check
+.\Tests\Invoke-LargeMethodRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-large-method-check
 ```
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
@@ -51,6 +54,9 @@ implementation remains in the export.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.
+Awaited finally blocks check cleanup after success, failure and cancellation,
+suspended cleanup, and cleanup exceptions taking precedence over body exceptions.
+Captured delegate caches retain their original zero-initialized storage.
 
 The nullable fixture emits IL that copies a local's managed pointer across a
 branch. It checks present and absent values and ensures the source is evaluated
@@ -87,11 +93,19 @@ Additional emitted IL checks cover zero-initialized local storage and generic
 `isinst`/unboxing for reference, value and nullable types, including failure and
 single-evaluation behavior. Null arguments retain their selected overload and
 generic arguments, while non-disposable enumerators retain conditional cleanup.
+Catch variables used after their handler retain their outer lifetime. Filtered
+handlers check exception identity and both accepting and rejecting the filter.
 
 The loop-control fixture checks `continue` paths that skip a final assignment,
 increment or condition. Moving that operation into a `for`, `foreach` or
 `do/while` header must preserve the original control flow. Nested loops are
 included so a continue in an inner loop does not change the outer loop's behavior.
+
+The large-method fixture generates hundreds of live locals and repeated object
+initializers with shared references and conditional values. Original and rebuilt
+programs verify side-effect order, values and reference identity. Export time is
+recorded in `timing.json`; use `-Count 4000` for a larger performance comparison.
+There is no machine-dependent timing threshold in the regression.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.
