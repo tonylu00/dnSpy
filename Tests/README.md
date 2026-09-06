@@ -92,6 +92,8 @@ are included in both SDK and traditional project exports.
 The collision fixture rewrites metadata with repeated generic and parameter names,
 including nested types, constraints, abstract methods and interfaces. The exported
 declarations and uses must agree, compile and preserve each argument's behavior.
+It also checks imported base types whose names match a namespace in the current
+or enclosing scope; those uses must retain enough qualification to select the type.
 The source metadata fixture checks readonly conversion arguments, readonly reference
 methods and indexers, mutable reference writes, tuples, static operations on dynamic
 fields and stack allocation sizes. It removes the unsafe marker before export and
