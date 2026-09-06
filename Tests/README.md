@@ -206,6 +206,17 @@ and shadowed base properties, getter/setter effects, exception identity, generic
 interfaces and read-only/write-only properties. Declaration accessors and setter
 parameters are also renamed. A separate export checks that directly referenced
 orphan methods remain visible; their call-site reconstruction is not yet supported.
+Existing implementation property rows are also renamed independently of their
+interface rows and accessor names; the exported property must bind to the
+interface's declared property name.
+
+`Invoke-InterfacePropertyMethodRegression.ps1` emits private property accessors
+that implement ordinary interface methods. Its 62 checks retain property
+metadata, generic storage, multiple MethodImpl slots, direct accessor calls,
+derived interface reimplementations, boxed structs, indexers, mutable and readonly
+references, exceptions, and delegate receiver evaluation. Both one-worker and
+four-worker exports are rebuilt and executed. Interface methods forward to the
+retained property body so direct access does not acquire interface dispatch.
 
 `Invoke-EventStorageRegression.ps1` checks WPF routed-event identifiers, automatic
 instance/static/generic events, and custom accessors with observable side effects.

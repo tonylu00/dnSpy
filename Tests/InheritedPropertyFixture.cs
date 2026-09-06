@@ -18,6 +18,14 @@ public class Computed : IValueContract {
         set { Writes++; if (Equals(value, "fail")) throw Failure; stored = value; }
     }
 }
+public class WithRows : IValueContract {
+    object stored;
+    public int Reads, Writes;
+    object IValueContract.Value {
+        get { Reads++; return stored; }
+        set { Writes++; stored = value; }
+    }
+}
 public interface IGeneric<T> { T Item { get; set; } }
 public class GenericHolder<T> : IGeneric<T> {
     T stored;
@@ -67,6 +75,9 @@ public static class Program {
         var one = new OneSided();
         ((IWriteOnly<int>)one).Item = 41;
         if (((IReadOnly<int>)one).Item != 41) return 11;
+        var rows = new WithRows(); var rowsContract = (IValueContract)rows;
+        rowsContract.Value = "property-row";
+        if ((string)rowsContract.Value != "property-row" || rows.Reads != 1 || rows.Writes != 1) return 12;
         Console.WriteLine("PASS: orphaned property bodies preserve inherited and shadowed access, effects, exceptions and generic interface bindings.");
         return 0;
     }

@@ -33,6 +33,10 @@ class Emitter {
         // The declaration property row, rather than a get_/set_ name convention,
         // determines the C# member name even for unconventional accessor names.
         foreach (var method in contract.Methods) method.Name = method.Name == "get_Value" ? "ReadValue" : "WriteValue";
+        var renamedProperty = module.GetTypes().Single(t => t.Name == "WithRows").Properties.Single();
+        renamedProperty.Name = "StoredValue";
+        renamedProperty.GetMethod.Name = "get_Prop_0";
+        renamedProperty.SetMethod.Name = "set_Prop_0";
         if (args.Length > 2 && args[2] == "direct-reference") {
             var owner = module.GetTypes().Single(t => t.Name == "ValueDerived");
             var getter = owner.Methods.Single(m => m.Overrides.Count != 0 && m.MethodSig.Params.Count == 0);
