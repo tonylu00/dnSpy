@@ -274,3 +274,12 @@ widths, unused trailing data, independent copies and empty-array identity. Its
 mutability or initialization effects prevent an exact constant reconstruction.
 Floating-point and boolean blobs remain unchanged because their raw bit patterns
 may not have an equivalent C# constant representation.
+
+`Invoke-IteratorTerminalRegression.ps1` moves the first, middle, last yield or
+exhaustion block to the physical end of `MoveNext`, while preserving every control
+flow edge. It emits the older compiler's empty `Dispose` body used by ETS. Each
+layout must reconstruct as an iterator and pass 241 original/rebuilt checks with
+one and four export workers: lazy evaluation, every item, factory exception
+identity, early disposal, trailing work, exhaustion and independent enumerators.
+The current Roslyn disposal-state store and generic iterator kickoff patterns
+remain separate cases and are not covered by this reconstruction test.
