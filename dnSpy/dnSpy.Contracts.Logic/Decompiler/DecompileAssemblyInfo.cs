@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.Versioning;
 using dnlib.DotNet;
 
@@ -36,6 +37,12 @@ namespace dnSpy.Contracts.Decompiler {
 		/// eg. <see cref="TargetFrameworkAttribute"/>
 		/// </summary>
 		public bool KeepAllAttributes { get; set; }
+
+		/// <summary>
+		/// Optional source-export replacements for InternalsVisibleTo assembly names.
+		/// Only applies when <see cref="KeepAllAttributes"/> is false. Does not modify metadata.
+		/// </summary>
+		public IReadOnlyDictionary<CustomAttribute, string>? FriendAssemblyNames { get; set; }
 
 		/// <summary>
 		/// Constructor

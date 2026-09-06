@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using dnlib.DotNet;
@@ -34,19 +35,21 @@ namespace dnSpy.Decompiler.MSBuild {
 		readonly DecompilationContext decompilationContext;
 		readonly IDecompiler decompiler;
 		readonly Func<TextWriter, IDecompilerOutput> createDecompilerOutput;
+		readonly IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames;
 
-		public AssemblyInfoProjectFile(ModuleDef module, string filename, DecompilationContext decompilationContext, IDecompiler decompiler, Func<TextWriter, IDecompilerOutput> createDecompilerOutput) {
+		public AssemblyInfoProjectFile(ModuleDef module, string filename, DecompilationContext decompilationContext, IDecompiler decompiler, Func<TextWriter, IDecompilerOutput> createDecompilerOutput, IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames) {
 			this.module = module;
 			Filename = filename;
 			this.decompilationContext = decompilationContext;
 			this.decompiler = decompiler;
 			this.createDecompilerOutput = createDecompilerOutput;
+			this.friendAssemblyNames = friendAssemblyNames;
 		}
 
 		public override void Create(DecompileContext ctx) {
 			using (var writer = new StreamWriter(Filename, false, Encoding.UTF8)) {
 				var output = createDecompilerOutput(writer);
-				decompiler.Decompile(DecompilationType.AssemblyInfo, new DecompileAssemblyInfo(output, decompilationContext, module));
+				decompiler.Decompile(DecompilationType.AssemblyInfo, new DecompileAssemblyInfo(output, decompilationContext, module) { FriendAssemblyNames = friendAssemblyNames });
 			}
 		}
 	}

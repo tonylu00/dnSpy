@@ -75,13 +75,14 @@ namespace dnSpy.Decompiler.MSBuild {
 				};
 				var filenameCreator = new FilenameCreator(options.Directory);
 				var ctx = new DecompileContext(options.CancellationToken, logger);
+				var friendAssemblyNames = FriendAssemblyNames.Create(options.ProjectModules.Select(m => m.Module));
 				satelliteAssemblyFinder = new SatelliteAssemblyFinder();
 				Parallel.ForEach(options.ProjectModules, opts, modOpts => {
 					options.CancellationToken.ThrowIfCancellationRequested();
 					string name;
 					lock (filenameCreator)
 						name = filenameCreator.Create(modOpts.Module);
-					var p = new Project(modOpts, name, satelliteAssemblyFinder, options.CreateDecompilerOutput);
+					var p = new Project(modOpts, name, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames);
 					lock (projects)
 						projects.Add(p);
 					p.CreateProjectFiles(ctx);

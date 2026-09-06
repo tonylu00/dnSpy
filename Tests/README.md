@@ -333,3 +333,22 @@ preparation path currently handles top-level declarations and expression stateme
 it excludes `out` parameters, ref locals, ref-like state fields, and direct parameter
 captures that cannot be represented in its helper. Public constructor signatures
 remain intact; the generated private helpers add source implementation members.
+
+`Invoke-FriendAssemblyRegression.ps1` checks source export of a signed library and
+its friend executable. Exported projects rebuild unsigned, so their assembly-info
+files use an unkeyed `InternalsVisibleTo` name when that friend's full public key
+matches every exported assembly with the same simple name. Compatible copies and
+versions are accepted; absent friends, conflicting keys, unsigned namesakes and
+malformed declarations keep their original values. Original assembly metadata and
+ordinary C#/VB decompilation remain unchanged. Re-signing exported projects with a
+different key requires updating the source friend declarations accordingly.
+
+The original and rebuilt fixture pass 22 runtime checks, covering internal generic
+types, an enum, an interface implementation, constructor overload selection,
+callbacks and exception identity. Both SDK projects (one/four workers) and legacy
+projects are rebuilt and executed. An isolated library export retains keyed grants.
+Another 66 checks exercise duplicate versions, conflicting keys, quoted/escaped
+names, malformed public keys, and repeated C#/VB export/keep-all/default modes
+against the same metadata. The .NET Framework parser reduces a full public key to
+a token; projection compares the full declared key instead and leaves invalid keys
+for diagnosis without aborting export.

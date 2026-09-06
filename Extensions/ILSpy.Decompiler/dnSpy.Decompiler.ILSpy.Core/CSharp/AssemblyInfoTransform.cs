@@ -17,6 +17,7 @@
     along with dnSpy.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using dnlib.DotNet;
@@ -25,6 +26,10 @@ using ICSharpCode.NRefactory.CSharp;
 
 namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 	sealed class AssemblyInfoTransform : IAstTransform {
+		readonly IReadOnlyDictionary<CustomAttribute, string>? friendAssemblyNames;
+
+		public AssemblyInfoTransform(IReadOnlyDictionary<CustomAttribute, string>? friendAssemblyNames = null) => this.friendAssemblyNames = friendAssemblyNames;
+
 		public void Run(AstNode compilationUnit) {
 			foreach (var attrSect in compilationUnit.Descendants.OfType<AttributeSection>()) {
 				var attr = attrSect.Descendants.OfType<Attribute>().FirstOrDefault();
@@ -33,6 +38,9 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 					continue;
 				bool remove = false;
 				if (!remove && attr.Annotation<CustomAttribute>() is CustomAttribute ca) {
+					if (attrSect.AttributeTarget == "assembly" && friendAssemblyNames is not null &&
+						friendAssemblyNames.TryGetValue(ca, out var name) && attr.Arguments.FirstOrDefault() is PrimitiveExpression argument)
+						argument.Value = name;
 					remove =
 						Compare(ca.AttributeType, systemRuntimeVersioningString, targetFrameworkAttributeString) ||
 						Compare(ca.AttributeType, systemSecurityString, unverifiableCodeAttributeString) ||

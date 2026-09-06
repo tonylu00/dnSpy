@@ -54,12 +54,14 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		readonly SatelliteAssemblyFinder satelliteAssemblyFinder;
 		readonly Func<TextWriter, IDecompilerOutput> createDecompilerOutput;
+		readonly IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames;
 
-		public Project(ProjectModuleOptions options, string projDir, SatelliteAssemblyFinder satelliteAssemblyFinder, Func<TextWriter, IDecompilerOutput> createDecompilerOutput) {
+		public Project(ProjectModuleOptions options, string projDir, SatelliteAssemblyFinder satelliteAssemblyFinder, Func<TextWriter, IDecompilerOutput> createDecompilerOutput, IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames) {
 			Options = options ?? throw new ArgumentNullException(nameof(options));
 			Directory = projDir;
 			this.satelliteAssemblyFinder = satelliteAssemblyFinder;
 			this.createDecompilerOutput = createDecompilerOutput;
+			this.friendAssemblyNames = friendAssemblyNames;
 			Files = new List<ProjectFile>();
 			DefaultNamespace = new DefaultNamespaceFinder(options.Module).Find();
 			Filename = Path.Combine(projDir, Path.GetFileName(projDir) + options.Decompiler.ProjectFileExtension);
@@ -92,7 +94,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			InitializeSplashScreen();
 			if (Options.Decompiler.CanDecompile(DecompilationType.AssemblyInfo)) {
 				var filename = filenameCreator.CreateFromRelativePath(Path.Combine(PropertiesFolder, "AssemblyInfo"), Options.Decompiler.FileExtension);
-				Files.Add(new AssemblyInfoProjectFile(Options.Module, filename, Options.DecompilationContext, Options.Decompiler, createDecompilerOutput));
+				Files.Add(new AssemblyInfoProjectFile(Options.Module, filename, Options.DecompilationContext, Options.Decompiler, createDecompilerOutput, friendAssemblyNames));
 			}
 
 			var ep = Options.Module.EntryPoint;
