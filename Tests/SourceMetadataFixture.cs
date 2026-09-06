@@ -25,8 +25,11 @@ public static class Program {
         if (meter.Value != 17 || PointerRead(7) != 17 || (int)(object)Current != 17 || Optional != null) return 1;
         var references = new ReferenceValues();
         if (references[0] + references[1] != 17 || references.First() != 7) return 2;
+        int copied = references[0];
+        ref readonly int alias = ref references.First();
         references.Mutable(0) = 11;
         if (references.First() != 11 || references[0] + references[1] != 21) return 3;
+        if (copied != 7 || alias != 11) return 4;
         Console.WriteLine("PASS: readonly conversions, tuples, dynamic and unmarked unsafe operations survive export.");
         return 0;
     }

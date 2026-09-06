@@ -41,7 +41,10 @@ conversion used as an array receiver. Both original and rebuilt programs execute
 The async fixture reproduces reordered suspension/resume blocks and unrelated
 branches between resume and result collection. It checks completed, suspended,
 faulted and cancelled tasks, the unrelated branch, and finally execution before
-and after export and recompilation.
+and after export and recompilation. Two-await cases exercise backward layouts,
+shared state dispatch, every completed/suspended combination and both failure
+positions. An unsupported kickoff pattern checks that its referenced state-machine
+implementation remains in the export.
 
 The nullable fixture emits IL that copies a local's managed pointer across a
 branch. It checks present and absent values and ensures the source is evaluated

@@ -116,6 +116,96 @@ public static class AsyncLayoutFixture {
         public void SetStateMachine(IAsyncStateMachine value) { }
     }
     static int finallyCount;
+    [AsyncStateMachine(typeof(FallbackState))]
+    public static Task<int> ReadFallback(Task<int> input) {
+        var machine = new FallbackState { Input = input };
+        machine.MoveNext();
+        return machine.Output;
+    }
+    [CompilerGenerated]
+    sealed class FallbackState : IAsyncStateMachine {
+        public Task<int> Input, Output;
+        public void MoveNext() { Output = Input; }
+        public void SetStateMachine(IAsyncStateMachine value) { }
+    }
+    [AsyncStateMachine(typeof(BackwardState))]
+    public static Task<int> ReadTwice(Task<int> first, Task<int> second) {
+        var machine = new BackwardState();
+        machine.builder = AsyncTaskMethodBuilder<int>.Create();
+        machine.first = first;
+        machine.second = second;
+        machine.state = -1;
+        machine.builder.Start(ref machine);
+        return machine.builder.Task;
+    }
+    [CompilerGenerated]
+    sealed class BackwardState : IAsyncStateMachine {
+        public int state;
+        public AsyncTaskMethodBuilder<int> builder;
+        public Task<int> first, second;
+        int firstValue;
+        TaskAwaiter<int> savedFirst, savedSecond;
+        public void MoveNext() {
+            int cachedState = state;
+            int result;
+            try {
+                TaskAwaiter<int> firstAwaiter, secondAwaiter;
+                if (cachedState != 0) goto Dispatch;
+                firstAwaiter = savedFirst;
+                savedFirst = default(TaskAwaiter<int>);
+                state = -1;
+            CompleteFirst:
+                firstValue = firstAwaiter.GetResult();
+                secondAwaiter = second.GetAwaiter();
+                if (!secondAwaiter.IsCompleted) goto SuspendSecond;
+            CompleteSecond:
+                result = firstValue + secondAwaiter.GetResult();
+                goto Success;
+            Dispatch:
+                if (cachedState == 1) goto ResumeSecond;
+                goto Start;
+            ResumeSecond:
+                secondAwaiter = savedSecond;
+                savedSecond = default(TaskAwaiter<int>);
+                state = -1;
+                goto CompleteSecond;
+            Start:
+                firstAwaiter = first.GetAwaiter();
+                if (firstAwaiter.IsCompleted) goto CompleteFirst;
+                state = 0;
+                savedFirst = firstAwaiter;
+                var self = this;
+                builder.AwaitUnsafeOnCompleted(ref firstAwaiter, ref self);
+                return;
+            SuspendSecond:
+                state = 1;
+                savedSecond = secondAwaiter;
+                self = this;
+                builder.AwaitUnsafeOnCompleted(ref secondAwaiter, ref self);
+                return;
+            Success: ;
+            }
+            catch (Exception error) { state = -2; builder.SetException(error); return; }
+            state = -2;
+            builder.SetResult(result);
+        }
+        public void SetStateMachine(IAsyncStateMachine value) { }
+    }
+    static void VerifyTwice() {
+        for (int pending = 0; pending < 4; pending++) {
+            var first = new TaskCompletionSource<int>();
+            var second = new TaskCompletionSource<int>();
+            if ((pending & 1) == 0) first.SetResult(7);
+            if ((pending & 2) == 0) second.SetResult(10);
+            var result = ReadTwice(first.Task, second.Task);
+            if (pending != 0 && result.IsCompleted) throw new Exception("Missing two-await suspension");
+            if ((pending & 1) != 0) first.SetResult(7);
+            if ((pending & 2) != 0) second.SetResult(10);
+            if (result.GetAwaiter().GetResult() != 17) throw new Exception("Two-await resume ordering");
+        }
+        Verify(input => ReadTwice(input, Task.FromResult(0)));
+        Verify(input => ReadTwice(Task.FromResult(0), input));
+    }
     public static async Task<int> ReadFinally(Task<int> input) {
         try { return await Read(input); }
         finally { finallyCount++; }
@@ -123,9 +213,11 @@ public static class AsyncLayoutFixture {
     public static int Main() {
         Verify(Read);
         Verify(ReadWithGap);
+        Verify(ReadFallback);
         if (ReadWithGap(null).GetAwaiter().GetResult() != 31) throw new Exception("Unrelated branch was lost");
         Verify(ReadFinally);
         if (finallyCount != 4) throw new Exception("Finally path");
+        VerifyTwice();
         Console.WriteLine("PASS: completed, suspended, faulted, cancelled, unrelated-branch and finally async paths.");
         return 0;
     }
