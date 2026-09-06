@@ -90,6 +90,53 @@ class Program {
         }
         Console.WriteLine("PASS: " + checks + " finally assignment, loop convergence, reachability and cancellation checks.");
         {
+            var incoming = new GotoStatement("forward");
+            var body = new BlockStatement {
+                new TryCatchStatement {
+                    TryBlock = new BlockStatement {
+                        new IfElseStatement { Condition = new IdentifierExpression("enter"), TrueStatement = new BlockStatement {
+                            new IfElseStatement { Condition = new IdentifierExpression("fail"), TrueStatement = new BlockStatement { new ThrowStatement(new IdentifierExpression("error")) } },
+                            new UnaryOperatorExpression(UnaryOperatorType.PostIncrement, new IdentifierExpression("visits")),
+                            new LabelStatement { Label = "forward" }, new LabelStatement { Label = "alias" }, new GotoStatement("next")
+                        } }, incoming, new LabelStatement { Label = "next" }, new GotoStatement("done")
+                    },
+                    FinallyBlock = new BlockStatement { new UnaryOperatorExpression(UnaryOperatorType.PostIncrement, new IdentifierExpression("cleanups")) }
+                }, new LabelStatement { Label = "done" }, new ReturnStatement(new IdentifierExpression("visits"))
+            };
+            using var module = new ModuleDefUser("TrampolineFixture");
+            new DeclareVariables(new DecompilerContext(0, module)).Run(body);
+            Check(incoming.Label == "done", "forwarding label inside a conditional was not bypassed");
+            File.WriteAllText(Path.Combine(args[0], "TrampolineFixture.cs"),
+                "public static class TrampolineFixture { static int visits, cleanups; static readonly System.Exception error = new System.Exception(); static int Scenario(bool enter, bool fail) " + body +
+                " public static int Main() { foreach (bool enter in new[] {false,true}) foreach (bool fail in new[] {false,true}) { visits = cleanups = 0; try { int result = Scenario(enter,fail); if (enter && fail || result != (enter ? 1 : 0)) return 1; } catch(System.Exception caught) { if (!enter || !fail || !object.ReferenceEquals(caught,error)) return 2; } if (cleanups != 1) return 3; } System.Console.WriteLine(\"PASS: four forwarding-jump value, exception and cleanup scenarios.\"); return 0; } }");
+            // Leaving a region and entering it again must retain that region's
+            // cleanup. Its external forwarding label cannot be bypassed.
+            foreach (int region in new[] { 0, 1, 2, 3 }) {
+                var leave = new GotoStatement("outside");
+                var inner = new BlockStatement { new LabelStatement { Label = "restart" }, leave };
+                Statement guarded;
+                if (region == 0) guarded = new TryCatchStatement { TryBlock = inner, FinallyBlock = new BlockStatement { new EmptyStatement() } };
+                else if (region == 1) guarded = new UsingStatement { ResourceAcquisition = new IdentifierExpression("resource"), EmbeddedStatement = inner };
+                else if (region == 2) guarded = new LockStatement { Expression = new IdentifierExpression("resource"), EmbeddedStatement = inner };
+                else guarded = new TryCatchStatement { TryBlock = new BlockStatement { new EmptyStatement() }, CatchClauses = { new CatchClause { Body = inner } } };
+                var root = new BlockStatement { guarded, new LabelStatement { Label = "outside" }, new GotoStatement("restart") };
+                new DeclareVariables(new DecompilerContext(0, module)).Run(root);
+                Check(leave.Label == "outside", "forwarding jump skipped a cleanup boundary");
+            }
+            var cycleStart = new GotoStatement("a");
+            var cycle = new BlockStatement { cycleStart, new LabelStatement { Label = "a" }, new GotoStatement("b"), new LabelStatement { Label = "b" }, new GotoStatement("a") };
+            new DeclareVariables(new DecompilerContext(0, module)).Run(cycle);
+            Check(cycleStart.Label == "a", "forwarding cycle was rewritten");
+            var outerJump = new GotoStatement("shared");
+            var innerJump = new GotoStatement("shared");
+            var nested = new BlockStatement { new ExpressionStatement(new LambdaExpression { Body = new BlockStatement {
+                innerJump, new LabelStatement { Label = "shared" }, new GotoStatement("innerEnd"), new LabelStatement { Label = "innerEnd" }, new ReturnStatement()
+            } }), outerJump, new LabelStatement { Label = "shared" }, new GotoStatement("outerEnd"), new LabelStatement { Label = "outerEnd" }, new ReturnStatement() };
+            new DeclareVariables(new DecompilerContext(0, module)).Run(nested);
+            Check(outerJump.Label == "outerEnd" && innerJump.Label == "innerEnd", "nested function labels shared a jump scope");
+            Console.WriteLine("PASS: forwarding cleanup boundaries, cycles and nested function scopes.");
+        }
+        {
             var methods = "";
             foreach (bool useSwitch in new[] { false, true }) foreach (bool backwards in new[] { false, true }) {
                 BlockStatement Branch(int value) => new BlockStatement {
@@ -181,3 +228,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Protected entry cleanup behavior changed.' }
     Set-Content (Join-Path $OutputDirectory 'JumpScopeFixture.csproj')
 dotnet run --project (Join-Path $OutputDirectory 'JumpScopeFixture.csproj') -c Release
 if ($LASTEXITCODE -ne 0) { throw 'Jump scope compilation or behavior changed.' }
+'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><EnableDefaultItems>false</EnableDefaultItems></PropertyGroup><ItemGroup><Compile Include="TrampolineFixture.cs"/></ItemGroup></Project>' |
+    Set-Content (Join-Path $OutputDirectory 'TrampolineFixture.csproj')
+dotnet run --project (Join-Path $OutputDirectory 'TrampolineFixture.csproj') -c Release
+if ($LASTEXITCODE -ne 0) { throw 'Forwarding jump compilation or behavior changed.' }

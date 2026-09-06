@@ -53,6 +53,24 @@ class Emitter {
             if (name == "OverloadDouble") il.Add(Instruction.Create(OpCodes.Call, type.Methods.Single(m => m.Name == "Select" && m.MethodSig.Params[0].ElementType == ElementType.R8)));
             il.Add(Instruction.Create(OpCodes.Ret));
         }
+        foreach (var name in new[] { "NarrowByte", "NarrowSByte", "NarrowShort", "NarrowUShort", "BoxByte", "BoxSByte", "BoxShort", "BoxUShort", "ChooseByte", "WriteByte" }) {
+            var method = type.Methods.Single(m => m.Name == name);
+            method.Body = new CilBody();
+            var il = method.Body.Instructions;
+            if (name == "WriteByte") { il.Add(Instruction.Create(OpCodes.Ldarg_1)); il.Add(Instruction.Create(OpCodes.Ldc_I4_0)); }
+            il.Add(Instruction.Create(OpCodes.Ldarg_0));
+            il.Add(Instruction.Create(OpCodes.Call, type.Methods.Single(m => m.Name == "Right")));
+            if (name.StartsWith("Box")) {
+                var target = name == "BoxByte" ? module.CorLibTypes.Byte : name == "BoxSByte" ? module.CorLibTypes.SByte : name == "BoxShort" ? module.CorLibTypes.Int16 : module.CorLibTypes.UInt16;
+                il.Add(Instruction.Create(OpCodes.Box, target.TypeDefOrRef));
+            }
+            if (name == "ChooseByte") il.Add(Instruction.Create(OpCodes.Call, type.Methods.Single(m => m.Name == "Select" && m.MethodSig.Params[0].ElementType == ElementType.U1)));
+            if (name == "WriteByte") {
+                il.Add(Instruction.Create(OpCodes.Ldc_I4_0)); il.Add(Instruction.Create(OpCodes.Cgt_Un));
+                il.Add(Instruction.Create(OpCodes.Stelem_I1));
+            }
+            il.Add(Instruction.Create(OpCodes.Ret));
+        }
         module.Write(args[1]);
     }
 }

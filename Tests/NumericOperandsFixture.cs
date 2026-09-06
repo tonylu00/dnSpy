@@ -31,8 +31,47 @@ public static class NumericOperandsFixture {
     public static string Select(int value) { return "int:" + value; }
     public static string Select(float value) { return "float:" + value; }
     public static double CompareDouble(int left, int right) { return left > right ? 1d : 0d; }
+    public static byte NarrowByte(bool value) { return (byte)(Right(value) ? 1 : 0); }
+    public static sbyte NarrowSByte(bool value) { return (sbyte)(Right(value) ? 1 : 0); }
+    public static short NarrowShort(bool value) { return (short)(Right(value) ? 1 : 0); }
+    public static ushort NarrowUShort(bool value) { return (ushort)(Right(value) ? 1 : 0); }
+    public static object BoxByte(bool value) { return (byte)(Right(value) ? 1 : 0); }
+    public static object BoxSByte(bool value) { return (sbyte)(Right(value) ? 1 : 0); }
+    public static object BoxShort(bool value) { return (short)(Right(value) ? 1 : 0); }
+    public static object BoxUShort(bool value) { return (ushort)(Right(value) ? 1 : 0); }
+    public static string ChooseByte(bool value) { return Select((byte)(Right(value) ? 1 : 0)); }
+    public static string Select(byte value) { return "byte:" + value; }
+    public static void WriteByte(bool value, byte[] target) { target[0] = (byte)(Right(value) ? 1 : 0); }
     public static int Main() {
         int checks = 0;
+        foreach (bool value in new[] { false, true }) {
+            object[] expected = { (byte)(value ? 1 : 0), (sbyte)(value ? 1 : 0), (short)(value ? 1 : 0), (ushort)(value ? 1 : 0),
+                (byte)(value ? 1 : 0), (sbyte)(value ? 1 : 0), (short)(value ? 1 : 0), (ushort)(value ? 1 : 0), "byte:" + (value ? 1 : 0) };
+            var conversions = new Func<bool, object>[] { v => NarrowByte(v), v => NarrowSByte(v), v => NarrowShort(v), v => NarrowUShort(v),
+                BoxByte, BoxSByte, BoxShort, BoxUShort, v => ChooseByte(v) };
+            for (int i = 0; i < conversions.Length; i++) {
+                order = 0;
+                var result = conversions[i](value);
+                if (!Equals(result, expected[i]) || result.GetType() != expected[i].GetType() || order != 2) throw new Exception("Small numeric value, type or overload changed");
+                checks++;
+                order = 0; failRight = true;
+                try { conversions[i](value); throw new Exception("Small numeric operand skipped"); }
+                catch (InvalidOperationException) { if (order != 2) throw new Exception("Small numeric evaluation changed"); }
+                finally { failRight = false; }
+                checks++;
+            }
+            var bytes = new byte[] { 127, 255 }; order = 0; WriteByte(value, bytes);
+            if (bytes[0] != (value ? 1 : 0) || bytes[1] != 255 || order != 2) throw new Exception("Byte array store changed");
+            checks++;
+            order = 0;
+            try { WriteByte(value, null); throw new Exception("Missing null array failure"); }
+            catch (NullReferenceException) { if (order != 2) throw new Exception("Byte array evaluation order changed"); }
+            checks++;
+            order = 0;
+            try { WriteByte(value, new byte[0]); throw new Exception("Missing array bounds failure"); }
+            catch (IndexOutOfRangeException) { if (order != 2) throw new Exception("Byte array bounds evaluation changed"); }
+            checks++;
+        }
         foreach (bool value in new[] { false, true }) {
             double expected = value ? 1d : 0d;
             foreach (var convert in new Func<bool, object>[] { v => Single(v), v => Double(v), v => UnsignedDouble(v), BoxDouble, v => OverloadDouble(v) }) {

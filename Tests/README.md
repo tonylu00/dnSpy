@@ -3,6 +3,11 @@
 After building `dnSpy.sln` in Release, run these scripts with a new output folder
 outside the repository (so repository build settings do not affect the fixtures):
 
+Build the complete solution, including its plug-ins. Building only
+`dnSpy/dnSpy/dnSpy.csproj` does not rebuild the ILSpy extension and can leave an
+older decompiler in the application output. Use a fresh copy of the complete
+output for concurrent regression runs; do not replace DLLs while a run uses them.
+
 ```powershell
 .\Tests\Invoke-LogicalChainRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
@@ -165,12 +170,15 @@ retained-iterator scenarios covering value flow, evaluation counts, exception
 identity, resumption and disposal.
 
 The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
-ordered boolean comparisons and unsigned negation. Its 230 checks cover integer
+ordered boolean comparisons and unsigned negation. Its 272 checks cover integer
 boundaries, signed and unsigned ordering, small enum promotion, signed shifts, both operand evaluations and
 exceptions from the second operand. These IL operations need valid C# numeric
 operands while preserving their original width and evaluation order.
 Boolean stack values converted to single/double precision also retain one operand
 evaluation, exceptions, numeric overload selection and their boxed result type.
+Boolean-to-byte/sbyte/short/ushort conversions also retain their narrow result
+types in returns, boxing, overload resolution and byte-array stores. Null and
+out-of-range arrays must still evaluate the value before throwing.
 
 `Invoke-NullCoalescingRegression.ps1` reverses seven reference null branches and
 adds empty branch blocks. Exported base/this constructor calls must retain their
@@ -240,6 +248,9 @@ stack, cancellation, callback failures, and wrapped non-Exception payloads.
 `Invoke-UsingLifetimeRegression.ps1` checks 37 outcomes for reused async resource
 storage, enumerator cleanup, initializer reads, nested disposal, shared closures
 and ref aliases. Both suites rebuild and execute exports with one and four workers.
+The definite-assignment suite also repairs empty forwarding jumps whose labels
+were placed inside nested C# blocks. It checks exception/cleanup behavior and
+retains jumps across cleanup boundaries, cycles and nested function scopes.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.
