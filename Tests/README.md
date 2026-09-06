@@ -312,3 +312,24 @@ alias; the tests cover callers and the rebuilt inheritance hierarchy, not arbitr
 external subclasses that override only the alias. The `RecordClasses` setting
 controls this C# output and is disabled by the Visual Basic frontend. This adds
 AST/output support; it does not add record parsing to the legacy NRefactory parser.
+
+`Invoke-ConstructorStateRegression.ps1` rebuilds renamed capture objects created
+before a base constructor call. A private forwarding constructor retains the same
+capture object through argument evaluation, the base call, and the remaining body.
+For longer preparation sequences, a private state object and preparation method
+retain saved values and propagate parameter updates before forwarding.
+
+The fixture passes 209 original/rebuilt checks with one and four workers. It covers
+generic captures, shared delegate targets, mutations made by the base constructor,
+callbacks escaping a failed constructor, cached delegate identity, null values,
+existing overload arities, and exact effects/exceptions at allocation, argument,
+base-body and derived-body steps. A separate capture used only after the base call
+exercises saved arguments and a `ref` update during preparation. Both paths also
+run the full AST transformation with debugger spans enabled.
+
+The transformation does not move instance field/property initializers across
+preparation, or move preparation that uses `this` into a static helper. The general
+preparation path currently handles top-level declarations and expression statements;
+it excludes `out` parameters, ref locals, ref-like state fields, and direct parameter
+captures that cannot be represented in its helper. Public constructor signatures
+remain intact; the generated private helpers add source implementation members.
