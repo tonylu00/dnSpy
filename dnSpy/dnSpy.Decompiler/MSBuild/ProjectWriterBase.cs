@@ -44,11 +44,16 @@ namespace dnSpy.Decompiler.MSBuild {
 		public abstract void Write();
 
 		List<(IAssembly Reference, AssemblyDef? Assembly)>? assemblyReferences;
+		static IEnumerable<IAssembly> GetDirectReferences(Project source) =>
+			source.Module.GetAssemblyRefs().Concat<IAssembly>(source.Files.OfType<BamlResourceProjectFile>().SelectMany(f => f.AssemblyReferences));
+
 		protected IReadOnlyList<(IAssembly Reference, AssemblyDef? Assembly)> GetAssemblyReferences() {
 			if (assemblyReferences is not null) return assemblyReferences;
 			assemblyReferences = new List<(IAssembly, AssemblyDef?)>();
 			var pending = new Queue<(IAssembly Reference, ModuleDef Source)>();
-			foreach (var reference in project.Module.GetAssemblyRefs()) pending.Enqueue((reference, project.Module));
+			// BAML can reference an assembly with no corresponding IL AssemblyRef.
+			// Resolve its full identity through the same binary/project graph.
+			foreach (var reference in GetDirectReferences(project)) pending.Enqueue((reference, project.Module));
 			var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 			if (project.Module.Assembly is not null) seen.Add(project.Module.Assembly.FullNameToken);
 			while (pending.Count != 0) {
@@ -84,7 +89,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				if (candidate.IsDotNetFramework && Version.TryParse(candidate.Version, out var version) &&
 					Version.TryParse(info.Version, out var selected) && version > selected)
 					info = candidate;
-				foreach (var reference in current.Module.GetAssemblyRefs()) {
+				foreach (var reference in GetDirectReferences(current)) {
 					var assembly = current.Module.Context.AssemblyResolver.Resolve(reference, current.Module);
 					var dependency = assembly is null ? null : FindOtherProject(assembly.ManifestModule.Location);
 					if (dependency is not null)

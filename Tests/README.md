@@ -196,6 +196,11 @@ compiler-generated public runtime constructor after export and recompilation.
 It does not activate a COM server. Ordinary constructor bodies are also executed
 to verify that the special handling stays limited to COM import metadata.
 
+`Invoke-BamlReferencesRegression.ps1` loads a resource whose static value comes
+from an assembly referenced only by BAML. SDK and traditional single/batch exports
+must retain a resolved binary or project reference. Both SDK outputs are rebuilt
+and executed, and the fixture verifies that no IL assembly reference masks the case.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
