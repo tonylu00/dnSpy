@@ -42,7 +42,9 @@ public static class DelegateFixture {
     static int calls;
     static int Increment(int value) { calls++; return value + 1; }
     public static int Read(int value) { return ((Func<int, int>)callback)(value); }
+    public static bool GenericPresent<T>(T value) { return value != null; }
     public static int Main() {
+        if (!GenericPresent(0) || GenericPresent<string>(null) || GenericPresent<int?>(null) || !GenericPresent<int?>(0)) return 11;
         var identity = new IdentityBox<int>();
         if (!IdentityBox<int>.Same(identity, identity) || IdentityBox<int>.Same(identity, new object()) ||
             !IdentityBox<int>.SameTyped(identity, identity) || IdentityBox<int>.SameTyped(identity, new IdentityBox<int>()) ||

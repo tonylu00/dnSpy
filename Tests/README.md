@@ -78,6 +78,8 @@ code must preserve mutations, reference identity, call counts and null failures.
 Emitted reference comparisons also check a generic class with overloaded equality:
 the rebuilt identity comparison must not invoke its operator or cast the other
 object to the generic class.
+Unconstrained generic null tests cover reference values, integers and nullable
+integers so boxing semantics survive reconstruction without an invalid `(T)null`.
 
 The application configuration fixture checks a signed library version redirect
 and a transitive dependency exposed by an overload in the newer library. The
