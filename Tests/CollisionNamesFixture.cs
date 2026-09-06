@@ -19,6 +19,12 @@ public interface ICombine {
 public sealed class Combiner : ICombine {
     public int Combine(int first, int second, int third) { return first * 100 + second * 10 + third; }
 }
+public class @file { public int Value; }
+public class KeywordTypes {
+    public @file[] Files { get; set; }
+    public @file[] Field;
+    public @file First() { return Files[0]; }
+}
 public class Container<A, B, C> {
     public A First;
     public B Second;
@@ -34,6 +40,9 @@ public class Container<A, B, C> {
 }
 public static class Program {
     public static int Main() {
+        var keywords = new KeywordTypes { Files = new[] { new @file { Value = 37 } } };
+        keywords.Field = keywords.Files;
+        if (keywords.First().Value != 37 || keywords.Field[0].Value != 37) return 6;
         if (new Cases.Error.Consumer().Code != 17 || new Cases.Usage.Build().Value != 23) return 4;
         foreach (var session in ((Cases.Usage.IQuery)new Cases.Usage.Query()).Read()) if (session.Value != 29) return 5;
         if (new Container<int, string, double> { First = 3, Second = "four", Third = 5 }.Read() != "3|four|5") return 1;
