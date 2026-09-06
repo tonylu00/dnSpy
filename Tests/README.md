@@ -31,6 +31,9 @@ outside the repository (so repository build settings do not affect the fixtures)
 .\Tests\Invoke-SourceMetadataRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-source-metadata-check
+.\Tests\Invoke-LoopControlRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-loop-control-check
 ```
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
@@ -45,6 +48,9 @@ and after export and recompilation. Two-await cases exercise backward layouts,
 shared state dispatch, every completed/suspended combination and both failure
 positions. An unsupported kickoff pattern checks that its referenced state-machine
 implementation remains in the export.
+Incomplete reconstruction also retains the original implementation. The tests
+cover side effects before await result collection, nested iterator cleanup,
+early disposal, captured owner references and valid names for retained helpers.
 
 The nullable fixture emits IL that copies a local's managed pointer across a
 branch. It checks present and absent values and ensures the source is evaluated
@@ -77,6 +83,15 @@ explicit attributes; the input assembly metadata is not changed.
 It also covers private nested types exposed by helper signatures, guarded
 constructor argument preparation (including null rejection and side-effect order),
 and conversions through interfaces with substituted generic type arguments.
+Additional emitted IL checks cover zero-initialized local storage and generic
+`isinst`/unboxing for reference, value and nullable types, including failure and
+single-evaluation behavior. Null arguments retain their selected overload and
+generic arguments, while non-disposable enumerators retain conditional cleanup.
+
+The loop-control fixture checks `continue` paths that skip a final assignment,
+increment or condition. Moving that operation into a `for`, `foreach` or
+`do/while` header must preserve the original control flow. Nested loops are
+included so a continue in an inner loop does not change the outer loop's behavior.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.
