@@ -80,10 +80,14 @@ namespace dnSpy.Decompiler.MSBuild {
 				if (!string.IsNullOrEmpty(asmName))
 					writer.WriteElementString("AssemblyName", asmName);
 				writer.WriteElementString("GenerateAssemblyInfo", "False");
+				// SDK defaults use C# 7.3 for .NET Framework, while the decompiler
+				// can emit newer constructs such as target-typed conditionals.
+				if (project.Options.Decompiler.GenericGuid == DecompilerConstants.LANGUAGE_CSHARP)
+					writer.WriteElementString("LangVersion", "latest");
 
 				writer.WriteElementString("FileAlignment", GetFileAlignment());
 
-				var targetFrameworkInfo = TargetFrameworkInfo.Create(project.Module);
+				var targetFrameworkInfo = GetTargetFrameworkInfo();
 				var moniker = targetFrameworkInfo.GetTargetFrameworkMoniker();
 				if (moniker is null)
 					throw new NotSupportedException("This assembly cannot be decompiled to a SDK style project.");

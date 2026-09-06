@@ -43,6 +43,34 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		public abstract void Write();
 
+		protected TargetFrameworkInfo GetTargetFrameworkInfo() {
+			var info = TargetFrameworkInfo.Create(project.Module);
+			if (info.FromAttribute || !info.IsDotNetFramework)
+				return info;
+			// Generated serializers often omit TargetFrameworkAttribute. The CLR
+			// version alone then says 4.0, even when their exported dependency needs
+			// 4.8. Infer a compatible target from this export's project graph only.
+			var pending = new Stack<Project>();
+			var visited = new HashSet<Project>();
+			pending.Push(project);
+			while (pending.Count != 0) {
+				var current = pending.Pop();
+				if (!visited.Add(current))
+					continue;
+				var candidate = TargetFrameworkInfo.Create(current.Module);
+				if (candidate.IsDotNetFramework && Version.TryParse(candidate.Version, out var version) &&
+					Version.TryParse(info.Version, out var selected) && version > selected)
+					info = candidate;
+				foreach (var reference in current.Module.GetAssemblyRefs()) {
+					var assembly = current.Module.Context.AssemblyResolver.Resolve(reference, current.Module);
+					var dependency = assembly is null ? null : FindOtherProject(assembly.ManifestModule.Location);
+					if (dependency is not null)
+						pending.Push(dependency);
+				}
+			}
+			return info;
+		}
+
 		protected static string GetRelativePath(string sourceDir, string destFile) {
 			var s = FilenameUtils.GetRelativePath(sourceDir, destFile);
 			if (Path.DirectorySeparatorChar != '\\')

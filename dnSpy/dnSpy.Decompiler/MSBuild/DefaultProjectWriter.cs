@@ -77,7 +77,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				var asmName = GetAssemblyName();
 				if (!string.IsNullOrEmpty(asmName))
 					writer.WriteElementString("AssemblyName", GetAssemblyName());
-				var fwkInfo = TargetFrameworkInfo.Create(project.Module);
+				var fwkInfo = GetTargetFrameworkInfo();
 				if (projectVersion > ProjectVersion.VS2005 || !fwkInfo.IsDotNetFramework || fwkInfo.Version != "2.0")
 					writer.WriteElementString("TargetFrameworkVersion", "v" + fwkInfo.Version);
 				if (!string.IsNullOrEmpty(fwkInfo.Profile))
