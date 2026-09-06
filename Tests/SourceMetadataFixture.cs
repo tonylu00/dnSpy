@@ -43,6 +43,21 @@ public static class Program {
     public static T CastProduced<T>() { return (T)Produce(); }
     public static int ProduceCount;
     public static object Produce() { ProduceCount++; return 17; }
+    public static Exception? Capture(Exception? expected) {
+        Exception? saved = null;
+        try { if (expected != null) throw expected; }
+        catch (Exception error) { saved = error; }
+        return saved;
+    }
+    public static Exception? CaptureFiltered(Exception expected, bool accept) {
+        Exception? saved = null;
+        try {
+            try { throw expected; }
+            catch (Exception error) when (error.Message == "captured" && accept) { saved = error; }
+        }
+        catch (Exception error) { if (!ReferenceEquals(error, expected)) throw; }
+        return saved;
+    }
     private delegate bool Parser<T>(string text, out T value);
     private static T Resolve<T>(Dictionary<string, T> values, string key, T fallback) { return values.TryGetValue(key, out var value) ? value : fallback; }
     private static int Parse(string text, Parser<int> parser) { return parser(text, out var value) ? value : 0; }
@@ -63,6 +78,9 @@ public static class Program {
         if (!IsEmpty(new object[0]) || IsEmpty(new object[] { 17 })) return 15;
         if (Resolve(new Dictionary<string, string> { { "a", "b" } }, "a", null!) != "b" || Parse("17", int.TryParse) != 17) return 16;
         if (new Tuple<string>((string)null!).Item1 != null) return 22;
+        var expectedError = new InvalidOperationException("captured");
+        if (!ReferenceEquals(Capture(expectedError), expectedError) || Capture(null) != null) return 23;
+        if (!ReferenceEquals(CaptureFiltered(expectedError, true), expectedError) || CaptureFiltered(expectedError, false) != null) return 24;
         if (ZeroInitialized(4) != 6 || ZeroInitialized(0) != 0) return 17;
         if (CastThroughIsInst<int>(17) != 17 || CastThroughIsInst<string>("test") != "test" || CastThroughIsInst<string>(17) != null) return 18;
         if (CastThroughIsInst<int?>(null!) != null || CastThroughIsInst<int?>(17) != 17) return 19;
