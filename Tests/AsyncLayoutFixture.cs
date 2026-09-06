@@ -50,6 +50,55 @@ public static class AsyncLayoutFixture {
         public void SetStateMachine(IAsyncStateMachine value) { }
     }
 
+    static int completionSideEffects;
+    static int RecordCompletion() { completionSideEffects++; return 0; }
+    [AsyncStateMachine(typeof(SideEffectState))]
+    public static Task<int> ReadWithCompletionSideEffect(Task<int> input) {
+        var machine = new SideEffectState();
+        machine.builder = AsyncTaskMethodBuilder<int>.Create();
+        machine.input = input;
+        machine.state = -1;
+        machine.builder.Start(ref machine);
+        return machine.builder.Task;
+    }
+    [CompilerGenerated]
+    sealed class SideEffectState : IAsyncStateMachine {
+        public int state;
+        public AsyncTaskMethodBuilder<int> builder;
+        public Task<int> input;
+        TaskAwaiter<int> saved;
+        public void MoveNext() {
+            int result;
+            try {
+                TaskAwaiter<int> awaiter;
+                if (state == 0) goto Resume;
+                awaiter = input.GetAwaiter();
+                if (!awaiter.IsCompleted) goto Suspend;
+            Complete:
+                // This side effect precedes GetResult even when it throws.
+                // It cannot be moved ahead of suspension or after an await.
+                result = RecordCompletion() + awaiter.GetResult();
+                goto Success;
+            Resume:
+                awaiter = saved;
+                saved = default(TaskAwaiter<int>);
+                state = -1;
+                goto Complete;
+            Suspend:
+                state = 0;
+                saved = awaiter;
+                var self = this;
+                builder.AwaitUnsafeOnCompleted(ref awaiter, ref self);
+                return;
+            Success: ;
+            }
+            catch (Exception error) { state = -2; builder.SetException(error); return; }
+            state = -2;
+            builder.SetResult(result);
+        }
+        public void SetStateMachine(IAsyncStateMachine value) { }
+    }
+
     static void Verify(Func<Task<int>, Task<int>> read) {
         if (read(Task.FromResult(17)).GetAwaiter().GetResult() != 17) throw new Exception("Completed path");
         var pending = new TaskCompletionSource<int>();
@@ -214,6 +263,15 @@ public static class AsyncLayoutFixture {
         Verify(Read);
         Verify(ReadWithGap);
         Verify(ReadFallback);
+        var completionInput = new TaskCompletionSource<int>();
+        var completionTask = ReadWithCompletionSideEffect(completionInput.Task);
+        if (completionSideEffects != 0) throw new Exception("Completion side effect ran before resumption");
+        completionInput.SetResult(29);
+        if (completionTask.GetAwaiter().GetResult() != 29 || completionSideEffects != 1)
+            throw new Exception("Completion side effect was lost on resumption");
+        completionSideEffects = 0;
+        Verify(ReadWithCompletionSideEffect);
+        if (completionSideEffects != 4) throw new Exception("Await completion side effect ordering");
         if (ReadWithGap(null).GetAwaiter().GetResult() != 31) throw new Exception("Unrelated branch was lost");
         Verify(ReadFinally);
         if (finallyCount != 4) throw new Exception("Finally path");
