@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 public interface IValue { int Number { get; } }
@@ -37,6 +38,7 @@ public sealed class GuardedConstructor {
     private static int Record(int value) { Events += value; return value * 2; }
 }
 public static class Program {
+    private static bool IsEmpty(IEnumerable values) { foreach (object value in values) return false; return true; }
     private static int ReadValue(IValue value) { return value.Number; }
     private static IValue ConvertGeneric<T>(T value) { return (GenericValue<T>)value; }
     public static string? Optional;
@@ -49,6 +51,8 @@ public static class Program {
         return values[0] + values[1];
     }
     public static int Main() {
+        if (" a b ".Split((char[])null!, StringSplitOptions.RemoveEmptyEntries).Length != 2) return 14;
+        if (!IsEmpty(new object[0]) || IsEmpty(new object[] { 17 })) return 15;
         Meter meter = Parts();
         if (meter.Value != 17 || PointerRead(7) != 17 || (int)(object)Current != 17 || Optional != null) return 1;
         var references = new ReferenceValues();
