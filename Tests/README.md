@@ -172,6 +172,11 @@ operands while preserving their original width and evaluation order.
 Boolean stack values converted to single/double precision also retain one operand
 evaluation, exceptions, numeric overload selection and their boxed result type.
 
+`Invoke-NullCoalescingRegression.ps1` reverses seven reference null branches and
+adds empty branch blocks. Exported base/this constructor calls must retain their
+argument scope. Its 33 scenarios also check lazy fallback evaluation, exceptions,
+object/array identity, unchanged arguments and numeric branch behavior.
+
 `Invoke-DiscardedValuesRegression.ps1` checks 26 discarded-result outcomes,
 including operator evaluation order, getter effects, invalid casts, null and
 array bounds errors, checked overflow, and completed/suspended/faulted/cancelled
