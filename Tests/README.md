@@ -158,10 +158,12 @@ inside a try. Its rebuilt program checks that redirecting the entry preserves
 internal back edges and executes the finally only once.
 
 The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
-ordered boolean comparisons and unsigned negation. Its 199 checks cover integer
+ordered boolean comparisons and unsigned negation. Its 230 checks cover integer
 boundaries, signed and unsigned ordering, small enum promotion, signed shifts, both operand evaluations and
 exceptions from the second operand. These IL operations need valid C# numeric
 operands while preserving their original width and evaluation order.
+Boolean stack values converted to single/double precision also retain one operand
+evaluation, exceptions, numeric overload selection and their boxed result type.
 
 `Invoke-DiscardedValuesRegression.ps1` checks 26 discarded-result outcomes,
 including operator evaluation order, getter effects, invalid casts, null and

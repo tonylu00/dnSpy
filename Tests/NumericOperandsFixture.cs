@@ -22,8 +22,37 @@ public static class NumericOperandsFixture {
     public static bool StateRange(int value) { return unchecked((uint)(value - 1)) <= 1U; }
     public static bool UnsignedGreater(int left, int right) { return unchecked((uint)left) > unchecked((uint)right); }
     public static bool SignedLess(uint left, uint right) { return unchecked((int)left) < unchecked((int)right); }
+    public static float Single(bool value) { return Right(value) ? 1f : 0f; }
+    public static double Double(bool value) { return Right(value) ? 1d : 0d; }
+    public static double UnsignedDouble(bool value) { return Right(value) ? 1d : 0d; }
+    public static object BoxDouble(bool value) { return Right(value) ? 1d : 0d; }
+    public static string OverloadDouble(bool value) { return Select(Right(value) ? 1d : 0d); }
+    public static string Select(double value) { return "double:" + value; }
+    public static string Select(int value) { return "int:" + value; }
+    public static string Select(float value) { return "float:" + value; }
+    public static double CompareDouble(int left, int right) { return left > right ? 1d : 0d; }
     public static int Main() {
         int checks = 0;
+        foreach (bool value in new[] { false, true }) {
+            double expected = value ? 1d : 0d;
+            foreach (var convert in new Func<bool, object>[] { v => Single(v), v => Double(v), v => UnsignedDouble(v), BoxDouble, v => OverloadDouble(v) }) {
+                order = 0;
+                var result = convert(value);
+                if (order != 2 || !(result.Equals(expected) || result.Equals((float)expected) || result.Equals("double:" + expected))) throw new Exception("Floating conversion or overload changed");
+                checks++;
+                order = 0; failRight = true;
+                try { convert(value); throw new Exception("Floating operand skipped"); }
+                catch (InvalidOperationException) { if (order != 2) throw new Exception("Floating operand evaluation changed"); }
+                finally { failRight = false; }
+                checks++;
+            }
+            if (!(BoxDouble(value) is double)) throw new Exception("Floating boxing type changed");
+            checks++;
+        }
+        foreach (int left in new[] { int.MinValue, 0, int.MaxValue }) foreach (int right in new[] { int.MinValue, 0, int.MaxValue }) {
+            if (CompareDouble(left, right) != (left > right ? 1d : 0d)) throw new Exception("Comparison result conversion changed");
+            checks++;
+        }
         foreach (int value in new[] { int.MinValue, -3, -1, 0, 1, 2, 3, int.MaxValue }) {
             if (StateRange(value) != (value == 1 || value == 2)) throw new Exception("Unsigned state range changed");
             foreach (int other in new[] { int.MinValue, -1, 0, 1, int.MaxValue }) {

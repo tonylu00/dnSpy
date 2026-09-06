@@ -41,6 +41,18 @@ class Emitter {
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Neg));
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
         }
+        foreach (var name in new[] { "Single", "Double", "UnsignedDouble", "BoxDouble", "OverloadDouble", "CompareDouble" }) {
+            var method = type.Methods.Single(m => m.Name == name);
+            method.Body = new CilBody();
+            var il = method.Body.Instructions;
+            il.Add(Instruction.Create(OpCodes.Ldarg_0));
+            if (name == "CompareDouble") { il.Add(Instruction.Create(OpCodes.Ldarg_1)); il.Add(Instruction.Create(OpCodes.Cgt)); }
+            else il.Add(Instruction.Create(OpCodes.Call, type.Methods.Single(m => m.Name == "Right")));
+            il.Add(Instruction.Create(name == "Single" ? OpCodes.Conv_R4 : name == "UnsignedDouble" ? OpCodes.Conv_R_Un : OpCodes.Conv_R8));
+            if (name == "BoxDouble") il.Add(Instruction.Create(OpCodes.Box, module.CorLibTypes.Double.TypeDefOrRef));
+            if (name == "OverloadDouble") il.Add(Instruction.Create(OpCodes.Call, type.Methods.Single(m => m.Name == "Select" && m.MethodSig.Params[0].ElementType == ElementType.R8)));
+            il.Add(Instruction.Create(OpCodes.Ret));
+        }
         module.Write(args[1]);
     }
 }
