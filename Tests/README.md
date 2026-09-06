@@ -265,3 +265,12 @@ retains jumps across cleanup boundaries, cycles and nested function scopes.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.
+
+`Invoke-RvaSpanRegression.ps1` reconstructs immediate `ReadOnlySpan<T>.ToArray()`
+copies from immutable compiler RVA data. It runs 36 original/rebuilt checks with
+one and four export workers, including UTF-8 strings, embedded nulls, integer
+widths, unused trailing data, independent copies and empty-array identity. Its
+20 analysis checks retain unsafe operations when lengths, element types, field
+mutability or initialization effects prevent an exact constant reconstruction.
+Floating-point and boolean blobs remain unchanged because their raw bit patterns
+may not have an equivalent C# constant representation.
