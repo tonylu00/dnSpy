@@ -373,3 +373,13 @@ redirects apply before this selection. The application-config regression also
 exports both the old and redirected libraries, then verifies SDK/legacy consumers
 still use the configured version. This change covers console resolution; the GUI
 document resolver has a separate implementation.
+
+`Invoke-LoopExitRegression.ps1` checks a loop whose normal exit forwards to code
+also reached by an early body exit. The emitter reorders the shared conditional
+tail without changing the input's behavior. Original and rebuilt SDK exports with
+one/four workers must agree on all 396 return values, side effects, exceptions and
+cleanup sequences. Another 24 control-flow graphs cover forwarding chains,
+inverted conditions, cyclic continuations and block ordering. The full debug
+pipeline must keep the shared tail outside the loop and retain its source spans.
+Loop expansion excludes every block reachable from the normal exit, including
+shared blocks that are not dominated by that exit's forwarding branch.
