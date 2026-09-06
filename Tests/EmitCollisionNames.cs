@@ -6,6 +6,10 @@ class Emitter {
         foreach (var type in module.GetTypes()) {
             var names = new[] { "T", "T", "T1", "T" };
             for (int i = 0; i < type.GenericParameters.Count; i++) type.GenericParameters[i].Name = names[i];
+            // Nested redeclarations bind by position even when their display
+            // names differ from the enclosing type's generic parameter names.
+            if (type.DeclaringType != null && type.GenericParameters.Count > 1)
+                type.GenericParameters[1].Name = "RenamedOuter";
             foreach (var method in type.Methods) {
                 foreach (var parameter in method.GenericParameters) parameter.Name = "T";
                 if (method.Name == "Combine") {

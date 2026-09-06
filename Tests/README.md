@@ -102,6 +102,8 @@ consumers retain binary support libraries needed to compile overloads.
 The collision fixture rewrites metadata with repeated generic and parameter names,
 including nested types, constraints, abstract methods and interfaces. The exported
 declarations and uses must agree, compile and preserve each argument's behavior.
+Nested redeclarations can also have different names from their enclosing type's
+parameters; metadata arity preserves their positional binding in that case.
 It also checks imported base types whose names match a namespace in the current
 or enclosing scope; those uses must retain enough qualification to select the type.
 Namespaces elsewhere in the assembly also participate in that lookup even when
