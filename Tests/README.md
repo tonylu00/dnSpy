@@ -63,6 +63,8 @@ implementation remains in the export.
 Detached suspension blocks with earlier resume/result blocks cover both branch
 polarities. Their kickoff methods must reconstruct as async source, preserve
 factory evaluation counts, and retain an unrelated branch around the await.
+Forward resume bookkeeping after the result path checks the same behavior,
+including completed, suspended, faulted and cancelled tasks.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.

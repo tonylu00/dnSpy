@@ -20,7 +20,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Original async behavior failed.' }
 & $DnSpyConsole --no-color --sdk-project --threads 1 -o $exportDirectory $inputExe
 if ($LASTEXITCODE -ne 0) { throw 'dnSpy export failed.' }
 $source = Get-Content (Join-Path $exportDirectory 'AsyncLayoutFixture\AsyncLayoutFixture.cs') -Raw
-foreach ($name in @('ReadDetachedPositive', 'ReadDetachedNegative')) {
+foreach ($name in @('ReadDetachedPositive', 'ReadDetachedNegative', 'ReadDetachedForward')) {
     if ($source -notmatch ('async Task<int> ' + $name + '\(')) { throw "Detached await was not reconstructed: $name" }
 }
 $project = Get-ChildItem -LiteralPath $exportDirectory -Recurse -Filter '*.csproj' | Select-Object -First 1
