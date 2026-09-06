@@ -40,6 +40,9 @@ outside the repository (so repository build settings do not affect the fixtures)
 .\Tests\Invoke-DefiniteAssignmentRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-assignment-check
+.\Tests\Invoke-NumericOperandsRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-numeric-check
 ```
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
@@ -72,6 +75,9 @@ before and after export and recompilation.
 It also removes receiver casts from generic field reads, writes and managed
 addresses, property and protected method calls, and reference returns. Rebuilt
 code must preserve mutations, reference identity, call counts and null failures.
+Emitted reference comparisons also check a generic class with overloaded equality:
+the rebuilt identity comparison must not invoke its operator or cast the other
+object to the generic class.
 
 The application configuration fixture checks a signed library version redirect
 and a transitive dependency exposed by an overload in the newer library. The
@@ -122,6 +128,12 @@ unreachable successors and reuse after cancellation. It reproduces an analysis
 loop found in ETS's device-copy operation. Assignment results from a leave must
 include its finally blocks before they reach the successor; temporary results
 can otherwise circulate indefinitely around a later loop.
+
+The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
+ordered boolean comparisons and unsigned negation. Its 111 checks cover integer
+boundaries, small enum promotion, signed shifts, both operand evaluations and
+exceptions from the second operand. These IL operations need valid C# numeric
+operands while preserving their original width and evaluation order.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.

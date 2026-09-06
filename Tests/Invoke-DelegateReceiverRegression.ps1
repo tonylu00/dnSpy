@@ -12,6 +12,16 @@ New-Item -ItemType Directory -Path $inputDirectory,$emitterDirectory | Out-Null
     Set-Content (Join-Path $inputDirectory 'DelegateFixture.csproj')
 @'
 using System;
+public sealed class IdentityBox<T> {
+    public static int OperatorCalls;
+    public static bool operator ==(IdentityBox<T> left, IdentityBox<T> right) { OperatorCalls++; return false; }
+    public static bool operator !=(IdentityBox<T> left, IdentityBox<T> right) { OperatorCalls++; return true; }
+    public override bool Equals(object other) { return ReferenceEquals(this, other); }
+    public override int GetHashCode() { return 0; }
+    public static bool Same(IdentityBox<T> left, object right) { return ReferenceEquals(left, right); }
+    public static bool SameTyped(IdentityBox<T> left, IdentityBox<T> right) { return ReferenceEquals(left, right); }
+    public static bool IsNull(IdentityBox<T> value) { return ReferenceEquals(value, null); }
+}
 public class ReceiverBase {
     public int Calls;
     protected int Advance(int value) { Calls++; return value + 1; }
@@ -33,6 +43,10 @@ public static class DelegateFixture {
     static int Increment(int value) { calls++; return value + 1; }
     public static int Read(int value) { return ((Func<int, int>)callback)(value); }
     public static int Main() {
+        var identity = new IdentityBox<int>();
+        if (!IdentityBox<int>.Same(identity, identity) || IdentityBox<int>.Same(identity, new object()) ||
+            !IdentityBox<int>.SameTyped(identity, identity) || IdentityBox<int>.SameTyped(identity, new IdentityBox<int>()) ||
+            IdentityBox<int>.IsNull(identity) || !IdentityBox<int>.IsNull(null) || IdentityBox<int>.OperatorCalls != 0) return 10;
         var receiver = new FieldReceiver<int>(17);
         if (FieldReceiver<int>.ErasedRead(receiver) != 17 || FieldReceiver<int>.ErasedProperty(receiver) != 17) return 4;
         FieldReceiver<int>.ErasedWrite(receiver, 23);
@@ -64,6 +78,15 @@ using dnlib.DotNet.Emit;
 class Emitter {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
+        var identity = module.GetTypes().Single(t => t.Name == "IdentityBox`1");
+        foreach (var name in new[] { "Same", "SameTyped", "IsNull" }) {
+            var comparison = identity.Methods.Single(m => m.Name == name);
+            comparison.Body = new CilBody();
+            comparison.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            comparison.Body.Instructions.Add(Instruction.Create(name == "IsNull" ? OpCodes.Ldnull : OpCodes.Ldarg_1));
+            comparison.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
+            comparison.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        }
         var method = module.Types.Single(t => t.Name == "DelegateFixture").Methods.Single(m => m.Name == "Read");
         var cast = method.Body.Instructions.Single(i => i.OpCode == OpCodes.Castclass);
         cast.OpCode = OpCodes.Nop;
