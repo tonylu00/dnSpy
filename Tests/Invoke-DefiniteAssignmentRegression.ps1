@@ -7,7 +7,7 @@ $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new regression output folder.' }
 New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
 $runtime = Split-Path ([IO.Path]::GetFullPath($DnSpyConsole))
-$references = ('ICSharpCode.NRefactory', 'ICSharpCode.NRefactory.CSharp', 'dnSpy.Contracts.Logic' | ForEach-Object {
+$references = ('ICSharpCode.NRefactory', 'ICSharpCode.NRefactory.CSharp', 'ICSharpCode.Decompiler', 'dnlib', 'dnSpy.Contracts.Logic' | ForEach-Object {
     $path = [Security.SecurityElement]::Escape((Join-Path $runtime ($_ + '.dll')))
     "<Reference Include=`"$_`"><HintPath>$path</HintPath></Reference>"
 }) -join ''
@@ -15,7 +15,12 @@ $references = ('ICSharpCode.NRefactory', 'ICSharpCode.NRefactory.CSharp', 'dnSpy
     Set-Content (Join-Path $OutputDirectory 'Regression.csproj')
 @'
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading;
+using dnlib.DotNet;
+using ICSharpCode.Decompiler;
+using ICSharpCode.Decompiler.Ast.Transforms;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Analysis;
 class Program {
@@ -32,7 +37,7 @@ class Program {
         using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(3));
         analysis.Analyze(name, timeout.Token);
     }
-    static void Main() {
+    static void Main(string[] args) {
         int checks = 0;
         // Delayed finally results used to inject both PA and DA into a later loop.
         // Those two waves could circulate forever even in a small method.
@@ -84,8 +89,33 @@ class Program {
             checks++;
         }
         Console.WriteLine("PASS: " + checks + " finally assignment, loop convergence, reachability and cancellation checks.");
+        {
+            var enter = new GotoStatement("restart");
+            var repeat = new GotoStatement("restart");
+            var label = new LabelStatement { Label = "restart" };
+            var guarded = new TryCatchStatement {
+                TryBlock = new BlockStatement { label,
+                    new IfElseStatement {
+                        Condition = new BinaryOperatorExpression(new UnaryOperatorExpression(UnaryOperatorType.PostIncrement, new IdentifierExpression("visits")), BinaryOperatorType.LessThan, new PrimitiveExpression(3)),
+                        TrueStatement = new BlockStatement { repeat }
+                    }, new ReturnStatement(new IdentifierExpression("visits")) },
+                FinallyBlock = new BlockStatement { new UnaryOperatorExpression(UnaryOperatorType.PostIncrement, new IdentifierExpression("cleanups")) }
+            };
+            var root = new BlockStatement { enter, guarded };
+            using var module = new ModuleDefUser("EntryFixture");
+            new DeclareVariables(new DecompilerContext(0, module)).Run(root);
+            Check(enter.Label != "restart" && repeat.Label == "restart" && label.Parent == guarded.TryBlock, "protected entry repair changed an internal jump");
+            Check(root.Statements.OfType<LabelStatement>().Single().Label == enter.Label, "missing external entry label");
+            File.WriteAllText(Path.Combine(args[0], "EntryFixture.cs"),
+                "public static class EntryFixture { static int visits, cleanups; static int Scenario() " + root +
+                " public static int Main() { if (Scenario() != 4 || cleanups != 1) return 1; System.Console.WriteLine(\"PASS: protected entry and internal loop preserve one cleanup.\"); return 0; } }");
+        }
     }
 }
 '@ | Set-Content (Join-Path $OutputDirectory 'Program.cs')
-dotnet run --project (Join-Path $OutputDirectory 'Regression.csproj') -c Release
+dotnet run --project (Join-Path $OutputDirectory 'Regression.csproj') -c Release -- $OutputDirectory
 if ($LASTEXITCODE -ne 0) { throw 'Definite assignment regression failed.' }
+'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><EnableDefaultItems>false</EnableDefaultItems></PropertyGroup><ItemGroup><Compile Include="EntryFixture.cs"/></ItemGroup></Project>' |
+    Set-Content (Join-Path $OutputDirectory 'EntryFixture.csproj')
+dotnet run --project (Join-Path $OutputDirectory 'EntryFixture.csproj') -c Release
+if ($LASTEXITCODE -ne 0) { throw 'Protected entry cleanup behavior changed.' }

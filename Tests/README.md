@@ -43,6 +43,9 @@ outside the repository (so repository build settings do not affect the fixtures)
 .\Tests\Invoke-NumericOperandsRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-numeric-check
+.\Tests\Invoke-ExceptionFilterRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-filter-check
 ```
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
@@ -116,6 +119,8 @@ The loop-control fixture checks `continue` paths that skip a final assignment,
 increment or condition. Moving that operation into a `for`, `foreach` or
 `do/while` header must preserve the original control flow. Nested loops are
 included so a continue in an inner loop does not change the outer loop's behavior.
+Iterator state ranges and prepared enumerators check that normal, throwing and
+skipped paths run cleanup exactly once where required.
 
 The large-method fixture generates hundreds of live locals and repeated object
 initializers with shared references and conditional values. Original and rebuilt
@@ -132,12 +137,20 @@ unreachable successors and reuse after cancellation. It reproduces an analysis
 loop found in ETS's device-copy operation. Assignment results from a leave must
 include its finally blocks before they reach the successor; temporary results
 can otherwise circulate indefinitely around a later loop.
+An emitted syntax tree also reproduces an external jump to the first instruction
+inside a try. Its rebuilt program checks that redirecting the entry preserves
+internal back edges and executes the finally only once.
 
 The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
-ordered boolean comparisons and unsigned negation. Its 111 checks cover integer
-boundaries, small enum promotion, signed shifts, both operand evaluations and
+ordered boolean comparisons and unsigned negation. Its 199 checks cover integer
+boundaries, signed and unsigned ordering, small enum promotion, signed shifts, both operand evaluations and
 exceptions from the second operand. These IL operations need valid C# numeric
 operands while preserving their original width and evaluation order.
+
+The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
+handlers. It covers accepting, rejecting and throwing filters, exception identity,
+first-pass ordering, nested cleanup, completed and suspended tasks, and successful
+operations that must bypass the filter.
 
 The expression-evaluator submodule and the `RoslynVersion` package setting must
 use compatible Roslyn internals. Updating only the package can break dnSpy's build.

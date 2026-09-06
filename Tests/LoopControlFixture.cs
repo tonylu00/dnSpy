@@ -1,5 +1,32 @@
 using System;
+using System.Collections.Generic;
 public static class LoopControlFixture {
+    static int cleanupCount;
+    static IEnumerable<int> Values(bool fail) {
+        try { yield return 3; if (fail) throw new InvalidOperationException(); yield return 7; }
+        finally { cleanupCount++; }
+    }
+    static int PreparedCleanup(int action, bool fail) {
+        IEnumerator<int> enumerator;
+        int sum = 0;
+        switch (action) {
+            case 0:
+                using (var first = Values(false).GetEnumerator()) { while (first.MoveNext()) sum += first.Current; }
+                return sum;
+            case 1: goto prepare;
+            case 2: return 20;
+            case 3: return 30;
+            case 4: return 40;
+            default: return -1;
+        }
+        enter:
+        try { while (enumerator.MoveNext()) sum += enumerator.Current; }
+        finally { enumerator.Dispose(); }
+        return sum;
+        prepare:
+        enumerator = Values(fail).GetEnumerator();
+        goto enter;
+    }
     static int TailAssignment() {
         int visits = 0;
         bool repeat = true;
@@ -62,6 +89,12 @@ public static class LoopControlFixture {
         return value;
     }
     public static int Main() {
+        cleanupCount = 0;
+        if (PreparedCleanup(0, false) != 10 || cleanupCount != 1) throw new Exception("First cleanup path changed");
+        if (PreparedCleanup(1, false) != 10 || cleanupCount != 2) throw new Exception("Prepared cleanup path changed");
+        try { PreparedCleanup(1, true); throw new Exception("Failure swallowed"); }
+        catch (InvalidOperationException) { if (cleanupCount != 3) throw new Exception("Failure cleanup changed"); }
+        if (PreparedCleanup(5, false) != -1 || cleanupCount != 3) throw new Exception("Skipped cleanup path changed");
         if (TailAssignment() != 1) throw new Exception("Continue executed the tail assignment");
         if (TailIncrement() != 4) throw new Exception("Continue executed the tail increment");
         if (TailCondition() != 32) throw new Exception("Continue evaluated the tail condition");

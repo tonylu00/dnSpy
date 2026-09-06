@@ -19,8 +19,20 @@ public static class NumericOperandsFixture {
     public static WireCode Multiply(WireCode left, WireCode right) { return (WireCode)unchecked((uint)left * (uint)right); }
     public static int SmallMultiply(SmallCode left, SmallCode right) { return (byte)left * (byte)right; }
     public static ulong SignedShift(ulong value, int count) { return unchecked((ulong)((long)value >> count)); }
+    public static bool StateRange(int value) { return unchecked((uint)(value - 1)) <= 1U; }
+    public static bool UnsignedGreater(int left, int right) { return unchecked((uint)left) > unchecked((uint)right); }
+    public static bool SignedLess(uint left, uint right) { return unchecked((int)left) < unchecked((int)right); }
     public static int Main() {
         int checks = 0;
+        foreach (int value in new[] { int.MinValue, -3, -1, 0, 1, 2, 3, int.MaxValue }) {
+            if (StateRange(value) != (value == 1 || value == 2)) throw new Exception("Unsigned state range changed");
+            foreach (int other in new[] { int.MinValue, -1, 0, 1, int.MaxValue }) {
+                if (UnsignedGreater(value, other) != (unchecked((uint)value) > unchecked((uint)other))) throw new Exception("Unsigned comparison changed");
+                if (SignedLess(unchecked((uint)value), unchecked((uint)other)) != (value < other)) throw new Exception("Signed comparison changed");
+                checks += 2;
+            }
+            checks++;
+        }
         var comparisons = new Func<bool, bool, bool>[] { Greater, Less, AtLeast, AtMost };
         foreach (bool left in new[] { false, true }) foreach (bool right in new[] { false, true }) {
             bool[] expected = { left & !right, !left & right, left | !right, !left | right };
