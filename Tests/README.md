@@ -383,3 +383,13 @@ inverted conditions, cyclic continuations and block ordering. The full debug
 pipeline must keep the shared tail outside the loop and retain its source spans.
 Loop expansion excludes every block reachable from the normal exit, including
 shared blocks that are not dominated by that exit's forwarding branch.
+
+`Invoke-ConverterSourceRegression.ps1` checks repeated namespace components,
+namespace prefixes, and same-name types alongside arrays stored in object locals.
+SDK exports with one/four workers must match the original's 64 array cases,
+including aliases, null paths, generic/value/reference elements, side effects and
+injected exceptions. Five full/nested/isolated AST scope cases verify imports and
+debugger namespaces; three array methods must retain typed temporaries and debug
+spans. Explicit namespace syntax supplies the traversal scope when present.
+Combining a local store into an assignment expression requires matching variable
+types, preserving the original duplicated stack value's type after a wider store.
