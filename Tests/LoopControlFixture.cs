@@ -1,7 +1,36 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Threading.Tasks;
 public static class LoopControlFixture {
     static int cleanupCount;
+    static void Bump(ref int value) { value += 2; }
+    static int MutableArray(int[] values) {
+        int sum = 0;
+        for (int index = 0; index < values.Length; index++) {
+            int value = values[index]; Bump(ref value); sum += value;
+        }
+        return sum;
+    }
+    static int MutableGeneric(IEnumerable<int> values) {
+        int sum = 0;
+        using (var enumerator = values.GetEnumerator()) {
+            while (enumerator.MoveNext()) { int value = enumerator.Current; Bump(ref value); sum += value; }
+        }
+        return sum;
+    }
+    static int MutableNonGeneric(IEnumerable values) {
+        int sum = 0;
+        var enumerator = values.GetEnumerator();
+        try { while (enumerator.MoveNext()) { int value = (int)enumerator.Current; Bump(ref value); sum += value; } }
+        finally { var disposable = enumerator as IDisposable; if (disposable != null) disposable.Dispose(); }
+        return sum;
+    }
+    static async Task<int> AsyncArrayLifetime(string[] values, Task pause) {
+        int sum = 0;
+        foreach (var value in values) { await pause; sum += value.Length; }
+        return sum;
+    }
     static IEnumerable<int> Values(bool fail) {
         try { yield return 3; if (fail) throw new InvalidOperationException(); yield return 7; }
         finally { cleanupCount++; }
@@ -89,6 +118,16 @@ public static class LoopControlFixture {
         return value;
     }
     public static int Main() {
+        var numbers = new[] { 3, 7 };
+        if (MutableArray(numbers) != 14 || MutableGeneric(numbers) != 14 || MutableNonGeneric(numbers) != 14 || numbers[0] != 3 || numbers[1] != 7)
+            throw new Exception("Writable iteration storage changed");
+        var words = new[] { "abc", "defgh" };
+        if (AsyncArrayLifetime(words, Task.CompletedTask).GetAwaiter().GetResult() != 8) throw new Exception("Completed async array loop changed");
+        var pause = new TaskCompletionSource<int>();
+        var pending = AsyncArrayLifetime(words, pause.Task);
+        if (pending.IsCompleted) throw new Exception("Async array loop did not suspend");
+        pause.SetResult(0);
+        if (pending.GetAwaiter().GetResult() != 8 || words[0] != "abc" || words[1] != "defgh") throw new Exception("Suspended async iteration storage changed");
         cleanupCount = 0;
         if (PreparedCleanup(0, false) != 10 || cleanupCount != 1) throw new Exception("First cleanup path changed");
         if (PreparedCleanup(1, false) != 10 || cleanupCount != 2) throw new Exception("Prepared cleanup path changed");

@@ -142,6 +142,11 @@ Use `-Guarded` to place the generated initialization inside a try/finally and
 check that cleanup still runs once. This exercises declaration indexing within
 a nested scope as well as at the method root.
 
+Loop tests also preserve writable iteration locals passed by reference through
+array, generic and non-generic enumeration, plus async array iteration storage
+across completed and suspended awaits. Such loops must not acquire the read-only
+storage rules of a C# `foreach` variable.
+
 The definite-assignment fixture checks delayed finally assignments followed by
 loops of different sizes, nested and conditional cleanup, outward jumps,
 unreachable successors and reuse after cancellation. It reproduces an analysis
