@@ -1,9 +1,54 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 public static class AsyncLayoutFixture {
+    public static IEnumerable<int> IterateFallback() { return new ManualIterator(new[] { 4, 9 }); }
+    [CompilerGenerated]
+    sealed class ManualIterator : IEnumerable<int>, IEnumerator<int> {
+        readonly int[] values;
+        int index = -1;
+        public ManualIterator(int[] values) { this.values = values; }
+        public int Current { get { return values[index]; } }
+        object IEnumerator.Current { get { return Current; } }
+        public bool MoveNext() { return ++index < values.Length; }
+        public void Reset() { index = -1; }
+        public void Dispose() { iteratorDisposals++; }
+        public IEnumerator<int> GetEnumerator() { return this; }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+    }
+    static int iteratorDisposals;
+    sealed class IteratorOwner {
+        readonly int offset = 4;
+        public IEnumerable<int> Range(int count) {
+            var iterator = new PartialIterator(-2);
+            iterator.owner = this;
+            iterator.count = count;
+            return iterator;
+        }
+        [CompilerGenerated]
+        sealed class PartialIterator : IEnumerable<int>, IEnumerator<int> {
+            public IteratorOwner owner;
+            public int count;
+            int index = -1, state, current;
+            public PartialIterator(int state) { this.state = state; }
+            public int Current { get { return current; } }
+            object IEnumerator.Current { get { return current; } }
+            public bool MoveNext() {
+                var owner = this.owner;
+                if (++index >= count) return false;
+                current = owner.offset + index;
+                return true;
+            }
+            public void Reset() { index = -1; }
+            public void Dispose() { iteratorDisposals++; }
+            public IEnumerator<int> GetEnumerator() { state++; return this; }
+            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        }
+    }
     [AsyncStateMachine(typeof(ReorderedState))]
     public static Task<int> Read(Task<int> input) {
         var machine = new ReorderedState();
@@ -260,6 +305,12 @@ public static class AsyncLayoutFixture {
         finally { finallyCount++; }
     }
     public static int Main() {
+        int iteratorResult = 0;
+        foreach (var value in IterateFallback()) iteratorResult = iteratorResult * 10 + value;
+        if (iteratorResult != 49 || iteratorDisposals != 1) throw new Exception("Iterator fallback behavior");
+        iteratorResult = 0;
+        foreach (var value in new IteratorOwner().Range(2)) iteratorResult = iteratorResult * 10 + value;
+        if (iteratorResult != 45 || iteratorDisposals != 2) throw new Exception("Captured iterator fields");
         Verify(Read);
         Verify(ReadWithGap);
         Verify(ReadFallback);
