@@ -185,6 +185,12 @@ interfaces and read-only/write-only properties. Declaration accessors and setter
 parameters are also renamed. A separate export checks that directly referenced
 orphan methods remain visible; their call-site reconstruction is not yet supported.
 
+`Invoke-EventStorageRegression.ps1` checks WPF routed-event identifiers, automatic
+instance/static/generic events, and custom accessors with observable side effects.
+Emitted metadata includes VB-style backing-field names and a public field sharing
+an event name. Rebuilt code must preserve direct field use, object initialization,
+subscriptions, removals and concurrent registration without losing event storage.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
