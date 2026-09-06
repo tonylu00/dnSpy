@@ -191,6 +191,11 @@ Emitted metadata includes VB-style backing-field names and a public field sharin
 an event name. Rebuilt code must preserve direct field use, object initialization,
 subscriptions, removals and concurrent registration without losing event storage.
 
+`Invoke-ComImportRegression.ps1` checks COM class/interface identity and the
+compiler-generated public runtime constructor after export and recompilation.
+It does not activate a COM server. Ordinary constructor bodies are also executed
+to verify that the special handling stays limited to COM import metadata.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
