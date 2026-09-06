@@ -182,7 +182,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			return "512";
 		}
 
-		protected string? GetHintPath(AssemblyDef? asm) {
+		protected virtual string? GetHintPath(AssemblyDef? asm) {
 			if (asm is null)
 				return null;
 			if (IsGacPath(asm.ManifestModule.Location))
@@ -193,7 +193,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			return GetRelativePath(asm.ManifestModule.Location);
 		}
 
-		bool IsGacPath(string file) => GacInfo.IsGacPath(file) || IsUserGacPath(file);
+		protected bool IsGacPath(string file) => GacInfo.IsGacPath(file) || IsUserGacPath(file);
 
 		bool IsUserGacPath(string file) {
 			file = file.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);

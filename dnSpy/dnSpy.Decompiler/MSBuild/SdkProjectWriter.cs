@@ -51,6 +51,37 @@ namespace dnSpy.Decompiler.MSBuild {
 		}
 
 		readonly DotNetPathProvider dotNetPathProvider;
+		HashSet<string>? standardReferenceNames;
+
+		protected override string? GetHintPath(AssemblyDef? assembly) {
+			if (assembly is not null && standardReferenceNames is not null &&
+				!standardReferenceNames.Contains(assembly.Name) && IsGacPath(assembly.ManifestModule.Location) &&
+				!ExistsInProject(assembly.ManifestModule.Location))
+				return GetRelativePath(assembly.ManifestModule.Location);
+			return base.GetHintPath(assembly);
+		}
+
+		HashSet<string>? FindStandardReferenceNames(TargetFrameworkInfo framework) {
+			if (framework.Framework != ".NETStandard") return null;
+			string? moniker = framework.GetTargetFrameworkMoniker();
+			if (moniker is null) return null;
+			var paths = dotNetPathProvider.TryGetNetStandardReferencePaths(Version.Parse(framework.Version), 64) ?? Array.Empty<string>();
+			// Never borrow the API surface of a newer .NET Standard target.
+			string? directory = paths.FirstOrDefault(p => StringComparer.OrdinalIgnoreCase.Equals(Path.GetFileName(p), moniker));
+			if (directory is null) {
+				var packages = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
+				if (string.IsNullOrEmpty(packages)) packages = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".nuget", "packages");
+				var root = Path.Combine(packages!, "netstandard.library");
+				if (Directory.Exists(root)) {
+					directory = Directory.EnumerateDirectories(root)
+						.Select(p => new { Path = p, Version = Version.TryParse(Path.GetFileName(p), out var version) ? version : null })
+						.Where(p => p.Version is not null).OrderByDescending(p => p.Version)
+						.Select(p => Path.Combine(p.Path, "build", moniker, "ref")).FirstOrDefault(Directory.Exists);
+				}
+			}
+			if (directory is null) return null;
+			return new HashSet<string>(Directory.EnumerateFiles(directory, "*.dll").Select(Path.GetFileNameWithoutExtension)!, StringComparer.OrdinalIgnoreCase);
+		}
 
 		public SdkProjectWriter(Project project, ProjectVersion projectVersion, IList<Project> allProjects,
 			IList<string> userGACPaths) : base(project, projectVersion, allProjects, userGACPaths) => dotNetPathProvider = new DotNetPathProvider();
@@ -88,6 +119,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteElementString("FileAlignment", GetFileAlignment());
 
 				var targetFrameworkInfo = GetTargetFrameworkInfo();
+				standardReferenceNames = FindStandardReferenceNames(targetFrameworkInfo);
 				var moniker = targetFrameworkInfo.GetTargetFrameworkMoniker();
 				if (moniker is null)
 					throw new NotSupportedException("This assembly cannot be decompiled to a SDK style project.");
@@ -173,6 +205,8 @@ namespace dnSpy.Decompiler.MSBuild {
 				bool ReferenceFilter(string refName) {
 					if (isNetCoreApp)
 						return !dotNetPathProvider.TryGetRuntimePackOfAssembly(refName, netCoreVersion!, bitness, out string? runtimePack) || !targetPacks.Contains(runtimePack);
+					if (standardReferenceNames?.Contains(refName) == true)
+						return false;
 					if (implicitReferences.Contains(refName))
 						return false;
 					return true;

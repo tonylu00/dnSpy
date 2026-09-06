@@ -201,6 +201,15 @@ from an assembly referenced only by BAML. SDK and traditional single/batch expor
 must retain a resolved binary or project reference. Both SDK outputs are rebuilt
 and executed, and the fixture verifies that no IL assembly reference masks the case.
 
+`Invoke-GacReferencesRegression.ps1` checks a System.Management dependency resolved
+from the installed GAC. The .NET Framework export retains its framework reference;
+the .NET Standard export retains the resolved file path. Both rebuilt libraries
+are loaded by their original .NET Framework host without making a WMI query.
+Emitted System.Core references also exercise LINQ and crypto types without mixing
+framework implementations into the exact .NET Standard reference surface. Reference
+sets come from installed matching SDK packs or the NuGet package cache; the original
+reference behavior is retained when no matching set is available.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
