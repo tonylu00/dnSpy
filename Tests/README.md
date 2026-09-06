@@ -173,6 +173,11 @@ accessors independently. Rebuilt subscriptions and removals must still dispatch
 through the original interfaces, including generic interfaces and an interface
 whose accessor methods have unconventional names.
 
+`Invoke-FinalizerRegression.ps1` reconstructs finalizers with local declarations
+before the protected body. It checks lock execution, nested cleanup, base cleanup
+and exception identity on success and failure. Finalization is suppressed and
+invoked explicitly so the test does not depend on garbage collection timing.
+
 The exception-filter fixture runs 25 checks on generic synchronous and asynchronous
 handlers. It covers accepting, rejecting and throwing filters, exception identity,
 first-pass ordering, nested cleanup, completed and suspended tasks, and successful
