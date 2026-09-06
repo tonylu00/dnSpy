@@ -57,6 +57,16 @@ class Emitter {
             Instruction.Create(OpCodes.Ldarg_0), Instruction.Create(OpCodes.Blt, loop),
             Instruction.Create(OpCodes.Ldloc, sum), Instruction.Create(OpCodes.Ret)
         }) initialized.Body.Instructions.Add(instruction);
+        var forward = program.Methods.Single(m => m.Name == "ForwardInitialized");
+        forward.Body = new CilBody { InitLocals = true };
+        var forwardValue = new Local(module.CorLibTypes.Int32);
+        forward.Body.Variables.Add(forwardValue);
+        var readForward = Instruction.Create(OpCodes.Ldloc, forwardValue);
+        foreach (var instruction in new[] {
+            Instruction.Create(OpCodes.Ldarg_0), Instruction.Create(OpCodes.Brtrue, readForward),
+            Instruction.Create(OpCodes.Ldc_I4, 17), Instruction.Create(OpCodes.Stloc, forwardValue),
+            readForward, Instruction.Create(OpCodes.Ret)
+        }) forward.Body.Instructions.Add(instruction);
         module.GetTypes().Single(t => t.Name == "HiddenValue").Visibility = TypeAttributes.NestedPrivate;
         module.GetTypes().Single(t => t.Name == "HiddenCallback").Visibility = TypeAttributes.NestedPrivate;
         foreach (var attribute in module.CustomAttributes.Where(a => a.TypeFullName == "System.Security.UnverifiableCodeAttribute").ToArray())

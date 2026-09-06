@@ -39,6 +39,7 @@ public sealed class GuardedConstructor {
 }
 public static class Program {
     public static int ZeroInitialized(int count) { return -1; } // Replaced with InitLocals IL by the fixture emitter.
+    public static int ForwardInitialized(bool skip) { return -1; } // A forward branch can bypass the first store.
     public static T CastThroughIsInst<T>(object value) { return (T)value; }
     public static T CastProduced<T>() { return (T)Produce(); }
     public static int ProduceCount;
@@ -82,6 +83,7 @@ public static class Program {
         if (!ReferenceEquals(Capture(expectedError), expectedError) || Capture(null) != null) return 23;
         if (!ReferenceEquals(CaptureFiltered(expectedError, true), expectedError) || CaptureFiltered(expectedError, false) != null) return 24;
         if (ZeroInitialized(4) != 6 || ZeroInitialized(0) != 0) return 17;
+        if (ForwardInitialized(true) != 0 || ForwardInitialized(false) != 17) return 25;
         if (CastThroughIsInst<int>(17) != 17 || CastThroughIsInst<string>("test") != "test" || CastThroughIsInst<string>(17) != null) return 18;
         if (CastThroughIsInst<int?>(null!) != null || CastThroughIsInst<int?>(17) != 17) return 19;
         try { CastThroughIsInst<int>("wrong"); return 20; } catch (NullReferenceException) { }

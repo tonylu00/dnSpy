@@ -346,6 +346,14 @@ public static class AsyncLayoutFixture {
         try { return await input; }
         finally { await cleanup(); }
     }
+    public static async Task<int> FindWithCleanup(Task<int> input, Func<Task> cleanup, bool choose) {
+        try {
+            int value = await input;
+            if (choose && value > 0) return value;
+        }
+        finally { await cleanup(); }
+        return -1;
+    }
     static void VerifyAwaitFinally() {
         int cleanups = 0;
         Verify(input => AwaitFinally(input, () => { cleanups++; return Task.CompletedTask; }));
@@ -364,6 +372,11 @@ public static class AsyncLayoutFixture {
         result = AwaitFinally(Task.FromException<int>(new InvalidOperationException("body")), () => Task.FromCanceled(new CancellationToken(true)));
         try { result.GetAwaiter().GetResult(); throw new Exception("Missing cleanup cancellation"); }
         catch (OperationCanceledException) { if (!result.IsCanceled) throw new Exception("Cleanup cancellation state"); }
+        cleanups = 0;
+        Verify(input => FindWithCleanup(input, () => { cleanups++; return Task.CompletedTask; }, true));
+        if (cleanups != 4) throw new Exception("Conditional return skipped cleanup");
+        if (FindWithCleanup(Task.FromResult(31), () => Task.CompletedTask, false).GetAwaiter().GetResult() != -1)
+            throw new Exception("Conditional return changed");
     }
     public static int Main() {
         int iteratorResult = 0;
