@@ -46,7 +46,9 @@ class EmitSharedCaptureFinally {
             }
             methods++;
         }
-        if (changed != 11 || methods != 5) throw new Exception("Expected all nested, conditional and independent cleanup captures");
+        int expectedCaptures = args.Length > 2 ? int.Parse(args[2]) : 11;
+        int expectedMethods = args.Length > 3 ? int.Parse(args[3]) : 5;
+        if (changed != expectedCaptures || methods != expectedMethods) throw new Exception("Expected all nested, conditional and independent cleanup captures");
         module.Write(args[1]);
         Console.WriteLine("Shared " + changed + " catch/rethrow temporaries across " + methods + " methods.");
     }

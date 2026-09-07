@@ -175,6 +175,16 @@ and protected-body observations. They also check cleanup structure, debug spans 
 unchanged input IL. Only independently defined capture/rethrow uses may share the
 temporary; other uses prevent removal.
 
+`Invoke-FilterCaptureFinallyRegression.ps1` shares a filtered-catch capture with
+the surrounding awaited-finally rethrow temporary. Original, modified and
+one/four-worker source rebuilds agree on 7,500 cases / 37,305 assertions for filter
+evaluation before unwinding, rejection and filter failures, repeated suspension,
+handler observations, wrapped payloads, cancellation and cleanup precedence.
+Fourteen AST/debug guards require the first mandatory predicate to assign the
+temporary before its reads and reject escaped, reassigned or captured storage.
+The filter expression and its source spans stay in place; input IL/hashes remain
+unchanged.
+
 `Invoke-BranchedFinallyReuseRegression.ps1` inserts a two-entry loop before the
 second independent protected await. Original, modified and one/four-worker source
 rebuilds pass 8,750 cases / 34,986 assertions for suspension, cleanup order,
