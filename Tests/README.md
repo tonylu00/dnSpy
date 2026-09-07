@@ -379,6 +379,17 @@ are included in both SDK and traditional project exports.
 Batch exports also follow dependencies through exported projects, so their
 consumers retain binary support libraries needed to compile overloads.
 
+`Invoke-TransitiveNamespaceRegression.ps1` checks names introduced by those
+support libraries. A three-assembly sample has no direct consumer reference to
+the library whose namespace hides an imported type and whose type conflicts with
+another import. One/four-worker exports rebuild and preserve seven runtime
+bindings across interfaces, fields, generic arguments and arrays. Nineteen AST
+checks cover full/nested/isolated namespaces, cached reuse, module changes,
+missing dependencies, reference cycles and cancellation during a module switch.
+Dependency edges resolve from their owning modules; the namespace/type table
+combines the non-GAC reference closure and is reused for subsequent source files.
+Cancellation invalidates partial tables. Input assemblies and IL stay unchanged.
+
 The collision fixture rewrites metadata with repeated generic and parameter names,
 including nested types, constraints, abstract methods and interfaces. The exported
 declarations and uses must agree, compile and preserve each argument's behavior.
