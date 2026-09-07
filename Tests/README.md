@@ -175,6 +175,17 @@ and protected-body observations. They also check cleanup structure, debug spans 
 unchanged input IL. Only independently defined capture/rethrow uses may share the
 temporary; other uses prevent removal.
 
+`Invoke-GroupedSelectorCopiesRegression.ps1` inserts two hoisted selector copies
+and repeated equality dispatch into ordinary/generic three-handler retry methods.
+Original, modified and one/four-worker rebuilt programs pass 76,832 cases /
+472,240 assertions for selection, suspension, retries, observation, cancellation,
+raw payloads and exception identity/stacks. Another 408 AST checks cover one,
+three and eight copies through if and switch dispatch, partial recovery, sparse
+IDs, name collisions, outside reads/entries, parameter aliases, changed types,
+cycles, writes, filters and closures. Copies remain for partially recovered
+dispatch and disappear only after complete recovery, with their debug spans
+retained. Input assembly hashes and IL stay unchanged.
+
 `Invoke-StateDispatchAwaitRegression.ps1` verifies a late switch routing three
 distinct awaiters inside a loop and a nested inclusive state comparison. Original
 and one/four-worker source rebuilds pass 8,000 cases / 35,440 assertions, covering
