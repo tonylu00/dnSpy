@@ -164,6 +164,16 @@ exception identity and rethrow stacks. Thirty guards preserve the normal exit,
 join and jump spans, and reject other entries, fallthrough, capture/flag writes,
 cross-region targets and unsupported dispatch alternatives.
 
+`Invoke-FallThroughAwaitRegression.ps1` covers a loop whose negative completion
+test falls through to GetResult while suspension and resume bookkeeping occupy
+separate blocks. Original and one/four-worker source rebuilds run 8,000 cases with
+35,440 assertions for zero to three iterations, repeated suspension, synchronous
+and task faults, result observers, cancellation and cleanup precedence. Twenty
+guards verify explicit/fallthrough completion paths, input IL and debug spans,
+and reject extra incoming edges, resume effects, escaping writes, wrong awaiter
+operations and mismatched exception regions. Existing async layout and iterator
+regressions also cover the shared normalization path.
+
 `Invoke-SplitCatchRegression.ps1` covers a lifted catch fragment that branches to
 an awaited fallback outside the fragment. An exact captured rethrow permits
 reconstruction even when the fragment itself has no await. Original, emitted
