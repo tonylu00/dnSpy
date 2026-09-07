@@ -27,8 +27,12 @@ using ICSharpCode.NRefactory.CSharp;
 namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 	sealed class AssemblyInfoTransform : IAstTransform {
 		readonly IReadOnlyDictionary<CustomAttribute, string>? friendAssemblyNames;
+		readonly ModuleDef module;
 
-		public AssemblyInfoTransform(IReadOnlyDictionary<CustomAttribute, string>? friendAssemblyNames = null) => this.friendAssemblyNames = friendAssemblyNames;
+		public AssemblyInfoTransform(ModuleDef module, IReadOnlyDictionary<CustomAttribute, string>? friendAssemblyNames = null) {
+			this.module = module;
+			this.friendAssemblyNames = friendAssemblyNames;
+		}
 
 		public void Run(AstNode compilationUnit) {
 			foreach (var attrSect in compilationUnit.Descendants.OfType<AttributeSection>()) {
@@ -45,13 +49,27 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 						Compare(ca.AttributeType, systemRuntimeVersioningString, targetFrameworkAttributeString) ||
 						Compare(ca.AttributeType, systemSecurityString, unverifiableCodeAttributeString) ||
 						Compare(ca.AttributeType, systemRuntimeCompilerServicesyString, compilationRelaxationsAttributeString) ||
-						Compare(ca.AttributeType, systemRuntimeCompilerServicesyString, runtimeCompatibilityAttributeString) ||
 						Compare(ca.AttributeType, systemDiagnosticsString, debuggableAttributeString);
 				}
 				if (!remove && attr.Annotation<SecurityAttribute>() is SecurityAttribute)
 					remove = true;
 				if (remove)
 					attrSect.Remove();
+			}
+			// RuntimeCompatibility changes which catches receive non-Exception
+			// payloads. Preserve explicit values, and prevent the source compiler
+			// from enabling wrapping when the input assembly did not opt into it.
+			if (module.IsManifestModule && module.Assembly is AssemblyDef assembly &&
+				!assembly.CustomAttributes.Any(ca => Compare(ca.AttributeType, systemRuntimeCompilerServicesyString, runtimeCompatibilityAttributeString)) &&
+				!compilationUnit.Descendants.OfType<Attribute>().Any(a => a.Type.Annotation<ITypeDefOrRef>() is ITypeDefOrRef type &&
+					Compare(type, systemRuntimeCompilerServicesyString, runtimeCompatibilityAttributeString))) {
+				AstType type = new MemberType(new SimpleType("global"), "System") { IsDoubleColon = true };
+				foreach (var part in new[] { "Runtime", "CompilerServices", "RuntimeCompatibilityAttribute" })
+					type = new MemberType(type, part);
+				type.AddAnnotation(module.CorLibTypes.GetTypeRef("System.Runtime.CompilerServices", "RuntimeCompatibilityAttribute"));
+				var attribute = new Attribute { Type = type };
+				attribute.Arguments.Add(new AssignmentExpression(new IdentifierExpression("WrapNonExceptionThrows"), new PrimitiveExpression(false)));
+				compilationUnit.AddChild(new AttributeSection(attribute) { AttributeTarget = "assembly" }, SyntaxTree.MemberRole);
 			}
 		}
 		static readonly UTF8String systemRuntimeVersioningString = new UTF8String("System.Runtime.Versioning");

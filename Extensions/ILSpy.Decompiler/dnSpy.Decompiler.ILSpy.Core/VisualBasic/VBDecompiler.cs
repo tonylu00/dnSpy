@@ -305,7 +305,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.VisualBasic {
 			var state = CreateAstBuilder(info.Context, GetDecompilerSettings(), currentModule: info.Module);
 			try {
 				state.AstBuilder.AddAssembly(info.Module, true, info.Module.IsManifestModule, true);
-				RunTransformsAndGenerateCode(ref state, info.Output, info.Context, info.KeepAllAttributes ? null : new AssemblyInfoTransform(info.FriendAssemblyNames));
+				RunTransformsAndGenerateCode(ref state, info.Output, info.Context, info.KeepAllAttributes ? null : new AssemblyInfoTransform(info.Module, info.FriendAssemblyNames));
 			}
 			finally {
 				state.Dispose();

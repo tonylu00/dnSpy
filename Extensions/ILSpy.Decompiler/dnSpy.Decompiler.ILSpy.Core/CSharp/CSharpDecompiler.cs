@@ -475,7 +475,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 			var state = CreateAstBuilder(info.Context, langSettings.Settings, currentModule: info.Module);
 			try {
 				state.AstBuilder.AddAssembly(info.Module, true, info.Module.IsManifestModule, true);
-				RunTransformsAndGenerateCode(ref state, info.Output, info.Context, info.KeepAllAttributes ? null : new AssemblyInfoTransform(info.FriendAssemblyNames));
+				RunTransformsAndGenerateCode(ref state, info.Output, info.Context, info.KeepAllAttributes ? null : new AssemblyInfoTransform(info.Module, info.FriendAssemblyNames));
 			}
 			finally {
 				state.Dispose();
