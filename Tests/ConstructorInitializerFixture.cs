@@ -1,11 +1,18 @@
 using System;
+using System.Linq;
 
 public static class InitializerTrace {
     public static string Text = "", Failure = "";
     public static readonly Exception Error = new InvalidOperationException("initializer preparation");
     public static object Read, Write;
+    public static int DefaultChecks;
     public static void Step(string name) { Text += name; if (name == Failure) throw Error; }
     public static T Value<T>(string name, T value) { Step(name); return value; }
+    public static void Defaults<T>(object reference, int number, T value) {
+        if (reference != null || number != 0 || !System.Collections.Generic.EqualityComparer<T>.Default.Equals(value, default(T)))
+            throw new Exception("Default local storage changed");
+        DefaultChecks++;
+    }
 }
 
 public abstract class InitializedBase<T> {
@@ -41,12 +48,29 @@ public sealed class InitializedCapture<T> : InitializedBase<T> {
     static int CreateConstructorState() { return 0; }
 }
 
+public abstract class DefaultLocalBase {
+    protected abstract int InitializedValue { get; }
+    protected DefaultLocalBase() {
+        if (InitializedValue != 9) throw new Exception("Default declarations hid field initialization");
+        InitializerTrace.Step("B");
+    }
+}
+public sealed class DefaultLocalConstructors : DefaultLocalBase {
+    readonly int initialized = InitializerTrace.Value("I", 9);
+    protected override int InitializedValue { get { return initialized; } }
+    // Put the forwarding constructor first to exercise matching of the other two.
+    public DefaultLocalConstructors() : this(1) { InitializerTrace.Step("F"); }
+    public DefaultLocalConstructors(int value) { InitializerTrace.Step("D"); }
+    public DefaultLocalConstructors(string value) { InitializerTrace.Step("S"); }
+}
+
 public static class ConstructorInitializerFixture {
     static int checks;
     static void Check(bool value) { checks++; if (!value) throw new Exception("Check " + checks + ": " + InitializerTrace.Text); }
     static void Cases<T>(T initial, T replacement, T final) {
         foreach (string failure in new[] { "", "I", "J", "N", "A", "B", "C", "F", "G", "H", "D", "E" }) {
             InitializerTrace.Text = ""; InitializerTrace.Failure = failure;
+            InitializerTrace.DefaultChecks = 0;
             InitializerTrace.Read = null; InitializerTrace.Write = null;
             InitializedCapture<T> result = null; Exception error = null; int counter = 0;
             try { result = new InitializedCapture<T>(initial, replacement, ref counter); } catch (Exception actual) { error = actual; }
@@ -55,6 +79,7 @@ public static class ConstructorInitializerFixture {
             Check(failure == "" ? error == null : ReferenceEquals(error, InitializerTrace.Error));
             Check((result != null) == (failure == ""));
             Check(counter == (failure != "" && "IJNA".Contains(failure) ? 0 : 1));
+            Check(InitializerTrace.DefaultChecks == (InitializerTrace.Text.Contains("D") ? 1 : 0));
             var read = (Func<T>)InitializerTrace.Read; var write = (Func<T, T>)InitializerTrace.Write;
             if (read != null) {
                 Check(Equals(read(), failure == "G" ? initial : replacement));
@@ -71,6 +96,19 @@ public static class ConstructorInitializerFixture {
     }
     public static int Main() {
         Cases("initial", "replacement", "final"); Cases(1, 2, 3); Cases((string)null, "replacement", (string)null);
+        foreach (int mode in new[] { 0, 1, 2 }) foreach (string failure in new[] { "", "I", "B", "D", "S", "F" }) {
+            string full = mode == 0 ? "IBDF" : mode == 1 ? "IBD" : "IBS";
+            InitializerTrace.Text = ""; InitializerTrace.Failure = failure; InitializerTrace.DefaultChecks = 0;
+            Exception error = null; DefaultLocalConstructors result = null;
+            try { result = mode == 0 ? new DefaultLocalConstructors() : mode == 1 ? new DefaultLocalConstructors(1) : new DefaultLocalConstructors("value"); }
+            catch (Exception actual) { error = actual; }
+            int stop = failure.Length == 0 ? -1 : full.IndexOf(failure, StringComparison.Ordinal);
+            string expected = stop < 0 ? full : full.Substring(0, stop + 1);
+            Check(InitializerTrace.Text == expected);
+            Check(stop < 0 ? error == null : ReferenceEquals(error, InitializerTrace.Error));
+            Check((result != null) == (stop < 0));
+            Check(InitializerTrace.DefaultChecks == expected.Count(c => c == 'D' || c == 'S' || c == 'F'));
+        }
         Console.WriteLine("PASS: constructor initializers, preparation, escaped storage and failure order: " + checks);
         return 0;
     }

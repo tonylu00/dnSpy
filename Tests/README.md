@@ -670,7 +670,7 @@ run the full AST transformation with debugger spans enabled.
 
 The transformation does not move instance field/property initializers across
 preparation, or move preparation that uses `this` into a static helper. The general
-preparation path currently handles top-level declarations and expression statements;
+preparation path handles top-level declarations, expressions and closed branches;
 it excludes `out` parameters, ref locals, ref-like state fields, and direct parameter
 captures that cannot be represented in its helper. Public constructor signatures
 remain intact; the generated private helpers add source implementation members.
@@ -684,9 +684,13 @@ first argument passed by value (not a `ref`/`out` parameter) and keeps the exist
 closed-control-flow and instance-access guards.
 
 Its emitted fixture retains a renamed capture with an observable constructor.
-Original and one/four-worker rebuilt executions check 201 assertions for ordered
+Original and one/four-worker rebuilt executions check 309 assertions for ordered
 initializers, parameter updates, generic/null values, shared escaped callbacks,
-and exact failures at each step. Twelve debug/guard checks cover declaration
+default local storage, forwarding constructors, and exact failures at each step.
+Leading default/null local declarations no longer hide field initializers; fields
+that depend on those locals or constructor parameters remain in the body. Calls
+in local initializers still prevent moving later field stores past them.
+Twenty-four debug/guard checks cover declaration
 matching/output, unavailable initializer recovery, invalid argument boundaries,
 and unchanged input IL. Adjacent preparation tests also cover lambdas using saved
 locals without capturing the preparation method's `out` parameter. The added out

@@ -35,6 +35,24 @@ class EmitConstructorInitializer {
             } else if (!method.IsConstructor) method.Name = "Invoke" + ++index;
         }
         foreach (var pair in targets) if (pair.Method != null) pair.Reference.Name = pair.Method.Name;
+        var defaults = module.Types.Single(t => t.Name == "InitializerTrace").Methods.Single(m => m.Name == "Defaults");
+        foreach (var target in new[] { type, module.Types.Single(t => t.Name == "DefaultLocalConstructors") })
+        foreach (var constructor in target.Methods.Where(m => m.IsInstanceConstructor)) {
+            // These locals are read after chaining without any IL stores. CLR
+            // zero initialization becomes leading default declarations in C#.
+            TypeSig valueType = target.HasGenericParameters ? new GenericVar(0, target) : module.CorLibTypes.String;
+            var reference = new Local(module.CorLibTypes.Object);
+            var number = new Local(module.CorLibTypes.Int32);
+            var value = new Local(valueType);
+            constructor.Body.InitLocals = true;
+            constructor.Body.Variables.Add(reference); constructor.Body.Variables.Add(number); constructor.Body.Variables.Add(value);
+            var instructions = constructor.Body.Instructions;
+            int position = instructions.Select((i, n) => (i, n)).Single(p => p.i.OpCode == OpCodes.Call && p.i.Operand is IMethod m && m.Name == ".ctor").n + 1;
+            instructions.Insert(position++, Instruction.Create(OpCodes.Ldloc, reference));
+            instructions.Insert(position++, Instruction.Create(OpCodes.Ldloc, number));
+            instructions.Insert(position++, Instruction.Create(OpCodes.Ldloc, value));
+            instructions.Insert(position, Instruction.Create(OpCodes.Call, new MethodSpecUser(defaults, new GenericInstMethodSig(valueType))));
+        }
         module.Write(args[1]);
         Console.WriteLine("PASS: retained constructor capture with preceding field initializers emitted");
     }
