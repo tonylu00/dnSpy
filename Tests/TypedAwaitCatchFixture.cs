@@ -20,6 +20,7 @@ public sealed class CatchRunner {
     public readonly Exception[] Errors = new Exception[3];
     public readonly TaskCompletionSource<int>[] Gates = new TaskCompletionSource<int>[3];
     public readonly List<int> Trace = new List<int>();
+    public readonly List<Exception> Observed = new List<Exception>();
     public Action<object> ThrowRaw;
     public object Payload;
     [MethodImpl(MethodImplOptions.NoInlining)]
@@ -30,6 +31,8 @@ public sealed class CatchRunner {
         return Modes[phase] == 1 ? ThrowSource(Errors[phase]) : Gates[phase].Task;
     }
     public Task<int> Invoke() {
+        if (Kind == 5) return TypedAwaitCatchFixture.Observed(Step, Observed.Add, Before, After);
+        if (Kind == 6) return TypedAwaitCatchFixture.ObservedGeneric<CatchFailure>(Step, Observed.Add, Before, After);
         if (Kind == 4) return TypedAwaitCatchFixture.NormalPath(Step);
         if (Kind == 0) return TypedAwaitCatchFixture.Typed(Step, Before, After);
         if (Kind == 1) return TypedAwaitCatchFixture.Derived(Step, Before, After);
@@ -80,6 +83,32 @@ public static class TypedAwaitCatchFixture {
         catch (CatchFailure) { await step(1).ConfigureAwait(false); throw; }
         return await step(2).ConfigureAwait(false);
     }
+    public static async Task<int> Observed(Func<int, Task<int>> step, Action<Exception> observe, bool before, bool after) {
+        try { return await step(0).ConfigureAwait(false); }
+        catch (Exception error) {
+            observe(error);
+            if (before) throw;
+            await step(1).ConfigureAwait(false);
+            observe(error);
+            if (after) throw;
+            await step(2).ConfigureAwait(false);
+            observe(error);
+            return 42;
+        }
+    }
+    public static async Task<int> ObservedGeneric<T>(Func<int, Task<int>> step, Action<Exception> observe, bool before, bool after) where T : Exception {
+        try { return await step(0).ConfigureAwait(false); }
+        catch (T error) {
+            observe(error);
+            if (before) throw;
+            await step(1).ConfigureAwait(false);
+            observe(error);
+            if (after) throw;
+            await step(2).ConfigureAwait(false);
+            observe(error);
+            return 42;
+        }
+    }
     static void Complete(CatchRunner runner, int phase) {
         if (runner.Modes[phase] < 2) runner.Gates[phase].SetResult(17);
         else runner.Gates[phase].SetException(runner.Errors[phase]);
@@ -97,7 +126,7 @@ public static class TypedAwaitCatchFixture {
         return runner;
     }
     static void Regular() {
-        for (int kind = 0; kind < 5; kind++)
+        for (int kind = 0; kind < 7; kind++)
         foreach (bool before in new[] { false, true }) foreach (bool after in new[] { false, true })
         for (int code = 0; code < 125; code++) foreach (int delayed in new[] { 0, 1, 2, 7 }) {
             if (kind == 4 && (before || after)) continue;
@@ -105,7 +134,7 @@ public static class TypedAwaitCatchFixture {
             var runner = Create(kind, before, after, code, delayed);
             int failure = runner.Modes[0] == 0 ? -1 : 0;
             int reached = 0;
-            bool selected = failure == 0 && (kind == 0 || kind == 3 || runner.Modes[0] < 3);
+            bool selected = failure == 0 && (kind == 0 || kind == 3 || kind == 5 || runner.Modes[0] < 3);
             if (selected && !before) {
                 reached = 1;
                 if (runner.Modes[1] != 0) failure = 1;
@@ -130,6 +159,11 @@ public static class TypedAwaitCatchFixture {
                 if (runner.Modes[failure] == 1) Check(actual.StackTrace.Contains("ThrowSource"), "Original throw stack missing");
             }
             Check(task.IsCanceled == (failure >= 0 && runner.Modes[failure] == 3), "Cancellation state changed");
+            if (kind >= 5) {
+                int observed = selected ? 1 + (!before && runner.Modes[1] == 0 ? 1 + (!after && runner.Modes[2] == 0 ? 1 : 0) : 0) : 0;
+                Check(runner.Observed.Count == observed, "Exception observation count changed");
+                Check(runner.Observed.TrueForAll(e => ReferenceEquals(e, runner.Errors[0])), "Observed exception identity changed");
+            }
         }
     }
     static void Raw() {
@@ -147,13 +181,13 @@ public static class TypedAwaitCatchFixture {
         var observe = (Func<Func<Task<int>>, object>)capture.CreateDelegate(typeof(Func<Func<Task<int>>, object>));
         bool wraps = typeof(TypedAwaitCatchFixture).Assembly.GetCustomAttribute<RuntimeCompatibilityAttribute>()?.WrapNonExceptionThrows ?? false;
         Check(wraps == ExpectedWrapping, "Assembly exception wrapping changed");
-        for (int kind = 0; kind < 4; kind++) foreach (bool before in new[] { false, true }) foreach (bool after in new[] { false, true })
+        foreach (int kind in new[] { 0, 1, 2, 3, 5, 6 }) foreach (bool before in new[] { false, true }) foreach (bool after in new[] { false, true })
         for (int phase = 0; phase < 3; phase++) {
             cases++;
             var runner = Create(kind, before, after, phase == 0 ? 0 : 1, 0);
             runner.RawPhase = phase; runner.ThrowRaw = throwRaw; runner.Payload = new object();
             var actual = observe(runner.Invoke);
-            bool selected = phase != 0 || (wraps && (kind == 0 || kind == 3));
+            bool selected = phase != 0 || (wraps && (kind == 0 || kind == 3 || kind == 5));
             int reached = selected && !before ? after || phase == 1 ? 1 : 2 : 0;
             bool rawReached = phase <= reached;
             Check(string.Join(",", runner.Trace) == (reached == 0 ? "0" : reached == 1 ? "0,1" : "0,1,2"), "Raw payload catch boundary changed");
@@ -167,10 +201,41 @@ public static class TypedAwaitCatchFixture {
                 else if (rawReached) Check(error == null && value == 42, "Handled wrapped payload result changed");
                 else Check(ReferenceEquals(error, runner.Errors[0]), "Original typed rethrow changed");
             }
+            if (kind >= 5) {
+                int observations = selected ? 1 + (!before && phase != 1 ? 1 + (!after && phase != 2 ? 1 : 0) : 0) : 0;
+                Check(runner.Observed.Count == observations, "Raw exception observation count changed");
+                Check(runner.Observed.TrueForAll(e => phase == 0 ? e is RuntimeWrappedException wrapped && ReferenceEquals(wrapped.WrappedException, runner.Payload) : ReferenceEquals(e, runner.Errors[0])), "Raw observed exception identity changed");
+            }
+        }
+    }
+    static void ObservationFailures() {
+        foreach (bool generic in new[] { false, true })
+        foreach (bool delayBody in new[] { false, true })
+        foreach (bool delayCleanup in new[] { false, true })
+        foreach (bool cancel in new[] { false, true })
+        for (int failAt = 0; failAt < 3; failAt++) {
+            cases++;
+            var bodyError = new CatchFailure();
+            var callbackError = cancel ? (Exception)new OperationCanceledException(new CancellationToken(true)) : new FormatException("observer");
+            var gates = new[] { new TaskCompletionSource<int>(), new TaskCompletionSource<int>(), new TaskCompletionSource<int>() };
+            if (!delayBody) gates[0].SetException(bodyError);
+            if (!delayCleanup) { gates[1].SetResult(0); gates[2].SetResult(0); }
+            var observed = new List<Exception>();
+            Action<Exception> observe = e => { observed.Add(e); if (observed.Count == failAt + 1) throw callbackError; };
+            Func<int, Task<int>> step = phase => gates[phase].Task;
+            var task = generic ? ObservedGeneric<CatchFailure>(step, observe, false, false) : Observed(step, observe, false, false);
+            if (delayBody) { Check(!task.IsCompleted, "Observed body did not suspend"); gates[0].SetException(bodyError); }
+            if (failAt > 0 && delayCleanup) Check(!task.IsCompleted, "Observed cleanup did not suspend");
+            if (delayCleanup) { gates[1].SetResult(0); gates[2].SetResult(0); }
+            Exception actual = null;
+            try { task.GetAwaiter().GetResult(); } catch (Exception error) { actual = error; }
+            Check(ReferenceEquals(actual, callbackError), "Observer exception identity changed");
+            Check(task.IsCanceled == cancel, "Observer cancellation state changed");
+            Check(observed.Count == failAt + 1 && observed.TrueForAll(e => ReferenceEquals(e, bodyError)), "Observer order or captured exception changed");
         }
     }
     public static int Main() {
-        try { Regular(); Raw(); Console.WriteLine("PASS: " + cases + " typed catch cases / " + assertions + " assertions."); return 0; }
+        try { Regular(); Raw(); ObservationFailures(); Console.WriteLine("PASS: " + cases + " typed catch cases / " + assertions + " assertions."); return 0; }
         catch (Exception error) { Console.Error.WriteLine(error.GetType().FullName + ": " + error.Message); return 1; }
     }
 }

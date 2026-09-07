@@ -19,7 +19,7 @@ class TypedAwaitCatchDebug {
         var transform = typeof(PatternStatementTransform).GetMethod("RestoreAwaitCatch", BindingFlags.Instance | BindingFlags.NonPublic);
         int checks = 0;
         foreach (string name in new[] { "Typed", "Derived", "Generic" })
-        foreach (string scenario in new[] { "original", "inbound-jump", "flag-use", "pending-use", "filter", "normal-fallthrough", "foreign-cast" }) {
+        foreach (string scenario in new[] { "original", "inbound-jump", "flag-use", "pending-use", "filter", "normal-fallthrough", "foreign-cast", "capture-read", "capture-write", "capture-ref", "flag-copy", "copy-escape" }) {
             var method = owner.Methods.Single(m => m.Name == name);
             var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method };
             var builder = new AstBuilder(context); builder.AddMethod(method); builder.RunTransformations(t => t is PatternStatementTransform);
@@ -39,12 +39,25 @@ class TypedAwaitCatchDebug {
             else if (scenario == "filter") handler.Condition = new PrimitiveExpression(true);
             else if (scenario == "normal-fallthrough") normal.Statements.Last().Remove();
             else if (scenario == "foreign-cast") capture.Right = new CastExpression(new PrimitiveType("string"), capture.Right.Detach());
+            else if (scenario == "capture-read" || scenario == "capture-write" || scenario == "capture-ref") {
+                Expression use = capture.Left.Clone();
+                if (scenario == "capture-ref") use = new DirectionExpression(FieldDirection.Ref, use);
+                Expression operation = scenario == "capture-write" ? (Expression)new AssignmentExpression(use, new NullReferenceExpression()) :
+                    new InvocationExpression(new IdentifierExpression("Observe"), use);
+                declaration.Body.Statements.InsertAfter(dispatch, new ExpressionStatement(operation));
+            } else if (scenario == "flag-copy" || scenario == "copy-escape") {
+                var variable = new ILVariable("copiedFlag") { Type = flag.Annotation<ILVariable>().Type };
+                IdentifierExpression Read() { var expression = new IdentifierExpression(variable.Name); expression.AddAnnotation(variable); return expression; }
+                declaration.Body.Statements.InsertBefore(dispatch, new ExpressionStatement(new AssignmentExpression(Read(), flag.Clone())));
+                flag.ReplaceWith(Read());
+                if (scenario == "copy-escape") declaration.Body.Statements.InsertAfter(dispatch, new ExpressionStatement(new InvocationExpression(new IdentifierExpression("Observe"), Read())));
+            }
             var before = declaration.ToString();
             transform.Invoke(new PatternStatementTransform(context), new object[] { statement });
-            if (scenario != "original") {
+            if (scenario != "original" && scenario != "capture-read" && scenario != "flag-copy") {
                 if (before != declaration.ToString()) throw new Exception("Unsafe catch recovery: " + name + "/" + scenario);
             } else {
-                if (handler.Type.ToString() != handlerType || !string.IsNullOrEmpty(handler.VariableName) ||
+                if (handler.Type.ToString() != handlerType || string.IsNullOrEmpty(handler.VariableName) == (scenario == "capture-read") ||
                     handler.Body.Descendants.OfType<ThrowStatement>().Count(t => t.Expression.IsNull) != 2 ||
                     !handler.Body.Descendants.OfType<UnaryOperatorExpression>().Any(e => e.Operator == UnaryOperatorType.Await) ||
                     !((AstNode)handler.Body).GetAllRecursiveILSpans().Any(s => s.Start < s.End) || dispatch.Parent != declaration.Body)

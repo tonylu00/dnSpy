@@ -68,14 +68,17 @@ cover branch polarity, nested negations, exposed locals, unsupported preparation
 numeric predicates, and unchanged IL when a match fails. Preparation stays in the
 filter expression so it also executes when the handler is not selected.
 
-The typed-await-catch test runs 8,548 cases for each exception-wrapping setting:
+The typed-await-catch test runs 12,620 cases for each exception-wrapping setting:
 enabled, disabled, absent, and an attribute with no named arguments. Original and
 rebuilt exports with one/four workers must preserve the setting, typed/derived/
 generic catch selection, immediate and suspended failures, exception identity and
 stack, cancellation, cleanup ordering, and errors on the normal path outside the
-catch. Deliberately unwrapped payloads are tested at a synchronous boundary so
-they cannot escape onto the thread pool. Twenty-one scope/debug checks reject
-incoming jumps, exposed dispatch/capture locals, filters, fallthrough guards and
+catch. Readonly exception observations before/after awaits retain the original
+typed capture; callback failures and cancellation preserve their identity and order.
+Deliberately unwrapped payloads are tested at a synchronous boundary so they cannot
+escape onto the thread pool. Thirty-six scope/debug checks cover readonly capture
+uses and copied selection flags, and reject incoming jumps, exposed dispatch/capture
+locals, writes/ref access, escaping flag copies, filters, fallthrough guards and
 incompatible catch-local casts. The export retains RuntimeCompatibility and
 explicitly disables compiler-added wrapping when the input attribute is absent.
 
