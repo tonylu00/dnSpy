@@ -27,6 +27,20 @@ class ReferenceCoalescingDebug {
             count++;
         }
         if (count != names.Length) throw new Exception("Unexpected coverage: " + count);
+        var conditionalNames = new[] { "Conditional", "ConditionalReversed", "ConditionalGeneric", "ConditionalReceiver", "ConditionalBaseReceiver" };
+        int conditionalCount = 0;
+        foreach (var method in builder.SyntaxTree.Descendants.OfType<MethodDeclaration>().Where(m => conditionalNames.Contains(m.Name))) {
+            var conditional = method.Descendants.OfType<ConditionalExpression>().SingleOrDefault();
+            if (conditional == null) {
+                if (method.Name != "ConditionalGeneric" || !method.Descendants.OfType<IfElseStatement>().Any()) throw new Exception("Conditional branches missing: " + method.Name);
+            }
+            else if (!conditional.TrueExpression.DescendantsAndSelf.OfType<CastExpression>().Any()) throw new Exception("Conditional common cast missing: " + method.Name);
+            if (method.Descendants.OfType<InvocationExpression>().Count(i => i.Annotation<IMethod>()?.Name == "Read") != 2) throw new Exception("Conditional producers changed.");
+            if (!((AstNode)method.Body).GetAllRecursiveILSpans().Any(s => s.Start < s.End)) throw new Exception("Conditional debug spans lost.");
+            conditionalCount++;
+        }
+        if (conditionalCount != conditionalNames.Length) throw new Exception("Conditional coverage missing.");
+        Console.WriteLine("PASS: " + conditionalCount + " reference conditional casts, producers and debug spans.");
         Console.WriteLine("PASS: " + count + " reference coalescing methods retain common casts, short-circuit operators, producers and debug spans.");
     }
 }

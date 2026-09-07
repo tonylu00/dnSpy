@@ -7,6 +7,7 @@ $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new regression output folder.' }
 $source = Join-Path $OutputDirectory 'source'
 New-Item -ItemType Directory -Path $source | Out-Null
+'<Project />' | Set-Content (Join-Path $OutputDirectory 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'ReferenceCoalescingFixture.cs') -Destination $source
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><Optimize>true</Optimize><LangVersion>latest</LangVersion></PropertyGroup></Project>' | Set-Content (Join-Path $source 'ReferenceCoalescingFixture.csproj')
 dotnet build (Join-Path $source 'ReferenceCoalescingFixture.csproj') -c Release --nologo -v quiet

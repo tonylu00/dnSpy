@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static ReferenceCoalescingFixture;
 public static class ReferenceCoalescingRunner {
     static int checks;
@@ -19,6 +20,19 @@ public static class ReferenceCoalescingRunner {
         }
     }
     public static int Main() {
+        foreach (bool choose in new[] { false, true }) foreach (bool reverse in new[] { false, true }) {
+            var pending = new TaskCompletionSource<int>();
+            var result = reverse ? ConditionalTaskReversed(choose, pending.Task) : ConditionalTask(choose, pending.Task);
+            if (choose != reverse) {
+                Check(!result.IsCompleted);
+                pending.SetResult(17);
+                Check(result.GetAwaiter().GetResult() == 17);
+            }
+            else {
+                try { result.GetAwaiter().GetResult(); Check(false); }
+                catch (NullReferenceException) { Check(true); }
+            }
+        }
         foreach (bool hasLeft in new[] { false, true }) foreach (bool hasRight in new[] { false, true }) {
             var a = hasLeft ? new ChoiceA() : null; var b = hasRight ? new ChoiceB() : null;
             Test(() => Object(a, b), (object)a ?? b, hasLeft ? "L" : "LR");
@@ -32,6 +46,19 @@ public static class ReferenceCoalescingRunner {
                 Test(() => ObjectChain(segment, line, project), (object)segment ?? (object)line ?? project, hasLeft ? "L" : hasMiddle ? "LM" : "LMR");
             }
             var first = hasLeft ? new First<string>() : null; var second = hasRight ? new Second<string>() : null;
+            foreach (bool choose in new[] { false, true }) {
+                Test(() => Conditional(choose, a, b), choose ? (object)a : b, choose ? "L" : "R");
+                Test(() => ConditionalReversed(choose, b, a), choose ? (object)b : a, choose ? "L" : "R");
+                Test(() => ConditionalGeneric(choose, first, second), choose ? (object)first : second, choose ? "L" : "R");
+                events = ""; calls = 0; failurePoint = 0;
+                try {
+                    string name = ConditionalReceiver(choose, a, b);
+                    Check((choose ? hasLeft : hasRight) && name == (choose ? "ChoiceA" : "ChoiceB"));
+                }
+                catch (NullReferenceException) { Check(!(choose ? hasLeft : hasRight)); }
+                Check(events == (choose ? "L" : "R") && calls == 1 && Conversions == 0);
+                Test(() => ConditionalBaseReceiver(choose, new CsvWriter(), new XmlWriter()), choose ? "csv" : "xml", choose ? "L" : "R");
+            }
             Test(() => Generic(first, second), (object)first ?? second, hasLeft ? "L" : "LR");
             Test(() => ObjectGeneric(first, second), (object)first ?? second, hasLeft ? "L" : "LR");
             var specific = hasLeft ? new Specific() : null; var common = hasRight ? new Common() : null;

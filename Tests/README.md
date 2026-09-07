@@ -517,6 +517,14 @@ adds empty branch blocks. Exported base/this constructor calls must retain their
 argument scope. Its 33 scenarios also check lazy fallback evaluation, exceptions,
 object/array identity, unchanged arguments and numeric branch behavior.
 
+`Invoke-ReferenceCoalescingRegression.ps1` checks 929 reference merge outcomes
+across original and one/four-worker source rebuilds. Conditional receivers and
+generic arguments preserve branch identity, lazy evaluation, null behavior and
+exception identity without invoking user-defined conversions. Awaited task/null
+branches retain their task type and suspension behavior. Five conditional
+and twelve coalescing methods also retain producers and debug spans. The runner
+isolates generated projects from parent build properties and checks input hashes.
+
 `Invoke-LiftedNumericCastRegression.ps1` checks numeric conversions on nullable
 operands before a fallback or lifted arithmetic. Its 6,760 checks cover null and
 boundary values, lazy fallback evaluation, operand exception identity, signedness,

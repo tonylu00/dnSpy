@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 public interface ILocation { }
 public interface ISegment : ILocation { }
@@ -18,8 +19,19 @@ public sealed class ChoiceA {
 public sealed class ChoiceB { }
 public class Common { }
 public sealed class Specific : Common { }
+public abstract class Writer { public abstract string Write(); }
+public sealed class CsvWriter : Writer { public override string Write() { return "csv"; } }
+public sealed class XmlWriter : Writer { public override string Write() { return "xml"; } }
 public static class ReferenceCoalescingFixture {
     public static int Conversions;
+    [MethodImpl(MethodImplOptions.NoInlining)] static T Keep<T>(T value) { return value; }
+    public static object Conditional(bool choose, ChoiceA left, ChoiceB right) { return Keep(choose ? (object)Read(left, "L") : Read(right, "R")); }
+    public static object ConditionalReversed(bool choose, ChoiceB left, ChoiceA right) { return Keep(choose ? (object)Read(left, "L") : Read(right, "R")); }
+    public static ISlot<T> ConditionalGeneric<T>(bool choose, First<T> left, Second<T> right) { return Keep(choose ? (ISlot<T>)Read(left, "L") : Read(right, "R")); }
+    public static string ConditionalReceiver(bool choose, ChoiceA left, ChoiceB right) { return (choose ? (object)Read(left, "L") : Read(right, "R")).GetType().Name; }
+    public static string ConditionalBaseReceiver(bool choose, CsvWriter left, XmlWriter right) { return (choose ? (Writer)Read(left, "L") : Read(right, "R")).Write(); }
+    public static async Task<int> ConditionalTask(bool choose, Task<int> task) { return await (choose ? task : null); }
+    public static async Task<int> ConditionalTaskReversed(bool choose, Task<int> task) { return await (choose ? null : task); }
     public static string events;
     public static int failurePoint, calls;
     public static readonly Exception failure = new InvalidOperationException("producer");
