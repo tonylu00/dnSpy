@@ -164,6 +164,16 @@ exception identity and rethrow stacks. Thirty guards preserve the normal exit,
 join and jump spans, and reject other entries, fallthrough, capture/flag writes,
 cross-region targets and unsupported dispatch alternatives.
 
+`Invoke-SplitCatchRegression.ps1` covers a lifted catch fragment that branches to
+an awaited fallback outside the fragment. An exact captured rethrow permits
+reconstruction even when the fragment itself has no await. Original, emitted
+raw-throw input and one/four-worker source rebuilds each run 20,480 cases with
+106,264 assertions for generic typed selection, normal/fallback execution,
+suspension, observer faults, cancellation, raw wrapped values and rethrow stacks.
+Eighteen guards preserve loop break/continue and return targets, capture identity
+and debug spans; they reject outside entries, capture/selector mutation, escaping
+temporaries, nested functions/handlers and missing or mismatched rethrow evidence.
+
 `Invoke-GroupedAwaitCatchRegression.ps1` covers multiple typed or generic catch
 handlers sharing a selector and pending-exception storage. It verifies both
 if/else and switch dispatch, independent capture names, and switch exits during
