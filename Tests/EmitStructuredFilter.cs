@@ -58,7 +58,7 @@ class Emitter {
                 filters++;
             }
         }
-        if (filters != 12) throw new Exception("Expected twelve reordered filters, got " + filters);
+        if (filters != 16) throw new Exception("Expected sixteen reordered filters, got " + filters);
         if (decisions != 2) throw new Exception("Expected two reordered nested decisions, got " + decisions);
         if (updates != 4) throw new Exception("Expected four inline update filters, got " + updates);
         module.Write(args[1]); Console.WriteLine("Reordered " + filters + " filter acceptance/rejection blocks.");

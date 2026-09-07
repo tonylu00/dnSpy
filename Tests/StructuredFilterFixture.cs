@@ -15,11 +15,18 @@ public sealed class FilterDetail {
         }
     }
 }
+public enum FilterCode { Target = 0, Other = 5 }
 public sealed class FilterFailure : Exception {
     public FilterDetail Value;
     public bool Fails;
     public int CodeValue;
     public bool CodeFails;
+    public FilterCode? OptionalCode;
+    public FilterCode? GetOptional() {
+        StructuredFilterFixture.Trace += "N";
+        if (CodeFails) throw new FormatException("nullable code failure");
+        return OptionalCode;
+    }
     public int Code {
         get {
             StructuredFilterFixture.Trace += "C";
@@ -91,6 +98,28 @@ public static class StructuredFilterFixture {
     static async Task<Exception> NestedAsync(Task task, bool accept, bool fails) {
         try { try { await task.ConfigureAwait(false); } finally { Trace += "U"; } }
         catch (FilterFailure exception) when (exception.Code is 5 or 19 && Read(exception, accept, fails)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+        return null;
+    }
+    static Exception NullablePrepared(Exception failure, bool accept, bool fails) {
+        try { try { throw failure; } finally { Trace += "U"; } }
+        catch (FilterFailure exception) when (exception.GetOptional() == FilterCode.Target && Read(exception, accept, fails)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+    }
+    static async Task<Exception> NullablePreparedAsync(Task task, bool accept, bool fails) {
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U"; } }
+        catch (FilterFailure exception) when (exception.GetOptional() == FilterCode.Target && Read(exception, accept, fails)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+        return null;
+    }
+    static Exception NullableHasValue(Exception failure, bool accept, bool fails) {
+        try { try { throw failure; } finally { Trace += "U"; } }
+        catch (FilterFailure exception) when (exception.GetOptional().HasValue && Read(exception, accept, fails)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+    }
+    static async Task<Exception> NullableHasValueAsync(Task task, bool accept, bool fails) {
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U"; } }
+        catch (FilterFailure exception) when (exception.GetOptional().HasValue && Read(exception, accept, fails)) { Trace += "H"; return exception; }
         catch (Exception exception) { Trace += "F"; return exception; }
         return null;
     }
@@ -233,6 +262,30 @@ public static class StructuredFilterFixture {
         }
         Reset(); Check(UpdateAndAsync(Task.FromResult(0), 0, 0, 0).GetAwaiter().GetResult(), null, "U00", false);
         Reset(); Check(UpdateOrAsync(Task.FromResult(0), 0, 0, 0).GetAwaiter().GetResult(), null, "U00", false);
+        foreach (bool hasValueOnly in new[] { false, true }) foreach (bool matches in new[] { false, true })
+        foreach (FilterCode? code in new FilterCode?[] { null, FilterCode.Target, FilterCode.Other, (FilterCode)int.MinValue, (FilterCode)int.MaxValue })
+        foreach (bool propertyFails in new[] { false, true }) foreach (bool accept in new[] { false, true }) foreach (bool fails in new[] { false, true }) {
+            Exception failure = matches ? (Exception)new FilterFailure { OptionalCode = code, CodeFails = propertyFails } : new ArgumentException("unmatched");
+            bool reads = matches && !propertyFails && code.HasValue && (hasValueOnly || (int)code.Value == 0);
+            string trace = (matches ? "N" : "") + (reads ? "R" : "") + "U" + (reads && accept && !fails ? "H" : "F");
+            Reset(); Check(hasValueOnly ? NullableHasValue(failure, accept, fails) : NullablePrepared(failure, accept, fails), failure, trace, reads);
+            foreach (bool suspended in new[] { false, true }) {
+                Reset(); var completion = new TaskCompletionSource<int>();
+                if (!suspended) completion.SetException(failure);
+                var task = hasValueOnly ? NullableHasValueAsync(completion.Task, accept, fails) : NullablePreparedAsync(completion.Task, accept, fails);
+                if (suspended) { if (task.IsCompleted || Trace != "") throw new Exception("Missing nullable suspension"); completion.SetException(failure); }
+                Check(task.GetAwaiter().GetResult(), failure, trace, reads);
+            }
+        }
+        Reset(); Check(NullablePreparedAsync(Task.FromResult(0), true, false).GetAwaiter().GetResult(), null, "U", false);
+        Reset(); Check(NullableHasValueAsync(Task.FromResult(0), true, false).GetAwaiter().GetResult(), null, "U", false);
+        string numbers = "";
+        foreach (int? value in new int?[] { null, 0, -7, int.MaxValue }) numbers += value.HasValue ? value.Value.ToString() + ";" : "null;";
+        checks++; if (numbers != "null;0;-7;2147483647;") throw new Exception("Nullable integer array element changed");
+        string codes = "";
+        foreach (FilterCode?[] row in new[] { new FilterCode?[] { null, FilterCode.Target }, new FilterCode?[] { FilterCode.Other, null } })
+            foreach (FilterCode? value in row) codes += value.HasValue ? ((int)value.Value).ToString() + ";" : "null;";
+        checks++; if (codes != "null;0;5;null;") throw new Exception("Jagged nullable enum array element changed");
         Console.WriteLine("PASS: " + checks + " structured filter identity, first-pass order, preparation, exposed assignment and suspension checks.");
         return 0;
     }
