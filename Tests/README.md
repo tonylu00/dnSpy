@@ -163,6 +163,16 @@ loop break/continue/return, suspension, faults, cancellation, raw wrapped payloa
 exception identity and rethrow stacks. Thirty guards preserve the normal exit,
 join and jump spans, and reject other entries, fallthrough, capture/flag writes,
 cross-region targets and unsupported dispatch alternatives.
+
+`Invoke-GroupedAwaitCatchRegression.ps1` covers multiple typed or generic catch
+handlers sharing a selector and pending-exception storage. It verifies both
+if/else and switch dispatch, independent capture names, and switch exits during
+partial recovery. Original and one/four-worker source rebuilds run 76,832 cases
+with 472,240 assertions for retries, suspension, handler selection, exceptions
+escaping sibling catches, cancellation, wrapped raw values and rethrow identity.
+Ninety-two guards reject ambiguous selectors, unowned or escaping captures,
+external entries, normal-path effects and unsafe switch exits; they also check
+name collisions, sparse selector values and debug metadata.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.
