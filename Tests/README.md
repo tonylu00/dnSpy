@@ -162,6 +162,18 @@ each initializes and consumes its own capture. Initialization can precede consta
 return-flag stores; calls and control-flow edges cannot intervene. Resets needed by
 another unrecovered region remain until that region is recovered.
 
+`Invoke-IndependentAwaitCatchRegression.ps1` verifies sequential and mutually
+exclusive catches that share compiler exception storage. Original and rebuilt
+one/four-worker exports pass 22,500 cases / 132,744 assertions for success, faults,
+cancellation, raw thrown payloads, suspension, repeated observation and optional
+rethrow. Each catch observes the same exception before and after its await; a
+failure stops later work and retains its original stack. Twenty-two AST guards
+check independent initialization/selection, outside reads, captures, references,
+writes, incoming jumps, rethrow observers, debug fields and naming collisions.
+Readonly captures receive a separate local identity only after proving that the
+other catch stores its own exception before selecting its continuation. Resets
+needed by another region stay in place; input assembly bytes remain unchanged.
+
 `Invoke-SingleIterationTryLoopRegression.ps1` verifies removal of an artificial loop
 whose try and every catch end with a break targeting that loop. It preserves nested
 breaks and finally blocks, rejects continues, early exits, labels, local declarations,
