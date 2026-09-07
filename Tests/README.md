@@ -374,6 +374,13 @@ reconstruct without conflicting with shared iterator storage.
 retained-iterator scenarios covering value flow, evaluation counts, exception
 identity, resumption and disposal.
 
+`Invoke-BitwiseComplementRegression.ps1` checks small-integer and character
+promotion before `~`, preserving narrowing in returns, stores, boxing and overload
+selection. Its 6,334 checks cover every byte value, wider signed/unsigned boundaries,
+enums, nullable operands, lazy failures, checked overflow and array failure order.
+Original and one/four-worker source rebuilds must match. Twenty-one complement
+operations also retain debug spans, and the input assembly and IL stay unchanged.
+
 The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
 ordered boolean comparisons and unsigned negation. Its 315 checks cover integer
 boundaries, signed and unsigned ordering, small enum promotion, signed shifts, both operand evaluations and
