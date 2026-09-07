@@ -442,6 +442,7 @@ namespace dnSpy.Decompiler.MSBuild {
 
 			return new ResXProjectFile(module, filename, typeFullName, set) {
 				IsSatelliteFile = isSatellite,
+				LogicalName = er.Name,
 			};
 		}
 

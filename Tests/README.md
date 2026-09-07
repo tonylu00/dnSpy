@@ -517,6 +517,13 @@ adds empty branch blocks. Exported base/this constructor calls must retain their
 argument scope. Its 33 scenarios also check lazy fallback evaluation, exceptions,
 object/array identity, unchanged arguments and numeric branch behavior.
 
+`Invoke-SerializedResourcesRegression.ps1` starts with framework-generated binary
+resources and checks image pixels, stream reads (including an empty stream), raw
+resource names, byte arrays and scalars. One/four-worker SDK exports are relocated,
+rebuilt and executed. `-FrameworkMSBuild` also tests traditional project exports.
+The SDK reader dependency matches MSBuild's recorded reader identity; stream
+assets use relative RESX file references so `ResourceManager.GetStream` still works.
+
 `Invoke-ReferenceCoalescingRegression.ps1` checks 929 reference merge outcomes
 across original and one/four-worker source rebuilds. Conditional receivers and
 generic arguments preserve branch identity, lazy evaluation, null behavior and

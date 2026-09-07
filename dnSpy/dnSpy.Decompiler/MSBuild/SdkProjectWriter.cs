@@ -91,6 +91,7 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		public override void Write() {
 			project.OnWrite();
+			bool preserializedResources = project.Files.OfType<ResXProjectFile>().Any(f => f.RequiresPreserializedResources);
 			var settings = new XmlWriterSettings {
 				Encoding = Encoding.UTF8,
 				Indent = true,
@@ -128,6 +129,8 @@ namespace dnSpy.Decompiler.MSBuild {
 					throw new NotSupportedException("This assembly cannot be decompiled to a SDK style project.");
 
 				writer.WriteElementString("TargetFramework", moniker);
+				if (preserializedResources)
+					writer.WriteElementString("GenerateResourceUsePreserializedResources", "True");
 
 				if (possibleProjectTypes.Contains(ProjectType.Wpf))
 					writer.WriteElementString("UseWPF", "True");
@@ -164,6 +167,19 @@ namespace dnSpy.Decompiler.MSBuild {
 
 				Write(writer, BuildAction.Compile);
 				Write(writer, BuildAction.EmbeddedResource);
+				// The SDK resource task preserves serialized values without loading
+				// their types at build time. Its reader must accompany the result.
+				if (preserializedResources && !GetAssemblyReferences().Any(r =>
+					StringComparer.OrdinalIgnoreCase.Equals(r.Reference.Name, "System.Resources.Extensions"))) {
+					writer.WriteStartElement("ItemGroup");
+					writer.WriteStartElement("PackageReference");
+					writer.WriteAttributeString("Include", "System.Resources.Extensions");
+					// Match the 4.0.0.0 reader identity written by MSBuild, so
+					// Framework applications need no new binding redirect.
+					writer.WriteAttributeString("Version", "4.6.0");
+					writer.WriteEndElement();
+					writer.WriteEndElement();
+				}
 
 				// Project references
 				var projRefs = GetAssemblyReferences().Select(a => a.Assembly).
@@ -265,6 +281,8 @@ namespace dnSpy.Decompiler.MSBuild {
 					continue;
 				writer.WriteStartElement(ToString(buildAction));
 				writer.WriteAttributeString("Include", GetRelativePath(file.Filename));
+				if (file.LogicalName is not null)
+					writer.WriteElementString("LogicalName", file.LogicalName);
 				if (file.DependentUpon is not null)
 					writer.WriteElementString("DependentUpon", GetRelativePath(Path.GetDirectoryName(file.Filename)!, file.DependentUpon.Filename));
 				if (file.SubType is not null)

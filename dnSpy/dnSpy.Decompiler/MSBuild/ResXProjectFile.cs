@@ -17,6 +17,7 @@
     along with dnSpy.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Resources;
 using dnSpy.Decompiler.Properties;
@@ -28,6 +29,8 @@ namespace dnSpy.Decompiler.MSBuild {
 		public override string Filename { get; }
 		public string TypeFullName { get; }
 		public bool IsSatelliteFile { get; set; }
+		public bool RequiresPreserializedResources => resourceElementSet.ResourceElements.Any(e =>
+			e.ResourceData is BinaryResourceData || e.ResourceData.Code == ResourceTypeCode.Stream);
 
 		readonly ModuleDef module;
 		readonly ResourceElementSet resourceElementSet;

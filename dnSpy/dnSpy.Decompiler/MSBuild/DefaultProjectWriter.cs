@@ -222,6 +222,8 @@ namespace dnSpy.Decompiler.MSBuild {
 					continue;
 				writer.WriteStartElement(ToString(buildAction));
 				writer.WriteAttributeString("Include", GetRelativePath(file.Filename));
+				if (file.LogicalName is not null)
+					writer.WriteElementString("LogicalName", file.LogicalName);
 				if (file.DependentUpon is not null)
 					writer.WriteElementString("DependentUpon", GetRelativePath(Path.GetDirectoryName(file.Filename)!, file.DependentUpon.Filename));
 				if (file.SubType is not null)
