@@ -175,6 +175,15 @@ and protected-body observations. They also check cleanup structure, debug spans 
 unchanged input IL. Only independently defined capture/rethrow uses may share the
 temporary; other uses prevent removal.
 
+`Invoke-PendingCatchReuseRegression.ps1` exercises one exception temporary shared
+by independent awaited cleanup and typed catch regions, in both execution orders.
+Original and one/four-worker source rebuilds agree on 45,000 cases / 186,204
+assertions for suspension, selection, observer failures, exception identity,
+wrapped payloads, cancellation and cleanup precedence. Thirty-four AST/debug
+guards check resets, capture ownership, selected entries, external observations,
+writes and closures. Cleanup recovery preserves the other catch while proving its
+independent lifetime; a later cleanup can then unblock an earlier awaited catch.
+
 `Invoke-FilterCaptureFinallyRegression.ps1` shares a filtered-catch capture with
 the surrounding awaited-finally rethrow temporary. Original, modified and
 one/four-worker source rebuilds agree on 7,500 cases / 37,305 assertions for filter
