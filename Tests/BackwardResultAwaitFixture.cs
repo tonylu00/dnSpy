@@ -62,6 +62,63 @@ public static class BackwardResultAwaitFixture {
         }
         public void SetStateMachine(IAsyncStateMachine value) { }
     }
+    [AsyncStateMachine(typeof(InlineResumeState))]
+    public static Task<int> ReadInlineResume(int count, Func<int, Task<int>> step, Action<int> observe, Action cleanup) {
+        var machine = new InlineResumeState();
+        machine.builder = AsyncTaskMethodBuilder<int>.Create();
+        machine.count = count; machine.step = step; machine.observe = observe; machine.cleanup = cleanup;
+        machine.state = -1;
+        machine.builder.Start(ref machine);
+        return machine.builder.Task;
+    }
+    [CompilerGenerated]
+    sealed class InlineResumeState : IAsyncStateMachine {
+        public int state, count;
+        public AsyncTaskMethodBuilder<int> builder;
+        public Func<int, Task<int>> step;
+        public Action<int> observe;
+        public Action cleanup;
+        TaskAwaiter<int> saved;
+        int total, iteration;
+        public void MoveNext() {
+            int result, cachedState = state;
+            try {
+                TaskAwaiter<int> awaiter;
+                if (cachedState == 0) goto Enter;
+                iteration = 0; total = 0;
+            Enter:
+                try {
+                    if (cachedState == 0) goto Resume;
+                    goto Factory;
+                Complete:
+                    total += awaiter.GetResult();
+                    observe(iteration++);
+                    goto Factory;
+                Suspend:
+                    state = cachedState = 0;
+                    saved = awaiter;
+                    var self = this;
+                    builder.AwaitUnsafeOnCompleted(ref awaiter, ref self);
+                    return;
+                Resume:
+                    awaiter = saved;
+                    saved = default(TaskAwaiter<int>);
+                    state = cachedState = -1;
+                    goto Complete;
+                Factory:
+                    if (iteration >= count) goto LoopDone;
+                    awaiter = step(iteration).GetAwaiter();
+                    if (!awaiter.IsCompleted) goto Suspend;
+                    goto Complete;
+                LoopDone: ;
+                } finally { if (cachedState < 0) cleanup(); }
+                result = total;
+            } catch (Exception error) { state = -2; builder.SetException(error); return; }
+            state = -2;
+            builder.SetResult(result);
+        }
+        public void SetStateMachine(IAsyncStateMachine value) { }
+    }
     [AsyncStateMachine(typeof(ForwardResumeState))]
     public static Task<int> ReadDetached(int count, Func<int, Task<int>> step, Action<int> observe, Action cleanup) {
         var machine = new ForwardResumeState();
@@ -128,7 +185,7 @@ public static class BackwardResultAwaitFixture {
         if (mode == 2 || mode == 3) gate.SetException(error); else gate.SetResult(7);
     }
     public static int Main() {
-        foreach (var read in new Func<int, Func<int, Task<int>>, Action<int>, Action, Task<int>>[] { Read, ReadDetached })
+        foreach (var read in new Func<int, Func<int, Task<int>>, Action<int>, Action, Task<int>>[] { Read, ReadDetached, ReadInlineResume })
         for (int count = 0; count <= 3; count++) for (int code = 0; code < 125; code++)
         for (int delayed = 0; delayed < 8; delayed++) foreach (bool cleanupFault in new[] { false, true }) {
             cases++;

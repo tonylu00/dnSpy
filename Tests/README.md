@@ -263,11 +263,12 @@ entry labels must survive later state analysis so every resume retains its own
 awaiter. Pure inline resume bookkeeping can precede or follow its completed path.
 
 `Invoke-BackwardResultAwaitRegression.ps1` covers an inline suspension whose
-GetResult block precedes the factory, with adjacent or detached resume bookkeeping.
-Original and one/four-worker source rebuilds run 16,004 cases with 70,892 assertions
+GetResult block precedes the factory, with adjacent or detached resume bookkeeping,
+including inline resume instructions before a later factory block.
+Original and one/four-worker source rebuilds run 24,004 cases with 106,332 assertions
 for repeated suspension, factory/result faults, cancellation, cleanup precedence
-and an unrelated branch that skips the await. Fifty-nine guards check all four
-resume/result orders, reject outside entry and observable resume effects, retain
+and an unrelated branch that skips the await. One hundred three guards check
+seven layouts and both completion branches, reject outside entry and observable resume effects, retain
 debug spans and leave the input IL unchanged. Await reconstruction also requires
 the placeholder to have come from the analyzed state machine.
 
