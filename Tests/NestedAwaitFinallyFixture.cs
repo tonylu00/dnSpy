@@ -50,7 +50,15 @@ public static class NestedAwaitFinallyFixture {
         finally { await step(1).ConfigureAwait(false); }
         try { value += await step(2).ConfigureAwait(false); }
         finally { await step(3).ConfigureAwait(false); }
+#if DETACHED_DISPATCH
+        if (step != null) {
+            foreach (int item in new[] { 1, 2, 3 }) value += item;
+            return value - 6;
+        }
+        return -1;
+#else
         return value;
+#endif
     }
     [MethodImpl(MethodImplOptions.NoInlining)]
     static Task<int> ThrowSource(Exception error) { throw error; }

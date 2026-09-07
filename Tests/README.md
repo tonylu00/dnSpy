@@ -350,6 +350,16 @@ tail removal also requires no fallthrough or remaining live entry. The existing
 dead-jump proof runs before rethrow recovery so unreachable branches cannot keep
 an otherwise unused tail alive. Both input assembly hashes remain unchanged.
 
+With `-DispatchCalls`, the runner instead detaches seven exception-dispatch calls,
+retaining their explicit normal continuations and original exception regions.
+Thirty additional AST checks cover effects, incoming edges, wrong values/calls,
+changed continuations and scope boundaries with debug spans enabled and disabled.
+The runner also constructs the detached AST directly, applies the new recovery,
+rebuilds that complete source and executes the same 8,750-case behavior matrix.
+This exercises the transform even when earlier passes can simplify the IL-only
+layout. Recovery requires the exact captured rethrow and a return branch to the
+guard's immediate continuation; other live entries keep the detached target.
+
 `Invoke-SingleIterationTryLoopRegression.ps1` verifies removal of an artificial loop
 whose try and every catch end with a break targeting that loop. It preserves nested
 breaks and finally blocks, rejects continues, early exits, labels, local declarations,

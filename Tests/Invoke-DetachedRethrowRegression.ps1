@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory)][string] $DnSpyConsole,
-    [Parameter(Mandatory)][string] $OutputDirectory
+    [Parameter(Mandatory)][string] $OutputDirectory,
+    [switch] $DispatchCalls
 )
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
@@ -9,6 +10,10 @@ $inputDirectory=Join-Path $OutputDirectory 'input'
 New-Item -ItemType Directory -Path $inputDirectory | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'NestedAwaitFinallyFixture.cs') -Destination $inputDirectory
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize><LangVersion>latest</LangVersion></PropertyGroup></Project>' | Set-Content (Join-Path $inputDirectory 'NestedAwaitFinallyFixture.csproj')
+if ($DispatchCalls) {
+    $fixtureProject=Join-Path $inputDirectory 'NestedAwaitFinallyFixture.csproj'
+    (Get-Content $fixtureProject -Raw).Replace('</PropertyGroup>','<DefineConstants>DETACHED_DISPATCH</DefineConstants></PropertyGroup>') | Set-Content $fixtureProject
+}
 dotnet build $inputDirectory -c Release --nologo -v quiet
 if($LASTEXITCODE -ne 0){throw 'Cleanup fixture build failed.'}
 $original=Join-Path $inputDirectory 'bin\Release\net48\NestedAwaitFinallyFixture.exe'
@@ -25,7 +30,9 @@ $dnlib=[Security.SecurityElement]::Escape((Join-Path $runtime 'dnlib.dll'))
 $variant=Join-Path $OutputDirectory 'detached'
 Copy-Item -LiteralPath (Split-Path $original) -Destination $variant -Recurse
 $inputAssembly=Join-Path $variant 'NestedAwaitFinallyFixture.exe'
-dotnet run --project (Join-Path $emitter 'Emitter.csproj') -c Release -- $original $inputAssembly
+$emitterArguments=@($original,$inputAssembly)
+if ($DispatchCalls) { $emitterArguments+='dispatch' }
+dotnet run --project (Join-Path $emitter 'Emitter.csproj') -c Release -- @emitterArguments
 if($LASTEXITCODE -ne 0){throw 'Detached rethrow emission failed.'}
 $variantHash=(Get-FileHash -LiteralPath $inputAssembly).Hash
 $actual=@(& $inputAssembly)
@@ -47,13 +54,27 @@ foreach($threads in @(1,4)) {
 }
 $debug=Join-Path $OutputDirectory 'debug'
 New-Item -ItemType Directory -Path $debug | Out-Null
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'DetachedRethrowDebug.cs') -Destination $debug
+$debugFile=if ($DispatchCalls) { 'DetachedDispatchRethrowDebug.cs' } else { 'DetachedRethrowDebug.cs' }
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot $debugFile) -Destination $debug
 $references=('ICSharpCode.NRefactory','ICSharpCode.NRefactory.CSharp','ICSharpCode.Decompiler','dnlib','dnSpy.Contracts.Logic' | ForEach-Object {
     $path=[Security.SecurityElement]::Escape((Join-Path $runtime ($_+'.dll')))
     "<Reference Include=`"$_`"><HintPath>$path</HintPath></Reference>"
 }) -join ''
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup>$references</ItemGroup></Project>" | Set-Content (Join-Path $debug 'Debug.csproj')
-dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release -- $original
+$debugArguments=@($original)
+if ($DispatchCalls) {
+    $normalized=Join-Path $OutputDirectory 'normalized'
+    New-Item -ItemType Directory -Path $normalized | Out-Null
+    $debugArguments+=(Join-Path $normalized 'Normalized.cs')
+}
+dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release -- @debugArguments
 if($LASTEXITCODE -ne 0){throw 'Detached rethrow safety/debug checks failed.'}
+if ($DispatchCalls) {
+    '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize><LangVersion>latest</LangVersion></PropertyGroup></Project>' | Set-Content (Join-Path $normalized 'Normalized.csproj')
+    dotnet build $normalized -c Release --nologo -v quiet
+    if ($LASTEXITCODE -ne 0) { throw 'Normalized dispatch AST source did not compile.' }
+    $actual=@(& (Join-Path $normalized 'bin\Release\net48\Normalized.exe'))
+    if ($LASTEXITCODE -ne 0 -or (Compare-Object $expected $actual -SyncWindow 0 -CaseSensitive)) { throw 'Normalized dispatch AST changed behavior.' }
+}
 if((Get-FileHash -LiteralPath $original).Hash -ne $hash -or (Get-FileHash -LiteralPath $inputAssembly).Hash -ne $variantHash){throw 'Input assembly changed.'}
 Write-Output $expected
