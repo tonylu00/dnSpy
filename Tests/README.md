@@ -431,6 +431,17 @@ Use `-Guarded` to place the generated initialization inside a try/finally and
 check that cleanup still runs once. This exercises declaration indexing within
 a nested scope as well as at the method root.
 
+`Invoke-RepeatedInitializerRegression.ps1` checks assignments followed by nested
+initialization of the same member, repeated fields/properties, reopened members
+and collection additions. The parser stops combining statements when a named
+member repeats; merging a setter with later getters could change which object is
+mutated. Ordinary and renamed-accessor inputs each rebuild with one/four workers
+and match 1,368 cases, including replacing setters, alternating getters, nulls,
+injected failures, partial state and exact call order. Eighteen AST/debug checks
+reject duplicate initializer names while retaining valid independent initializers.
+Property metadata supplies the source name; repeated index assignments remain
+legal. Input assembly hashes and IL stay unchanged.
+
 Loop tests also preserve writable iteration locals passed by reference through
 array, generic and non-generic enumeration, plus async array iteration storage
 across completed and suspended awaits. Such loops must not acquire the read-only
