@@ -10,9 +10,10 @@ using ICSharpCode.NRefactory.CSharp;
 class AsyncIteratorDebug {
     static void Main(string[] args) {
         int checks = 0;
-        foreach (string name in new[] { "Range", "Single", "Empty", "Cleanup", "Cancellable", "Items" })
-        foreach (string scenario in new[] { "original", "disabled-async", "disabled-yield", "unsupported-language", "constructor-effect", "yield-signal", "token-test", "token-attribute", "token-dispose", "exit-effect", "exit-cycle" }) {
+        foreach (string name in new[] { "Range", "Single", "Empty", "Cleanup", "Cancellable", "Items", "Filter" })
+        foreach (string scenario in new[] { "original", "disabled-async", "disabled-yield", "unsupported-language", "constructor-effect", "yield-signal", "token-test", "token-attribute", "token-dispose", "exit-effect", "exit-cycle", "cleanup-static", "cleanup-type" }) {
             if ((scenario.StartsWith("token-") && name != "Cancellable") || (scenario == "yield-signal" && name == "Empty")) continue;
+            if (scenario.StartsWith("cleanup-") && name != "Filter") continue;
             var resolver = new AssemblyResolver { EnableTypeDefCache = true };
             var mc = new ModuleContext(resolver); resolver.DefaultModuleContext = mc;
             resolver.PreSearchPaths.Add(Path.GetDirectoryName(args[0]));
@@ -33,6 +34,19 @@ class AsyncIteratorDebug {
                     int index = Enumerable.Range(0, move.Body.Instructions.Count).Last(i => (move.Body.Instructions[i].Operand as IMethod)?.Name == "Complete");
                     move.Body.Instructions.Insert(index, Instruction.Create(OpCodes.Call, hook));
                 }
+            } else if (scenario.StartsWith("cleanup-")) {
+                var code = move.Body.Instructions;
+                int completion = Enumerable.Range(0, code.Count).Last(i => (code[i].Operand as IMethod)?.Name == "Complete");
+                int clear = Enumerable.Range(0, completion).Last(i => code[i].OpCode == OpCodes.Initobj);
+                if (code[clear - 1].OpCode != OpCodes.Ldflda || !code[clear - 2].IsLdarg()) throw new Exception("Struct cleanup changed");
+                if (scenario == "cleanup-static") {
+                    // Clearing shared data is an observable exit effect, unlike
+                    // clearing the iterator's own dead hoisted local.
+                    var shared = new FieldDefUser("SharedEnumerator", new FieldSig(((IField)code[clear - 1].Operand).FieldSig.Type), FieldAttributes.Public | FieldAttributes.Static);
+                    owner.Fields.Add(shared);
+                    code[clear - 2].OpCode = OpCodes.Nop; code[clear - 2].Operand = null;
+                    code[clear - 1].OpCode = OpCodes.Ldsflda; code[clear - 1].Operand = shared;
+                } else code[clear].Operand = module.CorLibTypes.Int64.TypeDefOrRef;
             } else if (scenario == "exit-cycle") {
                 var exit = (Instruction)move.Body.Instructions.Last(i => i.OpCode == OpCodes.Leave || i.OpCode == OpCodes.Leave_S).Operand;
                 if (exit.OpCode != OpCodes.Ret) throw new Exception("Shared return changed");

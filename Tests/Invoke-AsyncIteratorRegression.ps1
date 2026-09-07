@@ -8,6 +8,7 @@ if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new regression outpu
 $inputDirectory=Join-Path $OutputDirectory 'input'
 New-Item -ItemType Directory -Path $inputDirectory | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'AsyncIteratorFixture.cs') -Destination $inputDirectory
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'FilteredIteratorFixture.cs') -Destination $inputDirectory
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><LangVersion>latest</LangVersion><Optimize>true</Optimize><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.0" /></ItemGroup></Project>' | Set-Content (Join-Path $inputDirectory 'AsyncIteratorFixture.csproj')
 dotnet build (Join-Path $inputDirectory 'AsyncIteratorFixture.csproj') -c Release --nologo -v quiet
 if($LASTEXITCODE -ne 0){throw 'Async iterator fixture build failed.'}
@@ -34,7 +35,7 @@ foreach($variant in $variants) {
         & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export $inputAssembly
         if($LASTEXITCODE -ne 0){throw 'Async iterator export failed.'}
         $source=Get-Content (Join-Path $export 'AsyncIteratorFixture\AsyncIteratorFixture.cs') -Raw
-        foreach($method in @('Range','Single','Empty','Cleanup','Cancellable','Items')) {
+        foreach($method in @('Range','Single','Empty','Cleanup','Cancellable','Items','Filter')) {
             if($source -notmatch "async IAsyncEnum(erable|erator)<[^>]+> $method") {throw "Iterator was not recovered: $method"}
         }
         if($source -match 'AsyncIteratorStateMachine\('){throw 'Reconstructed iterator retained its state machine attribute.'}

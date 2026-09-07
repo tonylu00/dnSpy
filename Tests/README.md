@@ -519,18 +519,22 @@ types, preserving the original duplicated stack value's type after a wider store
 `Invoke-AsyncIteratorRegression.ps1` verifies C# async enumerable/enumerator
 reconstruction, including generic instance methods, lazy execution, real await
 suspension, multiple yields, early disposal, awaited cleanup, exceptions and
-cancellation. Original and rebuilt one/four-worker exports each pass 4,676 checks.
+cancellation. Original and rebuilt one/four-worker exports each pass 14,348 checks.
+The filtered iterator covers 576 combinations of synchronous/suspended moves and
+disposal, skipped values, early stops, exceptions and cancellation. It checks exact
+input/read counts, output order, failure identity and cleanup precedence.
 Four additional inputs rearrange cancellation selection, disposal, completion,
 yield signalling and the shared return, including a completion path split around
-the yield signal. They also cache the state at each yield and rename the six state
+the yield signal. They also cache the state at each yield and rename the seven state
 machines, their fields and interface implementation methods. All five inputs must
 produce the same results. The emitter updates both metadata-table member references
 and generic-context references embedded in method bodies.
 
-Another 50 checks per input verify source/debug spans, unchanged input IL, disabled
+Another 60 checks per input verify source/debug spans, unchanged input IL, disabled
 settings/language capabilities, unexpected constructor effects, invalid yield
 signals, altered token predicates, missing cancellation attributes and changed
-token cleanup calls, extra completion effects and cyclic exit branches. These
+token cleanup calls, extra completion effects, cyclic exit branches, shared-data
+clearing and mismatched struct cleanup types. These
 unsupported shapes keep the original state machine.
 The Visual Basic frontend retains state machines because it cannot express C#
 async-iterator syntax. Other unsupported iterator layouts also remain available
@@ -545,6 +549,11 @@ emits `async` with `yield return`, and hides the inlined state machine. Both asy
 and iterator decompilation settings must be enabled. Exit matching follows branches
 without changing the input IL, checks both cancellation-disposal paths converge,
 and requires every node outside the main handler to belong to a validated exit.
+Redundant branches to the immediately following resume label are removed before
+counting incoming edges; other incoming edges and exception-region exits remain.
+Completion recognizes exact-type initialization of the state machine's own saved
+struct fields, including configured enumerators, without discarding calls or
+clearing shared data.
 
 `Invoke-EtsAsyncChannelRegression.ps1` takes original/processed Falcon assemblies,
 the untouched exported `Async.cs`, and a new output folder. It compiles that source

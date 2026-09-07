@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-public static class AsyncIteratorFixture {
+public static partial class AsyncIteratorFixture {
     public sealed class Box<T> {
         public int Visits;
         public async IAsyncEnumerable<T> Items(T first, T second) {
@@ -260,6 +260,7 @@ public static class AsyncIteratorFixture {
         empty.DisposeAsync().AsTask().GetAwaiter().GetResult();
         CheckCleanup();
         CheckCancellation();
+        CheckFilteredIteration();
         Gate = Task.CompletedTask;
         var box = new Box<string>();
         var boxed = box.Items("a", "b").GetAsyncEnumerator();
