@@ -6,6 +6,7 @@ using dnlib.DotNet.Emit;
 class EmitAsyncIterator {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
+        string layout = args.Length > 2 ? args[2] : "reordered";
         var kickoff = module.Types.Single(t => t.Name == "AsyncIteratorFixture").Methods.Single(m => m.Name == "Cancellable");
         var machine = ((IMethod)kickoff.Body.Instructions.Single(i => i.OpCode == OpCodes.Newobj).Operand).ResolveMethodDef().DeclaringType;
         var get = machine.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "GetAsyncEnumerator"));
@@ -23,19 +24,26 @@ class EmitAsyncIterator {
         foreach (var instruction in moved) code.Insert(insert++, instruction);
         branch.OpCode = OpCodes.Brtrue; branch.Operand = moved[0];
 
-        var move = machine.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "MoveNext"));
-        move.Body.SimplifyBranches(); code = move.Body.Instructions;
-        int dispose = Enumerable.Range(0, code.Count).Last(i => (code[i].Operand as IMethod)?.Name == "Dispose");
-        branch = code[dispose - 3];
-        if (branch.OpCode != OpCodes.Brfalse || !(branch.Operand is Instruction continuation)) throw new Exception("Disposal guard changed");
-        moved = code.Skip(dispose - 2).Take(6).ToArray();
-        if (moved[2].OpCode != OpCodes.Callvirt || moved[5].OpCode != OpCodes.Stfld || code[dispose + 4] != continuation) throw new Exception("Disposal body changed");
-        foreach (var instruction in moved) code.Remove(instruction);
-        int signal = Enumerable.Range(1, code.Count - 1).Single(i => (code[i].Operand as IMethod)?.Name == "SetResult" && code[i - 1].IsLdcI4() && code[i - 1].GetLdcI4Value() == 1);
-        insert = signal - 3;
-        foreach (var instruction in moved) code.Insert(insert++, instruction);
-        code.Insert(insert, Instruction.Create(OpCodes.Br, continuation));
-        branch.OpCode = OpCodes.Brtrue; branch.Operand = moved[0];
+        if (layout == "reordered") {
+            var move = machine.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "MoveNext"));
+            move.Body.SimplifyBranches(); code = move.Body.Instructions;
+            int dispose = Enumerable.Range(0, code.Count).Last(i => (code[i].Operand as IMethod)?.Name == "Dispose");
+            branch = code[dispose - 3];
+            if (branch.OpCode != OpCodes.Brfalse || !(branch.Operand is Instruction continuation)) throw new Exception("Disposal guard changed");
+            moved = code.Skip(dispose - 2).Take(6).ToArray();
+            if (moved[2].OpCode != OpCodes.Callvirt || moved[5].OpCode != OpCodes.Stfld || code[dispose + 4] != continuation) throw new Exception("Disposal body changed");
+            foreach (var instruction in moved) code.Remove(instruction);
+            int signal = Enumerable.Range(1, code.Count - 1).Single(i => (code[i].Operand as IMethod)?.Name == "SetResult" && code[i - 1].IsLdcI4() && code[i - 1].GetLdcI4Value() == 1);
+            insert = signal - 3;
+            foreach (var instruction in moved) code.Insert(insert++, instruction);
+            code.Insert(insert, Instruction.Create(OpCodes.Br, continuation));
+            branch.OpCode = OpCodes.Brtrue; branch.Operand = moved[0];
+        }
+
+        foreach (var type in module.GetTypes().Where(t => t.Interfaces.Any(i => i.Interface.FullName == "System.Runtime.CompilerServices.IAsyncStateMachine"))) {
+            CacheYieldStates(type);
+            if (layout != "reordered") ReorderExits(type, layout);
+        }
 
         var usedReferences = module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody)
             .SelectMany(m => m.Body.Instructions).Select(i => i.Operand is MethodSpec spec ? spec.Method as MemberRef : i.Operand as MemberRef).Where(r => r != null);
@@ -56,6 +64,52 @@ class EmitAsyncIterator {
             if (reference.Method != null) reference.Reference.Name = reference.Method.Name;
         }
         module.Write(args[1]);
-        Console.WriteLine("Reordered token selection and disposal; renamed " + names + " iterator machines.");
+        Console.WriteLine("Iterator layout " + layout + "; cached yield states and renamed " + names + " iterator machines.");
+    }
+
+    static void CacheYieldStates(TypeDef machine) {
+        var move = machine.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "MoveNext"));
+        var code = move.Body.Instructions;
+        var state = machine.Fields.Single(f => f.Name == "<>1__state");
+        int read = Enumerable.Range(0, code.Count - 1).First(i => code[i].OpCode == OpCodes.Ldfld && (code[i].Operand as IField)?.Name == state.Name);
+        var cache = code[read + 1].GetLocal(move.Body.Variables);
+        if (cache == null) throw new Exception("State cache changed: " + machine.Name);
+        for (int i = 1; i < code.Count; i++) {
+            if (code[i].OpCode != OpCodes.Stfld || (code[i].Operand as IField)?.Name != state.Name ||
+                !code[i - 1].IsLdcI4() || code[i - 1].GetLdcI4Value() >= -3) continue;
+            code.Insert(i++, Instruction.Create(OpCodes.Dup));
+            code.Insert(i++, Instruction.Create(OpCodes.Stloc, cache));
+        }
+    }
+
+    static void ReorderExits(TypeDef machine, string layout) {
+        var move = machine.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "MoveNext"));
+        move.Body.SimplifyBranches();
+        var code = move.Body.Instructions;
+        var handler = move.Body.ExceptionHandlers.Last();
+        int start = code.IndexOf(handler.HandlerEnd);
+        var sharedReturn = code.Last();
+        if (start < 0 || sharedReturn.OpCode != OpCodes.Ret || handler.CatchType?.FullName != "System.Exception") throw new Exception("Iterator exits changed");
+        int signal = Enumerable.Range(start + 1, code.Count - start - 1).SingleOrDefault(i =>
+            (code[i].Operand as IMethod)?.Name == "SetResult" && code[i - 1].IsLdcI4() && code[i - 1].GetLdcI4Value() == 1);
+        if (signal == 0) return; // Empty has only the completion exit.
+        int yieldStart = signal - 3;
+        var completion = code.Skip(start).Take(yieldStart - start).ToArray();
+        var yield = code.Skip(yieldStart).Take(code.Count - yieldStart - 1).Concat(new[] { Instruction.Create(OpCodes.Br, sharedReturn) }).ToArray();
+        if (completion.Last().OpCode != OpCodes.Ret || yield.Length != 5) throw new Exception("Exit signal changed");
+        Instruction[] replacement;
+        if (layout == "return-middle") replacement = completion.Concat(new[] { sharedReturn }).Concat(yield).ToArray();
+        else if (layout == "split-completion" && machine.Fields.Any(f => f.Name == "<>x__combinedTokens")) {
+            var guard = completion.Single(i => i.OpCode == OpCodes.Brfalse);
+            var continuation = (Instruction)guard.Operand;
+            int split = Array.IndexOf(completion, continuation);
+            if (split < 0) throw new Exception("Completion disposal changed");
+            replacement = new[] { sharedReturn }.Concat(completion.Take(split)).Concat(new[] { Instruction.Create(OpCodes.Br, continuation) })
+                .Concat(yield).Concat(completion.Skip(split)).ToArray();
+        } else if (layout == "return-first" || layout == "split-completion") replacement = new[] { sharedReturn }.Concat(yield).Concat(completion).ToArray();
+        else throw new Exception("Unknown exit layout: " + layout);
+        while (code.Count > start) code.RemoveAt(start);
+        foreach (var instruction in replacement) code.Add(instruction);
+        handler.HandlerEnd = replacement[0];
     }
 }

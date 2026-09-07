@@ -11,7 +11,7 @@ class AsyncIteratorDebug {
     static void Main(string[] args) {
         int checks = 0;
         foreach (string name in new[] { "Range", "Single", "Empty", "Cleanup", "Cancellable", "Items" })
-        foreach (string scenario in new[] { "original", "disabled-async", "disabled-yield", "unsupported-language", "constructor-effect", "yield-signal", "token-test", "token-attribute", "token-dispose" }) {
+        foreach (string scenario in new[] { "original", "disabled-async", "disabled-yield", "unsupported-language", "constructor-effect", "yield-signal", "token-test", "token-attribute", "token-dispose", "exit-effect", "exit-cycle" }) {
             if ((scenario.StartsWith("token-") && name != "Cancellable") || (scenario == "yield-signal" && name == "Empty")) continue;
             var resolver = new AssemblyResolver { EnableTypeDefCache = true };
             var mc = new ModuleContext(resolver); resolver.DefaultModuleContext = mc;
@@ -23,11 +23,20 @@ class AsyncIteratorDebug {
             var method = owner.Methods.Single(m => m.Name == name);
             var machine = method.Body.Instructions.Where(i => i.OpCode == OpCodes.Newobj).Select(i => ((IMethod)i.Operand).ResolveMethodDef().DeclaringType).Single();
             var move = machine.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "MoveNext"));
-            if (scenario == "constructor-effect") {
+            if (scenario == "constructor-effect" || scenario == "exit-effect") {
                 var hook = new MethodDefUser("ExtraInitialization", MethodSig.CreateStatic(module.CorLibTypes.Void), MethodImplAttributes.IL, MethodAttributes.Static | MethodAttributes.Private);
                 hook.Body = new CilBody(); hook.Body.Instructions.Add(Instruction.Create(OpCodes.Ret)); owner.Methods.Add(hook);
-                var ctor = machine.Methods.Single(m => m.IsInstanceConstructor);
-                ctor.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Call, hook));
+                if (scenario == "constructor-effect") {
+                    var ctor = machine.Methods.Single(m => m.IsInstanceConstructor);
+                    ctor.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Call, hook));
+                } else {
+                    int index = Enumerable.Range(0, move.Body.Instructions.Count).Last(i => (move.Body.Instructions[i].Operand as IMethod)?.Name == "Complete");
+                    move.Body.Instructions.Insert(index, Instruction.Create(OpCodes.Call, hook));
+                }
+            } else if (scenario == "exit-cycle") {
+                var exit = (Instruction)move.Body.Instructions.Last(i => i.OpCode == OpCodes.Leave || i.OpCode == OpCodes.Leave_S).Operand;
+                if (exit.OpCode != OpCodes.Ret) throw new Exception("Shared return changed");
+                exit.OpCode = OpCodes.Br; exit.Operand = exit;
             } else if (scenario == "yield-signal") {
                 int i = Enumerable.Range(1, move.Body.Instructions.Count - 1).Single(n =>
                     (move.Body.Instructions[n].Operand as IMethod)?.Name == "SetResult" &&

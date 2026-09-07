@@ -424,15 +424,18 @@ types, preserving the original duplicated stack value's type after a wider store
 reconstruction, including generic instance methods, lazy execution, real await
 suspension, multiple yields, early disposal, awaited cleanup, exceptions and
 cancellation. Original and rebuilt one/four-worker exports each pass 4,676 checks.
-A second input rearranges cancellation-selection and disposal blocks and renames
-the six state machines, their fields and interface implementation methods. It must
+Four additional inputs rearrange cancellation selection, disposal, completion,
+yield signalling and the shared return, including a completion path split around
+the yield signal. They also cache the state at each yield and rename the six state
+machines, their fields and interface implementation methods. All five inputs must
 produce the same results. The emitter updates both metadata-table member references
 and generic-context references embedded in method bodies.
 
-Another 38 checks per input verify source/debug spans, unchanged input IL, disabled
+Another 50 checks per input verify source/debug spans, unchanged input IL, disabled
 settings/language capabilities, unexpected constructor effects, invalid yield
 signals, altered token predicates, missing cancellation attributes and changed
-token cleanup calls. These unsupported shapes keep the original state machine.
+token cleanup calls, extra completion effects and cyclic exit branches. These
+unsupported shapes keep the original state machine.
 The Visual Basic frontend retains state machines because it cannot express C#
 async-iterator syntax. Other unsupported iterator layouts also remain available
 for further recovery; passing these tests does not establish complete ETS behavior.
@@ -443,4 +446,16 @@ symbolic default/equal/distinct token combinations before replacing cancellation
 selection, and validates the corresponding linked-token disposal. Successful
 recovery shares the existing await conversion and awaited-finally restoration,
 emits `async` with `yield return`, and hides the inlined state machine. Both async
-and iterator decompilation settings must be enabled.
+and iterator decompilation settings must be enabled. Exit matching follows branches
+without changing the input IL, checks both cancellation-disposal paths converge,
+and requires every node outside the main handler to belong to a validated exit.
+
+`Invoke-EtsAsyncChannelRegression.ps1` takes original/processed Falcon assemblies,
+the untouched exported `Async.cs`, and a new output folder. It compiles that source
+and runs only the channel reader helper in separate processes for all three targets.
+Each target must pass 198 cases / 1,697 checks with identical records: immediate and
+suspended waits/reads, fault identity, swallowed cancellation, all nine token pairs,
+linked-token cancellation, completion and early disposal. The runner verifies the
+source and assembly-copy hashes. It does not start ETS, open a project, or connect to
+a network or bus; these results establish helper behavior, not whole-application
+equivalence.

@@ -18,12 +18,15 @@ New-Item -ItemType Directory -Path $emitter | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'EmitAsyncIterator.cs') -Destination $emitter
 $dnlib=[Security.SecurityElement]::Escape((Join-Path $runtime 'dnlib.dll'))
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $emitter 'Emitter.csproj')
-$reordered=Join-Path $OutputDirectory 'reordered'
-Copy-Item -LiteralPath (Split-Path $original) -Destination $reordered -Recurse
-dotnet run --project (Join-Path $emitter 'Emitter.csproj') -c Release -- $original (Join-Path $reordered 'AsyncIteratorFixture.exe')
-if($LASTEXITCODE -ne 0){throw 'Iterator block rearrangement failed.'}
-foreach($variant in @('compiler','reordered')) {
-    $inputAssembly=if($variant -eq 'compiler'){$original}else{Join-Path $reordered 'AsyncIteratorFixture.exe'}
+$variants=@('compiler','reordered','return-first','return-middle','split-completion')
+foreach($variant in $variants | Where-Object {$_ -ne 'compiler'}) {
+    $reordered=Join-Path $OutputDirectory $variant
+    Copy-Item -LiteralPath (Split-Path $original) -Destination $reordered -Recurse
+    dotnet run --project (Join-Path $emitter 'Emitter.csproj') -c Release -- $original (Join-Path $reordered 'AsyncIteratorFixture.exe') $variant
+    if($LASTEXITCODE -ne 0){throw 'Iterator block rearrangement failed.'}
+}
+foreach($variant in $variants) {
+    $inputAssembly=if($variant -eq 'compiler'){$original}else{Join-Path $OutputDirectory "$variant\AsyncIteratorFixture.exe"}
     & $inputAssembly
     if($LASTEXITCODE -ne 0){throw 'Input async iterator behavior failed.'}
     foreach($threads in @(1,4)) {
@@ -52,7 +55,8 @@ $references=('ICSharpCode.NRefactory','ICSharpCode.NRefactory.CSharp','ICSharpCo
     "<Reference Include=`"$_`"><HintPath>$path</HintPath></Reference>"
 }) -join ''
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup>$references</ItemGroup></Project>" | Set-Content (Join-Path $debug 'Debug.csproj')
-dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release -- $original
-if($LASTEXITCODE -ne 0){throw 'Async iterator debug or rejection guard failed.'}
-dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release --no-build -- (Join-Path $reordered 'AsyncIteratorFixture.exe')
-if($LASTEXITCODE -ne 0){throw 'Reordered iterator debug or rejection guard failed.'}
+foreach($variant in $variants) {
+    $inputAssembly=if($variant -eq 'compiler'){$original}else{Join-Path $OutputDirectory "$variant\AsyncIteratorFixture.exe"}
+    dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release -- $inputAssembly
+    if($LASTEXITCODE -ne 0){throw 'Async iterator debug or rejection guard failed.'}
+}
