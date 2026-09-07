@@ -319,6 +319,21 @@ ordinary and imported types, including their names, dispatch IDs and return
 marshalling. `IndexerName` is synthesized only for a real indexer; named and
 explicit-interface indexers retain their metadata names and runtime dispatch.
 
+`Invoke-EmbeddedEventRegression.ps1` builds real embedded interop types through
+the C# compiler's `EmbedInteropTypes` option. Empty event wrappers carry an import
+flag without a GUID in that metadata. Their compilable C# declarations retain
+the explicit type-identity scope/name and event-source/provider attributes while
+omitting `ComImport`. Raw metadata and the "show all members" view retain the flag.
+This applies only to empty, nongeneric, top-level wrappers with well-formed
+identity/event attributes; ordinary COM contracts keep their GUID and import flag.
+
+Original and one/four-worker rebuilt assemblies pass 54 checks for runtime type
+equivalence, GUIDs, event-source/provider identity, inheritance, and casts across
+assemblies using managed implementations. Thirteen source guards check malformed or
+missing attributes, added members/bases, nested/generic types, and unchanged input
+metadata. The rebuilt wrapper's `IsImport` reflection flag is deliberately absent;
+no COM server is activated and no new GUID is invented.
+
 `Invoke-BamlReferencesRegression.ps1` loads a resource whose static value comes
 from an assembly referenced only by BAML. SDK and traditional single/batch exports
 must retain a resolved binary or project reference. Both SDK outputs are rebuilt
