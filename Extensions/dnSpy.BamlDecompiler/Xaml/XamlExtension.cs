@@ -86,6 +86,9 @@ namespace dnSpy.BamlDecompiler.Xaml {
 		}
 
 		static string EscapeOrEncapsulateInQuotes(string value) {
+			// An omitted value is invalid markup syntax, not an empty string.
+			if (value.Length == 0)
+				return "''";
 			var escaped = EscapeAttributeValue(value);
 			for (int i = 0; i < escaped.Length; i++) {
 				char c = escaped[i];

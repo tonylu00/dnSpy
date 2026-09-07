@@ -2,4 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:values="clr-namespace:OnlyBaml;assembly=XamlValues">
     <TextBlock x:Key="Entry" Text="{x:Static values:Provider.Text}" />
+    <TextBlock x:Key="Empty" Text="{Binding Missing, FallbackValue='', TargetNullValue='', ConverterParameter=''}" />
+    <TextBlock x:Key="Whitespace" Text="{Binding Missing, FallbackValue=' ', TargetNullValue={x:Null}, ConverterParameter='a b'}" />
 </ResourceDictionary>

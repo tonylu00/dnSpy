@@ -608,6 +608,8 @@ no COM server is activated and no new GUID is invented.
 from an assembly referenced only by BAML. SDK and traditional single/batch exports
 must retain a resolved binary or project reference. Both SDK outputs are rebuilt
 and executed, and the fixture verifies that no IL assembly reference masks the case.
+Binding fallback values, null values and converter parameters must also preserve
+empty strings, whitespace and explicit nulls when compacted to markup expressions.
 
 `Invoke-BamlTemplateScopeRegression.ps1` preserves dependency property owners inside
 templates instead of borrowing the enclosing style's target. Original and rebuilt

@@ -8,6 +8,7 @@ if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new regression ou
 $inputDirectory = Join-Path $OutputDirectory 'input'
 $libraryDirectory = Join-Path $OutputDirectory 'library'
 New-Item -ItemType Directory -Path $inputDirectory,$libraryDirectory | Out-Null
+'<Project />' | Set-Content (Join-Path $OutputDirectory 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlReferencesFixture.cs') -Destination $inputDirectory
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlReferencesDictionary.xaml') -Destination (Join-Path $inputDirectory 'Dictionary.xaml')
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework></PropertyGroup></Project>' |
