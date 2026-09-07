@@ -152,6 +152,14 @@ repeated suspension, synchronous factory faults, task faults and cancellation,
 filtered and ordinary handlers, cleanup order, exception identity and bypass.
 Twenty-three guards check fallthrough rejection, entry boundaries, switch edges,
 internal targets, bounded normalization, debug spans and disabled async recovery.
+
+`Invoke-JumpedAwaitCatchRegression.ps1` checks catch continuations reached by a
+jump past a normal exit, including a shared jump after the try/catch. Original
+and one/four-worker source rebuilds run 22,500 cases and 134,712 assertions for
+loop break/continue/return, suspension, faults, cancellation, raw wrapped payloads,
+exception identity and rethrow stacks. Thirty guards preserve the normal exit,
+join and jump spans, and reject other entries, fallthrough, capture/flag writes,
+cross-region targets and unsupported dispatch alternatives.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.
