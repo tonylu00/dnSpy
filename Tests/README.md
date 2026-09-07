@@ -183,6 +183,17 @@ static clearing, mismatched types and extra calls, preserve await debug spans an
 leave input IL unchanged. Exact-type initialization of a state-machine-owned field
 is recognized as cleanup without calling its struct constructor.
 
+`Invoke-DetachedRethrowRegression.ps1` moves seven compiler raw-object rethrows to
+detached tails, with two sharing an existing tail. The original, reordered input
+and rebuilt one/four-worker exports must agree on all 8,750 cleanup cases / 34,986
+assertions. Ten AST guards cover shared tails, dead incoming jumps, extra effects,
+fallthrough, wrong values, exception-region boundaries, nested functions,
+duplicate labels, other live entries and cleanup debug spans. The transform
+requires a complete captured-rethrow sequence and matching exception regions;
+tail removal also requires no fallthrough or remaining live entry. The existing
+dead-jump proof runs before rethrow recovery so unreachable branches cannot keep
+an otherwise unused tail alive. Both input assembly hashes remain unchanged.
+
 `Invoke-SingleIterationTryLoopRegression.ps1` verifies removal of an artificial loop
 whose try and every catch end with a break targeting that loop. It preserves nested
 breaks and finally blocks, rejects continues, early exits, labels, local declarations,
