@@ -19,7 +19,7 @@ class StructuredFilterDebug {
         var context = new DecompilerContext(0, module, null, true);
         var builder = new AstBuilder(context); builder.AddType(owner); builder.RunTransformations();
         var filters = builder.SyntaxTree.Descendants.OfType<CatchClause>().Where(c => !c.Condition.IsNull).ToArray();
-        if (filters.Length != 18 || filters.Count(c => c.VariableNameToken.IsNull) > 2 || filters.Any(c => c.Type.IsNull ||
+        if (filters.Length != 20 || filters.Count(c => c.VariableNameToken.IsNull) > 2 || filters.Any(c => c.Type.IsNull ||
             !c.Condition.GetAllRecursiveILSpans().Any(s => s.Start < s.End) ||
             c.Condition.DescendantsAndSelf.OfType<AnonymousMethodExpression>().Any() ||
             c.Condition.DescendantsAndSelf.OfType<InvocationExpression>().Any(i => i.Target is IdentifierExpression id && id.Identifier == "endfilter")))
@@ -310,6 +310,107 @@ class StructuredFilterDebug {
                 if (arguments[2] != null || arguments[3] == null || recovered.Code != ILCode.Cgt_Un ||
                     recovered.GetSelfAndChildrenRecursive<ILExpression>().Count(e => e.Code == ILCode.Stloc && e.Operand == variable) != 1 ||
                     spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End))) throw new Exception("Type-only decision stores, catch binding or spans changed: " + scenario);
+            }
+            checks++;
+        }
+        foreach (var name in new[] { "Conditional", "ConditionalAsync" })
+        foreach (var scenario in new[] { "linked", "direct-store", "inverted", "exposed-prepared", "external-false", "external-join", "cycle", "unknown-target", "missing-store", "mixed-store", "numeric-leaf", "result-read", "prefix-effect", "prefix-read", "wrong-address", "volatile-store" }) {
+            context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = owner.Methods.Single(m => m.Name == name) };
+            var block = new ILBlock(CodeBracesRangeFlags.MethodBraces) { Body = new ILAstBuilder().Build(context.CurrentMethod, true, context) };
+            var optimizer = new ILAstOptimizer(); optimizer.Optimize(context, block, out _, out _, out _, ILAstOptimizationStep.FixFilters);
+            var clause = block.GetSelfAndChildrenRecursive<ILTryCatchBlock.CatchBlock>().Single(c => c.FilterBlock != null);
+            var filter = clause.FilterBlock;
+            var outer = (ILCondition)filter.Body[1];
+            var accepted = outer.TrueBlock.Body.OfType<ILCondition>().Any() ? outer.TrueBlock : outer.FalseBlock;
+            var first = accepted.Body.OfType<ILCondition>().Single();
+            var path = first.TrueBlock.Body.OfType<ILCondition>().Any() ? first.TrueBlock : first.FalseBlock;
+            var preparation = path.Body.OfType<ILExpression>().Single(e => e.Code == ILCode.Stind_Ref);
+            var prepared = (ILVariable)preparation.Arguments[0].Operand;
+            var second = path.Body.OfType<ILCondition>().Single();
+            var join = accepted.Body.OfType<ILLabel>().Single();
+            var terminal = accepted.Body.Last();
+            var falseStore = accepted.Body.OfType<ILExpression>().First(e => e.Code == ILCode.Stloc && ((ILVariable)e.Operand).Type.ElementType == ElementType.I4);
+            var variable = (ILVariable)falseStore.Operand;
+            var successStore = second.GetSelfAndChildrenRecursive<ILExpression>().Single(e => e.Code == ILCode.Stloc && e.Operand == variable);
+            var falseLabel = new ILLabel { Name = "conditionalFalse" };
+            var rejectedJump = new ILExpression(ILCode.Br, falseLabel);
+            var prefix = accepted.Body.TakeWhile(n => n != first).ToArray();
+            ILBlock Body(params ILNode[] nodes) { var body = new ILBlock(CodeBracesRangeFlags.MethodBraces); body.Body.AddRange(nodes); return body; }
+            bool truePrepares = path == first.TrueBlock;
+            first.TrueBlock = truePrepares ? Body() : Body(rejectedJump);
+            first.FalseBlock = truePrepares ? Body(rejectedJump) : Body();
+            accepted.Body.Clear(); accepted.Body.AddRange(prefix);
+            accepted.Body.AddRange(new ILNode[] { first, preparation, second, falseLabel, falseStore, join, terminal });
+            bool shouldMatch = new[] { "linked", "direct-store", "inverted", "exposed-prepared" }.Contains(scenario);
+            if (scenario == "direct-store") accepted.Body[accepted.Body.IndexOf(preparation)] = new ILExpression(ILCode.Stloc, prepared, preparation.Arguments[1]) { InferredType = prepared.Type };
+            else if (scenario == "inverted") { first.Condition = new ILExpression(ILCode.LogicNot, null, first.Condition); var old = first.TrueBlock; first.TrueBlock = first.FalseBlock; first.FalseBlock = old; }
+            else if (scenario == "exposed-prepared") block.Body.Add(new ILExpression(ILCode.Ldloc, prepared));
+            else if (scenario == "external-false" || scenario == "external-join") block.Body.Add(new ILExpression(ILCode.Br, scenario == "external-false" ? falseLabel : join));
+            else if (scenario == "cycle") { var start = new ILLabel { Name = "conditionalCycle" }; accepted.Body.Insert(accepted.Body.IndexOf(preparation), start); rejectedJump.Operand = start; second.TrueBlock.Body.Insert(0, new ILExpression(ILCode.Br, start)); }
+            else if (scenario == "unknown-target") rejectedJump.Operand = new ILLabel { Name = "outside" };
+            else if (scenario == "missing-store") accepted.Body.Remove(falseStore);
+            else if (scenario == "mixed-store") successStore.Operand = new ILVariable("otherDecision") { Type = variable.Type };
+            else if (scenario == "numeric-leaf") falseStore.Arguments[0].Operand = 2;
+            else if (scenario == "result-read") first.Condition = new ILExpression(ILCode.Cne, null, new ILExpression(ILCode.Ldloc, variable), new ILExpression(ILCode.Ldc_I4, 0));
+            else if (scenario == "prefix-effect") accepted.Body.Insert(accepted.Body.IndexOf(preparation) + 1, new ILExpression(ILCode.Nop, null));
+            else if (scenario == "prefix-read") second.Condition = new ILExpression(ILCode.LogicAnd, null, new ILExpression(ILCode.Ldloc, new ILVariable("earlierRead") { Type = module.CorLibTypes.Boolean }), second.Condition);
+            else if (scenario == "wrong-address") preparation.Arguments[0].Code = ILCode.Ldloc;
+            else if (scenario == "volatile-store") preparation.Prefixes = new[] { new ILExpressionPrefix(ILCode.Volatile) };
+            var before = block.ToString(); var spans = filter.GetSelfAndChildrenRecursiveILSpans().Where(s => s.Start < s.End).ToArray();
+            var arguments = new object[] { block, clause, null, null };
+            if ((bool)match.Invoke(optimizer, arguments) != shouldMatch) throw new Exception("Incorrect linked preparation boundary: " + name + "/" + scenario);
+            if (!shouldMatch && before != block.ToString()) throw new Exception("Rejected linked preparation changed IL: " + scenario);
+            if (shouldMatch) {
+                var retained = filter.GetSelfAndChildrenRecursiveILSpans().ToArray();
+                var expressions = filter.GetSelfAndChildrenRecursive<ILExpression>().ToArray();
+                if (filter.Body.Count != 1 || arguments[2] == null || arguments[3] == null || !expressions.Any(e => e.Code == ILCode.Stloc && e.Operand == prepared) ||
+                    expressions.Any(e => e.Code == ILCode.Stind_Ref || e.Code == ILCode.Br) ||
+                    spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End))) throw new Exception("Linked preparation stores, type or offsets changed: " + scenario);
+            }
+            checks++;
+        }
+        foreach (var scenario in new[] { "selected", "reversed", "inverted", "negated", "outside-read", "other-path-read", "selected-write", "selected-address", "filter-write", "flag-read", "flag-write", "wrong-reset", "missing-reset", "extra-handler", "extra-statement", "incoming-label" }) {
+            context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = owner.Methods.Single(m => m.Name == "Prepared") };
+            var block = new ILBlock(CodeBracesRangeFlags.MethodBraces) { Body = new ILAstBuilder().Build(context.CurrentMethod, true, context) };
+            var optimizer = new ILAstOptimizer(); optimizer.Optimize(context, block, out _, out _, out _, ILAstOptimizationStep.FixFilters);
+            var clause = block.GetSelfAndChildrenRecursive<ILTryCatchBlock.CatchBlock>().Single(c => c.FilterBlock != null);
+            var filter = clause.FilterBlock;
+            var exception = (ILVariable)((ILExpression)filter.Body[0]).Operand;
+            var flag = new ILVariable("selectedHandler") { Type = module.CorLibTypes.Int32 };
+            ILExpression Number(int value) { return new ILExpression(ILCode.Ldc_I4, value) { InferredType = module.CorLibTypes.Int32 }; }
+            ILBlock Body(params ILNode[] nodes) { var body = new ILBlock(CodeBracesRangeFlags.MethodBraces); body.Body.AddRange(nodes); return body; }
+            var reset = new ILExpression(ILCode.Stloc, flag, Number(0));
+            var selected = new ILExpression(ILCode.Stloc, flag, Number(1));
+            var use = new ILExpression(ILCode.Ldloc, exception);
+            var dispatch = new ILCondition { Condition = new ILExpression(ILCode.Ceq, null, new ILExpression(ILCode.Ldloc, flag), Number(1)), TrueBlock = Body(use), FalseBlock = Body() };
+            var ownerBlock = block.GetSelfAndChildrenRecursive<ILTryCatchBlock>().Single(t => t.CatchBlocks.Contains(clause));
+            ownerBlock.CatchBlocks.RemoveAll(c => c != clause); clause.Body.Clear(); clause.Body.Add(selected);
+            block.Body.Clear(); block.Body.AddRange(new ILNode[] { reset, ownerBlock, dispatch });
+            bool shouldMatch = new[] { "selected", "reversed", "inverted", "negated" }.Contains(scenario);
+            if (scenario == "reversed") dispatch.Condition.Arguments.Reverse();
+            else if (scenario == "inverted" || scenario == "negated") { var old = dispatch.TrueBlock; dispatch.TrueBlock = dispatch.FalseBlock; dispatch.FalseBlock = old; if (scenario == "inverted") dispatch.Condition.Code = ILCode.Cne; else dispatch.Condition = new ILExpression(ILCode.LogicNot, null, dispatch.Condition); }
+            else if (scenario == "outside-read") block.Body.Add(new ILExpression(ILCode.Ldloc, exception));
+            else if (scenario == "other-path-read") dispatch.FalseBlock.Body.Add(new ILExpression(ILCode.Ldloc, exception));
+            else if (scenario == "selected-write") { use.Code = ILCode.Stloc; use.Arguments.Add(new ILExpression(ILCode.Ldnull, null)); }
+            else if (scenario == "selected-address") use.Code = ILCode.Ldloca;
+            else if (scenario == "filter-write") ((ILCondition)filter.Body[1]).TrueBlock.Body.Insert(0, new ILExpression(ILCode.Stloc, exception, new ILExpression(ILCode.Ldnull, null)));
+            else if (scenario == "flag-read") block.Body.Add(new ILExpression(ILCode.Ldloc, flag));
+            else if (scenario == "flag-write") block.Body.Add(new ILExpression(ILCode.Stloc, flag, Number(1)));
+            else if (scenario == "wrong-reset") reset.Arguments[0].Operand = 1;
+            else if (scenario == "missing-reset") block.Body.Remove(reset);
+            else if (scenario == "extra-handler") clause.Body.Add(new ILExpression(ILCode.Nop, null));
+            else if (scenario == "extra-statement") block.Body.Insert(2, new ILExpression(ILCode.Nop, null));
+            else if (scenario == "incoming-label") { var label = new ILLabel { Name = "selectedEntry" }; dispatch.TrueBlock.Body.Insert(0, label); block.Body.Add(new ILExpression(ILCode.Br, label)); }
+            var before = block.ToString(); var spans = filter.GetSelfAndChildrenRecursiveILSpans().Where(s => s.Start < s.End).ToArray();
+            var arguments = new object[] { block, clause, null, null };
+            if ((bool)match.Invoke(optimizer, arguments) != shouldMatch) throw new Exception("Incorrect selected exception boundary: " + scenario);
+            if (!shouldMatch && before != block.ToString()) throw new Exception("Rejected selected exception changed IL: " + scenario);
+            if (shouldMatch) {
+                var captured = (ILVariable)arguments[2];
+                var expression = (ILExpression)filter.Body.Single(); var retained = filter.GetSelfAndChildrenRecursiveILSpans().ToArray();
+                if (captured == null || captured == exception || arguments[3] == null || expression.Code != ILCode.LogicAnd ||
+                    !expression.Arguments[0].GetSelfAndChildrenRecursive<ILExpression>().Any(e => e.Code == ILCode.Stloc && e.Operand == exception && e.Arguments.Single().Operand == captured) ||
+                    use.Operand != exception || spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End))) throw new Exception("Selected exception capture or debug offsets lost: " + scenario);
             }
             checks++;
         }

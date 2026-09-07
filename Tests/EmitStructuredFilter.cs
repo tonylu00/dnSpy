@@ -6,7 +6,7 @@ using dnlib.DotNet.Emit;
 class Emitter {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
-        int filters = 0, decisions = 0, updates = 0, typeDecisions = 0;
+        int filters = 0, decisions = 0, updates = 0, typeDecisions = 0, conditional = 0;
         foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody)) {
             method.Body.SimplifyBranches();
             method.Body.SimplifyMacros(method.Parameters);
@@ -56,14 +56,58 @@ class Emitter {
                 branch.Operand = reject[0];
                 if (InlineUpdates(method, handler)) updates++;
                 if (InlineTypeDecision(module, method, handler)) typeDecisions++;
+                if (InlineConditional(module, method, handler)) conditional++;
                 filters++;
             }
         }
-        if (filters != 18) throw new Exception("Expected eighteen reordered filters, got " + filters);
+        if (filters != 20) throw new Exception("Expected twenty reordered filters, got " + filters);
         if (decisions != 2) throw new Exception("Expected two reordered nested decisions, got " + decisions);
         if (updates != 4) throw new Exception("Expected four inline update filters, got " + updates);
         if (typeDecisions != 2) throw new Exception("Expected two inline type-only decisions, got " + typeDecisions);
+        if (conditional != 2) throw new Exception("Expected two conditional preparation filters, got " + conditional);
         module.Write(args[1]); Console.WriteLine("Reordered " + filters + " filter acceptance/rejection blocks.");
+    }
+    static bool InlineConditional(ModuleDef module, MethodDef method, ExceptionHandler handler) {
+        var code = method.Body.Instructions;
+        int start = code.IndexOf(handler.FilterStart), end = code.IndexOf(handler.HandlerStart);
+        int call = Enumerable.Range(start, end - start).FirstOrDefault(i => (code[i].Operand as IMethod)?.Name == "ConditionalPredicate", -1);
+        if (call < 0) return false;
+        var args = new List<Instruction[]>(); int cursor = call;
+        for (int i = 0; i < 3; i++) {
+            int last = cursor;
+            if (code[cursor - 1].OpCode == OpCodes.Ldfld || code[cursor - 1].OpCode == OpCodes.Ldflda) cursor--;
+            cursor--;
+            if (code[cursor].OpCode != OpCodes.Ldarg && code[cursor].OpCode != OpCodes.Ldloc && code[cursor].OpCode != OpCodes.Ldloca) throw new Exception("Unexpected conditional argument");
+            args.Insert(0, code.Skip(cursor).Take(last - cursor).ToArray());
+        }
+        if (args[2].Last().OpCode != OpCodes.Ldloca && args[2].Last().OpCode != OpCodes.Ldflda) throw new Exception("Missing prepared reference");
+        var errorType = module.Types.Single(t => t.Name == "FilterFailure");
+        var contextType = module.Types.Single(t => t.Name == "FilterContext");
+        var detailType = module.Types.Single(t => t.Name == "FilterDetail");
+        var result = new Local(module.CorLibTypes.Int32); method.Body.Variables.Add(result);
+        var no = Instruction.Create(OpCodes.Ldc_I4, 0); var join = Instruction.Create(OpCodes.Ldloc, result);
+        var prepare = new Instruction(args[2][0].OpCode, args[2][0].Operand);
+        var emitted = new List<Instruction>();
+        void Load(int i) { emitted.AddRange(args[i].Select(a => new Instruction(a.OpCode, a.Operand))); }
+        void ReadPrepared() {
+            emitted.AddRange(args[2].Take(args[2].Length - 1).Select(a => new Instruction(a.OpCode, a.Operand)));
+            var address = args[2].Last(); emitted.Add(new Instruction(address.OpCode == OpCodes.Ldloca ? OpCodes.Ldloc : OpCodes.Ldfld, address.Operand));
+        }
+        Load(0); emitted.Add(Instruction.Create(OpCodes.Callvirt, errorType.Methods.Single(m => m.Name == "get_RetryCode")));
+        emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 5)); emitted.Add(Instruction.Create(OpCodes.Beq, prepare));
+        Load(0); emitted.Add(Instruction.Create(OpCodes.Callvirt, errorType.Methods.Single(m => m.Name == "get_RetryCode")));
+        emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 19)); emitted.Add(Instruction.Create(OpCodes.Bne_Un, no));
+        emitted.Add(prepare); emitted.AddRange(args[2].Skip(1).Select(a => new Instruction(a.OpCode, a.Operand)));
+        Load(1); emitted.Add(Instruction.Create(OpCodes.Callvirt, contextType.Methods.Single(m => m.Name == "get_Detail")));
+        emitted.Add(Instruction.Create(OpCodes.Isinst, detailType)); emitted.Add(Instruction.Create(OpCodes.Stind_Ref));
+        ReadPrepared(); emitted.Add(Instruction.Create(OpCodes.Brfalse, no));
+        ReadPrepared(); emitted.Add(Instruction.Create(OpCodes.Callvirt, detailType.Methods.Single(m => m.Name == "get_Ready"))); emitted.Add(Instruction.Create(OpCodes.Brfalse, no));
+        Load(1); emitted.Add(Instruction.Create(OpCodes.Callvirt, contextType.Methods.Single(m => m.Name == "get_Final")));
+        emitted.Add(Instruction.Create(OpCodes.Stloc, result)); emitted.Add(Instruction.Create(OpCodes.Br, join));
+        emitted.Add(no); emitted.Add(Instruction.Create(OpCodes.Stloc, result)); emitted.Add(join);
+        for (int i = call; i >= cursor; i--) code.RemoveAt(i);
+        foreach (var instruction in emitted) code.Insert(cursor++, instruction);
+        return true;
     }
     static bool InlineTypeDecision(ModuleDef module, MethodDef method, ExceptionHandler handler) {
         var code = method.Body.Instructions;

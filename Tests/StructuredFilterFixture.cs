@@ -21,6 +21,16 @@ public sealed class FilterFailure : Exception {
     public bool Fails;
     public int CodeValue;
     public bool CodeFails;
+    public int FirstRetry, SecondRetry, RetryThrowStage;
+    int retryReads;
+    public int RetryCode {
+        get {
+            StructuredFilterFixture.Trace += "Q"; retryReads++;
+            if (retryReads == RetryThrowStage) throw new FormatException("retry code failure");
+            if (retryReads > 2) throw new Exception("Duplicate retry code read");
+            return retryReads == 1 ? FirstRetry : SecondRetry;
+        }
+    }
     public FilterCode? OptionalCode;
     public FilterCode? GetOptional() {
         StructuredFilterFixture.Trace += "N";
@@ -51,6 +61,13 @@ public sealed class FilterWindow {
     public int AddressSpace { get { addressReads++; Read("A", addressReads == 1 ? 2 : 3); if (addressReads > 2) throw new Exception("Duplicate address read"); return addressReads == 1 ? FirstSpace : SecondSpace; } }
     public uint Start { get { Read("S", 4); return StartValue; } }
     void Read(string marker, int stage) { StructuredFilterFixture.Trace += marker; if (stage == ThrowStage) throw new FormatException("window getter"); }
+}
+public sealed class FilterContext {
+    public object DetailValue;
+    public bool FinalValue;
+    public int ThrowStage;
+    public object Detail { get { StructuredFilterFixture.Trace += "P"; if (ThrowStage == 3) throw new FormatException("detail preparation"); return DetailValue; } }
+    public bool Final { get { StructuredFilterFixture.Trace += "Z"; if (ThrowStage == 5) throw new FormatException("final predicate"); return FinalValue; } }
 }
 public static class StructuredFilterFixture {
     public static string Trace;
@@ -160,6 +177,46 @@ public static class StructuredFilterFixture {
         trace += "S";
         ulong sum = ((ulong)start + length) & uint.MaxValue;
         return trace + "U" + (stage != 4 && sum <= 65536UL ? "H" : "F");
+    }
+    static bool ConditionalPredicate(FilterFailure failure, FilterContext context, ref FilterDetail prepared) {
+        if (failure.RetryCode != 5 && failure.RetryCode != 19) return false;
+        prepared = context.Detail as FilterDetail;
+        return !ReferenceEquals(prepared, null) && prepared.Ready && context.Final;
+    }
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+    static string PreparedState(ref FilterDetail prepared, FilterDetail initial) {
+        return ReferenceEquals(prepared, initial) ? "I" : ReferenceEquals(prepared, null) ? "N" : "P";
+    }
+    static Exception Conditional(Exception failure, FilterContext context, FilterDetail initial) {
+        FilterDetail prepared = initial;
+        try { try { throw failure; } finally { Trace += "U" + PreparedState(ref prepared, initial); } }
+        catch (FilterFailure exception) when (ConditionalPredicate(exception, context, ref prepared)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+    }
+    static async Task<Exception> ConditionalAsync(Task task, Task cleanup, bool rethrow, FilterContext context, FilterDetail initial) {
+        FilterDetail prepared = initial;
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U" + PreparedState(ref prepared, initial); } }
+        catch (FilterFailure exception) when (ConditionalPredicate(exception, context, ref prepared)) {
+            Trace += "H"; await cleanup.ConfigureAwait(false); Trace += "K"; if (rethrow) throw; return exception;
+        }
+        catch (Exception exception) { Trace += "F"; return exception; }
+        return null;
+    }
+    static Exception ConditionalFailure(bool matches, int first, int second, int stage) {
+        return matches ? (Exception)new FilterFailure { FirstRetry = first, SecondRetry = second, RetryThrowStage = stage <= 2 ? stage : 0 } : new ArgumentException("unmatched");
+    }
+    static string ConditionalTrace(bool matches, int first, int second, int stage, int detail, bool ready, bool final, bool async) {
+        if (!matches) return "UIF";
+        string trace = "Q";
+        if (stage == 1) return trace + "UIF";
+        if (first != 5) { trace += "Q"; if (stage == 2 || second != 19) return trace + "UIF"; }
+        trace += "P";
+        if (stage == 3) return trace + "UIF";
+        if (detail != 2) return trace + "UNF";
+        trace += "R";
+        if (stage == 4 || !ready) return trace + "UPF";
+        trace += "Z";
+        return trace + "UP" + (stage == 5 || !final ? "F" : async ? "HK" : "H");
     }
     static bool Initial(Exception error, int mode) {
         Trace += "A"; observed = error;
@@ -332,6 +389,49 @@ public static class StructuredFilterFixture {
             }
         }
         Reset(); Check(TypeOnlyAsync(Task.FromResult(0), null, new FilterWindow(), 0).GetAwaiter().GetResult(), null, "U", false);
+        foreach (bool matches in new[] { false, true }) foreach (int first in new[] { 5, 19, 0 }) foreach (int second in new[] { 5, 19, 0 })
+        for (int stage = 0; stage <= 5; stage++) for (int detail = 0; detail < 3; detail++) foreach (bool ready in new[] { false, true }) foreach (bool final in new[] { false, true }) {
+            var initial = new FilterDetail(); var context = new FilterContext { ThrowStage = stage, FinalValue = final, DetailValue = detail == 0 ? null : detail == 1 ? new object() : new FilterDetail { Accept = ready, Fails = stage == 4 } };
+            var failure = ConditionalFailure(matches, first, second, stage);
+            Reset(); Check(Conditional(failure, context, initial), failure, ConditionalTrace(matches, first, second, stage, detail, ready, final, false), false);
+            foreach (bool suspended in new[] { false, true }) {
+                failure = ConditionalFailure(matches, first, second, stage);
+                Reset(); var completion = new TaskCompletionSource<int>(); if (!suspended) completion.SetException(failure);
+                var task = ConditionalAsync(completion.Task, Task.FromResult(0), false, context, initial);
+                if (suspended) { if (task.IsCompleted || Trace != "") throw new Exception("Missing conditional suspension"); completion.SetException(failure); }
+                Check(task.GetAwaiter().GetResult(), failure, ConditionalTrace(matches, first, second, stage, detail, ready, final, true), false);
+            }
+        }
+        foreach (bool suspended in new[] { false, true }) foreach (bool suspendCleanup in new[] { false, true }) foreach (bool rethrow in new[] { false, true }) {
+            var initial = new FilterDetail(); var context = new FilterContext { FinalValue = true, DetailValue = new FilterDetail { Accept = true } };
+            var failure = ConditionalFailure(true, 5, 0, 0); var completion = new TaskCompletionSource<int>(); var cleanup = new TaskCompletionSource<int>();
+            if (!suspended) completion.SetException(failure); if (!suspendCleanup) cleanup.SetResult(0);
+            Reset(); var task = ConditionalAsync(completion.Task, cleanup.Task, rethrow, context, initial);
+            if (suspended) { if (task.IsCompleted || Trace != "") throw new Exception("Missing conditional rethrow suspension"); completion.SetException(failure); }
+            if (suspendCleanup) { if (task.IsCompleted || Trace != "QPRZUPH") throw new Exception("Missing filtered handler suspension"); cleanup.SetResult(0); }
+            Exception actual;
+            try { actual = task.GetAwaiter().GetResult(); if (rethrow) throw new Exception("Missing conditional rethrow"); }
+            catch (FilterFailure error) { if (!rethrow) throw; actual = error; }
+            Check(actual, failure, "QPRZUPHK", false);
+        }
+        Reset(); Check(ConditionalAsync(Task.FromResult(0), Task.FromResult(0), false, new FilterContext(), new FilterDetail()).GetAwaiter().GetResult(), null, "UI", false);
+        foreach (bool suspended in new[] { false, true }) foreach (bool suspendCleanup in new[] { false, true }) foreach (bool cancel in new[] { false, true }) {
+            var failure = ConditionalFailure(true, 5, 0, 0); var cleanupError = new FilterFailure();
+            var completion = new TaskCompletionSource<int>(); var cleanup = new TaskCompletionSource<int>();
+            if (!suspended) completion.SetException(failure);
+            if (!suspendCleanup) { if (cancel) cleanup.SetCanceled(); else cleanup.SetException(cleanupError); }
+            var context = new FilterContext { FinalValue = true, DetailValue = new FilterDetail { Accept = true } };
+            Reset(); var task = ConditionalAsync(completion.Task, cleanup.Task, false, context, new FilterDetail());
+            if (suspended) { if (task.IsCompleted || Trace != "") throw new Exception("Missing conditional failure suspension"); completion.SetException(failure); }
+            if (suspendCleanup) { if (task.IsCompleted || Trace != "QPRZUPH") throw new Exception("Missing cleanup failure suspension"); if (cancel) cleanup.SetCanceled(); else cleanup.SetException(cleanupError); }
+            Exception actual = null;
+            try { task.GetAwaiter().GetResult(); throw new Exception("Cleanup failure was swallowed"); }
+            catch (FilterFailure error) { actual = error; }
+            catch (OperationCanceledException error) { actual = error; }
+            checks++;
+            if (Trace != "QPRZUPH" || (cancel ? !(actual is OperationCanceledException) || !task.IsCanceled : !ReferenceEquals(actual, cleanupError) || !task.IsFaulted))
+                throw new Exception("Cleanup failure crossed another catch boundary");
+        }
         string numbers = "";
         foreach (int? value in new int?[] { null, 0, -7, int.MaxValue }) numbers += value.HasValue ? value.Value.ToString() + ";" : "null;";
         checks++; if (numbers != "null;0;-7;2147483647;") throw new Exception("Nullable integer array element changed");
