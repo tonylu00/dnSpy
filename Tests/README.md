@@ -164,6 +164,17 @@ exception identity and rethrow stacks. Thirty guards preserve the normal exit,
 join and jump spans, and reject other entries, fallthrough, capture/flag writes,
 cross-region targets and unsupported dispatch alternatives.
 
+`Invoke-StateDispatchAwaitRegression.ps1` verifies a late switch routing three
+distinct awaiters inside a loop and a nested inclusive state comparison. Original
+and one/four-worker source rebuilds pass 8,000 cases / 35,440 assertions, covering
+immediate and repeated suspended completion, factory/task/observer failures,
+cancellation, result order and exactly-once cleanup with failure precedence.
+Another 1,050 checks cover signed/unsigned boundaries, overflowing state offsets,
+switch cases and default fallthrough, observable-effect barriers, unsupported
+expressions, debug spans, disabled reconstruction and unchanged input IL. Synthetic
+entry labels must survive later state analysis so every resume retains its own
+awaiter. Pure inline resume bookkeeping can precede or follow its completed path.
+
 `Invoke-BackwardResultAwaitRegression.ps1` covers an inline suspension whose
 GetResult block precedes the factory, with adjacent or detached resume bookkeeping.
 Original and one/four-worker source rebuilds run 16,004 cases with 70,892 assertions
