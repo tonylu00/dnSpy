@@ -795,6 +795,14 @@ Completion recognizes exact-type initialization of the state machine's own saved
 struct fields, including configured enumerators, without discarding calls or
 clearing shared data.
 
+`Invoke-EscapedClosureRegression.ps1` checks captures allocated inside a loop and
+used after it, including generic values, repeated allocations, synchronous and
+suspended execution, faults and cancellation. Original and rebuilt one/four-worker
+exports each pass 460 cases / 2,888 checks for allocation identity, stored values,
+event order and exception behavior. Eight AST checks cover retained allocations,
+local-only simplification, debug spans and unchanged input IL. Closure cleanup
+keeps the original storage when a use extends beyond the allocation block.
+
 `Invoke-EtsAsyncChannelRegression.ps1` takes original/processed Falcon assemblies,
 the untouched exported `Async.cs`, and a new output folder. It compiles that source
 and runs only the channel reader helper in separate processes for all three targets.
