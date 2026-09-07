@@ -314,6 +314,10 @@ subscriptions, removals and concurrent registration without losing event storage
 compiler-generated public runtime constructor after export and recompilation.
 It does not activate a COM server. Ordinary constructor bodies are also executed
 to verify that the special handling stays limited to COM import metadata.
+One- and four-worker exports also preserve parameterless default properties on
+ordinary and imported types, including their names, dispatch IDs and return
+marshalling. `IndexerName` is synthesized only for a real indexer; named and
+explicit-interface indexers retain their metadata names and runtime dispatch.
 
 `Invoke-BamlReferencesRegression.ps1` loads a resource whose static value comes
 from an assembly referenced only by BAML. SDK and traditional single/batch exports

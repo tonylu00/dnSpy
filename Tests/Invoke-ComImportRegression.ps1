@@ -15,12 +15,14 @@ if ($LASTEXITCODE -ne 0) { throw 'COM import fixture build failed.' }
 $inputExe = Join-Path $inputDirectory 'bin\Release\net48\ComImportFixture.exe'
 & $inputExe
 if ($LASTEXITCODE -ne 0) { throw 'Original COM import metadata check failed.' }
-$export = Join-Path $OutputDirectory 'export'
-& $DnSpyConsole --no-color --sdk-project --threads 4 -o $export $inputExe
-if ($LASTEXITCODE -ne 0) { throw 'COM import export failed.' }
-$project = Get-ChildItem -LiteralPath $export -Recurse -Filter '*.csproj' | Select-Object -First 1
-$rebuilt = Join-Path $OutputDirectory 'rebuilt'
-dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
-if ($LASTEXITCODE -ne 0) { throw 'Exported COM import source compilation failed.' }
-& (Join-Path $rebuilt 'ComImportFixture.exe')
-if ($LASTEXITCODE -ne 0) { throw 'Rebuilt COM import metadata or ordinary constructor behavior changed.' }
+foreach ($threads in @(1,4)) {
+    $export = Join-Path $OutputDirectory "export-$threads"
+    & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export $inputExe
+    if ($LASTEXITCODE -ne 0) { throw 'COM import export failed.' }
+    $project = Get-ChildItem -LiteralPath $export -Recurse -Filter '*.csproj' | Select-Object -First 1
+    $rebuilt = Join-Path $OutputDirectory "rebuilt-$threads"
+    dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
+    if ($LASTEXITCODE -ne 0) { throw 'Exported COM import source compilation failed.' }
+    & (Join-Path $rebuilt 'ComImportFixture.exe')
+    if ($LASTEXITCODE -ne 0) { throw 'Rebuilt COM import metadata or ordinary constructor behavior changed.' }
+}

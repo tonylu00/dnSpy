@@ -532,7 +532,7 @@ namespace dnSpy.Contracts.Decompiler {
 			foreach (var ca in property.CustomAttributes)
 				yield return ca;
 			var defMemCa = Find(property.DeclaringType, systemReflectionName, defaultMemberAttributeName);
-			if (defMemCa is not null && defMemCa.ConstructorArguments.Count > 0 &&
+			if (property.IsIndexer() && defMemCa is not null && defMemCa.ConstructorArguments.Count > 0 &&
 				defMemCa.ConstructorArguments[0].Value is UTF8String defMember &&
 				defMember != itemName && defMember == property.Name) {
 				var module = property.Module;
