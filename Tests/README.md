@@ -164,6 +164,17 @@ exception identity and rethrow stacks. Thirty guards preserve the normal exit,
 join and jump spans, and reject other entries, fallthrough, capture/flag writes,
 cross-region targets and unsupported dispatch alternatives.
 
+`Invoke-SharedCaptureFinallyRegression.ps1` gives eleven caught-exception captures
+the same hoisted temporary used by independent rethrows, across five nested,
+conditional and sequential cleanup methods. Original, modified and one/four-worker
+source rebuilds pass 8,750 cases / 34,986 assertions, including suspension, wrapped
+raw payloads, cancellation, exception identity, original stacks and cleanup-failure
+precedence. Fifty AST checks require exact capture definitions and reject external
+reads, closures, self inputs, wrong values, handler effects, early reads, filters
+and protected-body observations. They also check cleanup structure, debug spans and
+unchanged input IL. Only independently defined capture/rethrow uses may share the
+temporary; other uses prevent removal.
+
 `Invoke-StateDispatchAwaitRegression.ps1` verifies a late switch routing three
 distinct awaiters inside a loop and a nested inclusive state comparison. Original
 and one/four-worker source rebuilds pass 8,000 cases / 35,440 assertions, covering
