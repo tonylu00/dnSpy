@@ -394,6 +394,13 @@ reconstruct without conflicting with shared iterator storage.
 retained-iterator scenarios covering value flow, evaluation counts, exception
 identity, resumption and disposal.
 
+`Invoke-ConstantArrayStoreRegression.ps1` emits signed/unsigned byte and short
+array stores with out-of-range stack constants and erased receiver casts. Original,
+emitted and one/four-worker source rebuilds must agree on 1,854 checks for truncation,
+contents, operand order, null/bounds failures and explicit checked conversions.
+Twelve AST/debug checks retain source spans, unchecked literal narrowing and
+checked index/value operations. Input assembly hashes and IL remain unchanged.
+
 `Invoke-BitwiseComplementRegression.ps1` checks small-integer and character
 promotion before `~`, preserving narrowing in returns, stores, boxing and overload
 selection. Its 6,334 checks cover every byte value, wider signed/unsigned boundaries,
