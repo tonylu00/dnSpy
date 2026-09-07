@@ -34,7 +34,9 @@ class PendingCatchReuseDebug {
             var capture = (AssignmentExpression)((ExpressionStatement)handler.Body.Statements.First()).Expression;
             var pending = capture.Left.Annotation<ILVariable>();
             var cleanupCapture = (AssignmentExpression)((ExpressionStatement)cleanupHandler.Body.Statements.Last()).Expression;
-            Check(cleanupCapture.Left.Annotation<ILVariable>() == pending, "Compiler no longer shares pending capture");
+            var sharedCapture = args.Length > 1 && args[1] == "shared"
+                ? (AssignmentExpression)((ExpressionStatement)cleanupHandler.Body.Statements.First()).Expression : cleanupCapture;
+            Check(sharedCapture.Left.Annotation<ILVariable>() == pending, "Fixture no longer shares expected capture");
             var flag = (AssignmentExpression)((ExpressionStatement)handler.Body.Statements.Last()).Expression;
             var reset = (ExpressionStatement)region.GetPrevSibling(n => n is Statement);
             var dispatch = (IfElseStatement)region.GetNextSibling(n => n is Statement);

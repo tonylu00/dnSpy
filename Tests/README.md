@@ -208,6 +208,10 @@ writes and closures. Cleanup recovery preserves the other catch while proving it
 independent lifetime; a later cleanup can then unblock an earlier awaited catch.
 An alternative branch can have independent effects, while external observations
 of the shared exception still prevent cleanup recovery.
+With `-ShareIntermediate`, the emitter shares the catch/rethrow intermediate with
+the independent typed catch while keeping the cleanup's pending exception separate.
+The modified input must match the same 67,500-case baseline before source export;
+rebuilt outputs and the same lifetime guards then exercise this second arrangement.
 
 `Invoke-FilterCaptureFinallyRegression.ps1` shares a filtered-catch capture with
 the surrounding awaited-finally rethrow temporary. Original, modified and

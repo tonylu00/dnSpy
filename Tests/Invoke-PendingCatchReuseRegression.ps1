@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory)][string] $DnSpyConsole,
-    [Parameter(Mandatory)][string] $OutputDirectory
+    [Parameter(Mandatory)][string] $OutputDirectory,
+    [switch] $ShareIntermediate
 )
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
@@ -18,6 +19,21 @@ if($LASTEXITCODE -ne 0){throw 'Original catch behavior failed.'}
 $expected | Set-Content (Join-Path $OutputDirectory 'expected.txt')
 $runtime=Split-Path ([IO.Path]::GetFullPath($DnSpyConsole))
 $inputAssembly=$original
+if ($ShareIntermediate) {
+    $emitter=Join-Path $OutputDirectory 'emitter'
+    New-Item -ItemType Directory -Path $emitter | Out-Null
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'EmitSharedCaptureFinally.cs') -Destination $emitter
+    $dnlib=[Security.SecurityElement]::Escape((Join-Path $runtime 'dnlib.dll'))
+    "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $emitter 'Emitter.csproj')
+    $variant=Join-Path $OutputDirectory 'shared'
+    Copy-Item -LiteralPath (Split-Path $original) -Destination $variant -Recurse
+    $inputAssembly=Join-Path $variant 'PendingCatchReuseFixture.exe'
+    dotnet run --project (Join-Path $emitter 'Emitter.csproj') -c Release -- $original $inputAssembly 3 3 independent-catch
+    if ($LASTEXITCODE -ne 0) { throw 'Independent intermediate capture emission failed.' }
+    $actual=@(& $inputAssembly)
+    if ($LASTEXITCODE -ne 0 -or (Compare-Object $expected $actual -SyncWindow 0 -CaseSensitive)) { throw 'Intermediate sharing changed input behavior.' }
+}
+$variantHash=(Get-FileHash -LiteralPath $inputAssembly).Hash
 foreach($threads in @(1,4)) {
     $export=Join-Path $OutputDirectory "export-$threads"
     & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export $inputAssembly
@@ -41,7 +57,10 @@ $references=('ICSharpCode.NRefactory','ICSharpCode.NRefactory.CSharp','ICSharpCo
     "<Reference Include=`"$_`"><HintPath>$path</HintPath></Reference>"
 }) -join ''
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup>$references</ItemGroup></Project>" | Set-Content (Join-Path $debug 'Debug.csproj')
-dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release -- $original
+$debugArguments=@($inputAssembly)
+if ($ShareIntermediate) { $debugArguments+='shared' }
+dotnet run --project (Join-Path $debug 'Debug.csproj') -c Release -- @debugArguments
 if($LASTEXITCODE -ne 0){throw 'Independent pending catch rethrow safety/debug checks failed.'}
 if((Get-FileHash -LiteralPath $original).Hash -ne $hash){throw 'Input assembly changed.'}
+if((Get-FileHash -LiteralPath $inputAssembly).Hash -ne $variantHash){throw 'Variant assembly changed.'}
 Write-Output $expected
