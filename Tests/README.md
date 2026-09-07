@@ -144,6 +144,14 @@ They check repeated factory calls, suspension and failure on either iteration,
 and cancellation after resuming the first iteration. A resume-only application
 effect keeps its original state machine. Both one- and four-worker exports rebuild
 and execute; debug checks retain await spans and leave input IL unchanged.
+
+`Invoke-GuardedAwaitRegression.ps1` covers a detached suspension after a nested
+try/catch whose paths all exit, and state dispatch into a reordered try entry.
+Original and one/four-worker source rebuilds run 217 cases with 865 assertions:
+repeated suspension, synchronous factory faults, task faults and cancellation,
+filtered and ordinary handlers, cleanup order, exception identity and bypass.
+Twenty-three guards check fallthrough rejection, entry boundaries, switch edges,
+internal targets, bounded normalization, debug spans and disabled async recovery.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.
