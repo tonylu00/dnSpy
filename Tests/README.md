@@ -615,6 +615,8 @@ empty strings, whitespace and explicit nulls when compacted to markup expression
 templates instead of borrowing the enclosing style's target. Original and rebuilt
 resources retain absent/explicit template targets, trigger and setter identities,
 template bindings, and named trigger activation/reset on an isolated control.
+Inherited local properties also retain their owners across sibling setters and
+triggers, with conflicting root prefixes and nested namespace overrides preserved.
 
 `Invoke-GacReferencesRegression.ps1` checks a System.Management dependency resolved
 from the installed GAC. The .NET Framework export retains its framework reference;

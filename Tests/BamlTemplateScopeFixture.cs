@@ -5,6 +5,14 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
+namespace BaseControls {
+    public class IconButton : Button {
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(IconButton), new PropertyMetadata("default"));
+        public string Icon { get { return (string)GetValue(IconProperty); } set { SetValue(IconProperty, value); } }
+    }
+}
+namespace SidebarControls { public class SidebarButton : BaseControls.IconButton { } }
+
 public static class BamlTemplateScopeFixture {
     static void Check(bool value, string message) { if (!value) throw new Exception(message); }
     [STAThread]
@@ -15,6 +23,15 @@ public static class BamlTemplateScopeFixture {
     static int Run() {
         var app = new Application();
         var dictionary = (ResourceDictionary)Application.LoadComponent(new Uri("/BamlTemplateScopeFixture;component/Dictionary.xaml", UriKind.Relative));
+        var inheritedStyle = (Style)dictionary["Inherited"];
+        var inherited = new SidebarControls.SidebarButton { Style = inheritedStyle };
+        Check(inherited.Icon == "ready", "inherited setter lost");
+        inherited.IsEnabled = false;
+        Check(inherited.Icon == "disabled", "inherited trigger lost");
+        inherited.IsEnabled = true;
+        Check(inherited.Icon == "ready", "inherited trigger reset lost");
+        var shadowed = new SidebarControls.SidebarButton { Style = (Style)dictionary["Shadowed"] };
+        Check(shadowed.Icon == "shadowed", "namespace shadow changed setter owner");
         foreach (string key in new[] { "DefaultTarget", "ExplicitTarget" }) {
             var style = (Style)dictionary[key];
             var template = (ControlTemplate)style.Setters.OfType<Setter>().Single(s => s.Property == Control.TemplateProperty).Value;

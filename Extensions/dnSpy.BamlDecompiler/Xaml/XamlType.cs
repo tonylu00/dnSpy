@@ -47,7 +47,7 @@ namespace dnSpy.BamlDecompiler.Xaml {
 		}
 
 		public void ResolveNamespace(XElement elem, XamlContext ctx) {
-			if (Namespace is not null)
+			if (Namespace is not null && (Namespace == elem.GetDefaultNamespace() || elem.GetPrefixOfNamespace(Namespace) is not null))
 				return;
 
 			// Since XmlnsProperty records are inside the element,
@@ -85,7 +85,12 @@ namespace dnSpy.BamlDecompiler.Xaml {
 				}
 
 				if (prefixNs is null) {
-					elem.Add(new XAttribute(XNamespace.Xmlns + XmlConvert.EncodeLocalName(truePrefix), ns));
+					// Synthesized CLR mappings must be visible to sibling uses of
+					// the cached type, and to WPF's local-assembly markup pass.
+					var declaration = elem;
+					while (declaration.Parent is not null && declaration.Parent.Name != ctx.GetPseudoName("Document"))
+						declaration = declaration.Parent;
+					declaration.Add(new XAttribute(XNamespace.Xmlns + XmlConvert.EncodeLocalName(truePrefix), ns));
 					if (string.IsNullOrEmpty(TypeNamespace))
 						elem.AddBeforeSelf(new XComment(string.Format(dnSpy_BamlDecompiler_Resources.Msg_GlobalNamespace, truePrefix)));
 				}
