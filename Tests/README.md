@@ -420,6 +420,23 @@ it excludes `out` parameters, ref locals, ref-like state fields, and direct para
 captures that cannot be represented in its helper. Public constructor signatures
 remain intact; the generated private helpers add source implementation members.
 
+`Invoke-ConstructorInitializerRegression.ps1` covers preparation after instance
+field initialization. A preparation method in the first base argument returns that
+argument and declares an `out` state variable shared by the remaining arguments
+and constructor body. This preserves field initialization before preparation,
+including what the base constructor sees through virtual calls. It requires a
+first argument passed by value (not a `ref`/`out` parameter) and keeps the existing
+closed-control-flow and instance-access guards.
+
+Its emitted fixture retains a renamed capture with an observable constructor.
+Original and one/four-worker rebuilt executions check 201 assertions for ordered
+initializers, parameter updates, generic/null values, shared escaped callbacks,
+and exact failures at each step. Twelve debug/guard checks cover declaration
+matching/output, unavailable initializer recovery, invalid argument boundaries,
+and unchanged input IL. Adjacent preparation tests also cover lambdas using saved
+locals without capturing the preparation method's `out` parameter. The added out
+declaration support is for AST/source output; it does not extend the legacy parser.
+
 `Invoke-FriendAssemblyRegression.ps1` checks source export of a signed library and
 its friend executable. Exported projects rebuild unsigned, so their assembly-info
 files use an unkeyed `InternalsVisibleTo` name when that friend's full public key
