@@ -55,7 +55,7 @@ output for concurrent regression runs; do not replace DLLs while a run uses them
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-structured-filter-check
 .\Tests\Invoke-TypedAwaitCatchRegression.ps1 `
-  -DnSpyConsole "$PWD\dnSpy\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-typed-catch-check
 ```
 
@@ -63,23 +63,28 @@ The structured-filter test checks 146 cases in compiler-produced and reordered
 filter bodies, with both one and four export workers. It verifies exception
 identity, filtering before unwinding, acceptance, rejection, throwing filters,
 property preparation, null checks without overloaded equality, and real async
-suspension. Six filters retain their debugger offsets; twelve shape/scope checks
+suspension. Six filters retain their debugger offsets; nineteen shape/scope checks
 cover branch polarity, nested negations, exposed locals, unsupported preparation,
-numeric predicates, and unchanged IL when a match fails. Preparation stays in the
-filter expression so it also executes when the handler is not selected.
+numeric predicates, typed/boxed exception-copy chains, overwritten aliases and
+unchanged IL when a match fails. Preparation stays in the filter expression so it
+also executes when the handler is not selected.
 
-The typed-await-catch test runs 12,620 cases for each exception-wrapping setting:
+The typed-await-catch test runs 26,204 cases for each exception-wrapping setting:
 enabled, disabled, absent, and an attribute with no named arguments. Original and
 rebuilt exports with one/four workers must preserve the setting, typed/derived/
 generic catch selection, immediate and suspended failures, exception identity and
 stack, cancellation, cleanup ordering, and errors on the normal path outside the
 catch. Readonly exception observations before/after awaits retain the original
 typed capture; callback failures and cancellation preserve their identity and order.
+Filtered handlers preserve accepting, rejecting and throwing predicates, including
+generic captures, exception reads after awaits, and filtering before stack unwind.
 Deliberately unwrapped payloads are tested at a synchronous boundary so they cannot
-escape onto the thread pool. Thirty-six scope/debug checks cover readonly capture
-uses and copied selection flags, and reject incoming jumps, exposed dispatch/capture
-locals, writes/ref access, escaping flag copies, filters, fallthrough guards and
-incompatible catch-local casts. The export retains RuntimeCompatibility and
+escape onto the thread pool; typed filters preserve raw payload selection and identity.
+Eighty-one scope/debug checks cover readonly captures, copied selection flags,
+mandatory filter captures and retained filter resets. They reject incoming jumps,
+exposed dispatch/capture locals, writes/ref access, escaping flag copies, conditional
+or missing filter captures, fallthrough guards and incompatible catch-local casts.
+The export retains RuntimeCompatibility and
 explicitly disables compiler-added wrapping when the input attribute is absent.
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and

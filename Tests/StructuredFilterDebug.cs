@@ -27,7 +27,8 @@ class StructuredFilterDebug {
 
         var match = typeof(ILAstOptimizer).GetMethod("FixConditionalFilter", BindingFlags.Instance | BindingFlags.NonPublic);
         int checks = 0;
-        foreach (var scenario in new[] { "original", "inverted", "double-negative", "trailing-code", "exposed-exception", "exposed-result", "exposed-input", "extra-result-use", "preparation", "overwrite-exception", "reject-side-effect", "numeric-predicate" }) {
+        foreach (var scenario in new[] { "original", "inverted", "double-negative", "trailing-code", "exposed-exception", "exposed-result", "exposed-input", "extra-result-use", "preparation", "overwrite-exception", "reject-side-effect", "numeric-predicate",
+            "alias-copy", "alias-cast", "alias-box", "alias-foreign-cast", "alias-overwrite", "alias-address", "alias-exposed" }) {
             context = new DecompilerContext(0, module, null, true) { CurrentMethod = owner.Methods.Single(m => m.Name == "Prepared") };
             var block = new ILBlock(CodeBracesRangeFlags.MethodBraces) { Body = new ILAstBuilder().Build(context.CurrentMethod, true, context) };
             var optimizer = new ILAstOptimizer();
@@ -57,6 +58,20 @@ class StructuredFilterDebug {
             else if (scenario == "overwrite-exception") accepted.Body.Insert(0, new ILExpression(ILCode.Stloc, exception, new ILExpression(ILCode.Ldnull, null)));
             else if (scenario == "reject-side-effect") rejected.Body.Add(new ILExpression(ILCode.Nop, null));
             else if (scenario == "numeric-predicate") ((ILExpression)accepted.Body.Last()).Arguments[0].Arguments[0] = new ILExpression(ILCode.Ldc_I4, -1) { InferredType = module.CorLibTypes.Int32 };
+            else if (scenario.StartsWith("alias-")) {
+                var first = new ILVariable("firstCopy") { Type = module.CorLibTypes.Object };
+                var second = new ILVariable("secondCopy") { Type = exception.Type };
+                var type = (ITypeDefOrRef)((ILExpression)filter.Body[0]).Arguments[0].Operand;
+                ILExpression copy = new ILExpression(scenario == "alias-address" ? ILCode.Ldloca : ILCode.Ldloc, first);
+                if (scenario == "alias-cast" || scenario == "alias-box" || scenario == "alias-foreign-cast")
+                    copy = new ILExpression(ILCode.Unbox_Any, scenario == "alias-foreign-cast" ? module.CorLibTypes.String.TypeDefOrRef : type, copy);
+                if (scenario == "alias-box") copy = new ILExpression(ILCode.Box, type, copy);
+                accepted.Body.Insert(0, new ILExpression(ILCode.Stloc, first, new ILExpression(ILCode.Ldloc, exception)));
+                accepted.Body.Insert(1, new ILExpression(ILCode.Stloc, second, copy));
+                if (scenario == "alias-overwrite") accepted.Body.Insert(1, new ILExpression(ILCode.Stloc, first, new ILExpression(ILCode.Ldnull, null)));
+                if (scenario == "alias-exposed") block.Body.Add(new ILExpression(ILCode.Ldloc, second));
+                shouldMatch = scenario == "alias-copy" || scenario == "alias-cast" || scenario == "alias-box" || scenario == "alias-exposed";
+            }
             var before = block.ToString();
             var spans = filter.GetSelfAndChildrenRecursiveILSpans().Where(s => s.Start < s.End).ToArray();
             var arguments = new object[] { block, clause, null, null };
