@@ -59,11 +59,11 @@ output for concurrent regression runs; do not replace DLLs while a run uses them
   -OutputDirectory D:\knx_analysis\dnspy-typed-catch-check
 ```
 
-The structured-filter test checks 1,244 cases in compiler-produced and reordered
+The structured-filter test checks 4,485 cases in compiler-produced and reordered
 filter bodies, with both one and four export workers. It verifies exception
 identity, filtering before unwinding, acceptance, rejection, throwing filters,
 property preparation, null checks without overloaded equality, and real async
-suspension. Sixteen filters retain their debugger offsets; 134 shape/scope checks
+suspension. Eighteen filters retain their debugger offsets; 168 shape/scope checks
 cover branch polarity, nested negations, exposed locals, unsupported preparation,
 numeric predicates, typed/boxed exception-copy chains, overwritten aliases and
 unchanged IL when a match fails. Preparation stays in the filter expression so it
@@ -83,6 +83,13 @@ foreign types, mutable/ref calls and incompatible signatures remain guarded.
 Private constant comparison temporaries may be folded only when they have one read
 and no uses outside the filter. Nullable integer and enum array loops, including
 jagged arrays, must retain nullable element types when reconstructed as foreach.
+Unnamed typed catches include nested address-space decisions, changing property
+values, throwing getters and unsigned bounds overflow. The runtime fixture may
+collapse to a straight-line Boolean predicate; separate IL guards retain ETS's
+shared-label form with integer 0/1 stores and a computed Boolean leaf. They reject
+escaping exception inputs, inconsistent stores, incoming joins and cycles. The
+fixture also retains a local-function helper with captured value-type environments;
+all helper declarations and references must receive matching legal source names.
 
 The typed-await-catch test runs 26,204 cases for each exception-wrapping setting:
 enabled, disabled, absent, and an attribute with no named arguments. Original and
@@ -230,7 +237,7 @@ retained-iterator scenarios covering value flow, evaluation counts, exception
 identity, resumption and disposal.
 
 The numeric fixture rebuilds enum multiplication, division, remainder and shifts,
-ordered boolean comparisons and unsigned negation. Its 272 checks cover integer
+ordered boolean comparisons and unsigned negation. Its 315 checks cover integer
 boundaries, signed and unsigned ordering, small enum promotion, signed shifts, both operand evaluations and
 exceptions from the second operand. These IL operations need valid C# numeric
 operands while preserving their original width and evaluation order.
@@ -239,6 +246,10 @@ evaluation, exceptions, numeric overload selection and their boxed result type.
 Boolean-to-byte/sbyte/short/ushort conversions also retain their narrow result
 types in returns, boxing, overload resolution and byte-array stores. Null and
 out-of-range arrays must still evaluate the value before throwing.
+Unsigned widening from a signed 32-bit stack value must zero-extend through uint;
+the tests include negative constants, signed enums, small integers, callback
+failures and a checked addition nested inside the unchecked conversion. Existing
+64-bit input conversions must preserve all their original bits.
 
 `Invoke-NullCoalescingRegression.ps1` reverses seven reference null branches and
 adds empty branch blocks. Exported base/this constructor calls must retain their

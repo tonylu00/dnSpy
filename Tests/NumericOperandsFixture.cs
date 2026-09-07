@@ -1,6 +1,7 @@
 using System;
 public enum WireCode : uint { Zero = 0, High = 0x80000000, Max = uint.MaxValue }
 public enum SmallCode : byte { Zero = 0, Max = 255 }
+public enum SignedWireCode : int { Min = int.MinValue, MinusOne = -1, Zero = 0, Max = int.MaxValue }
 public static class NumericOperandsFixture {
     static int order;
     static bool failRight;
@@ -42,8 +43,35 @@ public static class NumericOperandsFixture {
     public static string ChooseByte(bool value) { return Select((byte)(Right(value) ? 1 : 0)); }
     public static string Select(byte value) { return "byte:" + value; }
     public static void WriteByte(bool value, byte[] target) { target[0] = (byte)(Right(value) ? 1 : 0); }
+    public static int NextInt(int value) { order = order * 10 + 3; if (failRight) throw new InvalidOperationException(); return value; }
+    public static ulong WidenInt(int value) { return unchecked((ulong)(uint)NextInt(value)); }
+    public static ulong WidenSByte(sbyte value) { return unchecked((ulong)(uint)value); }
+    public static ulong WidenShort(short value) { return unchecked((ulong)(uint)value); }
+    public static ulong WidenEnum(SignedWireCode value) { return unchecked((ulong)(uint)value); }
+    public static ulong WidenChecked(int value) { return unchecked((ulong)(uint)checked(NextInt(value) + 1)); }
+    public static ulong WidenLong(long value) { return unchecked((ulong)value); }
+    public static ulong WidenConstant() { return 4294967295UL; }
     public static int Main() {
         int checks = 0;
+        foreach (int value in new[] { int.MinValue, -129, -128, -1, 0, 1, 127, 32767, int.MaxValue }) {
+            ulong expected = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+            order = 0; if (WidenInt(value) != expected || order != 3 || WidenEnum((SignedWireCode)value) != expected) throw new Exception("Unsigned widening or enum changed"); checks++;
+            order = 0; failRight = true;
+            try { WidenInt(value); throw new Exception("Unsigned widening lost callback failure"); }
+            catch (InvalidOperationException) { if (order != 3) throw new Exception("Unsigned widening callback count changed"); }
+            finally { failRight = false; }
+            checks++;
+            order = 0;
+            if (value == int.MaxValue) {
+                try { WidenChecked(value); throw new Exception("Unsigned widening lost checked overflow"); }
+                catch (OverflowException) { if (order != 3) throw new Exception("Checked widening callback changed"); }
+            } else if (WidenChecked(value) != BitConverter.ToUInt32(BitConverter.GetBytes(value + 1), 0) || order != 3) throw new Exception("Checked widening changed");
+            checks++;
+        }
+        foreach (sbyte value in new sbyte[] { sbyte.MinValue, -1, 0, 1, sbyte.MaxValue }) { if (WidenSByte(value) != BitConverter.ToUInt32(BitConverter.GetBytes((int)value), 0)) throw new Exception("SByte widening changed"); checks++; }
+        foreach (short value in new short[] { short.MinValue, -1, 0, 1, short.MaxValue }) { if (WidenShort(value) != BitConverter.ToUInt32(BitConverter.GetBytes((int)value), 0)) throw new Exception("Int16 widening changed"); checks++; }
+        foreach (long value in new[] { long.MinValue, -1L, 0L, 1L, long.MaxValue }) { if (WidenLong(value) != BitConverter.ToUInt64(BitConverter.GetBytes(value), 0)) throw new Exception("Int64 widening changed"); checks++; }
+        if (WidenConstant() != 4294967295UL) throw new Exception("Unsigned constant widening changed"); checks++;
         foreach (bool value in new[] { false, true }) {
             object[] expected = { (byte)(value ? 1 : 0), (sbyte)(value ? 1 : 0), (short)(value ? 1 : 0), (ushort)(value ? 1 : 0),
                 (byte)(value ? 1 : 0), (sbyte)(value ? 1 : 0), (short)(value ? 1 : 0), (ushort)(value ? 1 : 0), "byte:" + (value ? 1 : 0) };

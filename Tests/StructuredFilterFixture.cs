@@ -42,6 +42,16 @@ public sealed class FilterFailure : Exception {
         }
     }
 }
+public sealed class FilterWindow {
+    public bool EnabledValue;
+    public int FirstSpace, SecondSpace, ThrowStage;
+    public uint StartValue;
+    int addressReads;
+    public bool Enabled { get { Read("E", 1); return EnabledValue; } }
+    public int AddressSpace { get { addressReads++; Read("A", addressReads == 1 ? 2 : 3); if (addressReads > 2) throw new Exception("Duplicate address read"); return addressReads == 1 ? FirstSpace : SecondSpace; } }
+    public uint Start { get { Read("S", 4); return StartValue; } }
+    void Read(string marker, int stage) { StructuredFilterFixture.Trace += marker; if (stage == ThrowStage) throw new FormatException("window getter"); }
+}
 public static class StructuredFilterFixture {
     public static string Trace;
     static Exception observed;
@@ -122,6 +132,34 @@ public static class StructuredFilterFixture {
         catch (FilterFailure exception) when (exception.GetOptional().HasValue && Read(exception, accept, fails)) { Trace += "H"; return exception; }
         catch (Exception exception) { Trace += "F"; return exception; }
         return null;
+    }
+    static bool TypePredicate(FilterWindow window, uint length) {
+        if (!window.Enabled) return false;
+        if (window.AddressSpace != 1 && window.AddressSpace != 2) return true;
+        return unchecked(window.Start + length) <= 65536U;
+    }
+    static Exception TypeOnly(Exception failure, FilterWindow window, uint length) {
+        try { try { throw failure; } finally { Trace += "U"; } }
+        catch (FilterFailure) when (TypePredicate(window, length)) { Trace += "H"; return failure; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+    }
+    static async Task<Exception> TypeOnlyAsync(Task task, Exception failure, FilterWindow window, uint length) {
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U"; } }
+        catch (FilterFailure) when (TypePredicate(window, length)) { Trace += "H"; return failure; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+        return null;
+    }
+    static string TypeTrace(bool matches, bool enabled, int first, int second, int stage, uint start, uint length) {
+        if (!matches) return "UF";
+        if (!enabled || stage == 1) return "EUF";
+        if (stage == 2) return "EAUF";
+        string trace = "EA";
+        bool needsBounds = first == 1;
+        if (!needsBounds) { trace += "A"; if (stage == 3) return trace + "UF"; needsBounds = second == 2; }
+        if (!needsBounds) return trace + "UH";
+        trace += "S";
+        ulong sum = ((ulong)start + length) & uint.MaxValue;
+        return trace + "U" + (stage != 4 && sum <= 65536UL ? "H" : "F");
     }
     static bool Initial(Exception error, int mode) {
         Trace += "A"; observed = error;
@@ -279,6 +317,21 @@ public static class StructuredFilterFixture {
         }
         Reset(); Check(NullablePreparedAsync(Task.FromResult(0), true, false).GetAwaiter().GetResult(), null, "U", false);
         Reset(); Check(NullableHasValueAsync(Task.FromResult(0), true, false).GetAwaiter().GetResult(), null, "U", false);
+        foreach (bool matches in new[] { false, true }) foreach (bool enabled in new[] { false, true })
+        foreach (int first in new[] { 1, 2, 9 }) foreach (int second in new[] { 1, 2, 9 }) for (int stage = 0; stage <= 4; stage++)
+        foreach (var bounds in new[] { new uint[] { 0, 0 }, new uint[] { 65536, 0 }, new uint[] { 65536, 1 }, new uint[] { 0, 65537 }, new uint[] { uint.MaxValue, 1 }, new uint[] { uint.MaxValue, uint.MaxValue } }) {
+            Exception failure = matches ? (Exception)new FilterFailure() : new ArgumentException("unmatched");
+            string trace = TypeTrace(matches, enabled, first, second, stage, bounds[0], bounds[1]);
+            FilterWindow Window() { return new FilterWindow { EnabledValue = enabled, FirstSpace = first, SecondSpace = second, ThrowStage = stage, StartValue = bounds[0] }; }
+            Reset(); Check(TypeOnly(failure, Window(), bounds[1]), failure, trace, false);
+            foreach (bool suspended in new[] { false, true }) {
+                Reset(); var completion = new TaskCompletionSource<int>(); if (!suspended) completion.SetException(failure);
+                var task = TypeOnlyAsync(completion.Task, failure, Window(), bounds[1]);
+                if (suspended) { if (task.IsCompleted || Trace != "") throw new Exception("Missing type-only suspension"); completion.SetException(failure); }
+                Check(task.GetAwaiter().GetResult(), failure, trace, false);
+            }
+        }
+        Reset(); Check(TypeOnlyAsync(Task.FromResult(0), null, new FilterWindow(), 0).GetAwaiter().GetResult(), null, "U", false);
         string numbers = "";
         foreach (int? value in new int?[] { null, 0, -7, int.MaxValue }) numbers += value.HasValue ? value.Value.ToString() + ";" : "null;";
         checks++; if (numbers != "null;0;-7;2147483647;") throw new Exception("Nullable integer array element changed");

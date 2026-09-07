@@ -6,7 +6,7 @@ using dnlib.DotNet.Emit;
 class Emitter {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
-        int filters = 0, decisions = 0, updates = 0;
+        int filters = 0, decisions = 0, updates = 0, typeDecisions = 0;
         foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody)) {
             method.Body.SimplifyBranches();
             method.Body.SimplifyMacros(method.Parameters);
@@ -41,27 +41,70 @@ class Emitter {
                 }
                 int branchIndex = Enumerable.Range(start, limit - start).First(i => instructions[i].OpCode == OpCodes.Brtrue);
                 var branch = instructions[branchIndex];
-                var reject = instructions.Skip(branchIndex + 1).Take(3).ToArray();
-                if (instructions[branchIndex - 1].OpCode != OpCodes.Dup || reject[0].OpCode != OpCodes.Pop ||
-                    !reject[1].IsLdcI4() || reject[1].GetLdcI4Value() != 0 || reject[2].OpCode != OpCodes.Br ||
-                    branch.Operand != instructions[branchIndex + 4] || !(reject[2].Operand is Instruction end) || end.OpCode != OpCodes.Endfilter)
+                bool captured = instructions[branchIndex - 1].OpCode == OpCodes.Dup;
+                var reject = instructions.Skip(branchIndex + 1).Take(captured ? 3 : 2).ToArray();
+                if ((captured ? reject[0].OpCode != OpCodes.Pop : instructions[branchIndex - 1].OpCode != OpCodes.Isinst) ||
+                    !reject[reject.Length - 2].IsLdcI4() || reject[reject.Length - 2].GetLdcI4Value() != 0 || reject.Last().OpCode != OpCodes.Br ||
+                    branch.Operand != instructions[branchIndex + reject.Length + 1] || !(reject.Last().Operand is Instruction end) || end.OpCode != OpCodes.Endfilter)
                     throw new Exception("Unexpected compiler filter layout: " + method.FullName);
                 // Keep the exact filter instructions; only reverse physical branch order.
                 foreach (var instruction in reject) instructions.Remove(instruction);
                 int endIndex = instructions.IndexOf(end);
                 instructions.Insert(endIndex++, Instruction.Create(OpCodes.Br, end));
-                instructions.Insert(endIndex++, reject[0]);
-                instructions.Insert(endIndex, reject[1]);
+                foreach (var instruction in reject.Take(reject.Length - 1)) instructions.Insert(endIndex++, instruction);
                 branch.OpCode = OpCodes.Brfalse;
                 branch.Operand = reject[0];
                 if (InlineUpdates(method, handler)) updates++;
+                if (InlineTypeDecision(module, method, handler)) typeDecisions++;
                 filters++;
             }
         }
-        if (filters != 16) throw new Exception("Expected sixteen reordered filters, got " + filters);
+        if (filters != 18) throw new Exception("Expected eighteen reordered filters, got " + filters);
         if (decisions != 2) throw new Exception("Expected two reordered nested decisions, got " + decisions);
         if (updates != 4) throw new Exception("Expected four inline update filters, got " + updates);
+        if (typeDecisions != 2) throw new Exception("Expected two inline type-only decisions, got " + typeDecisions);
         module.Write(args[1]); Console.WriteLine("Reordered " + filters + " filter acceptance/rejection blocks.");
+    }
+    static bool InlineTypeDecision(ModuleDef module, MethodDef method, ExceptionHandler handler) {
+        var code = method.Body.Instructions;
+        int start = code.IndexOf(handler.FilterStart), end = code.IndexOf(handler.HandlerStart);
+        int call = Enumerable.Range(start, end - start).FirstOrDefault(i => (code[i].Operand as IMethod)?.Name == "TypePredicate", -1);
+        if (call < 0) return false;
+        var args = new List<Instruction[]>(); int cursor = call;
+        for (int i = 0; i < 2; i++) {
+            int last = cursor;
+            if (code[cursor - 1].OpCode == OpCodes.Ldfld) cursor--;
+            cursor--;
+            if (code[cursor].OpCode != OpCodes.Ldarg && code[cursor].OpCode != OpCodes.Ldloc) throw new Exception("Unexpected type predicate argument");
+            args.Insert(0, code.Skip(cursor).Take(last - cursor).ToArray());
+        }
+        var owner = module.Types.Single(t => t.Name == "FilterWindow");
+        var result = new Local(module.CorLibTypes.Int32); method.Body.Variables.Add(result);
+        var no = Instruction.Create(OpCodes.Ldc_I4, 0);
+        var bounds = new Instruction(args[0][0].OpCode, args[0][0].Operand);
+        var join = Instruction.Create(OpCodes.Ldloc, result);
+        var emitted = new List<Instruction>();
+        void Load(int i) { emitted.AddRange(args[i].Select(a => new Instruction(a.OpCode, a.Operand))); }
+        void Getter(string name) { emitted.Add(Instruction.Create(OpCodes.Callvirt, owner.Methods.Single(m => m.Name == name))); }
+        Load(0); Getter("get_Enabled"); emitted.Add(Instruction.Create(OpCodes.Brfalse, no));
+        Load(0); Getter("get_AddressSpace"); emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 1)); emitted.Add(Instruction.Create(OpCodes.Beq, bounds));
+        Load(0); Getter("get_AddressSpace"); emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 2)); emitted.Add(Instruction.Create(OpCodes.Beq, bounds));
+        emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 1)); emitted.Add(Instruction.Create(OpCodes.Stloc, result)); emitted.Add(Instruction.Create(OpCodes.Br, join));
+        var prefix = emitted.ToArray(); emitted.Clear();
+        emitted.Add(bounds); emitted.AddRange(args[0].Skip(1).Select(a => new Instruction(a.OpCode, a.Operand))); Getter("get_Start");
+        Load(1); emitted.Add(Instruction.Create(OpCodes.Add)); emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 65536));
+        emitted.Add(Instruction.Create(OpCodes.Cgt_Un)); emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 0)); emitted.Add(Instruction.Create(OpCodes.Ceq));
+        emitted.Add(Instruction.Create(OpCodes.Stloc, result)); emitted.Add(Instruction.Create(OpCodes.Br, join));
+        var boundsBlock = emitted.ToArray(); emitted.Clear(); emitted.AddRange(prefix);
+        emitted.Add(no); emitted.Add(Instruction.Create(OpCodes.Stloc, result)); emitted.Add(join);
+        var rejected = (Instruction)code.Skip(start).First(i => i.OpCode == OpCodes.Brfalse).Operand;
+        for (int i = call; i >= cursor; i--) code.RemoveAt(i);
+        foreach (var instruction in emitted) code.Insert(cursor++, instruction);
+        // Put the bounds computation after the predicate's final comparison,
+        // with a backward branch to its earlier integer-result join.
+        cursor = code.IndexOf(rejected);
+        foreach (var instruction in boundsBlock) code.Insert(cursor++, instruction);
+        return true;
     }
     static bool InlineUpdates(MethodDef method, ExceptionHandler handler) {
         var code = method.Body.Instructions;

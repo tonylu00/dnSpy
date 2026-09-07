@@ -19,7 +19,7 @@ class StructuredFilterDebug {
         var context = new DecompilerContext(0, module, null, true);
         var builder = new AstBuilder(context); builder.AddType(owner); builder.RunTransformations();
         var filters = builder.SyntaxTree.Descendants.OfType<CatchClause>().Where(c => !c.Condition.IsNull).ToArray();
-        if (filters.Length != 16 || filters.Any(c => c.Type.IsNull || c.VariableNameToken.IsNull ||
+        if (filters.Length != 18 || filters.Count(c => c.VariableNameToken.IsNull) > 2 || filters.Any(c => c.Type.IsNull ||
             !c.Condition.GetAllRecursiveILSpans().Any(s => s.Start < s.End) ||
             c.Condition.DescendantsAndSelf.OfType<AnonymousMethodExpression>().Any() ||
             c.Condition.DescendantsAndSelf.OfType<InvocationExpression>().Any(i => i.Target is IdentifierExpression id && id.Identifier == "endfilter")))
@@ -248,6 +248,69 @@ class StructuredFilterDebug {
             var result = (ILExpression)arguments[3];
             if (result.Code != operation || result.Arguments.Single().Code != ILCode.AddressOf || result.Arguments.Single().Arguments.Single() != preparation)
                 throw new Exception("Nullable receiver lost its stored value: " + operation);
+            checks++;
+        }
+        foreach (var name in new[] { "TypeOnly", "TypeOnlyAsync" })
+        foreach (var scenario in new[] { "original", "inverted", "double-negative", "unsigned-decision", "exposed-decision", "wrong-input", "exposed-input", "exposed-result", "extra-input",
+            "nonboolean-leaf", "nonboolean-local", "missing-store", "mixed-stores", "result-read", "cycle", "external-join", "branch-effect" }) {
+            context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = owner.Methods.Single(m => m.Name == name) };
+            var block = new ILBlock(CodeBracesRangeFlags.MethodBraces) { Body = new ILAstBuilder().Build(context.CurrentMethod, true, context) };
+            var optimizer = new ILAstOptimizer(); optimizer.Optimize(context, block, out _, out _, out _, ILAstOptimizationStep.FixFilters);
+            var clause = block.GetSelfAndChildrenRecursive<ILTryCatchBlock.CatchBlock>().Single(c => c.FilterBlock != null);
+            var filter = clause.FilterBlock;
+            var expressions = filter.GetSelfAndChildrenRecursive<ILExpression>().ToArray();
+            var typeTest = expressions.Single(e => e.Code == ILCode.Isinst);
+            var result = new ILVariable("filterResult") { Type = module.CorLibTypes.Boolean };
+            var variable = new ILVariable("integerDecision") { Type = module.CorLibTypes.Int32 };
+            var enabled = expressions.Single(e => (e.Operand as IMethod)?.Name == "get_Enabled");
+            var addresses = expressions.Where(e => (e.Operand as IMethod)?.Name == "get_AddressSpace").ToArray();
+            var bounds = expressions.Single(e => e.Code == ILCode.Cle_Un);
+            var join = new ILLabel { Name = "typeDecisionJoin" };
+            ILExpression Number(int value) { return new ILExpression(ILCode.Ldc_I4, value) { InferredType = module.CorLibTypes.Int32 }; }
+            ILExpression Store(ILExpression value) { return new ILExpression(ILCode.Stloc, variable, value) { InferredType = variable.Type }; }
+            ILBlock Body(params ILNode[] nodes) { var body = new ILBlock(CodeBracesRangeFlags.MethodBraces); body.Body.AddRange(nodes); return body; }
+            ILExpression IsSpace(ILExpression address, int space) { return new ILExpression(ILCode.Ceq, null, address, Number(space)) { InferredType = module.CorLibTypes.Boolean }; }
+            var whenOther = Store(Number(1)); var whenDisabled = Store(Number(0)); var whenBounds = Store(bounds);
+            var jump = new ILExpression(ILCode.Br, join);
+            var otherBlock = Body(whenOther, jump);
+            var second = new ILCondition { Condition = IsSpace(addresses[1], 2), TrueBlock = Body(), FalseBlock = otherBlock };
+            var first = new ILCondition { Condition = IsSpace(addresses[0], 1), TrueBlock = Body(), FalseBlock = Body(second) };
+            var decision = new ILCondition { Condition = enabled, TrueBlock = Body(first, whenBounds), FalseBlock = Body(whenDisabled) };
+            // Reconstruct ETS's shared-label shape from the same getter expressions;
+            // the small runtime fixture can collapse further during optimization.
+            var terminal = new ILExpression(ILCode.Stloc, result, new ILExpression(ILCode.Cgt_Un, null, new ILExpression(ILCode.Ldloc, variable) { InferredType = variable.Type }, Number(0)) { InferredType = module.CorLibTypes.Boolean });
+            var accepted = Body(decision, join, terminal);
+            var rejected = Body(new ILExpression(ILCode.Stloc, result, Number(0)));
+            var outer = new ILCondition { Condition = typeTest, TrueBlock = accepted, FalseBlock = rejected };
+            filter.Body.Clear(); filter.Body.Add(outer); filter.Body.Add(new ILExpression(ILCode.Endfilter, null, new ILExpression(ILCode.Ldloc, result)));
+            bool shouldMatch = scenario == "original" || scenario == "inverted" || scenario == "double-negative" || scenario == "unsigned-decision" || scenario == "exposed-decision";
+            if (scenario == "inverted") { outer.Condition = new ILExpression(ILCode.LogicNot, null, outer.Condition); var old = outer.TrueBlock; outer.TrueBlock = outer.FalseBlock; outer.FalseBlock = old; }
+            else if (scenario == "double-negative") outer.Condition = new ILExpression(ILCode.LogicNot, null, new ILExpression(ILCode.LogicNot, null, outer.Condition));
+            else if (scenario == "unsigned-decision") variable.Type = module.CorLibTypes.UInt32;
+            else if (scenario == "exposed-decision") block.Body.Add(new ILExpression(ILCode.Ldloc, variable));
+            else if (scenario == "wrong-input") outer.Condition.GetSelfAndChildrenRecursive<ILExpression>().Single(e => e.Code == ILCode.Isinst).Arguments[0].Operand = new ILVariable("foreignException") { Type = module.CorLibTypes.Object };
+            else if (scenario == "exposed-input") block.Body.Add(new ILExpression(ILCode.Ldloc, filter.ExceptionVariable));
+            else if (scenario == "exposed-result") block.Body.Add(new ILExpression(ILCode.Ldloc, result));
+            else if (scenario == "extra-input") otherBlock.Body.Insert(0, new ILExpression(ILCode.Ldloc, filter.ExceptionVariable));
+            else if (scenario == "nonboolean-leaf") whenOther.Arguments[0] = Number(2);
+            else if (scenario == "nonboolean-local") variable.Type = module.CorLibTypes.Int64;
+            else if (scenario == "missing-store") decision.FalseBlock.Body.Clear();
+            else if (scenario == "mixed-stores") whenOther.Operand = new ILVariable("otherDecision") { Type = variable.Type };
+            else if (scenario == "result-read") first.Condition = new ILExpression(ILCode.Cne, null, new ILExpression(ILCode.Ldloc, variable), Number(0));
+            else if (scenario == "cycle") { var loop = new ILLabel { Name = "cycle" }; otherBlock.Body.Insert(0, loop); jump.Operand = loop; }
+            else if (scenario == "external-join") block.Body.Add(new ILExpression(ILCode.Br, join));
+            else if (scenario == "branch-effect") otherBlock.Body.Insert(0, new ILExpression(ILCode.Nop, null));
+            var before = block.ToString(); var spans = filter.GetSelfAndChildrenRecursiveILSpans().Where(s => s.Start < s.End).ToArray();
+            var arguments = new object[] { block, clause, null, null };
+            if ((bool)match.Invoke(optimizer, arguments) != shouldMatch) throw new Exception("Incorrect type-only decision boundary: " + name + "/" + scenario);
+            if (!shouldMatch && before != block.ToString()) throw new Exception("Rejected type-only decision changed IL: " + scenario);
+            if (shouldMatch) {
+                var retained = filter.GetSelfAndChildrenRecursiveILSpans().ToArray();
+                var recovered = (ILExpression)filter.Body.Single();
+                if (arguments[2] != null || arguments[3] == null || recovered.Code != ILCode.Cgt_Un ||
+                    recovered.GetSelfAndChildrenRecursive<ILExpression>().Count(e => e.Code == ILCode.Stloc && e.Operand == variable) != 1 ||
+                    spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End))) throw new Exception("Type-only decision stores, catch binding or spans changed: " + scenario);
+            }
             checks++;
         }
         Console.WriteLine("Structured filter debug: " + filters.Length + " filters / " + checks + " shape, scope and nonmutation checks.");

@@ -22,6 +22,13 @@ class Emitter {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
         var type = module.GetTypes().Single(t => t.Name == "NumericOperandsFixture");
+        foreach (var name in new[] { "WidenInt", "WidenSByte", "WidenShort", "WidenEnum", "WidenChecked", "WidenLong", "WidenConstant" }) {
+            var method = type.Methods.Single(m => m.Name == name); method.Body = new CilBody(); var il = method.Body.Instructions;
+            il.Add(name == "WidenConstant" ? Instruction.Create(OpCodes.Ldc_I4, -1) : Instruction.Create(OpCodes.Ldarg_0));
+            if (name == "WidenInt" || name == "WidenChecked") il.Add(Instruction.Create(OpCodes.Call, type.Methods.Single(m => m.Name == "NextInt")));
+            if (name == "WidenChecked") { il.Add(Instruction.Create(OpCodes.Ldc_I4, 1)); il.Add(Instruction.Create(OpCodes.Add_Ovf)); }
+            il.Add(Instruction.Create(OpCodes.Conv_U8)); il.Add(Instruction.Create(OpCodes.Ret));
+        }
         foreach (var name in new[] { "Greater", "Less", "AtLeast", "AtMost" }) {
             var method = type.Methods.Single(m => m.Name == name);
             method.Body = new CilBody();
