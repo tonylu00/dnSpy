@@ -109,13 +109,14 @@ Filtered handlers preserve accepting, rejecting and throwing predicates, includi
 generic captures, exception reads after awaits, and filtering before stack unwind.
 Deliberately unwrapped payloads are tested at a synchronous boundary so they cannot
 escape onto the thread pool; typed filters preserve raw payload selection and identity.
-One hundred fourteen scope/debug checks cover readonly captures, copied selection flags,
+One hundred twenty-three scope/debug checks cover readonly captures, copied selection flags,
 mandatory filter captures and retained filter resets. They reject incoming jumps,
 exposed dispatch/capture locals, writes/ref access, escaping flag copies, conditional
 or missing filter captures, fallthrough guards and incompatible catch-local casts.
-Alternative paths remain outside the recovered catch, retaining their selection flag;
-other handlers cannot read, write or filter on that flag. The checks also verify that
-normal-path effects and exceptions stay outside all catch boundaries.
+Alternative paths remain outside the recovered catch, retaining their selection flag.
+Later reads and normal-path writes remain in place; the selected catch cannot write
+or expose the flag, and other handlers cannot read, write or filter on it. The checks
+also verify that normal-path effects and exceptions stay outside all catch boundaries.
 The export retains RuntimeCompatibility and
 explicitly disables compiler-added wrapping when the input attribute is absent.
 
@@ -197,13 +198,16 @@ original stores. The selection flag must stay private and unchanged in that body
 Independent-capture lifetime analysis follows the same bounded copy chains.
 
 `Invoke-PendingCatchReuseRegression.ps1` exercises one exception temporary shared
-by independent awaited cleanup and typed catch regions, in both execution orders.
-Original and one/four-worker source rebuilds agree on 45,000 cases / 186,204
+by independent awaited cleanup and typed catch regions, in both execution orders
+and with cleanup confined to the normal alternative of a returning catch.
+Original and one/four-worker source rebuilds agree on 67,500 cases / 288,834
 assertions for suspension, selection, observer failures, exception identity,
-wrapped payloads, cancellation and cleanup precedence. Thirty-four AST/debug
+wrapped payloads, cancellation and cleanup precedence. Thirty-six AST/debug
 guards check resets, capture ownership, selected entries, external observations,
 writes and closures. Cleanup recovery preserves the other catch while proving its
 independent lifetime; a later cleanup can then unblock an earlier awaited catch.
+An alternative branch can have independent effects, while external observations
+of the shared exception still prevent cleanup recovery.
 
 `Invoke-FilterCaptureFinallyRegression.ps1` shares a filtered-catch capture with
 the surrounding awaited-finally rethrow temporary. Original, modified and

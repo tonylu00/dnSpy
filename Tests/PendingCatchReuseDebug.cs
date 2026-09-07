@@ -22,7 +22,7 @@ class PendingCatchReuseDebug {
         string Snapshot() => string.Join("\n", module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).SelectMany(m => m.Body.Instructions));
         string originalIL = Snapshot();
         foreach (var name in new[] { "CleanupFirst", "CatchFirst" })
-        foreach (var scenario in new[] { "original", "missing-reset", "nonzero-reset", "zero-selector", "wrong-selector", "filter", "wrong-capture", "body-write", "body-ref", "closure", "try-read", "try-flag", "outside-read", "outside-entry", "alternative", "no-await", "parameter" }) {
+        foreach (var scenario in new[] { "original", "alternative-effect", "missing-reset", "nonzero-reset", "zero-selector", "wrong-selector", "filter", "wrong-capture", "body-write", "body-ref", "closure", "try-read", "try-flag", "outside-read", "outside-entry", "alternative", "no-await", "parameter" }) {
             var method = owner.Methods.Single(m => m.Name == name);
             var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method };
             var builder = new AstBuilder(context); builder.AddMethod(method); builder.RunTransformations(t => t is PatternStatementTransform);
@@ -54,13 +54,14 @@ class PendingCatchReuseDebug {
             else if (scenario == "try-flag") region.TryBlock.Add(Observe(flag.Left.Clone()));
             else if (scenario == "outside-read") body.Add(Observe(Read()));
             else if (scenario == "outside-entry") { selected.Add(new LabelStatement { Label = "SelectedEntry" }); body.Add(new GotoStatement("SelectedEntry")); }
-            else if (scenario == "alternative") dispatch.FalseStatement = new BlockStatement { Observe(new PrimitiveExpression(1)) };
+            else if (scenario == "alternative") dispatch.FalseStatement = new BlockStatement { Observe(Read()) };
+            else if (scenario == "alternative-effect") dispatch.FalseStatement = new BlockStatement { Observe(new PrimitiveExpression(1)) };
             else if (scenario == "no-await") foreach (var awaitExpression in selected.Descendants.OfType<UnaryOperatorExpression>().Where(e => e.Operator == UnaryOperatorType.Await).ToArray()) awaitExpression.ReplaceWith(awaitExpression.Expression.Detach());
             else if (scenario == "parameter") pending.OriginalParameter = method.Parameters[0];
             string before = body.ToString(), beforeHandler = handler.ToString(), beforeDispatch = dispatch.ToString();
             var spans = ((AstNode)selected).GetAllRecursiveILSpans().Where(s => s.Start < s.End).ToArray();
             restore.Invoke(new PatternStatementTransform(context), new object[] { cleanup });
-            if (scenario == "original") {
+            if (scenario == "original" || scenario == "alternative-effect") {
                 Check(cleanup.CatchClauses.Count == 0 && !cleanup.FinallyBlock.IsNull && cleanup.FinallyBlock.Descendants.OfType<UnaryOperatorExpression>().Any(e => e.Operator == UnaryOperatorType.Await), "Cleanup not recovered: " + name);
                 Check(handler.ToString() == beforeHandler && dispatch.ToString() == beforeDispatch && spans.Length != 0 && spans.All(s => ((AstNode)selected).GetAllRecursiveILSpans().Any(r => r.Start <= s.Start && r.End >= s.End)), "Independent catch or debug spans changed while proving reuse");
                 ((IAstTransform)new PatternStatementTransform(context)).Run(builder.SyntaxTree);

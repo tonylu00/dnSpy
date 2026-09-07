@@ -113,7 +113,7 @@ class TypedAwaitCatchDebug {
             checks++;
         }
         foreach (string name in new[] { "Typed", "Derived", "Generic" })
-        foreach (string scenario in new[] { "alternative", "other-handler", "other-handler-read", "other-handler-write", "other-handler-filter", "flag-escape", "incoming-jump", "normal-throw", "normal-flag-write", "inverted-alternative", "nonblock-alternative" }) {
+        foreach (string scenario in new[] { "alternative", "other-handler", "other-handler-read", "other-handler-write", "other-handler-filter", "flag-escape", "incoming-jump", "normal-throw", "normal-flag-write", "selected-flag-write", "selected-flag-ref", "flag-closure", "inverted-alternative", "nonblock-alternative" }) {
             var method = owner.Methods.Single(m => m.Name == name);
             var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method };
             var builder = new AstBuilder(context); builder.AddMethod(method); builder.RunTransformations(t => t is PatternStatementTransform);
@@ -141,12 +141,15 @@ class TypedAwaitCatchDebug {
             else if (scenario == "incoming-jump") { selected.Statements.InsertBefore(selected.Statements.First(), new LabelStatement { Label = "selectedBody" }); declaration.Body.Statements.InsertBefore(statement, new GotoStatement("selectedBody")); }
             else if (scenario == "normal-throw") ((BlockStatement)normal).Statements.Last().ReplaceWith(new ThrowStatement(new ObjectCreateExpression(new SimpleType("Exception"))));
             else if (scenario == "normal-flag-write") ((BlockStatement)normal).Statements.InsertBefore(((BlockStatement)normal).Statements.First(), new ExpressionStatement(new AssignmentExpression(flag.Clone(), new PrimitiveExpression(1))));
+            else if (scenario == "selected-flag-write") selected.Statements.InsertBefore(selected.Statements.First(), new ExpressionStatement(new AssignmentExpression(flag.Clone(), new PrimitiveExpression(0))));
+            else if (scenario == "selected-flag-ref") selected.Statements.InsertBefore(selected.Statements.First(), new ExpressionStatement(new InvocationExpression(new IdentifierExpression("Observe"), new DirectionExpression(FieldDirection.Ref, flag.Clone()))));
+            else if (scenario == "flag-closure") declaration.Body.Add(new ExpressionStatement(new InvocationExpression(new IdentifierExpression("Observe"), new LambdaExpression { Body = flag.Clone() })));
             else if (scenario == "inverted-alternative") { condition.Operator = BinaryOperatorType.InEquality; dispatch.TrueStatement = normal.Detach(); dispatch.FalseStatement = selected.Detach(); }
             else if (scenario == "nonblock-alternative") dispatch.FalseStatement = new ReturnStatement();
             var before = declaration.ToString(); var normalBefore = normal.ToString(); var otherBefore = other?.ToString();
             var handlerType = handler.Type.ToString();
             transform.Invoke(new PatternStatementTransform(context), new object[] { statement });
-            bool accepted = new[] { "alternative", "other-handler", "normal-throw" }.Contains(scenario);
+            bool accepted = new[] { "alternative", "other-handler", "normal-throw", "normal-flag-write", "flag-escape" }.Contains(scenario);
             if (!accepted) { if (before != declaration.ToString()) throw new Exception("Unsafe alternative recovery: " + name + "/" + scenario); }
             else if (handler.Type.ToString() != handlerType || handler.Body.Descendants.OfType<ThrowStatement>().Count(t => t.Expression.IsNull) != 2 ||
                 !handler.Body.Descendants.OfType<UnaryOperatorExpression>().Any(e => e.Operator == UnaryOperatorType.Await) ||

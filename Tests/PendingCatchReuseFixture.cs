@@ -34,6 +34,16 @@ public static class PendingCatchReuseFixture {
         finally { await step(3).ConfigureAwait(false); }
         return first + second;
     }
+    public static async Task<int> CatchAlternative(Func<int, Task> step, Action<int, Exception> observe, bool rethrow) {
+        try { await step(0).ConfigureAwait(false); }
+        catch (Exception error) {
+            observe(10, error); await step(1).ConfigureAwait(false); observe(20, error);
+            if (rethrow) throw;
+            return 59;
+        }
+        try { await step(2).ConfigureAwait(false); return 34; }
+        finally { await step(3).ConfigureAwait(false); }
+    }
     [MethodImpl(MethodImplOptions.NoInlining)]
     static Task<int> ThrowSource(Exception error) { throw error; }
     static void Complete(TaskCompletionSource<int> gate, int mode, Exception error) {
@@ -55,8 +65,9 @@ public static class PendingCatchReuseFixture {
         trace.Add(phase); trace.Add(phase + 1);
         return modes[phase + 1] != 0 ? phase + 1 : modes[phase] != 0 ? phase : -1;
     }
-    static void Run(bool cleanupFirst, int code, int delayed, bool rethrow, int observerFailure, Action<object> throwPayload) {
+    static void Run(int layout, int code, int delayed, bool rethrow, int observerFailure, Action<object> throwPayload) {
         cases++;
+        bool cleanupFirst = layout == 0;
         int[] modes = { code % 5, code / 5 % 5, code / 25 % 5, code / 125 };
         var expected = new List<int>(); var trace = new List<int>(); var observed = new List<Exception>();
         var errors = new Exception[4]; var payloads = new object[4]; var gates = new TaskCompletionSource<int>[4];
@@ -67,7 +78,7 @@ public static class PendingCatchReuseFixture {
         }
         int expectedValue = 17, failure;
         if (cleanupFirst) { failure = ExpectedCleanup(0, modes, expected); if (failure < 0) failure = ExpectedCatch(2, modes, rethrow, observerFailure, expected, out expectedValue); }
-        else { failure = ExpectedCatch(0, modes, rethrow, observerFailure, expected, out expectedValue); if (failure < 0) failure = ExpectedCleanup(2, modes, expected); }
+        else { failure = ExpectedCatch(0, modes, rethrow, observerFailure, expected, out expectedValue); if (failure < 0 && (layout != 2 || modes[0] == 0)) failure = ExpectedCleanup(2, modes, expected); }
         var observerError = new ArgumentException("observer");
         Func<int, Task> step = phase => {
             trace.Add(phase);
@@ -79,7 +90,7 @@ public static class PendingCatchReuseFixture {
             trace.Add(marker); observed.Add(error);
             if (observerFailure == (marker < 20 ? 1 : 2)) throw observerError;
         };
-        var task = cleanupFirst ? CleanupFirst(step, observe, rethrow) : CatchFirst(step, observe, rethrow);
+        var task = cleanupFirst ? CleanupFirst(step, observe, rethrow) : layout == 1 ? CatchFirst(step, observe, rethrow) : CatchAlternative(step, observe, rethrow);
         for (int phase = 0; phase < 4; phase++) if ((delayed & (1 << phase)) != 0) {
             if (trace.Contains(phase) && modes[phase] != 1 && modes[phase] != 4) Check(!task.IsCompleted, "Suspension state");
             Complete(gates[phase], modes[phase], errors[phase]);
@@ -103,9 +114,9 @@ public static class PendingCatchReuseFixture {
         var method = new DynamicMethod("ThrowPayload", typeof(void), new[] { typeof(object) }, typeof(PendingCatchReuseFixture).Module);
         var il = method.GetILGenerator(); il.Emit(OpCodes.Ldarg_0); il.Emit(OpCodes.Throw);
         var throwPayload = (Action<object>)method.CreateDelegate(typeof(Action<object>));
-        foreach (bool cleanupFirst in new[] { false, true }) for (int code = 0; code < 625; code++)
+        foreach (int layout in new[] { 0, 1, 2 }) for (int code = 0; code < 625; code++)
         foreach (int delayed in new[] { 0, 1, 2, 4, 8, 15 }) foreach (bool rethrow in new[] { false, true }) foreach (int observerFailure in new[] { 0, 1, 2 })
-            Run(cleanupFirst, code, delayed, rethrow, observerFailure, throwPayload);
+            Run(layout, code, delayed, rethrow, observerFailure, throwPayload);
         Console.WriteLine("PASS: " + cases + " independent cleanup/catch cases, " + checks + " assertions."); return 0;
     }
 }
