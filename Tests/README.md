@@ -51,7 +51,19 @@ output for concurrent regression runs; do not replace DLLs while a run uses them
 .\Tests\Invoke-ExceptionFilterRegression.ps1 `
   -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
   -OutputDirectory D:\knx_analysis\dnspy-filter-check
+.\Tests\Invoke-StructuredFilterRegression.ps1 `
+  -DnSpyConsole "$PWD\dnSpy\dnSpy\bin\Release\net10.0-windows\dnSpy.Console.exe" `
+  -OutputDirectory D:\knx_analysis\dnspy-structured-filter-check
 ```
+
+The structured-filter test checks 146 cases in compiler-produced and reordered
+filter bodies, with both one and four export workers. It verifies exception
+identity, filtering before unwinding, acceptance, rejection, throwing filters,
+property preparation, null checks without overloaded equality, and real async
+suspension. Six filters retain their debugger offsets; twelve shape/scope checks
+cover branch polarity, nested negations, exposed locals, unsupported preparation,
+numeric predicates, and unchanged IL when a match fails. Preparation stays in the
+filter expression so it also executes when the handler is not selected.
 
 The first test compiles long AND/OR expressions, exports them, rebuilds them and
 checks 1,538 evaluation paths, including operand order and every short-circuit
