@@ -77,23 +77,29 @@ namespace dnSpy.Decompiler.MSBuild {
 				return info;
 			// Generated serializers often omit TargetFrameworkAttribute. The CLR
 			// version alone then says 4.0, even when their exported dependency needs
-			// 4.8. Infer a compatible target from this export's project graph only.
-			var pending = new Stack<Project>();
-			var visited = new HashSet<Project>();
-			pending.Push(project);
+			// 4.8. Infer a compatible target from this export's source projects and
+			// preserved native dependencies only.
+			var pending = new Stack<ModuleDef>();
+			var visited = new HashSet<ModuleDef>();
+			pending.Push(project.Module);
 			while (pending.Count != 0) {
 				var current = pending.Pop();
 				if (!visited.Add(current))
 					continue;
-				var candidate = TargetFrameworkInfo.Create(current.Module);
+				var candidate = TargetFrameworkInfo.Create(current);
 				if (candidate.IsDotNetFramework && Version.TryParse(candidate.Version, out var version) &&
 					Version.TryParse(info.Version, out var selected) && version > selected)
 					info = candidate;
-				foreach (var reference in GetDirectReferences(current)) {
-					var assembly = current.Module.Context.AssemblyResolver.Resolve(reference, current.Module);
+				var currentProject = FindOtherProject(current.Location);
+				var references = currentProject is null ? current.GetAssemblyRefs() : GetDirectReferences(currentProject);
+				foreach (var reference in references) {
+					var assembly = current.Context.AssemblyResolver.Resolve(reference, current);
 					var dependency = assembly is null ? null : FindOtherProject(assembly.ManifestModule.Location);
 					if (dependency is not null)
-						pending.Push(dependency);
+						pending.Push(dependency.Module);
+					else if (assembly is not null && !string.IsNullOrEmpty(assembly.ManifestModule.Location) &&
+						project.PreservedAssemblyFiles.ContainsKey(Path.GetFullPath(assembly.ManifestModule.Location)))
+						pending.Push(assembly.ManifestModule);
 				}
 			}
 			return info;
@@ -185,6 +191,9 @@ namespace dnSpy.Decompiler.MSBuild {
 		protected virtual string? GetHintPath(AssemblyDef? asm) {
 			if (asm is null)
 				return null;
+			if (!string.IsNullOrEmpty(asm.ManifestModule.Location) &&
+				project.PreservedAssemblyFiles.TryGetValue(Path.GetFullPath(asm.ManifestModule.Location), out var preserved))
+				return GetRelativePath(preserved);
 			if (IsGacPath(asm.ManifestModule.Location))
 				return null;
 			if (ExistsInProject(asm.ManifestModule.Location))

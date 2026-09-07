@@ -54,6 +54,9 @@ namespace dnSpy.Decompiler.MSBuild {
 		HashSet<string>? standardReferenceNames;
 
 		protected override string? GetHintPath(AssemblyDef? assembly) {
+			if (assembly is not null && !string.IsNullOrEmpty(assembly.ManifestModule.Location) &&
+				project.PreservedAssemblyFiles.TryGetValue(Path.GetFullPath(assembly.ManifestModule.Location), out var preserved))
+				return GetRelativePath(preserved);
 			if (assembly is not null && standardReferenceNames is not null &&
 				!standardReferenceNames.Contains(assembly.Name) && IsGacPath(assembly.ManifestModule.Location) &&
 				!ExistsInProject(assembly.ManifestModule.Location))

@@ -30,12 +30,14 @@ namespace dnSpy.Decompiler.MSBuild {
 	sealed class MSBuildProjectCreator {
 		readonly ProjectCreatorOptions options;
 		readonly List<Project> projects;
+		readonly List<NativeAssemblyFile> nativeAssemblies = new List<NativeAssemblyFile>();
 		readonly IMSBuildProjectWriterLogger logger;
 		readonly IMSBuildProgressListener progressListener;
 		int errors;
 		int totalProgress;
 
 		public IEnumerable<string> ProjectFilenames => projects.Select(a => a.Filename);
+		public IEnumerable<string> NativeAssemblyFilenames => nativeAssemblies.Where(a => a.Written).Select(a => a.Filename);
 
 		public string SolutionFilename {
 			get {
@@ -75,14 +77,24 @@ namespace dnSpy.Decompiler.MSBuild {
 				};
 				var filenameCreator = new FilenameCreator(options.Directory);
 				var ctx = new DecompileContext(options.CancellationToken, logger);
-				var friendAssemblyNames = FriendAssemblyNames.Create(options.ProjectModules.Select(m => m.Module));
+				var managedModules = options.ProjectModules.Where(m => m.Module.IsILOnly).ToArray();
+				var preservedAssemblies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+				foreach (var modOpts in options.ProjectModules.Where(m => !m.Module.IsILOnly).OrderBy(m => m.Module.Location, StringComparer.OrdinalIgnoreCase)) {
+					var file = new NativeAssemblyFile(modOpts.Module, filenameCreator.Create(modOpts.Module));
+					if (preservedAssemblies.ContainsKey(file.Source)) continue;
+					preservedAssemblies.Add(file.Source, file.Filename);
+					nativeAssemblies.Add(file);
+				}
+				// Only source projects lose their strong-name keys. Copied native
+				// assemblies retain their signatures and keyed friend grants.
+				var friendAssemblyNames = FriendAssemblyNames.Create(managedModules.Select(m => m.Module));
 				satelliteAssemblyFinder = new SatelliteAssemblyFinder();
-				Parallel.ForEach(options.ProjectModules, opts, modOpts => {
+				Parallel.ForEach(managedModules, opts, modOpts => {
 					options.CancellationToken.ThrowIfCancellationRequested();
 					string name;
 					lock (filenameCreator)
 						name = filenameCreator.Create(modOpts.Module);
-					var p = new Project(modOpts, name, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames);
+					var p = new Project(modOpts, name, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames, preservedAssemblies);
 					lock (projects)
 						projects.Add(p);
 					p.CreateProjectFiles(ctx);
@@ -152,6 +164,7 @@ namespace dnSpy.Decompiler.MSBuild {
 		}
 
 		IEnumerable<IJob> GetJobs() {
+			foreach (var file in nativeAssemblies) yield return file;
 			foreach (var p in projects) {
 				foreach (var j in p.GetJobs())
 					yield return j;

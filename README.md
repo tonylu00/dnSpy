@@ -84,6 +84,18 @@ To debug Unity games, you need this repo too: https://github.com/dnSpyEx/dnSpy-U
 - Code tooltips (C# and Visual Basic)
 - Export to project
 
+Project export preserves assemblies containing native code, such as C++/CLI
+bridges, as binary dependencies. Each copy has a `.reference.xml` file explaining
+its source and purpose. Generated managed projects reference the copied binary;
+compatibility copies remain separate. Save pending edits to native assemblies
+before exporting. Their native implementation is retained in the saved binary.
+
+The native-reference regression uses Visual C++ with C++/CLI support:
+
+```powershell
+.\Tests\Invoke-NativeReferenceRegression.ps1 -DnSpyConsole .\dnSpy\dnSpy\bin\Release\net48\dnSpy.Console.exe -OutputDirectory D:\knx_analysis\native-reference-check
+```
+
 # List of other open source libraries used by dnSpy
 
 - [ILSpy decompiler engine](https://github.com/icsharpcode/ILSpy) (C# and Visual Basic decompilers)

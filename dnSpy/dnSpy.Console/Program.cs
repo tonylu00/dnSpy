@@ -777,6 +777,8 @@ namespace dnSpy_Console {
 				options.GenerateSDKStyleProjects = sdkProject;
 				var creator = new MSBuildProjectCreator(options);
 				creator.Create();
+				foreach (var filename in creator.NativeAssemblyFilenames)
+					System.Console.WriteLine("Native assembly retained as a binary dependency: " + filename);
 			}
 		}
 

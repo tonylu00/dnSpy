@@ -35,6 +35,7 @@ namespace dnSpy.Decompiler.MSBuild {
 		public string DefaultNamespace { get; }
 		public string AssemblyName { get; }
 		public ModuleDef Module => Options.Module;
+		public IReadOnlyDictionary<string, string> PreservedAssemblyFiles { get; }
 		public List<ProjectFile> Files { get; }
 		public Guid Guid => Options.ProjectGuid;
 		public Guid LanguageGuid { get; }
@@ -56,12 +57,13 @@ namespace dnSpy.Decompiler.MSBuild {
 		readonly Func<TextWriter, IDecompilerOutput> createDecompilerOutput;
 		readonly IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames;
 
-		public Project(ProjectModuleOptions options, string projDir, SatelliteAssemblyFinder satelliteAssemblyFinder, Func<TextWriter, IDecompilerOutput> createDecompilerOutput, IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames) {
+		public Project(ProjectModuleOptions options, string projDir, SatelliteAssemblyFinder satelliteAssemblyFinder, Func<TextWriter, IDecompilerOutput> createDecompilerOutput, IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames, IReadOnlyDictionary<string, string> preservedAssemblyFiles) {
 			Options = options ?? throw new ArgumentNullException(nameof(options));
 			Directory = projDir;
 			this.satelliteAssemblyFinder = satelliteAssemblyFinder;
 			this.createDecompilerOutput = createDecompilerOutput;
 			this.friendAssemblyNames = friendAssemblyNames;
+			PreservedAssemblyFiles = preservedAssemblyFiles;
 			Files = new List<ProjectFile>();
 			DefaultNamespace = new DefaultNamespaceFinder(options.Module).Find();
 			Filename = Path.Combine(projDir, Path.GetFileName(projDir) + options.Decompiler.ProjectFileExtension);
