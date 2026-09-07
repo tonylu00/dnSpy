@@ -18,6 +18,15 @@ public sealed class FilterDetail {
 public sealed class FilterFailure : Exception {
     public FilterDetail Value;
     public bool Fails;
+    public int CodeValue;
+    public bool CodeFails;
+    public int Code {
+        get {
+            StructuredFilterFixture.Trace += "C";
+            if (CodeFails) throw new FormatException("code failure");
+            return CodeValue;
+        }
+    }
     public FilterDetail Detail {
         get {
             StructuredFilterFixture.Trace += "D";
@@ -74,6 +83,17 @@ public static class StructuredFilterFixture {
         catch (Exception exception) { Trace += "F"; return exception; }
         return null;
     }
+    static Exception Nested(Exception failure, bool accept, bool fails) {
+        try { try { throw failure; } finally { Trace += "U"; } }
+        catch (FilterFailure exception) when (exception.Code is 5 or 19 && Read(exception, accept, fails)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+    }
+    static async Task<Exception> NestedAsync(Task task, bool accept, bool fails) {
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U"; } }
+        catch (FilterFailure exception) when (exception.Code is 5 or 19 && Read(exception, accept, fails)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
+        return null;
+    }
     static void Check(Exception actual, Exception expected, string trace, bool observedException) {
         checks++;
         if (!ReferenceEquals(actual, expected) || Trace != trace || !ReferenceEquals(observed, observedException ? expected : null))
@@ -84,7 +104,7 @@ public static class StructuredFilterFixture {
         var completion = new TaskCompletionSource<int>();
         if (!suspended) completion.SetException(failure);
         var result = kind == 0 ? DirectAsync<FilterFailure>(completion.Task, accept, fails) :
-            kind == 1 ? ExposedAsync(completion.Task, failure, accept, fails) : PreparedAsync(completion.Task);
+            kind == 1 ? ExposedAsync(completion.Task, failure, accept, fails) : kind == 2 ? PreparedAsync(completion.Task) : NestedAsync(completion.Task, accept, fails);
         if (suspended) {
             if (result.IsCompleted || Trace.Length != 0) throw new Exception("Missing suspension");
             completion.SetException(failure);
@@ -124,6 +144,14 @@ public static class StructuredFilterFixture {
         }
         Reset(); Check(DirectAsync<FilterFailure>(Task.FromResult(0), true, false).GetAwaiter().GetResult(), null, "U", false);
         Reset(); Check(PreparedAsync(Task.FromResult(0)).GetAwaiter().GetResult(), null, "U", false);
+        foreach (bool matches in new[] { false, true }) foreach (int code in new[] { 5, 19, 0, -1, int.MinValue, int.MaxValue })
+        foreach (bool codeFails in new[] { false, true }) foreach (bool accept in new[] { false, true }) foreach (bool fails in new[] { false, true }) {
+            Exception failure = matches ? (Exception)new FilterFailure { CodeValue = code, CodeFails = codeFails } : new ArgumentException("unmatched");
+            bool reads = matches && !codeFails && (code == 5 || code == 19);
+            string trace = (matches ? "C" : "") + (reads ? "R" : "") + "U" + (reads && accept && !fails ? "H" : "F");
+            Reset(); Check(Nested(failure, accept, fails), failure, trace, reads);
+            foreach (bool suspended in new[] { false, true }) { Reset(); Check(RunAsync(3, failure, suspended, accept, fails), failure, trace, reads); }
+        }
         Console.WriteLine("PASS: " + checks + " structured filter identity, first-pass order, preparation, exposed assignment and suspension checks.");
         return 0;
     }

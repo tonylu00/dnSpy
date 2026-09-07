@@ -59,15 +59,19 @@ output for concurrent regression runs; do not replace DLLs while a run uses them
   -OutputDirectory D:\knx_analysis\dnspy-typed-catch-check
 ```
 
-The structured-filter test checks 146 cases in compiler-produced and reordered
+The structured-filter test checks 434 cases in compiler-produced and reordered
 filter bodies, with both one and four export workers. It verifies exception
 identity, filtering before unwinding, acceptance, rejection, throwing filters,
 property preparation, null checks without overloaded equality, and real async
-suspension. Six filters retain their debugger offsets; nineteen shape/scope checks
+suspension. Eight filters retain their debugger offsets; forty-seven shape/scope checks
 cover branch polarity, nested negations, exposed locals, unsupported preparation,
 numeric predicates, typed/boxed exception-copy chains, overwritten aliases and
 unchanged IL when a match fails. Preparation stays in the filter expression so it
 also executes when the handler is not selected.
+Nested Boolean decisions include an out-of-line comparison that branches back to
+a shared result. Property reads execute once, and rejecting or throwing predicates
+still run before unwind. The checks reject cycles, incoming join branches, missing
+or inconsistent result stores, and preparation that would cross an earlier call/read.
 
 The typed-await-catch test runs 26,204 cases for each exception-wrapping setting:
 enabled, disabled, absent, and an attribute with no named arguments. Original and

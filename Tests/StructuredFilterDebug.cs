@@ -19,7 +19,7 @@ class StructuredFilterDebug {
         var context = new DecompilerContext(0, module, null, true);
         var builder = new AstBuilder(context); builder.AddType(owner); builder.RunTransformations();
         var filters = builder.SyntaxTree.Descendants.OfType<CatchClause>().Where(c => !c.Condition.IsNull).ToArray();
-        if (filters.Length != 6 || filters.Any(c => c.Type.IsNull || c.VariableNameToken.IsNull ||
+        if (filters.Length != 8 || filters.Any(c => c.Type.IsNull || c.VariableNameToken.IsNull ||
             !c.Condition.GetAllRecursiveILSpans().Any(s => s.Start < s.End) ||
             c.Condition.DescendantsAndSelf.OfType<AnonymousMethodExpression>().Any() ||
             c.Condition.DescendantsAndSelf.OfType<InvocationExpression>().Any(i => i.Target is IdentifierExpression id && id.Identifier == "endfilter")))
@@ -82,6 +82,63 @@ class StructuredFilterDebug {
                 if (filter.Body.Count != 1 || arguments[2] != exception || arguments[3] == null || spans.Length == 0 ||
                     spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End)))
                     throw new Exception("Filter identity or offsets changed: " + scenario);
+            }
+            checks++;
+        }
+        foreach (var name in new[] { "Nested", "NestedAsync" })
+        foreach (var scenario in new[] { "original", "inverted", "reversed-constant", "exposed-stores", "no-join", "external-join", "cycle", "numeric-store", "mixed-stores", "decision-read", "branch-effect", "after-store", "prefix-call", "prefix-read" }) {
+            context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = owner.Methods.Single(m => m.Name == name) };
+            var block = new ILBlock(CodeBracesRangeFlags.MethodBraces) { Body = new ILAstBuilder().Build(context.CurrentMethod, true, context) };
+            var optimizer = new ILAstOptimizer();
+            optimizer.Optimize(context, block, out _, out _, out _, ILAstOptimizationStep.FixFilters);
+            var clause = block.GetSelfAndChildrenRecursive<ILTryCatchBlock.CatchBlock>().Single(c => c.FilterBlock != null);
+            var filter = clause.FilterBlock;
+            var outer = (ILCondition)filter.Body[1];
+            var accepted = outer.TrueBlock.Body.OfType<ILCondition>().Any() ? outer.TrueBlock : outer.FalseBlock;
+            var decision = accepted.Body.OfType<ILCondition>().Single();
+            var join = accepted.Body.OfType<ILLabel>().Single();
+            var result = (ILVariable)((ILExpression)filter.Body.Last()).Arguments[0].Operand;
+            var stores = accepted.GetSelfAndChildrenRecursive<ILExpression>().Where(e => e.Code == ILCode.Stloc && e.Operand is ILVariable v && v.Type.ElementType == ElementType.Boolean && v != result).ToArray();
+            if (stores.Length != 2 || stores[0].Operand != stores[1].Operand) throw new Exception("Nested Boolean decision fixture did not retain its shared join");
+            var variable = (ILVariable)stores[0].Operand;
+            var preparation = accepted.Body.OfType<ILExpression>().First(e => e.Code == ILCode.Stloc && e.Operand is ILVariable v && v.Type.ElementType == ElementType.I4);
+            var prepared = (ILVariable)preparation.Operand;
+            var jump = accepted.GetSelfAndChildrenRecursive<ILExpression>().Single(e => e.Code == ILCode.Br && e.Operand == join);
+            var branch = accepted.GetSelfAndChildrenRecursive<ILBlock>().Single(b => b.Body.Contains(jump));
+            bool shouldMatch = scenario == "original" || scenario == "inverted" || scenario == "reversed-constant" || scenario == "exposed-stores";
+            if (scenario == "inverted") {
+                decision.Condition = new ILExpression(ILCode.LogicNot, null, decision.Condition);
+                var old = decision.TrueBlock; decision.TrueBlock = decision.FalseBlock; decision.FalseBlock = old;
+            } else if (scenario == "reversed-constant") {
+                var compare = decision.Condition.GetSelfAndChildrenRecursive<ILExpression>().First(e => e.Code == ILCode.Ceq || e.Code == ILCode.Cne);
+                var old = compare.Arguments[0]; compare.Arguments[0] = compare.Arguments[1]; compare.Arguments[1] = old;
+            } else if (scenario == "exposed-stores") { block.Body.Add(new ILExpression(ILCode.Ldloc, prepared)); block.Body.Add(new ILExpression(ILCode.Ldloc, variable)); }
+            else if (scenario == "no-join") accepted.Body.Remove(join);
+            else if (scenario == "external-join") block.Body.Add(new ILExpression(ILCode.Br, join));
+            else if (scenario == "cycle") { var loop = new ILLabel { Name = "filterLoop" }; branch.Body.Insert(0, loop); jump.Operand = loop; }
+            else if (scenario == "numeric-store") stores[0].Arguments[0].Operand = 2;
+            else if (scenario == "mixed-stores") stores[0].Operand = new ILVariable("otherResult") { Type = variable.Type };
+            else if (scenario == "decision-read") decision.Condition = new ILExpression(ILCode.LogicAnd, null, new ILExpression(ILCode.Ldloc, variable), decision.Condition);
+            else if (scenario == "branch-effect") branch.Body.Insert(0, new ILExpression(ILCode.Nop, null));
+            else if (scenario == "after-store") branch.Body.Insert(branch.Body.IndexOf(jump), new ILExpression(ILCode.Nop, null));
+            else if (scenario == "prefix-call" || scenario == "prefix-read") {
+                var exception = (ILVariable)((ILExpression)filter.Body[0]).Operand;
+                var prefix = scenario == "prefix-call" ? new ILExpression(ILCode.Call, owner.Methods.Single(m => m.Name == "Read"),
+                    new ILExpression(ILCode.Ldloc, exception), new ILExpression(ILCode.Ldc_I4, 1), new ILExpression(ILCode.Ldc_I4, 0)) :
+                    new ILExpression(ILCode.Ldloc, new ILVariable("earlierPredicate") { Type = module.CorLibTypes.Boolean });
+                decision.Condition = new ILExpression(ILCode.LogicAnd, null, prefix, decision.Condition);
+            }
+            var before = block.ToString();
+            var spans = filter.GetSelfAndChildrenRecursiveILSpans().Where(s => s.Start < s.End).ToArray();
+            var arguments = new object[] { block, clause, null, null };
+            if ((bool)match.Invoke(optimizer, arguments) != shouldMatch) throw new Exception("Incorrect nested filter boundary: " + name + "/" + scenario);
+            if (!shouldMatch && before != block.ToString()) throw new Exception("Failed nested filter match mutated IL: " + scenario);
+            if (shouldMatch) {
+                var retained = filter.GetSelfAndChildrenRecursiveILSpans().ToArray();
+                var expressions = filter.GetSelfAndChildrenRecursive<ILExpression>();
+                if (filter.Body.Count != 1 || expressions.Count(e => e.Code == ILCode.Stloc && e.Operand == prepared) != 1 ||
+                    expressions.Count(e => e.Code == ILCode.Stloc && e.Operand == variable) != 1 || spans.Length == 0 ||
+                    spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End))) throw new Exception("Nested filter stores or offsets changed: " + scenario);
             }
             checks++;
         }
