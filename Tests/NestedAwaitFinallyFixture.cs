@@ -33,13 +33,32 @@ public static class NestedAwaitFinallyFixture {
         }
         finally { if (step != null) await step(2).ConfigureAwait(false); }
     }
+    public static async Task<int> ExclusiveCleanup(Func<int, Task<int>> step, bool branch) {
+        try {
+            if (branch) {
+                try { return await step(0).ConfigureAwait(false) + 1; }
+                finally { await step(1).ConfigureAwait(false); }
+            } else {
+                try { return await step(0).ConfigureAwait(false) + 2; }
+                finally { await step(1).ConfigureAwait(false); }
+            }
+        } finally { await step(2).ConfigureAwait(false); }
+    }
+    public static async Task<int> SequentialCleanup(Func<int, Task<int>> step) {
+        int value;
+        try { value = await step(0).ConfigureAwait(false); }
+        finally { await step(1).ConfigureAwait(false); }
+        try { value += await step(2).ConfigureAwait(false); }
+        finally { await step(3).ConfigureAwait(false); }
+        return value;
+    }
     [MethodImpl(MethodImplOptions.NoInlining)]
     static Task<int> ThrowSource(Exception error) { throw error; }
     public static int Main() {
         var method = new DynamicMethod("ThrowPayload", typeof(void), new[] { typeof(object) }, typeof(NestedAwaitFinallyFixture).Module);
         var il = method.GetILGenerator(); il.Emit(OpCodes.Ldarg_0); il.Emit(OpCodes.Throw);
         var throwPayload = (Action<object>)method.CreateDelegate(typeof(Action<object>));
-        var functions = new Func<Func<int, Task<int>>, bool, Task<int>>[] { Nested, NestedCleanup, ConditionalCleanup };
+        var functions = new Func<Func<int, Task<int>>, bool, Task<int>>[] { Nested, NestedCleanup, ConditionalCleanup, ExclusiveCleanup };
         foreach (var function in functions) foreach (bool branch in new[] { false, true })
         for (int code = 0; code < 125; code++) foreach (int delayed in new[] { 0, 1, 2, 4, 7 }) {
             int[] modes = { code % 5, code / 5 % 5, code / 25 };
@@ -79,8 +98,45 @@ public static class NestedAwaitFinallyFixture {
             Check(task.IsCanceled == (failure >= 0 && modes[failure] == 3), "Cancellation state");
             cases++;
         }
-        Console.WriteLine("PASS: " + cases + " nested cleanup cases, " + checks + " assertions.");
+        CheckSequential(throwPayload);
+        Console.WriteLine("PASS: " + cases + " nested/independent cleanup cases, " + checks + " assertions.");
         return 0;
+    }
+    static void CheckSequential(Action<object> throwPayload) {
+        for (int code = 0; code < 625; code++) foreach (int delayed in new[] { 0, 1, 2, 4, 8, 15 }) {
+            int[] modes = { code % 5, code / 5 % 5, code / 25 % 5, code / 125 };
+            var trace = new List<int>();
+            var errors = new Exception[4]; var payloads = new object[4];
+            var gates = new TaskCompletionSource<int>[4];
+            for (int phase = 0; phase < 4; phase++) {
+                errors[phase] = modes[phase] == 3 ? (Exception)new OperationCanceledException(new CancellationToken(true)) : new InvalidOperationException("phase" + phase);
+                payloads[phase] = new object(); gates[phase] = new TaskCompletionSource<int>();
+                if ((delayed & (1 << phase)) == 0) Complete(gates[phase], modes[phase], errors[phase]);
+            }
+            var task = SequentialCleanup(phase => {
+                trace.Add(phase);
+                if (modes[phase] == 1) return ThrowSource(errors[phase]);
+                if (modes[phase] == 4) { throwPayload(payloads[phase]); throw new Exception("Throw returned"); }
+                return gates[phase].Task;
+            });
+            for (int phase = 0; phase < 4; phase++) if ((delayed & (1 << phase)) != 0) {
+                if (trace.Contains(phase) && modes[phase] != 1 && modes[phase] != 4) Check(!task.IsCompleted, "Sequential suspension state");
+                Complete(gates[phase], modes[phase], errors[phase]);
+            }
+            bool second = modes[0] == 0 && modes[1] == 0;
+            int failure = second ? (modes[3] != 0 ? 3 : modes[2] != 0 ? 2 : -1) : modes[1] != 0 ? 1 : 0;
+            Exception actual = null; int value = 0;
+            try { value = task.GetAwaiter().GetResult(); } catch (Exception caught) { actual = caught; }
+            Check(string.Join(",", trace) == (second ? "0,1,2,3" : "0,1"), "Sequential cleanup order");
+            if (failure < 0) Check(actual == null && value == 34, "Sequential result");
+            else if (modes[failure] == 4) Check(actual is RuntimeWrappedException wrapped && ReferenceEquals(wrapped.WrappedException, payloads[failure]), "Sequential raw payload identity");
+            else {
+                Check(ReferenceEquals(actual, errors[failure]), "Sequential winning exception identity");
+                if (modes[failure] == 1) Check(actual.StackTrace.Contains("ThrowSource"), "Sequential original stack");
+            }
+            Check(task.IsCanceled == (failure >= 0 && modes[failure] == 3), "Sequential cancellation state");
+            cases++;
+        }
     }
     static void Complete(TaskCompletionSource<int> gate, int mode, Exception error) {
         if (mode == 2 || mode == 3) gate.SetException(error);

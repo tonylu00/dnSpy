@@ -151,6 +151,17 @@ Awaited finally blocks check cleanup after success, failure and cancellation,
 suspended cleanup, and cleanup exceptions taking precedence over body exceptions.
 Captured delegate caches retain their original zero-initialized storage.
 
+`Invoke-NestedAwaitFinallyRegression.ps1` checks 8,750 cases / 34,986 assertions
+for nested, conditional, mutually exclusive and sequential cleanup. Original and
+rebuilt one/four-worker exports must agree on suspension, cleanup order, skipped
+later regions, exact exception or raw payload identity, stack preservation and
+cancellation. Twenty AST checks cover debug spans, observed/captured temporaries,
+missing initialization, resets inside protected/cleanup code and outside jumps.
+Independent cleanup regions may share a compiler exception temporary only when
+each initializes and consumes its own capture. Initialization can precede constant
+return-flag stores; calls and control-flow edges cannot intervene. Resets needed by
+another unrecovered region remain until that region is recovered.
+
 `Invoke-SingleIterationTryLoopRegression.ps1` verifies removal of an artificial loop
 whose try and every catch end with a break targeting that loop. It preserves nested
 breaks and finally blocks, rejects continues, early exits, labels, local declarations,
