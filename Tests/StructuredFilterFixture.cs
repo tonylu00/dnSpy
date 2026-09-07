@@ -94,6 +94,72 @@ public static class StructuredFilterFixture {
         catch (Exception exception) { Trace += "F"; return exception; }
         return null;
     }
+    static bool Initial(Exception error, int mode) {
+        Trace += "A"; observed = error;
+        if (mode == 2) throw new FormatException("initial predicate");
+        return mode == 1;
+    }
+    static bool Advance(Exception error, ref bool value, bool expected, int mode, string marker) {
+        Trace += marker; observed = error;
+        if (value != expected) Trace += "!";
+        value = !value;
+        if (mode == 2) throw new FormatException("updating predicate");
+        return mode == 1;
+    }
+    static bool AndPredicate(Exception error, ref bool first, ref bool second, int a, int b, int c) {
+        if (first = Initial(error, a)) first = Advance(error, ref first, true, b, "B");
+        if (second = first) second = Advance(error, ref second, true, c, "C");
+        return second;
+    }
+    static bool OrPredicate(Exception error, ref bool first, ref bool second, int a, int b, int c) {
+        if (!(first = Initial(error, a))) first = Advance(error, ref first, false, b, "B");
+        if (!(second = first)) second = Advance(error, ref second, false, c, "C");
+        return second;
+    }
+    static Exception UpdateAnd(Exception failure, int a, int b, int c) {
+        bool first = false, second = false;
+        try { try { throw failure; } finally { Trace += "U" + (first ? "1" : "0") + (second ? "1" : "0"); } }
+        catch (FilterFailure error) when (AndPredicate(error, ref first, ref second, a, b, c)) { Trace += "H"; return error; }
+        catch (Exception error) { Trace += "F"; return error; }
+    }
+    static Exception UpdateOr(Exception failure, int a, int b, int c) {
+        bool first = false, second = false;
+        try { try { throw failure; } finally { Trace += "U" + (first ? "1" : "0") + (second ? "1" : "0"); } }
+        catch (FilterFailure error) when (OrPredicate(error, ref first, ref second, a, b, c)) { Trace += "H"; return error; }
+        catch (Exception error) { Trace += "F"; return error; }
+    }
+    static async Task<Exception> UpdateAndAsync(Task task, int a, int b, int c) {
+        bool first = false, second = false;
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U" + (first ? "1" : "0") + (second ? "1" : "0"); } }
+        catch (FilterFailure error) when (AndPredicate(error, ref first, ref second, a, b, c)) { Trace += "H"; return error; }
+        catch (Exception error) { Trace += "F"; return error; }
+        return null;
+    }
+    static async Task<Exception> UpdateOrAsync(Task task, int a, int b, int c) {
+        bool first = false, second = false;
+        try { try { await task.ConfigureAwait(false); } finally { Trace += "U" + (first ? "1" : "0") + (second ? "1" : "0"); } }
+        catch (FilterFailure error) when (OrPredicate(error, ref first, ref second, a, b, c)) { Trace += "H"; return error; }
+        catch (Exception error) { Trace += "F"; return error; }
+        return null;
+    }
+    static string UpdateTrace(bool matches, bool and, int a, int b, int c) {
+        if (!matches) return "U00F";
+        string trace = "A"; int first = 0, second = 0;
+        if (a == 2) return trace + "U00F";
+        first = a;
+        if ((first == 1) == and) {
+            trace += "B"; first = 1 - first;
+            if (b == 2) return trace + "U" + first + "0F";
+            first = b;
+        }
+        second = first;
+        if ((second == 1) == and) {
+            trace += "C"; second = 1 - second;
+            if (c == 2) return trace + "U" + first + second + "F";
+            second = c;
+        }
+        return trace + "U" + first + second + (second == 1 ? "H" : "F");
+    }
     static void Check(Exception actual, Exception expected, string trace, bool observedException) {
         checks++;
         if (!ReferenceEquals(actual, expected) || Trace != trace || !ReferenceEquals(observed, observedException ? expected : null))
@@ -152,6 +218,21 @@ public static class StructuredFilterFixture {
             Reset(); Check(Nested(failure, accept, fails), failure, trace, reads);
             foreach (bool suspended in new[] { false, true }) { Reset(); Check(RunAsync(3, failure, suspended, accept, fails), failure, trace, reads); }
         }
+        foreach (bool matches in new[] { false, true }) foreach (bool and in new[] { false, true })
+        for (int a = 0; a < 3; a++) for (int b = 0; b < 3; b++) for (int c = 0; c < 3; c++) {
+            Exception failure = matches ? (Exception)new FilterFailure() : new ArgumentException("unmatched");
+            string trace = UpdateTrace(matches, and, a, b, c);
+            Reset(); Check(and ? UpdateAnd(failure, a, b, c) : UpdateOr(failure, a, b, c), failure, trace, matches);
+            foreach (bool suspended in new[] { false, true }) {
+                Reset(); var completion = new TaskCompletionSource<int>();
+                if (!suspended) completion.SetException(failure);
+                var task = and ? UpdateAndAsync(completion.Task, a, b, c) : UpdateOrAsync(completion.Task, a, b, c);
+                if (suspended) { if (task.IsCompleted || Trace != "") throw new Exception("Missing update suspension"); completion.SetException(failure); }
+                Check(task.GetAwaiter().GetResult(), failure, trace, matches);
+            }
+        }
+        Reset(); Check(UpdateAndAsync(Task.FromResult(0), 0, 0, 0).GetAwaiter().GetResult(), null, "U00", false);
+        Reset(); Check(UpdateOrAsync(Task.FromResult(0), 0, 0, 0).GetAwaiter().GetResult(), null, "U00", false);
         Console.WriteLine("PASS: " + checks + " structured filter identity, first-pass order, preparation, exposed assignment and suspension checks.");
         return 0;
     }

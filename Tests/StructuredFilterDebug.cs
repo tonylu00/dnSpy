@@ -19,7 +19,7 @@ class StructuredFilterDebug {
         var context = new DecompilerContext(0, module, null, true);
         var builder = new AstBuilder(context); builder.AddType(owner); builder.RunTransformations();
         var filters = builder.SyntaxTree.Descendants.OfType<CatchClause>().Where(c => !c.Condition.IsNull).ToArray();
-        if (filters.Length != 8 || filters.Any(c => c.Type.IsNull || c.VariableNameToken.IsNull ||
+        if (filters.Length != 12 || filters.Any(c => c.Type.IsNull || c.VariableNameToken.IsNull ||
             !c.Condition.GetAllRecursiveILSpans().Any(s => s.Start < s.End) ||
             c.Condition.DescendantsAndSelf.OfType<AnonymousMethodExpression>().Any() ||
             c.Condition.DescendantsAndSelf.OfType<InvocationExpression>().Any(i => i.Target is IdentifierExpression id && id.Identifier == "endfilter")))
@@ -139,6 +139,41 @@ class StructuredFilterDebug {
                 if (filter.Body.Count != 1 || expressions.Count(e => e.Code == ILCode.Stloc && e.Operand == prepared) != 1 ||
                     expressions.Count(e => e.Code == ILCode.Stloc && e.Operand == variable) != 1 || spans.Length == 0 ||
                     spans.Any(s => !retained.Any(r => r.Start <= s.Start && r.End >= s.End))) throw new Exception("Nested filter stores or offsets changed: " + scenario);
+            }
+            checks++;
+        }
+        var normalizeUpdate = typeof(ILAstOptimizer).GetMethod("NormalizeFilterUpdate", BindingFlags.Static | BindingFlags.NonPublic);
+        foreach (var name in new[] { "UpdateAnd", "UpdateOr", "UpdateAndAsync", "UpdateOrAsync" })
+        foreach (var scenario in new[] { "original", "inverted", "initial-store", "extra-update", "extra-skipped", "wrong-target", "missing-block", "empty-update", "int-local", "entry-jump", "address-test" }) {
+            context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = owner.Methods.Single(m => m.Name == name) };
+            var block = new ILBlock(CodeBracesRangeFlags.MethodBraces) { Body = new ILAstBuilder().Build(context.CurrentMethod, true, context) };
+            new ILAstOptimizer().Optimize(context, block, out _, out _, out _, ILAstOptimizationStep.FixFilters);
+            var filter = block.GetSelfAndChildrenRecursive<ILTryCatchBlock.CatchBlock>().Single(c => c.FilterBlock != null).FilterBlock;
+            ILExpression BaseTest(ILCondition candidate) { var test = candidate.Condition; while (test.Code == ILCode.LogicNot) test = test.Arguments.Single(); return test; }
+            var condition = filter.GetSelfAndChildrenRecursive<ILCondition>().First(c => BaseTest(c).Operand is ILVariable v && v.Type.ElementType == ElementType.Boolean);
+            var test = BaseTest(condition); var variable = (ILVariable)test.Operand;
+            var updated = condition.TrueBlock.Body.Count == 0 ? condition.FalseBlock : condition.TrueBlock;
+            var skipped = condition.TrueBlock.Body.Count == 0 ? condition.TrueBlock : condition.FalseBlock;
+            if (updated.Body.Count != 1 || ((ILExpression)updated.Body.Single()).Operand != variable) throw new Exception("Expected one conditional Boolean update");
+            if (scenario == "inverted") { condition.Condition = new ILExpression(ILCode.LogicNot, null, condition.Condition); var old = condition.TrueBlock; condition.TrueBlock = condition.FalseBlock; condition.FalseBlock = old; }
+            else if (scenario == "initial-store") { test.Code = ILCode.Stloc; test.Arguments.Add(new ILExpression(ILCode.Ldloc, variable)); }
+            else if (scenario == "extra-update") updated.Body.Add(new ILExpression(ILCode.Nop, null));
+            else if (scenario == "extra-skipped") skipped.Body.Add(new ILExpression(ILCode.Nop, null));
+            else if (scenario == "wrong-target") ((ILExpression)updated.Body.Single()).Operand = new ILVariable("otherFlag") { Type = variable.Type };
+            else if (scenario == "missing-block") condition.FalseBlock = null;
+            else if (scenario == "empty-update") updated.Body.Clear();
+            else if (scenario == "int-local") variable.Type = module.CorLibTypes.Int32;
+            else if (scenario == "entry-jump") updated.EntryGoto = new ILExpression(ILCode.Br, new ILLabel { Name = "filterEntry" });
+            else if (scenario == "address-test") test.Code = ILCode.Ldloca;
+            string Snapshot() { return scenario == "missing-block" ? condition.Condition + "|" + condition.TrueBlock + "|" + condition.FalseBlock : block.ToString(); }
+            var before = Snapshot(); var arguments = new object[] { condition, null };
+            bool accepted = scenario == "original" || scenario == "inverted" || scenario == "initial-store";
+            if ((bool)normalizeUpdate.Invoke(null, arguments) != accepted || before != Snapshot()) throw new Exception("Unsafe conditional filter update: " + name + "/" + scenario);
+            if (accepted) {
+                var result = (ILExpression)arguments[1]; var decision = result.Arguments.Single();
+                if (result.Code != ILCode.Stloc || result.Operand != variable || decision.Code != ILCode.TernaryOp || decision.Arguments[0] != condition.Condition ||
+                    !decision.Arguments.Skip(1).Any(e => e.Code == ILCode.Ldloc && e.Operand == variable) ||
+                    !decision.Arguments.Skip(1).Contains(((ILExpression)updated.Body.Single()).Arguments.Single())) throw new Exception("Conditional filter initial value or callback was lost");
             }
             checks++;
         }
