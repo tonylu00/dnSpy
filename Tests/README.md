@@ -96,12 +96,23 @@ polarities. Their kickoff methods must reconstruct as async source, preserve
 factory evaluation counts, and retain an unrelated branch around the await.
 Forward resume bookkeeping after the result path checks the same behavior,
 including completed, suspended, faulted and cancelled tasks.
+The detached fixture also places result collection before both resume bookkeeping
+and the await factory. Its branched resume must recover as async source, execute
+the factory once, and preserve success, failure, cancellation and bypass paths.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.
 Awaited finally blocks check cleanup after success, failure and cancellation,
 suspended cleanup, and cleanup exceptions taking precedence over body exceptions.
 Captured delegate caches retain their original zero-initialized storage.
+
+`Invoke-SingleIterationTryLoopRegression.ps1` verifies removal of an artificial loop
+whose try and every catch end with a break targeting that loop. It preserves nested
+breaks and finally blocks, rejects continues, early exits, labels, local declarations,
+repeated iterations, gotos and trailing statements, and retains debug spans. It
+compiles original/transformed syntax and compares 36 runtime traces, including a
+throwing finally. Exposing the adjacent cleanup lets async iterator recovery restore
+the awaited finally instead of emitting a yield inside a catch-protected try.
 
 The nullable fixture emits IL that copies a local's managed pointer across a
 branch. It checks present and absent values and ensures the source is evaluated
