@@ -175,6 +175,16 @@ and protected-body observations. They also check cleanup structure, debug spans 
 unchanged input IL. Only independently defined capture/rethrow uses may share the
 temporary; other uses prevent removal.
 
+`Invoke-ObservedSelectorCatchRegression.ps1` preserves copied catch selectors
+whose storage is reused or observed outside dispatch. Original and one/four-worker
+source rebuilds agree on 46,600 cases / 195,180 assertions, including copies seen
+by an outer catch when an awaited handler fails, and writes retained after that
+handler completes. Another 54 AST/debug guards cover one, three and eight copies,
+normal-path stores, escaped selection flags, parameters, effects and bad entries.
+The selected catch performs the copies before its body; other paths retain the
+original stores. The selection flag must stay private and unchanged in that body.
+Independent-capture lifetime analysis follows the same bounded copy chains.
+
 `Invoke-PendingCatchReuseRegression.ps1` exercises one exception temporary shared
 by independent awaited cleanup and typed catch regions, in both execution orders.
 Original and one/four-worker source rebuilds agree on 45,000 cases / 186,204
