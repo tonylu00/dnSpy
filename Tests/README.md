@@ -164,6 +164,15 @@ exception identity and rethrow stacks. Thirty guards preserve the normal exit,
 join and jump spans, and reject other entries, fallthrough, capture/flag writes,
 cross-region targets and unsupported dispatch alternatives.
 
+`Invoke-BackwardResultAwaitRegression.ps1` covers an inline suspension whose
+GetResult block precedes the factory, with adjacent or detached resume bookkeeping.
+Original and one/four-worker source rebuilds run 16,004 cases with 70,892 assertions
+for repeated suspension, factory/result faults, cancellation, cleanup precedence
+and an unrelated branch that skips the await. Fifty-nine guards check all four
+resume/result orders, reject outside entry and observable resume effects, retain
+debug spans and leave the input IL unchanged. Await reconstruction also requires
+the placeholder to have come from the analyzed state machine.
+
 `Invoke-FallThroughAwaitRegression.ps1` covers a loop whose negative completion
 test falls through to GetResult while suspension and resume bookkeeping occupy
 separate blocks. Original and one/four-worker source rebuilds run 8,000 cases with
