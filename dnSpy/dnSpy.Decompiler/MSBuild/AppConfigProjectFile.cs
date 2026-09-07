@@ -18,6 +18,9 @@
 */
 
 using System.IO;
+using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
 using dnSpy.Decompiler.Properties;
 
 namespace dnSpy.Decompiler.MSBuild {
@@ -33,6 +36,27 @@ namespace dnSpy.Decompiler.MSBuild {
 			this.existingName = existingName;
 		}
 
-		public override void Create(DecompileContext ctx) => File.Copy(existingName, Filename, true);
+		public override void Create(DecompileContext ctx) {
+			File.Copy(existingName, Filename, true);
+			XDocument document;
+			try {
+				using var reader = XmlReader.Create(existingName, new XmlReaderSettings { XmlResolver = null, DtdProcessing = DtdProcessing.Prohibit });
+				document = XDocument.Load(reader, LoadOptions.PreserveWhitespace);
+			}
+			catch (XmlException) {
+				return;
+			}
+			XNamespace binding = "urn:schemas-microsoft-com:asm.v1";
+			var tokens = document.Root?.Elements("runtime").Elements(binding + "assemblyBinding")
+				.Elements(binding + "dependentAssembly").Elements(binding + "assemblyIdentity")
+				.Attributes("publicKeyToken").Where(a => a.Value.Length == 0).ToArray();
+			if (tokens == null || tokens.Length == 0)
+				return;
+			// The CLR accepts an empty token for unsigned assemblies, but MSBuild
+			// requires the explicit null spelling when it reads binding redirects.
+			foreach (var token in tokens)
+				token.Value = "null";
+			document.Save(Filename, SaveOptions.DisableFormatting);
+		}
 	}
 }
