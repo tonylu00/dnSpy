@@ -20,7 +20,7 @@ class JumpedAwaitCatchDebug {
         var restore = typeof(PatternStatementTransform).GetMethod("RestoreAwaitCatch", BindingFlags.Instance | BindingFlags.NonPublic);
         int checks = 0;
         foreach (bool shared in new[] { false, true })
-        foreach (string scenario in new[] { "original", "return", "continue", "normal-throw", "fallthrough", "effect", "outside-entry", "duplicate-label", "cross-region", "flag-write", "missing-reset", "capture-write", "body-entry", "alternative", "inverted" }) {
+        foreach (string scenario in new[] { "original", "return", "continue", "normal-throw", "fallthrough", "effect", "outside-entry", "duplicate-label", "cross-region", "flag-write", "missing-reset", "capture-write", "body-entry", "alternative", "inverted", "normal-entry", "normal-ref", "normal-closure", "normal-parameter", "normal-write" }) {
             string Snapshot() => string.Join("\n", module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).SelectMany(m => m.Body.Instructions));
             string originalIL = Snapshot();
             var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method };
@@ -52,9 +52,16 @@ class JumpedAwaitCatchDebug {
             else if (scenario == "body-entry") { continuation.Statements.InsertBefore(continuation.Statements.First(), new LabelStatement { Label = "BodyEntry" }); block.Add(new GotoStatement("BodyEntry")); }
             else if (scenario == "alternative") dispatch.FalseStatement = new BlockStatement();
             else if (scenario == "inverted") ((BinaryOperatorExpression)dispatch.Condition).Operator = BinaryOperatorType.InEquality;
+            if (scenario.StartsWith("normal-") && scenario != "normal-throw") {
+                region.TryBlock.Statements.Last().ReplaceWith(new GotoStatement(label.Label));
+                if (scenario == "normal-ref") block.Add(new ExpressionStatement(new InvocationExpression(new IdentifierExpression("Observe"), new DirectionExpression(FieldDirection.Ref, flag.Left.Clone()))));
+                else if (scenario == "normal-closure") block.Add(new ExpressionStatement(new InvocationExpression(new IdentifierExpression("Observe"), new LambdaExpression { Body = flag.Left.Clone() })));
+                else if (scenario == "normal-parameter") flag.Left.Annotation<ILVariable>().OriginalParameter = method.Parameters[0];
+                else if (scenario == "normal-write") region.TryBlock.Statements.InsertBefore(region.TryBlock.Statements.First(), new ExpressionStatement(new AssignmentExpression(flag.Left.Clone(), new PrimitiveExpression(1))));
+            }
             string before = declaration.ToString();
             restore.Invoke(new PatternStatementTransform(context), new object[] { region });
-            bool accepted = new[] { "original", "return", "continue", "normal-throw" }.Contains(scenario);
+            bool accepted = new[] { "original", "return", "continue", "normal-throw", "normal-entry" }.Contains(scenario);
             if (accepted) {
                 Check(dispatch.Parent == null && label.Parent == block && normalExit.Parent == block, "Normal exit or join changed");
                 Check(originalStatements.All(s => s.Parent == handler.Body), "Continuation was not moved into the handler");

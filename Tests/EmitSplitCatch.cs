@@ -5,7 +5,8 @@ using dnlib.DotNet.Emit;
 class EmitSplitCatch {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
-        var type = module.GetTypes().Single(t => t.Name.String.StartsWith("<Split>d__"));
+        string name = args.Length > 2 ? args[2] : "Split";
+        var type = module.GetTypes().Single(t => t.Name.String.StartsWith("<" + name + ">d__"));
         var method = type.Methods.Single(m => m.Name == "MoveNext");
         var code = method.Body.Instructions;
         int changed = 0;

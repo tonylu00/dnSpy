@@ -160,9 +160,20 @@ internal targets, bounded normalization, debug spans and disabled async recovery
 jump past a normal exit, including a shared jump after the try/catch. Original
 and one/four-worker source rebuilds run 22,500 cases and 134,712 assertions for
 loop break/continue/return, suspension, faults, cancellation, raw wrapped payloads,
-exception identity and rethrow stacks. Thirty guards preserve the normal exit,
-join and jump spans, and reject other entries, fallthrough, capture/flag writes,
+exception identity and rethrow stacks. Forty guards preserve the normal exit,
+join and jump spans, allow a protected normal path to share the dispatch entry,
+and reject outside entries, fallthrough, escaped or written selection flags,
 cross-region targets and unsupported dispatch alternatives.
+
+`Invoke-LoopExitRethrowRegression.ps1` covers a captured rethrow whose null branch
+breaks out of an infinite retry loop to a raw throw. Normal and selected catch
+paths share a dispatch entry. Original, emitted and one/four-worker source
+rebuilds agree on 20,580 cases / 107,292 assertions for retries, suspension,
+observer failures, cancellation, wrapped payloads, exception identity and stacks.
+Twenty-four AST/debug checks cover while/for/do loops, multiple exits, retained
+shared tails and nested breaks. Moving the throw must preserve exception-search
+and cleanup timing; finite loops, intervening effects, external entries and
+crossing using/lock/fixed/exception regions are rejected. Input IL stays unchanged.
 
 `Invoke-SharedCaptureFinallyRegression.ps1` gives eleven caught-exception captures
 the same hoisted temporary used by independent rethrows, across five nested,
