@@ -139,6 +139,11 @@ including completed, suspended, faulted and cancelled tasks.
 The detached fixture also places result collection before both resume bookkeeping
 and the await factory. Its branched resume must recover as async source, execute
 the factory once, and preserve success, failure, cancellation and bypass paths.
+Loop cases place the factory between result collection and resume bookkeeping.
+They check repeated factory calls, suspension and failure on either iteration,
+and cancellation after resuming the first iteration. A resume-only application
+effect keeps its original state machine. Both one- and four-worker exports rebuild
+and execute; debug checks retain await spans and leave input IL unchanged.
 Incomplete reconstruction also retains the original implementation. The tests
 cover side effects before await result collection, nested iterator cleanup,
 early disposal, captured owner references and valid names for retained helpers.

@@ -411,6 +411,7 @@ public static partial class AsyncLayoutFixture {
         VerifyTwice();
         VerifyAwaitFinally();
         VerifyDetachedAwaits();
+        VerifyDetachedLoopAwaits();
         Console.WriteLine("PASS: completed, suspended, faulted, cancelled, unrelated-branch and finally async paths.");
         return 0;
     }
