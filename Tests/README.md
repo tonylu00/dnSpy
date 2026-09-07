@@ -175,6 +175,15 @@ and protected-body observations. They also check cleanup structure, debug spans 
 unchanged input IL. Only independently defined capture/rethrow uses may share the
 temporary; other uses prevent removal.
 
+`Invoke-BranchedFinallyReuseRegression.ps1` inserts a two-entry loop before the
+second independent protected await. Original, modified and one/four-worker source
+rebuilds pass 8,750 cases / 34,986 assertions for suspension, cleanup order,
+cancellation, wrapped payloads, winning exceptions and original rethrow stacks.
+Thirty AST checks cover internal forward/backward branches, cleanup entries,
+outside entries, duplicate labels, escaping jumps, missing resets and escaped
+exception storage. An independent region may contain branches only when its
+reset still dominates every entry. Debug spans and input IL/hashes are preserved.
+
 `Invoke-GroupedSelectorCopiesRegression.ps1` inserts two hoisted selector copies
 and repeated equality dispatch into ordinary/generic three-handler retry methods.
 Original, modified and one/four-worker rebuilt programs pass 76,832 cases /
