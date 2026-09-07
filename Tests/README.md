@@ -401,6 +401,15 @@ adds empty branch blocks. Exported base/this constructor calls must retain their
 argument scope. Its 33 scenarios also check lazy fallback evaluation, exceptions,
 object/array identity, unchanged arguments and numeric branch behavior.
 
+`Invoke-LiftedNumericCastRegression.ps1` checks numeric conversions on nullable
+operands before a fallback or lifted arithmetic. Its 6,760 checks cover null and
+boundary values, lazy fallback evaluation, operand exception identity, signedness,
+narrowing, checked overflow, boxed types and both-operand evaluation for addition.
+Original and one/four-worker source rebuilds must agree; five fallback expressions
+retain their conditional/coalescing structure and debug spans, with unchanged
+input IL and assembly hashes. Conversions belong on the nullable child of a
+`ValueOf` marker, so they preserve null until the fallback decides which path runs.
+
 `Invoke-DiscardedValuesRegression.ps1` checks 26 discarded-result outcomes,
 including operator evaluation order, getter effects, invalid casts, null and
 array bounds errors, checked overflow, and completed/suspended/faulted/cancelled
