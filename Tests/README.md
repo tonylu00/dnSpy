@@ -174,6 +174,15 @@ Readonly captures receive a separate local identity only after proving that the
 other catch stores its own exception before selecting its continuation. Resets
 needed by another region stay in place; input assembly bytes remain unchanged.
 
+`Invoke-SavedStructAwaitRegression.ps1` checks ordinary async methods that clear a
+saved struct on success and failure. Original and rebuilt one/four-worker exports
+pass 128 cases / 632 assertions, including generic structs, value/reference/null
+contents, suspension, synchronous/task failures, cancellation, observer failures
+and constructor counts. Sixteen guards verify both completion paths reject shared
+static clearing, mismatched types and extra calls, preserve await debug spans and
+leave input IL unchanged. Exact-type initialization of a state-machine-owned field
+is recognized as cleanup without calling its struct constructor.
+
 `Invoke-SingleIterationTryLoopRegression.ps1` verifies removal of an artificial loop
 whose try and every catch end with a break targeting that loop. It preserves nested
 breaks and finally blocks, rejects continues, early exits, labels, local declarations,
