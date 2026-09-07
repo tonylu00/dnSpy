@@ -227,6 +227,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.VisualBasic {
 			state.AstBuilder.Context.CancellationToken = ctx.CancellationToken;
 			state.AstBuilder.Context.CurrentType = currentType;
 			state.AstBuilder.Context.Settings = settings;
+			state.AstBuilder.Context.SupportsAsyncIterators = false;
 			return state;
 		}
 

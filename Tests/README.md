@@ -419,3 +419,28 @@ debugger namespaces; three array methods must retain typed temporaries and debug
 spans. Explicit namespace syntax supplies the traversal scope when present.
 Combining a local store into an assignment expression requires matching variable
 types, preserving the original duplicated stack value's type after a wider store.
+
+`Invoke-AsyncIteratorRegression.ps1` verifies C# async enumerable/enumerator
+reconstruction, including generic instance methods, lazy execution, real await
+suspension, multiple yields, early disposal, awaited cleanup, exceptions and
+cancellation. Original and rebuilt one/four-worker exports each pass 4,676 checks.
+A second input rearranges cancellation-selection and disposal blocks and renames
+the six state machines, their fields and interface implementation methods. It must
+produce the same results. The emitter updates both metadata-table member references
+and generic-context references embedded in method bodies.
+
+Another 38 checks per input verify source/debug spans, unchanged input IL, disabled
+settings/language capabilities, unexpected constructor effects, invalid yield
+signals, altered token predicates, missing cancellation attributes and changed
+token cleanup calls. These unsupported shapes keep the original state machine.
+The Visual Basic frontend retains state machines because it cannot express C#
+async-iterator syntax. Other unsupported iterator layouts also remain available
+for further recovery; passing these tests does not establish complete ETS behavior.
+
+The iterator pass identifies fields through their constructor, interface methods,
+promise completion and token flow rather than generated names. It checks all nine
+symbolic default/equal/distinct token combinations before replacing cancellation
+selection, and validates the corresponding linked-token disposal. Successful
+recovery shares the existing await conversion and awaited-finally restoration,
+emits `async` with `yield return`, and hides the inlined state machine. Both async
+and iterator decompilation settings must be enabled.
