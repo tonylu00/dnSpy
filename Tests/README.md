@@ -147,9 +147,12 @@ and execute; debug checks retain await spans and leave input IL unchanged.
 
 `Invoke-GuardedAwaitRegression.ps1` covers a detached suspension after a nested
 try/catch whose paths all exit, and state dispatch into a reordered try entry.
-Original and one/four-worker source rebuilds run 217 cases with 865 assertions:
+Original and one/four-worker source rebuilds run 325 cases with 1,297 assertions:
 repeated suspension, synchronous factory faults, task faults and cancellation,
 filtered and ordinary handlers, cleanup order, exception identity and bypass.
+Compiler state guards in nested catch/finally cleanup are removed throughout the
+method. Conditional application cleanup, nested cleanup and cleanup exceptions
+must keep their effect order, selection and precedence over the pending failure.
 Twenty-three guards check fallthrough rejection, entry boundaries, switch edges,
 internal targets, bounded normalization, debug spans and disabled async recovery.
 

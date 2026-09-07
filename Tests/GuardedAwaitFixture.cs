@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public static class GuardedAwaitFixture {
     static readonly List<string> trace = new List<string>();
-    static Exception parseFailure, factoryFailure;
+    static Exception parseFailure, factoryFailure, cleanupFailure;
 
     [AsyncStateMachine(typeof(GuardedState))]
     public static Task<int> Read(Task<int> input, Task<int> tail, int mode) {
@@ -34,9 +34,10 @@ public static class GuardedAwaitFixture {
         int total, iteration;
 
         public void MoveNext() {
+            int cachedState = state;
             int result;
             try {
-                if (state == 0) goto Guarded;
+                if (cachedState == 0) goto Guarded;
                 iteration = 0;
                 total = 0;
                 if (input == null) { trace.Add("bypass"); result = 31; goto Success; }
@@ -49,12 +50,12 @@ public static class GuardedAwaitFixture {
             Guarded:
                 try {
                     TaskAwaiter<int> awaiter;
-                    if (state == 0) goto Resume;
+                    if (cachedState == 0) goto Resume;
                     goto FactorySite;
                 Resume:
                     awaiter = saved;
                     saved = default(TaskAwaiter<int>);
-                    state = -1;
+                    state = cachedState = -1;
                 Complete:
                     int value = awaiter.GetResult();
                     goto Parse;
@@ -66,22 +67,55 @@ public static class GuardedAwaitFixture {
                     try {
                         try {
                             trace.Add("parse" + iteration);
-                            if (mode >= 1 && mode <= 3) throw parseFailure;
+                            if ((mode >= 1 && mode <= 3) || mode == 6 || mode == 7) throw parseFailure;
                             total += value;
                             goto Next;
                         }
                         finally { trace.Add("cleanup" + iteration); }
                     }
-                    catch (InvalidOperationException) { trace.Add("handled"); total += 100; goto Next; }
+                    catch (InvalidOperationException) {
+                        try { trace.Add("handled"); total += 100; }
+                        finally {
+                            if (cachedState < 0) {
+                                trace.Add("handled-cleanup");
+                                if (iteration != 0) trace.Add("selected-cleanup");
+                                if (mode == 6) throw cleanupFailure;
+                            }
+                        }
+                        goto Next;
+                    }
                 Suspend:
-                    state = 0;
+                    state = cachedState = 0;
                     saved = awaiter;
                     var self = this;
                     builder.AwaitUnsafeOnCompleted(ref awaiter, ref self);
                     return;
                 }
-                catch (OperationCanceledException) { trace.Add("cancel"); throw; }
-                catch (ArgumentException) when (mode == 2) { trace.Add("filter"); total += 200; goto Next; }
+                catch (OperationCanceledException) {
+                    try { trace.Add("cancel"); }
+                    finally {
+                        if (cachedState < 0) {
+                            try { trace.Add("cancel-cleanup"); }
+                            finally {
+                                if (cachedState < 0) {
+                                    trace.Add("nested-cleanup");
+                                    if (mode == 8) throw cleanupFailure;
+                                }
+                            }
+                        }
+                    }
+                    throw;
+                }
+                catch (ArgumentException) when (mode == 2 || mode == 7) {
+                    try { trace.Add("filter"); total += 200; }
+                    finally {
+                        if (cachedState < 0) {
+                            trace.Add("filter-cleanup");
+                            if (mode == 7) throw cleanupFailure;
+                        }
+                    }
+                    goto Next;
+                }
             Success: ;
             }
             catch (Exception error) { state = -2; builder.SetException(error); return; }
@@ -99,15 +133,16 @@ public static class GuardedAwaitFixture {
 
     public static int Main() {
         int cases = 0, assertions = 0;
-        foreach (int mode in new[] { 0, 1, 2, 3, 4, 5 })
+        foreach (int mode in new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 })
         foreach (int headOutcome in new[] { 0, 1, 2 })
         foreach (int tailOutcome in new[] { 0, 1, 2 })
         foreach (bool headSuspends in new[] { false, true })
         foreach (bool tailSuspends in new[] { false, true }) {
             trace.Clear();
-            parseFailure = mode == 1 ? (Exception)new InvalidOperationException("parse") :
-                mode == 2 ? (Exception)new ArgumentException("parse") : new NotSupportedException("parse");
+            parseFailure = mode == 1 || mode == 6 ? (Exception)new InvalidOperationException("parse") :
+                mode == 2 || mode == 7 ? (Exception)new ArgumentException("parse") : new NotSupportedException("parse");
             factoryFailure = new NotSupportedException("factory");
+            cleanupFailure = new NotSupportedException("cleanup");
             var headError = new InvalidOperationException("head");
             var tailError = new InvalidOperationException("tail");
             var head = new TaskCompletionSource<int>();
@@ -115,7 +150,7 @@ public static class GuardedAwaitFixture {
             if (!headSuspends) Complete(head, headOutcome, 5, headError);
             if (!tailSuspends) Complete(tail, tailOutcome, 7, tailError);
             var actual = Read(head.Task, tail.Task, mode);
-            bool reachesTail = mode != 4 && headOutcome == 0 && mode != 3;
+            bool reachesTail = mode != 4 && headOutcome == 0 && mode != 3 && mode != 6 && mode != 7;
             bool pendingBefore = mode != 4 && (headSuspends || (reachesTail && mode != 5 && tailSuspends));
             if (actual.IsCompleted == pendingBefore)
                 throw new Exception("First suspension state");
@@ -135,11 +170,24 @@ public static class GuardedAwaitFixture {
                 if (mode == 4 + iteration) { expectedError = factoryFailure; break; }
                 int outcome = iteration == 0 ? headOutcome : tailOutcome;
                 if (outcome == 1) { expectedError = iteration == 0 ? headError : tailError; break; }
-                if (outcome == 2) { expectedTrace.Add("cancel"); canceled = true; break; }
+                if (outcome == 2) {
+                    expectedTrace.Add("cancel"); expectedTrace.Add("cancel-cleanup"); expectedTrace.Add("nested-cleanup");
+                    if (mode == 8) expectedError = cleanupFailure; else canceled = true;
+                    break;
+                }
                 expectedTrace.Add("parse" + iteration);
                 expectedTrace.Add("cleanup" + iteration);
-                if (mode == 1) { expectedTrace.Add("handled"); total += 100; }
-                else if (mode == 2) { expectedTrace.Add("filter"); total += 200; }
+                if (mode == 1 || mode == 6) {
+                    expectedTrace.Add("handled"); expectedTrace.Add("handled-cleanup");
+                    if (iteration != 0) expectedTrace.Add("selected-cleanup");
+                    if (mode == 6) { expectedError = cleanupFailure; break; }
+                    total += 100;
+                }
+                else if (mode == 2 || mode == 7) {
+                    expectedTrace.Add("filter"); expectedTrace.Add("filter-cleanup");
+                    if (mode == 7) { expectedError = cleanupFailure; break; }
+                    total += 200;
+                }
                 else if (mode == 3) { expectedError = parseFailure; break; }
                 else total += iteration == 0 ? 5 : 7;
                 if (iteration == 1) expectedTrace.Add("done");
