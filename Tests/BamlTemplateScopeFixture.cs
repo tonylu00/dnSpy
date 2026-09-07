@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
+[assembly: System.Windows.Markup.XmlnsDefinition("urn:fixture:overflow", "OverflowControls")]
 namespace BaseControls {
     public class IconButton : Button {
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(IconButton), new PropertyMetadata("default"));
@@ -13,6 +14,13 @@ namespace BaseControls {
 }
 namespace SidebarControls { public class SidebarButton : BaseControls.IconButton { } }
 
+namespace OverflowControls {
+    public class OverflowButton : Button {
+        public static readonly DependencyProperty HasOverflowProperty = DependencyProperty.Register("HasOverflow", typeof(bool), typeof(OverflowButton), new PropertyMetadata(false));
+        public bool HasOverflow { get { return (bool)GetValue(HasOverflowProperty); } set { SetValue(HasOverflowProperty, value); } }
+    }
+}
+namespace SidebarControls { public class OverflowSidebar : OverflowControls.OverflowButton { } }
 public static class BamlTemplateScopeFixture {
     static void Check(bool value, string message) { if (!value) throw new Exception(message); }
     [STAThread]
@@ -23,6 +31,14 @@ public static class BamlTemplateScopeFixture {
     static int Run() {
         var app = new Application();
         var dictionary = (ResourceDictionary)Application.LoadComponent(new Uri("/BamlTemplateScopeFixture;component/Dictionary.xaml", UriKind.Relative));
+        var overflow = new SidebarControls.OverflowSidebar { Style = (Style)dictionary["Overflow"] };
+        overflow.ApplyTemplate();
+        var overflowBorder = (Border)overflow.Template.FindName("overflowBorder", overflow);
+        Check(overflowBorder.BorderThickness == new Thickness(0), "overflow baseline changed");
+        overflow.HasOverflow = true;
+        Check(overflowBorder.BorderThickness == new Thickness(7), "inherited template trigger lost");
+        overflow.HasOverflow = false;
+        Check(overflowBorder.BorderThickness == new Thickness(0), "inherited template trigger reset lost");
         var inheritedStyle = (Style)dictionary["Inherited"];
         var inherited = new SidebarControls.SidebarButton { Style = inheritedStyle };
         Check(inherited.Icon == "ready", "inherited setter lost");

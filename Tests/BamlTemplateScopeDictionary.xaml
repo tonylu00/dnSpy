@@ -2,6 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sidebar="clr-namespace:SidebarControls"
                     xmlns:basecontrols="clr-namespace:System;assembly=mscorlib">
+  <Style x:Key="Overflow" TargetType="sidebar:OverflowSidebar">
+    <Setter Property="Template"><Setter.Value>
+      <ControlTemplate TargetType="sidebar:OverflowSidebar">
+        <Border x:Name="overflowBorder" />
+        <ControlTemplate.Triggers>
+          <Trigger Property="HasOverflow" Value="True">
+            <Setter TargetName="overflowBorder" Property="BorderThickness" Value="7" />
+          </Trigger>
+        </ControlTemplate.Triggers>
+      </ControlTemplate>
+    </Setter.Value></Setter>
+  </Style>
   <Style x:Key="Inherited" TargetType="sidebar:SidebarButton">
     <Setter Property="Icon" Value="ready" />
     <Style.Triggers>

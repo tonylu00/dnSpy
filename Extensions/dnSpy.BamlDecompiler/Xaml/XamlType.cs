@@ -67,7 +67,11 @@ namespace dnSpy.BamlDecompiler.Xaml {
 					xmlNs = $"clr-namespace:{TypeNamespace}";
 				else
 					xmlNs = $"clr-namespace:{TypeNamespace};assembly={Assembly.Name}";
+			}
 
+			// A namespace found in assembly metadata need not have a declaration
+			// in this document (for example, an inherited template property owner).
+			if (ctx.GetXmlNamespace(xmlNs) != elem.GetDefaultNamespace() && elem.GetPrefixOfNamespace(ctx.GetXmlNamespace(xmlNs)) is null) {
 				var nsSeg = TypeNamespace.Split('.');
 				var prefix = nsSeg[nsSeg.Length - 1].ToLowerInvariant();
 				if (string.IsNullOrEmpty(prefix)) {
