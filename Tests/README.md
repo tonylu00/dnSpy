@@ -195,6 +195,14 @@ cycles, writes, filters and closures. Copies remain for partially recovered
 dispatch and disappear only after complete recovery, with their debug spans
 retained. Input assembly hashes and IL stay unchanged.
 
+`Invoke-EmptySiblingCatchRegression.ps1` keeps an empty synchronous catch beside
+three awaited handlers. Original and one/four-worker source rebuilds agree on
+131,072 retry, selection, suspension and failure cases with 802,304 assertions.
+The empty catch must swallow only its own exception; cleanup failures must escape
+sibling handlers. Another 492 AST/debug checks cover copied selectors, partial
+recovery, and rejection of effects, filters, writes, returns or entries in the
+synchronous handler. Its original body, ordering and exception type stay intact.
+
 `Invoke-StateDispatchAwaitRegression.ps1` verifies a late switch routing three
 distinct awaiters inside a loop and a nested inclusive state comparison. Original
 and one/four-worker source rebuilds pass 8,000 cases / 35,440 assertions, covering

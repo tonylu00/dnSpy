@@ -18,11 +18,12 @@ class GroupedSelectorCopiesDebug {
         var resolver = new AssemblyResolver { EnableTypeDefCache = true }; var mc = new ModuleContext(resolver); resolver.DefaultModuleContext = mc;
         resolver.PostSearchPaths.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "Microsoft.NET", "Framework64", "v4.0.30319"));
         using var module = ModuleDefMD.Load(args[0], mc); resolver.AddToCache(module);
-        var owner = module.Types.Single(t => t.Name == "GroupedAwaitCatchFixture");
+        var owner = module.Types.Single(t => t.Name == "EmptySiblingCatchFixture" || t.Name == "GroupedAwaitCatchFixture");
         var restore = typeof(PatternStatementTransform).GetMethod("RestoreAwaitCatch", BindingFlags.Instance | BindingFlags.NonPublic);
         int checks = 0;
         foreach (string name in new[] { "Read", "Generic" }) foreach (bool tree in new[] { false, true }) foreach (int copyCount in new[] { 1, 3, 8 })
-        foreach (string scenario in new[] { "original", "name-collision", "sparse", "partial", "missing-reset", "nonzero-reset", "duplicate-id", "zero-id", "other-flag", "try-flag", "body-flag", "capture-write", "capture-ref", "capture-lambda", "wrong-capture", "unowned-read", "outside-read", "outside-entry", "normal-body", "selector-effect", "unknown-entry", "missing-body", "early-break", "goto-case", "alias-observe", "alias-ref", "alias-closure", "alias-body", "alias-filter", "alias-cycle", "alias-type", "alias-param", "alias-late-write", "alias-source-write", "too-many-copies" }) {
+        foreach (string scenario in new[] { "original", "name-collision", "sparse", "partial", "missing-reset", "nonzero-reset", "duplicate-id", "zero-id", "other-flag", "try-flag", "body-flag", "capture-write", "capture-ref", "capture-lambda", "wrong-capture", "unowned-read", "outside-read", "outside-entry", "normal-body", "selector-effect", "unknown-entry", "missing-body", "early-break", "goto-case", "alias-observe", "alias-ref", "alias-closure", "alias-body", "alias-filter", "alias-cycle", "alias-type", "alias-param", "alias-late-write", "alias-source-write", "too-many-copies", "empty-effect", "empty-filter", "empty-flag-store", "empty-capture-read", "empty-return", "empty-rethrow", "empty-entry" }) {
+            if (scenario.StartsWith("empty-") && owner.Name != "EmptySiblingCatchFixture") continue;
             if (tree && (scenario == "early-break" || scenario == "goto-case")) continue;
             string Snapshot() => string.Join("\n", module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).SelectMany(m => m.Body.Instructions));
             string originalIL = Snapshot();
@@ -31,7 +32,8 @@ class GroupedSelectorCopiesDebug {
             var builder = new AstBuilder(context); builder.AddMethod(method); builder.RunTransformations(t => t is PatternStatementTransform);
             var declaration = builder.SyntaxTree.Descendants.OfType<MethodDeclaration>().Single();
             var region = declaration.Descendants.OfType<TryCatchStatement>().Single(); var block = (BlockStatement)region.Parent;
-            var handlers = region.CatchClauses.ToArray(); Check(handlers.Length == 3, "Handler count changed");
+            var empty = region.CatchClauses.SingleOrDefault(h => h.Body.Statements.Count == 0);
+            var handlers = region.CatchClauses.Where(h => h != empty).ToArray(); Check(handlers.Length == 3 && region.CatchClauses.Count == (empty == null ? 3 : 4), "Handler count changed");
             var stores = handlers.Select(h => (AssignmentExpression)((ExpressionStatement)h.Body.Statements.First()).Expression).ToArray();
             var flags = handlers.Select(h => (AssignmentExpression)((ExpressionStatement)h.Body.Statements.Last()).Expression).ToArray();
             var pending = stores[0].Left.Annotation<ILVariable>();
@@ -125,6 +127,17 @@ class GroupedSelectorCopiesDebug {
             else if (scenario == "alias-param") aliases[0].OriginalParameter = method.Parameters[0];
             else if (scenario == "alias-late-write") declaration.Body.Add(new ExpressionStatement(new AssignmentExpression(Local(aliases[0]), new PrimitiveExpression(9))));
             else if (scenario == "alias-source-write") bodies[0].Statements.InsertBefore(bodies[0].Statements.First(), new ExpressionStatement(new AssignmentExpression(Local(originalFlag), new PrimitiveExpression(9))));
+            if (scenario == "empty-effect") empty.Body.Add(Observe(new PrimitiveExpression(1)));
+            else if (scenario == "empty-filter") empty.Condition = new InvocationExpression(new IdentifierExpression("Filter"));
+            else if (scenario == "empty-flag-store") empty.Body.Add(new ExpressionStatement(new AssignmentExpression(Local(originalFlag), new PrimitiveExpression(1))));
+            else if (scenario == "empty-capture-read") empty.Body.Add(Observe(Local(pending)));
+            else if (scenario == "empty-return") empty.Body.Add(new ReturnStatement(new PrimitiveExpression(17)));
+            else if (scenario == "empty-rethrow") empty.Body.Add(new ThrowStatement());
+            else if (scenario == "empty-entry") {
+                empty.Body.Add(new LabelStatement { Label = "EmptyEntry" });
+                declaration.Body.Add(new GotoStatement("EmptyEntry"));
+            }
+            string emptyBefore = empty?.ToString();
             string before = declaration.ToString();
             restore.Invoke(new PatternStatementTransform(context), new object[] { region });
             if (scenario == "original" || scenario == "name-collision" || scenario == "sparse") {
@@ -144,9 +157,9 @@ class GroupedSelectorCopiesDebug {
                 Check(handlers.Skip(1).All(h => h.Body.Descendants.OfType<UnaryOperatorExpression>().Any(e => e.Operator == UnaryOperatorType.Await)), "Independent handlers were not recovered");
                 Check(bodies.Skip(1).All(b => tree ? b.Statements.Count == 0 : b.Statements.Count == 1 && b.Statements.Single() is BreakStatement), "Partial selection can fall through");
             } else Check(before == declaration.ToString(), "Unsafe grouped recovery: " + name + "/" + tree + "/" + scenario);
+            Check(empty == null || region.CatchClauses.Contains(empty) && empty.ToString() == emptyBefore, "Synchronous catch changed");
             Check(Snapshot() == originalIL, "Input IL changed"); checks++;
         }
-        Console.WriteLine("PASS: " + checks + " grouped selector copy, ownership, partial recovery and debug guards.");
+        Console.WriteLine("PASS: " + checks + " empty synchronous catch, grouped selection, ownership, partial recovery and debug guards.");
     }
 }
-
