@@ -517,6 +517,12 @@ adds empty branch blocks. Exported base/this constructor calls must retain their
 argument scope. Its 33 scenarios also check lazy fallback evaluation, exceptions,
 object/array identity, unchanged arguments and numeric branch behavior.
 
+`Invoke-OptionalOrderRegression.ps1` preserves optional parameters before required
+parameters without changing their order. Original and one/four-worker rebuilt
+executables check ref state, string/enum/decimal defaults and reflection metadata.
+Fresh callers compile against each rebuilt assembly to verify omitted arguments;
+optional parameters without constants and ordinary trailing defaults are retained.
+
 `Invoke-SerializedResourcesRegression.ps1` starts with framework-generated binary
 resources and checks image pixels, stream reads (including an empty stream), raw
 resource names, byte arrays and scalars. One/four-worker SDK exports are relocated,
