@@ -909,6 +909,12 @@ event order and exception behavior. Eight AST checks cover retained allocations,
 local-only simplification, debug spans and unchanged input IL. Closure cleanup
 keeps the original storage when a use extends beyond the allocation block.
 
+`Invoke-LambdaBindingRegression.ps1` checks two loops that capture identically
+named locals after independent lambdas use that same parameter name. It verifies
+rebuilt dictionary results and escaped captures across multiple calls, one- and
+four-worker source determinism, and unchanged input. Collision renames must follow
+local variable identity rather than replacing unrelated lambda parameter names.
+
 `Invoke-ForwardedReferenceRegression.ps1` exports a .NET Standard library and a
 .NET Framework consumer whose extension lookup needs a type forwarded by the
 standard facade. It checks the destination reference, absence of redundant
