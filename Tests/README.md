@@ -63,7 +63,7 @@ The structured-filter test checks 8,390 cases in compiler-produced and reordered
 filter bodies, with both one and four export workers. It verifies exception
 identity, filtering before unwinding, acceptance, rejection, throwing filters,
 property preparation, null checks without overloaded equality, and real async
-suspension. Twenty filters retain their debugger offsets; 216 shape/scope checks
+suspension. Twenty filters retain their debugger offsets; 228 shape/scope checks
 cover branch polarity, nested negations, exposed locals, unsupported preparation,
 numeric predicates, typed/boxed exception-copy chains, overwritten aliases and
 unchanged IL when a match fails. Preparation stays in the filter expression so it

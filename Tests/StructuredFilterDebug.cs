@@ -414,6 +414,38 @@ class StructuredFilterDebug {
             }
             checks++;
         }
+        var normalize = typeof(ILAstOptimizer).GetMethod("NormalizeFilterUpdate", BindingFlags.Static | BindingFlags.NonPublic);
+        foreach (bool inverted in new[] { false, true }) foreach (var scenario in new[] { "copy", "chain", "delayed-read", "unused-store", "target-store", "skipped-work" }) {
+            var flag = new ILVariable("flag") { Type = module.CorLibTypes.Boolean };
+            var temp = new ILVariable("temp") { Type = module.CorLibTypes.Boolean };
+            var other = new ILVariable("other") { Type = module.CorLibTypes.Boolean };
+            ILExpression Read(ILVariable v) => new ILExpression(ILCode.Ldloc, v) { InferredType = v.Type };
+            ILExpression Store(ILVariable v, ILExpression value) => new ILExpression(ILCode.Stloc, v, value) { InferredType = v.Type };
+            var first = Store(temp, Read(other));
+            var value = Read(temp);
+            if (scenario == "delayed-read") value = new ILExpression(ILCode.LogicAnd, null, Read(other), value);
+            if (scenario == "unused-store") value = Read(other);
+            if (scenario == "target-store") first.Operand = flag;
+            var last = Store(flag, value);
+            var updated = new ILBlock(CodeBracesRangeFlags.MethodBraces); updated.Body.Add(first);
+            if (scenario == "chain") { updated.Body.Add(Store(other, Read(temp))); last.Arguments[0] = Read(other); }
+            updated.Body.Add(last);
+            var skipped = new ILBlock(CodeBracesRangeFlags.MethodBraces);
+            if (scenario == "skipped-work") skipped.Body.Add(Store(other, Read(flag)));
+            var condition = new ILCondition { Condition = inverted ? new ILExpression(ILCode.LogicNot, null, Read(flag)) : Read(flag), TrueBlock = inverted ? skipped : updated, FalseBlock = inverted ? updated : skipped };
+            var before = condition.ToString(); var args2 = new object[] { condition, null };
+            bool expected = scenario == "copy" || scenario == "chain";
+            if ((bool)normalize.Invoke(null, args2) != expected) throw new Exception("Intermediate filter store boundary: " + scenario);
+            if (before != condition.ToString()) throw new Exception("Intermediate filter matcher mutated input");
+            if (expected) {
+                var result = (ILExpression)args2[1]; var decision = result.Arguments.Single();
+                var selected = decision.Arguments[inverted ? 2 : 1]; var unchanged = decision.Arguments[inverted ? 1 : 2];
+                if (result.Operand != flag || decision.Code != ILCode.TernaryOp || unchanged.Operand != flag ||
+                    selected.GetSelfAndChildrenRecursive<ILExpression>().Count(e => e.Code == ILCode.Stloc) != (scenario == "chain" ? 2 : 1) ||
+                    !selected.GetSelfAndChildrenRecursive<ILExpression>().Contains(first)) throw new Exception("Intermediate filter stores lost or moved across branches");
+            }
+            checks++;
+        }
         Console.WriteLine("Structured filter debug: " + filters.Length + " filters / " + checks + " shape, scope and nonmutation checks.");
     }
 }
