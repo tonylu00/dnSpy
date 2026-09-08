@@ -12,6 +12,14 @@ public static class BindingExtensions {
     public static string Kind<T>(this IEnumerable<T> values, T value) { return typeof(T).FullName; }
     public static string NullKind<T>(this IEnumerable<T> values, T value) { return (values == null ? "null:" : "value:") + typeof(T).FullName; }
 }
+public static class FirstExtensions {
+    public static int Calls;
+    public static int Measure<T>(this IEnumerable<T> values) { Calls++; return values == null ? -17 : 17; }
+}
+public static class SecondExtensions {
+    public static int Calls;
+    public static int Measure<T>(this IEnumerable<T> values) { Calls++; return values == null ? -31 : 31; }
+}
 public sealed class TracedSequence : IEnumerable<int> {
     readonly Action<string> trace;
     public TracedSequence(Action<string> trace) { this.trace = trace; }
@@ -33,6 +41,8 @@ public static class ExtensionBindingFixture {
     public static string ConvertedReceiver(Receiver value) { return BindingExtensions.Pick(value, 7); }
     public static string InterfaceReceiver(IReceiver value) { return BindingExtensions.Pick(value, 9); }
     public static IEnumerable<int> ReverseList(List<int> values) { return Enumerable.Reverse<int>(values); }
+    public static int FirstMeasure(IEnumerable<int> values) { return FirstExtensions.Measure<int>(values); }
+    public static int SecondMeasure(IEnumerable<int> values) { return SecondExtensions.Measure<int>(values); }
     public static int AnonymousQuery(int[] values) {
         var query = from value in values
                     let twice = value * 2
@@ -41,6 +51,9 @@ public static class ExtensionBindingFixture {
         return query.Sum(item => item.Value + item.Twice);
     }
     public static int Main() {
+        Check(FirstMeasure(new int[0]) == 17 && SecondMeasure(new int[0]) == 31, "Competing extension selection");
+        Check(FirstMeasure(null) == -17 && SecondMeasure(null) == -31, "Competing null extension selection");
+        Check(FirstExtensions.Calls == 2 && SecondExtensions.Calls == 2, "Competing extension effects");
         foreach (var values in new[] { new byte[0], new byte[] { 0 }, new byte[] { 1, 0, 255, 7 } }) {
             var snapshot = (byte[])values.Clone();
             var reversed = ReverseArray(values);

@@ -223,6 +223,15 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
+`Invoke-ExtensionBindingRegression.ps1` checks 39 binding/behavior cases and
+13 retained call annotations/debug spans. Matching extension signatures on
+different containers keep their explicit static owner; null receivers, generic
+arguments, receiver conversions and deferred enumeration retain their behavior.
+The anonymous-query case also verifies that an added private closure remains
+before delegate reconstruction but disappears when fully inlined and no longer
+referenced. Reachability between added closures preserves their dependencies.
+The retained/escaped closure regressions cover live storage and delegate caches.
+
 `Invoke-DelegateMethodsRegression.ps1` covers ordinary static methods declared
 on a delegate type, including generic methods and generic delegate owners. Its
 emitter moves real method bodies onto a delegate and repairs a separate client
