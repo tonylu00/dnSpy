@@ -36,6 +36,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 			this.cache = cache;
 			State = cache.AllocateAstBuilderState();
 			State.AstBuilder.Context.CalculateILSpans = ctx.CalculateILSpans;
+			State.AstBuilder.Context.MetadataOnlyField = ctx.RestoreMetadataOnlyFields ? MetadataOnlyFields.Contains : (Func<dnlib.DotNet.FieldDef, bool>?)null;
 			State.AstBuilder.Context.MetadataTextColorProvider = metadataTextColorProvider;
 			State.AstBuilder.Context.AsyncMethodBodyDecompilation = ctx.AsyncMethodBodyDecompilation;
 		}

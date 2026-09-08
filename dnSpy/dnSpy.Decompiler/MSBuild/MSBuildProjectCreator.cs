@@ -95,6 +95,7 @@ namespace dnSpy.Decompiler.MSBuild {
 					lock (filenameCreator)
 						name = filenameCreator.Create(modOpts.Module);
 					var p = new Project(modOpts, name, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames, preservedAssemblies);
+					modOpts.DecompilationContext.RestoreMetadataOnlyFields = options.GenerateSDKStyleProjects && modOpts.Decompiler.GenericGuid == dnSpy.Contracts.Decompiler.DecompilerConstants.LANGUAGE_CSHARP;
 					lock (projects)
 						projects.Add(p);
 					p.CreateProjectFiles(ctx);

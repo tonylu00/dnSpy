@@ -247,6 +247,21 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 				additionalTransform.Run(astBuilder.SyntaxTree);
 			}
 			AddXmlDocumentation(ref state, langSettings.Settings, astBuilder);
+			if (ctx.RestoreMetadataOnlyFields) {
+				foreach (var node in astBuilder.SyntaxTree.Descendants.OfType<EntityDeclaration>()) {
+					var type = node.Annotation<TypeDef>();
+					if (type == null || !(node is TypeDeclaration || node is DelegateDeclaration)) continue;
+					foreach (var field in type.Fields.Where(MetadataOnlyFields.Contains)) {
+						var attribute = new ICSharpCode.NRefactory.CSharp.Attribute {
+							Type = new MemberType(new MemberType(new MemberType(new SimpleType("global"), "System") { IsDoubleColon = true }, "Reflection"), "ObfuscationAttribute")
+						};
+						attribute.Arguments.Add(new NamedExpression(Identifier.Create("Feature"), new PrimitiveExpression(MetadataOnlyFields.Encode(field))));
+						var section = new AttributeSection();
+						section.Attributes.Add(attribute);
+						node.Attributes.Add(section);
+					}
+				}
+			}
 			astBuilder.GenerateCode(output);
 		}
 

@@ -266,6 +266,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				Write(writer, BuildAction.Page);
 				Write(writer, BuildAction.Resource);
 				Write(writer, BuildAction.SplashScreen);
+				MetadataFieldProjectSupport.Write(project, writer);
 
 				writer.WriteEndElement();
 			}

@@ -47,6 +47,9 @@ namespace dnSpy.Contracts.Decompiler {
 		/// </summary>
 		public bool CalculateILSpans { get; set; }
 
+		/// <summary>Emit instructions for fields restored by an exported SDK project's build.</summary>
+		public bool RestoreMetadataOnlyFields { get; set; }
+
 		/// <summary>
 		/// true to decompile method bodies asynchronously. Should not be enabled when decompiling
 		/// to a project since that code already decompiles one type per CPU core.

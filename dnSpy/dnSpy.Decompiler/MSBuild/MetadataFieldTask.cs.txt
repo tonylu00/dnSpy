@@ -1,0 +1,69 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Globalization;
+using dnlib.DotNet;
+using dnlib.DotNet.Writer;
+
+public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task {
+    [Microsoft.Build.Framework.Required]
+    public string AssemblyPath { get; set; }
+    public override bool Execute() {
+        const string prefix = "dnSpy.metadata.string-field.v1|";
+        string temporary = AssemblyPath + ".metadata-" + Guid.NewGuid().ToString("N");
+        string pdb = Path.ChangeExtension(AssemblyPath, ".pdb");
+        string temporaryPdb = temporary + ".pdb";
+        try {
+            bool changed = false;
+            using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
+                foreach (var type in module.GetTypes()) {
+                    foreach (var attribute in type.CustomAttributes.ToArray()) {
+                        if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                        var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
+                        string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
+                        if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                        var parts = text.Substring(prefix.Length).Split('|');
+                        if (parts.Length != 4) throw new InvalidDataException("Invalid dnSpy field metadata instruction.");
+                        var name = new UTF8String(Convert.FromBase64String(parts[0]));
+                        var field = new FieldDefUser(name, new FieldSig(module.CorLibTypes.String),
+                            (dnlib.DotNet.FieldAttributes)int.Parse(parts[1], CultureInfo.InvariantCulture));
+                        if (parts[2] != "none") {
+                            var kind = (ElementType)int.Parse(parts[2], CultureInfo.InvariantCulture);
+                            string value = null;
+                            if (parts[3] != "N") {
+                                if (!parts[3].StartsWith("V", StringComparison.Ordinal)) throw new InvalidDataException("Invalid constant encoding.");
+                                var bytes = Convert.FromBase64String(parts[3].Substring(1));
+                                if (bytes.Length % 2 != 0) throw new InvalidDataException("Invalid UTF-16 constant.");
+                                value = new string(Enumerable.Range(0, bytes.Length / 2).Select(i => (char)(bytes[i * 2] | bytes[i * 2 + 1] << 8)).ToArray());
+                            }
+                            object constant;
+                            if (kind == ElementType.I1) constant = sbyte.Parse(value, CultureInfo.InvariantCulture);
+                            else if (kind == ElementType.String) constant = value;
+                            else if (kind == ElementType.Class) constant = null;
+                            else throw new InvalidDataException("Unsupported metadata constant type.");
+                            field.Constant = new ConstantUser(constant, kind);
+                        }
+                        type.Fields.Add(field);
+                        type.CustomAttributes.Remove(attribute);
+                        changed = true;
+                    }
+                }
+                if (!changed) return true;
+                if (module.IsStrongNameSigned) throw new InvalidOperationException("Metadata field restoration requires an unsigned build output.");
+                var options = new ModuleWriterOptions(module) {
+                    WritePdb = module.PdbState != null, PdbFileName = temporaryPdb,
+                    PdbFileNameInDebugDirectory = Path.GetFileName(pdb)
+                };
+                module.Write(temporary, options);
+            }
+            File.Copy(temporary, AssemblyPath, true);
+            if (File.Exists(temporaryPdb)) File.Copy(temporaryPdb, pdb, true);
+            return true;
+        }
+        catch (Exception error) { Log.LogErrorFromException(error); return false; }
+        finally {
+            if (File.Exists(temporary)) File.Delete(temporary);
+            if (File.Exists(temporaryPdb)) File.Delete(temporaryPdb);
+        }
+    }
+}
