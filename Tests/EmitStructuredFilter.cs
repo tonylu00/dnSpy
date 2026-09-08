@@ -60,11 +60,11 @@ class Emitter {
                 filters++;
             }
         }
-        if (filters != 20) throw new Exception("Expected twenty reordered filters, got " + filters);
+        if (filters != 21) throw new Exception("Expected twenty-one reordered filters, got " + filters);
         if (decisions != 2) throw new Exception("Expected two reordered nested decisions, got " + decisions);
         if (updates != 4) throw new Exception("Expected four inline update filters, got " + updates);
         if (typeDecisions != 2) throw new Exception("Expected two inline type-only decisions, got " + typeDecisions);
-        if (conditional != 2) throw new Exception("Expected two conditional preparation filters, got " + conditional);
+        if (conditional != 3) throw new Exception("Expected three conditional preparation filters, got " + conditional);
         module.Write(args[1]); Console.WriteLine("Reordered " + filters + " filter acceptance/rejection blocks.");
     }
     static bool InlineConditional(ModuleDef module, MethodDef method, ExceptionHandler handler) {
@@ -97,9 +97,11 @@ class Emitter {
         emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 5)); emitted.Add(Instruction.Create(OpCodes.Beq, prepare));
         Load(0); emitted.Add(Instruction.Create(OpCodes.Callvirt, errorType.Methods.Single(m => m.Name == "get_RetryCode")));
         emitted.Add(Instruction.Create(OpCodes.Ldc_I4, 19)); emitted.Add(Instruction.Create(OpCodes.Bne_Un, no));
-        emitted.Add(prepare); emitted.AddRange(args[2].Skip(1).Select(a => new Instruction(a.OpCode, a.Operand)));
+        bool fieldStore = method.Name == "FieldConditional";
+        emitted.Add(prepare); emitted.AddRange(args[2].Skip(1).Take(fieldStore ? args[2].Length - 2 : args[2].Length).Select(a => new Instruction(a.OpCode, a.Operand)));
         Load(1); emitted.Add(Instruction.Create(OpCodes.Callvirt, contextType.Methods.Single(m => m.Name == "get_Detail")));
-        emitted.Add(Instruction.Create(OpCodes.Isinst, detailType)); emitted.Add(Instruction.Create(OpCodes.Stind_Ref));
+        emitted.Add(Instruction.Create(OpCodes.Isinst, detailType));
+        emitted.Add(fieldStore ? Instruction.Create(OpCodes.Stfld, (IField)args[2].Last().Operand) : Instruction.Create(OpCodes.Stind_Ref));
         ReadPrepared(); emitted.Add(Instruction.Create(OpCodes.Brfalse, no));
         ReadPrepared(); emitted.Add(Instruction.Create(OpCodes.Callvirt, detailType.Methods.Single(m => m.Name == "get_Ready"))); emitted.Add(Instruction.Create(OpCodes.Brfalse, no));
         Load(1); emitted.Add(Instruction.Create(OpCodes.Callvirt, contextType.Methods.Single(m => m.Name == "get_Final")));

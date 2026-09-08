@@ -19,7 +19,7 @@ class StructuredFilterDebug {
         var context = new DecompilerContext(0, module, null, true);
         var builder = new AstBuilder(context); builder.AddType(owner); builder.RunTransformations();
         var filters = builder.SyntaxTree.Descendants.OfType<CatchClause>().Where(c => !c.Condition.IsNull).ToArray();
-        if (filters.Length != 20 || filters.Count(c => c.VariableNameToken.IsNull) > 2 || filters.Any(c => c.Type.IsNull ||
+        if (filters.Length != 21 || filters.Count(c => c.VariableNameToken.IsNull) > 2 || filters.Any(c => c.Type.IsNull ||
             !c.Condition.GetAllRecursiveILSpans().Any(s => s.Start < s.End) ||
             c.Condition.DescendantsAndSelf.OfType<AnonymousMethodExpression>().Any() ||
             c.Condition.DescendantsAndSelf.OfType<InvocationExpression>().Any(i => i.Target is IdentifierExpression id && id.Identifier == "endfilter")))
@@ -341,7 +341,7 @@ class StructuredFilterDebug {
             first.FalseBlock = truePrepares ? Body(rejectedJump) : Body();
             accepted.Body.Clear(); accepted.Body.AddRange(prefix);
             accepted.Body.AddRange(new ILNode[] { first, preparation, second, falseLabel, falseStore, join, terminal });
-            bool shouldMatch = new[] { "linked", "direct-store", "inverted", "exposed-prepared" }.Contains(scenario);
+            bool shouldMatch = new[] { "linked", "direct-store", "inverted", "exposed-prepared", "prefix-read" }.Contains(scenario);
             if (scenario == "direct-store") accepted.Body[accepted.Body.IndexOf(preparation)] = new ILExpression(ILCode.Stloc, prepared, preparation.Arguments[1]) { InferredType = prepared.Type };
             else if (scenario == "inverted") { first.Condition = new ILExpression(ILCode.LogicNot, null, first.Condition); var old = first.TrueBlock; first.TrueBlock = first.FalseBlock; first.FalseBlock = old; }
             else if (scenario == "exposed-prepared") block.Body.Add(new ILExpression(ILCode.Ldloc, prepared));
@@ -443,6 +443,37 @@ class StructuredFilterDebug {
                 if (result.Operand != flag || decision.Code != ILCode.TernaryOp || unchanged.Operand != flag ||
                     selected.GetSelfAndChildrenRecursive<ILExpression>().Count(e => e.Code == ILCode.Stloc) != (scenario == "chain" ? 2 : 1) ||
                     !selected.GetSelfAndChildrenRecursive<ILExpression>().Contains(first)) throw new Exception("Intermediate filter stores lost or moved across branches");
+            }
+            checks++;
+        }
+        var sequence = typeof(ILAstOptimizer).GetMethod("SequenceFilterReferenceAssignment", BindingFlags.Static | BindingFlags.NonPublic);
+        foreach (var scenario in new[] { "field", "static", "local", "string", "array", "null-type", "value-type", "generic-parameter", "pointer", "volatile", "wrong-arity", "not-store" }) {
+            TypeSig signature = scenario == "string" ? module.CorLibTypes.String : scenario == "array" ? new SZArraySig(module.CorLibTypes.Int32) :
+                scenario == "null-type" ? null : scenario == "value-type" ? module.CorLibTypes.Int32 :
+                scenario == "generic-parameter" ? new GenericVar(0) : scenario == "pointer" ? new PtrSig(module.CorLibTypes.Int32) : module.CorLibTypes.Object;
+            var field = new FieldDefUser("field", new FieldSig(signature));
+            var local = new ILVariable("slot") { Type = signature };
+            var value = new ILExpression(ILCode.Ldnull, null);
+            var store = scenario == "local" ? new ILExpression(ILCode.Stloc, local, value) :
+                scenario == "static" ? new ILExpression(ILCode.Stsfld, field, value) :
+                new ILExpression(ILCode.Stfld, field, new ILExpression(ILCode.Ldnull, null), value);
+            if (scenario == "volatile") store.Prefixes = new[] { new ILExpressionPrefix(ILCode.Volatile) };
+            if (scenario == "wrong-arity") store.Arguments.Clear();
+            if (scenario == "not-store") store.Code = ILCode.Call;
+            var continuation = new ILExpression(ILCode.Ldc_I4, 0);
+            var before = store.ToString();
+            var arguments = new object[] { store, continuation, null };
+            bool expected = new[] { "field", "static", "local", "string", "array" }.Contains(scenario);
+            if ((bool)sequence.Invoke(null, arguments) != expected || store.ToString() != before)
+                throw new Exception("Reference store boundary or nonmutation: " + scenario);
+            if (expected) {
+                var result = (ILExpression)arguments[2];
+                var assignments = result.GetSelfAndChildrenRecursive<ILExpression>().Where(e => e.Code == store.Code).ToArray();
+                if (result.Code != ILCode.LogicAnd || result.Arguments[1] != continuation ||
+                    assignments.Length != 1 || ReferenceEquals(assignments[0], store) || assignments[0].Operand != store.Operand ||
+                    result.Arguments[0].Code != ILCode.LogicOr || result.Arguments[0].Arguments[1].Code != ILCode.Ldc_I4 ||
+                    (int)result.Arguments[0].Arguments[1].Operand != 1)
+                    throw new Exception("Reference store order or identity: " + scenario);
             }
             checks++;
         }

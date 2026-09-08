@@ -59,11 +59,11 @@ output for concurrent regression runs; do not replace DLLs while a run uses them
   -OutputDirectory D:\knx_analysis\dnspy-typed-catch-check
 ```
 
-The structured-filter test checks 8,390 cases in compiler-produced and reordered
+The structured-filter test checks 9,686 cases in compiler-produced and reordered
 filter bodies, with both one and four export workers. It verifies exception
 identity, filtering before unwinding, acceptance, rejection, throwing filters,
 property preparation, null checks without overloaded equality, and real async
-suspension. Twenty filters retain their debugger offsets; 228 shape/scope checks
+suspension. Twenty-one filters retain their debugger offsets; 240 shape/scope checks
 cover branch polarity, nested negations, exposed locals, unsupported preparation,
 numeric predicates, typed/boxed exception-copy chains, overwritten aliases and
 unchanged IL when a match fails. Preparation stays in the filter expression so it
@@ -72,6 +72,11 @@ Nested Boolean decisions include an out-of-line comparison that branches back to
 a shared result. Property reads execute once, and rejecting or throwing predicates
 still run before unwind. The checks reject cycles, incoming join branches, missing
 or inconsistent result stores, and preparation that would cross an earlier call/read.
+Reference assignments can instead be sequenced before the remaining predicate
+without moving them into a later read. A field-backed preparation checks the value
+observed during unwinding on rejection and getter failure. Value types, unknown
+generic parameters, pointers, volatile prefixes and malformed stores are excluded
+from this reference-assignment fallback.
 Conditional Boolean updates include AND/OR paths with callbacks that read and
 mutate the local by reference, including throwing before the final assignment.
 The emitted fixture inlines four helper predicates into the filter; values seen

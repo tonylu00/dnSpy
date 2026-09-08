@@ -63,6 +63,7 @@ public sealed class FilterWindow {
     void Read(string marker, int stage) { StructuredFilterFixture.Trace += marker; if (stage == ThrowStage) throw new FormatException("window getter"); }
 }
 public sealed class FilterContext {
+    public FilterDetail Stored;
     public object DetailValue;
     public bool FinalValue;
     public int ThrowStage;
@@ -201,6 +202,12 @@ public static class StructuredFilterFixture {
         }
         catch (Exception exception) { Trace += "F"; return exception; }
         return null;
+    }
+    static Exception FieldConditional(Exception failure, FilterContext context, FilterDetail initial) {
+        context.Stored = initial;
+        try { try { throw failure; } finally { Trace += "U" + PreparedState(ref context.Stored, initial); } }
+        catch (FilterFailure exception) when (ConditionalPredicate(exception, context, ref context.Stored)) { Trace += "H"; return exception; }
+        catch (Exception exception) { Trace += "F"; return exception; }
     }
     static Exception ConditionalFailure(bool matches, int first, int second, int stage) {
         return matches ? (Exception)new FilterFailure { FirstRetry = first, SecondRetry = second, RetryThrowStage = stage <= 2 ? stage : 0 } : new ArgumentException("unmatched");
@@ -394,6 +401,8 @@ public static class StructuredFilterFixture {
             var initial = new FilterDetail(); var context = new FilterContext { ThrowStage = stage, FinalValue = final, DetailValue = detail == 0 ? null : detail == 1 ? new object() : new FilterDetail { Accept = ready, Fails = stage == 4 } };
             var failure = ConditionalFailure(matches, first, second, stage);
             Reset(); Check(Conditional(failure, context, initial), failure, ConditionalTrace(matches, first, second, stage, detail, ready, final, false), false);
+            failure = ConditionalFailure(matches, first, second, stage);
+            Reset(); Check(FieldConditional(failure, context, initial), failure, ConditionalTrace(matches, first, second, stage, detail, ready, final, false), false);
             foreach (bool suspended in new[] { false, true }) {
                 failure = ConditionalFailure(matches, first, second, stage);
                 Reset(); var completion = new TaskCompletionSource<int>(); if (!suspended) completion.SetException(failure);
