@@ -1,7 +1,21 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sidebar="clr-namespace:SidebarControls"
+                    xmlns:generic="clr-namespace:GenericControls"
+                    xmlns:owners="clr-namespace:BaseControls"
                     xmlns:basecontrols="clr-namespace:System;assembly=mscorlib">
+  <Style x:Key="GenericInherited" TargetType="generic:LongControl">
+    <Setter Property="Minimum" Value="7" />
+    <Style.Triggers>
+      <Trigger Property="IsEnabled" Value="False"><Setter Property="Minimum" Value="11" /></Trigger>
+    </Style.Triggers>
+  </Style>
+  <Style x:Key="GenericString" TargetType="generic:StringControl">
+    <Setter Property="Minimum" Value="text" />
+  </Style>
+  <Style x:Key="Hiding" TargetType="sidebar:HidingButton">
+    <Setter Property="owners:IconButton.Icon" Value="base-value" />
+  </Style>
   <Style x:Key="Overflow" TargetType="sidebar:OverflowSidebar">
     <Setter Property="Template"><Setter.Value>
       <ControlTemplate TargetType="sidebar:OverflowSidebar">

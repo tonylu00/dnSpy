@@ -712,6 +712,12 @@ resources retain absent/explicit template targets, trigger and setter identities
 template bindings, and named trigger activation/reset on an isolated control.
 Inherited local properties also retain their owners across sibling setters and
 triggers, with conflicting root prefixes and nested namespace overrides preserved.
+Type/name dependency-property records use the same target resolution as member-ID
+records, so inherited properties from closed generic bases do not emit open generic
+XAML owner names. One/four-worker rebuilt resources check two generic instantiations,
+two levels of inheritance, trigger reset, and a hidden same-name dependency property
+whose explicit base owner must remain. Values are read by dependency-property
+identity to isolate BAML behavior from C# member lookup.
 
 `Invoke-GacReferencesRegression.ps1` checks a System.Management dependency resolved
 from the installed GAC. The .NET Framework export retains its framework reference;

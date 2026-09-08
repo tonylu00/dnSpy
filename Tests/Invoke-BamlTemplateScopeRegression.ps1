@@ -15,14 +15,18 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlTemplateScopeDictionary.xam
 dotnet build (Join-Path $inputDirectory 'BamlTemplateScopeFixture.csproj') -c Release --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw 'BAML template fixture compilation failed.' }
 $original = Join-Path $inputDirectory 'bin\Release\net48\BamlTemplateScopeFixture.exe'
+$inputHash = (Get-FileHash -LiteralPath $original).Hash
 & $original
 if ($LASTEXITCODE -ne 0) { throw 'Original BAML template behavior failed.' }
-$export = Join-Path $OutputDirectory 'export'
-& $DnSpyConsole --no-color --sdk-project --threads 4 -o $export $original
+foreach ($threads in @(1,4)) {
+$export = Join-Path $OutputDirectory "export-$threads"
+& $DnSpyConsole --no-color --sdk-project --threads $threads -o $export $original
 if ($LASTEXITCODE -ne 0) { throw 'BAML template source export failed.' }
 $project = Get-ChildItem -LiteralPath $export -Recurse -Filter '*.csproj' | Select-Object -First 1
-$rebuilt = Join-Path $OutputDirectory 'rebuilt'
+$rebuilt = Join-Path $OutputDirectory "rebuilt-$threads"
 dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw 'Exported BAML template compilation failed.' }
 & (Join-Path $rebuilt 'BamlTemplateScopeFixture.exe')
 if ($LASTEXITCODE -ne 0) { throw 'Rebuilt BAML template behavior changed.' }
+}
+if ((Get-FileHash -LiteralPath $original).Hash -ne $inputHash) { throw 'Input assembly changed.' }

@@ -13,6 +13,22 @@ namespace BaseControls {
     }
 }
 namespace SidebarControls { public class SidebarButton : BaseControls.IconButton { } }
+namespace SidebarControls {
+    public class HidingButton : BaseControls.IconButton {
+        public new static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(HidingButton), new PropertyMetadata("hidden-default"));
+        public new string Icon { get { return (string)GetValue(IconProperty); } set { SetValue(IconProperty, value); } }
+    }
+}
+
+namespace GenericControls {
+    public class ValueControl<T> : Control {
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(T), typeof(ValueControl<T>), new PropertyMetadata(default(T)));
+        public T Minimum { get { return (T)GetValue(MinimumProperty); } set { SetValue(MinimumProperty, value); } }
+    }
+    public class Intermediate<T> : ValueControl<T> { }
+    public class LongControl : Intermediate<long> { }
+    public class StringControl : Intermediate<string> { }
+}
 
 namespace OverflowControls {
     public class OverflowButton : Button {
@@ -31,6 +47,22 @@ public static class BamlTemplateScopeFixture {
     static int Run() {
         var app = new Application();
         var dictionary = (ResourceDictionary)Application.LoadComponent(new Uri("/BamlTemplateScopeFixture;component/Dictionary.xaml", UriKind.Relative));
+        var genericStyle = (Style)dictionary["GenericInherited"];
+        var generic = new GenericControls.LongControl { Style = genericStyle };
+        Check(((Setter)genericStyle.Setters[0]).Property == GenericControls.ValueControl<long>.MinimumProperty, "generic setter identity changed");
+        Check(generic.Minimum == 7, "generic inherited setter lost");
+        generic.IsEnabled = false;
+        Check(generic.Minimum == 11, "generic inherited trigger lost");
+        generic.IsEnabled = true;
+        Check(generic.Minimum == 7, "generic inherited trigger reset lost");
+        var stringStyle = (Style)dictionary["GenericString"];
+        var strings = new GenericControls.StringControl { Style = stringStyle };
+        Check(((Setter)stringStyle.Setters[0]).Property == GenericControls.ValueControl<string>.MinimumProperty && strings.Minimum == "text", "generic instantiation changed");
+        var hidingStyle = (Style)dictionary["Hiding"];
+        var hiding = new SidebarControls.HidingButton { Style = hidingStyle };
+        Check(((Setter)hidingStyle.Setters[0]).Property == BaseControls.IconButton.IconProperty, "hidden owner identity changed");
+        Check((string)hiding.GetValue(BaseControls.IconButton.IconProperty) == "base-value" &&
+            (string)hiding.GetValue(SidebarControls.HidingButton.IconProperty) == "hidden-default", "hidden owner binding changed");
         var overflow = new SidebarControls.OverflowSidebar { Style = (Style)dictionary["Overflow"] };
         overflow.ApplyTemplate();
         var overflowBorder = (Border)overflow.Template.FindName("overflowBorder", overflow);

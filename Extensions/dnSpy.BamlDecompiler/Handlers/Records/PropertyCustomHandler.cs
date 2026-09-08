@@ -53,8 +53,12 @@ namespace dnSpy.BamlDecompiler.Handlers {
 						else {
 							var type = ctx.ResolveType(reader.ReadUInt16());
 							var name = reader.ReadString();
-							var typeName = type.ToMarkupExtensionName(ctx, elem);
-							return typeName + "." + name;
+							var property = new XamlProperty(type, name);
+							property.TryResolve();
+							type.ResolveNamespace(elem, ctx);
+							// Type/name records need the same target-aware handling as
+							// member IDs, especially for instantiated generic owners.
+							return property.ToMarkupExtensionName(ctx, elem, NeedsFullName(property, elem));
 						}
 					}
 
@@ -148,7 +152,14 @@ namespace dnSpy.BamlDecompiler.Handlers {
 				var type = p.Annotation<XamlType>()?.ResolvedType;
 				if (type?.FullName == "System.Windows.Style") {
 					var target = p.Annotation<TargetTypeAnnotation>()?.Type;
-					return target is null || property.IsAttachedTo(target);
+					if (target is null || property.IsAttachedTo(target))
+						return true;
+					var targetProperty = new XamlProperty(target, property.PropertyName);
+					targetProperty.TryResolve();
+					// A derived type may hide the serialized member with another
+					// dependency property of the same name. Keep its explicit owner.
+					return !ReferenceEquals(targetProperty.ResolvedMember, property.ResolvedMember) ||
+						!new SigComparer().Equals(targetProperty.ResolvedMemberDeclaringType, property.ResolvedMemberDeclaringType);
 				}
 				while (type is not null) {
 					// A template has its own target and namescope. Its dependency
