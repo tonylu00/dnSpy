@@ -20,7 +20,7 @@ class BranchedFinallyReuseDebug {
         var restore = typeof(PatternStatementTransform).GetMethod("RestoreAwaitFinally", BindingFlags.Instance | BindingFlags.NonPublic); int checks = 0;
         string Snapshot() => string.Join("\n", module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).SelectMany(m => m.Body.Instructions));
         foreach (string name in new[] { "ExclusiveCleanup", "SequentialCleanup" })
-        foreach (string scenario in new[] { "forward", "loop", "cleanup-entry", "outside-entry", "outside-duplicate", "duplicate", "escaping-jump", "return", "yield-break", "nested-function", "pending-read", "pending-write", "missing-reset", "reset-after-label", "cleanup-exit" }) {
+        foreach (string scenario in new[] { "forward", "loop", "cleanup-entry", "handler-cleanup-entry", "handler-wrong-entry", "outside-entry", "outside-duplicate", "duplicate", "escaping-jump", "return", "yield-break", "nested-function", "pending-read", "pending-write", "missing-reset", "reset-after-label", "cleanup-exit" }) {
             string beforeIL = Snapshot(); var method = owner.Methods.Single(m => m.Name == name);
             var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method };
             var builder = new AstBuilder(context); builder.AddMethod(method); builder.RunTransformations(t => t is PatternStatementTransform);
@@ -33,8 +33,13 @@ class BranchedFinallyReuseDebug {
             var pending = captures[1].Store.Left;
             var label = new LabelStatement { Label = "InternalCleanupEntry" }; label.AddAnnotation(new[] { new ILSpan(9000, 1) });
             var protectedStart = second.TryBlock.Statements.First();
-            if (scenario == "cleanup-entry") {
+            if (scenario == "cleanup-entry" || scenario == "handler-cleanup-entry" || scenario == "handler-wrong-entry") {
                 parent.Statements.InsertAfter(second, label); second.TryBlock.Add(new GotoStatement(label.Label));
+                if (scenario != "cleanup-entry") {
+                    var exit = new GotoStatement(scenario == "handler-wrong-entry" ? "UnrelatedEntry" : label.Label);
+                    exit.AddAnnotation(new[] { new ILSpan(9001, 1) });
+                    second.CatchClauses.Single().Body.Add(exit);
+                }
             } else {
                 second.TryBlock.Statements.InsertBefore(protectedStart, label);
                 var jump = new IfElseStatement(new PrimitiveExpression(false), new BlockStatement { new GotoStatement(label.Label) });
@@ -60,7 +65,7 @@ class BranchedFinallyReuseDebug {
                 Check(resets.Length != 0, "Pending reset missing from fixture");
                 foreach (var reset in resets) reset.Remove();
             } else if (scenario == "reset-after-label") parent.Statements.InsertBefore(second, new LabelStatement { Label = "BeforeRegion" });
-            bool accepted = scenario == "forward" || scenario == "loop" || scenario == "cleanup-entry";
+            bool accepted = scenario == "forward" || scenario == "loop" || scenario == "cleanup-entry" || scenario == "handler-cleanup-entry";
             string before = declaration.ToString(), secondBefore = second.ToString(); var pass = new PatternStatementTransform(context);
             restore.Invoke(pass, new object[] { first });
             if (accepted) {
@@ -68,6 +73,7 @@ class BranchedFinallyReuseDebug {
                 Check(second.ToString() == secondBefore, "Independent region changed while proving its lifetime");
                 restore.Invoke(pass, new object[] { second });
                 Check(second.CatchClauses.Count == 0 && !second.FinallyBlock.IsNull, "Second cleanup was not restored");
+                if (scenario == "handler-cleanup-entry") Check(second.GetAllRecursiveILSpans().Any(s => s.Start <= 9001 && s.End > 9001), "Handler exit debug span lost");
                 Check(second.GetAllRecursiveILSpans().Any(s => s.Start <= 9000 && s.End > 9000) &&
                     ((AstNode)first.FinallyBlock).GetAllRecursiveILSpans().Any(s => s.Start < s.End), "Branch or cleanup debug spans lost");
             } else Check(before == declaration.ToString(), "Unsafe independent branch recovery: " + name + "/" + scenario);
