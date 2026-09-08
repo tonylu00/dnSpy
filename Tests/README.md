@@ -223,6 +223,14 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
+`Invoke-IteratorBaseWrapperRegression.ps1` retains a renamed public iterator
+state type whose `MoveNext` calls a compiler-generated base dispatch wrapper.
+The wrapper must remain declared even when the outer iterator reconstructs.
+Original, renamed and one/four-worker rebuilt programs verify yielded values,
+non-virtual base dispatch and disposal after both early exit and exhaustion.
+The required iterator declaration remains present, exported source hashes agree
+across worker counts and the input assembly stays unchanged.
+
 `Invoke-ClosureContextRegression.ps1` gives generic capture methods generated
 names while retaining their ordinary instance helpers. Direct helper calls and
 nested delegate construction must use the capture receiver when inlined into a
