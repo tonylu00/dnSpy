@@ -919,7 +919,10 @@ The default mode continues to cover renamed closure types.
 state-machine startup, requiring raw state code to survive lambda reconstruction.
 The emitted assembly and one/four-worker rebuilt sources check suspension, result
 evaluation order, fault identity, cancellation, and exactly-once startup effects.
-It also checks deterministic source and unchanged input. Declaration collection
+It also covers a captured lambda with a private state type nested inside its
+display class, and verifies that the rebuilt type retains that visibility and
+nesting. Inlining must not move its raw startup code outside the access boundary.
+It checks deterministic source and unchanged input. Declaration collection
 must finish before whole-tree namespace imports and final source transforms.
 
 `Invoke-DelegateFieldRegression.ps1` checks struct and class field receivers whose
