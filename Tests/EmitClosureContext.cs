@@ -6,11 +6,11 @@ class EmitClosureContext {
         var memberReferences = module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody)
             .SelectMany(m => m.Body.Instructions).Select(i => i.Operand).OfType<MemberRef>().ToArray();
         var owner = module.GetTypes().Single(t => t.Name == "Capture`1");
-        foreach (var method in owner.Methods.Where(m => m.Name == "Invoke" || m.Name == "Bind")) {
+        foreach (var method in owner.Methods.Where(m => m.Name == "Invoke" || m.Name == "Bind" || m.Name == "InvokeBase")) {
             var references = memberReferences.Where(r => r.IsMethodRef && r.Name == method.Name &&
                 r.DeclaringType.ToTypeSig().RemovePinnedAndModifiers() is GenericInstSig generic &&
                 generic.GenericType.TypeDefOrRef == owner).ToArray();
-            method.Name = "<Factory>b__" + (method.Name == "Invoke" ? "0" : "1");
+            method.Name = "<Factory>b__" + (method.Name == "Invoke" ? "0" : method.Name == "Bind" ? "1" : "2");
             foreach (var reference in references) reference.Name = method.Name;
         }
         module.Write(args[1]);
