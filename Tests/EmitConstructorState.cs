@@ -16,7 +16,8 @@ class EmitConstructorState {
             r.DeclaringType.ResolveTypeDef()?.Methods.SingleOrDefault(m => m.Name == r.Name && comparer.Equals(m.MethodSig, r.MethodSig)))).ToArray();
         int index = 0;
         foreach (var closure in closures) {
-            closure.Name = "Capture" + (++index);
+            index++;
+            if (args.Length < 3 || args[2] != "generated") closure.Name = "Capture" + index;
             int methodIndex = 0;
             foreach (var method in closure.Methods) {
                 if (method.IsInstanceConstructor) {

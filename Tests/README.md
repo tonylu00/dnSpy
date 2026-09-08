@@ -909,6 +909,12 @@ event order and exception behavior. Eight AST checks cover retained allocations,
 local-only simplification, debug spans and unchanged input IL. Closure cleanup
 keeps the original storage when a use extends beyond the allocation block.
 
+`Invoke-ConstructorStateRegression.ps1 -KeepGeneratedNames` retains compiler
+closure names while forcing constructor preparation to preserve their allocation.
+It covers source-safe helper parameters and state fields, including a collision
+with an existing `constructorState` parameter, runtime ordering and debugger spans.
+The default mode continues to cover renamed closure types.
+
 `Invoke-LambdaBindingRegression.ps1` checks two loops that capture identically
 named locals after independent lambdas use that same parameter name. It verifies
 rebuilt dictionary results and escaped captures across multiple calls, one- and

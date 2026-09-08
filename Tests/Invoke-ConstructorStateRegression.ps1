@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory)][string] $DnSpyConsole,
-    [Parameter(Mandatory)][string] $OutputDirectory
+    [Parameter(Mandatory)][string] $OutputDirectory,
+    [switch] $KeepGeneratedNames
 )
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
@@ -17,7 +18,8 @@ dotnet build (Join-Path $inputDirectory 'ConstructorStateFixture.csproj') -c Rel
 if($LASTEXITCODE -ne 0){throw 'Constructor state fixture build failed.'}
 $source=Join-Path $inputDirectory 'bin\Release\net48\ConstructorStateFixture.exe'
 $original=Join-Path $OutputDirectory 'ConstructorStateFixture.exe'
-dotnet run --project (Join-Path $emitterDirectory 'Emitter.csproj') -c Release -- $source $original
+$naming = if ($KeepGeneratedNames) { 'generated' } else { 'renamed' }
+dotnet run --project (Join-Path $emitterDirectory 'Emitter.csproj') -c Release -- $source $original $naming
 if($LASTEXITCODE -ne 0){throw 'Constructor state renaming failed.'}
 & $original
 if($LASTEXITCODE -ne 0){throw 'Original constructor state behavior failed.'}

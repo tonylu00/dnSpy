@@ -22,12 +22,12 @@ public class ConstructorStateBase<T> {
 }
 public sealed class ConstructorState<T> : ConstructorStateBase<T> {
     public readonly Func<T> Later;
-    public ConstructorState(T value, T replacement)
-        : base(ConstructorStateTrace.Argument("A", value), () => value, next => value = next,
+    public ConstructorState(T constructorState, T replacement)
+        : base(ConstructorStateTrace.Argument("A", constructorState), () => constructorState, next => constructorState = next,
             ConstructorStateTrace.Argument("B", 1), replacement, ConstructorStateTrace.Argument("C", 2)) {
         ConstructorStateTrace.Step("D");
-        Later = () => value;
-        value = ConstructorStateTrace.Argument("E", value);
+        Later = () => constructorState;
+        constructorState = ConstructorStateTrace.Argument("E", constructorState);
     }
     // The generated constructor must not collide with an existing arity.
     private ConstructorState(object state, T value, T replacement) : this(value, replacement) { }
