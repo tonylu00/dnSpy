@@ -20,11 +20,20 @@ class DelegateMethodsClient {
             var item = new object();
             Check(ReferenceEquals(ExtraMethods.Identity(item), item));
             Check(ExtraMethods.Identity(42) == 42);
+            Check(ReferenceEquals(GenericMethods<object>.Read(item), item));
+            Func<string, string> generic = GenericMethods<string>.Read;
+            Check(generic("generic") == "generic" && generic.Method.DeclaringType == typeof(GenericCallback<string>));
+            Check(__DnSpyDelegateMethods_02000002.Read() == 71 && __DnSpyDelegateMethodsMapAttribute.Read() == 73);
             try { decode(null, 0); throw new Exception("Missing exception"); }
             catch (ArgumentNullException error) { Check(error.ParamName == "value"); }
             var method = typeof(ExtraCallback).GetMethod("Decode", BindingFlags.Public | BindingFlags.Static);
             Check(method != null && method.ReturnType == typeof(string));
             Check((string)method.Invoke(null, new object[] { "hello", 1 }) == decode("hello", 1));
+            Check(typeof(ExtraCallback).GetMethod("Rotate", BindingFlags.NonPublic | BindingFlags.Static).IsPrivate);
+            foreach (var assembly in new[] { typeof(ExtraCallback).Assembly, typeof(DelegateMethodsClient).Assembly })
+            foreach (var type in assembly.GetTypes())
+                Check(!type.Name.StartsWith("__DnSpyDelegateMethods", StringComparison.Ordinal) ||
+                    type == typeof(__DnSpyDelegateMethods_02000002) || type == typeof(__DnSpyDelegateMethodsMapAttribute));
             Console.WriteLine("PASS: same/cross-assembly calls, helper calls, generic identity, delegate binding, reflection and exceptions.");
             return 0;
         } catch (Exception error) { Console.WriteLine(error.GetType().FullName + ": " + error.Message); return 1; }

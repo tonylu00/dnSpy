@@ -223,16 +223,19 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
-`Invoke-DelegateMethodsRegression.ps1` is a regression for the currently
-unsupported case of ordinary static methods declared on a delegate type. Its
+`Invoke-DelegateMethodsRegression.ps1` covers ordinary static methods declared
+on a delegate type, including generic methods and generic delegate owners. Its
 emitter moves real method bodies onto a delegate and repairs a separate client
 assembly. The emitted program passes direct same/cross-assembly calls, private
 helper calls, generic identity, bound-method declaring type, reflection and
-exception checks. Current SDK source export fails with CS0644; this test must
-pass source compilation and the same runtime checks when restoration is added.
-Dropping the methods or leaving their runtime owner as a companion class cannot
-satisfy it. The script also checks one/four-worker source determinism and input
-preservation after successful rebuilding.
+exception checks. SDK export compiles the bodies in temporary static companion
+classes and restores their delegate owner after compilation, including calls
+from other assemblies. Rebuilt programs check private helper visibility and
+removal of temporary types while preserving colliding user type names. The
+script also checks one/four-worker source determinism, input preservation and
+unchanged DLL/EXE/PDB hashes on incremental builds. Delegates with instance IL
+methods, extra runtime/PInvoke methods, properties, events, nested types or
+unsupported fields are not projected by this mechanism.
 
 `Invoke-IteratorBaseWrapperRegression.ps1` retains a renamed public iterator
 state type whose `MoveNext` calls a compiler-generated base dispatch wrapper.

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Globalization;
@@ -17,6 +18,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         try {
             bool changed = false;
             using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
+                changed |= RestoreDelegateMethods(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
                     a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.raw-exceptions.v1"))).ToArray();
                 foreach (var rawType in rawTypes) {
@@ -102,5 +104,56 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (File.Exists(temporary)) File.Delete(temporary);
             if (File.Exists(temporaryPdb)) File.Delete(temporaryPdb);
         }
+    }
+
+    static string TypeKey(ITypeDefOrRef type) { return type.FullName + ", " + type.DefinitionAssembly.FullName; }
+    static bool RestoreDelegateMethods(ModuleDef module) {
+        var attributes = module.Types.Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
+            a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.delegate-methods.v1"))).ToArray();
+        if (attributes.Length == 0) return false;
+        var maps = new Dictionary<string, ITypeDefOrRef>(StringComparer.Ordinal);
+        foreach (var marker in attributes) {
+            foreach (var attribute in module.Assembly.CustomAttributes.Where(a => a.AttributeType.ResolveTypeDef() == marker).ToArray()) {
+                if (attribute.ConstructorArguments.Count != 2) throw new InvalidDataException("Invalid delegate method mapping.");
+                var source = (attribute.ConstructorArguments[0].Value as TypeSig).ToTypeDefOrRef();
+                var target = (attribute.ConstructorArguments[1].Value as TypeSig).ToTypeDefOrRef();
+                if (source == null || target == null) throw new InvalidDataException("Missing delegate method mapping types.");
+                maps.Add(TypeKey(source), target);
+                module.Assembly.CustomAttributes.Remove(attribute);
+            }
+        }
+        // Load instruction operands before changing ownership: dnlib metadata rows are lazy.
+        var methods = module.GetTypes().SelectMany(t => t.Methods).ToArray();
+        var references = new HashSet<MemberRef>(module.GetMemberRefs());
+        foreach (var method in methods.Where(m => m.HasBody)) foreach (var instruction in method.Body.Instructions) {
+            var reference = instruction.Operand as MemberRef;
+            var specification = instruction.Operand as MethodSpec;
+            if (reference == null && specification != null) reference = specification.Method as MemberRef;
+            if (reference != null) references.Add(reference);
+        }
+        foreach (var reference in references) {
+            var declaring = reference.DeclaringType;
+            if (declaring == null) continue;
+            var generic = (declaring as TypeSpec)?.TypeSig as GenericInstSig;
+            var definition = generic == null ? declaring : generic.GenericType.TypeDefOrRef;
+            ITypeDefOrRef target;
+            if (!maps.TryGetValue(TypeKey(definition), out target)) continue;
+            reference.Class = generic == null ? (IMemberRefParent)target : new TypeSpecUser(new GenericInstSig(new ClassSig(target), generic.GenericArguments.ToArray()));
+        }
+        foreach (var companion in module.GetTypes().ToArray()) {
+            ITypeDefOrRef destination;
+            if (!maps.TryGetValue(TypeKey(companion), out destination)) continue;
+            var target = destination.ResolveTypeDef();
+            if (target == null || target.Module != module || target.BaseType == null || target.BaseType.FullName != "System.MulticastDelegate")
+                throw new InvalidDataException("Delegate method destination is not a local delegate.");
+            if (!companion.IsAbstract || !companion.IsSealed || companion.Methods.Any(m => !m.IsStatic))
+                throw new InvalidDataException("Invalid delegate method companion.");
+            foreach (var method in companion.Methods.ToArray()) { companion.Methods.Remove(method); target.Methods.Add(method); }
+            foreach (var field in companion.Fields.ToArray()) { companion.Fields.Remove(field); target.Fields.Add(field); }
+            foreach (var nested in companion.NestedTypes.ToArray()) { companion.NestedTypes.Remove(nested); target.NestedTypes.Add(nested); }
+            if (companion.DeclaringType == null) module.Types.Remove(companion); else companion.DeclaringType.NestedTypes.Remove(companion);
+        }
+        foreach (var marker in attributes) module.Types.Remove(marker);
+        return true;
     }
 }

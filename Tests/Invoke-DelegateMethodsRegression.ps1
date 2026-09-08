@@ -33,5 +33,9 @@ foreach($threads in 1,4){
  $exe=Join-Path $project.DirectoryName 'bin\Release\net48\DelegateMethodsClient.exe'
  & $exe
  if($LASTEXITCODE -ne 0){throw 'Rebuilt delegate method behavior failed.'}
+ $outputs=@(Get-ChildItem (Split-Path $exe) -File | Where-Object Extension -in '.exe','.dll','.pdb' | Sort-Object Name | Get-FileHash | ForEach-Object Hash)
+ dotnet build $project.FullName -c Release --nologo -v quiet
+ if($LASTEXITCODE -ne 0){throw 'Incremental build failed.'}
+ if(Compare-Object $outputs @(Get-ChildItem (Split-Path $exe) -File | Where-Object Extension -in '.exe','.dll','.pdb' | Sort-Object Name | Get-FileHash | ForEach-Object Hash) -SyncWindow 0){throw 'Incremental build changed restored output.'}
 }
 if(Compare-Object $hashes @($inputs | Get-FileHash | ForEach-Object Hash) -SyncWindow 0){throw 'Input changed.'}
