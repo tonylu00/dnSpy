@@ -20,6 +20,7 @@ public class ReceiverDerived<T> : ReceiverMiddle<T> {
     public void RaiseHidden() { if (Changed != null) Changed(); }
 }
 public static class HiddenMemberReceiverFixture {
+    static uint? nullableNumber;
     static int reads, baseEvents, hiddenEvents;
     static ReceiverDerived<int> Read(ReceiverDerived<int> value) { reads++; return value; }
     static void BaseEvent() { baseEvents++; }
@@ -30,6 +31,11 @@ public static class HiddenMemberReceiverFixture {
         catch (Exception e) { Console.Error.WriteLine(e.GetType().Name + ": " + e.Message); return 1; }
     }
     static void Run() {
+        nullableNumber = null;
+        Check(nullableNumber.Equals((uint?)null), "empty nullable receiver equality");
+        Check(!nullableNumber.Equals((uint?)7), "empty nullable receiver inequality");
+        nullableNumber = 7;
+        Check(nullableNumber.Equals((uint?)7) && !nullableNumber.Equals((uint?)null), "nonempty nullable receiver equality");
         var value = new ReceiverDerived<int>();
         ((ReceiverBase<int>)Read(value)).Value = 13;
         value.Value = 29;
