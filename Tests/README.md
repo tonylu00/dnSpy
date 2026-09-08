@@ -918,6 +918,8 @@ The default mode continues to cover renamed closure types.
 `Invoke-DelegateFieldRegression.ps1` checks struct and class field receivers whose
 generated helper methods are emitted in another source file. Replacing each field
 after delegate creation must leave the original receiver identity and state bound.
+It includes generic receivers represented by dnlib MemberRef objects, which must
+be distinguished from field references despite implementing both interfaces.
 It also reserves the generated method alias with a field, requiring a consistent
 collision suffix in declarations and callers. One/four-worker exports must rebuild,
 behave identically, preserve input hashes and produce deterministic source.
