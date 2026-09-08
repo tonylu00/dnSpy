@@ -227,10 +227,12 @@ unchanged.
 second independent protected await. Original, modified and one/four-worker source
 rebuilds pass 8,750 cases / 34,986 assertions for suspension, cleanup order,
 cancellation, wrapped payloads, winning exceptions and original rethrow stacks.
-Thirty AST checks cover internal forward/backward branches, cleanup entries,
+Forty AST checks cover internal forward/backward branches, cleanup entries,
 outside entries, duplicate labels, escaping jumps, missing resets and escaped
 exception storage. An independent region may contain branches only when its
-reset still dominates every entry. Debug spans and input IL/hashes are preserved.
+reset still dominates every entry. Nested lambda and anonymous-method returns
+do not count as exits from the enclosing region; outer returns and jumps still
+do. Debug spans and input IL/hashes are preserved.
 
 `Invoke-GroupedSelectorCopiesRegression.ps1` inserts two hoisted selector copies
 and repeated equality dispatch into ordinary/generic three-handler retry methods.

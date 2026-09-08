@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -78,6 +79,20 @@ class BranchedFinallyReuseDebug {
                     ((AstNode)first.FinallyBlock).GetAllRecursiveILSpans().Any(s => s.Start < s.End), "Branch or cleanup debug spans lost");
             } else Check(before == declaration.ToString(), "Unsafe independent branch recovery: " + name + "/" + scenario);
             Check(beforeIL == Snapshot(), "Input IL changed"); checks++;
+        }
+        var exits = typeof(PatternStatementTransform).GetMethod("HasNonLocalExit", BindingFlags.Static | BindingFlags.NonPublic);
+        foreach (bool anonymous in new[] { false, true }) {
+            var nestedBody = new BlockStatement { new ReturnStatement(new PrimitiveExpression(1)) };
+            Expression nested = anonymous ? (Expression)new AnonymousMethodExpression { Body = nestedBody } : new LambdaExpression { Body = nestedBody };
+            var region = new BlockStatement { Observe(nested) };
+            bool Escapes() => (bool)exits.Invoke(null, new object[] { new HashSet<AstNode>(region.DescendantsAndSelf), null });
+            Check(!Escapes(), "Nested function return escaped its function");
+            region.Add(new ReturnStatement());
+            Check(Escapes(), "Outer return was ignored with a nested function");
+            region.Statements.Last().Remove();
+            region.Add(new GotoStatement("Outside"));
+            Check(Escapes(), "Outer jump was ignored with a nested function");
+            checks += 3;
         }
         Console.WriteLine("PASS: " + checks + " independent cleanup branch, reset, entry and debug guards.");
     }
