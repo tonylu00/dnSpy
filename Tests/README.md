@@ -1011,3 +1011,11 @@ linked-token cancellation, completion and early disposal. The runner verifies th
 source and assembly-copy hashes. It does not start ETS, open a project, or connect to
 a network or bus; these results establish helper behavior, not whole-application
 equivalence.
+
+`Invoke-HiddenMemberReceiverRegression.ps1` checks public base-member calls whose
+receiver type hides the member, including property/field collisions, setters,
+methods, events, indexers and virtual overrides through generic inheritance.
+Original and one/four-worker rebuilt executions verify selected members, event
+subscription/removal, receiver evaluation counts and null behavior. A cast selects
+the base member while retaining virtual dispatch. This does not broaden protected
+member access or reconstruct arbitrary nonvirtual calls on another instance.
