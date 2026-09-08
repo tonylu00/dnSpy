@@ -493,6 +493,11 @@ Dependency edges resolve from their owning modules; the namespace/type table
 combines the non-GAC reference closure and is reused for subsequent source files.
 Cancellation invalidates partial tables. Input assemblies and IL stay unchanged.
 
+`Invoke-ReferenceEqualityRegression.ps1` checks base/derived identity comparisons
+and asynchronous `Task.WhenAny` results, including reversed inequality, an ordinary
+non-generic task winner and a faulted generic task winner. One/four-worker rebuilds
+must preserve identity without inserting a derived-type cast into the producer.
+
 `Invoke-RefLocalScopeRegression.ps1` checks generic local reference reassignment
 across nested scopes. Rebuilt sources must preserve alias writes, branch behavior,
 and initializer side effects for value and reference types with one/four workers.
