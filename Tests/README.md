@@ -68,6 +68,9 @@ cover branch polarity, nested negations, exposed locals, unsupported preparation
 numeric predicates, typed/boxed exception-copy chains, overwritten aliases and
 unchanged IL when a match fails. Preparation stays in the filter expression so it
 also executes when the handler is not selected.
+`Invoke-TryEntryRegression.ps1` separately verifies protected-block entry labels,
+internal backedges, nested cleanup and collision-safe label generation; see
+[TryEntry.md](TryEntry.md) for its runtime and control-flow coverage.
 Nested Boolean decisions include an out-of-line comparison that branches back to
 a shared result. Property reads execute once, and rejecting or throwing predicates
 still run before unwind. The checks reject cycles, incoming join branches, missing
