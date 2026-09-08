@@ -251,6 +251,22 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 				foreach (var node in astBuilder.SyntaxTree.Descendants.OfType<EntityDeclaration>()) {
 					var type = node.Annotation<TypeDef>();
 					if (type == null || !(node is TypeDeclaration || node is DelegateDeclaration)) continue;
+					var usage = MetadataAttributeUsages.GetUsage(type);
+					if (usage != null) {
+						foreach (var item in node.Attributes.SelectMany(s => s.Attributes)) {
+							if (item.Annotation<CustomAttribute>() != usage) continue;
+							item.Arguments.First().ReplaceWith(new MemberReferenceExpression(new TypeReferenceExpression(
+								new MemberType(new MemberType(new SimpleType("global"), "System") { IsDoubleColon = true }, "AttributeTargets")), "All"));
+						}
+						var marker = new ICSharpCode.NRefactory.CSharp.Attribute {
+							Type = new MemberType(new MemberType(new MemberType(new SimpleType("global"), "System") { IsDoubleColon = true }, "Reflection"), "ObfuscationAttribute")
+						};
+						marker.Arguments.Add(new NamedExpression(Identifier.Create("Feature"), new PrimitiveExpression(
+							MetadataAttributeUsages.Prefix + ((int)usage.ConstructorArguments[0].Value).ToString(System.Globalization.CultureInfo.InvariantCulture))));
+						var section = new AttributeSection();
+						section.Attributes.Add(marker);
+						node.Attributes.Add(section);
+					}
 					foreach (var field in type.Fields.Where(MetadataOnlyFields.Contains)) {
 						var attribute = new ICSharpCode.NRefactory.CSharp.Attribute {
 							Type = new MemberType(new MemberType(new MemberType(new SimpleType("global"), "System") { IsDoubleColon = true }, "Reflection"), "ObfuscationAttribute")

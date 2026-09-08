@@ -115,6 +115,8 @@ namespace dnSpy.Decompiler.MSBuild {
 				if (!string.IsNullOrEmpty(asmName))
 					writer.WriteElementString("AssemblyName", asmName);
 				writer.WriteElementString("GenerateAssemblyInfo", "False");
+				if (MetadataFieldProjectSupport.Required(project))
+					writer.WriteElementString("ProduceReferenceAssembly", "true");
 				// SDK defaults use C# 7.3 for .NET Framework, while the decompiler
 				// can emit newer constructs such as target-typed conditionals.
 				if (project.Options.Decompiler.GenericGuid == DecompilerConstants.LANGUAGE_CSHARP)

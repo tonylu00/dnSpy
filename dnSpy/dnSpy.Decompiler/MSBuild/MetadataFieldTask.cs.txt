@@ -21,6 +21,16 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                         if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
                         var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
                         string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
+                        const string usagePrefix = "dnSpy.metadata.attribute-usage.v1|";
+                        if (text != null && text.StartsWith(usagePrefix, StringComparison.Ordinal)) {
+                            var usage = type.CustomAttributes.Single(a => a.TypeFullName == "System.AttributeUsageAttribute");
+                            var argument = usage.ConstructorArguments[0];
+                            usage.ConstructorArguments[0] = new CAArgument(argument.Type,
+                                int.Parse(text.Substring(usagePrefix.Length), CultureInfo.InvariantCulture));
+                            type.CustomAttributes.Remove(attribute);
+                            changed = true;
+                            continue;
+                        }
                         if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
                         var parts = text.Substring(prefix.Length).Split('|');
                         if (parts.Length != 4) throw new InvalidDataException("Invalid dnSpy field metadata instruction.");
