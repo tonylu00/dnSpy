@@ -6,6 +6,8 @@ class EmitClosureContext {
         var memberReferences = module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody)
             .SelectMany(m => m.Body.Instructions).Select(i => i.Operand).OfType<MemberRef>().ToArray();
         var owner = module.GetTypes().Single(t => t.Name == "Capture`1");
+        var generated = owner.CustomAttributes.Single(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute");
+        owner.Methods.Single(m => m.Name == "InvokeBase").CustomAttributes.Add(new CustomAttribute(generated.Constructor));
         foreach (var method in owner.Methods.Where(m => m.Name == "Invoke" || m.Name == "Bind" || m.Name == "InvokeBase")) {
             var references = memberReferences.Where(r => r.IsMethodRef && r.Name == method.Name &&
                 r.DeclaringType.ToTypeSig().RemovePinnedAndModifiers() is GenericInstSig generic &&

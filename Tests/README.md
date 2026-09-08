@@ -280,7 +280,9 @@ nested delegate construction must use the capture receiver when inlined into a
 static factory. Original, renamed and one/four-worker rebuilt programs check
 independent mutable captures, call counts, generic values and bound receiver
 identity. A struct caller also binds a generated method containing a nonvirtual
-base call; rebuilding must retain the original receiver and base dispatch even
+base call; its CompilerGenerated marker hides the method initially, so late
+declaration collection must retain the referenced implementation. Rebuilding
+must retain the original receiver and base dispatch even
 when the derived override throws. Exported source hashes agree across worker counts and input hashes
 remain unchanged. `Invoke-DelegateTargetRegression.ps1` also covers genuine
 base-method binding so it is not confused with a closure's own helper.
