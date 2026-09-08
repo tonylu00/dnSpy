@@ -223,6 +223,16 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
+`Invoke-ImplementationHelperRegression.ps1` covers helper methods, a field-only
+private implementation cache and retained dynamic call sites. Its emitter gives
+cache fields invalid metadata identifiers and reserves the generated field
+alias with another member. Original and one/four-worker rebuilt programs check
+dictionary identity/mutation, dynamic conversion, call-site reuse and binder
+failure. Source hashes agree across workers and the input assembly stays
+unchanged. `Invoke-FieldCollisionRegression.ps1` also checks reference repair
+across assemblies and generic field owners. Field aliases are allocated once
+per module so declarations and callers in separate source files agree.
+
 `Invoke-ExtensionBindingRegression.ps1` checks 39 binding/behavior cases and
 13 retained call annotations/debug spans. Matching extension signatures on
 different containers keep their explicit static owner; null receivers, generic
