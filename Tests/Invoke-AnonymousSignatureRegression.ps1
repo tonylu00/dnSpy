@@ -20,6 +20,8 @@ foreach($threads in 1,4){
  $export=Join-Path $OutputDirectory "export-$threads"
  & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export $inputFile
  if($LASTEXITCODE -ne 0){throw 'Export failed.'}
+ $fixtureSource = Get-Content (Join-Path $export 'AnonymousSignatureFixture\AnonymousSignatureFixture.cs') -Raw
+ if ($fixtureSource -notmatch 'new\s*\{\s*Local\s*=') { throw 'Local-only anonymous syntax was unnecessarily replaced.' }
  $project=Get-ChildItem $export -Recurse -Filter AnonymousSignatureFixture.csproj | Select-Object -First 1
  $rebuilt=Join-Path $OutputDirectory "rebuilt-$threads"
  dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet

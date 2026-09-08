@@ -6,4 +6,4 @@ The emitter changes an internal factory's return signature from object to its ac
 
 The original and rebuilt executables check properties, equality, hash consistency, formatting and a separate local-only anonymous type. One- and four-worker exports must both build and run, produce identical source, and leave input hashes unchanged. Retaining the compiler-generated hash implementation also exercises unchecked constant multiplication.
 
-The current detection covers local TypeDef signatures in non-generated owners and non-generated methods, recursively including generic arguments and element types. It does not claim recovery of all escaped types across arbitrary external references or all compiler-generated closure patterns.
+The emitter also retains an anonymous value in a field on a generated owner. Field signatures require concrete types even when their owner has a compiler-generated name. Detection covers fields on all owners and non-generated methods on non-generated owners, recursively including generic arguments and element types. It does not claim recovery of all escaped types across arbitrary external references or method-only generated signatures.

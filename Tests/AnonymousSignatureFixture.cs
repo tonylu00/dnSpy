@@ -1,11 +1,14 @@
 using System;
 public static class AnonymousSignatureFixture {
+    public static class Holder { public static object Saved = new { Captured = 31 }; }
     internal static object Create() { return new { Label = "value", Number = 17 }; }
     internal static object LocalOnly() { return new { Local = 23 }; }
     public static int Main() {
         object first = Create(), second = Create();
         var type = first.GetType();
         var local = LocalOnly();
+        if ((int)Holder.Saved.GetType().GetProperty("Captured").GetValue(Holder.Saved, null) != 31 || !ReferenceEquals(Holder.Saved, Holder.Saved))
+            throw new Exception("Generated field signature changed");
         if (!first.Equals(second) || first.GetHashCode() != second.GetHashCode() ||
             (int)local.GetType().GetProperty("Local").GetValue(local, null) != 23 ||
             (string)type.GetProperty("Label").GetValue(first, null) != "value" ||
