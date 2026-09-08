@@ -179,6 +179,7 @@ namespace dnSpy_Console {
 		int spaces;
 		string? typeName;
 		string? applicationConfig;
+		string? assemblyContexts;
 		ProjectVersion projectVersion = ProjectVersion.VS2010;
 		string? outputDir;
 		string slnName = "solution.sln";
@@ -336,6 +337,7 @@ namespace dnSpy_Console {
 			new UsageInfo("--sdk-project", null, dnSpy_Console_Resources.CmdLineDescription_SdkProject),
 			new UsageInfo("--asm-path", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_AsmPath),
 			new UsageInfo("--app-config", dnSpy_Console_Resources.CmdLinePath, "use assembly binding redirects from the application's configuration file"),
+			new UsageInfo("--assembly-contexts", dnSpy_Console_Resources.CmdLinePath, "use explicit per-input dependency directories and configurations from an XML manifest"),
 			new UsageInfo("--user-gac", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_UserGAC),
 			new UsageInfo("--no-gac", null, dnSpy_Console_Resources.CmdLineDescription_NoGAC),
 			new UsageInfo("--no-stdlib", null, dnSpy_Console_Resources.CmdLineDescription_NoStdLib),
@@ -434,6 +436,7 @@ namespace dnSpy_Console {
 			"sdk-project",
 			"asm-path",
 			"app-config",
+			"assembly-contexts",
 			"user-gac",
 			"gac",
 			"stdlib",
@@ -513,6 +516,12 @@ namespace dnSpy_Console {
 						if (next is null || !File.Exists(next))
 							throw new ErrorException("--app-config requires an existing application configuration file.");
 						applicationConfig = Path.GetFullPath(next);
+						i++;
+						break;
+
+					case "--assembly-contexts":
+						if (next is null) throw new ErrorException("Missing assembly contexts manifest.");
+						assemblyContexts = Path.GetFullPath(next);
 						i++;
 						break;
 
@@ -712,6 +721,8 @@ namespace dnSpy_Console {
 			IAssemblyResolver inputResolver = new InputAssemblyResolver(assemblyResolver, files.Select(f => f.Module));
 			if (applicationConfig is not null)
 				inputResolver = new ApplicationConfigResolver(inputResolver, applicationConfig);
+			if (assemblyContexts is not null)
+				inputResolver = new AssemblyContextResolver(inputResolver, assemblyContexts, files.Select(f => f.Module), useGac);
 			moduleContext.AssemblyResolver = inputResolver;
 			moduleContext.Resolver = new Resolver(inputResolver);
 			string guidStr = projectGuid.ToString();
