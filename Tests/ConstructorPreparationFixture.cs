@@ -61,6 +61,15 @@ public sealed class PreparedException : Exception {
         PreparationTrace.Step("I"); Report = report;
     }
 }
+public class LatePreparationBase {
+    public readonly string Text;
+    public LatePreparationBase(string first, string text) { PreparationTrace.Step("H"); if (first != null) throw new Exception("First argument changed"); Text = text; }
+}
+public sealed class PreparedLate : LatePreparationBase {
+    public readonly string Initialized = PreparationTrace.Argument("X", "field");
+    public PreparedLate(PreparationReport report) : base(null, report?.FullReport ?? "fallback") { Check(4); PreparationTrace.Step("I"); }
+    public static void Check(int value) { if (value != 4) throw new Exception("Preparation constant changed"); }
+}
 public static class ConstructorPreparationFixture {
     static int checks;
     static void Check(bool condition) { checks++; if (!condition) throw new Exception("Preparation check " + checks + ": " + PreparationTrace.Text); }
@@ -107,6 +116,20 @@ public static class ConstructorPreparationFixture {
                 Check(ReferenceEquals(result.Report, report));
                 PreparationTrace.Failure = "";
                 Check(result.Message == (report?.FullReport ?? "fallback"));
+            }
+        }
+        foreach (var report in new[] { null, new PreparationReport(null), new PreparationReport(""), new PreparationReport("detail") })
+        foreach (string failure in new[] { "", "X", "B", "H", "I" }) {
+            PreparationTrace.Text = ""; PreparationTrace.Failure = failure;
+            PreparedLate result = null; Exception error = null;
+            try { result = new PreparedLate(report); } catch (Exception e) { error = e; }
+            string full = report == null ? "XHI" : "XBHI";
+            int stop = failure.Length == 0 ? -1 : full.IndexOf(failure, StringComparison.Ordinal);
+            Check(PreparationTrace.Text == (stop < 0 ? full : full.Substring(0, stop + 1)));
+            Check(stop < 0 ? error == null : ReferenceEquals(error, PreparationTrace.Error));
+            if (result != null) {
+                PreparationTrace.Failure = "";
+                Check(result.Initialized == "field" && result.Text == (report?.FullReport ?? "fallback"));
             }
         }
         Console.WriteLine("Constructor preparation: " + checks + " checks"); return 0;

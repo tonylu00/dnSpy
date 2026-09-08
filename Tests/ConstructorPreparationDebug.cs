@@ -12,7 +12,7 @@ class ConstructorPreparationDebug {
         using var module = ModuleDefMD.Load(args[0]);
         var type = module.Types.Single(t => t.Name == "PreparedBranch");
         int checks = 0;
-        foreach (string scenario in new[] { "original", "closed-jump", "outward-jump", "inward-jump", "return", "finally", "initializer", "initializer-lambda", "local-name", "lambda-return" }) {
+        foreach (string scenario in new[] { "original", "closed-jump", "outward-jump", "inward-jump", "return", "finally", "initializer", "initializer-lambda", "local-name", "lambda-return", "late-block", "late-fallthrough", "late-body-entry", "late-outward" }) {
             var context = new DecompilerContext(0, module, null, true);
             var builder = new AstBuilder(context);
             builder.AddType(type);
@@ -25,7 +25,20 @@ class ConstructorPreparationDebug {
             if (!constructor.Body.Statements.TakeWhile(s => s != call).OfType<IfElseStatement>().Any())
                 throw new Exception("Fixture did not retain conditional preparation");
             bool hasInitializer = scenario == "initializer" || scenario == "initializer-lambda";
-            bool accepted = scenario == "original" || scenario == "closed-jump" || scenario == "local-name" || scenario == "lambda-return" || hasInitializer;
+            bool accepted = scenario == "original" || scenario == "closed-jump" || scenario == "local-name" || scenario == "lambda-return" || scenario == "late-block" || hasInitializer;
+            if (scenario.StartsWith("late-")) {
+                var assignment = constructor.Body.Statements.TakeWhile(s => s != call).OfType<ExpressionStatement>().Last();
+                constructor.Body.Statements.InsertBefore(assignment, new GotoStatement("latePreparation"));
+                assignment.Remove();
+                constructor.Body.Statements.InsertBefore(call, new LabelStatement { Label = "preparationJoin" });
+                if (scenario == "late-body-entry") constructor.Body.Statements.Add(new GotoStatement("latePreparation"));
+                if (scenario != "late-fallthrough") constructor.Body.Statements.Add(new ReturnStatement());
+                else constructor.Body.Statements.Add(new ExpressionStatement(new InvocationExpression(new IdentifierExpression("BodyEffect"))));
+                constructor.Body.Statements.Add(new LabelStatement { Label = "latePreparation" });
+                constructor.Body.Statements.Add(assignment);
+                constructor.Body.Statements.Add(new GotoStatement(scenario == "late-outward" ? "bodyExit" : "preparationJoin"));
+                if (scenario == "late-outward") constructor.Body.Statements.Add(new LabelStatement { Label = "bodyExit" });
+            }
             if (scenario == "closed-jump" || scenario == "inward-jump") {
                 constructor.Body.Statements.InsertBefore(first, new LabelStatement { Label = "preparationStart" });
                 if (scenario == "closed-jump") constructor.Body.Statements.InsertBefore(constructor.Body.Statements.First(), new GotoStatement("preparationStart"));
@@ -61,6 +74,9 @@ class ConstructorPreparationDebug {
                     throw new Exception("Constructor annotations or forwarding were lost: " + scenario);
                 if (scenario == "closed-jump" && (!factory.Descendants.OfType<GotoStatement>().Any() || !factory.Descendants.OfType<LabelStatement>().Any()))
                     throw new Exception("Preparation lost its closed branch");
+                if (scenario == "late-block" && (!factory.Descendants.OfType<LabelStatement>().Any(l => l.Label == "latePreparation") ||
+                    constructor.Body.Descendants.OfType<LabelStatement>().Any(l => l.Label == "latePreparation")))
+                    throw new Exception("Out-of-line preparation did not move with the factory");
                 if (scenario == "local-name" && helper.Parameters.First().Name == "constructorState")
                     throw new Exception("Generated state collided with a nested local");
                 if (hasInitializer && constructor.Initializer.Descendants.OfType<DirectionExpression>().Count(d => !d.DeclarationType.IsNull) != 1)

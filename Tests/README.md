@@ -808,6 +808,17 @@ it excludes `out` parameters, ref locals, ref-like state fields, and direct para
 captures that cannot be represented in its helper. Public constructor signatures
 remain intact; the generated private helpers add source implementation members.
 
+`Invoke-ConstructorPreparationRegression.ps1` also covers a scalar local before
+an observable field initializer and an out-of-line fallback after the constructor
+return. Original and one/four-worker rebuilt executions pass 1,207 checks for
+null paths, initialization order, shared state, and exact exception identity.
+Fourteen transformation scenarios include relocating a closed fallback block and
+rejecting fallthrough, body entries, and jumps outside preparation. The runtime
+fixture reproduces field initialization order; the AST scenarios directly cover
+the late-block boundary because expression reconstruction simplifies that branch
+in the emitted runtime fixture. Only nonthrowing scalar literal local initializers
+may be skipped when recovering subsequent field initializers.
+
 `Invoke-ConstructorInitializerRegression.ps1` covers preparation after instance
 field initialization. A preparation method in the first base argument returns that
 argument and declares an `out` state variable shared by the remaining arguments
