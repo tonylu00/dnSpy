@@ -819,6 +819,12 @@ the late-block boundary because expression reconstruction simplifies that branch
 in the emitted runtime fixture. Only nonthrowing scalar literal local initializers
 may be skipped when recovering subsequent field initializers.
 
+`Invoke-FieldKeywordRegression.ps1` compiles exported source with C# 14 to catch
+the accessor keyword `field` changing identifier binding. Original and one/four
+worker rebuilt executions verify getters, setters, a captured local, a parameter,
+and reflection against the unchanged field metadata name. Output escapes the
+identifier as `@field` consistently; it does not rename the underlying member.
+
 `Invoke-ConstructorInitializerRegression.ps1` covers preparation after instance
 field initialization. A preparation method in the first base argument returns that
 argument and declares an `out` state variable shared by the remaining arguments
