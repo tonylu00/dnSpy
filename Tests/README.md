@@ -290,6 +290,13 @@ Conditional delegates passed to `System.Delegate` retain their concrete `Action`
 or custom delegate type. Both branches check deferred execution, invocation
 results and runtime delegate type after source rebuilding.
 
+`Invoke-AnonymousSignatureRegression.ps1` checks concrete anonymous types in
+retained signatures and metadata handles. Its emitter replaces an expression
+tree's literal parameter name with an equivalent method call, leaving explicit
+expression construction to exercise constructor and member handles. Rebuilt
+programs verify expression execution and reflected type/member identity, while
+local-only anonymous syntax and one/four-worker source hashes remain unchanged.
+
 `Invoke-BranchedFinallyReuseRegression.ps1` inserts a two-entry loop before the
 second independent protected await. Original, modified and one/four-worker source
 rebuilds pass 8,750 cases / 34,986 assertions for suspension, cleanup order,
