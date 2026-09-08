@@ -324,6 +324,11 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		IReadOnlyCollection<ProjectType> GetPossibleProjectTypes() {
 			var hashSet = new HashSet<ProjectType>();
+			// Resource-only WPF assemblies can have no framework AssemblyRefs.
+			// Their Page/Resource items still require the WindowsDesktop targets.
+			if (project.Files.Any(f => f.BuildAction == BuildAction.Page || f.BuildAction == BuildAction.ApplicationDefinition ||
+				f.BuildAction == BuildAction.Resource || f.BuildAction == BuildAction.SplashScreen))
+				hashSet.Add(ProjectType.Wpf);
 
 			foreach (var assemblyRef in project.Module.GetAssemblyRefs()) {
 				if (assemblyRef.Name.StartsWith("Microsoft.AspNetCore", StringComparison.Ordinal))

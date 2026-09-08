@@ -1027,3 +1027,9 @@ Project-folder suffixes are allocated in input-path order before parallel work.
 `Invoke-DuplicateAssemblyRegression.ps1` compares mappings across one/four workers,
 reversed input order and SDK/legacy project formats. It then uses the map to restore
 rebuilt binaries to both compatibility folders and executes both dependency graphs.
+
+`Invoke-ResourceOnlyRegression.ps1` tests WPF libraries with no framework IL
+references: one contains BAML and a text resource, and one contains only the text
+resource. An unchanged WPF host loads both original and rebuilt resources through
+pack URIs and verifies the dictionary value. SDK export enables WPF from resource
+build actions even when assembly-reference detection alone finds no WPF usage.
