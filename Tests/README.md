@@ -493,6 +493,10 @@ Dependency edges resolve from their owning modules; the namespace/type table
 combines the non-GAC reference closure and is reused for subsequent source files.
 Cancellation invalidates partial tables. Input assemblies and IL stay unchanged.
 
+The collision fixture also gives indexer getters and setters different parameter
+names, including duplicate names and the setter's reserved `value` name. Both
+accessor bodies must use the shared positional names and preserve read/write results.
+
 The collision fixture rewrites metadata with repeated generic and parameter names,
 including nested types, constraints, abstract methods and interfaces. The exported
 declarations and uses must agree, compile and preserve each argument's behavior.

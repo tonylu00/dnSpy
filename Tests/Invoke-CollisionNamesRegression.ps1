@@ -8,6 +8,7 @@ if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new regression ou
 $inputDirectory = Join-Path $OutputDirectory 'input'
 $emitterDirectory = Join-Path $OutputDirectory 'emitter'
 New-Item -ItemType Directory -Path $inputDirectory,$emitterDirectory | Out-Null
+'<Project />' | Set-Content (Join-Path $OutputDirectory 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'CollisionNamesFixture.cs') -Destination $inputDirectory
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'EmitCollisionNames.cs') -Destination $emitterDirectory
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize></PropertyGroup></Project>' |

@@ -11,6 +11,11 @@ class Emitter {
             if (type.DeclaringType != null && type.GenericParameters.Count > 1)
                 type.GenericParameters[1].Name = "RenamedOuter";
             foreach (var method in type.Methods) {
+                if (type.Name == "IndexerNames" && (method.Name == "get_Item" || method.Name == "set_Item")) {
+                    var indices = method.Parameters.Where(p => !p.IsHiddenThisParameter).ToArray();
+                    indices[0].Name = method.Name == "get_Item" ? "value" : "other";
+                    indices[1].Name = method.Name == "get_Item" ? "value" : "other";
+                }
                 foreach (var parameter in method.GenericParameters) parameter.Name = "T";
                 if (method.Name == "Combine") {
                     var parameters = method.Parameters.Where(p => !p.IsHiddenThisParameter).ToArray();

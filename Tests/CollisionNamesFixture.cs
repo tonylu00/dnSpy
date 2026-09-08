@@ -38,8 +38,18 @@ public class Container<A, B, C> {
         }
     }
 }
+public class IndexerNames {
+    int stored;
+    public int this[int first, int second] {
+        get { return stored + first * 10 + second; }
+        set { stored = value - first * 10 - second; }
+    }
+}
 public static class Program {
     public static int Main() {
+        var indexer = new IndexerNames();
+        indexer[2, 3] = 123;
+        if (indexer[4, 5] != 145) return 7;
         var keywords = new KeywordTypes { Files = new[] { new @file { Value = 37 } } };
         keywords.Field = keywords.Files;
         if (keywords.First().Value != 37 || keywords.Field[0].Value != 37) return 6;
