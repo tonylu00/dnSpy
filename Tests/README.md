@@ -915,6 +915,13 @@ It covers source-safe helper parameters and state fields, including a collision
 with an existing `constructorState` parameter, runtime ordering and debugger spans.
 The default mode continues to cover renamed closure types.
 
+`Invoke-DelegateFieldRegression.ps1` checks struct and class field receivers whose
+generated helper methods are emitted in another source file. Replacing each field
+after delegate creation must leave the original receiver identity and state bound.
+It also reserves the generated method alias with a field, requiring a consistent
+collision suffix in declarations and callers. One/four-worker exports must rebuild,
+behave identically, preserve input hashes and produce deterministic source.
+
 `Invoke-LambdaBindingRegression.ps1` checks two loops that capture identically
 named locals after independent lambdas use that same parameter name. It verifies
 rebuilt dictionary results and escaped captures across multiple calls, one- and
