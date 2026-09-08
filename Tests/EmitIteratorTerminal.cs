@@ -44,6 +44,25 @@ class Emitter {
         reordered.Add(terminal);
         method.Body.Instructions.Clear();
         foreach (var instruction in reordered.SelectMany(b => b)) method.Body.Instructions.Add(instruction);
+        if (args.Length > 3 && args[3] == "prefix") {
+            var key = new Local(module.CorLibTypes.Int32);
+            method.Body.Variables.Add(key);
+            var code = method.Body.Instructions;
+            code.Insert(0, Instruction.Create(OpCodes.Ldc_I4, 3));
+            code.Insert(1, Instruction.Create(OpCodes.Stloc, key));
+            int calls = 0;
+            for (int i = 2; i < code.Count; i++) {
+                if (code[i].Operand is IMethod call && call.Name == "Invoke") {
+                    // Use the invariant prefix local without changing any yielded value.
+                    code.Insert(i++, Instruction.Create(OpCodes.Ldloc, key));
+                    code.Insert(i++, Instruction.Create(OpCodes.Ldc_I4, 3));
+                    code.Insert(i++, Instruction.Create(OpCodes.Sub));
+                    code.Insert(i++, Instruction.Create(OpCodes.Add));
+                    calls++;
+                }
+            }
+            if (calls != 9) throw new Exception("Expected nine factory calls");
+        }
         module.Write(args[1]);
         Console.WriteLine("Last physical block: " + (selected < 0 ? "exhaustion" : "yield " + selected));
     }

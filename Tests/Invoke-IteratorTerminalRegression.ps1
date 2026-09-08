@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory)][string] $DnSpyConsole,
-    [Parameter(Mandatory)][string] $OutputDirectory
+    [Parameter(Mandatory)][string] $OutputDirectory,
+    [switch] $Prefix
 )
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
@@ -20,7 +21,8 @@ foreach($last in @(4,0,8,-1)) {
     $variant=Join-Path $OutputDirectory "last-$last"
     New-Item -ItemType Directory -Path $variant | Out-Null
     $original=Join-Path $variant 'IteratorTerminalFixture.exe'
-    dotnet run --project (Join-Path $emitterDirectory 'Emitter.csproj') -c Release -- $compiled $original $last
+    $prefixMode=if($Prefix){'prefix'}else{'plain'}
+    dotnet run --project (Join-Path $emitterDirectory 'Emitter.csproj') -c Release -- $compiled $original $last $prefixMode
     if($LASTEXITCODE -ne 0){throw 'Iterator metadata emission failed.'}
     & $original
     if($LASTEXITCODE -ne 0){throw 'Original iterator behavior failed.'}
