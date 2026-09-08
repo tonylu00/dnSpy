@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using dnlib.DotNet;
 using dnlib.PE;
 using dnSpy.Contracts.Decompiler;
@@ -45,7 +46,26 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		List<(IAssembly Reference, AssemblyDef? Assembly)>? assemblyReferences;
 		static IEnumerable<IAssembly> GetDirectReferences(Project source) =>
-			source.Module.GetAssemblyRefs().Concat<IAssembly>(source.Files.OfType<BamlResourceProjectFile>().SelectMany(f => f.AssemblyReferences));
+			GetMetadataReferences(source.Module).Concat(source.Files.OfType<BamlResourceProjectFile>().SelectMany(f => f.AssemblyReferences));
+
+		static readonly ConditionalWeakTable<ModuleDef, IAssembly[]> metadataReferences = new ConditionalWeakTable<ModuleDef, IAssembly[]>();
+		static IEnumerable<IAssembly> GetMetadataReferences(ModuleDef module) =>
+			metadataReferences.GetValue(module, m => FindMetadataReferences(m).ToArray());
+
+		static IEnumerable<IAssembly> FindMetadataReferences(ModuleDef module) {
+			foreach (var reference in module.GetAssemblyRefs())
+				yield return reference;
+			// A facade can hide a dependency required by source overload resolution.
+			// Follow the types actually referenced by this module, not every assembly
+			// mentioned by the facade (which can describe a much larger platform).
+			var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+			foreach (var type in module.GetTypeRefs()) {
+				var destination = type.ResolveTypeDef()?.Module.Assembly;
+				if (destination is not null && type.DefinitionAssembly is not null &&
+					destination.FullNameToken != type.DefinitionAssembly.FullNameToken && seen.Add(destination.FullNameToken))
+					yield return destination;
+			}
+		}
 
 		protected IReadOnlyList<(IAssembly Reference, AssemblyDef? Assembly)> GetAssemblyReferences() {
 			if (assemblyReferences is not null) return assemblyReferences;
@@ -65,7 +85,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				// Follow exported projects too: their binary references are not
 				// necessarily propagated to consumers by the generated project format.
 				if (resolved is null || IsGacPath(resolved.ManifestModule.Location)) continue;
-				foreach (var reference in resolved.ManifestModule.GetAssemblyRefs())
+				foreach (var reference in GetMetadataReferences(resolved.ManifestModule))
 					pending.Enqueue((reference, resolved.ManifestModule));
 			}
 			return assemblyReferences;

@@ -909,6 +909,12 @@ event order and exception behavior. Eight AST checks cover retained allocations,
 local-only simplification, debug spans and unchanged input IL. Closure cleanup
 keeps the original storage when a use extends beyond the allocation block.
 
+`Invoke-ForwardedReferenceRegression.ps1` exports a .NET Standard library and a
+.NET Framework consumer whose extension lookup needs a type forwarded by the
+standard facade. It checks the destination reference, absence of redundant
+framework references in the standard project, compilation and runtime behavior
+with one and four workers, deterministic source, and unchanged inputs.
+
 `Invoke-SettingsPartialRegression.ps1` checks settings classes with custom members
 and designer-only settings classes. It rebuilds one- and four-worker exports and
 checks settings values, singleton state, custom type attributes and member
