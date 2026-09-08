@@ -11,6 +11,8 @@ public class AutoSource {
     public static event Action Global;
     public void Raise() { Changed?.Invoke(); }
     public static void RaiseGlobal() { Global?.Invoke(); }
+    public void Clear() { Changed = null; }
+    public static void ClearGlobal() { Global = null; }
 }
 public class GenericAuto<T> {
     public event Action<T> Changed;
@@ -75,6 +77,11 @@ public static class Program {
         automatic.Changed += handler; automatic.Raise(); automatic.Changed -= handler; automatic.Raise();
         AutoSource.Global += handler; AutoSource.RaiseGlobal(); AutoSource.Global -= handler; AutoSource.RaiseGlobal();
         if (count != 3) return 2;
+        int cleared = 0;
+        Action clearHandler = () => cleared++;
+        automatic.Changed += clearHandler; automatic.Clear(); automatic.Raise();
+        AutoSource.Global += clearHandler; AutoSource.ClearGlobal(); AutoSource.RaiseGlobal();
+        if (cleared != 0) throw new Exception("event storage clearing changed");
         var generic = new GenericAuto<int>();
         Action<int> genericHandler = value => count += value;
         generic.Changed += genericHandler; generic.Raise(5); generic.Changed -= genericHandler; generic.Raise(100);
