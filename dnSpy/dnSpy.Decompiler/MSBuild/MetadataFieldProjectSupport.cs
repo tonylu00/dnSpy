@@ -8,17 +8,29 @@ using dnSpy.Contracts.Decompiler;
 namespace dnSpy.Decompiler.MSBuild {
 	static class MetadataFieldProjectSupport {
 		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
-			(project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
+			(MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
 		public static void Write(Project project, XmlWriter writer) {
 			if (!Required(project)) return;
 			string directory = Path.Combine(project.Directory, ".dnspy-metadata");
 			System.IO.Directory.CreateDirectory(directory);
+			var rawExceptionName = MetadataRawExceptions.GetRequestedName(project.Module);
+			if (rawExceptionName != null) {
+				File.WriteAllText(Path.Combine(directory, "RawExceptions.cs"),
+					"[global::System.Reflection.Obfuscation(Feature = \"" + MetadataRawExceptions.Feature + "\")]\n" +
+					"internal sealed class " + rawExceptionName + " : global::System.Exception {\n" +
+					" public static global::System.Exception ThrowValue(object value) { throw new global::System.InvalidOperationException(\"Run the dnSpy metadata restoration build target.\"); }\n}\n");
+				writer.WriteStartElement("ItemGroup");
+				writer.WriteStartElement("Compile");
+				writer.WriteAttributeString("Include", ".dnspy-metadata/RawExceptions.cs");
+				writer.WriteEndElement(); writer.WriteEndElement();
+			}
 			File.Copy(typeof(ModuleDef).Assembly.Location, Path.Combine(directory, "dnlib.dll"), true);
 			File.WriteAllText(Path.Combine(directory, "README.md"),
-				"This project contains metadata requiring restoration after C# compilation: private string fields on static classes or delegates, or attribute usage rules.\n" +
+				"This project contains metadata requiring restoration after C# compilation: private string fields on static classes or delegates, attribute usage rules, or raw exception operations.\n" +
 				"Generated ObfuscationAttribute instructions preserve field names, flags, constants and original AttributeUsage.ValidOn values. The SDK build runs RestoreFields.cs after CoreCompile, restores metadata and debug symbols, and removes the instructions.\n" +
 				"Source and reference assemblies allow attributes on all targets so dependent source projects can compile. Runtime assemblies retain the original usage rules; AllowMultiple and Inherited are unchanged.\n" +
+				"RawExceptions.cs is a compilation placeholder: its catch type becomes System.Object, and calls to ThrowValue are removed before the existing IL throw. The helper type is removed from runtime assemblies. This preserves raw exception objects and the assembly's exception-wrapping policy.\n" +
 				"The task requires an unsigned build output and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +
 				"Only supported, unreferenced private/compiler-controlled string fields are handled; other unrepresentable metadata remains visible as a source error.\n");
 			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))

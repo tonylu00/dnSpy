@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 using dnlib.DotNet.Writer;
 
 public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task {
@@ -16,6 +17,32 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         try {
             bool changed = false;
             using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
+                var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
+                    a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.raw-exceptions.v1"))).ToArray();
+                foreach (var rawType in rawTypes) {
+                    var throwHelper = rawType.Methods.SingleOrDefault(m => m.Name == "ThrowValue" && m.IsStatic &&
+                        m.MethodSig != null && m.MethodSig.Params.Count == 1 && m.MethodSig.Params[0].FullName == "System.Object" &&
+                        m.MethodSig.RetType.FullName == "System.Exception");
+                    if (rawType.BaseType == null || rawType.BaseType.FullName != "System.Exception" || throwHelper == null)
+                        throw new InvalidDataException("Invalid raw exception placeholder.");
+                    foreach (var method in module.GetTypes().Where(t => t != rawType).SelectMany(t => t.Methods)) {
+                        if (!method.HasBody) continue;
+                        foreach (var handler in method.Body.ExceptionHandlers)
+                            if (handler.CatchType == rawType) handler.CatchType = module.CorLibTypes.Object.TypeDefOrRef;
+                        foreach (var local in method.Body.Variables)
+                            if (local.Type.ToTypeDefOrRef() == rawType) local.Type = module.CorLibTypes.Object;
+                        foreach (var instruction in method.Body.Instructions) {
+                            var called = instruction.Operand as IMethod;
+                            if (instruction.OpCode == OpCodes.Call && called != null && called.DeclaringType == rawType && called.ResolveMethodDef() == throwHelper) {
+                                instruction.OpCode = OpCodes.Nop;
+                                instruction.Operand = null;
+                            }
+                            else if (instruction.Operand == rawType) instruction.Operand = module.CorLibTypes.Object.TypeDefOrRef;
+                        }
+                    }
+                    module.Types.Remove(rawType);
+                    changed = true;
+                }
                 foreach (var type in module.GetTypes()) {
                     foreach (var attribute in type.CustomAttributes.ToArray()) {
                         if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
