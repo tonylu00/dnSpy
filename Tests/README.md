@@ -223,6 +223,15 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
+`Invoke-ClosureContextRegression.ps1` gives generic capture methods generated
+names while retaining their ordinary instance helpers. Direct helper calls and
+nested delegate construction must use the capture receiver when inlined into a
+static factory. Original, renamed and one/four-worker rebuilt programs check
+independent mutable captures, call counts, generic values and bound receiver
+identity. Exported source hashes agree across worker counts and input hashes
+remain unchanged. `Invoke-DelegateTargetRegression.ps1` also covers genuine
+base-method binding so it is not confused with a closure's own helper.
+
 `Invoke-BranchedFinallyReuseRegression.ps1` inserts a two-entry loop before the
 second independent protected await. Original, modified and one/four-worker source
 rebuilds pass 8,750 cases / 34,986 assertions for suspension, cleanup order,
