@@ -223,6 +223,16 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
+`Invoke-CaptureNameRegression.ps1` injects an unused closure field that shares
+an input parameter's name, and a used capture that collides with a parameter.
+Unused storage must not become a spurious local; used storage gets a distinct
+name while retaining its initialization and captured value. A generic closure
+parameter is also renamed independently of its enclosing method, verifying
+that local types use the instantiated closure arguments. Original, emitted and
+one/four-worker rebuilt programs check values, object identity, independent
+captures, initialization counts and memoization. Source hashes agree across
+workers and input hashes remain unchanged.
+
 `Invoke-ImplementationHelperRegression.ps1` covers helper methods, a field-only
 private implementation cache and retained dynamic call sites. Its emitter gives
 cache fields invalid metadata identifiers and reserves the generated field
