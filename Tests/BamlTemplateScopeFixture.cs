@@ -47,6 +47,9 @@ public static class BamlTemplateScopeFixture {
     static int Run() {
         var app = new Application();
         var dictionary = (ResourceDictionary)Application.LoadComponent(new Uri("/BamlTemplateScopeFixture;component/Dictionary.xaml", UriKind.Relative));
+        var merged = (ResourceDictionary)Application.LoadComponent(new Uri("/BamlTemplateScopeFixture;component/MergedDictionary.xaml", UriKind.Relative));
+        var firstTip = (Style)merged.MergedDictionaries[0][typeof(ToolTip)];
+        Check((string)((Setter)firstTip.Setters[0]).Value == "first", "merged dictionary style changed");
         var genericStyle = (Style)dictionary["GenericInherited"];
         var generic = new GenericControls.LongControl { Style = genericStyle };
         Check(((Setter)genericStyle.Setters[0]).Property == GenericControls.ValueControl<long>.MinimumProperty, "generic setter identity changed");

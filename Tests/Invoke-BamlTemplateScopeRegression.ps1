@@ -10,6 +10,7 @@ New-Item -ItemType Directory -Path $inputDirectory | Out-Null
 '<Project />' | Set-Content (Join-Path $OutputDirectory 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlTemplateScopeFixture.cs') -Destination $inputDirectory
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlTemplateScopeDictionary.xaml') -Destination (Join-Path $inputDirectory 'Dictionary.xaml')
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlMergedDictionary.xaml') -Destination (Join-Path $inputDirectory 'MergedDictionary.xaml')
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><UseWPF>true</UseWPF><Optimize>true</Optimize></PropertyGroup></Project>' |
     Set-Content (Join-Path $inputDirectory 'BamlTemplateScopeFixture.csproj')
 dotnet build (Join-Path $inputDirectory 'BamlTemplateScopeFixture.csproj') -c Release --nologo -v quiet

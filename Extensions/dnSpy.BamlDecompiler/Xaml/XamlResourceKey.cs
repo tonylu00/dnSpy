@@ -38,7 +38,10 @@ namespace dnSpy.BamlDecompiler.Xaml {
 
 			if (keyRecord.Record.Type == BamlRecordType.ElementEnd) {
 				Debug.Assert(node.Parent.Footer == keyRecord.Record);
-				node.Parent.Annotation = this;
+				// WPF can emit an empty deferred value for an implicit style in an
+				// inline merged dictionary. The closing record is not a value element:
+				// attaching its key to the parent creates an extra root x:Key which
+				// becomes a duplicate when the exported XAML is compiled again.
 				node.Annotation = this;
 				return;
 			}
