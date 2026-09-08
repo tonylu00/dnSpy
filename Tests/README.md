@@ -915,6 +915,13 @@ It covers source-safe helper parameters and state fields, including a collision
 with an existing `constructorState` parameter, runtime ordering and debugger spans.
 The default mode continues to cover renamed closure types.
 
+`Invoke-LateStateRegression.ps1` adds a side effect before an async lambda's
+state-machine startup, requiring raw state code to survive lambda reconstruction.
+The emitted assembly and one/four-worker rebuilt sources check suspension, result
+evaluation order, fault identity, cancellation, and exactly-once startup effects.
+It also checks deterministic source and unchanged input. Declaration collection
+must finish before whole-tree namespace imports and final source transforms.
+
 `Invoke-DelegateFieldRegression.ps1` checks struct and class field receivers whose
 generated helper methods are emitted in another source file. Replacing each field
 after delegate creation must leave the original receiver identity and state bound.
