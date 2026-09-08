@@ -6,10 +6,10 @@ $ErrorActionPreference = 'Stop'
 $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new regression output folder.' }
 $inputDirectory = Join-Path $OutputDirectory 'input'
-New-Item -ItemType Directory -Path $inputDirectory | Out-Null
+New-Item -ItemType Directory -Path (Join-Path $inputDirectory 'Legacy.Controls') | Out-Null
 '<Project />' | Set-Content (Join-Path $OutputDirectory 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlConnectorsFixture.cs') -Destination $inputDirectory
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlConnectorsView.xaml') -Destination (Join-Path $inputDirectory 'View.xaml')
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'BamlConnectorsView.xaml') -Destination (Join-Path $inputDirectory 'Legacy.Controls\OldView.xaml')
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><UseWPF>true</UseWPF><Optimize>true</Optimize></PropertyGroup></Project>' |
     Set-Content (Join-Path $inputDirectory 'BamlConnectorsFixture.csproj')
 dotnet build (Join-Path $inputDirectory 'BamlConnectorsFixture.csproj') -c Release --nologo -v quiet

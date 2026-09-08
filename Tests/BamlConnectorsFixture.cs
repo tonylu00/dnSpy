@@ -20,6 +20,7 @@ namespace ConnectorFixture {
         [STAThread] public static int Main() {
             new Application();
             new View().Verify();
+            ((View)Application.LoadComponent(new Uri("/BamlConnectorsFixture;component/Legacy.Controls/OldView.xaml", UriKind.Relative))).Verify();
             Console.WriteLine("PASS: component and style event handlers each execute once");
             return 0;
         }

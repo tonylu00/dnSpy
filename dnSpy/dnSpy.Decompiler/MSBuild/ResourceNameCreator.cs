@@ -171,13 +171,12 @@ namespace dnSpy.Decompiler.MSBuild {
 
 			Debug.Assert(resourceName.EndsWith(".baml", StringComparison.OrdinalIgnoreCase));
 			var name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(resourceName.Substring(0, resourceName.Length - ".baml".Length));
-			var nameNoExt = name;
 			name = name.Replace('/', '.');
 			typeFullName = !string2.IsNullOrWhiteSpace(bamlTypeName) ? bamlTypeName : GetFullName(name) ?? string.Empty;
-			if (!string.IsNullOrEmpty(typeFullName))
-				return filenameCreator.Create(".xaml", typeFullName);
-
-			return GetBamlResourceName(nameNoExt + ".xaml");
+			// Pack URIs identify resources by their original path, not x:Class.
+			// Moving markup to a class/namespace-derived path breaks external URIs
+			// even when regenerated InitializeComponent calls still work.
+			return filenameCreator.CreateFromRelativePath(resourceName.Substring(0, resourceName.Length - ".baml".Length), ".xaml");
 		}
 
 		string? GetFullName(string partialName) {

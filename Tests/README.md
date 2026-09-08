@@ -1033,3 +1033,9 @@ references: one contains BAML and a text resource, and one contains only the tex
 resource. An unchanged WPF host loads both original and rebuilt resources through
 pack URIs and verifies the dictionary value. SDK export enables WPF from resource
 build actions even when assembly-reference detection alone finds no WPF usage.
+
+BAML source filenames retain their original resource paths instead of following
+the restored class name. `Invoke-BamlConnectorsRegression.ps1` places its control
+in `Legacy.Controls/OldView.xaml` while its class is `ConnectorFixture.View`.
+Original and one/four-worker rebuilt executions instantiate it both directly and
+through the unchanged pack URI, verifying component and style event wiring.
