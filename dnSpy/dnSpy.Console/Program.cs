@@ -722,7 +722,7 @@ namespace dnSpy_Console {
 			if (applicationConfig is not null)
 				inputResolver = new ApplicationConfigResolver(inputResolver, applicationConfig);
 			if (assemblyContexts is not null)
-				inputResolver = new AssemblyContextResolver(inputResolver, assemblyContexts, files.Select(f => f.Module), useGac);
+				inputResolver = new AssemblyContextResolver(inputResolver, assemblyContexts, files.Select(f => f.Module), useGac, asmPaths.Concat(userGacPaths));
 			moduleContext.AssemblyResolver = inputResolver;
 			moduleContext.Resolver = new Resolver(inputResolver);
 			string guidStr = projectGuid.ToString();

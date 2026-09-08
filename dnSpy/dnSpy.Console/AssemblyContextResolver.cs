@@ -11,7 +11,7 @@ namespace dnSpy_Console {
 	sealed class AssemblyContextResolver : IAssemblyResolver {
 		readonly IAssemblyResolver fallback;
 		readonly List<Context> contexts = new List<Context>();
-		public AssemblyContextResolver(IAssemblyResolver fallback, string manifest, IEnumerable<ModuleDef> inputs, bool useGac) {
+		public AssemblyContextResolver(IAssemblyResolver fallback, string manifest, IEnumerable<ModuleDef> inputs, bool useGac, IEnumerable<string> searchPaths) {
 			this.fallback = fallback;
 			var document = new XmlDocument { XmlResolver = null };
 			using (var reader = XmlReader.Create(manifest, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null }))
@@ -33,6 +33,10 @@ namespace dnSpy_Console {
 				if (!Directory.Exists(directory)) throw new ErrorException("Assembly context directory does not exist: " + directory);
 				var resolver = new AssemblyResolver { EnableFrameworkRedirect = false, FindExactMatch = true, EnableTypeDefCache = true, UseGAC = useGac };
 				resolver.PreSearchPaths.Add(directory);
+				// Explicit support paths remain available without importing the host's
+				// identity cache or automatically discovered application directory.
+				foreach (var path in searchPaths.Distinct(StringComparer.OrdinalIgnoreCase))
+					if (Directory.Exists(path)) resolver.PostSearchPaths.Add(path);
 				IAssemblyResolver configured = resolver;
 				if (element.HasAttribute("Config")) configured = new ApplicationConfigResolver(configured, FullPath("Config"));
 				var context = new ModuleContext { AssemblyResolver = configured, Resolver = new Resolver(configured) };

@@ -17,6 +17,9 @@ input can have one context. `Config` is optional. Its redirects replace the glob
 host redirects for that input. Each context has an isolated resolver cache, so
 equal assembly identities can resolve to different implementations. The source
 input still resolves references to its own assembly to itself.
+Explicit `--asm-path` and `--user-gac` support directories remain available after
+the context directory. The host's automatically discovered directory and resolver
+cache are not inherited.
 
 Use this when the dependency layout cannot express the intended binding context,
 such as an alternate assembly stored beside a different version of its host.
@@ -30,3 +33,5 @@ also needed.
 identities and different public APIs, exports both clients together, and executes
 the rebuilt clients with one and four workers. `-WithoutContexts` reproduces the
 wrong-binding compilation failure.
+The old dependency also exposes a base type from a support library available only
+through `--asm-path`, checking that its transitive reference survives isolation.
