@@ -909,6 +909,12 @@ event order and exception behavior. Eight AST checks cover retained allocations,
 local-only simplification, debug spans and unchanged input IL. Closure cleanup
 keeps the original storage when a use extends beyond the allocation block.
 
+`Invoke-SettingsPartialRegression.ps1` checks settings classes with custom members
+and designer-only settings classes. It rebuilds one- and four-worker exports and
+checks settings values, singleton state, custom type attributes and member
+attributes against the original behavior. Type attributes belong to one partial
+declaration; source hashes must be deterministic and the input must remain intact.
+
 `Invoke-EtsAsyncChannelRegression.ps1` takes original/processed Falcon assemblies,
 the untouched exported `Async.cs`, and a new output folder. It compiles that source
 and runs only the channel reader helper in separate processes for all three targets.

@@ -47,6 +47,12 @@ namespace dnSpy.Contracts.Decompiler {
 		public bool ShowDefinitions { get; set; }
 
 		/// <summary>
+		/// Suppress attributes on the selected type when another partial declaration owns them.
+		/// Member attributes are unaffected.
+		/// </summary>
+		public bool RemoveTypeAttributes { get; set; }
+
+		/// <summary>
 		/// true to use using declarations, false to use full namespaces (eg. useful when decompiling
 		/// WinForms designer files)
 		/// </summary>

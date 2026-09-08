@@ -46,6 +46,8 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		protected override void Decompile(DecompileContext ctx, IDecompilerOutput output) {
 			var opts = new DecompilePartialType(output, decompilationContext, Type);
+			// The designer declaration is always emitted, including when this part is empty.
+			opts.RemoveTypeAttributes = true;
 			foreach (var d in GetDefsToRemove())
 				opts.Definitions.Add(d);
 			decompiler.Decompile(DecompilationType.PartialType, opts);

@@ -30,13 +30,15 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 		readonly HashSet<IMemberDef> definitions;
 		readonly bool showDefinitions;
 		readonly bool addPartialKeyword;
+		readonly bool removeTypeAttributes;
 		readonly HashSet<ITypeDefOrRef> ifacesToRemove;
 
-		public DecompilePartialTransform(TypeDef type, HashSet<IMemberDef> definitions, bool showDefinitions, bool addPartialKeyword, IEnumerable<ITypeDefOrRef> ifacesToRemove) {
+		public DecompilePartialTransform(TypeDef type, HashSet<IMemberDef> definitions, bool showDefinitions, bool addPartialKeyword, IEnumerable<ITypeDefOrRef> ifacesToRemove, bool removeTypeAttributes) {
 			this.type = type;
 			this.definitions = definitions;
 			this.showDefinitions = showDefinitions;
 			this.addPartialKeyword = addPartialKeyword;
+			this.removeTypeAttributes = removeTypeAttributes;
 			this.ifacesToRemove = new HashSet<ITypeDefOrRef>(ifacesToRemove, TypeEqualityComparer.Instance);
 		}
 
@@ -50,6 +52,8 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 					var tdecl = en as TypeDeclaration;
 					Debug2.Assert(tdecl is not null);
 					if (tdecl is not null) {
+						if (removeTypeAttributes)
+							tdecl.Attributes.Clear();
 						if (addPartialKeyword) {
 							if (tdecl.ClassType != ClassType.Enum)
 								tdecl.Modifiers |= Modifiers.Partial;

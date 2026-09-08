@@ -495,7 +495,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 			var state = CreateAstBuilder(info.Context, CreateDecompilerSettings(langSettings.Settings, info.UseUsingDeclarations), currentType: info.Type);
 			try {
 				state.AstBuilder.AddType(info.Type);
-				RunTransformsAndGenerateCode(ref state, info.Output, info.Context, new DecompilePartialTransform(info.Type, info.Definitions, info.ShowDefinitions, info.AddPartialKeyword, info.InterfacesToRemove));
+				RunTransformsAndGenerateCode(ref state, info.Output, info.Context, new DecompilePartialTransform(info.Type, info.Definitions, info.ShowDefinitions, info.AddPartialKeyword, info.InterfacesToRemove, info.RemoveTypeAttributes));
 			}
 			finally {
 				state.Dispose();
