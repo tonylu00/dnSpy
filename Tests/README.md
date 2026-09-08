@@ -223,6 +223,17 @@ temporary before its reads and reject escaped, reassigned or captured storage.
 The filter expression and its source spans stay in place; input IL/hashes remain
 unchanged.
 
+`Invoke-DelegateMethodsRegression.ps1` is a regression for the currently
+unsupported case of ordinary static methods declared on a delegate type. Its
+emitter moves real method bodies onto a delegate and repairs a separate client
+assembly. The emitted program passes direct same/cross-assembly calls, private
+helper calls, generic identity, bound-method declaring type, reflection and
+exception checks. Current SDK source export fails with CS0644; this test must
+pass source compilation and the same runtime checks when restoration is added.
+Dropping the methods or leaving their runtime owner as a companion class cannot
+satisfy it. The script also checks one/four-worker source determinism and input
+preservation after successful rebuilding.
+
 `Invoke-IteratorBaseWrapperRegression.ps1` retains a renamed public iterator
 state type whose `MoveNext` calls a compiler-generated base dispatch wrapper.
 The wrapper must remain declared even when the outer iterator reconstructs.
