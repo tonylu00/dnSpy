@@ -286,6 +286,9 @@ must retain the original receiver and base dispatch even
 when the derived override throws. Exported source hashes agree across worker counts and input hashes
 remain unchanged. `Invoke-DelegateTargetRegression.ps1` also covers genuine
 base-method binding so it is not confused with a closure's own helper.
+Conditional delegates passed to `System.Delegate` retain their concrete `Action`
+or custom delegate type. Both branches check deferred execution, invocation
+results and runtime delegate type after source rebuilding.
 
 `Invoke-BranchedFinallyReuseRegression.ps1` inserts a two-entry loop before the
 second independent protected await. Original, modified and one/four-worker source

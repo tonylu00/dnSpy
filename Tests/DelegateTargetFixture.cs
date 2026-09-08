@@ -34,12 +34,33 @@ public static class DelegateTargetFixture {
     public static Func<int, int> TypedTarget(Receiver<int> value) { return new Func<int, int>(value.Read); }
     public static Func<int, int> StaticDelegate() { return new Func<int, int>(StaticTarget); }
     public static int StaticTarget(int value) { return value + 60; }
+    public static Delegate Conditional(bool first, Action<int> record) {
+        return Pass(first ? new Action(delegate { record(1); }) : new Action(delegate { record(2); }));
+    }
+    public delegate void Callback();
+    public static Delegate ConditionalCustom(bool first, Action<int> record) {
+        return Pass(first ? new Callback(delegate { record(3); }) : new Callback(delegate { record(4); }));
+    }
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static Delegate Pass(Delegate value) { return value; }
     static void Check(bool value) { checks++; if (!value) throw new Exception("Check " + checks); }
     static string Failure(Func<Func<int, int>> create) {
         try { var callback = create(); return "created:" + (callback == null); }
         catch (Exception ex) { return ex.GetType().FullName; }
     }
     public static int Main() {
+        foreach (bool first in new[] { false, true }) {
+            int observed = 0;
+            var selected = Conditional(first, value => observed += value);
+            Check(selected.GetType() == typeof(Action) && observed == 0);
+            ((Action)selected)(); ((Action)selected)();
+            Check(observed == (first ? 2 : 4));
+            observed = 0;
+            var custom = ConditionalCustom(first, value => observed += value);
+            Check(custom.GetType() == typeof(Callback) && observed == 0);
+            ((Callback)custom)();
+            Check(observed == (first ? 3 : 4));
+        }
         for (int value = -3; value <= 3; value++) {
             var receiver = new Receiver<int>();
             Func<int, int>[] callbacks = { ErasedObject(receiver), ErasedBase(receiver), ErasedVirtual(receiver), ErasedInterface(receiver), TypedTarget(receiver) };
