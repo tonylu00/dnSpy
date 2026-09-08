@@ -639,9 +639,14 @@ through the original interfaces, including generic interfaces and an interface
 whose accessor methods have unconventional names.
 
 `Invoke-FinalizerRegression.ps1` reconstructs finalizers with local declarations
-before the protected body. It checks lock execution, nested cleanup, base cleanup
+and nonthrowing scalar initialization before the protected body. It checks the
+initialized value, lock execution, nested cleanup, base cleanup
 and exception identity on success and failure. Finalization is suppressed and
 invoked explicitly so the test does not depend on garbage collection timing.
+One/four-worker rebuilds and source/input hashes are checked. A prefix call that
+can throw stays outside base cleanup; its original runtime behavior is checked
+and export must retain the method rather than introduce a destructor. That
+unsupported shape is deliberately not claimed to produce compilable C#.
 
 `Invoke-InheritedPropertyRegression.ps1` emits interface MethodImpl accessors
 without implementing property rows. Original and rebuilt programs check inherited

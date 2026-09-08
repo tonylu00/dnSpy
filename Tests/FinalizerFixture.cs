@@ -17,7 +17,9 @@ public class FinalizerCase : FinalizerBase {
     }
 }
 public static class Program {
-    public static int Main() {
+    public static string Marker(int value) { if (value != 11) throw new Exception("Finalizer preparation changed"); return "D"; }
+    public static void Prefix() { FinalizerBase.Trace += "P"; if (FinalizerBase.Fail) throw FinalizerBase.Error; }
+    public static int Main(string[] args) {
         foreach (bool fail in new[] { false, true }) {
             var instance = new FinalizerCase();
             GC.SuppressFinalize(instance);
@@ -26,7 +28,8 @@ public static class Program {
             bool failed = false;
             try { typeof(FinalizerCase).GetMethod("Finalize", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).Invoke(instance, null); }
             catch (TargetInvocationException error) { if (!ReferenceEquals(error.InnerException, FinalizerBase.Error)) throw; failed = true; }
-            if (failed != fail || FinalizerBase.Trace != "DFB") throw new Exception("Finalizer cleanup order or exception changed");
+            string expected = args.Length == 0 ? "DFB" : fail ? "P" : "PDFB";
+            if (failed != fail || FinalizerBase.Trace != expected) throw new Exception("Finalizer cleanup order or exception changed");
         }
         Console.WriteLine("PASS: finalizer body, local lock, nested cleanup and base cleanup agree on success and failure.");
         return 0;
