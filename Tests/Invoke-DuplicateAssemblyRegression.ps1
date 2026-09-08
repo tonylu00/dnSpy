@@ -48,9 +48,32 @@ foreach ($case in @(@{Name='sdk-1';Threads=1;Options=@('--sdk-project')},@{Name=
     if ($LASTEXITCODE -ne 0) { throw 'Duplicate assembly export failed.' }
     $projects = @(Get-ChildItem -LiteralPath $export -Filter '*.csproj' -Recurse)
     if ($projects.Count -ne 7) { throw 'A compatibility or backup assembly was dropped.' }
+    [xml]$map = Get-Content -LiteralPath (Join-Path $export 'dnspy-export-map.xml')
+    $entries = @($map.DnSpyExportMap.Project)
+    if ($entries.Count -ne 7 -or $map.DnSpyExportMap.ExportErrors -ne '0') { throw 'Export map is incomplete.' }
+    if (Compare-Object ($inputs | Sort-Object) ($entries.Source | Sort-Object)) { throw 'Export map lost source identity.' }
+    $mapping = @($entries | ForEach-Object { $_.Source + '|' + $_.Project })
+    if ($case.Name -eq 'sdk-1') { $expectedMapping = $mapping }
+    elseif (Compare-Object $expectedMapping $mapping -SyncWindow 0) { throw 'Project paths depend on workers or input order.' }
     $solution = Get-ChildItem -LiteralPath $export -Filter '*.sln' | Select-Object -First 1
     dotnet build $solution.FullName -c Release --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Duplicate assembly source build failed.' }
+    $restaged = Join-Path $OutputDirectory ('restaged-' + $case.Name)
+    Copy-Item -LiteralPath $deployment -Destination $restaged -Recurse
+    foreach ($entry in $entries) {
+        $prefix = [IO.Path]::GetFullPath($deployment).TrimEnd('\') + '\'
+        $sourcePath = [IO.Path]::GetFullPath($entry.Source)
+        if (!$sourcePath.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)) { throw 'Map source left the fixture tree.' }
+        $project = Join-Path $export $entry.Project
+        $binaryName = $entry.AssemblyName + [IO.Path]::GetExtension($sourcePath)
+        $binary = @(Get-ChildItem -LiteralPath (Join-Path (Split-Path $project) 'bin') -Recurse -File | Where-Object { $_.Name -eq $binaryName })
+        if ($binary.Count -ne 1) { throw 'Build output is ambiguous.' }
+        Copy-Item -LiteralPath $binary[0].FullName -Destination (Join-Path $restaged $sourcePath.Substring($prefix.Length))
+    }
+    foreach ($location in @(@{Path='Runner.exe';Value=17},@{Path='compat\v1\Runner.exe';Value=23})) {
+        & (Join-Path $restaged $location.Path)
+        if ($LASTEXITCODE -ne $location.Value) { throw 'Mapped rebuilt deployment changed compatibility binding.' }
+    }
     foreach ($variant in @(@{Name='Root';Value=17},@{Name='Compat';Value=23})) {
         $entry = Get-ChildItem -LiteralPath $export -Recurse -Filter ($variant.Name + 'Entry.cs') | Select-Object -First 1
         $rebuilt = Get-ChildItem -LiteralPath (Join-Path $entry.Directory.FullName 'bin') -Recurse -Filter 'Runner.exe' | Select-Object -First 1

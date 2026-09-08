@@ -24,6 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using dnSpy.Contracts.Utilities;
 using dnSpy.Decompiler.Properties;
 
 namespace dnSpy.Decompiler.MSBuild {
@@ -89,12 +91,12 @@ namespace dnSpy.Decompiler.MSBuild {
 				// assemblies retain their signatures and keyed friend grants.
 				var friendAssemblyNames = FriendAssemblyNames.Create(managedModules.Select(m => m.Module));
 				satelliteAssemblyFinder = new SatelliteAssemblyFinder();
-				Parallel.ForEach(managedModules, opts, modOpts => {
+				var namedModules = managedModules.OrderBy(m => m.Module.Location, StringComparer.OrdinalIgnoreCase)
+					.Select(m => (Options: m, Directory: filenameCreator.Create(m.Module))).ToArray();
+				Parallel.ForEach(namedModules, opts, named => {
+					var modOpts = named.Options;
 					options.CancellationToken.ThrowIfCancellationRequested();
-					string name;
-					lock (filenameCreator)
-						name = filenameCreator.Create(modOpts.Module);
-					var p = new Project(modOpts, name, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames, preservedAssemblies);
+					var p = new Project(modOpts, named.Directory, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames, preservedAssemblies);
 					modOpts.DecompilationContext.RestoreMetadataOnlyFields = options.GenerateSDKStyleProjects && modOpts.Decompiler.GenericGuid == dnSpy.Contracts.Decompiler.DecompilerConstants.LANGUAGE_CSHARP;
 					lock (projects)
 						projects.Add(p);
@@ -156,12 +158,29 @@ namespace dnSpy.Decompiler.MSBuild {
 					}
 					progressListener.SetProgress(Interlocked.Increment(ref totalProgress));
 				}
+				WriteExportMap();
 				Debug.Assert(totalProgress == maxProgress);
 				progressListener.SetProgress(maxProgress);
 			}
 			finally {
 				satelliteAssemblyFinder?.Dispose();
 			}
+		}
+
+		void WriteExportMap() {
+			var root = new XElement("DnSpyExportMap", new XAttribute("Version", 1), new XAttribute("ExportErrors", errors));
+			foreach (var project in projects.OrderBy(p => p.Module.Location, StringComparer.OrdinalIgnoreCase)) {
+				root.Add(new XElement("Project",
+					new XAttribute("Source", project.Module.Location),
+					new XAttribute("Project", FilenameUtils.GetRelativePath(options.Directory, project.Filename)),
+					new XAttribute("AssemblyName", project.AssemblyName),
+					new XAttribute("ModuleName", project.Module.Name.String),
+					new XAttribute("Mvid", project.Module.Mvid?.ToString() ?? string.Empty)));
+			}
+			foreach (var file in nativeAssemblies.OrderBy(f => f.Source, StringComparer.OrdinalIgnoreCase))
+				root.Add(new XElement("Binary", new XAttribute("Source", file.Source),
+					new XAttribute("Path", FilenameUtils.GetRelativePath(options.Directory, file.Filename)), new XAttribute("Written", file.Written)));
+			new XDocument(root).Save(Path.Combine(options.Directory, "dnspy-export-map.xml"));
 		}
 
 		IEnumerable<IJob> GetJobs() {

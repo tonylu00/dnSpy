@@ -1019,3 +1019,11 @@ Original and one/four-worker rebuilt executions verify selected members, event
 subscription/removal, receiver evaluation counts and null behavior. A cast selects
 the base member while retaining virtual dispatch. This does not broaden protected
 member access or reconstruct arbitrary nonvirtual calls on another instance.
+
+Project export writes `dnspy-export-map.xml`, linking each saved input path and
+module MVID to its generated project, or to its preserved native binary. The map
+records export errors; it is not a source-build or runtime-success certificate.
+Project-folder suffixes are allocated in input-path order before parallel work.
+`Invoke-DuplicateAssemblyRegression.ps1` compares mappings across one/four workers,
+reversed input order and SDK/legacy project formats. It then uses the map to restore
+rebuilt binaries to both compatibility folders and executes both dependency graphs.
