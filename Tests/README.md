@@ -493,6 +493,12 @@ Dependency edges resolve from their owning modules; the namespace/type table
 combines the non-GAC reference closure and is reused for subsequent source files.
 Cancellation invalidates partial tables. Input assemblies and IL stay unchanged.
 
+`Invoke-RefLocalScopeRegression.ps1` checks generic local reference reassignment
+across nested scopes. Rebuilt sources must preserve alias writes, branch behavior,
+and initializer side effects for value and reference types with one/four workers.
+Address-taken locals retain their original declaration scope without moving their
+assignments, avoiding C# ref-escape errors introduced by declaration narrowing.
+
 The collision fixture also gives indexer getters and setters different parameter
 names, including duplicate names and the setter's reserved `value` name. Both
 accessor bodies must use the shared positional names and preserve read/write results.
