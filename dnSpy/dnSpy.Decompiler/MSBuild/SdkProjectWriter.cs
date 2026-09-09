@@ -286,6 +286,13 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteAttributeString("Include", GetRelativePath(file.Filename));
 				if (file.LogicalName is not null)
 					writer.WriteElementString("LogicalName", file.LogicalName);
+				if (file is ResXProjectFile resx) {
+					writer.WriteElementString("WithCulture", resx.IsSatelliteFile ? "true" : "false");
+					if (resx.Culture is not null) writer.WriteElementString("Culture", resx.Culture);
+					writer.WriteElementString("ManifestResourceName", "dnspy_resource_" + Array.IndexOf(files, file));
+				}
+				else if (file is RawEmbeddedResourceProjectFile)
+					writer.WriteElementString("WithCulture", "false");
 				if (file.DependentUpon is not null)
 					writer.WriteElementString("DependentUpon", GetRelativePath(Path.GetDirectoryName(file.Filename)!, file.DependentUpon.Filename));
 				if (file.SubType is not null)

@@ -20,13 +20,14 @@ class Program {
         CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
         var actual = resources.GetString("Greeting");
         var satelliteOnly = new ResourceManager("Fixture.SatelliteOnly", typeof(Program).Assembly).GetString("Greeting");
+        var neutralCopy = new ResourceManager("Fixture.Text.zh-CN", typeof(Program).Assembly).GetString("Greeting", CultureInfo.InvariantCulture);
         Console.WriteLine(actual);
-        return actual == args[0] && satelliteOnly == args[0] ? 0 : 1;
+        return actual == args[0] && satelliteOnly == args[0] && neutralCopy == args[0].Replace("中文", "English") ? 0 : 1;
     }
 }
 '@ | Set-Content (Join-Path $source 'Program.cs')
     @'
-<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><AssemblyName>Fixture</AssemblyName><RootNamespace>Fixture</RootNamespace><SignAssembly>true</SignAssembly><AssemblyOriginatorKeyFile>..\fixture.snk</AssemblyOriginatorKeyFile></PropertyGroup></Project>
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><AssemblyName>Fixture</AssemblyName><RootNamespace>Fixture</RootNamespace><SignAssembly>true</SignAssembly><AssemblyOriginatorKeyFile>..\fixture.snk</AssemblyOriginatorKeyFile></PropertyGroup><ItemGroup><EmbeddedResource Update="NeutralCopy.resx"><WithCulture>false</WithCulture><LogicalName>Fixture.Text.zh-CN.resources</LogicalName><ManifestResourceName>Fixture.NeutralCopy</ManifestResourceName></EmbeddedResource></ItemGroup></Project>
 '@ | Set-Content (Join-Path $source 'Fixture.csproj')
     foreach ($locale in @('','zh-CN')) {
         $value = if ($locale) { "$variant 中文" } else { "$variant English" }
@@ -35,6 +36,7 @@ class Program {
             Set-Content (Join-Path $source "Text$suffix.resx")
     }
     Copy-Item -LiteralPath (Join-Path $source 'Text.zh-CN.resx') -Destination (Join-Path $source 'SatelliteOnly.zh-CN.resx')
+    Copy-Item -LiteralPath (Join-Path $source 'Text.resx') -Destination (Join-Path $source 'NeutralCopy.resx')
     dotnet build (Join-Path $source 'Fixture.csproj') -c Release --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Fixture build failed.' }
     Copy-Item -LiteralPath (Join-Path $source 'bin\Release\net48') -Destination (Join-Path $inputRoot $variant) -Recurse

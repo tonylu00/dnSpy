@@ -29,6 +29,7 @@ namespace dnSpy.Decompiler.MSBuild {
 		public override string Filename { get; }
 		public string TypeFullName { get; }
 		public bool IsSatelliteFile { get; set; }
+		public string? Culture => IsSatelliteFile ? module.Assembly?.Culture?.String : null;
 		public bool RequiresPreserializedResources => resourceElementSet.ResourceElements.Any(e =>
 			e.ResourceData is BinaryResourceData || e.ResourceData.Code == ResourceTypeCode.Stream);
 
