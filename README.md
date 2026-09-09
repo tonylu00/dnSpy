@@ -120,3 +120,7 @@ See the [Wiki](https://github.com/dnSpyEx/dnSpy/wiki) for build instructions and
 dnSpy is licensed under [GPLv3](dnSpy/dnSpy/LicenseInfo/GPLv3.txt).
 
 # [Credits](dnSpy/dnSpy/LicenseInfo/CREDITS.txt)
+
+### Custom batch name maps
+
+Export, preview and apply behavior-based type, method and parameter names across an application tree. See [CUSTOM_NAMES.md](CUSTOM_NAMES.md) or run the CLI with --name-map-help.

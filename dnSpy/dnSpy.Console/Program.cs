@@ -45,6 +45,7 @@ namespace dnSpy_Console {
 
 	static class Program {
 		static int Main(string[] args) {
+			if (CustomNames.BatchNameMap.TryRun(args, out int nameMapExit)) return nameMapExit;
 			if (!dnlib.Settings.IsThreadSafe) {
 				Console.WriteLine("dnlib wasn't compiled with THREAD_SAFE defined");
 				return 1;
