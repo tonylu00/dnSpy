@@ -24,3 +24,12 @@ dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw 'Exported filter compilation failed.' }
 & (Join-Path $rebuilt 'ExceptionFilterFixture.exe')
 if ($LASTEXITCODE -ne 0) { throw 'Rebuilt filter behavior changed.' }
+$secondExport = Join-Path $OutputDirectory 'second-export'
+& $DnSpyConsole --no-color --sdk-project --threads 4 -o $secondExport (Join-Path $rebuilt 'ExceptionFilterFixture.exe')
+if ($LASTEXITCODE -ne 0) { throw 'Second filter source export failed.' }
+$secondProject = Get-ChildItem -LiteralPath $secondExport -Recurse -Filter '*.csproj' | Select-Object -First 1
+$secondRebuilt = Join-Path $OutputDirectory 'second-rebuilt'
+dotnet build $secondProject.FullName -c Release -o $secondRebuilt --nologo -v quiet
+if ($LASTEXITCODE -ne 0) { throw 'Second exported filter compilation failed.' }
+& (Join-Path $secondRebuilt 'ExceptionFilterFixture.exe')
+if ($LASTEXITCODE -ne 0) { throw 'Second rebuilt filter behavior changed.' }
