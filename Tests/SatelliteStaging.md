@@ -27,3 +27,7 @@ Run `Tests/Invoke-SatelliteStagingRegression.ps1` with `-DnSpyConsole` and a new
 identity and different Chinese resources, exports/rebuilds with one and four
 workers, and verifies runtime culture lookup, duplicate contexts, unchanged data,
 empty directories and rejection of missing rebuilt satellites.
+It also checks resource sets without a neutral counterpart and byte-identical
+satellites distributed under additional culture paths. The exporter preserves
+the resource manifest names; staging copies the matching rebuilt satellite to
+each original physical location.

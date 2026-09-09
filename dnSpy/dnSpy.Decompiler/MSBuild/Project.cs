@@ -54,6 +54,7 @@ namespace dnSpy.Decompiler.MSBuild {
 		ApplicationManifest? applicationManifest;
 
 		readonly SatelliteAssemblyFinder satelliteAssemblyFinder;
+		readonly HashSet<EmbeddedResource> exportedSatelliteResources = new HashSet<EmbeddedResource>();
 		readonly Func<TextWriter, IDecompilerOutput> createDecompilerOutput;
 		readonly IReadOnlyDictionary<CustomAttribute, string> friendAssemblyNames;
 
@@ -127,6 +128,25 @@ namespace dnSpy.Decompiler.MSBuild {
 
 				default:
 					break;
+				}
+			}
+			// Obfuscators can rename neutral resources without renaming satellites.
+			// Preserve satellite-only sets too, under their actual manifest names.
+			if (Options.CreateResX) {
+				foreach (var satellite in satelliteAssemblyFinder.GetSatelliteAssemblies(Options.Module)) {
+					foreach (var resource in satellite.Resources.OfType<EmbeddedResource>()) {
+						if (!exportedSatelliteResources.Add(resource))
+							continue;
+						var set = TryCreateResourceElementSet(satellite, resource);
+						if (set is null)
+							throw new InvalidOperationException("Cannot export satellite resource: " + resource.Name);
+						var basename = FileUtils.RemoveExtension(resource.Name);
+						var suffix = "." + satellite.Assembly.Culture;
+						if (!basename.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+							basename += suffix;
+						var filename = filenameCreator.CreateFromRelativePath(Path.Combine("SatelliteResources", basename), ".resx");
+						Files.Add(CreateResXFile(satellite, resource, set, filename, string.Empty, true));
+					}
 				}
 			}
 			InitializeXaml();
@@ -506,6 +526,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (set is null)
 				return null;
 			Debug2.Assert(er is not null);
+			exportedSatelliteResources.Add(er);
 
 			var dirName = Path.GetDirectoryName(nonSatFile.Filename)!;
 			var dir = Directory.Length + 1 > dirName.Length ? string.Empty : dirName.Substring(Directory.Length + 1);

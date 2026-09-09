@@ -43,12 +43,17 @@ namespace dnSpy.Decompiler.MSBuild {
 				yield break;
 			var satAsmName = new AssemblyNameInfo(asm);
 			satAsmName.Name = asm.Name + ".resources";
+			var yielded = new List<ModuleDef>();
 			foreach (var filename in GetFiles(asm, module)) {
 				if (!File.Exists(filename))
 					continue;
 				var satAsm = TryOpenAssembly(filename);
 				if (satAsm is null || !AssemblyNameComparer.NameAndPublicKeyTokenOnly.Equals(satAsmName, satAsm))
 					continue;
+				if (yielded.Any(previous => previous.Assembly.FullName == satAsm.FullName &&
+					File.ReadAllBytes(previous.Location).SequenceEqual(File.ReadAllBytes(filename))))
+					continue;
+				yielded.Add(satAsm.ManifestModule);
 				yield return satAsm.ManifestModule;
 			}
 		}

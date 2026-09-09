@@ -19,8 +19,9 @@ class Program {
         var resources = new ResourceManager("Fixture.Text", typeof(Program).Assembly);
         CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
         var actual = resources.GetString("Greeting");
+        var satelliteOnly = new ResourceManager("Fixture.SatelliteOnly", typeof(Program).Assembly).GetString("Greeting");
         Console.WriteLine(actual);
-        return actual == args[0] ? 0 : 1;
+        return actual == args[0] && satelliteOnly == args[0] ? 0 : 1;
     }
 }
 '@ | Set-Content (Join-Path $source 'Program.cs')
@@ -33,9 +34,12 @@ class Program {
         "<root><resheader name=`"resmimetype`"><value>text/microsoft-resx</value></resheader><resheader name=`"version`"><value>2.0</value></resheader><resheader name=`"reader`"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name=`"writer`"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name=`"Greeting`" xml:space=`"preserve`"><value>$value</value></data></root>" |
             Set-Content (Join-Path $source "Text$suffix.resx")
     }
+    Copy-Item -LiteralPath (Join-Path $source 'Text.zh-CN.resx') -Destination (Join-Path $source 'SatelliteOnly.zh-CN.resx')
     dotnet build (Join-Path $source 'Fixture.csproj') -c Release --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Fixture build failed.' }
     Copy-Item -LiteralPath (Join-Path $source 'bin\Release\net48') -Destination (Join-Path $inputRoot $variant) -Recurse
+    # Real application trees can ship the same satellite at an extra culture path.
+    Copy-Item -LiteralPath (Join-Path $inputRoot "$variant\zh-CN") -Destination (Join-Path $inputRoot "$variant\fr-FR") -Recurse
     New-Item -ItemType Directory -Path (Join-Path $inputRoot "$variant\empty") | Out-Null
     'unchanged data' | Set-Content (Join-Path $inputRoot "$variant\data.txt")
     & (Join-Path $inputRoot "$variant\Fixture.exe") "$variant 中文"

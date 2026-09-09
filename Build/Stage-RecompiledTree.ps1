@@ -65,7 +65,15 @@ foreach ($entry in $map.DnSpyExportMap.Project) {
         if (!$culture) { continue }
         foreach ($original in @((Join-Path $directory.FullName $satelliteName), (Join-Path $directory.FullName "$($entry.AssemblyName)\$satelliteName"))) {
             if ((Test-Path -LiteralPath $original -PathType Leaf) -and !$overlays.ContainsKey((RelativeWithin $InputDirectory $original))) {
-                throw "Missing rebuilt satellite: $original"
+                # Some application trees ship a byte-identical satellite in more
+                # than one culture directory. Preserve each physical location.
+                $originalHash = (Get-FileHash -LiteralPath $original).Hash
+                $matching = @($overlays.Values | Where-Object {
+                    $_.Kind -eq 'Satellite' -and
+                    (Get-FileHash -LiteralPath (Join-Path $InputDirectory $_.Relative)).Hash -eq $originalHash
+                })
+                if ($matching.Count -eq 0) { throw "Missing rebuilt satellite: $original" }
+                AddOverlay $original $matching[0].Built 'Satellite'
             }
         }
     }
