@@ -33,6 +33,13 @@ foreach($threads in 1,4){
  $exe=Join-Path $project.DirectoryName 'bin\Release\net48\DelegateMethodsClient.exe'
  & $exe
  if($LASTEXITCODE -ne 0){throw 'Rebuilt delegate method behavior failed.'}
+ $unchanged=Join-Path $OutputDirectory "unchanged-client-$threads"
+ New-Item -ItemType Directory -Path $unchanged | Out-Null
+ Copy-Item -LiteralPath $inputs[1] -Destination $unchanged
+ Get-ChildItem (Split-Path $exe) -Filter '*.dll' -File | Copy-Item -Destination $unchanged
+ $unchangedExe=Join-Path $unchanged 'DelegateMethodsClient.exe'
+ & $unchangedExe
+ if($LASTEXITCODE -ne 0 -or (Get-FileHash $unchangedExe).Hash -ne (Get-FileHash $inputs[1]).Hash){throw 'Unchanged delegate caller failed.'}
  $outputs=@(Get-ChildItem (Split-Path $exe) -File | Where-Object Extension -in '.exe','.dll','.pdb' | Sort-Object Name | Get-FileHash | ForEach-Object Hash)
  dotnet build $project.FullName -c Release --nologo -v quiet
  if($LASTEXITCODE -ne 0){throw 'Incremental build failed.'}

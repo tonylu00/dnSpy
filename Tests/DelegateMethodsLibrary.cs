@@ -1,10 +1,15 @@
 using System;
 public delegate int ExtraCallback(int value);
 public delegate T GenericCallback<T>(T value);
-public static class GenericMethods<T> { public static T Read(T value) { return value; } }
+public static class GenericMethods<T> {
+    static GenericMethods() { InitializationTracker.GenericCount++; }
+    public static T Read(T value) { return value; }
+}
+public static class InitializationTracker { public static int NonGenericCount; public static int GenericCount; }
 public sealed class __DnSpyDelegateMethods_02000002 { public static int Read() { return 71; } }
 public sealed class __DnSpyDelegateMethodsMapAttribute { public static int Read() { return 73; } }
 public static class ExtraMethods {
+    static ExtraMethods() { InitializationTracker.NonGenericCount++; }
     public static string Decode(string value, int seed) {
         if (value == null) throw new ArgumentNullException(nameof(value));
         var chars = value.ToCharArray();

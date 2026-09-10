@@ -4,6 +4,13 @@ class DelegateMethodsClient {
     static void Check(bool value) { if (!value) throw new Exception("Delegate method restoration changed behavior"); }
     static int Main() {
         try {
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ExtraCallback).TypeHandle);
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ExtraCallback).TypeHandle);
+            Check(InitializationTracker.NonGenericCount == 1);
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(GenericCallback<object>).TypeHandle);
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(GenericCallback<string>).TypeHandle);
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(GenericCallback<object>).TypeHandle);
+            Check(InitializationTracker.GenericCount == 2);
             ExtraCallback callback = value => value * 2;
             Check(callback(21) == 42);
             Func<string, int, string> decode = ExtraMethods.Decode;
@@ -30,6 +37,7 @@ class DelegateMethodsClient {
             Check(method != null && method.ReturnType == typeof(string));
             Check((string)method.Invoke(null, new object[] { "hello", 1 }) == decode("hello", 1));
             Check(typeof(ExtraCallback).GetMethod("Rotate", BindingFlags.NonPublic | BindingFlags.Static).IsPrivate);
+            Check(InitializationTracker.NonGenericCount == 1 && InitializationTracker.GenericCount == 2);
             foreach (var assembly in new[] { typeof(ExtraCallback).Assembly, typeof(DelegateMethodsClient).Assembly })
             foreach (var type in assembly.GetTypes())
                 Check(!type.Name.StartsWith("__DnSpyDelegateMethods", StringComparison.Ordinal) ||

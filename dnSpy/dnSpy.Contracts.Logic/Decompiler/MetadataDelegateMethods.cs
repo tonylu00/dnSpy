@@ -22,7 +22,7 @@ namespace dnSpy.Contracts.Decompiler {
 			var result = new Dictionary<TypeDef, string>();
 			foreach (var type in module.GetTypes()) {
 				if (type.BaseType?.FullName != "System.MulticastDelegate" || type.HasProperties || type.HasEvents || type.HasNestedTypes ||
-					!type.Methods.Any(m => m.HasBody) || type.Methods.Any(m => m.HasBody && (!m.IsStatic || m.IsConstructor)) ||
+					!type.Methods.Any(m => m.HasBody) || type.Methods.Any(m => m.HasBody && (!m.IsStatic || m.IsInstanceConstructor)) ||
 					type.Methods.Any(m => !m.HasBody && (!m.IsRuntime || m.IsStatic ||
 						(m.Name != ".ctor" && m.Name != "Invoke" && m.Name != "BeginInvoke" && m.Name != "EndInvoke"))) ||
 					type.Fields.Any(f => !MetadataOnlyFields.Contains(f))) continue;
