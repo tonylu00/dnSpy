@@ -6,6 +6,12 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 public class Container<T> {
+    public static int Calls;
+    public sealed class Payload : EventArgs { }
+    public static void e(object sender, EventArgs args) { Calls++; }
+    public static void f(object sender, Payload args) { Calls += 10; }
+    public static void Subscribe() { EventHub.Changed += e; EventHub<T>.Changed += f; }
+    public static void Unsubscribe() { EventHub.Changed -= e; EventHub<T>.Changed -= f; }
     public static async Task<int> a(int value) {
         await Task.Yield();
         return value + typeof(T).Name.Length;
@@ -39,6 +45,13 @@ public class Container<T> {
 }
 public static class Program {
     public static int Main() {
+        Container<int>.Subscribe();
+        EventHub.Raise();
+        EventHub<int>.Raise();
+        Container<int>.Unsubscribe();
+        EventHub.Raise();
+        EventHub<int>.Raise();
+        if (Container<int>.Calls != 11) throw new Exception("Delegate subscription/removal changed.");
         if (Container<int>.a(7).GetAwaiter().GetResult() != 12 ||
             !Container<int>.b(4).SequenceEqual(new[] { 4, 9 }) ||
             Container<int>.c("payload").GetAwaiter().GetResult() != "payload" ||
@@ -53,10 +66,14 @@ public static class Program {
                 throw new Exception("State-machine owner name changed: " + state.Name);
         }
         VerifyNestedOwners(typeof(Container<>));
-        Console.WriteLine("PASS async/iterator execution and original generated owner names on generic types/methods");
+        Console.WriteLine("PASS async/iterator/delegate execution and original generated names on generic types/methods");
         return 0;
     }
     static void VerifyNestedOwners(Type type) {
+        if (type.Name.StartsWith("<>O", StringComparison.Ordinal))
+            foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
+                if (field.Name.EndsWith("__OnChanged", StringComparison.Ordinal) || field.Name.EndsWith("__OnPayloadChanged", StringComparison.Ordinal))
+                    throw new Exception("Delegate cache still contains the source alias.");
         foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly)) {
             foreach (StateMachineAttribute attribute in method.GetCustomAttributes(typeof(StateMachineAttribute), false)) {
                 // Lambda state types can end in >d; ordinary async methods use >d__N.
@@ -67,4 +84,12 @@ public static class Program {
         foreach (var nested in type.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic))
             VerifyNestedOwners(nested);
     }
+}
+public static class EventHub {
+    public static event EventHandler Changed;
+    public static void Raise() { if (Changed != null) Changed(null, EventArgs.Empty); }
+}
+public static class EventHub<T> {
+    public static event EventHandler<Container<T>.Payload> Changed;
+    public static void Raise() { if (Changed != null) Changed(null, new Container<T>.Payload()); }
 }

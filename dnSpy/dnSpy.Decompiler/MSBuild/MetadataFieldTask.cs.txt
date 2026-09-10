@@ -632,6 +632,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         if (methods) {
             AvoidGeneratedMethodCollisions(module, definitions, references, memberNames);
             RestoreStateMachineTypeNames(module, definitions);
+            RestoreDelegateCacheFieldNames(module, definitions, memberNames);
             foreach (var method in module.GetTypes().SelectMany(t => t.Methods))
                 foreach (var marker in method.CustomAttributes.Where(IsOriginalDuplicateMarker).ToArray()) method.CustomAttributes.Remove(marker);
         }
@@ -642,6 +643,86 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         }
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
+    }
+
+    static void RestoreDelegateCacheFieldNames(ModuleDef module, Dictionary<IMemberDef, UTF8String> methodNames,
+        Dictionary<MemberRef, UTF8String> referenceNames) {
+        var names = new Dictionary<FieldDef, UTF8String>();
+        foreach (var caller in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody)) {
+            var il = caller.Body.Instructions.Where(i => i.OpCode != OpCodes.Nop).ToArray();
+            for (int i = 0; i + 3 < il.Length; i++) {
+                // The compiler caches static method-group conversions as
+                // ldftn / newobj delegate / dup / stsfld in a generated <>O type.
+                if (il[i].OpCode != OpCodes.Ldftn || il[i + 1].OpCode != OpCodes.Newobj ||
+                    il[i + 2].OpCode != OpCodes.Dup || il[i + 3].OpCode != OpCodes.Stsfld) continue;
+                var target = il[i].Operand as IMethod;
+                if (target is MethodSpec specification) target = specification.Method;
+                var constructor = il[i + 1].Operand as IMethod;
+                var stored = il[i + 3].Operand as IField;
+                UTF8String original = null;
+                if (target == null || target.MethodSig == null || target.MethodSig.HasThis ||
+                    !(target is MethodDef definition && methodNames.TryGetValue(definition, out original) ||
+                    target is MemberRef reference && referenceNames.TryGetValue(reference, out original)) || target.Name == original) continue;
+                if (stored == null || stored.DeclaringType.DefinitionAssembly == null ||
+                    stored.DeclaringType.DefinitionAssembly.FullName != module.Assembly.FullName) continue;
+                var field = ResolveLocalCacheField(module, stored);
+                if (field == null || field.Module != module || !field.IsStatic ||
+                    field.DeclaringType.DeclaringType != caller.DeclaringType ||
+                    !field.DeclaringType.Name.String.StartsWith("<>O", StringComparison.Ordinal) ||
+                    !field.DeclaringType.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute") ||
+                    constructor == null || constructor.Name != ".ctor" ||
+                    !new SigComparer().Equals(stored.FieldSig.Type, constructor.DeclaringType.ToTypeSig())) continue;
+                var delimiter = field.Name.String.IndexOf(">__", StringComparison.Ordinal);
+                int ordinal;
+                if (delimiter < 2 || field.Name.String[0] != '<' ||
+                    !int.TryParse(field.Name.String.Substring(1, delimiter - 1), out ordinal) || ordinal < 0 ||
+                    field.Name.String.Substring(delimiter + 3) != target.Name.String) continue;
+                var name = new UTF8String(field.Name.Data.Take(field.Name.Data.Length - target.Name.Data.Length).Concat(original.Data).ToArray());
+                UTF8String previous;
+                if (names.TryGetValue(field, out previous) && previous != name)
+                    throw new InvalidDataException("Conflicting delegate-cache target names.");
+                names[field] = name;
+            }
+        }
+        foreach (var entry in names)
+            if (entry.Key.DeclaringType.Fields.Any(f => f != entry.Key &&
+                (names.ContainsKey(f) ? names[f] : f.Name) == entry.Value))
+                throw new InvalidDataException("Delegate-cache restoration would create duplicate fields.");
+        if (names.Count == 0) return;
+        var sourceNames = new HashSet<UTF8String>(names.Keys.Select(f => f.Name));
+        var references = new Dictionary<MemberRef, UTF8String>();
+        var fieldReferences = new HashSet<MemberRef>(module.GetMemberRefs().Where(r => r.IsFieldRef));
+        foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody))
+            foreach (var instruction in method.Body.Instructions)
+                if (instruction.Operand is MemberRef member && member.IsFieldRef) fieldReferences.Add(member);
+        foreach (var reference in fieldReferences) {
+            if (!sourceNames.Contains(reference.Name)) continue;
+            if (reference.DeclaringType.DefinitionAssembly == null ||
+                reference.DeclaringType.DefinitionAssembly.FullName != module.Assembly.FullName) continue;
+            var definition = ResolveLocalCacheField(module, reference);
+            UTF8String name;
+            if (definition != null && names.TryGetValue(definition, out name)) references.Add(reference, name);
+        }
+        foreach (var entry in references) entry.Key.Name = entry.Value;
+        foreach (var entry in names) entry.Key.Name = entry.Value;
+    }
+
+    static FieldDef ResolveLocalCacheField(ModuleDef module, IField reference) {
+        if (reference is FieldDef definition) return definition.Module == module ? definition : null;
+        var owner = reference.DeclaringType;
+        if (owner is TypeSpec specification) {
+            var generic = specification.TypeSig.RemovePinnedAndModifiers() as GenericInstSig;
+            if (generic == null) return null;
+            owner = generic.GenericType.TypeDefOrRef;
+        }
+        if (owner.DefinitionAssembly == null || owner.DefinitionAssembly.FullName != module.Assembly.FullName) return null;
+        // Resolve against this physical module, without asking an assembly
+        // resolver to reload a same-identity compatibility component from disk.
+        var type = owner as TypeDef ?? module.Find(owner.FullName, false);
+        if (type == null || type.Module != module) return null;
+        var matches = type.Fields.Where(f => f.Name == reference.Name &&
+            new SigComparer().Equals(f.FieldSig, reference.FieldSig)).ToArray();
+        return matches.Length == 1 ? matches[0] : null;
     }
 
     static void RestoreStateMachineTypeNames(ModuleDef module, Dictionary<IMemberDef, UTF8String> methodNames) {

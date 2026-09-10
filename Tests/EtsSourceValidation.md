@@ -285,6 +285,16 @@ source aliases, execution, original method/state-machine reflection names and
 attributes, unchanged input bytes, and byte-stable incremental builds with one
 and four export workers. `state-owner-regression2` passed these runtime checks.
 
+The fixture also maps static event handlers used with ordinary and generic
+delegate types. It requires emitted delegate caches, checks their restored
+target names, and verifies subscription/removal by execution. The cache-name
+restorer follows the compiler's `ldftn/newobj/dup/stsfld` pattern in a generated
+cache type, preserves the ordinal, resolves fields within the physical module,
+and updates both metadata-table and method-body field references. This closes
+the two remaining source17 body differences in the online-catalog view model's
+constructor/disposal paths; full application validation is still required after
+the focused `delegate-cache-regression4` pass.
+
 The expanded 496-method 6.4 map compiled in source16 and passed the SDK contract
 audit (172 projects, zero issues). Comparing its bodies with source14 exposed
 generated state-machine names containing source aliases. Runtime metadata
