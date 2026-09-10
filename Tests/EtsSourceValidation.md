@@ -6,7 +6,7 @@ The current tool runtime is `D:\knx_analysis\delegate-cache-runtime2`, including
 the state-machine and delegate-cache name fixes. Full 6.3 source45 validation
 passed before starting the corresponding 6.4 source18 run.
 
-These passing builds do not yet cover every shipped application assembly. A
+The initial passing builds omitted some shipped application assemblies. A
 physical input inventory found three additional 6.3 assemblies under
 `Uploader/Windows` absent from the source45 export. The uploader's telemetry
 abstraction assembly differs from the root copy, so it needs its own context.
@@ -24,8 +24,8 @@ projects compile with zero SDK issues, all 3,013 state-machine attributes and
 approved aliases pass, and 194,229 bodies match the disjoint source46/helper
 baselines with zero differences. Staging preserves 381 assembly/satellite
 overlays; the unchanged official-SDK MCP add-in loads 407 types.
-The 6.4 inventory identifies six uncovered application files in total;
-that expansion follows the 6.3 gate. Initial filename inventory artifacts are
+The 6.4 inventory identified six uncovered application files in total;
+their expansion followed the 6.3 gate. Initial filename inventory artifacts are
 `ets63-source-coverage-20260911.json` and `ets64-source-coverage-20260911.json`.
 The 6.4 inventory covers its primary input tree; the 172-project export also
 includes explicit external 6.3 compatibility contexts.
@@ -36,7 +36,21 @@ not establish complete coverage.
 After that 6.3 gate, `ets64-additional-validation1` exports and compiles all six
 additional assemblies as SDK projects. Its contract audit checks 89 types, 318
 methods and 35 fields with zero issues. The expanded 182-input full 6.4 run is
-`ets64-api-source-validation19`; its final build and integration audits are pending.
+`ets64-api-source-validation19`. It passes export/build with 178 managed projects
+and zero SDK issues (24,955 types, 183,678 methods, 32,702 fields). All 496 method
+aliases and the parameter alias pass, as do 5,891 local state-machine attributes.
+`source19-body-audit-repo1` compares 385,538 bodies against source18 plus the
+isolated six-component baseline: zero differences, without owner-name alignment.
+Staging preserves 403 assembly/satellite overlays and the unchanged official-SDK
+MCP add-in loads 410 types. All six publisher-identified additions appear in the
+export manifest.
+
+`additional-source-resource-parity1.json` compares all ten added assemblies
+(four in 6.3, six in 6.4) against their original input resources. Resource names,
+flags, counts and the sole embedded resource's bytes match. The audit includes
+the x86 output directory of the 6.4 PluginInstaller project. Source47/source19
+are now the expanded offline-validated trees; the direct live evidence below
+currently remains source45/source18.
 
 - **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
   zero SDK contract issues. All 193,872 method-body fingerprints match the
