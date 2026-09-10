@@ -124,3 +124,19 @@ conversion; the completed launch and subsequent reads succeeded. After ETS
 closed, original add-in/profile hashes and all 1,877 original data hashes matched.
 Evidence: `D:\knx_analysis\ets64-source14-live1`. This remains an unprotected
 test-mcp check; the earlier P-01C0 password-project failure is not covered by it.
+
+### Reported P-01C0 parsing exception
+
+The user's supplied log fails while constructing `SpaceUsageId` from
+`tag:livingRoom`, before the later null-reference errors. The current P-01C0
+building store contains that value and similar semantic tags. A focused runtime
+probe of the original ETS 6.3 `IdCache.Create<SpaceUsageId>(string)` and source39's
+rebuilt equivalent accepts `SU-1` in both and rejects `tag:livingRoom` and
+`tag:kitchen` with identical `ArgumentException` messages. Evidence:
+`D:\knx_analysis\ets63-spaceusage-parity1\original.txt` and `rebuilt.txt`.
+
+The 6.4 BuildingPart reader explicitly accepts semantic location tags as well as
+legacy `SU-` identifiers; the 6.3 reader requires the latter. This isolates the
+reported identifier rejection from the decompilation pipeline. No original
+project data or parser behavior was altered. It does not test the complete
+password-opening flow, nor prove when the project's stored format changed.
