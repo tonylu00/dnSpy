@@ -7,6 +7,10 @@ class DelegateMethodsClient {
             NestedContainer.Run(); NestedContainer.Run();
             Check(InitializationTracker.NestedCount == 1);
             Check(typeof(NestedContainer).GetNestedType("PrivateOwner", BindingFlags.NonPublic).IsNestedPrivate);
+            var owner = typeof(NestedContainer).GetNestedType("PrivateOwner", BindingFlags.NonPublic);
+            var invoke = owner.GetNestedType("NestedCallback", BindingFlags.Public).GetMethod("Invoke");
+            Check(invoke.ReturnType.IsNestedPrivate && invoke.ReturnType.Name == "PrivateValue");
+            Check(invoke.GetParameters()[0].ParameterType.IsNestedPrivate && invoke.GetParameters()[0].ParameterType.Name == "PrivateKind");
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ExtraCallback).TypeHandle);
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ExtraCallback).TypeHandle);
             Check(InitializationTracker.NonGenericCount == 1);

@@ -8,7 +8,9 @@ public static class GenericMethods<T> {
 public static class InitializationTracker { public static int NonGenericCount; public static int GenericCount; public static int NestedCount; }
 public static class NestedContainer {
     private static class PrivateOwner {
-        public delegate void NestedCallback();
+        public enum PrivateKind { First, Second }
+        public struct PrivateValue { public int Number; }
+        public delegate PrivateValue NestedCallback(PrivateKind kind);
         public static class NestedMethods { static NestedMethods() { InitializationTracker.NestedCount++; } }
         public static void Run() { System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(NestedCallback).TypeHandle); }
     }

@@ -18,8 +18,30 @@ namespace dnSpy.Contracts.Decompiler {
 		static readonly ConditionalWeakTable<ModuleDef, State> requests = new ConditionalWeakTable<ModuleDef, State>();
 		/// <summary>Returns the companion name for supported delegate methods.</summary>
 		public static string? GetName(TypeDef type) => type.BaseType?.FullName == "System.MulticastDelegate" && type.Module != null && names.GetValue(type.Module, Find).TryGetValue(type, out var name) ? name : null;
-		/// <summary>Mapping attributes at assembly scope must name the companion and its enclosing types.</summary>
-		public static bool RequiresAssemblyVisibility(TypeDef type) => GetName(type) != null || type.NestedTypes.Any(RequiresAssemblyVisibility);
+		static readonly ConditionalWeakTable<ModuleDef, HashSet<TypeDef>> visibleTypes = new ConditionalWeakTable<ModuleDef, HashSet<TypeDef>>();
+		/// <summary>Mapping companions and their signature types must be accessible at assembly scope.</summary>
+		public static bool RequiresAssemblyVisibility(TypeDef type) => type.Module != null && visibleTypes.GetValue(type.Module, FindVisibleTypes).Contains(type);
+		static HashSet<TypeDef> FindVisibleTypes(ModuleDef module) {
+			var result = new HashSet<TypeDef>();
+			void Add(TypeDef type) {
+				for (; type != null && type.Module == module; type = type.DeclaringType) result.Add(type);
+			}
+			void Inspect(TypeSig signature) {
+				if (signature == null) return;
+				Add(signature.ToTypeDefOrRef()?.ResolveTypeDef());
+				if (signature.Next != null) Inspect(signature.Next);
+				if (signature is GenericInstSig generic) foreach (var argument in generic.GenericArguments) Inspect(argument);
+			}
+			foreach (var type in names.GetValue(module, Find).Keys) {
+				Add(type);
+				foreach (var method in type.Methods) {
+					if (method.MethodSig == null) continue;
+					Inspect(method.MethodSig.RetType);
+					foreach (var parameter in method.MethodSig.Params) Inspect(parameter);
+				}
+			}
+			return result;
+		}
 		static Dictionary<TypeDef, string> Find(ModuleDef module) {
 			var result = new Dictionary<TypeDef, string>();
 			foreach (var type in module.GetTypes()) {

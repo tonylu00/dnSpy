@@ -16,6 +16,20 @@ class StaticValuesClient {
     }
     static int Main() {
         Check("ab".Twice() == "abab");
+        string receiver = new string(new[] { 'a', 'b' });
+        Func<string> bound = receiver.Twice;
+        Check(ReferenceEquals(bound.Target, receiver) && bound.Method == typeof(Extensions).GetMethod("Twice"));
+        Check(bound() == "abab");
+        Func<int, int> genericBound = receiver.Identity<int>;
+        Check(ReferenceEquals(genericBound.Target, receiver) && genericBound(37) == 37);
+        Check(genericBound.Method == typeof(Extensions).GetMethod("Identity").MakeGenericMethod(typeof(int)));
+        Action action = receiver.Record;
+        action();
+        Check(ReferenceEquals(action.Target, receiver) && ReferenceEquals(Initialization.Recorded, receiver));
+        Check(action.Method == typeof(Extensions).GetMethod("Record"));
+        receiver = null;
+        Func<string> nullBound = receiver.Twice;
+        Check(nullBound.Target == null && nullBound.Method == bound.Method && nullBound() == "");
         Check(Initialization.Count == 1);
         Check(GenericHost<int>.Read(37) == 37);
         Inspect(typeof(Extensions)); Inspect(typeof(GenericHost<int>));
