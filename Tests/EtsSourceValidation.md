@@ -19,7 +19,11 @@ the disjoint source45/uploader-source2 baselines with zero differences; staging
 preserves 380 assembly/satellite overlays and the unchanged SDK add-in loads.
 A publisher-metadata inventory additionally finds `PostActivation.exe` in both
 versions. Its isolated 6.3 SDK export/build/contract audit passes in
-`ets63-postactivation-validation2`; the 115-input full source47 run is pending.
+`ets63-postactivation-validation2`. The 115-input source47 run passes: 111
+projects compile with zero SDK issues, all 3,013 state-machine attributes and
+approved aliases pass, and 194,229 bodies match the disjoint source46/helper
+baselines with zero differences. Staging preserves 381 assembly/satellite
+overlays; the unchanged official-SDK MCP add-in loads 407 types.
 The 6.4 inventory identifies six uncovered application files in total;
 that expansion follows the 6.3 gate. Initial filename inventory artifacts are
 `ets63-source-coverage-20260911.json` and `ets64-source-coverage-20260911.json`.
@@ -28,6 +32,11 @@ includes explicit external 6.3 compatibility contexts.
 Publisher metadata results are in `ets63-preserved-vendor-metadata-20260911.json`
 and `ets64-preserved-vendor-metadata-20260911.json`; filename prefixes alone did
 not establish complete coverage.
+
+After that 6.3 gate, `ets64-additional-validation1` exports and compiles all six
+additional assemblies as SDK projects. Its contract audit checks 89 types, 318
+methods and 35 fields with zero issues. The expanded 182-input full 6.4 run is
+`ets64-api-source-validation19`; its final build and integration audits are pending.
 
 - **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
   zero SDK contract issues. All 193,872 method-body fingerprints match the
@@ -76,6 +85,14 @@ lambdas, ordinary/generic delegate caches, original reflection names, event
 subscription/removal and incremental rebuilds with one/four export workers.
 `delegate-cache-baml-regression1` additionally covers WPF type/event aliases,
 resource-URI loading and opaque resource preservation on this tool build.
+`reactor-current-source-audit5` repeats both protected fixture scenarios on this
+same runtime: method encryption alone and encryption with control flow both
+export, compile and execute in the root and compatibility contexts (100/120).
+`source-goal-string-audit2.json` verifies all retained decoder-parity reports have
+successful exits, no unverified strings and no remaining decoder calls, and
+records their hashes: 117,047 strings for 6.3, 93,181 for 6.4 and 120,291 for the
+compatibility tree. This checks the existing evidence; it is not a fresh decoder
+execution or a claim that every rebuilt method has identical original IL.
 
 The repository runner in `SourceMethodBodies.md` independently repeats the
 full comparison: `source45-body-audit-repo2` checks 107 projects / 193,872 bodies
