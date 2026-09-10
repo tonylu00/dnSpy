@@ -67,3 +67,27 @@ reviewed 6.4 method aliases using 6.3 as reference. Its guarded source-map conve
 also exported and rebuilt the four affected modules with zero SDK differences.
 It retains relative physical module contexts and rejects ambiguous candidates;
 it does not claim to recover every original obfuscated name.
+
+## Explicit string extraction follow-up
+
+Compilation of the earlier API-preserving trees did not prove string readability:
+their ObjectModel source still called the decoder with encrypted literals.
+The fresh 6.3 batch `ETS6.3_api_preserved4` explicitly requests static string
+extraction while retaining the default public API preservation policy. It processes
+86 protected modules and copies 442 other managed modules unchanged.
+
+Comparison with the original pure decoder implementations verified 117,047
+strings across 43 assemblies, including all six `AddCertificate` strings. The
+ETS6C check requires a genuinely x86 probe; force a rebuild and check its PE flags
+when changing architecture, rather than trusting an output directory name.
+Evidence: `D:\knx_analysis\ets63-all-string-parity4-final.json` and the x86 rerun
+`ets63-ets6c-string-parity4b.log`. The checks verify literals at the known decoder
+call sites; they do not establish equivalence of every method body.
+
+Source39 uses this decoded batch. Before rebasing the source-name map hash, each
+mapped token, MVID, expected name, signature and parameter name was verified.
+All 107 managed projects compile (111 inputs including four native dependencies),
+and the SDK audit reports zero differences across 13,776 types, 102,871 methods
+and 17,406 fields. Source: `D:\git\ets63-api-source39`; build/audit evidence:
+`D:\knx_analysis\ets63-api-source-validation39`. This is offline evidence;
+the live results above remain tied to their original source versions.
