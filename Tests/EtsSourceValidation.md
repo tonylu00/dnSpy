@@ -164,3 +164,15 @@ a changed token on those files does not explain the result. No integrity or
 password checks were changed. Further persistence diagnosis needs a valid
 control before any recompiler fix can be justified. Both runs restored the
 original profile/add-in and verified all 1,877 original data hashes.
+
+Follow-up inspection found `ExtendedLogging version: 1.23.3.9.23` in both
+the original-control and source39 test startup logs. The shell adds `3.9` when
+`ExtendedLoggingAvailable` is reported as licensed; this produces the state
+that suppresses `Project.Save` in both versions. This supplies a concrete host
+configuration explanation for the missing persistence, rather than evidence
+of a decompiler-only failure. The automation bridge now exposes that state and
+rejects create/duplicate/import before calling ETS when saving is suppressed.
+Its fixture regression passed 93 checks, including suppression, recovery, and
+continued open/close access (`automation-save-suppression-regression2.log`).
+The new guard has not yet been restaged into an ETS live runtime. Password
+round-trip validation still requires a host configuration that permits saving.
