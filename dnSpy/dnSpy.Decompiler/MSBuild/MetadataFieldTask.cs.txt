@@ -597,7 +597,11 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             UTF8String name;
             if (key != null && maps.TryGetValue(key, out name)) memberNames.Add(reference, name);
         }
-        if (methods) AvoidGeneratedMethodCollisions(module, definitions, references, memberNames);
+        if (methods) {
+            AvoidGeneratedMethodCollisions(module, definitions, references, memberNames);
+            foreach (var method in module.GetTypes().SelectMany(t => t.Methods))
+                foreach (var marker in method.CustomAttributes.Where(IsOriginalDuplicateMarker).ToArray()) method.CustomAttributes.Remove(marker);
+        }
         foreach (var entry in memberNames) entry.Key.Name = entry.Value;
         foreach (var entry in definitions) {
             if (entry.Key is FieldDef field) field.Name = entry.Value;
@@ -606,6 +610,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
     }
+
+    static bool IsOriginalDuplicateMarker(CustomAttribute attribute) => attribute.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
+        attribute.NamedArguments.Any(a => a.Name == "Feature" && a.Value != null && a.Value.ToString() == "dnSpy.metadata.original-duplicate-method.v1");
 
     static void AvoidGeneratedMethodCollisions(ModuleDef module, Dictionary<IMemberDef, UTF8String> names,
         HashSet<MemberRef> references, Dictionary<MemberRef, UTF8String> referenceNames) {
@@ -618,6 +625,8 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 UTF8String planned;
                 if (!names.TryGetValue(other, out planned)) planned = other.Name;
                 if (planned != originalName || !new SigComparer().Equals(other.MethodSig, method.MethodSig)) continue;
+                if (names.ContainsKey(other) && method.IsPrivate && other.IsPrivate && !method.IsVirtual && !other.IsVirtual &&
+                    !method.HasOverrides && !other.HasOverrides && method.CustomAttributes.Any(IsOriginalDuplicateMarker) && other.CustomAttributes.Any(IsOriginalDuplicateMarker)) continue;
                 if (names.ContainsKey(other) || !(IsGeneratedType(other.DeclaringType) ||
                     other.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute")))
                     throw new InvalidDataException("Method name restoration would create duplicate runtime methods.");

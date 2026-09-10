@@ -10,6 +10,10 @@ namespace dnSpy.Contracts.Decompiler {
 	public static class MetadataMethodNames {
 		/// <summary>Assembly instructions for restoring aliased methods.</summary>
 		public const string Prefix = "dnSpy.metadata.method-name.v1|";
+		/// <summary>Evidence that two original private definitions share their complete signature.</summary>
+		public static bool HasOriginalDuplicate(MethodDef method) => method.IsPrivate && !method.IsVirtual && !method.HasOverrides &&
+			method.DeclaringType.Methods.Any(other => other != method && other.IsPrivate && !other.IsVirtual && !other.HasOverrides &&
+				other.Name == method.Name && new SigComparer().Equals(other.MethodSig, method.MethodSig));
 		/// <summary>Returns the source identifier from the resolved declaring module.</summary>
 		public static string GetName(MethodDef method) => SourceNameAliases.Get(method) ?? (method.Module != null && names.GetValue(method.Module, Find).TryGetValue(method, out var alias) ? alias : method.Name.String);
 		static readonly ConditionalWeakTable<ModuleDef, string[]> mappings = new ConditionalWeakTable<ModuleDef, string[]>();
@@ -86,14 +90,24 @@ namespace dnSpy.Contracts.Decompiler {
 				var parent = type.BaseType?.ResolveTypeDef();
 				if (parent != null) used.UnionWith(Allocate(parent));
 				bool generated = IsGenerated(type);
+				var collisions = new HashSet<MethodDef>();
+				var comparer = new SigComparer();
+				foreach (var group in type.Methods.Where(m => !m.IsConstructor && m.MethodSig != null).GroupBy(m => new { Name = m.Name.String, Arity = m.GenericParameters.Count, Count = m.MethodSig.Params.Count })) {
+					var candidates = group.ToArray();
+					if (candidates.Length < 2) continue;
+					foreach (var method in candidates.Where(m => m.IsPrivate && !m.IsVirtual && !m.HasOverrides && m.SemanticsAttributes == 0))
+						if (candidates.Any(other => other != method && method.MethodSig.Params.Zip(other.MethodSig.Params,
+							(a, b) => comparer.Equals(a, b)).All(equal => equal))) collisions.Add(method);
+				}
 				foreach (var method in type.Methods.OrderBy(m => m.MDToken.Raw)) {
-					if (method.IsConstructor || method.HasOverrides || MetadataTypeNames.IsIdentifier(method.Name) ||
-						!(generated || method.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"))) continue;
+					bool collision = collisions.Contains(method);
+					if (method.IsConstructor || method.HasOverrides || (!collision && (MetadataTypeNames.IsIdentifier(method.Name) ||
+						!(generated || method.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"))))) continue;
 					var baseMethod = FindBaseMethod(method);
 					if (baseMethod != null && result.TryGetValue(baseMethod, out var shared)) {
 						result.Add(method, shared); used.Add(shared); continue;
 					}
-					string stem = "method_" + method.MDToken.Raw.ToString("X8", CultureInfo.InvariantCulture), alias = stem;
+					string stem = (collision && MetadataTypeNames.IsIdentifier(method.Name) ? method.Name.String + "_" : "method_") + method.MDToken.Raw.ToString("X8", CultureInfo.InvariantCulture), alias = stem;
 					for (int suffix = 1; !used.Add(alias); suffix++) alias = stem + "_" + suffix.ToString(CultureInfo.InvariantCulture);
 					result.Add(method, alias);
 				}
