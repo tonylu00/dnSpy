@@ -21,3 +21,11 @@ storage, helper-name collisions and unchanged external callers. It also compares
 source across one/four workers and checks incremental output hashes.
 The same-declared-type fixture compares original, rebuilt and unchanged-caller
 output and verifies that the rebuilt method retains its `isinst` instruction.
+
+Reference storage passed through a differently typed managed reference uses a
+temporary `AsRef<TFrom,TTo>(ref value)` source helper. Restoration erases the
+helper call while retaining the original managed address. This preserves aliasing,
+null assignments and writes before exceptions without changing field declarations.
+Only concrete reference types are supported; value types, pointers and unconstrained
+generic parameters are excluded. The regression passes one erased field as both
+arguments and checks write visibility through the alias and after a thrown exception.

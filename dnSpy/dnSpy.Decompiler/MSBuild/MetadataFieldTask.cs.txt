@@ -548,13 +548,22 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         foreach (var helper in helpers) {
             var cast = helper.Methods.SingleOrDefault(m => m.Name == "Cast" && m.IsStatic && m.GenericParameters.Count == 1 &&
                 m.MethodSig.Params.Count == 1 && m.MethodSig.Params[0].ElementType == ElementType.Object && m.MethodSig.RetType is GenericMVar);
-            if (cast == null || helper.Methods.Count != 1 || helper.HasFields) throw new InvalidDataException("Invalid unchecked reference placeholder.");
+            var asRef = helper.Methods.SingleOrDefault(m => m.Name == "AsRef" && m.IsStatic && m.GenericParameters.Count == 2 &&
+                m.MethodSig.Params.Count == 1 && m.MethodSig.Params[0] is ByRefSig &&
+                m.MethodSig.Params[0].Next is GenericMVar && ((GenericMVar)m.MethodSig.Params[0].Next).Number == 0 &&
+                m.MethodSig.RetType is ByRefSig && m.MethodSig.RetType.Next is GenericMVar &&
+                ((GenericMVar)m.MethodSig.RetType.Next).Number == 1);
+            if (cast == null || helper.Methods.Count != (asRef == null ? 1 : 2) || helper.HasFields) throw new InvalidDataException("Invalid unchecked reference placeholder.");
             foreach (var method in module.GetTypes().Where(t => t != helper).SelectMany(t => t.Methods).Where(m => m.HasBody))
                 foreach (var instruction in method.Body.Instructions) {
                     var specification = instruction.Operand as MethodSpec;
-                    if (specification == null || specification.Method.ResolveMethodDef() != cast) continue;
+                    if (specification == null) continue;
+                    var target = specification.Method.ResolveMethodDef();
+                    if (target != cast && (asRef == null || target != asRef)) continue;
                     var arguments = specification.GenericInstMethodSig.GenericArguments;
-                    if (instruction.OpCode != OpCodes.Call || arguments.Count != 1 || arguments[0].IsValueType)
+                    if (instruction.OpCode != OpCodes.Call || arguments.Count != (target == cast ? 1 : 2) ||
+                        arguments.Any(a => a.IsValueType || (target == asRef && a.ElementType != ElementType.Object &&
+                            a.ElementType != ElementType.String && a.ElementType != ElementType.Class && !(a is GenericInstSig))))
                         throw new InvalidDataException("Invalid unchecked reference transfer.");
                     instruction.OpCode = OpCodes.Nop; instruction.Operand = null;
                 }

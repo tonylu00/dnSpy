@@ -23,3 +23,17 @@ public sealed class ReferenceStore {
         return new System.Security.Cryptography.RijndaelManaged();
     }
 }
+public sealed class AliasedReferenceStore {
+    FirstValue storage;
+    public object Read() { return storage; }
+    public bool Replace(FirstValue value) { return ReplaceCore(ref storage, ref storage, value); }
+    public void ReplaceAndThrow(FirstValue value) { ThrowCore(ref storage, value); }
+    static bool ReplaceCore(ref FirstValue first, ref FirstValue second, FirstValue value) {
+        first = value;
+        return object.ReferenceEquals(second, value);
+    }
+    static void ThrowCore(ref FirstValue target, FirstValue value) {
+        target = value;
+        throw new System.InvalidOperationException("after write");
+    }
+}

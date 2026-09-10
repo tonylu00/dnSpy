@@ -8,7 +8,7 @@ using dnSpy.Contracts.Decompiler;
 namespace dnSpy.Decompiler.MSBuild {
 	static class MetadataFieldProjectSupport {
 		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
-			(project.Module.GetTypes().Any(t => !t.IsGlobalModuleType) || project.Module.GetMemberRefs().Any(r => r.IsMethodRef) || MetadataMethodNames.GetMappings(project.Module).Length != 0 || MetadataFieldNames.GetMappings(project.Module).Length != 0 || MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
+			(project.Module.GetTypes().Any(t => !t.IsGlobalModuleType) || project.Module.GetMemberRefs().Any(r => r.IsMethodRef) || MetadataMethodNames.GetMappings(project.Module).Length != 0 || MetadataFieldNames.GetMappings(project.Module).Length != 0 || MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || MetadataUncheckedReferences.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
 		public static void Write(Project project, XmlWriter writer) {
 			if (project.Options.DecompilationContext.RestoreMetadataOnlyFields) {
@@ -73,7 +73,8 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (uncheckedName != null) {
 				File.WriteAllText(Path.Combine(directory, "UncheckedReferences.cs"),
 					"[global::System.Reflection.Obfuscation(Feature = \"" + MetadataUncheckedReferences.Feature + "\")]\n" +
-					"internal static class " + uncheckedName + " { public static T Cast<T>(object value) where T : class { throw new global::System.InvalidOperationException(\"Run the dnSpy metadata restoration build target.\"); } }\n");
+					"internal static class " + uncheckedName + " { public static T Cast<T>(object value) where T : class { throw new global::System.InvalidOperationException(\"Run the dnSpy metadata restoration build target.\"); }\n" +
+					" public static ref TTo AsRef<TFrom, TTo>(ref TFrom value) where TFrom : class where TTo : class { throw new global::System.InvalidOperationException(\"Run the dnSpy metadata restoration build target.\"); } }\n");
 				writer.WriteStartElement("ItemGroup"); writer.WriteStartElement("Compile");
 				writer.WriteAttributeString("Include", ".dnspy-metadata/UncheckedReferences.cs");
 				writer.WriteEndElement(); writer.WriteEndElement();

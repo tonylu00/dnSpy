@@ -10,6 +10,9 @@ class Emitter {
         var first = module.Types.Single(t => t.Name == "FirstValue");
         var second = module.Types.Single(t => t.Name == "SecondValue");
         owner.Fields.Single().FieldType = first.ToTypeSig();
+        // Retain typed byref call signatures but erase the storage declaration.
+        // The two arguments must keep pointing at the same field.
+        module.Types.Single(t => t.Name == "AliasedReferenceStore").Fields.Single().FieldType = module.CorLibTypes.Object;
         var choose = owner.Methods.Single(m => m.Name == "Choose");
         var local = new Local(first.ToTypeSig()); choose.Body = new CilBody(); choose.Body.Variables.Add(local);
         var alternate = Instruction.Create(OpCodes.Newobj, second.Methods.Single(m => m.IsInstanceConstructor));

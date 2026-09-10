@@ -21,6 +21,13 @@ class UncheckedReferenceClient {
         using (var algorithm = ReferenceStore.ChooseCrypto(false)) Check(algorithm is System.Security.Cryptography.RijndaelManaged);
         Check(typeof(ReferenceStore).GetField("storage", BindingFlags.NonPublic | BindingFlags.Instance).FieldType == typeof(FirstValue));
         Check(__DnSpyUncheckedReference.Read() == 71);
+        var aliases = new AliasedReferenceStore();
+        Check(aliases.Replace(first) && ReferenceEquals(aliases.Read(), first));
+        Check(aliases.Replace(null) && aliases.Read() == null);
+        try { aliases.ReplaceAndThrow(first); throw new Exception("Expected callee exception"); }
+        catch (InvalidOperationException ex) { Check(ex.Message == "after write"); }
+        Check(ReferenceEquals(aliases.Read(), first));
+        Check(typeof(AliasedReferenceStore).GetField("storage", BindingFlags.NonPublic | BindingFlags.Instance).FieldType == typeof(object));
         Check(!typeof(ReferenceStore).Assembly.GetTypes().Any(t => t.Name.StartsWith("__DnSpyUncheckedReference") && t != typeof(__DnSpyUncheckedReference)));
         Console.WriteLine("PASS sibling references, field metadata, locals, nulls and isinst behavior"); return 0;
     }
