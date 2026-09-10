@@ -749,14 +749,33 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         return name + "|" + new AssemblyNameInfo(assembly.FullName).FullName;
     }
 
+    static bool UsesStandardResourceReader(byte[] data) {
+        if (data.Length < 12) return false;
+        using (var reader = new BinaryReader(new MemoryStream(data))) {
+            if (reader.ReadUInt32() != 0xbeefcace || reader.ReadInt32() != 1) return false;
+            int headerLength = reader.ReadInt32();
+            if (headerLength < 0 || headerLength > data.Length - 12)
+                throw new InvalidDataException("Invalid resource reader header length.");
+            string readerType = reader.ReadString();
+            if (reader.BaseStream.Position > 12L + headerLength)
+                throw new InvalidDataException("Invalid resource reader header.");
+            return readerType.Split(',')[0].Trim() == "System.Resources.ResourceReader";
+        }
+    }
+
     static void RestoreBamlTypeNames(ModuleDef module, Dictionary<string, string> names) {
         if (names.Count == 0) return;
         for (int index = 0; index < module.Resources.Count; index++) {
             var resource = module.Resources[index] as EmbeddedResource;
             if (resource == null || !resource.Name.String.EndsWith(".resources", StringComparison.OrdinalIgnoreCase)) continue;
+            byte[] resourceData = resource.CreateReader().ToArray();
+            // WPF BAML uses the standard resource format. Other readers (such
+            // as preserialized ResX readers) must retain their original bytes;
+            // never load their reader types or deserialize their values here.
+            if (!UsesStandardResourceReader(resourceData)) continue;
             var entries = new List<Tuple<string, string, byte[]>>();
             bool changed = false;
-            using (var stream = new MemoryStream(resource.CreateReader().ToArray()))
+            using (var stream = new MemoryStream(resourceData))
             using (var reader = new System.Resources.ResourceReader(stream)) {
                 var enumerator = reader.GetEnumerator();
                 while (enumerator.MoveNext()) {

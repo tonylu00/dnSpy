@@ -2,7 +2,8 @@ param(
     [Parameter(Mandatory)][string] $DnSpyConsole,
     [Parameter(Mandatory)][string] $OutputDirectory,
     [switch] $SourceAliases,
-    [switch] $TypeAliases
+    [switch] $TypeAliases,
+    [string] $PreserializedResourceLibrary
 )
 $ErrorActionPreference = 'Stop'
 $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
@@ -69,11 +70,40 @@ foreach ($threads in @(1,4)) {
         if ($TypeAliases -and (!$xaml.Contains('ConnectorFixture.ReadableView') -or !$xaml.Contains(':ReadableBadge'))) { throw 'XAML type aliases missing' }
     }
     $project = Get-ChildItem -LiteralPath $export -Recurse -Filter '*.csproj' | Select-Object -First 1
+    $opaqueBytes = $null
+    if ($PreserializedResourceLibrary) {
+        Add-Type -LiteralPath $PreserializedResourceLibrary
+        $stream = [IO.MemoryStream]::new()
+        $resourceWriter = [System.Resources.Extensions.PreserializedResourceWriter]::new($stream)
+        try {
+            # The task must not try to load this deliberately absent converter type.
+            $resourceWriter.AddTypeConverterResource('opaque', [byte[]](1,2,3), 'Missing.ResourceType, Missing.ResourceAssembly')
+            $resourceWriter.Generate()
+            $opaqueBytes = $stream.ToArray()
+        } finally { $resourceWriter.Dispose(); $stream.Dispose() }
+        $resourcePath = Join-Path $project.DirectoryName 'opaque.resources'
+        [IO.File]::WriteAllBytes($resourcePath, $opaqueBytes)
+        [xml]$projectXml = Get-Content -LiteralPath $project.FullName -Raw
+        $group = $projectXml.CreateElement('ItemGroup')
+        $entry = $projectXml.CreateElement('EmbeddedResource')
+        $entry.SetAttribute('Include', 'opaque.resources')
+        $entry.SetAttribute('LogicalName', 'opaque.resources')
+        $null = $group.AppendChild($entry); $null = $projectXml.DocumentElement.AppendChild($group)
+        $projectXml.Save($project.FullName)
+    }
     $rebuilt = Join-Path $OutputDirectory "rebuilt-$threads"
     dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Exported BAML connector compilation failed.' }
     & (Join-Path $rebuilt 'BamlConnectorsFixture.exe')
     if ($LASTEXITCODE -ne 0) { throw 'Rebuilt BAML connector behavior changed.' }
+    if ($opaqueBytes) {
+        Add-Type -LiteralPath (Join-Path (Split-Path $DnSpyConsole) 'dnlib.dll')
+        $module = [dnlib.DotNet.ModuleDefMD]::Load((Join-Path $rebuilt 'BamlConnectorsFixture.exe'))
+        try {
+            $resource = $module.Resources | Where-Object {$_.Name.String -ceq 'opaque.resources'}
+            if (!$resource -or [Convert]::ToBase64String($resource.CreateReader().ToArray()) -cne [Convert]::ToBase64String($opaqueBytes)) { throw 'Preserialized resource bytes changed.' }
+        } finally { $module.Dispose() }
+    }
     $rebuiltHash = (Get-FileHash -LiteralPath (Join-Path $rebuilt 'BamlConnectorsFixture.exe')).Hash
     dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Incremental BAML connector compilation failed.' }

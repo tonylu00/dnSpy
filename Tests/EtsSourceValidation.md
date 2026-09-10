@@ -36,6 +36,15 @@ passes. Evidence: `baml-type-alias-regression3.log`,
 `D:\knx_analysis`. These additional changes require the next full 6.3/6.4 run;
 source40 does not validate changes made after its export.
 
+Source41 caught an additional resource-format regression: Reports contains a
+container requiring `System.Resources.Extensions.DeserializingResourceReader`,
+which the BAML restoration task incorrectly opened with the standard reader.
+The task now checks reader headers and preserves nonstandard containers without
+deserializing values. `baml-resource-reader-regression1.log` verifies opaque
+preserialized bytes survive while aliased WPF controls execute correctly, with
+one/four workers and incremental builds. Source41 remains a failed build;
+source42 is the subsequent full validation run.
+
 Validation on 2026-09-10 used original SDK callers and separate rebuilt trees.
 The 6.3 regression build and live test passed before the 6.4 live test.
 

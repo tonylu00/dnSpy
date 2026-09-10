@@ -79,6 +79,13 @@ raw resource data without deserializing their values. The regression checks both
 construction and resource-URI loading, original type/method reflection names,
 unrelated resource content and byte-stable incremental builds.
 
+Resource restoration checks the declared resource-reader header before scanning
+for BAML. Containers requiring a different reader, including preserialized ResX
+data, remain byte-identical and their reader/converter types are not loaded.
+Pass `-PreserializedResourceLibrary <System.Resources.Extensions.dll>` to the
+connector regression to include an opaque converter resource and verify this
+preservation behavior alongside the BAML changes.
+
 On 2026-09-10, parameter aliases on the schema-version helper in real ETS 6.3
 and then 6.4 Common assemblies exported and compiled with zero errors. Both
 public SDK contract audits reported zero differences, including parameter names.
