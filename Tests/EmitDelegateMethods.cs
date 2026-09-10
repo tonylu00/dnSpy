@@ -8,6 +8,9 @@ class EmitDelegateMethods {
         // Load body operands before moving definitions; metadata rows are lazy.
         var libraryBodies = library.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).Select(m => m.Body).ToArray();
         var clientBodies = client.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).Select(m => m.Body).ToArray();
+        var nestedSource = library.GetTypes().Single(t => t.Name == "NestedMethods");
+        var nestedTarget = library.GetTypes().Single(t => t.Name == "NestedCallback");
+        foreach (var method in nestedSource.Methods.ToArray()) { nestedSource.Methods.Remove(method); nestedTarget.Methods.Add(method); }
         var source = library.Types.Single(t => t.Name == "ExtraMethods");
         var target = library.Types.Single(t => t.Name == "ExtraCallback");
         foreach (var method in source.Methods.ToArray()) { source.Methods.Remove(method); target.Methods.Add(method); }

@@ -5,7 +5,15 @@ public static class GenericMethods<T> {
     static GenericMethods() { InitializationTracker.GenericCount++; }
     public static T Read(T value) { return value; }
 }
-public static class InitializationTracker { public static int NonGenericCount; public static int GenericCount; }
+public static class InitializationTracker { public static int NonGenericCount; public static int GenericCount; public static int NestedCount; }
+public static class NestedContainer {
+    private static class PrivateOwner {
+        public delegate void NestedCallback();
+        public static class NestedMethods { static NestedMethods() { InitializationTracker.NestedCount++; } }
+        public static void Run() { System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(NestedCallback).TypeHandle); }
+    }
+    public static void Run() { PrivateOwner.Run(); }
+}
 public sealed class __DnSpyDelegateMethods_02000002 { public static int Read() { return 71; } }
 public sealed class __DnSpyDelegateMethodsMapAttribute { public static int Read() { return 73; } }
 public static class ExtraMethods {

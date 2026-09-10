@@ -4,6 +4,9 @@ class DelegateMethodsClient {
     static void Check(bool value) { if (!value) throw new Exception("Delegate method restoration changed behavior"); }
     static int Main() {
         try {
+            NestedContainer.Run(); NestedContainer.Run();
+            Check(InitializationTracker.NestedCount == 1);
+            Check(typeof(NestedContainer).GetNestedType("PrivateOwner", BindingFlags.NonPublic).IsNestedPrivate);
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ExtraCallback).TypeHandle);
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ExtraCallback).TypeHandle);
             Check(InitializationTracker.NonGenericCount == 1);
