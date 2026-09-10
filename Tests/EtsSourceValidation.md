@@ -91,3 +91,27 @@ and the SDK audit reports zero differences across 13,776 types, 102,871 methods
 and 17,406 fields. Source: `D:\git\ets63-api-source39`; build/audit evidence:
 `D:\knx_analysis\ets63-api-source-validation39`. This is offline evidence;
 the live results above remain tied to their original source versions.
+
+The decoded 6.4 source14 follow-up also compiles all 172 managed projects
+(176 inputs) with zero SDK differences across 24,866 types, 183,360 methods and
+32,667 fields. Its main input is `ETS6.4_api_preserved5`; legacy references use
+the separately decoded `ETS6.3_compat_api2` tree. The batch must bind the legacy
+`UserControls_patched` component to its 6.3 signing dependency context. Omitting
+that context correctly rejected publication instead of substituting the root
+assembly. Staging retained 397 assemblies/satellites and loaded all 410 MCP types.
+Evidence: `D:\knx_analysis\ets64-api-source-validation14`,
+`ets64-source14-staging.log` and `ets64-source14-sdk-load.log`.
+
+Original-decoder parity checks cover 93,181 strings in 26 identified Dotfuscator
+decoder assemblies in that main tree, and 120,291 strings in 44 assemblies in
+the compatibility tree. These overlapping tree counts are separate, not additive.
+The refreshed cross-version scan still produces ten reviewed candidates; decoding
+the strings did not establish additional unique method matches.
+
+Source39 subsequently passed a fresh isolated 6.3 launch test: Chinese UI opened
+test-mcp, MCP 4.13.1 registered 151 tools, and project/device/group-address,
+communication-object and parameter-metadata reads succeeded. Original profile,
+installed add-in and all 1,877 original project/product file hashes were restored
+and verified after ETS closed. Evidence: `D:\knx_analysis\ets63-source39-live1`.
+This project is unprotected; password-project and broader runtime equivalence
+remain separate requirements. Source14's fresh live test is still pending.
