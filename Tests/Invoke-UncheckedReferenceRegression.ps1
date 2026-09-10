@@ -8,7 +8,7 @@ New-Item -ItemType Directory -Path $library,$client,$emitter | Out-Null
 Copy-Item (Join-Path $PSScriptRoot 'UncheckedReferenceLibrary.cs') $library
 Copy-Item (Join-Path $PSScriptRoot 'UncheckedReferenceClient.cs') $client
 Copy-Item (Join-Path $PSScriptRoot 'EmitUncheckedReference.cs') $emitter
-'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><Optimize>true</Optimize></PropertyGroup></Project>' | Set-Content (Join-Path $library 'UncheckedReferenceLibrary.csproj')
+'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><Optimize>true</Optimize></PropertyGroup><ItemGroup><Reference Include="System.Configuration"/></ItemGroup></Project>' | Set-Content (Join-Path $library 'UncheckedReferenceLibrary.csproj')
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize></PropertyGroup><ItemGroup><ProjectReference Include="..\library\UncheckedReferenceLibrary.csproj"/></ItemGroup></Project>' | Set-Content (Join-Path $client 'UncheckedReferenceClient.csproj')
 $dnlib=[Security.SecurityElement]::Escape((Join-Path (Split-Path ([IO.Path]::GetFullPath($DnSpyConsole))) 'dnlib.dll'))
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $emitter 'Emitter.csproj')

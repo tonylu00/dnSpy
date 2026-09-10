@@ -12,6 +12,8 @@ class UncheckedReferenceClient {
         Check(((BaseValue)ReferenceStore.Choose(true)).Name == "first");
         Check(((BaseValue)ReferenceStore.Choose(false)).Name == "second");
         Check(new GenericReferenceStore<int>().Count == 0);
+        var configuration = new ConfigurationFixture();
+        Check(configuration.Value == "default"); configuration.Value = "retained"; Check(configuration.Value == "retained");
         using (var algorithm = ReferenceStore.ChooseCrypto(true)) Check(algorithm is System.Security.Cryptography.AesCryptoServiceProvider);
         using (var algorithm = ReferenceStore.ChooseCrypto(false)) Check(algorithm is System.Security.Cryptography.RijndaelManaged);
         Check(typeof(ReferenceStore).GetField("storage", BindingFlags.NonPublic | BindingFlags.Instance).FieldType == typeof(FirstValue));

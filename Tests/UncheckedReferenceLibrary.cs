@@ -1,5 +1,9 @@
 public abstract class BaseValue { public abstract string Name { get; } }
 public sealed class __DnSpyUncheckedReference { public static int Read() { return 71; } }
+public sealed class ConfigurationFixture : System.Configuration.ConfigurationSection {
+    static readonly System.Configuration.ConfigurationProperty valueProperty = new System.Configuration.ConfigurationProperty("value", typeof(string), "default");
+    public string Value { get { return (string)base[valueProperty]; } set { base[valueProperty] = value; } }
+}
 public sealed class FirstValue : BaseValue { public override string Name { get { return "first"; } } }
 public sealed class SecondValue : BaseValue { public override string Name { get { return "second"; } } }
 public sealed class GenericReferenceStore<T> {
