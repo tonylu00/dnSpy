@@ -21,7 +21,8 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 module.LoadEverything();
                 changed |= RestoreDelegateMethods(module);
                 changed |= RestoreProtectedCalls(module);
-                changed |= RestoreFieldNames(module);
+                changed |= RestoreMemberNames(module, true);
+                changed |= RestoreMemberNames(module, false);
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
@@ -177,8 +178,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         return true;
     }
 
-    static bool RestoreFieldNames(ModuleDef module) {
-        const string prefix = "dnSpy.metadata.field-name.v1|";
+    static bool RestoreMemberNames(ModuleDef module, bool methods) {
+        string kind = methods ? "method" : "field";
+        string prefix = "dnSpy.metadata." + kind + "-name.v1|";
         var maps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
         var markers = new List<CustomAttribute>();
         foreach (var attribute in module.Assembly.CustomAttributes) {
@@ -187,12 +189,12 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
             if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
             var parts = text.Substring(prefix.Length).Split('|');
-            if (parts.Length != 6) throw new InvalidDataException("Invalid dnSpy field name instruction.");
+            if (parts.Length != 6) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
             string key = string.Join("|", parts.Take(5));
             var name = new UTF8String(Convert.FromBase64String(parts[5]));
             UTF8String previous;
             if (maps.TryGetValue(key, out previous) && previous != name)
-                throw new InvalidDataException("Conflicting field name instructions for one assembly context.");
+                throw new InvalidDataException("Conflicting " + kind + " name instructions for one assembly context.");
             maps[key] = name;
             markers.Add(attribute);
         }
@@ -209,30 +211,86 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             Func<string, string> encode = value => Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
             return string.Join("|", new[] { owner.FullName, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "", name }.Select(encode));
         };
-        var references = new HashSet<MemberRef>(module.GetMemberRefs().Where(r => r.IsFieldRef));
+        Func<MemberRef, bool> matches = reference => methods ? reference.IsMethodRef : reference.IsFieldRef;
+        var references = new HashSet<MemberRef>(module.GetMemberRefs().Where(matches));
         foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody))
             foreach (var instruction in method.Body.Instructions) {
                 var reference = instruction.Operand as MemberRef;
-                if (reference != null && reference.IsFieldRef) references.Add(reference);
+                if (reference == null && instruction.Operand is MethodSpec specification) reference = specification.Method as MemberRef;
+                if (reference != null && matches(reference)) references.Add(reference);
             }
-        // Capture every source key before mutating definitions; direct FieldDef
-        // operands then follow their original storage automatically.
-        var definitions = new Dictionary<FieldDef, UTF8String>();
+        // Capture source keys before mutating definitions; direct definition
+        // operands and method specifications follow the same storage/body.
+        var definitions = new Dictionary<IMemberDef, UTF8String>();
         var memberNames = new Dictionary<MemberRef, UTF8String>();
-        foreach (var field in module.GetTypes().SelectMany(t => t.Fields)) {
-            var key = keyFor(field.DeclaringType, field.Name);
+        var members = module.GetTypes().SelectMany(t => methods ? t.Methods.Cast<IMemberDef>() : t.Fields.Cast<IMemberDef>());
+        foreach (var member in members) {
+            var key = keyFor(member.DeclaringType, member.Name);
             UTF8String name;
-            if (key != null && maps.TryGetValue(key, out name)) definitions.Add(field, name);
+            if (key != null && maps.TryGetValue(key, out name)) definitions.Add(member, name);
         }
         foreach (var reference in references) {
             var key = keyFor(reference.DeclaringType, reference.Name);
             UTF8String name;
             if (key != null && maps.TryGetValue(key, out name)) memberNames.Add(reference, name);
         }
+        if (methods) AvoidGeneratedMethodCollisions(module, definitions, references, memberNames);
         foreach (var entry in memberNames) entry.Key.Name = entry.Value;
-        foreach (var entry in definitions) entry.Key.Name = entry.Value;
+        foreach (var entry in definitions) {
+            if (entry.Key is FieldDef field) field.Name = entry.Value;
+            else ((MethodDef)entry.Key).Name = entry.Value;
+        }
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
+    }
+
+    static void AvoidGeneratedMethodCollisions(ModuleDef module, Dictionary<IMemberDef, UTF8String> names,
+        HashSet<MemberRef> references, Dictionary<MemberRef, UTF8String> referenceNames) {
+        var retained = names.Keys.OfType<MethodDef>().ToArray();
+        var redirects = new Dictionary<MethodDef, MethodDef>();
+        var used = new HashSet<string>(module.GetTypes().SelectMany(t => t.Methods.Select(m => m.Name.String)).Concat(names.Values.Select(n => n.String)), StringComparer.Ordinal);
+        foreach (var method in retained) {
+            var originalName = names[method];
+            foreach (var other in method.DeclaringType.Methods.Where(m => m != method && !redirects.ContainsKey(m)).ToArray()) {
+                UTF8String planned;
+                if (!names.TryGetValue(other, out planned)) planned = other.Name;
+                if (planned != originalName || !new SigComparer().Equals(other.MethodSig, method.MethodSig)) continue;
+                if (names.ContainsKey(other) || !(IsGeneratedType(other.DeclaringType) ||
+                    other.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute")))
+                    throw new InvalidDataException("Method name restoration would create duplicate runtime methods.");
+                // A C# record always synthesizes this method. Keep the retained
+                // input implementation and its override family, including custom
+                // copy-constructor behavior, rather than add a second clone slot.
+                if (originalName == "<Clone>$" && method.IsVirtual && other.IsVirtual && method.MethodSig.Params.Count == 0) {
+                    redirects.Add(other, method);
+                    continue;
+                }
+                if (other.IsVirtual || other.HasOverrides)
+                    throw new InvalidDataException("Unsupported generated virtual method name collision.");
+                string stem = "__DnSpyGeneratedMethod_" + other.MDToken.Raw.ToString("X8"), alias = stem;
+                for (int suffix = 1; !used.Add(alias); suffix++) alias = stem + "_" + suffix;
+                var name = new UTF8String(alias);
+                foreach (var reference in references)
+                    if (reference.ResolveMethodDef() == other) referenceNames[reference] = name;
+                names.Add(other, name);
+            }
+        }
+        if (redirects.Count == 0) return;
+        Func<IMethodDefOrRef, IMethodDefOrRef> redirect = reference => {
+            MethodDef replacement;
+            return reference is MethodDef definition && redirects.TryGetValue(definition, out replacement) ? replacement : reference;
+        };
+        foreach (var method in module.GetTypes().SelectMany(t => t.Methods)) {
+            if (method.HasBody) foreach (var instruction in method.Body.Instructions) {
+                if (instruction.Operand is MethodSpec specification) specification.Method = redirect(specification.Method);
+                else if (instruction.Operand is MethodDef definition) instruction.Operand = redirect(definition);
+            }
+            for (int index = 0; index < method.Overrides.Count; index++) {
+                var item = method.Overrides[index];
+                method.Overrides[index] = new MethodOverride(redirect(item.MethodBody), redirect(item.MethodDeclaration));
+            }
+        }
+        foreach (var method in redirects.Keys) method.DeclaringType.Methods.Remove(method);
     }
 
     static bool RestoreTypeNames(ModuleDef module) {

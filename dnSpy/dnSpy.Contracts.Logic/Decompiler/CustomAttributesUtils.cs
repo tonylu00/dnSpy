@@ -377,7 +377,7 @@ namespace dnSpy.Contracts.Decompiler {
 					ca.NamedArguments.Add(new CANamedArgument(isField: true, charSetType, charSetName, new CAArgument(charSetType, (int)charSet)));
 				}
 
-				if (!UTF8String.IsNullOrEmpty(implMap.Name) && implMap.Name != method.Name)
+				if (!UTF8String.IsNullOrEmpty(implMap.Name) && (implMap.Name != method.Name || MetadataMethodNames.GetName(method) != method.Name.String))
 					ca.NamedArguments.Add(new CANamedArgument(isField: true, module.CorLibTypes.String, entryPointName, new CAArgument(module.CorLibTypes.String, implMap.Name)));
 
 				if (implMap.IsNoMangle)

@@ -56,6 +56,7 @@ namespace dnSpy.Contracts.Decompiler {
 				if (allocated.TryGetValue(type, out var existing)) return existing;
 				if (!visiting.Add(type)) return new HashSet<string>(StringComparer.Ordinal);
 				var inheritedNames = new HashSet<string>(type.Methods.Select(m => m.Name.String)
+					.Concat(type.Methods.Select(MetadataMethodNames.GetName))
 					.Concat(type.Properties.Select(p => p.Name.String)).Concat(type.Events.Select(e => e.Name.String))
 					.Concat(type.NestedTypes.Select(MetadataTypeNames.GetName)), StringComparer.Ordinal);
 				var occupied = new HashSet<string>(inheritedNames, StringComparer.Ordinal);
