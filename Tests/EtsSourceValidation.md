@@ -22,6 +22,20 @@ mapped type, five methods and one parameter retain their original runtime names:
 
 ## Earlier completed milestones
 
+The source40 build subsequently completed: 111 inputs, 107 managed projects,
+zero build errors and zero SDK audit differences (13,776 types, 102,871 methods,
+17,406 fields). Evidence: `D:\knx_analysis\ets63-api-source-validation40`.
+
+An independent WPF type-map probe then found source/runtime naming gaps in
+`x:Class`, child-control references, temporary markup assemblies and compiled
+BAML type records. The generic type-alias regression now covers these paths,
+including resource-URI loading and incremental builds. Both aliased and default
+exports pass with one/four workers; the modern WPF markup compilation mode also
+passes. Evidence: `baml-type-alias-regression3.log`,
+`baml-type-no-alias-regression1.log`, `baml-type-alias-modern1.log` under
+`D:\knx_analysis`. These additional changes require the next full 6.3/6.4 run;
+source40 does not validate changes made after its export.
+
 Validation on 2026-09-10 used original SDK callers and separate rebuilt trees.
 The 6.3 regression build and live test passed before the 6.4 live test.
 

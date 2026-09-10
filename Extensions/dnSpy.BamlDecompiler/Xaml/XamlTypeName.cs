@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using dnlib.DotNet;
+using dnSpy.Contracts.Decompiler;
 
 namespace dnSpy.BamlDecompiler.Xaml {
 	public sealed class XamlTypeName {
@@ -38,16 +39,23 @@ namespace dnSpy.BamlDecompiler.Xaml {
 		}
 
 		public static XamlTypeName From(ITypeDefOrRef type, out string clrNs) {
-			var typeName = type.ReflectionName;
+			var typeName = SourceName(type);
 
 			var declaringTypes = new List<string>();
 			while (type.DeclaringType is ITypeDefOrRef declaringType) {
-				declaringTypes.Insert(0, declaringType.ReflectionName);
+				declaringTypes.Insert(0, SourceName(declaringType));
 				type = declaringType;
 			}
 
 			clrNs = type.ReflectionNamespace;
 			return new XamlTypeName(declaringTypes.ToArray(), typeName);
+		}
+
+		static string SourceName(ITypeDefOrRef type) {
+			string name = MetadataTypeNames.GetName(type);
+			if (name == MetadataTypeNames.SimpleName(type.Name)) return type.ReflectionName;
+			int arity = type.ReflectionName.IndexOf('`');
+			return name + (arity < 0 ? "" : type.ReflectionName.Substring(arity));
 		}
 
 		public string ToEncodedName() => AppendEncodedName(new StringBuilder()).ToString();

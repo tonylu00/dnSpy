@@ -51,7 +51,10 @@ namespace dnSpy.BamlDecompiler {
 			token.ThrowIfCancellationRequested();
 			new XClassRewritePass().Run(ctx, xaml);
 
-			return xaml.Root?.Elements().FirstOrDefault()?.Attributes().FirstOrDefault(x => x.Name.LocalName == "Class")?.Value;
+			var root = xaml.Root?.Elements().FirstOrDefault();
+			// Project/resource association uses original metadata identities, even
+			// when the exported x:Class uses a source-only alias.
+			return root?.Annotation<TypeDef>()?.ReflectionFullName ?? root?.Attributes().FirstOrDefault(x => x.Name.LocalName == "Class")?.Value;
 		}
 
 		public static XDocument Decompile(ModuleDef module, BamlDocument document, CancellationToken token, BamlDecompilerOptions bamlDecompilerOptions, List<string> assemblyReferences) {

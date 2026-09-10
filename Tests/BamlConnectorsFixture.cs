@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 namespace ConnectorFixture {
+    public class Badge : Button { }
     public partial class View : UserControl {
         int clicks;
         int styledClicks;
@@ -12,6 +13,11 @@ namespace ConnectorFixture {
         void OnStyledClick(object sender, RoutedEventArgs e) { styledClicks++; }
         void OnAttachedClick(object sender, RoutedEventArgs e) { attachedClicks++; }
         public void Verify() {
+            if (typeof(View).FullName != "ConnectorFixture.View") throw new Exception("Runtime root type name changed");
+            using (var stream = Application.GetResourceStream(new Uri("/BamlConnectorsFixture;component/untouched.txt", UriKind.Relative)).Stream)
+            using (var reader = new System.IO.StreamReader(stream)) {
+                if (reader.ReadToEnd() != "unrelated-resource-payload") throw new Exception("Unrelated resource changed");
+            }
             foreach (var name in new[] { "OnClick", "OnStyledClick", "OnAttachedClick" }) {
                 var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
                 if (typeof(View).GetMethod(name, flags) == null || typeof(View).GetMethod("Mapped" + name, flags) != null)
@@ -21,6 +27,7 @@ namespace ConnectorFixture {
             Direct.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Styled.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             AttachedChild.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (BadgeChild.GetType().FullName != "ConnectorFixture.Badge") throw new Exception("Runtime child type name changed");
             if (clicks != 1 || styledClicks != 1 || attachedClicks != 1) throw new Exception("Event wiring changed");
         }
     }

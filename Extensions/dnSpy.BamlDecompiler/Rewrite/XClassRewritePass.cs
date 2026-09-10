@@ -57,7 +57,10 @@ namespace dnSpy.BamlDecompiler.Rewrite {
 				var classModifierName = ctx.GetKnownNamespace("ClassModifier", XamlContext.KnownNamespace_Xaml, elem);
 				attrs.Insert(0, new XAttribute(classModifierName, ctx.BamlDecompilerOptions.InternalClassModifier));
 			}
-			attrs.Insert(0, new XAttribute(attrName, IdentifierEscaper.Escape(type.ResolvedType.ReflectionFullName)));
+			// Retain the physical input definition for connector reconstruction;
+			// x:Class itself must identify the aliased C# partial class.
+			elem.AddAnnotation(typeDef);
+			attrs.Insert(0, new XAttribute(attrName, IdentifierEscaper.Escape(MetadataTypeNames.SourceFullName(typeDef).Replace('/', '+'))));
 			elem.ReplaceAttributes(attrs);
 		}
 	}

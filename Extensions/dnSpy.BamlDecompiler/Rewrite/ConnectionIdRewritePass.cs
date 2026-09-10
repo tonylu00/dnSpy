@@ -53,11 +53,12 @@ namespace dnSpy.BamlDecompiler.Rewrite {
 		}
 
 		public void Run(XamlContext ctx, XDocument document) {
-			var xClass = document.Root.Elements().First().Attribute(ctx.GetKnownNamespace("Class", XamlContext.KnownNamespace_Xaml));
+			var root = document.Root.Elements().First();
+			var xClass = root.Attribute(ctx.GetKnownNamespace("Class", XamlContext.KnownNamespace_Xaml));
 			if (xClass is null)
 				return;
 
-			var type = ctx.Module.Find(xClass.Value, true);
+			var type = root.Annotation<TypeDef>() ?? ctx.Module.Find(xClass.Value, true);
 			if (type is null)
 				return;
 

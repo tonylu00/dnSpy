@@ -110,6 +110,13 @@ namespace dnSpy.Decompiler.MSBuild {
 			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))
 			using (var output = File.Create(Path.Combine(directory, "RestoreFields.cs")))
 				(input ?? throw new InvalidOperationException("Metadata field task resource missing.")).CopyTo(output);
+			// Reuse the BAML reader/writer, including deferred-record offsets, in
+			// the self-contained restoration task. Preserve each source's license.
+			foreach (var name in new[] { "BamlDocument", "BamlRecords", "BamlReader", "BamlWriter" }) {
+				using var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild." + name + ".cs");
+				using var reader = new StreamReader(input ?? throw new InvalidOperationException("BAML task source missing: " + name));
+				File.AppendAllText(Path.Combine(directory, "RestoreFields.cs"), "\nnamespace DnSpyMetadataBamlSupport {\n" + reader.ReadToEnd() + "\n}\n");
+			}
 			writer.WriteStartElement("UsingTask");
 			writer.WriteAttributeString("TaskName", "DnSpyRestoreMetadataFields");
 			writer.WriteAttributeString("TaskFactory", "RoslynCodeTaskFactory");
@@ -129,6 +136,9 @@ namespace dnSpy.Decompiler.MSBuild {
 			writer.WriteAttributeString("Condition", "'$(DesignTimeBuild)' != 'true'");
 			writer.WriteStartElement("DnSpyRestoreMetadataFields");
 			writer.WriteAttributeString("AssemblyPath", "@(IntermediateAssembly)");
+			// WPF loads its temporary assembly to resolve source names during
+			// markup compilation. Restore runtime names only in the final assembly.
+			writer.WriteAttributeString("Condition", "'$(_TargetAssemblyProjectName)' == ''");
 			writer.WriteAttributeString("PublicSign", "$(PublicSign)");
             writer.WriteAttributeString("ReferencePaths", "@(ReferencePathWithRefAssemblies)");
 			writer.WriteEndElement();

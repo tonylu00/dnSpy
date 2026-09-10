@@ -1,6 +1,6 @@
-<UserControl x:Class="ConnectorFixture.View" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<UserControl x:Class="ConnectorFixture.View" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:ConnectorFixture">
   <UserControl.Resources>
     <Style x:Key="StyledButton" TargetType="Button"><EventSetter Event="Click" Handler="OnStyledClick" /></Style>
   </UserControl.Resources>
-  <StackPanel><Button x:Name="Direct" Click="OnClick" /><Button x:Name="Styled" Style="{StaticResource StyledButton}" /><Border Button.Click="OnAttachedClick"><Button x:Name="AttachedChild" /></Border></StackPanel>
+  <StackPanel><Button x:Name="Direct" Click="OnClick" /><Button x:Name="Styled" Style="{StaticResource StyledButton}" /><Border Button.Click="OnAttachedClick"><Button x:Name="AttachedChild" /></Border><local:Badge x:Name="BadgeChild" /></StackPanel>
 </UserControl>

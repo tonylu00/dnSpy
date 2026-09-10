@@ -69,6 +69,16 @@ with `-SourceAliases` to check mapped XAML, compilation, event execution and
 reflection names with one and four workers; omit the switch to check the default
 export path.
 
+Use `-TypeAliases` to cover a mapped WPF root class and child control together
+with mapped handlers. The exporter retains original identities for resource
+association, emits source names in `x:Class` and type references, and leaves WPF's
+temporary markup-compilation assembly in source form. Final runtime restoration
+also rewrites scoped BAML type records using the existing BAML reader/writer,
+which recalculates deferred-record offsets. Other resource entries are copied as
+raw resource data without deserializing their values. The regression checks both
+construction and resource-URI loading, original type/method reflection names,
+unrelated resource content and byte-stable incremental builds.
+
 On 2026-09-10, parameter aliases on the schema-version helper in real ETS 6.3
 and then 6.4 Common assemblies exported and compiled with zero errors. Both
 public SDK contract audits reported zero differences, including parameter names.

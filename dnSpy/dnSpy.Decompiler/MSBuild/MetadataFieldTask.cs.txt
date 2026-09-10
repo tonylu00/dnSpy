@@ -6,6 +6,7 @@ using System.Globalization;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Writer;
+using DnSpyMetadataBamlSupport.dnSpy.BamlDecompiler.Baml;
 
 public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task {
     [Microsoft.Build.Framework.Required]
@@ -728,9 +729,84 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (maps.TryGetValue(key, out name)) renames.Add(new KeyValuePair<ITypeDefOrRef, UTF8String>(type, name));
         }
         AvoidGeneratedTypeCollisions(module, renames);
+        var originalTypeKeys = module.GetTypes().Cast<ITypeDefOrRef>().Concat(module.GetTypeRefs())
+            .Where(t => t.DefinitionAssembly != null).ToDictionary(t => t, t => BamlTypeKey(t.ReflectionFullName, t.DefinitionAssembly));
         foreach (var rename in renames) rename.Key.Name = rename.Value;
+        var bamlNames = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var type in originalTypeKeys) {
+            if (type.Value == BamlTypeKey(type.Key.ReflectionFullName, type.Key.DefinitionAssembly)) continue;
+            string previous;
+            if (bamlNames.TryGetValue(type.Value, out previous) && previous != type.Key.ReflectionFullName)
+                throw new InvalidDataException("Conflicting BAML type restoration names.");
+            bamlNames[type.Value] = type.Key.ReflectionFullName;
+        }
+        RestoreBamlTypeNames(module, bamlNames);
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
+    }
+
+    static string BamlTypeKey(string name, IAssembly assembly) {
+        return name + "|" + new AssemblyNameInfo(assembly.FullName).FullName;
+    }
+
+    static void RestoreBamlTypeNames(ModuleDef module, Dictionary<string, string> names) {
+        if (names.Count == 0) return;
+        for (int index = 0; index < module.Resources.Count; index++) {
+            var resource = module.Resources[index] as EmbeddedResource;
+            if (resource == null || !resource.Name.String.EndsWith(".resources", StringComparison.OrdinalIgnoreCase)) continue;
+            var entries = new List<Tuple<string, string, byte[]>>();
+            bool changed = false;
+            using (var stream = new MemoryStream(resource.CreateReader().ToArray()))
+            using (var reader = new System.Resources.ResourceReader(stream)) {
+                var enumerator = reader.GetEnumerator();
+                while (enumerator.MoveNext()) {
+                    string key = (string)enumerator.Key, type;
+                    byte[] data;
+                    // Never deserialize arbitrary resource values.
+                    reader.GetResourceData(key, out type, out data);
+                    if (key.EndsWith(".baml", StringComparison.OrdinalIgnoreCase) &&
+                        (type == "ResourceTypeCode.Stream" || type == "ResourceTypeCode.ByteArray")) {
+                        if (data.Length < 4 || BitConverter.ToInt32(data, 0) != data.Length - 4)
+                            throw new InvalidDataException("Invalid BAML resource stream length: " + key);
+                        BamlDocument document;
+                        using (var baml = new MemoryStream(data, 4, data.Length - 4))
+                            document = BamlReader.ReadDocument(baml, System.Threading.CancellationToken.None);
+                        var assemblies = document.OfType<AssemblyInfoRecord>().ToDictionary(a => (int)a.AssemblyId, a => new AssemblyNameInfo(a.AssemblyFullName));
+                        bool renamed = false;
+                        foreach (var record in document.OfType<TypeInfoRecord>()) {
+                            AssemblyNameInfo assembly;
+                            if (record.AssemblyId == ushort.MaxValue) assembly = new AssemblyNameInfo(module.Assembly.FullName);
+                            else if (!assemblies.TryGetValue(record.AssemblyId & 0xfff, out assembly))
+                                throw new InvalidDataException("Missing BAML assembly record: " + key);
+                            string name;
+                            if (names.TryGetValue(BamlTypeKey(record.TypeFullName, assembly), out name)) {
+                                record.TypeFullName = name;
+                                renamed = true;
+                            }
+                        }
+                        if (renamed) {
+                            using (var baml = new MemoryStream()) {
+                                BamlWriter.WriteDocument(document, baml);
+                                byte[] payload = baml.ToArray();
+                                data = new byte[payload.Length + 4];
+                                Buffer.BlockCopy(BitConverter.GetBytes(payload.Length), 0, data, 0, 4);
+                                Buffer.BlockCopy(payload, 0, data, 4, payload.Length);
+                            }
+                            changed = true;
+                        }
+                    }
+                    entries.Add(Tuple.Create(key, type, data));
+                }
+            }
+            if (!changed) continue;
+            using (var stream = new MemoryStream()) {
+                using (var writer = new System.Resources.ResourceWriter(stream)) {
+                    foreach (var entry in entries) writer.AddResourceData(entry.Item1, entry.Item2, entry.Item3);
+                    writer.Generate();
+                    module.Resources[index] = new EmbeddedResource(resource.Name, stream.ToArray(), resource.Attributes);
+                }
+            }
+        }
     }
 
     static string PlannedTypeKey(ITypeDefOrRef type, Dictionary<TypeDef, UTF8String> names) {
