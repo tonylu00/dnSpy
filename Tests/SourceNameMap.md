@@ -50,3 +50,17 @@ its original runtime names, and matched all five operations across nine schema
 versions. The public-contract audit compared 9,603 types, 69,790 methods and
 13,761 fields with zero differences. These checks do not prove equivalence of
 all method bodies or arbitrary third-party SDK applications.
+
+Cross-version validation also transferred ten descriptive method names from a
+6.3 reference into 6.4 source. Candidate comparison required a unique matching
+declaring type, signature, normalized instruction sequence, locals, exception
+regions and symbolic assembly scopes (ignoring version). Two additional matches
+were excluded when scope comparison failed. This is candidate evidence, not
+general proof of behavior equivalence; review names before creating a map.
+
+Together with the two schema-method aliases, the expanded map rebuilt five
+modules. The SDK contract audit reported no differences, and a separate metadata
+check found all twelve mapped methods under their exact original runtime names
+and signatures. Repeated candidate names received distinct descriptive aliases
+where required by the source map's module-wide collision guard. This validation
+does not replace a full-tree build or application launch with the expanded map.
