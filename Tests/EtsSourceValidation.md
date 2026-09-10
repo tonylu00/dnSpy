@@ -45,6 +45,24 @@ preserialized bytes survive while aliased WPF controls execute correctly, with
 one/four workers and incremental builds. Source41 remains a failed build;
 source42 is the subsequent full validation run.
 
+Source42 completed after an interrupted export/build handoff. Before resuming
+compilation, its zero-error export manifest, all 107 project files and exact
+source-map snapshot were verified. The full build and SDK audit passed with the
+same 111-input/107-project and contract counts as source40. All mapped original
+runtime names were independently verified. Staging preserved tree structure and
+377 assembly/satellite overlays, and the unchanged SDK-built MCP add-in loaded
+all 407 types with the host's binding configuration.
+
+A whole-project comparison against source39 found zero normalized differences
+across 193,872 method bodies in 107 physical projects. It checks scoped signatures,
+flags, IL, referenced locals and exception handlers; this does not prove equality
+of all attributes/resources or replace unexercised runtime checks. The first
+comparison attempt used an incorrect path for an x86 output; the corrected
+comparison discovers the unique Release/framework output within each project.
+Evidence: `ets63-api-source-validation42`, `ets63-source42-alias-audit1.json`,
+`source42-bodycheck2`, `ets63-source42-staging.log` and
+`ets63-source42-sdk-load.log` under `D:\knx_analysis`.
+
 Validation on 2026-09-10 used original SDK callers and separate rebuilt trees.
 The 6.3 regression build and live test passed before the 6.4 live test.
 
