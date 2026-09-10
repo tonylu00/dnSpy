@@ -59,8 +59,20 @@ password entry. The prior project-number marker and protection remain intact;
 the bridge reports `save_suppressed: false`. The original profile, add-in and
 all 4,811 original data-file hashes are restored after shutdown. Its legacy
 injected DevKit default was removed only in the disposable live copy, with
-input/output hashes recorded. Direct 6.4 live evidence still covers source18;
-source19's automation and separate test stores are prepared for the next check.
+input/output hashes recorded.
+
+After the source47 live check and complete restoration, `ets64-source19-live1`
+directly validates the expanded 6.4 tree using fresh profile backups and copied
+stores. Its unchanged official-SDK add-in reads test-mcp's 29 devices and 502
+group addresses. A copy of P-07CC saved by source47 retains the 6.3 SDK marker
+when opened with its password. An additional SDK edit to that migrated project
+(`SRC19-MIGRATED-SAVE`) and a project-number edit to native protected P-0836
+(`SRC19-NATIVE-PROTECTED`) both survive a full ETS process restart and password
+entry. Both remain protected and healthy, with `save_suppressed: false`.
+The SDK before/update/restarted JSON files and `projects-restarted.json` record
+these checks. Original profile/add-in and all 4,811 original data-file hashes
+and counts match after shutdown and restoration. The 6.4 DevKit check is a
+byte-identical no-op: its optional features already exclude ExtendedLogging.
 
 - **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
   zero SDK contract issues. All 193,872 method-body fingerprints match the
