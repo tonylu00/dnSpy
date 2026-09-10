@@ -23,7 +23,7 @@ namespace dnSpy.Contracts.Decompiler {
 		public static bool RequiresAssemblyVisibility(TypeDef type) => type.Module != null && visibleTypes.GetValue(type.Module, FindVisibleTypes).Contains(type);
 		static HashSet<TypeDef> FindVisibleTypes(ModuleDef module) {
 			var result = new HashSet<TypeDef>();
-			void Add(TypeDef type) {
+			void Add(TypeDef? type) {
 				for (; type != null && type.Module == module; type = type.DeclaringType) result.Add(type);
 			}
 			void Inspect(TypeSig signature) {

@@ -51,7 +51,7 @@ foreach ($threads in @(1,4)) {
     $metadata = [dnlib.DotNet.ModuleDefMD]::Load((Join-Path $rebuilt 'PropertyRowNamesFixture.exe'))
     try {
         $properties = @($metadata.GetTypes() | ForEach-Object { $_.Properties })
-        if ($properties.Count -ne 2 -or @($properties | Where-Object { $_.PropertySig.HasThis }).Count) { throw 'Original property calling convention changed' }
+        if ($properties.Count -ne 4 -or @($properties | Where-Object { $_.PropertySig.HasThis }).Count) { throw 'Original property calling convention changed' }
     } finally { $metadata.Dispose() }
 }
 
