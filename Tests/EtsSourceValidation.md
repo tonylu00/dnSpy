@@ -16,6 +16,11 @@ passed before starting the corresponding 6.4 source18 run.
   project access, an SDK metadata update surviving a process restart, and
   password-protected project opening. Original profile/add-in and all 4,811
   recorded original data-file hashes were restored; ETS and its daemon exited.
+  The later `ets63-source45-live1` runs the latest tree directly: a UI edit and
+  an official-SDK edit to a disposable protected project both survive a full
+  ETS process restart and password entry. The project remains protected and
+  healthy, with saving enabled. Its profile/add-in, original data and source
+  fixture hash checks pass as well.
 - **6.4:** `ets64-api-source-validation18` compiles 172 managed projects with
   zero SDK contract issues. All 496 reviewed method aliases across 25 modules
   retain their original runtime names, and all 5,883 local state-machine
@@ -32,6 +37,16 @@ passed before starting the corresponding 6.4 source18 run.
   project save/reopen cycle. Cleanup verifies the original profile, add-in,
   all 4,811 recorded original data files and frozen fixtures are unchanged;
   ETS and its daemon exited, and port 37620 is free.
+- **6.4 protected persistence:** `ets64-source18-live2` copies the protected
+  project just saved by source45 into the 6.4 test store and opens it with its
+  password. The unchanged official-SDK add-in reads both 6.3 edits correctly.
+  An additional SDK edit to that migrated copy and another to a native 6.4
+  protected fixture both survive a full ETS process restart and fresh password
+  entry. Both projects remain protected and healthy, with saving enabled.
+  `protected-roundtrip-result.json` and the SDK before/update/restarted reports
+  record the exact markers and process IDs. Source fixture hashes and the
+  original profile, add-in and all 4,811 original data-file hashes match after
+  restoration.
 
 `delegate-cache-regression4` covers async methods, iterators, constructor
 lambdas, ordinary/generic delegate caches, original reflection names, event
