@@ -28,10 +28,21 @@ foreach($threads in 1,4){
  if($LASTEXITCODE -ne 0){throw 'Rebuilt source failed.'}
  & (Join-Path $rebuilt 'FieldCollisionClient.exe')
  if($LASTEXITCODE -ne 0){throw 'Rebuilt references changed.'}
+ $runtimeFiles=@(Join-Path $rebuilt 'FieldCollisionLibrary.dll'; Join-Path $rebuilt 'FieldCollisionLibrary.pdb')
+ $before=@(Get-FileHash -LiteralPath $runtimeFiles | ForEach-Object Hash)
+ dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
+ if($LASTEXITCODE -ne 0){throw 'Incremental build failed.'}
+ if(Compare-Object $before @(Get-FileHash -LiteralPath $runtimeFiles | ForEach-Object Hash)){throw 'Incremental restoration changed the library or symbols.'}
+ Copy-Item -LiteralPath $exe -Destination (Join-Path $rebuilt 'FieldCollisionClient.exe') -Force
+ & (Join-Path $rebuilt 'FieldCollisionClient.exe')
+ if($LASTEXITCODE -ne 0){throw 'Unchanged binary field references failed.'}
 }
 if(Compare-Object $hashes @(Get-FileHash $exe,$library | ForEach-Object Hash)){throw 'Inputs changed.'}
-foreach($relative in 'FieldCollisionLibrary\Collision.cs','FieldCollisionLibrary\GenericBox.cs','FieldCollisionClient\FieldCollisionClient.cs') {
- $one=Join-Path $OutputDirectory (Join-Path 'export-1' $relative)
- $four=Join-Path $OutputDirectory (Join-Path 'export-4' $relative)
- if((Get-FileHash $one).Hash -ne (Get-FileHash $four).Hash){throw 'Worker count changed generated source.'}
+$one=Join-Path $OutputDirectory 'export-1'
+$four=Join-Path $OutputDirectory 'export-4'
+foreach($file in Get-ChildItem -LiteralPath $one -Recurse -File -Filter '*.cs' | Where-Object FullName -NotMatch '\\(obj|bin)\\'){
+ $relative=$file.FullName.Substring($one.Length+1)
+ $other=Join-Path $four $relative
+ if(!(Test-Path -LiteralPath $other) -or (Get-FileHash -LiteralPath $file.FullName).Hash -ne (Get-FileHash -LiteralPath $other).Hash){throw "Worker-dependent source: $relative"}
 }
+Write-Output 'PASS: reflection, unchanged binary clients, deterministic source and incremental DLL/PDB hashes'

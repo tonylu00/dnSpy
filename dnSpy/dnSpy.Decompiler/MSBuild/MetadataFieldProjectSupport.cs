@@ -8,7 +8,7 @@ using dnSpy.Contracts.Decompiler;
 namespace dnSpy.Decompiler.MSBuild {
 	static class MetadataFieldProjectSupport {
 		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
-			(MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
+			(MetadataFieldNames.GetMappings(project.Module).Length != 0 || MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
 		public static void Write(Project project, XmlWriter writer) {
 			if (project.Options.DecompilationContext.RestoreMetadataOnlyFields) {
@@ -33,6 +33,14 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteEndElement(); writer.WriteEndElement();
 			}
 			var typeNames = MetadataTypeNames.GetMappings(project.Module);
+			var fieldNames = MetadataFieldNames.GetMappings(project.Module);
+			if (fieldNames.Length != 0) {
+				File.WriteAllText(Path.Combine(directory, "FieldNames.cs"), string.Join("\n", fieldNames.Select(m =>
+					"[assembly: global::System.Reflection.ObfuscationAttribute(Feature = \"" + m + "\")]")) + "\n");
+				writer.WriteStartElement("ItemGroup"); writer.WriteStartElement("Compile");
+				writer.WriteAttributeString("Include", ".dnspy-metadata/FieldNames.cs");
+				writer.WriteEndElement(); writer.WriteEndElement();
+			}
 			if (typeNames.Length != 0) {
 				File.WriteAllText(Path.Combine(directory, "TypeNames.cs"), string.Join("\n", typeNames.Select(m =>
 					"[assembly: global::System.Reflection.ObfuscationAttribute(Feature = \"" + m + "\")]")) + "\n");
@@ -71,6 +79,8 @@ namespace dnSpy.Decompiler.MSBuild {
 				"RawExceptions.cs is a compilation placeholder: its catch type becomes System.Object, and calls to ThrowValue are removed before the existing IL throw. The helper type is removed from runtime assemblies. This preserves raw exception objects and the assembly's exception-wrapping policy.\n" +
 				"DelegateMethods.cs records typed companion-to-delegate mappings. Static helper bodies compile in companion classes; the task moves them onto the delegate, repairs local and external method references (including generic calls), and removes mapping attributes and companion types. Reference assemblies retain the source companions so dependent projects can compile.\n" +
 				"TypeNames.cs records reversible type aliases for metadata names that C# cannot declare, including collisions with methods or enclosing types. Runtime definitions and external type references regain their original names; reference assemblies retain source aliases for compilation. Method names and overload families stay intact. The mapping uses the resolved input assembly context, assembly name/version/culture, and full nested source name.\n" +
+				"FieldNames.cs restores source field aliases in runtime definitions and MemberRefs, including generic and inherited owners. Mappings identify the resolved source owner, assembly name/version/culture and unique source alias. Field types, storage, flags and constants remain unchanged. Source reference assemblies keep aliases so dependent source projects can compile.\n" +
+				"Type restoration also preserves unusual input generic arity spelling. If a newly compiled helper would collide with a retained input type, only the new compiler-generated helper receives a unique runtime name. Ambiguous conflicts between retained or ordinary types fail explicitly.\n" +
 				"EntryPoint.cs allows C# to compile executables whose CLR entry method has another name. The build task selects the marked original method and removes the stub; its original name, signature, attributes and body remain intact.\n" +
 				"Protected-call stubs allow nested source code to reach hidden, nonvirtual protected methods within the same module. The task redirects calls (including generic method specifications) to the original methods and removes the stubs from runtime assemblies. Original access flags, names and bodies remain unchanged; reference assemblies retain the compilation stubs. Unexpected inherited generic declaring-type references fail explicitly.\n" +
 				"The task requires an unsigned build output and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +

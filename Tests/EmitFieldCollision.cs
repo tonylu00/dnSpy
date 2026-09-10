@@ -3,6 +3,7 @@ using System.Linq;
 using dnlib.DotNet;
 class Emitter {
     static string Name(string type, string field) {
+        if (type == "PublicFieldBase`1" && field == "Storage") return "Store";
         if (type == "FieldBase`1" && field == "BaseStorage" || type == "FieldDerived" && field == "DerivedStorage") return "e";
         if (type == "FieldDerived" && field == "Callback") return "ReadProtected";
         if (type == "Collision") {
@@ -28,9 +29,15 @@ class Emitter {
                             member.Name = Name(member.DeclaringType.Name, member.Name);
         foreach (var type in library.GetTypes())
             foreach (var field in type.Fields) field.Name = Name(type.Name, field.Name);
+        foreach (var module in new[] { library, client }) {
+            foreach (var reference in module.GetTypeRefs()) reference.Name = TypeName(reference.Name);
+        }
+        foreach (var type in library.GetTypes()) type.Name = TypeName(type.Name);
         library.Write(Path.Combine(args[2], "FieldCollisionLibrary.dll"));
         client.Write(Path.Combine(args[2], "FieldCollisionClient.exe"));
     }
+    static string TypeName(string name) => name == "GenericBox`1" ? "GenericBox" : name == "Nested`1" ? "Nested" :
+        name == "<>c" ? "OriginalLambdaClosure" : name == "RetainedHelper" ? "<>c" : name;
 }
 
 

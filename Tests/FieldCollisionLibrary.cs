@@ -2,6 +2,13 @@
 public class FriendBase { internal bool Check() { return true; } }
 public class FriendDerived : FriendBase { public new uint Check() { return 7; } }
 public enum EnumTokens { Object, Array, ValueType, Enum }
+public class PublicFieldBase<T> {
+    public T Storage;
+    public int Store() { return 29; }
+}
+public class PublicFieldDerived : PublicFieldBase<string> {
+    public new int Store;
+}
 public sealed class Collision {
     public int First;
     public string Second;
@@ -15,6 +22,18 @@ public sealed class GenericBox<T> {
     public T First;
     public int Second;
     public int Total() { return Second + 3; }
+    public class Nested<U> {
+        public T Left;
+        public U Right;
+    }
+}
+public class RetainedHelperHost {
+    public class RetainedHelper { public int Value = 37; }
+    public static int ReadRetained() { return new RetainedHelper().Value; }
+    public static int ReadLambda(int value) {
+        System.Func<int, int> add = x => x + 41;
+        return add(value);
+    }
 }
 public class FieldBase<T> {
     protected T BaseStorage;

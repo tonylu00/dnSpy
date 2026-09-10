@@ -66,10 +66,15 @@ namespace dnSpy.Contracts.Decompiler {
 			}
 			return result;
 		}
-		static string SourceFullName(TypeDef type) {
-			var name = GetName(type) + type.Name.String.Substring(SimpleName(type.Name).Length);
+		/// <summary>Full nested source name, including projected aliases and generic arity.</summary>
+		public static string SourceFullName(TypeDef type) {
+			var name = SourceMetadataName(type);
 			return type.DeclaringType != null ? SourceFullName(type.DeclaringType) + "/" + name :
 				string.IsNullOrEmpty(type.Namespace) ? name : type.Namespace + "." + name;
+		}
+		static string SourceMetadataName(TypeDef type) {
+			int arity = Math.Max(0, type.GenericParameters.Count - (type.DeclaringType?.GenericParameters.Count ?? 0));
+			return GetName(type) + (arity == 0 ? "" : "`" + arity.ToString(CultureInfo.InvariantCulture));
 		}
 		static string Encode(string text) => Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
 		/// <summary>Maps local definitions and external references using the resolved input context.</summary>
@@ -79,7 +84,7 @@ namespace dnSpy.Contracts.Decompiler {
 			foreach (var reference in module.GetTypeRefs()) {
 				for (var type = reference.ResolveTypeDef(); type != null; type = type.DeclaringType) types.Add(type);
 			}
-			return types.Where(t => t.Module?.Assembly != null && names.GetValue(t.Module, Find).ContainsKey(t))
+			return types.Where(t => t.Module?.Assembly != null && SourceMetadataName(t) != t.Name.String)
 				.Select(t => Prefix + Encode(SourceFullName(t)) + "|" + Encode(t.DefinitionAssembly.Name) + "|" +
 					Encode(t.DefinitionAssembly.Version.ToString()) + "|" + Encode(t.DefinitionAssembly.Culture ?? "") + "|" + Convert.ToBase64String(t.Name.Data))
 				.Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();
