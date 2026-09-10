@@ -32,6 +32,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreMemberNames(module, false);
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreDefinitionFlags(module);
+                changed |= RestoreStaticValueTypes(module);
                 changed |= RestoreParameterNames(module);
                 changed |= RestoreFieldData(module);
                 changed |= RestoreEntryPoint(module);
@@ -375,6 +376,38 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                     owner.CustomAttributes.Remove(attribute); changed = true;
                 }
             }
+        }
+        return changed;
+    }
+
+    static bool RestoreStaticValueTypes(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.static-values.v1|";
+        const string methodFeature = "dnSpy.metadata.extension-method.v1";
+        string Feature(CustomAttribute attribute) => attribute.TypeFullName != "System.Reflection.ObfuscationAttribute" ? null :
+            attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+        void AddExtension(IHasCustomAttribute owner) {
+            const string name = "System.Runtime.CompilerServices.ExtensionAttribute";
+            if (owner.CustomAttributes.Any(a => a.TypeFullName == name)) return;
+            var type = module.CorLibTypes.GetTypeRef("System.Runtime.CompilerServices", "ExtensionAttribute");
+            owner.CustomAttributes.Add(new CustomAttribute(new MemberRefUser(module, ".ctor", MethodSig.CreateInstance(module.CorLibTypes.Void), type)));
+        }
+        bool changed = false;
+        foreach (var type in module.GetTypes()) {
+            var markers = type.CustomAttributes.Where(a => Feature(a)?.StartsWith(prefix, StringComparison.Ordinal) == true).ToArray();
+            if (markers.Length == 0) continue;
+            if (markers.Length != 1 || !type.IsAbstract || !type.IsSealed) throw new InvalidDataException("Invalid static value projection.");
+            var flags = Feature(markers[0]).Substring(prefix.Length).Split('|');
+            if (flags.Length != 2 || flags.Any(f => f != "0" && f != "1")) throw new InvalidDataException("Invalid extension flags.");
+            var constructors = type.Methods.Where(m => m.IsInstanceConstructor).ToArray();
+            if (constructors.Length != 1 || !constructors[0].IsInstanceConstructor || !constructors[0].IsPrivate || constructors[0].MethodSig.Params.Count != 0)
+                throw new InvalidDataException("Missing or invalid temporary constructor.");
+            type.Methods.Remove(constructors[0]);
+            if (flags[0] == "1") AddExtension(type);
+            if (flags[1] == "1") AddExtension(module.Assembly);
+            foreach (var method in type.Methods) foreach (var attribute in method.CustomAttributes.Where(a => Feature(a) == methodFeature).ToArray()) {
+                AddExtension(method); method.CustomAttributes.Remove(attribute);
+            }
+            type.CustomAttributes.Remove(markers[0]); changed = true;
         }
         return changed;
     }

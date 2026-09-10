@@ -73,6 +73,8 @@ namespace dnSpy.Decompiler.MSBuild {
 		}
 
 		public void Create() {
+			if (options.GenerateSDKStyleProjects)
+				dnSpy.Contracts.Decompiler.MetadataStaticValues.RegisterProjects(options.ProjectModules.Select(m => m.Module));
 			string? sourceNameMapSnapshot = null;
 			if (options.SourceNameMapPath != null) {
 				if (!options.GenerateSDKStyleProjects) throw new InvalidOperationException("Source aliases require SDK export.");
