@@ -114,4 +114,13 @@ communication-object and parameter-metadata reads succeeded. Original profile,
 installed add-in and all 1,877 original project/product file hashes were restored
 and verified after ETS closed. Evidence: `D:\knx_analysis\ets63-source39-live1`.
 This project is unprotected; password-project and broader runtime equivalence
-remain separate requirements. Source14's fresh live test is still pending.
+remain separate requirements.
+
+Source14 then passed the corresponding fresh 6.4 launch test against separately
+copied stores. Chinese UI opened test-mcp, and the original-SDK MCP returned all
+29 devices plus sampled group addresses, communication objects and parameter
+metadata. The initial dispatcher snapshot timed out during copied-product
+conversion; the completed launch and subsequent reads succeeded. After ETS
+closed, original add-in/profile hashes and all 1,877 original data hashes matched.
+Evidence: `D:\knx_analysis\ets64-source14-live1`. This remains an unprotected
+test-mcp check; the earlier P-01C0 password-project failure is not covered by it.
