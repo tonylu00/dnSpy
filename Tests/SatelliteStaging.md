@@ -14,6 +14,11 @@ The script copies each project's main assembly and its own culture satellite
 assemblies. Rebuilt unsigned parents need matching rebuilt satellites; retaining
 the original signed satellites can silently select neutral English resources.
 Transitive dependencies in build output directories are not used as overlays.
+When an export also builds dependencies from separate source trees, declare
+those roots with `-ReferenceOnlyDirectories D:\analysis\compatibility`.
+Their projects must have build outputs; the manifest records their source and
+rebuilt hashes, but they are not copied into the application tree. Undeclared
+external roots and roots overlapping the application input are rejected.
 Missing satellites and ambiguous outputs fail before creating the destination.
 The script verifies input hashes, output hashes and the complete tree shape,
 and writes a manifest next to the output. Native components and other files

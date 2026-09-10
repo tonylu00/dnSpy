@@ -2,12 +2,20 @@ param(
     [Parameter(Mandatory)][string]$InputDirectory,
     [Parameter(Mandatory)][string]$ExportDirectory,
     [Parameter(Mandatory)][string]$OutputDirectory,
-    [string]$Configuration = 'Release'
+    [string]$Configuration = 'Release',
+    [string[]]$ReferenceOnlyDirectories = @()
 )
 $ErrorActionPreference = 'Stop'
 $InputDirectory = [IO.Path]::GetFullPath($InputDirectory).TrimEnd('\')
 $ExportDirectory = [IO.Path]::GetFullPath($ExportDirectory).TrimEnd('\')
 $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory).TrimEnd('\')
+$ReferenceOnlyDirectories = @($ReferenceOnlyDirectories | ForEach-Object { [IO.Path]::GetFullPath($_).TrimEnd('\') } | Sort-Object -Unique)
+foreach ($referenceRoot in $ReferenceOnlyDirectories) {
+    if (!(Test-Path -LiteralPath $referenceRoot -PathType Container)) { throw "Missing reference directory: $referenceRoot" }
+    if ($referenceRoot -eq $InputDirectory -or $referenceRoot.StartsWith($InputDirectory + '\', [StringComparison]::OrdinalIgnoreCase) -or
+        $InputDirectory.StartsWith($referenceRoot + '\', [StringComparison]::OrdinalIgnoreCase)) { throw 'Reference-only roots must not overlap the application input.' }
+    if ($OutputDirectory -eq $referenceRoot -or $OutputDirectory.StartsWith($referenceRoot + '\', [StringComparison]::OrdinalIgnoreCase)) { throw 'Output must be outside reference-only roots.' }
+}
 function RelativeWithin([string]$root, [string]$path) {
     $prefix = $root.TrimEnd('\') + '\'
     $full = [IO.Path]::GetFullPath($path)
@@ -21,6 +29,7 @@ foreach ($root in @($InputDirectory, $ExportDirectory)) {
 [xml]$map = Get-Content -LiteralPath (Join-Path $ExportDirectory 'dnspy-export-map.xml')
 if ($map.DnSpyExportMap.ExportErrors -ne '0') { throw 'Export map reports errors.' }
 $overlays = [Collections.Generic.Dictionary[string,object]]::new([StringComparer]::OrdinalIgnoreCase)
+$references = [Collections.Generic.List[object]]::new()
 function AddOverlay([string]$source, [string]$built, [string]$kind) {
     $relative = RelativeWithin $InputDirectory $source
     if (!(Test-Path -LiteralPath $source -PathType Leaf)) { throw "Missing input file: $source" }
@@ -28,7 +37,12 @@ function AddOverlay([string]$source, [string]$built, [string]$kind) {
     $overlays.Add($relative, [pscustomobject]@{ Relative=$relative; Built=$built; Kind=$kind; Hash=(Get-FileHash -LiteralPath $built).Hash })
 }
 foreach ($entry in $map.DnSpyExportMap.Project) {
-    $null = RelativeWithin $InputDirectory $entry.Source
+    $sourcePath = [IO.Path]::GetFullPath($entry.Source)
+    $referenceOnly = !$sourcePath.StartsWith($InputDirectory + '\', [StringComparison]::OrdinalIgnoreCase)
+    if ($referenceOnly -and !@($ReferenceOnlyDirectories | Where-Object { $sourcePath.StartsWith($_ + '\', [StringComparison]::OrdinalIgnoreCase) }).Count) {
+        throw "Source outside application and declared reference roots: $sourcePath"
+    }
+    if (!(Test-Path -LiteralPath $sourcePath -PathType Leaf)) { throw "Missing input file: $sourcePath" }
     $project = [IO.Path]::GetFullPath((Join-Path $ExportDirectory $entry.Project))
     $null = RelativeWithin $ExportDirectory $project
     $name = $entry.AssemblyName + [IO.Path]::GetExtension($entry.Source)
@@ -39,6 +53,10 @@ foreach ($entry in $map.DnSpyExportMap.Project) {
     })
     if ($outputs.Count -ne 1) { throw "Ambiguous or missing build output for $project" }
     $built = $outputs[0].FullName
+    if ($referenceOnly) {
+        $references.Add([pscustomobject]@{ Source=$sourcePath; InputHash=(Get-FileHash -LiteralPath $sourcePath).Hash; Built=$built; Hash=(Get-FileHash -LiteralPath $built).Hash })
+        continue
+    }
     AddOverlay $entry.Source $built 'Assembly'
 
     # Copy only this project's satellite outputs, never its transitive dependencies.
@@ -92,6 +110,6 @@ foreach ($file in $hashes) {
     if ((Get-FileHash -LiteralPath (Join-Path $OutputDirectory $relative)).Hash -ne $expected) { throw "Output mismatch: $relative" }
 }
 if (@(Get-ChildItem -LiteralPath $OutputDirectory -Recurse -Force).Count -ne $tree.Count) { throw 'Runtime tree shape changed.' }
-@{ Input=$InputDirectory; Export=$ExportDirectory; Output=$OutputDirectory; Files=$hashes.Count; Overlays=@($overlays.Values | Sort-Object Relative) } |
+@{ Input=$InputDirectory; Export=$ExportDirectory; Output=$OutputDirectory; Files=$hashes.Count; Overlays=@($overlays.Values | Sort-Object Relative); ReferenceOnlyProjects=@($references | Sort-Object Source) } |
     ConvertTo-Json -Depth 5 | Set-Content ($OutputDirectory + '-manifest.json')
 Write-Output "PASS: staged $($overlays.Count) assemblies and satellites; input hashes and tree structure preserved."

@@ -61,6 +61,21 @@ foreach ($threads in @(1,4)) {
         & (Join-Path $staged "$variant\Fixture.exe") "$variant 中文"
         if ($LASTEXITCODE -ne 0) { throw "Satellite lookup failed in $variant context." }
     }
+    $subset = Join-Path $OutputDirectory "subset-$threads"
+    & (Join-Path $PSScriptRoot '..\Build\Stage-RecompiledTree.ps1') -InputDirectory (Join-Path $inputRoot 'Current') -ReferenceOnlyDirectories (Join-Path $inputRoot 'Compatibility') -ExportDirectory $export -OutputDirectory $subset
+    & (Join-Path $subset 'Fixture.exe') 'Current 中文'
+    if ($LASTEXITCODE -ne 0 -or (Test-Path (Join-Path $subset 'Compatibility'))) { throw 'Reference-only project replaced application context' }
+    $subsetManifest = Get-Content ($subset + '-manifest.json') -Raw | ConvertFrom-Json
+    if (@($subsetManifest.ReferenceOnlyProjects).Count -ne 1) { throw 'Missing reference-only provenance' }
+    $undeclared = Join-Path $OutputDirectory "undeclared-$threads"
+    $rejected = $false
+    try {
+        & (Join-Path $PSScriptRoot '..\Build\Stage-RecompiledTree.ps1') -InputDirectory (Join-Path $inputRoot 'Current') -ExportDirectory $export -OutputDirectory $undeclared
+    } catch {
+        if ($_.Exception.Message -notlike 'Source outside application and declared reference roots:*') { throw }
+        $rejected = $true
+    }
+    if (!$rejected -or (Test-Path $undeclared)) { throw 'Undeclared source root was not rejected before staging' }
     $satellite = Get-ChildItem -LiteralPath $export -Recurse -File -Filter 'Fixture.resources.dll' |
         Where-Object FullName -like '*\bin\Release\*' | Select-Object -First 1
     $savedSatellite = $satellite.FullName + '.saved'
