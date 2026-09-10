@@ -119,7 +119,12 @@ namespace dnSpy.Decompiler.MSBuild {
 			writer.WriteAttributeString("Condition", "'$(DesignTimeBuild)' != 'true'");
 			writer.WriteStartElement("DnSpyRestoreMetadataFields");
 			writer.WriteAttributeString("AssemblyPath", "@(IntermediateAssembly)");
-			writer.WriteAttributeString("ReferencePaths", "@(ReferencePathWithRefAssemblies)");
+            writer.WriteAttributeString("ReferencePaths", "@(ReferencePathWithRefAssemblies)");
+			writer.WriteEndElement();
+			writer.WriteStartElement("DnSpyRestoreMetadataFields");
+			writer.WriteAttributeString("AssemblyPath", "@(IntermediateRefAssembly)");
+			writer.WriteAttributeString("TupleNamesOnly", "true");
+			writer.WriteAttributeString("Condition", "'@(IntermediateRefAssembly)' != '' and Exists('@(IntermediateRefAssembly)')");
 			writer.WriteEndElement(); writer.WriteEndElement();
 		}
 	}

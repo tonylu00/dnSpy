@@ -11,6 +11,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
     [Microsoft.Build.Framework.Required]
     public string AssemblyPath { get; set; }
     public Microsoft.Build.Framework.ITaskItem[] ReferencePaths { get; set; }
+    public bool TupleNamesOnly { get; set; }
     public override bool Execute() {
         const string prefix = "dnSpy.metadata.string-field.v1|";
         string temporary = AssemblyPath + ".metadata-" + Guid.NewGuid().ToString("N");
@@ -20,6 +21,8 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             bool changed = false;
             using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
                 module.LoadEverything();
+                changed |= RestoreTupleNames(module);
+                if (!TupleNamesOnly) {
                 changed |= RestoreAccessorContracts(module);
                 changed |= RestoreDelegateMethods(module);
                 changed |= RestoreProtectedCalls(module);
@@ -96,6 +99,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                         type.CustomAttributes.Remove(attribute);
                         changed = true;
                     }
+                }
                 }
                 if (!changed) return true;
                 if (module.IsStrongNameSigned) throw new InvalidOperationException("Metadata field restoration requires an unsigned build output.");
@@ -180,6 +184,73 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         if (module.PdbState != null) module.PdbState.UserEntryPoint = entry;
         module.Types.Remove(stubs[0]);
         return true;
+    }
+
+    static bool RestoreTupleNames(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.tuple-names.v1|";
+        const string name = "System.Runtime.CompilerServices.TupleElementNamesAttribute";
+        bool changed = false;
+        var owners = new List<IHasCustomAttribute>();
+        foreach (var type in module.GetTypes()) {
+            owners.Add(type); owners.AddRange(type.Fields); owners.AddRange(type.Properties); owners.AddRange(type.Events);
+            foreach (var method in type.Methods) { owners.Add(method); owners.AddRange(method.ParamDefs); }
+        }
+        foreach (var owner in owners) foreach (var marker in owner.CustomAttributes.ToArray()) {
+            if (marker.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+            string feature = marker.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+            if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+            var parts = feature.Substring(prefix.Length).Split('|');
+            if (parts.Length != 3) throw new InvalidDataException("Invalid tuple-name instruction.");
+            IHasCustomAttribute target = owner;
+            if (parts[0] != "s") {
+                MethodDef method; string sequence;
+                if (parts[0].StartsWith("p", StringComparison.Ordinal)) { method = owner as MethodDef; sequence = parts[0].Substring(1); }
+                else if (parts[0].StartsWith("d", StringComparison.Ordinal) && owner is TypeDef delegateType) {
+                    var split = parts[0].Substring(1).Split(':');
+                    if (split.Length != 2) throw new InvalidDataException("Invalid delegate tuple target.");
+                    var methodName = new UTF8String(Convert.FromBase64String(split[0]));
+                    method = delegateType.Methods.Single(m => m.Name == methodName); sequence = split[1];
+                }
+                else throw new InvalidDataException("Invalid tuple target.");
+                ushort index = ushort.Parse(sequence, CultureInfo.InvariantCulture);
+                if (method == null || index > method.MethodSig.Params.Count) throw new InvalidDataException("Invalid tuple parameter position.");
+                var parameter = method.ParamDefs.SingleOrDefault(p => p.Sequence == index);
+                if (parameter == null) { parameter = new ParamDefUser("", index); method.ParamDefs.Add(parameter); }
+                target = parameter;
+            }
+            var names = new List<CAArgument>();
+            foreach (var item in parts[2].Length == 0 ? new string[0] : parts[2].Split(',')) {
+                string value = null;
+                if (item != "N") {
+                    if (!item.StartsWith("V", StringComparison.Ordinal)) throw new InvalidDataException("Invalid tuple element name.");
+                    var bytes = Convert.FromBase64String(item.Substring(1));
+                    if (bytes.Length % 2 != 0) throw new InvalidDataException("Invalid tuple UTF-16 name.");
+                    value = new string(Enumerable.Range(0, bytes.Length / 2).Select(i => (char)(bytes[i * 2] | bytes[i * 2 + 1] << 8)).ToArray());
+                }
+                names.Add(new CAArgument(module.CorLibTypes.String, value == null ? null : new UTF8String(value)));
+            }
+            var existing = target.CustomAttributes.Where(a => a.TypeFullName == name).ToArray();
+            if (existing.Length != 0) {
+                var actual = existing.Length == 1 && existing[0].ConstructorArguments.Count == 1 ? existing[0].ConstructorArguments[0].Value as IList<CAArgument> : null;
+                if (actual == null || !actual.Select(a => a.Value == null ? null : a.Value.ToString()).SequenceEqual(names.Select(a => a.Value == null ? null : a.Value.ToString())))
+                    throw new InvalidDataException("Conflicting tuple element names.");
+            }
+            else {
+                var assembly = new AssemblyRefUser(new AssemblyNameInfo(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(parts[1]))));
+                ITypeDefOrRef attributeType;
+                if (assembly.Name == module.Assembly.Name && assembly.Version == module.Assembly.Version && assembly.Culture == module.Assembly.Culture) {
+                    attributeType = module.Find(name, false);
+                    if (attributeType == null) throw new InvalidDataException("Local tuple attribute type was not retained.");
+                }
+                else attributeType = new TypeRefUser(module, "System.Runtime.CompilerServices", "TupleElementNamesAttribute", assembly);
+                var constructor = new MemberRefUser(module, ".ctor", MethodSig.CreateInstance(module.CorLibTypes.Void, new SZArraySig(module.CorLibTypes.String)), attributeType);
+                var attribute = new CustomAttribute(constructor);
+                attribute.ConstructorArguments.Add(new CAArgument(new SZArraySig(module.CorLibTypes.String), names));
+                target.CustomAttributes.Add(attribute);
+            }
+            owner.CustomAttributes.Remove(marker); changed = true;
+        }
+        return changed;
     }
 
     static bool RestoreFieldData(ModuleDef module) {
