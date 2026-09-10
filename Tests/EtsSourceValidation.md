@@ -295,6 +295,15 @@ the cache-name mismatch behind two source17 body differences in the online-catal
 constructor/disposal paths; full application validation is still required after
 the focused `delegate-cache-regression4` pass.
 
+The subsequent source45 6.3 validation compiles all 107 projects and passes the
+SDK contract audit, original-name audit, and all 3,005 local state-machine
+attribute checks. Its 193,872 method bodies match the live-tested source44
+without any additional name normalization. Staging preserves all original input
+hashes and the complete tree with 377 assembly/satellite overlays; the unchanged
+official-SDK MCP add-in loads 407 types. The WPF type/event alias regression also
+passes on this tool build, including opaque resource preservation and incremental
+rebuilds. The full 6.4 source18 run begins only after those 6.3 checks pass.
+
 The expanded 496-method 6.4 map compiled in source16 and passed the SDK contract
 audit (172 projects, zero issues). Comparing its bodies with source14 exposed
 generated state-machine names containing source aliases. Runtime metadata
