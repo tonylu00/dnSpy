@@ -471,12 +471,13 @@ namespace dnSpy.Decompiler.MSBuild {
 		RawEmbeddedResourceProjectFile CreateRawEmbeddedResourceProjectFile(ModuleDef module, ResourceNameCreator resourceNameCreator, EmbeddedResource er) => new RawEmbeddedResourceProjectFile(resourceNameCreator.GetResourceFilename(er.Name), er);
 
 		bool DecompileType(TypeDef type) {
+			if (type.IsGlobalModuleType && Options.DecompilationContext.RestoreMetadataOnlyFields)
+				return type.HasMethods || type.HasFields;
 			if (!Options.Decompiler.ShowMember(type))
 				return false;
 
-			// The <Module> (global) type cannot be expressed in C# — the module
-			// initializer and module-level methods have no C# equivalent. Always
-			// skip it so generated projects stay compilable.
+			// Ordinary exports cannot express the global type. SDK exports
+			// above use a temporary class and restore global ownership at build.
 			if (type.IsGlobalModuleType)
 				return false;
 

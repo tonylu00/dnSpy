@@ -57,7 +57,7 @@ namespace dnSpy.Contracts.Decompiler {
 			}
 			var result = new Dictionary<TypeDef, string>();
 			foreach (var type in types.OrderBy(t => t.MDToken.Raw)) {
-				if (type.IsGlobalModuleType) continue;
+				if (type.IsGlobalModuleType && !type.HasMethods && !type.HasFields) continue;
 				string name = SimpleName(type.Name);
 				// A method may legally have its owner's name in IL, or share a name
 				// with a nested type. Keep overload/virtual families intact; alias the type.
@@ -88,7 +88,7 @@ namespace dnSpy.Contracts.Decompiler {
 			foreach (var reference in module.GetTypeRefs()) {
 				for (var type = reference.ResolveTypeDef(); type != null; type = type.DeclaringType) types.Add(type);
 			}
-			return types.Where(t => t.Module?.Assembly != null && SourceMetadataName(t) != t.Name.String)
+			return types.Where(t => !t.IsGlobalModuleType && t.Module?.Assembly != null && SourceMetadataName(t) != t.Name.String)
 				.Select(t => Prefix + Encode(SourceFullName(t)) + "|" + Encode(t.DefinitionAssembly.Name) + "|" +
 					Encode(t.DefinitionAssembly.Version.ToString()) + "|" + Encode(t.DefinitionAssembly.Culture ?? "") + "|" + Convert.ToBase64String(t.Name.Data))
 				.Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();

@@ -104,6 +104,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                     }
                 }
                 }
+                if (!TupleNamesOnly) changed |= RestoreGlobalMembers(module);
                 if (!changed) return true;
                 if (module.IsStrongNameSigned && !PublicSign) throw new InvalidOperationException("Metadata restoration requires an unsigned output or explicit public signing.");
                 var options = new ModuleWriterOptions(module) {
@@ -378,14 +379,49 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         return changed;
     }
 
+    static bool RestoreGlobalMembers(ModuleDef module) {
+        var companions = module.Types.Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
+            a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.global-members.v1"))).ToArray();
+        if (companions.Length == 0) return false;
+        if (companions.Length != 1) throw new InvalidDataException("Multiple global member companions.");
+        var source = companions[0]; var target = module.GlobalType;
+        if (source == target || target == null || source.Methods.Any(m => !m.IsStatic) || source.Fields.Any(f => !f.IsStatic) || source.HasGenericParameters || source.HasProperties || source.HasEvents)
+            throw new InvalidDataException("Invalid global member companion.");
+        if (target.HasMethods || target.HasFields) throw new InvalidDataException("Global members already exist.");
+        foreach (var reference in module.GetMemberRefs())
+            if (reference.DeclaringType == source || reference.DeclaringType?.ResolveTypeDef() == source) reference.Class = target;
+        foreach (var field in source.Fields.ToArray()) {
+            foreach (var attribute in field.CustomAttributes.ToArray()) {
+                if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                const string prefix = "dnSpy.metadata.global-field.v1|";
+                if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                field.Attributes = (FieldAttributes)uint.Parse(feature.Substring(prefix.Length), CultureInfo.InvariantCulture);
+                field.CustomAttributes.Remove(attribute);
+            }
+            source.Fields.Remove(field); target.Fields.Add(field);
+        }
+        foreach (var method in source.Methods.ToArray()) { source.Methods.Remove(method); target.Methods.Add(method); }
+        foreach (var nested in source.NestedTypes.ToArray()) { source.NestedTypes.Remove(nested); target.NestedTypes.Add(nested); }
+        module.Types.Remove(source);
+        return true;
+    }
+
     bool RestorePropertyNames(ModuleDef module) {
         const string prefix = "dnSpy.metadata.property-name.v1|";
+        const string signaturePrefix = "dnSpy.metadata.property-has-this.v1|";
         bool changed = false;
         foreach (var property in module.GetTypes().SelectMany(t => t.Properties)) {
             int count = 0;
             foreach (var attribute in property.CustomAttributes.ToArray()) {
                 if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
                 string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                if (feature != null && feature.StartsWith(signaturePrefix, StringComparison.Ordinal)) {
+                    string value = feature.Substring(signaturePrefix.Length);
+                    if (value != "0" && value != "1") throw new InvalidDataException("Invalid property signature instruction.");
+                    property.PropertySig.HasThis = value == "1";
+                    property.CustomAttributes.Remove(attribute); changed = true; continue;
+                }
                 if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
                 if (++count != 1) throw new InvalidDataException("Duplicate property name instruction.");
                 property.Name = new UTF8String(Convert.FromBase64String(feature.Substring(prefix.Length)));

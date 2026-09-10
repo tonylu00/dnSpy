@@ -47,5 +47,11 @@ foreach ($threads in @(1,4)) {
     $rebuiltClient = Join-Path $rebuilt 'Client.exe'
     & $rebuiltClient
     if ($LASTEXITCODE -or (Get-FileHash $rebuiltClient).Hash -ne $clientHash) { throw 'Unchanged external client failed' }
+    Add-Type -Path (Join-Path (Split-Path $DnSpyConsole) 'dnlib.dll')
+    $metadata = [dnlib.DotNet.ModuleDefMD]::Load((Join-Path $rebuilt 'PropertyRowNamesFixture.exe'))
+    try {
+        $properties = @($metadata.GetTypes() | ForEach-Object { $_.Properties })
+        if ($properties.Count -ne 2 -or @($properties | Where-Object { $_.PropertySig.HasThis }).Count) { throw 'Original property calling convention changed' }
+    } finally { $metadata.Dispose() }
 }
 
