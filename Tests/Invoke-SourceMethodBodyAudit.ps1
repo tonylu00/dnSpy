@@ -2,6 +2,7 @@ param([Parameter(Mandatory)][string]$BeforeExport,
       [Parameter(Mandatory)][string]$AfterExport,
       [Parameter(Mandatory)][string]$NameCandidatesProject,
       [Parameter(Mandatory)][string]$OutputDirectory,
+      [string[]]$AdditionalBeforeExports=@(),
       [switch]$AlignStateOwners)
 $ErrorActionPreference='Stop'
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new audit output directory.'}
@@ -22,7 +23,17 @@ function Read-Map($root){
     }
     return $result
 }
-$beforeMap=Read-Map $before
+$beforeRoots=@($before)+@($AdditionalBeforeExports|ForEach-Object {(Resolve-Path -LiteralPath $_).Path})
+$beforeMap=@{}
+$beforeLocations=@{}
+foreach($root in $beforeRoots){
+    $part=Read-Map $root
+    foreach($source in $part.Keys){
+        if($beforeMap.ContainsKey($source)){throw "Overlapping baseline physical source: $source"}
+        $beforeMap[$source]=$part[$source]
+        $beforeLocations[$source]=$root
+    }
+}
 $afterMap=Read-Map $after
 # A missing project is a failure even when all remaining method bodies match.
 $missing=@($beforeMap.Keys | Where-Object {-not $afterMap.ContainsKey($_)})
@@ -49,7 +60,7 @@ if($LASTEXITCODE){throw 'Method-body audit build failed.'}
 $results=@()
 foreach($source in @($afterMap.Keys | Sort-Object)){
     $report=Join-Path $output ('module-{0:D4}.json' -f $results.Count)
-    $arguments=@((Binary $before $beforeMap[$source]),(Binary $after $afterMap[$source]))
+    $arguments=@((Binary $beforeLocations[$source] $beforeMap[$source]),(Binary $after $afterMap[$source]))
     if($AlignStateOwners){$arguments+='--align-state-owners'}
     & dotnet (Join-Path $output 'bin\Release\net8.0\Audit.dll') @arguments > $report
     $code=$LASTEXITCODE
@@ -58,7 +69,7 @@ foreach($source in @($afterMap.Keys | Sort-Object)){
     if($null -eq $row.Methods -or $null -eq $row.Differences){throw "Comparator did not return a complete report: $source"}
     $results += [pscustomobject][ordered]@{Source=$source;Methods=$row.Methods;Differences=@($row.Differences).Count;OwnerNameChanges=@($row.OwnerNameChanges).Count;Exit=$code;Report=$report}
 }
-$summary=[pscustomobject][ordered]@{Before=$before;After=$after;AlignStateOwners=[bool]$AlignStateOwners;Projects=$results.Count;Methods=($results|Measure-Object Methods -Sum).Sum;Differences=($results|Measure-Object Differences -Sum).Sum;OwnerNameChanges=($results|Measure-Object OwnerNameChanges -Sum).Sum;Results=$results}
+$summary=[pscustomobject][ordered]@{Before=$before;BeforeExports=$beforeRoots;After=$after;AlignStateOwners=[bool]$AlignStateOwners;Projects=$results.Count;Methods=($results|Measure-Object Methods -Sum).Sum;Differences=($results|Measure-Object Differences -Sum).Sum;OwnerNameChanges=($results|Measure-Object OwnerNameChanges -Sum).Sum;Results=$results}
 $summary | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $output 'result.json')
 $summary | Select-Object Before,After,Projects,Methods,Differences,OwnerNameChanges | ConvertTo-Json
 if(@($results|Where-Object Exit -NE 0).Count){throw 'Method-body differences require review.'}

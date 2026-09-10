@@ -24,4 +24,17 @@ if($changed.Differences -ne 1 -or $difference.Count -ne 1 -or $difference[0].Sou
 try{& $audit -BeforeExport "$output\trees\before" -AfterExport "$output\trees\missing" -NameCandidatesProject $NameCandidatesProject -OutputDirectory "$output\missing"; throw 'Missing project accepted.'}
 catch{if($_.Exception.Message -notlike 'Physical project sets differ: 1 removed, 0 added.*'){throw}}
 foreach($hash in $hashes){if((Get-FileHash -LiteralPath $hash.Path).Hash -ne $hash.Hash){throw 'Audit modified an input.'}}
+foreach($context in @('host','compat')){
+    $split=Join-Path $output ('baseline-'+$context)
+    Copy-Item -LiteralPath "$output\trees\before" -Destination $split -Recurse
+    [xml]$map=Get-Content "$split\dnspy-export-map.xml" -Raw
+    foreach($row in @($map.DnSpyExportMap.Project)){if($row.Project -notlike "$context\*"){$map.DnSpyExportMap.RemoveChild($row)|Out-Null}}
+    $map.Save("$split\dnspy-export-map.xml")
+}
+& $audit -BeforeExport "$output\baseline-host" -AdditionalBeforeExports "$output\baseline-compat" -AfterExport "$output\trees\after" -NameCandidatesProject $NameCandidatesProject -OutputDirectory "$output\union"
+$union=Get-Content "$output\union\result.json" -Raw|ConvertFrom-Json
+if($union.Projects -ne 2 -or $union.Methods -ne 2 -or $union.Differences -ne 0 -or $union.BeforeExports.Count -ne 2){throw 'Baseline union lost physical coverage.'}
+try{& $audit -BeforeExport "$output\trees\before" -AdditionalBeforeExports "$output\baseline-compat" -AfterExport "$output\trees\after" -NameCandidatesProject $NameCandidatesProject -OutputDirectory "$output\overlap";throw 'Overlapping baseline accepted.'}
+catch{if($_.Exception.Message -notlike 'Overlapping baseline physical source:*'){throw}}
+'PASS: disjoint baseline union and overlapping-source rejection.'
 'PASS: complete physical coverage, distinct compatibility bodies, changed-body rejection, missing-project rejection and input preservation.'

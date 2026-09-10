@@ -14,6 +14,14 @@ project must have exactly one matching Release output, including platform-specif
 output folders. Reports include binary hashes and every differing method; no
 input binaries are written.
 
+When expanding an application export, `-AdditionalBeforeExports` accepts
+previously validated isolated exports for the added components. Their physical
+source paths must be disjoint from the primary baseline and each other. The
+complete union must exactly match the candidate's project set; additions or
+removals without a baseline still fail. Reports retain every baseline root and
+the exact binary paths/hashes. This supports testing integration without dropping
+coverage checks or accepting unverified new assemblies.
+
 By default all method and generated type names must match. The optional
 `-AlignStateOwners` switch permits only the generated state-type name correction
 associated with the same uniquely matched owner method and its state-machine

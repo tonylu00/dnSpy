@@ -12,13 +12,22 @@ physical input inventory found three additional 6.3 assemblies under
 abstraction assembly differs from the root copy, so it needs its own context.
 `ets63-uploader-validation2` exports all three as SDK projects, compiles with zero
 errors and audits 86 types / 304 methods / 35 fields with zero contract issues.
-The expanded full validation is `ets63-api-source-validation46`, using 114 inputs
-and uploader-specific dependency/configuration contexts; its final checks are
-pending. The 6.4 inventory also identifies uncovered uploader/application files;
-that expansion follows the 6.3 gate. Inventory artifacts are
+The expanded `ets63-api-source-validation46` passes with 114 inputs, 110 managed
+projects, zero SDK issues, 3,013 valid state-machine attributes and all approved
+aliases preserved. `source46-body-audit-repo1` compares all 194,222 bodies against
+the disjoint source45/uploader-source2 baselines with zero differences; staging
+preserves 380 assembly/satellite overlays and the unchanged SDK add-in loads.
+A publisher-metadata inventory additionally finds `PostActivation.exe` in both
+versions. Its isolated 6.3 SDK export/build/contract audit passes in
+`ets63-postactivation-validation2`; the 115-input full source47 run is pending.
+The 6.4 inventory identifies six uncovered application files in total;
+that expansion follows the 6.3 gate. Initial filename inventory artifacts are
 `ets63-source-coverage-20260911.json` and `ets64-source-coverage-20260911.json`.
 The 6.4 inventory covers its primary input tree; the 172-project export also
 includes explicit external 6.3 compatibility contexts.
+Publisher metadata results are in `ets63-preserved-vendor-metadata-20260911.json`
+and `ets64-preserved-vendor-metadata-20260911.json`; filename prefixes alone did
+not establish complete coverage.
 
 - **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
   zero SDK contract issues. All 193,872 method-body fingerprints match the
