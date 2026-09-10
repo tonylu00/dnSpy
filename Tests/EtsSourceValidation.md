@@ -49,8 +49,18 @@ export manifest.
 (four in 6.3, six in 6.4) against their original input resources. Resource names,
 flags, counts and the sole embedded resource's bytes match. The audit includes
 the x86 output directory of the 6.4 PluginInstaller project. Source47/source19
-are now the expanded offline-validated trees; the direct live evidence below
-currently remains source45/source18.
+are now the expanded offline-validated trees.
+
+`ets63-source47-live1` directly validates the expanded 6.3 tree. The unchanged
+official-SDK add-in opens test-mcp with 29 devices and 502 group addresses.
+The protected P-07CC copy accepts its password, and an SDK contract-number
+edit (`SRC47-PROTECTED-SAVE`) survives a complete process restart and another
+password entry. The prior project-number marker and protection remain intact;
+the bridge reports `save_suppressed: false`. The original profile, add-in and
+all 4,811 original data-file hashes are restored after shutdown. Its legacy
+injected DevKit default was removed only in the disposable live copy, with
+input/output hashes recorded. Direct 6.4 live evidence still covers source18;
+source19's automation and separate test stores are prepared for the next check.
 
 - **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
   zero SDK contract issues. All 193,872 method-body fingerprints match the
