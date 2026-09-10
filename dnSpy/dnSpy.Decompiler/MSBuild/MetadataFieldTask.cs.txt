@@ -27,6 +27,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreMemberNames(module, false);
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreDefinitionFlags(module);
+                changed |= RestoreFieldData(module);
                 changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
                     a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.raw-exceptions.v1"))).ToArray();
@@ -179,6 +180,56 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         if (module.PdbState != null) module.PdbState.UserEntryPoint = entry;
         module.Types.Remove(stubs[0]);
         return true;
+    }
+
+    static bool RestoreFieldData(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.field-data.v1|";
+        bool changed = false;
+        foreach (var field in module.GetTypes().SelectMany(t => t.Fields)) {
+            int count = 0;
+            foreach (var attribute in field.CustomAttributes.ToArray()) {
+                if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                var parts = feature.Substring(prefix.Length).Split('|');
+                if (++count != 1 || parts.Length != 5 || field.Name != new UTF8String(Convert.FromBase64String(parts[0])))
+                    throw new InvalidDataException("Invalid field data instruction or unrestored field name.");
+                object value = null;
+                var kind = parts[2] == "none" ? ElementType.End : (ElementType)int.Parse(parts[2], CultureInfo.InvariantCulture);
+                if (parts[3] != "N") {
+                    if (!parts[3].StartsWith("V", StringComparison.Ordinal)) throw new InvalidDataException("Invalid field constant encoding.");
+                    using (var stream = new MemoryStream(Convert.FromBase64String(parts[3].Substring(1))))
+                    using (var reader = new BinaryReader(stream)) {
+                        switch (kind) {
+                        case ElementType.Boolean: value = reader.ReadBoolean(); break;
+                        case ElementType.Char: value = (char)reader.ReadUInt16(); break;
+                        case ElementType.I1: value = reader.ReadSByte(); break;
+                        case ElementType.U1: value = reader.ReadByte(); break;
+                        case ElementType.I2: value = reader.ReadInt16(); break;
+                        case ElementType.U2: value = reader.ReadUInt16(); break;
+                        case ElementType.I4: value = reader.ReadInt32(); break;
+                        case ElementType.U4: value = reader.ReadUInt32(); break;
+                        case ElementType.I8: value = reader.ReadInt64(); break;
+                        case ElementType.U8: value = reader.ReadUInt64(); break;
+                        case ElementType.R4: value = reader.ReadSingle(); break;
+                        case ElementType.R8: value = reader.ReadDouble(); break;
+                        case ElementType.String:
+                            if (stream.Length % 2 != 0) throw new InvalidDataException("Invalid UTF-16 field constant.");
+                            var chars = new char[stream.Length / 2];
+                            for (int i = 0; i < chars.Length; i++) chars[i] = (char)reader.ReadUInt16();
+                            value = new string(chars); break;
+                        default: throw new InvalidDataException("Unsupported field constant kind.");
+                        }
+                        if (stream.Position != stream.Length) throw new InvalidDataException("Trailing field constant data.");
+                    }
+                }
+                field.Constant = kind == ElementType.End ? null : new ConstantUser(value, kind);
+                if (parts[4] != "none") field.InitialValue = Convert.FromBase64String(parts[4]);
+                field.Attributes = (dnlib.DotNet.FieldAttributes)uint.Parse(parts[1], CultureInfo.InvariantCulture);
+                field.CustomAttributes.Remove(attribute); changed = true;
+            }
+        }
+        return changed;
     }
 
     static bool RestoreDefinitionFlags(ModuleDef module) {
