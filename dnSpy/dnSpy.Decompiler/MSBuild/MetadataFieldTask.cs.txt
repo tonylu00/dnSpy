@@ -10,6 +10,7 @@ using dnlib.DotNet.Writer;
 public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task {
     [Microsoft.Build.Framework.Required]
     public string AssemblyPath { get; set; }
+    public Microsoft.Build.Framework.ITaskItem[] ReferencePaths { get; set; }
     public override bool Execute() {
         const string prefix = "dnSpy.metadata.string-field.v1|";
         string temporary = AssemblyPath + ".metadata-" + Guid.NewGuid().ToString("N");
@@ -19,6 +20,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             bool changed = false;
             using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
                 module.LoadEverything();
+                changed |= RestoreAccessorContracts(module);
                 changed |= RestoreDelegateMethods(module);
                 changed |= RestoreProtectedCalls(module);
                 changed |= RestoreMemberNames(module, true);
@@ -176,6 +178,83 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         if (module.PdbState != null) module.PdbState.UserEntryPoint = entry;
         module.Types.Remove(stubs[0]);
         return true;
+    }
+
+    bool RestoreAccessorContracts(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.accessor-contract.v1|";
+        var loaded = new List<ModuleDefMD>();
+        var modules = new List<ModuleDef> { module };
+        try {
+            foreach (var path in (ReferencePaths ?? new Microsoft.Build.Framework.ITaskItem[0]).Select(p => p.ItemSpec).Distinct(StringComparer.OrdinalIgnoreCase)) {
+                var reference = ModuleDefMD.Load(path);
+                loaded.Add(reference); modules.Add(reference);
+            }
+            Func<IAssembly, string> identity = assembly => assembly == null ? "" : assembly.FullName;
+            var assemblies = modules.ToLookup(m => identity(m.Assembly), StringComparer.Ordinal);
+            var contracts = new Dictionary<MethodDef, Tuple<UTF8String, MethodAttributes, CustomAttribute>>();
+            var inspected = new HashSet<MethodDef>();
+            Action<MethodDef> inspect = method => {
+                if (!inspected.Add(method)) return;
+                foreach (var attribute in method.CustomAttributes) {
+                    if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                    string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                    if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                    var parts = feature.Substring(prefix.Length).Split('|');
+                    if (parts.Length != 2 || contracts.ContainsKey(method)) throw new InvalidDataException("Invalid or duplicate accessor contract.");
+                    contracts.Add(method, Tuple.Create(new UTF8String(Convert.FromBase64String(parts[0])),
+                        (MethodAttributes)uint.Parse(parts[1], CultureInfo.InvariantCulture), attribute));
+                }
+            };
+            foreach (var method in module.GetTypes().SelectMany(t => t.Methods)) inspect(method);
+            var references = new HashSet<MemberRef>(module.GetMemberRefs().Where(r => r.IsMethodRef));
+            foreach (var method in module.GetTypes().SelectMany(t => t.Methods))
+                foreach (var implementation in method.Overrides) {
+                    if (implementation.MethodDeclaration is MemberRef declaration) references.Add(declaration);
+                    if (implementation.MethodBody is MemberRef body) references.Add(body);
+                }
+            foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody))
+                foreach (var instruction in method.Body.Instructions) {
+                    var reference = instruction.Operand as MemberRef;
+                    if (reference == null && instruction.Operand is MethodSpec specification) reference = specification.Method as MemberRef;
+                    if (reference != null && reference.IsMethodRef) references.Add(reference);
+                }
+            var renames = new Dictionary<MemberRef, UTF8String>();
+            foreach (var reference in references) {
+                var owners = new Queue<ITypeDefOrRef>(); owners.Enqueue(reference.DeclaringType);
+                var visited = new HashSet<string>(StringComparer.Ordinal);
+                var matches = new List<MethodDef>();
+                while (owners.Count != 0 && matches.Count == 0) {
+                    var owner = owners.Dequeue();
+                    if (owner is TypeSpec specification) {
+                        var generic = specification.TypeSig.RemovePinnedAndModifiers() as GenericInstSig;
+                        if (generic == null) continue;
+                        owner = generic.GenericType.TypeDefOrRef;
+                    }
+                    string key = identity(owner.DefinitionAssembly) + "|" + owner.FullName;
+                    if (!visited.Add(key)) continue;
+                    foreach (var type in assemblies[identity(owner.DefinitionAssembly)].Select(m => m.Find(owner.FullName, false)).Where(t => t != null)) {
+                        matches.AddRange(type.Methods.Where(m => m.Name == reference.Name && new SigComparer().Equals(m.MethodSig, reference.MethodSig)));
+                        if (type.BaseType != null) owners.Enqueue(type.BaseType);
+                    }
+                }
+                foreach (var method in matches) inspect(method);
+                var values = matches.Where(contracts.ContainsKey).Select(m => contracts[m].Item1).Distinct().ToArray();
+                if (values.Length > 1 || values.Length == 1 && matches.Any(m => !contracts.ContainsKey(m) && m.Name != values[0]))
+                    throw new InvalidDataException("Conflicting accessor contracts in the selected compilation references: " + reference.FullName);
+                if (values.Length == 1 && reference.Name != values[0]) renames.Add(reference, values[0]);
+            }
+            // Resolve all source signatures before changing any definition or reference.
+            foreach (var entry in renames) entry.Key.Name = entry.Value;
+            bool changed = renames.Count != 0;
+            foreach (var entry in contracts.Where(p => p.Key.Module == module)) {
+                entry.Key.Name = entry.Value.Item1;
+                entry.Key.Attributes = entry.Value.Item2;
+                entry.Key.CustomAttributes.Remove(entry.Value.Item3);
+                changed = true;
+            }
+            return changed;
+        }
+        finally { foreach (var reference in loaded) reference.Dispose(); }
     }
 
     static bool RestoreMemberNames(ModuleDef module, bool methods) {
