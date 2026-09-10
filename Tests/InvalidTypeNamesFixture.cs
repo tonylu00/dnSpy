@@ -40,6 +40,7 @@ public class Container<A, B, C> {
 }
 public static class Program {
     public static int Main() {
+        if(CacheCase.HasCache || CacheCase.Run(3)!=4 || !CacheCase.HasCache || CacheCase.Run(7)!=8) return 9;
         var named = new NamedArguments(4, 5);
         if (named[2] != 11) return 7;
         named[3] = 17;
@@ -61,6 +62,12 @@ public static class Program {
     }
 }
 public delegate int NamedOperation(int left, int right);
+public static class CacheCase {
+    [System.Runtime.CompilerServices.CompilerGenerated] static Func<int,int> cache;
+    public static bool HasCache { get { return cache != null; } }
+    public static int Compute(int value) { return value + 1; }
+    public static int Run(int value) { if(cache==null) cache=Compute; return cache(value); }
+}
 public sealed class NamedArguments {
     int total;
     static NamedArguments() { }

@@ -1,8 +1,23 @@
 using System.Linq;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 class Emitter {
     static void Main(string[] args) {
         using var module = ModuleDefMD.Load(args[0]);
+        var cacheType=module.Types.Single(t=>t.Name=="CacheCase");
+        var cache=cacheType.Fields.Single(); cache.Name="CS$<>9__CachedAnonymousMethodDelegate1";
+        var run=cacheType.Methods.Single(m=>m.Name=="Run");
+        var invoke=(IMethod)run.Body.Instructions.Single(i=>i.OpCode==OpCodes.Callvirt).Operand;
+        var ctor=(IMethod)run.Body.Instructions.Single(i=>i.OpCode==OpCodes.Newobj).Operand;
+        var initialize=Instruction.Create(OpCodes.Ldnull);
+        var use=Instruction.Create(OpCodes.Ldsfld,cache);
+        run.Body.Instructions.Clear(); run.Body.Variables.Clear();
+        foreach(var instruction in new[] {
+            Instruction.Create(OpCodes.Ldsfld,cache),Instruction.Create(OpCodes.Brfalse,initialize),
+            use,Instruction.Create(OpCodes.Ldarg_0),Instruction.Create(OpCodes.Callvirt,invoke),Instruction.Create(OpCodes.Ret),
+            initialize,Instruction.Create(OpCodes.Ldftn,cacheType.Methods.Single(m=>m.Name=="Compute")),
+            Instruction.Create(OpCodes.Newobj,ctor),Instruction.Create(OpCodes.Stsfld,cache),Instruction.Create(OpCodes.Br,use)
+        }) run.Body.Instructions.Add(instruction);
         foreach (var type in module.GetTypes()) {
             var names = new[] { "T", "T", "T1", "T" };
             for (int i = 0; i < type.GenericParameters.Count; i++) type.GenericParameters[i].Name = names[i];

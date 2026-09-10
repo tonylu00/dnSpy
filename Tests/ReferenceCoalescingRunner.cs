@@ -20,6 +20,17 @@ public static class ReferenceCoalescingRunner {
         }
     }
     public static int Main() {
+        foreach(bool? value in new bool?[] {null,false,true}) for(int point=0;point<=3;point++) {
+            events="";calls=0;failurePoint=point;
+            string expectedEvents=value.HasValue ? "L" : "LR";
+            try {
+                object result=DirectBoxed(value,"fallback");
+                Check(point==0 || point>expectedEvents.Length);
+                Check(Equals(result,(object)value??"fallback") && events==expectedEvents && result.GetType()==(value.HasValue?typeof(bool):typeof(string)));
+            } catch(InvalidOperationException ex) {
+                Check(ReferenceEquals(ex,failure) && point>0 && point<=expectedEvents.Length && events==expectedEvents.Substring(0,point));
+            }
+        }
         foreach (bool choose in new[] { false, true }) foreach (bool reverse in new[] { false, true }) {
             var pending = new TaskCompletionSource<int>();
             var result = reverse ? ConditionalTaskReversed(choose, pending.Task) : ConditionalTask(choose, pending.Task);

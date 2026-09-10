@@ -56,6 +56,12 @@ public static class ReferenceCoalescingFixture {
     public static int? Nullable(int? left, int? right) { return left ?? right; }
     public static int Unwrap(int? left, int right) { return left ?? right; }
     public static object Boxed(int? left, string right) { return StoreBox(left) ?? right; }
+    public static object DirectBoxed(bool? left, string right) { return (object)ReadNullable(left) ?? Read(right, "R"); }
+    [MethodImpl(MethodImplOptions.NoInlining)] static bool? ReadNullable(bool? value) {
+        events += "L"; calls++;
+        if(calls == failurePoint) throw failure;
+        return value;
+    }
     [MethodImpl(MethodImplOptions.NoInlining)] static object StoreBox(int? value) { return value; }
 }
 
