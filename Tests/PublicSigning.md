@@ -26,3 +26,21 @@ to produce the original fixtures, not exported or used by the rebuilt projects.
 With `-StrongNameTool <sn.exe>`, the regression also forces cryptographic
 verification: the original fixture must verify and the public-signed rebuild
 must fail verification. Incremental output hashes must remain unchanged.
+
+## ETS 6.3 live compatibility gate
+
+Source24 rebuilt all 76 managed projects from the refreshed de4dot batch and
+retained the identities of 345 unique main/satellite outputs. A second live test
+built MCP 4.13.1 against pristine ETS 6.3.7959.0 SDK files, verified all six
+reference hashes against those pristine inputs, and ran that resulting binary
+unchanged on the public-signed rebuilt ETS tree. The app initialized on test-mcp
+and read 29 devices, 36 building/function records, a communication-object page
+from 99 objects and parameter metadata from 884 parameters. Chinese UI controls
+were present. No project mutation or physical operation was requested.
+
+This proves the exercised official-SDK app paths; it does not prove every SDK
+entry point or every third-party app. Earlier live testing used a binary compiled
+against deobfuscated SDK files and must not be substituted for this stricter gate.
+The installed app DLL and pre-test workspace files were restored with hashes
+verified; ETS and the test daemon exited and port 37620 was released. Detailed
+local evidence is in `D:\knx_analysis\ets63-source24-live1\`.
