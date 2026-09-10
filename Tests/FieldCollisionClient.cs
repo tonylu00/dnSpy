@@ -1,6 +1,7 @@
 using System;
 public static class FieldCollisionClient {
     public static int Main() {
+        if (!((FriendBase)new FriendDerived()).Check()) throw new Exception("Friend assembly selected hidden derived method");
         if (EnumTokens.Object.ToString() != "Object" || EnumTokens.ValueType.ToString() != "ValueType" || EnumTokens.Enum.ToString() != "Enum")
             throw new Exception("An ancestor type name changed enum member names");
         if (new FieldDerived().Run() != 33) throw new Exception("Inherited field aliases or protected call binding changed");

@@ -1,3 +1,6 @@
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("FieldCollisionClient")]
+public class FriendBase { internal bool Check() { return true; } }
+public class FriendDerived : FriendBase { public new uint Check() { return 7; } }
 public enum EnumTokens { Object, Array, ValueType, Enum }
 public sealed class Collision {
     public int First;
