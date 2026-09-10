@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory)][string] $DnSpyConsole,
-    [Parameter(Mandatory)][string] $OutputDirectory
+    [Parameter(Mandatory)][string] $OutputDirectory,
+    [switch] $SourceAliases
 )
 $ErrorActionPreference = 'Stop'
 $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
@@ -18,10 +19,41 @@ $original = Join-Path $inputDirectory 'bin\Release\net48\BamlConnectorsFixture.e
 & $original
 if ($LASTEXITCODE -ne 0) { throw 'Original BAML connector behavior failed.' }
 $hash = (Get-FileHash -LiteralPath $original).Hash
+$mapArguments = @()
+if ($SourceAliases) {
+    Add-Type -Path (Join-Path (Split-Path $DnSpyConsole) 'dnlib.dll')
+    $module = [dnlib.DotNet.ModuleDefMD]::Load($original)
+    try {
+        [xml]$map = '<SourceNameMap Version="1"><Module /></SourceNameMap>'
+        $map.DocumentElement.SetAttribute('InputDirectory', (Split-Path $original))
+        $row = $map.DocumentElement.SelectSingleNode('Module')
+        $row.SetAttribute('Path', (Split-Path $original -Leaf))
+        $row.SetAttribute('Mvid', $module.Mvid.ToString())
+        $row.SetAttribute('Sha256', $hash)
+        $type = $module.GetTypes() | Where-Object FullName -EQ 'ConnectorFixture.View'
+        foreach ($name in 'OnClick','OnStyledClick','OnAttachedClick') {
+            $method = $type.Methods | Where-Object {$_.Name.String -ceq $name}
+            $entry = $map.CreateElement('Method')
+            $entry.SetAttribute('Token', ('0x{0:X8}' -f $method.MDToken.Raw))
+            $entry.SetAttribute('ExpectedName', $name)
+            $entry.SetAttribute('Signature', $method.FullName)
+            $entry.SetAttribute('NewName', 'Mapped' + $name)
+            $null = $row.AppendChild($entry)
+        }
+        $map.Save((Join-Path $OutputDirectory 'names.xml'))
+        $mapArguments = @('--source-name-map', (Join-Path $OutputDirectory 'names.xml'))
+    } finally { $module.Dispose() }
+}
 foreach ($threads in @(1,4)) {
     $export = Join-Path $OutputDirectory "export-$threads"
-    & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export $original
+    & $DnSpyConsole --no-color --sdk-project --threads $threads @mapArguments -o $export $original
     if ($LASTEXITCODE -ne 0) { throw 'BAML connector source export failed.' }
+    if ($SourceAliases) {
+        $xaml = (Get-ChildItem -LiteralPath $export -Recurse -Filter '*.xaml' | Get-Content) -join "`n"
+        foreach ($name in 'OnClick','OnStyledClick','OnAttachedClick') {
+            if (!$xaml.Contains('="Mapped' + $name + '"')) { throw "XAML handler alias missing: $name" }
+        }
+    }
     $project = Get-ChildItem -LiteralPath $export -Recurse -Filter '*.csproj' | Select-Object -First 1
     $rebuilt = Join-Path $OutputDirectory "rebuilt-$threads"
     dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet

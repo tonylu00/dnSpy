@@ -1,5 +1,27 @@
 # ETS source recompilation milestones
 
+## Expanded reference-map validation in progress
+
+The 496-method, 25-module 6.4 map exposed a BAML export omission in source15:
+the C# event handlers had source aliases, while reconstructed XAML still used
+their original names. Export completed, but compilation failed with 16 CS1061
+errors in UserControls. This is not a successful full rebuild.
+
+The generic connector exporter now obtains handler names from the same metadata
+name service as C#, covering ordinary events, attached events and style event
+setters. The connector regression passes with and without source aliases, using
+one/four workers, and checks runtime event execution and original reflection
+names. Evidence: `D:\knx_analysis\baml-source-alias-regression3.log` and
+`baml-no-alias-regression1.log`. Full 6.3 source40 validation starts before the
+6.4 retry; the previously validated source39/source14 trees remain separate.
+
+The current de4dot matcher still produces zero candidates for a 528-module 6.3
+self-comparison. An independent metadata check of source39 verifies its one
+mapped type, five methods and one parameter retain their original runtime names:
+`D:\knx_analysis\ets63-source39-alias-audit1.json`.
+
+## Earlier completed milestones
+
 Validation on 2026-09-10 used original SDK callers and separate rebuilt trees.
 The 6.3 regression build and live test passed before the 6.4 live test.
 

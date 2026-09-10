@@ -35,6 +35,11 @@ using ICSharpCode.Decompiler.ILAst;
 
 namespace dnSpy.BamlDecompiler.Rewrite {
 	sealed class ConnectionIdRewritePass : IRewritePass {
+		static string HandlerName(IMethod handler) {
+			var definition = handler.ResolveMethodDef();
+			return definition is null ? handler.Name.String : MetadataMethodNames.GetName(definition);
+		}
+
 		static bool Impl(MethodDef method, MethodDef ifaceMethod) {
 			if (method.HasOverrides) {
 				var comparer = new SigComparer(SigComparerOptions.CompareDeclaringTypes | SigComparerOptions.PrivateScopeIsComparable);
@@ -232,7 +237,7 @@ namespace dnSpy.BamlDecompiler.Rewrite {
 							cb += new EventAttachment {
 								AttachedType = reField.DeclaringType.ResolveTypeDef() ?? reField.DeclaringType,
 								EventName = evName,
-								MethodName = handler.Name
+								MethodName = HandlerName(handler)
 							}.Callback;
 						}
 						else {
@@ -257,7 +262,7 @@ namespace dnSpy.BamlDecompiler.Rewrite {
 
 							cb += new EventAttachment {
 								EventName = eventName,
-								MethodName = handler.Name
+								MethodName = HandlerName(handler)
 							}.Callback;
 						}
 						break;
@@ -326,7 +331,7 @@ namespace dnSpy.BamlDecompiler.Rewrite {
 
 			i += 3;
 
-			@event = new EventAttachment { EventName = evName, MethodName = handlerMethod.Name };
+			@event = new EventAttachment { EventName = evName, MethodName = HandlerName(handlerMethod) };
 			return true;
 		}
 

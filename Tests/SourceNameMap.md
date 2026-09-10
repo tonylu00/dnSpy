@@ -61,6 +61,14 @@ runtime output; compiler reference assemblies retain source names for compilatio
 parameter-only maps, generic methods, one/four workers, unchanged callers, runtime
 reflection names, input preservation and invalid-map rejection.
 
+BAML connector export uses the same method-name lookup as C# when reconstructing
+ordinary event attributes, attached events and style `EventSetter` handlers.
+This keeps mapped handler declarations and XAML references consistent without
+changing the original runtime method names. Run `Invoke-BamlConnectorsRegression.ps1`
+with `-SourceAliases` to check mapped XAML, compilation, event execution and
+reflection names with one and four workers; omit the switch to check the default
+export path.
+
 On 2026-09-10, parameter aliases on the schema-version helper in real ETS 6.3
 and then 6.4 Common assemblies exported and compiled with zero errors. Both
 public SDK contract audits reported zero differences, including parameter names.
