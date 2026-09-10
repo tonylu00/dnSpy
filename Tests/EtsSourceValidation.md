@@ -140,3 +140,27 @@ legacy `SU-` identifiers; the 6.3 reader requires the latter. This isolates the
 reported identifier rejection from the decompilation pipeline. No original
 project data or parser behavior was altered. It does not test the complete
 password-opening flow, nor prove when the project's stored format changed.
+
+### Password fixture control follow-up
+
+The isolated `ets63-password-live1` source39 run failed while creating a new
+password-protected project. An original-binary control with automation hooks
+(`ets63-original-control1`) reproduced the same creation exception and incomplete
+store. This control is instrumented, so the result does not establish a defect
+in untouched vendor ETS.
+
+Setting a password on the control's disposable test-mcp copy through the project
+details UI completed and temporarily reported `password_protected: true`.
+However, its persisted project metadata remained byte-identical to the original
+unprotected input. A separate source39 launch (`ets63-protected-open1`) reopened
+that copy with `password_protected: false`. This is a failed fixture-persistence
+check, **not** successful password-opening validation. The partial newly created
+project was excluded from the second test.
+
+The source contains signing-identity checks and a save-suppression state; their
+runtime involvement is unverified. Metadata inspection found the same expected
+public-key token on the shell, ViewModel and ObjectModel in all three trees, so
+a changed token on those files does not explain the result. No integrity or
+password checks were changed. Further persistence diagnosis needs a valid
+control before any recompiler fix can be justified. Both runs restored the
+original profile/add-in and verified all 1,877 original data hashes.
