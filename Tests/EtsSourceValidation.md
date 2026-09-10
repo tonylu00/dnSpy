@@ -39,3 +39,31 @@ These are compilation, metadata and exercised-runtime milestones. They do not
 prove equivalence of every body/custom attribute, every third-party app, password
 projects or physical KNX operations. The test project was not password protected.
 Compiler warnings and existing development-add-in/network/MyKNX warnings remain.
+
+## Source-only parameter map follow-up
+
+The subsequent source37 (6.3) and source12 (6.4) builds added a descriptive
+`schemaVersionValue` argument alias to the schema helper. The full 6.3 build and
+expanded audit passed before starting 6.4. Both retained the same input/project
+and staging counts above, with zero SDK contract differences. The expanded audit
+also checks enum/string constants and event accessor associations.
+
+Both staged trees loaded the unchanged SDK-built MCP add-ins (407/410 types),
+and the automation patcher recognized their hash-verified rebuilt provenance.
+Comparisons against the live-tested source36/source11 Common assemblies found no
+normalized method-body differences across 1,305 methods in 6.3 and 1,814 in 6.4.
+Those comparisons include scoped signatures, method flags, IL, locals and
+exception handlers; they do not compare every attribute or resource.
+
+Latest source trees: `D:\git\ets63-api-source37`, `D:\git\ets64-api-source12`.
+Staged trees: `D:\knx_analysis\ETS6.3_source37`, `D:\knx_analysis\ETS6.4_source12`.
+Evidence: `ets63-api-source-validation37`, `ets64-api-source-validation12`,
+`ets-sdk-loader3` and `parameter-alias-bodycheck1` under `D:\knx_analysis`.
+These follow-up trees were validated offline; the live checks above remain tied
+to source36/source11. Original installations and project data were not changed.
+
+The generic de4dot NameCandidates scanner independently recovered ten of the
+reviewed 6.4 method aliases using 6.3 as reference. Its guarded source-map converter
+also exported and rebuilt the four affected modules with zero SDK differences.
+It retains relative physical module contexts and rejects ambiguous candidates;
+it does not claim to recover every original obfuscated name.
