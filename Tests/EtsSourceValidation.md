@@ -185,3 +185,25 @@ has no such static-initializer literal. Evidence:
 `D:\knx_analysis\ets-devkit-runtime-provenance1.json`. Consequently, the 6.3
 directory named `orig` must not be described as an untouched vendor distribution.
 The patcher now reports this distinction in profiles and instrumentation manifests.
+
+### Corrected 6.3 persistence and password round trip
+
+`ets63-saving-live1` used a separate `ETS6.3_source39_live2` runtime. The only
+DevKit method changed from source39 was the injected runtime's static initializer:
+`ExtendedLoggingAvailable` was removed from its optional-feature array. The
+VirtualDongle preparation script preserved all other entries and method bodies;
+applying it to corrected source14 produced a byte-identical copy. The rebuilt
+baseline directories and original inputs were not overwritten.
+
+The corrected 6.3 process reported `save_suppressed: false` and startup state
+`1.23.1.23`. It created `test-mcp-password-qa` (P-07CC), wrote the complete project
+store, and opened it with the supplied disposable-test password. After exiting
+and starting a new ETS process, the project remained protected, prompted for
+its password, and opened successfully after entering it. Evidence is in
+`D:\knx_analysis\ets63-saving-live1`: creation/open action results, persisted
+file hashes, restart snapshot, and `projects-password-opened.json`.
+
+This validates a newly created password project on rebuilt 6.3. It does not
+establish compatibility of the user's separate P-01C0 data or cover a 6.4
+password round trip. The original profile/add-in and all 1,877 tracked original
+data hashes were restored; the test-only workspace was backed up and removed.
