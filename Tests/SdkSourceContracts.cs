@@ -63,10 +63,15 @@ if(t.Attributes!=o.Attributes) Issue("TypeFlags",t.FullName,t.Attributes.ToStrin
   var es=o.Events.Where(n=>n.Name==e.Name && comparer.Equals(n.EventType,e.EventType)).ToArray();
   if(es.Length!=1) { Issue("EventRow",e.FullName,"1",es.Length.ToString()); continue; }
   if(es[0].Attributes!=e.Attributes) Issue("EventFlags",e.FullName,e.Attributes.ToString(),es[0].Attributes.ToString());
+  if(es[0].AddMethod?.Name!=e.AddMethod?.Name || es[0].RemoveMethod?.Name!=e.RemoveMethod?.Name || es[0].InvokeMethod?.Name!=e.InvokeMethod?.Name)
+   Issue("EventSemantics",e.FullName,e.AddMethod?.Name+"|"+e.RemoveMethod?.Name+"|"+e.InvokeMethod?.Name,es[0].AddMethod?.Name+"|"+es[0].RemoveMethod?.Name+"|"+es[0].InvokeMethod?.Name);
  }
  foreach(var f in t.Fields.Where(f=>f.IsPublic||f.IsFamily||f.IsFamilyOrAssembly)) { fields++; var fs=o.Fields.Where(n=>n.Name==f.Name && comparer.Equals(n.FieldSig,f.FieldSig)).ToArray();
  if(fs.Length!=1) Issue("FieldMissingOrAmbiguous",f.FullName,"1",fs.Length.ToString());
  else if(fs[0].Attributes!=f.Attributes) Issue("FieldFlags",f.FullName,f.Attributes.ToString(),fs[0].Attributes.ToString());
+ if(fs.Length==1 && (f.HasConstant!=fs[0].HasConstant || f.HasConstant &&
+    (f.Constant.Type!=fs[0].Constant.Type || !object.Equals(f.Constant.Value,fs[0].Constant.Value))))
+  Issue("FieldConstant",f.FullName,f.Constant?.Type+":"+f.Constant?.Value,fs[0].Constant?.Type+":"+fs[0].Constant?.Value);
  }
  }
  }

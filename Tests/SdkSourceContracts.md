@@ -8,8 +8,11 @@ separate contexts for duplicate assembly identities.
 
 It compares visible types, methods and fields, including scoped signatures,
 inheritance, interfaces, flags, generic names and constraints, parameter names,
-flags and default values. It also checks property/event rows and property accessor
-names. Differences produce `result.json` and fail the command.
+flags and default values. It also checks public/protected field constants
+(including enum values), property/event rows and property/event accessor names.
+Differences produce `result.json` and fail the command. The regression fixture
+changes enum and string constants and swaps event add/remove associations to
+verify those diagnostics, alongside inheritance, generic and parameter checks.
 
 This is a metadata audit. It does not prove method-body equivalence, custom
 attribute equivalence, native interop behavior or successful live application
