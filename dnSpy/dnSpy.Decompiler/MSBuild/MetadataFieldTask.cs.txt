@@ -659,9 +659,11 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 if (state == null || state.Module != module || state.DeclaringType != method.DeclaringType ||
                     !state.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute") ||
                     !state.Name.String.StartsWith("<" + method.Name.String + ">d__", StringComparison.Ordinal)) continue;
-                // Retain the compiler ordinal/arity and the original method's raw
-                // UTF8 bytes. References and state-machine attributes share the type.
-                var name = new UTF8String(new byte[] { (byte)'<' }.Concat(entry.Value.Data)
+                // Retain the compiler ordinal/arity and raw UTF8 bytes, except
+                // that C# substitutes '-' for '.' in generated owner names
+                // (notably constructor lambdas). Dots confuse reflection type parsing.
+                var ownerBytes = entry.Value.Data.Select(b => b == (byte)'.' ? (byte)'-' : b);
+                var name = new UTF8String(new byte[] { (byte)'<' }.Concat(ownerBytes)
                     .Concat(state.Name.Data.Skip(1 + method.Name.Data.Length)).ToArray());
                 UTF8String previous;
                 if (names.TryGetValue(state, out previous) && previous != name)
