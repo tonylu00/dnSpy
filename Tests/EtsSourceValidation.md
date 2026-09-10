@@ -207,3 +207,26 @@ This validates a newly created password project on rebuilt 6.3. It does not
 establish compatibility of the user's separate P-01C0 data or cover a 6.4
 password round trip. The original profile/add-in and all 1,877 tracked original
 data hashes were restored; the test-only workspace was backed up and removed.
+
+### Rebuilt 6.4 password round trips
+
+`ets64-password-live1` used source14 in a separate runtime with the current
+automation bridge, copied stores and the original-SDK 6.4 MCP build. Saving was
+enabled. The verified protected 6.3 fixture P-07CC opened with its password in
+6.4, survived a process restart, prompted for the password, and reopened with
+protection intact. The original 6.3 fixture hashes remained unchanged.
+
+The test then created a separate protected project, `test-mcp-password64-qa`
+(P-0836, stored version 6.4.8718.0). Its complete store was written, and it also
+prompted for and accepted its password after another ETS process restart.
+`projects-password-opened.json`, `projects-password64-opened.json`, the snapshots,
+action results and persisted file hashes record both checks. The official-SDK
+MCP independently returned the copied test-mcp project's 29 devices and 502
+group addresses. Early dispatcher timeouts occurred during startup; subsequent
+project operations succeeded without restarting that process.
+
+Original profile/add-in and all 1,877 original data hashes were restored after
+ETS closed. Two test-only workspace files were backed up and removed. This
+extends runtime evidence to new protected-project persistence and cross-version
+opening; it does not claim that arbitrary project formats or every method body
+have been validated.
