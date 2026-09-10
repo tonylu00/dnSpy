@@ -46,6 +46,9 @@ namespace dnSpy.Decompiler.MSBuild {
 		/// </summary>
 		public bool DontReferenceStdLib { get; set; }
 
+		/// <summary>Preserve the input public-key identity in an SDK project.</summary>
+		public bool PublicSign { get; set; }
+
 		/// <summary>
 		/// Project version or null to use <see cref="ProjectCreatorOptions.ProjectVersion"/>
 		/// </summary>

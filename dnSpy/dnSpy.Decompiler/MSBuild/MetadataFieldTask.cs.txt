@@ -12,6 +12,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
     public string AssemblyPath { get; set; }
     public Microsoft.Build.Framework.ITaskItem[] ReferencePaths { get; set; }
     public bool TupleNamesOnly { get; set; }
+    public bool PublicSign { get; set; }
     public override bool Execute() {
         const string prefix = "dnSpy.metadata.string-field.v1|";
         string temporary = AssemblyPath + ".metadata-" + Guid.NewGuid().ToString("N");
@@ -102,11 +103,15 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 }
                 }
                 if (!changed) return true;
-                if (module.IsStrongNameSigned) throw new InvalidOperationException("Metadata field restoration requires an unsigned build output.");
+                if (module.IsStrongNameSigned && !PublicSign) throw new InvalidOperationException("Metadata restoration requires an unsigned output or explicit public signing.");
                 var options = new ModuleWriterOptions(module) {
                     WritePdb = module.PdbState != null, PdbFileName = temporaryPdb,
                     PdbFileNameInDebugDirectory = Path.GetFileName(pdb)
                 };
+                if (PublicSign && module.Assembly?.PublicKey?.Data?.Length > 0) {
+                    options.StrongNamePublicKey = new StrongNamePublicKey(module.Assembly.PublicKey);
+                    options.Cor20HeaderOptions.Flags = module.Cor20HeaderFlags | dnlib.DotNet.MD.ComImageFlags.StrongNameSigned;
+                }
                 module.Write(temporary, options);
             }
             File.Copy(temporary, AssemblyPath, true);

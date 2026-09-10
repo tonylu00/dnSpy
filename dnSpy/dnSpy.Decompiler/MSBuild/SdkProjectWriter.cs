@@ -1,4 +1,4 @@
-﻿/*
+/*
     Copyright (C) 2014-2019 de4dot@gmail.com
 
     This file is part of dnSpy
@@ -115,6 +115,13 @@ namespace dnSpy.Decompiler.MSBuild {
 				if (!string.IsNullOrEmpty(asmName))
 					writer.WriteElementString("AssemblyName", asmName);
 				writer.WriteElementString("GenerateAssemblyInfo", "False");
+				if (project.Options.PublicSign && project.Module.Assembly?.PublicKey?.Data is byte[] key && key.Length != 0) {
+					System.IO.File.WriteAllBytes(System.IO.Path.Combine(project.Directory, "original-public-key.snk"), key);
+					writer.WriteElementString("SignAssembly", "true");
+					writer.WriteElementString("PublicSign", "true");
+					writer.WriteElementString("AssemblyOriginatorKeyFile", "original-public-key.snk");
+					System.IO.File.WriteAllText(System.IO.Path.Combine(project.Directory, "PUBLIC-SIGNING.txt"), "This build preserves the input public-key identity only. It has no valid cryptographic signature and requires a host that accepts public-signed assemblies. No private signing key or vendor signature is recovered.\n");
+				}
 				if (MetadataFieldProjectSupport.Required(project))
 					writer.WriteElementString("ProduceReferenceAssembly", "true");
 				// SDK defaults use C# 7.3 for .NET Framework, while the decompiler

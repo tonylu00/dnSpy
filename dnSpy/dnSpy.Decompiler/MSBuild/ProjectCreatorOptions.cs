@@ -82,6 +82,9 @@ namespace dnSpy.Decompiler.MSBuild {
 		/// </summary>
 		public bool GenerateSDKStyleProjects { get; set; }
 
+		/// <summary>Preserve public-key identities without producing cryptographic signatures.</summary>
+		public bool PublicSign { get; set; }
+
 		/// <summary>
 		/// Constructor
 		/// </summary>

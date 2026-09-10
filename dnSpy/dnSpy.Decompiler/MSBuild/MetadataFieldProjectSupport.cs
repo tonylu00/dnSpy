@@ -95,7 +95,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				"Type restoration also preserves unusual input generic arity spelling. If a newly compiled helper would collide with a retained input type, only the new compiler-generated helper receives a unique runtime name. Ambiguous conflicts between retained or ordinary types fail explicitly.\n" +
 				"EntryPoint.cs allows C# to compile executables whose CLR entry method has another name. The build task selects the marked original method and removes the stub; its original name, signature, attributes and body remain intact.\n" +
 				"Protected-call stubs allow nested source code to reach hidden, nonvirtual protected methods within the same module. The task redirects calls (including generic method specifications) to the original methods and removes the stubs from runtime assemblies. Original access flags, names and bodies remain unchanged; reference assemblies retain the compilation stubs. Unexpected inherited generic declaring-type references fail explicitly.\n" +
-				"The task requires an unsigned build output and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +
+				"The task requires an unsigned output or explicit PublicSign=true, and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). Public signing retains identity only, not a valid cryptographic signature. It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +
 				"Only supported, unreferenced private/compiler-controlled string fields are handled; other unrepresentable metadata remains visible as a source error.\n");
 			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))
 			using (var output = File.Create(Path.Combine(directory, "RestoreFields.cs")))
@@ -119,11 +119,13 @@ namespace dnSpy.Decompiler.MSBuild {
 			writer.WriteAttributeString("Condition", "'$(DesignTimeBuild)' != 'true'");
 			writer.WriteStartElement("DnSpyRestoreMetadataFields");
 			writer.WriteAttributeString("AssemblyPath", "@(IntermediateAssembly)");
+			writer.WriteAttributeString("PublicSign", "$(PublicSign)");
             writer.WriteAttributeString("ReferencePaths", "@(ReferencePathWithRefAssemblies)");
 			writer.WriteEndElement();
 			writer.WriteStartElement("DnSpyRestoreMetadataFields");
 			writer.WriteAttributeString("AssemblyPath", "@(IntermediateRefAssembly)");
 			writer.WriteAttributeString("TupleNamesOnly", "true");
+			writer.WriteAttributeString("PublicSign", "$(PublicSign)");
 			writer.WriteAttributeString("Condition", "'@(IntermediateRefAssembly)' != '' and Exists('@(IntermediateRefAssembly)')");
 			writer.WriteEndElement(); writer.WriteEndElement();
 		}

@@ -65,6 +65,8 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		public MSBuildProjectCreator(ProjectCreatorOptions options) {
 			this.options = options ?? throw new ArgumentNullException(nameof(options));
+			if (options.PublicSign && !options.GenerateSDKStyleProjects)
+				throw new ArgumentException("Public signing requires SDK-style project export.", nameof(options));
 			logger = new MyLogger(this, options.Logger);
 			progressListener = options.ProgressListener ?? NoMSBuildProgressListener.Instance;
 			projects = new List<Project>();
@@ -87,14 +89,15 @@ namespace dnSpy.Decompiler.MSBuild {
 					preservedAssemblies.Add(file.Source, file.Filename);
 					nativeAssemblies.Add(file);
 				}
-				// Only source projects lose their strong-name keys. Copied native
-				// assemblies retain their signatures and keyed friend grants.
-				var friendAssemblyNames = FriendAssemblyNames.Create(managedModules.Select(m => m.Module));
+				// Unsigned source projects need adapted friend grants. Public-sign
+				// exports and copied binaries retain their original keyed grants.
+				var friendAssemblyNames = options.PublicSign ? new Dictionary<dnlib.DotNet.CustomAttribute, string>() : FriendAssemblyNames.Create(managedModules.Select(m => m.Module));
 				satelliteAssemblyFinder = new SatelliteAssemblyFinder();
 				var namedModules = managedModules.OrderBy(m => m.Module.Location, StringComparer.OrdinalIgnoreCase)
 					.Select(m => (Options: m, Directory: filenameCreator.Create(m.Module))).ToArray();
 				Parallel.ForEach(namedModules, opts, named => {
 					var modOpts = named.Options;
+					modOpts.PublicSign = options.PublicSign;
 					options.CancellationToken.ThrowIfCancellationRequested();
 					var p = new Project(modOpts, named.Directory, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames, preservedAssemblies);
 					modOpts.DecompilationContext.RestoreMetadataOnlyFields = options.GenerateSDKStyleProjects && modOpts.Decompiler.GenericGuid == dnSpy.Contracts.Decompiler.DecompilerConstants.LANGUAGE_CSHARP;

@@ -174,6 +174,7 @@ namespace dnSpy_Console {
 		bool decompileBaml = true;
 		bool colorizeOutput;
 		bool sdkProject;
+		bool publicSign;
 		Guid projectGuid = Guid.NewGuid();
 		int numThreads;
 		int mdToken;
@@ -335,6 +336,7 @@ namespace dnSpy_Console {
 			}
 		}
 		static readonly UsageInfo[] usageInfos = new UsageInfo[] {
+			new UsageInfo("--public-sign", null, "Export SDK projects with original public-key identity; no valid cryptographic signature is produced."),
 			new UsageInfo("--sdk-project", null, dnSpy_Console_Resources.CmdLineDescription_SdkProject),
 			new UsageInfo("--asm-path", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_AsmPath),
 			new UsageInfo("--app-config", dnSpy_Console_Resources.CmdLinePath, "use assembly binding redirects from the application's configuration file"),
@@ -435,6 +437,7 @@ namespace dnSpy_Console {
 			"output-dir",
 			"lang",
 			"sdk-project",
+			"public-sign",
 			"asm-path",
 			"app-config",
 			"assembly-contexts",
@@ -489,6 +492,9 @@ namespace dnSpy_Console {
 						isRecursive = true;
 						break;
 					
+					case "--public-sign":
+						publicSign = true; sdkProject = true;
+						break;
 					case "--sdk-project":
 						sdkProject = true;
 						break;
@@ -787,6 +793,7 @@ namespace dnSpy_Console {
 				if (createSlnFile && !string.IsNullOrEmpty(slnName))
 					options.SolutionFilename = slnName;
 				options.GenerateSDKStyleProjects = sdkProject;
+				options.PublicSign = publicSign;
 				var creator = new MSBuildProjectCreator(options);
 				creator.Create();
 				foreach (var filename in creator.NativeAssemblyFilenames)
