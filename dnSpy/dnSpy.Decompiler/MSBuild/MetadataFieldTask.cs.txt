@@ -18,7 +18,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         try {
             bool changed = false;
             using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
+                module.LoadEverything();
                 changed |= RestoreDelegateMethods(module);
+                changed |= RestoreTypeNames(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
                     a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.raw-exceptions.v1"))).ToArray();
                 foreach (var rawType in rawTypes) {
@@ -104,6 +106,42 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (File.Exists(temporary)) File.Delete(temporary);
             if (File.Exists(temporaryPdb)) File.Delete(temporaryPdb);
         }
+    }
+
+    static bool RestoreTypeNames(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.type-name.v1|";
+        var maps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
+        var markers = new List<CustomAttribute>();
+        foreach (var attribute in module.Assembly.CustomAttributes) {
+            if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+            var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
+            string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
+            if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+            var parts = text.Substring(prefix.Length).Split('|');
+            if (parts.Length != 5) throw new InvalidDataException("Invalid dnSpy type name instruction.");
+            string key = string.Join("|", parts.Take(4));
+            var name = new UTF8String(Convert.FromBase64String(parts[4]));
+            UTF8String previous;
+            if (maps.TryGetValue(key, out previous) && previous != name)
+                throw new InvalidDataException("Conflicting type name instructions for one assembly context.");
+            maps[key] = name;
+            markers.Add(attribute);
+        }
+        if (markers.Count == 0) return false;
+        // Capture every key before changing an enclosing type. TypeRefs are also
+        // used by generic signatures, method bodies, constraints and attributes.
+        var renames = new List<KeyValuePair<ITypeDefOrRef, UTF8String>>();
+        foreach (var type in module.GetTypes().Cast<ITypeDefOrRef>().Concat(module.GetTypeRefs())) {
+            var assembly = type.DefinitionAssembly;
+            if (assembly == null) continue;
+            Func<string, string> encode = value => Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
+            string key = string.Join("|", new[] { type.FullName, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "" }.Select(encode));
+            UTF8String name;
+            if (maps.TryGetValue(key, out name)) renames.Add(new KeyValuePair<ITypeDefOrRef, UTF8String>(type, name));
+        }
+        foreach (var rename in renames) rename.Key.Name = rename.Value;
+        foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
+        return true;
     }
 
     static string TypeKey(ITypeDefOrRef type) { return type.FullName + ", " + type.DefinitionAssembly.FullName; }
