@@ -103,6 +103,8 @@ namespace dnSpy.Decompiler.MSBuild {
 			var ep = Options.Module.EntryPoint;
 			if (ep is not null && ep.DeclaringType is not null)
 				StartupObject = ep.DeclaringType.ReflectionFullName;
+			if (Options.DecompilationContext.RestoreMetadataOnlyFields && MetadataEntryPoint.GetName(Options.Module) is string entryStub)
+				StartupObject = entryStub;
 
 			applicationManifest = ApplicationManifest.TryCreate(Options.Module.Win32Resources, filenameCreator);
 			if (ApplicationManifest is not null)

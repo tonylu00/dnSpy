@@ -6,11 +6,17 @@ using System.Linq;
 public interface IReceiver { }
 public sealed class Receiver : IReceiver {
     public string Pick(int value) { return "instance"; }
+    public Func<int, string> Callback = value => "field:" + value;
 }
 public static class BindingExtensions {
     public static string Pick(this IReceiver receiver, int value) { return "extension:" + value; }
+    public static string Same(this Receiver receiver) { return "same"; }
+    public static string Callback(this Receiver receiver) { return "extension-field"; }
     public static string Kind<T>(this IEnumerable<T> values, T value) { return typeof(T).FullName; }
     public static string NullKind<T>(this IEnumerable<T> values, T value) { return (values == null ? "null:" : "value:") + typeof(T).FullName; }
+}
+public static class ExactReceiverExtensions {
+    public static string Pick(this Receiver receiver, int value) { return "exact-extension:" + value; }
 }
 public static class FirstExtensions {
     public static int Calls;
@@ -75,6 +81,9 @@ public static class ExtensionBindingFixture {
         Check(NullByteKind() == "null:System.Byte", "Null extension receiver");
         Check(ConvertedReceiver(new Receiver()) == "extension:7", "Instance method replaced extension");
         Check(InterfaceReceiver(new Receiver()) == "extension:9", "Interface extension binding");
+        Check(ExactReceiverExtensions.Pick(new Receiver(), 11) == "exact-extension:11", "Exact receiver instance hides extension");
+        Check(BindingExtensions.Callback(new Receiver()) == "extension-field", "Delegate field hides extension");
+        Check(BindingExtensions.Same(new Receiver()) == "same", "Unambiguous extension receiver");
         Check(AnonymousQuery(new[] { 0, 1, 2, 3 }) == 15, "Anonymous query inference");
         foreach (Action call in new Action[] { () => ReverseArray(null), () => ReverseDeferred(null), () => ContainsByte(null), () => PrependByte(null) }) {
             Exception error = null; try { call(); } catch (Exception caught) { error = caught; }

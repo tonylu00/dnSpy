@@ -3,6 +3,8 @@ using System.Linq;
 using dnlib.DotNet;
 class Emitter {
     static string Name(string type, string field) {
+        if (type == "FieldBase`1" && field == "BaseStorage" || type == "FieldDerived" && field == "DerivedStorage") return "e";
+        if (type == "FieldDerived" && field == "Callback") return "ReadProtected";
         if (type == "Collision") {
             if (field == "First" || field == "Second") return "Value";
             if (field == "CallName") return "Call";

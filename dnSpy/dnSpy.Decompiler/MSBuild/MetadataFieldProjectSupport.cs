@@ -8,12 +8,21 @@ using dnSpy.Contracts.Decompiler;
 namespace dnSpy.Decompiler.MSBuild {
 	static class MetadataFieldProjectSupport {
 		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
-			(MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
+			(MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
 		public static void Write(Project project, XmlWriter writer) {
 			if (!Required(project)) return;
 			string directory = Path.Combine(project.Directory, ".dnspy-metadata");
 			System.IO.Directory.CreateDirectory(directory);
+			var entryStub = MetadataEntryPoint.GetName(project.Module);
+			if (entryStub != null) {
+				File.WriteAllText(Path.Combine(directory, "EntryPoint.cs"),
+					"[global::System.Reflection.ObfuscationAttribute(Feature = \"" + MetadataEntryPoint.StubFeature + "\")]\n" +
+					"internal static class " + entryStub + " { private static int Main(string[] args) { throw new global::System.InvalidOperationException(\"Run the dnSpy metadata restoration build target.\"); } }\n");
+				writer.WriteStartElement("ItemGroup"); writer.WriteStartElement("Compile");
+				writer.WriteAttributeString("Include", ".dnspy-metadata/EntryPoint.cs");
+				writer.WriteEndElement(); writer.WriteEndElement();
+			}
 			var typeNames = MetadataTypeNames.GetMappings(project.Module);
 			if (typeNames.Length != 0) {
 				File.WriteAllText(Path.Combine(directory, "TypeNames.cs"), string.Join("\n", typeNames.Select(m =>
@@ -53,6 +62,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				"RawExceptions.cs is a compilation placeholder: its catch type becomes System.Object, and calls to ThrowValue are removed before the existing IL throw. The helper type is removed from runtime assemblies. This preserves raw exception objects and the assembly's exception-wrapping policy.\n" +
 				"DelegateMethods.cs records typed companion-to-delegate mappings. Static helper bodies compile in companion classes; the task moves them onto the delegate, repairs local and external method references (including generic calls), and removes mapping attributes and companion types. Reference assemblies retain the source companions so dependent projects can compile.\n" +
 				"TypeNames.cs records reversible type aliases for metadata names that C# cannot declare, including collisions with methods or enclosing types. Runtime definitions and external type references regain their original names; reference assemblies retain source aliases for compilation. Method names and overload families stay intact. The mapping uses the resolved input assembly context, assembly name/version/culture, and full nested source name.\n" +
+				"EntryPoint.cs allows C# to compile executables whose CLR entry method has another name. The build task selects the marked original method and removes the stub; its original name, signature, attributes and body remain intact.\n" +
 				"The task requires an unsigned build output and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +
 				"Only supported, unreferenced private/compiler-controlled string fields are handled; other unrepresentable metadata remains visible as a source error.\n");
 			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))

@@ -1,15 +1,23 @@
 using System;
 
+public class shadow {
+    public static int Read() { return 19; }
+    public int Instance() { return 23; }
+}
+
 public class ReceiverBase<T> {
     public T Value { get; set; }
     public virtual string Virtual { get { return "base"; } }
     public string Method() { return "base-method"; }
+    internal string InternalMethod() { return "base-internal"; }
     public int this[int index] { get { return index + 10; } }
     public event Action Changed;
     public void Raise() { if (Changed != null) Changed(); }
 }
 public class ReceiverMiddle<T> : ReceiverBase<T> {
     public override string Virtual { get { return "override"; } }
+    public new string Method() { return "middle-method"; }
+    internal new string InternalMethod() { return "middle-internal"; }
 }
 public class ReceiverDerived<T> : ReceiverMiddle<T> {
     public new T Value;
@@ -18,6 +26,11 @@ public class ReceiverDerived<T> : ReceiverMiddle<T> {
     public new int this[int index] { get { return index + 20; } }
     public new event Action Changed;
     public void RaiseHidden() { if (Changed != null) Changed(); }
+    public string Grandparent() { return ((ReceiverBase<T>)this).Method() + "|" + ((ReceiverBase<T>)this).InternalMethod() + "|" + base.Virtual; }
+}
+public sealed class ReceiverBox<T> where T : ReceiverBase<int> {
+    public T Value;
+    public T Get() { return Value; }
 }
 public static class HiddenMemberReceiverFixture {
     static uint? nullableNumber;
@@ -31,12 +44,19 @@ public static class HiddenMemberReceiverFixture {
         catch (Exception e) { Console.Error.WriteLine(e.GetType().Name + ": " + e.Message); return 1; }
     }
     static void Run() {
+        int staticValue = global::shadow.Read();
+        shadow shadow = new shadow();
+        Check(staticValue + shadow.Instance() == 42, "local shadows earlier static type receiver");
         nullableNumber = null;
         Check(nullableNumber.Equals((uint?)null), "empty nullable receiver equality");
         Check(!nullableNumber.Equals((uint?)7), "empty nullable receiver inequality");
         nullableNumber = 7;
         Check(nullableNumber.Equals((uint?)7) && !nullableNumber.Equals((uint?)null), "nonempty nullable receiver equality");
         var value = new ReceiverDerived<int>();
+        var box = new ReceiverBox<ReceiverDerived<int>> { Value = value };
+        Check(((ReceiverBase<int>)box.Get()).Method() == "base-method", "Substituted generic return receiver");
+        Check(value.Grandparent() == "base-method|base-internal|override", "nonvirtual grandparent and virtual base calls");
+        Check(((ReceiverBase<int>)value).InternalMethod() == "base-internal", "internal hidden method");
         ((ReceiverBase<int>)Read(value)).Value = 13;
         value.Value = 29;
         Check(((ReceiverBase<int>)Read(value)).Value == 13 && value.Value == 29, "property/field hiding");

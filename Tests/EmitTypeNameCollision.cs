@@ -8,6 +8,11 @@ class Emitter {
         using var library = ModuleDefMD.Load(args[0]);
         using var client = ModuleDefMD.Load(args[1]);
         library.LoadEverything(); client.LoadEverything();
+        string entryName = args.Length > 3 ? args[3] : "b";
+        client.EntryPoint.Name = entryName;
+        if (entryName == "Main") client.EntryPoint.DeclaringType.Name = "Main";
+        foreach (var instruction in client.EntryPoint.Body.Instructions)
+            if (instruction.Operand is string value && value == "b") instruction.Operand = entryName;
         foreach (var module in new[] { library, client }) {
             foreach (var reference in module.GetTypeRefs()) reference.Name = Name(reference.Name);
             foreach (var reference in module.GetMemberRefs())

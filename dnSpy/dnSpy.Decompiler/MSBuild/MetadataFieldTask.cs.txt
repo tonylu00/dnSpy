@@ -21,6 +21,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 module.LoadEverything();
                 changed |= RestoreDelegateMethods(module);
                 changed |= RestoreTypeNames(module);
+                changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
                     a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.raw-exceptions.v1"))).ToArray();
                 foreach (var rawType in rawTypes) {
@@ -106,6 +107,22 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (File.Exists(temporary)) File.Delete(temporary);
             if (File.Exists(temporaryPdb)) File.Delete(temporaryPdb);
         }
+    }
+
+    static bool RestoreEntryPoint(ModuleDef module) {
+        Func<CustomAttribute, string, bool> marker = (a, feature) => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
+            a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == feature);
+        var stubs = module.Types.Where(t => t.CustomAttributes.Any(a => marker(a, "dnSpy.metadata.entry-point-stub.v1"))).ToArray();
+        if (stubs.Length == 0) return false;
+        var methods = module.GetTypes().SelectMany(t => t.Methods).Where(m => m.CustomAttributes.Any(a => marker(a, "dnSpy.metadata.entry-point.v1"))).ToArray();
+        if (stubs.Length != 1 || methods.Length != 1 || !methods[0].IsStatic || !methods[0].HasBody || module.EntryPoint?.DeclaringType != stubs[0])
+            throw new InvalidDataException("Invalid original entry-point instruction or missing compilation stub.");
+        var entry = methods[0];
+        foreach (var attribute in entry.CustomAttributes.Where(a => marker(a, "dnSpy.metadata.entry-point.v1")).ToArray()) entry.CustomAttributes.Remove(attribute);
+        module.EntryPoint = entry;
+        if (module.PdbState != null) module.PdbState.UserEntryPoint = entry;
+        module.Types.Remove(stubs[0]);
+        return true;
     }
 
     static bool RestoreTypeNames(ModuleDef module) {

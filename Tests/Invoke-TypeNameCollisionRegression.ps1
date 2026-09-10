@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$OutputDirectory)
+param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$OutputDirectory,[ValidateSet('b','Main')][string]$EntryPointName='b')
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new output directory.'}
@@ -12,7 +12,7 @@ $dnlib=[Security.SecurityElement]::Escape((Join-Path (Split-Path ([IO.Path]::Get
 dotnet build (Join-Path $OutputDirectory 'client\TypeNameCollisionClient.csproj') -c Release --nologo -v quiet
 if($LASTEXITCODE -ne 0){throw 'Input build failed.'}
 $inputDir=Join-Path $OutputDirectory 'input'
-dotnet run --project (Join-Path $OutputDirectory 'emitter\Emitter.csproj') -c Release -- (Join-Path $OutputDirectory 'library\bin\Release\net48\TypeNameCollisionLibrary.dll') (Join-Path $OutputDirectory 'client\bin\Release\net48\TypeNameCollisionClient.exe') $inputDir
+dotnet run --project (Join-Path $OutputDirectory 'emitter\Emitter.csproj') -c Release -- (Join-Path $OutputDirectory 'library\bin\Release\net48\TypeNameCollisionLibrary.dll') (Join-Path $OutputDirectory 'client\bin\Release\net48\TypeNameCollisionClient.exe') $inputDir $EntryPointName
 if($LASTEXITCODE -ne 0){throw 'Metadata emission failed.'}
 $exe=Join-Path $inputDir 'TypeNameCollisionClient.exe'; $library=Join-Path $inputDir 'TypeNameCollisionLibrary.dll'
 $hashes=@(Get-FileHash $exe,$library | ForEach-Object Hash)

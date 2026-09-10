@@ -1,6 +1,9 @@
 using System;
 public static class FieldCollisionClient {
     public static int Main() {
+        if (EnumTokens.Object.ToString() != "Object" || EnumTokens.ValueType.ToString() != "ValueType" || EnumTokens.Enum.ToString() != "Enum")
+            throw new Exception("An ancestor type name changed enum member names");
+        if (new FieldDerived().Run() != 33) throw new Exception("Inherited field aliases or protected call binding changed");
         var value = new Collision { First = 5, Second = "abc", CallName = 7, SameAsType = 11, Value_1 = 13 };
         var generic = new GenericBox<string> { First = "generic", Second = 19 };
         if (value.First != 5 || value.Second != "abc" || value.CallName != 7 || value.SameAsType != 11 ||

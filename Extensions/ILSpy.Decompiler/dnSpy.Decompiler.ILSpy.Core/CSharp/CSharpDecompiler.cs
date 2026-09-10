@@ -249,6 +249,16 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 			AddXmlDocumentation(ref state, langSettings.Settings, astBuilder);
 			if (ctx.RestoreMetadataOnlyFields) {
 				foreach (var node in astBuilder.SyntaxTree.Descendants.OfType<EntityDeclaration>()) {
+					var method = node.Annotation<MethodDef>();
+					if (method?.Module != null && method.Module.EntryPoint == method && MetadataEntryPoint.GetName(method.Module) != null) {
+						var marker = new ICSharpCode.NRefactory.CSharp.Attribute {
+							Type = new MemberType(new MemberType(new MemberType(new SimpleType("global"), "System") { IsDoubleColon = true }, "Reflection"), "ObfuscationAttribute")
+						};
+						marker.Arguments.Add(new NamedExpression(Identifier.Create("Feature"), new PrimitiveExpression(MetadataEntryPoint.Feature)));
+						var section = new AttributeSection();
+						section.Attributes.Add(marker);
+						node.Attributes.Add(section);
+					}
 					var type = node.Annotation<TypeDef>();
 					if (type == null || !(node is TypeDeclaration || node is DelegateDeclaration)) continue;
 					var usage = MetadataAttributeUsages.GetUsage(type);
