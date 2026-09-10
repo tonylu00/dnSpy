@@ -31,11 +31,43 @@ assembly name. The accepted map is saved as `dnspy-source-name-map.xml` beside
 the export manifest.
 
 Version 1 supports non-generic types and ordinary nonvirtual methods. It rejects
-constructors, accessors, runtime/PInvoke methods, virtual/override methods and
-parameter rows. Choose aliases unique across their module, including original
+constructors, accessors, runtime/PInvoke methods and virtual/override methods.
+Choose type/method aliases unique across their module, including original
 type/member names, namespace segments, parameters and generic parameters.
 Alias swaps and invisible Unicode format characters are rejected. These
 conservative limits avoid ambiguous compiler binding and metadata restoration.
+
+Ordinary method rows also accept source-only parameter aliases:
+
+```xml
+<Method Token="0x06000001" ExpectedName="b"
+        Signature="System.Int32 Example.Api::b(System.Int32,System.Int32)">
+  <Parameter Sequence="1" ExpectedName="a" NewName="tens" />
+  <Parameter Sequence="2" ExpectedName="b" NewName="units" />
+</Method>
+```
+
+The method's `NewName` is optional when parameter rows are present. Sequence is
+one-based in the signature, excluding `this`; an existing parameter metadata row
+and its exact original name are required. Return rows and absent metadata rows
+are rejected. Parameter aliases must be distinct from original argument names,
+other aliases and generic parameter names in scope. Swaps and collisions with
+mapped type/method aliases are rejected. Generic methods are supported.
+
+Source bodies and declarations use the aliases together. The existing parameter
+metadata restoration instructions preserve original reflection-visible names in
+runtime output; compiler reference assemblies retain source names for compilation.
+`Invoke-SourceParameterAliasRegression.ps1` checks combined method/parameter maps,
+parameter-only maps, generic methods, one/four workers, unchanged callers, runtime
+reflection names, input preservation and invalid-map rejection.
+
+On 2026-09-10, parameter aliases on the schema-version helper in real ETS 6.3
+and then 6.4 Common assemblies exported and compiled with zero errors. Both
+public SDK contract audits reported zero differences, including parameter names.
+These isolated exports used their respective `ETS6N.exe.config` binding redirects.
+The existing duplicate generic/argument-name regression also passed with one/four
+workers. These targeted checks do not replace the separately recorded whole-tree
+and live validation; no new whole-tree runtime was staged for this change.
 Names containing characters that cannot be represented in XML attributes are
 not supported by this version.
 

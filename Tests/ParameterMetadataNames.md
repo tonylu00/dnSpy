@@ -29,8 +29,10 @@ checks one/four-worker source determinism, incremental output hashes and input
 preservation. `Assert-ParameterMetadataNames.ps1` is the reusable exact-name
 comparison for fixtures whose original definitions are all retained.
 
-This does not yet add custom parameter aliases to `--source-name-map`; that
-format still accepts non-generic types and ordinary nonvirtual methods only.
+`--source-name-map` also accepts custom parameter aliases on ordinary nonvirtual
+methods, including generic methods. The same runtime restoration path preserves
+their original metadata names. See `SourceNameMap.md` for guarded sequence/name
+mapping and `Invoke-SourceParameterAliasRegression.ps1` for caller/runtime checks.
 
 The ETS 6.3 source26 export rebuilt all 76 managed projects with zero errors.
 An expanded public-contract audit found 265 parameter-name differences in the
