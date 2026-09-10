@@ -273,6 +273,12 @@ data hashes were restored; the test-only workspace was backed up and removed.
 
 ### Source aliases on state-machine methods
 
+`Invoke-SourceStateMachineAttributeAudit.ps1` accepts `-DnlibPath`,
+`-ExportDirectory` and a new `-OutputDirectory`. It checks state-machine attribute
+type resolution in every physical exported project, including platform-specific
+output directories. External state types are counted separately and are not
+resolved through another project's dependency context.
+
 `Invoke-SourceStateMachineAliasRegression.ps1` maps async and iterator methods
 on a generic declaring type, including a generic async method. It checks readable
 source aliases, execution, original method/state-machine reflection names and
@@ -287,6 +293,26 @@ associations while retaining compiler ordinals and generic arity. Raw iterator
 bodies also retain the original association attribute; only reconstructed
 async/iterator syntax can rely on the compiler to recreate it. These focused
 checks do not replace the next full 6.3-first, then 6.4 validation.
+
+The constructor-lambda regression additionally checks the compiler's dot-to-hyphen
+rule (`<.ctor>b__N` becomes `<<-ctor>b__N>d...`). Source43's negative audit found
+32 unresolved state types; corrected source44 resolves all 3,005 associations
+across 107 projects, with no external associations. Source44 compiles, passes
+the SDK and original-name audits, and stages 377 assemblies/satellites with
+input hashes and the complete physical tree preserved. Comparing its 193,872
+method bodies with source39 leaves no normalized differences after 70 explicitly
+verified generated-owner name corrections. The correction ledger uses unchanged
+owner signatures and matching attributes, preserving compiler ordinals and
+arity; it does not ignore arbitrary names or instruction differences.
+
+In `ets63-source44-live1`, the isolated runtime launched in Chinese and opened
+the copied test-mcp project through the unchanged official-SDK add-in. The MCP
+reported 29 devices and 502 group addresses. An SDK project-number update
+survived a complete ETS process restart. The copied P-07CC protected project
+then prompted for its password and opened with protection intact. The runtime
+reported saving enabled. After shutdown, original profile/add-in hashes and
+all 4,811 recorded original data-file hashes matched their backups. Only the
+new test workspace was removed, after backing it up.
 
 ### Rebuilt 6.4 password round trips
 
