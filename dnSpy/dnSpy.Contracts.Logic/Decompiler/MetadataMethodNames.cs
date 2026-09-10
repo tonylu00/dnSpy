@@ -11,7 +11,7 @@ namespace dnSpy.Contracts.Decompiler {
 		/// <summary>Assembly instructions for restoring aliased methods.</summary>
 		public const string Prefix = "dnSpy.metadata.method-name.v1|";
 		/// <summary>Returns the source identifier from the resolved declaring module.</summary>
-		public static string GetName(MethodDef method) => method.Module != null && names.GetValue(method.Module, Find).TryGetValue(method, out var alias) ? alias : method.Name.String;
+		public static string GetName(MethodDef method) => SourceNameAliases.Get(method) ?? (method.Module != null && names.GetValue(method.Module, Find).TryGetValue(method, out var alias) ? alias : method.Name.String);
 		static readonly ConditionalWeakTable<ModuleDef, string[]> mappings = new ConditionalWeakTable<ModuleDef, string[]>();
 		/// <summary>Instructions use resolved assembly context and source owner/alias pairs.</summary>
 		public static string[] GetMappings(ModuleDef module) => mappings.GetValue(module, CreateMappings);
@@ -80,6 +80,7 @@ namespace dnSpy.Contracts.Decompiler {
 					.Concat(type.Properties.Select(p => p.Name.String)).Concat(type.Events.Select(e => e.Name.String))
 					.Concat(type.NestedTypes.Select(MetadataTypeNames.GetName)), StringComparer.Ordinal);
 				used.Add(MetadataTypeNames.GetName(type));
+				used.UnionWith(type.Methods.Select(SourceNameAliases.Get).Where(n => n != null).Select(n => n!));
 				used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
 				used.UnionWith(type.Methods.SelectMany(m => m.GenericParameters).Select(p => p.Name.String));
 				var parent = type.BaseType?.ResolveTypeDef();

@@ -84,6 +84,8 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		/// <summary>Preserve public-key identities without producing cryptographic signatures.</summary>
 		public bool PublicSign { get; set; }
+		/// <summary>Checked source aliases, preserving runtime metadata names.</summary>
+		public string? SourceNameMapPath { get; set; }
 
 		/// <summary>
 		/// Constructor

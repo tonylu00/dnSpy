@@ -175,6 +175,7 @@ namespace dnSpy_Console {
 		bool colorizeOutput;
 		bool sdkProject;
 		bool publicSign;
+		string? sourceNameMap;
 		Guid projectGuid = Guid.NewGuid();
 		int numThreads;
 		int mdToken;
@@ -336,6 +337,7 @@ namespace dnSpy_Console {
 			}
 		}
 		static readonly UsageInfo[] usageInfos = new UsageInfo[] {
+			new UsageInfo("--source-name-map", "FILE", "Use checked source aliases while restoring original runtime names (SDK export)."),
 			new UsageInfo("--public-sign", null, "Export SDK projects with original public-key identity; no valid cryptographic signature is produced."),
 			new UsageInfo("--sdk-project", null, dnSpy_Console_Resources.CmdLineDescription_SdkProject),
 			new UsageInfo("--asm-path", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_AsmPath),
@@ -438,6 +440,7 @@ namespace dnSpy_Console {
 			"lang",
 			"sdk-project",
 			"public-sign",
+			"source-name-map",
 			"asm-path",
 			"app-config",
 			"assembly-contexts",
@@ -492,6 +495,10 @@ namespace dnSpy_Console {
 						isRecursive = true;
 						break;
 					
+					case "--source-name-map":
+						if (next is null) throw new ErrorException("Missing source name map.");
+						sourceNameMap = Path.GetFullPath(next); sdkProject = true; i++;
+						break;
 					case "--public-sign":
 						publicSign = true; sdkProject = true;
 						break;
@@ -794,6 +801,7 @@ namespace dnSpy_Console {
 					options.SolutionFilename = slnName;
 				options.GenerateSDKStyleProjects = sdkProject;
 				options.PublicSign = publicSign;
+				options.SourceNameMapPath = sourceNameMap;
 				var creator = new MSBuildProjectCreator(options);
 				creator.Create();
 				foreach (var filename in creator.NativeAssemblyFilenames)

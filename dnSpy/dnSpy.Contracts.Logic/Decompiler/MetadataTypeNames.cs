@@ -21,6 +21,8 @@ namespace dnSpy.Contracts.Decompiler {
 		/// <summary>Returns a stable identifier for declarations and references, including external references.</summary>
 		public static string GetName(ITypeDefOrRef type) {
 			var definition = type.ResolveTypeDef();
+			var requested = SourceNameAliases.Get(definition);
+			if (requested != null) return requested;
 			return definition?.Module != null && names.GetValue(definition.Module, Find).TryGetValue(definition, out var alias)
 				? alias : SimpleName(type.Name);
 		}
@@ -42,6 +44,8 @@ namespace dnSpy.Contracts.Decompiler {
 			var used = new HashSet<string>(StringComparer.Ordinal);
 			foreach (var type in types) {
 				used.Add(SimpleName(type.Name));
+				var requested = SourceNameAliases.Get(type);
+				if (requested != null) used.Add(requested);
 				used.UnionWith((type.Namespace.String ?? "").Split('.'));
 				used.UnionWith(MemberNames(type));
 				used.UnionWith(type.Fields.Select(f => f.Name.String));

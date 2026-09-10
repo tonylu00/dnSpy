@@ -73,6 +73,12 @@ namespace dnSpy.Decompiler.MSBuild {
 		}
 
 		public void Create() {
+			string? sourceNameMapSnapshot = null;
+			if (options.SourceNameMapPath != null) {
+				if (!options.GenerateSDKStyleProjects) throw new InvalidOperationException("Source aliases require SDK export.");
+				if (options.ProjectModules.Any(m => m.Decompiler.GenericGuid != dnSpy.Contracts.Decompiler.DecompilerConstants.LANGUAGE_CSHARP)) throw new InvalidOperationException("Source aliases currently require C# export.");
+				sourceNameMapSnapshot = SourceNameMap.Apply(options.SourceNameMapPath, options.ProjectModules.Select(m => m.Module));
+			}
 			SatelliteAssemblyFinder? satelliteAssemblyFinder = null;
 			try {
 				var opts = new ParallelOptions {
@@ -162,6 +168,8 @@ namespace dnSpy.Decompiler.MSBuild {
 					progressListener.SetProgress(Interlocked.Increment(ref totalProgress));
 				}
 				WriteExportMap();
+				if (sourceNameMapSnapshot != null)
+					File.WriteAllText(Path.Combine(options.Directory, "dnspy-source-name-map.xml"), sourceNameMapSnapshot);
 				Debug.Assert(totalProgress == maxProgress);
 				progressListener.SetProgress(maxProgress);
 			}
