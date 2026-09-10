@@ -11,6 +11,11 @@ class Emitter {
         var spanType = new TypeRefUser(module, "System", "ReadOnlySpan`1", memory);
         var owner = new TypeDefUser("", "StoredData", module.CorLibTypes.Object.TypeDefOrRef) { Attributes = TypeAttributes.NotPublic | TypeAttributes.Sealed };
         module.Types.Add(owner);
+        var initializer = new MethodDefUser(".cctor", MethodSig.CreateStatic(module.CorLibTypes.Void), MethodImplAttributes.IL,
+            MethodAttributes.Static | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName) { Body = new CilBody() };
+        initializer.Body.Instructions.Add(Instruction.Create(OpCodes.Nop));
+        initializer.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        owner.Methods.Add(initializer);
         owner.CustomAttributes.Add(new CustomAttribute(new MemberRefUser(module, ".ctor", MethodSig.CreateInstance(module.CorLibTypes.Void),
             module.CorLibTypes.GetTypeRef("System.Runtime.CompilerServices", "CompilerGeneratedAttribute"))));
         var payloads = new object[][] {

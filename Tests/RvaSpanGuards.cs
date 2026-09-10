@@ -33,6 +33,13 @@ class RvaSpanGuards {
         }
     }
     static int checks;
+    static MethodDef AddInitializer(Case item, params dnlib.DotNet.Emit.OpCode[] codes) {
+        var method = new MethodDefUser(".cctor", MethodSig.CreateStatic(item.Module.CorLibTypes.Void), dnlib.DotNet.MethodImplAttributes.IL,
+            dnlib.DotNet.MethodAttributes.Static | dnlib.DotNet.MethodAttributes.SpecialName | dnlib.DotNet.MethodAttributes.RTSpecialName) { Body = new dnlib.DotNet.Emit.CilBody() };
+        foreach (var code in codes) method.Body.Instructions.Add(dnlib.DotNet.Emit.Instruction.Create(code));
+        item.Owner.Methods.Add(method);
+        return method;
+    }
     static bool Rewrite(Case item) => (bool)typeof(ILAstOptimizer).GetMethod("TransformReadOnlySpanCopy", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { item.Expression, item.Context });
     static void Check(bool value, string name) { checks++; if (!value) throw new Exception(name); }
     static void Reject(string name, Action<Case> change, ElementType type = ElementType.U1, int length = 3) {
@@ -46,6 +53,10 @@ class RvaSpanGuards {
         var empty = new Case(length: 0);
         Check(Rewrite(empty) && empty.Expression.Code == ILCode.Call && empty.Construction.Code == ILCode.DefaultValue, "Framework empty-copy call retained");
         Reject("Mutable data remains live", c => c.Field.IsInitOnly = false);
+        var inert = new Case(); AddInitializer(inert, dnlib.DotNet.Emit.OpCodes.Nop, dnlib.DotNet.Emit.OpCodes.Ret);
+        Check(Rewrite(inert), "Empty compiler-data initializer is harmless");
+        Reject("Throwing initializer remains live", c => AddInitializer(c, dnlib.DotNet.Emit.OpCodes.Ldnull, dnlib.DotNet.Emit.OpCodes.Throw));
+        Reject("Synchronized initializer retained", c => AddInitializer(c, dnlib.DotNet.Emit.OpCodes.Ret).IsSynchronized = true);
         Reject("Static constructor effects retained", c => c.Owner.Methods.Add(new MethodDefUser(".cctor", MethodSig.CreateStatic(c.Module.CorLibTypes.Void), dnlib.DotNet.MethodImplAttributes.IL,
             dnlib.DotNet.MethodAttributes.Static | dnlib.DotNet.MethodAttributes.SpecialName | dnlib.DotNet.MethodAttributes.RTSpecialName)));
         Reject("Ordinary user data is not compiler data", c => c.Owner.CustomAttributes.Clear());
