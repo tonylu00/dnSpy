@@ -69,6 +69,15 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteEndElement(); writer.WriteEndElement();
 			}
 			var rawExceptionName = MetadataRawExceptions.GetRequestedName(project.Module);
+			var uncheckedName = MetadataUncheckedReferences.GetRequestedName(project.Module);
+			if (uncheckedName != null) {
+				File.WriteAllText(Path.Combine(directory, "UncheckedReferences.cs"),
+					"[global::System.Reflection.Obfuscation(Feature = \"" + MetadataUncheckedReferences.Feature + "\")]\n" +
+					"internal static class " + uncheckedName + " { public static T Cast<T>(object value) where T : class { throw new global::System.InvalidOperationException(\"Run the dnSpy metadata restoration build target.\"); } }\n");
+				writer.WriteStartElement("ItemGroup"); writer.WriteStartElement("Compile");
+				writer.WriteAttributeString("Include", ".dnspy-metadata/UncheckedReferences.cs");
+				writer.WriteEndElement(); writer.WriteEndElement();
+			}
 			if (rawExceptionName != null) {
 				File.WriteAllText(Path.Combine(directory, "RawExceptions.cs"),
 					"[global::System.Reflection.Obfuscation(Feature = \"" + MetadataRawExceptions.Feature + "\")]\n" +

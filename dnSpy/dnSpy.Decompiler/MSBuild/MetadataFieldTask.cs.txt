@@ -33,6 +33,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreDefinitionFlags(module);
                 changed |= RestoreStaticValueTypes(module);
+                changed |= RestoreUncheckedReferences(module);
                 changed |= RestoreParameterNames(module);
                 changed |= RestoreFieldData(module);
                 changed |= RestoreEntryPoint(module);
@@ -539,6 +540,27 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             return changed;
         }
         finally { foreach (var reference in loaded) reference.Dispose(); }
+    }
+
+    static bool RestoreUncheckedReferences(ModuleDef module) {
+        var helpers = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
+            a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.unchecked-references.v1"))).ToArray();
+        foreach (var helper in helpers) {
+            var cast = helper.Methods.SingleOrDefault(m => m.Name == "Cast" && m.IsStatic && m.GenericParameters.Count == 1 &&
+                m.MethodSig.Params.Count == 1 && m.MethodSig.Params[0].ElementType == ElementType.Object && m.MethodSig.RetType is GenericMVar);
+            if (cast == null || helper.Methods.Count != 1 || helper.HasFields) throw new InvalidDataException("Invalid unchecked reference placeholder.");
+            foreach (var method in module.GetTypes().Where(t => t != helper).SelectMany(t => t.Methods).Where(m => m.HasBody))
+                foreach (var instruction in method.Body.Instructions) {
+                    var specification = instruction.Operand as MethodSpec;
+                    if (specification == null || specification.Method.ResolveMethodDef() != cast) continue;
+                    var arguments = specification.GenericInstMethodSig.GenericArguments;
+                    if (instruction.OpCode != OpCodes.Call || arguments.Count != 1 || arguments[0].IsValueType)
+                        throw new InvalidDataException("Invalid unchecked reference transfer.");
+                    instruction.OpCode = OpCodes.Nop; instruction.Operand = null;
+                }
+            module.Types.Remove(helper);
+        }
+        return helpers.Length != 0;
     }
 
     static bool RestoreMemberNames(ModuleDef module, bool methods) {
