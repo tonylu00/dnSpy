@@ -17,6 +17,16 @@ callers. A record's synthesized clone is replaced by the retained input clone,
 preserving the original override family and copy-constructor behavior. Other
 ambiguous or unsupported virtual collisions fail explicitly.
 
+Original private nonvirtual methods can also have the same readable name and
+C# parameter signature. They receive token-suffixed source aliases, preserving
+the readable stem. When the complete runtime signatures were already identical,
+the exporter records that fact on both definitions. Restoration accepts the
+duplicate only with that evidence and retains both bodies and delegate bindings.
+Ordinary meaningful overloads with different parameter types keep their names.
+`Invoke-MethodCollisionRegression.ps1` verifies these cases with rebuilt and
+unchanged callers, deterministic source across one/four workers, and incremental
+binary hashes.
+
 Run `Invoke-GeneratedMethodRegression.ps1 -DnSpyConsole <exe> -OutputDirectory
 <new folder>`. It verifies overloads, readable API names, generic owners and
 methods, abstract overrides across assemblies, inherited field collisions, instance/static method
