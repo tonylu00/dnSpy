@@ -290,8 +290,8 @@ delegate types. It requires emitted delegate caches, checks their restored
 target names, and verifies subscription/removal by execution. The cache-name
 restorer follows the compiler's `ldftn/newobj/dup/stsfld` pattern in a generated
 cache type, preserves the ordinal, resolves fields within the physical module,
-and updates both metadata-table and method-body field references. This closes
-the two remaining source17 body differences in the online-catalog view model's
+and updates both metadata-table and method-body field references. This addresses
+the cache-name mismatch behind two source17 body differences in the online-catalog view model's
 constructor/disposal paths; full application validation is still required after
 the focused `delegate-cache-regression4` pass.
 
