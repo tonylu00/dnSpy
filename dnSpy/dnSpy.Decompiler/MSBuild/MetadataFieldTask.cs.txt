@@ -26,6 +26,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreMemberNames(module, true);
                 changed |= RestoreMemberNames(module, false);
                 changed |= RestoreTypeNames(module);
+                changed |= RestoreDefinitionFlags(module);
                 changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
                     a.NamedArguments.Any(n => n.Name == "Feature" && n.Value != null && n.Value.ToString() == "dnSpy.metadata.raw-exceptions.v1"))).ToArray();
@@ -178,6 +179,27 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         if (module.PdbState != null) module.PdbState.UserEntryPoint = entry;
         module.Types.Remove(stubs[0]);
         return true;
+    }
+
+    static bool RestoreDefinitionFlags(ModuleDef module) {
+        bool changed = false;
+        foreach (var type in module.GetTypes()) {
+            foreach (var owner in new IHasCustomAttribute[] { type }.Concat(type.Methods.Cast<IHasCustomAttribute>())) {
+                string prefix = "dnSpy.metadata." + (owner is TypeDef ? "type" : "method") + "-flags.v1|";
+                int count = 0;
+                foreach (var attribute in owner.CustomAttributes.ToArray()) {
+                    if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                    string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                    if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                    if (++count != 1) throw new InvalidDataException("Duplicate metadata flag instruction.");
+                    uint flags = uint.Parse(feature.Substring(prefix.Length), CultureInfo.InvariantCulture);
+                    if (owner is TypeDef definition) definition.Attributes = (TypeAttributes)flags;
+                    else ((MethodDef)owner).Attributes = (MethodAttributes)flags;
+                    owner.CustomAttributes.Remove(attribute); changed = true;
+                }
+            }
+        }
+        return changed;
     }
 
     bool RestoreAccessorContracts(ModuleDef module) {
