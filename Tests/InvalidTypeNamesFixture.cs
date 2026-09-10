@@ -40,6 +40,13 @@ public class Container<A, B, C> {
 }
 public static class Program {
     public static int Main() {
+        var named = new NamedArguments(4, 5);
+        if (named[2] != 11) return 7;
+        named[3] = 17;
+        int notifications = 0;
+        named.Changed += () => notifications++;
+        NamedOperation operation = (left, right) => left * 10 + right;
+        if (named.Value() != 14 || notifications != 1 || operation(2, 3) != 23 || new NamedArguments().Value() != 1) return 8;
         var keywords = new KeywordTypes { Files = new[] { new @file { Value = 37 } } };
         keywords.Field = keywords.Files;
         if (keywords.First().Value != 37 || keywords.Field[0].Value != 37) return 6;
@@ -52,4 +59,14 @@ public static class Program {
         Console.WriteLine("PASS: colliding type, nested, method and argument names preserve positional bindings.");
         return 0;
     }
+}
+public delegate int NamedOperation(int left, int right);
+public sealed class NamedArguments {
+    int total;
+    static NamedArguments() { }
+    public NamedArguments() { total = 1; }
+    public NamedArguments(int first, int second) { total = first + second; }
+    public int this[int index] { get { return total + index; } set { total = value - index; } }
+    public event Action Changed { add { value(); } remove { } }
+    public int Value() { return total; }
 }

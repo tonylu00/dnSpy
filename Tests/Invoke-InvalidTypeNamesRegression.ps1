@@ -34,7 +34,13 @@ dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw 'Exported collision source compilation failed.' }
 & (Join-Path $rebuilt 'InvalidTypeNamesFixture.exe')
 if ($LASTEXITCODE -ne 0) { throw 'Rebuilt positional binding behavior changed.' }
-
-
+& "$PSScriptRoot\Assert-ParameterMetadataNames.ps1" -DnlibPath (Join-Path (Split-Path $DnSpyConsole) 'dnlib.dll') -Original $inputExe -Rebuilt (Join-Path $rebuilt 'InvalidTypeNamesFixture.exe')
+$beforeBuild=(Get-FileHash (Join-Path $rebuilt 'InvalidTypeNamesFixture.exe')).Hash
+dotnet build $project.FullName -c Release -o $rebuilt --nologo -v quiet
+if($LASTEXITCODE -or (Get-FileHash (Join-Path $rebuilt 'InvalidTypeNamesFixture.exe')).Hash -ne $beforeBuild){throw 'Incremental metadata output changed'}
+}
+foreach($file in Get-ChildItem (Join-Path $OutputDirectory 'export-1') -Recurse -File -Filter '*.cs' | Where-Object {$_.FullName -notmatch '[\\/](obj|bin)[\\/]'}) {
+ $other=$file.FullName.Replace((Join-Path $OutputDirectory 'export-1'),(Join-Path $OutputDirectory 'export-4'))
+ if(!(Test-Path -LiteralPath $other) -or (Get-FileHash -LiteralPath $file.FullName).Hash -ne (Get-FileHash -LiteralPath $other).Hash){throw "Worker-dependent source: $($file.FullName)"}
 }
 if ((Get-FileHash -LiteralPath $inputExe).Hash -ne $hash) { throw 'Input assembly changed.' }

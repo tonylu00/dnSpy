@@ -31,6 +31,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreMemberNames(module, false);
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreDefinitionFlags(module);
+                changed |= RestoreParameterNames(module);
                 changed |= RestoreFieldData(module);
                 changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
@@ -303,6 +304,53 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 if (parts[4] != "none") field.InitialValue = Convert.FromBase64String(parts[4]);
                 field.Attributes = (dnlib.DotNet.FieldAttributes)uint.Parse(parts[1], CultureInfo.InvariantCulture);
                 field.CustomAttributes.Remove(attribute); changed = true;
+            }
+        }
+        return changed;
+    }
+
+    static bool RestoreParameterNames(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.parameter-names.v1|";
+        bool changed = false;
+        var parameterOwners = module.GetTypes().SelectMany(t => t.Methods).SelectMany(m => m.ParamDefs.Select(p => new { Parameter = p, Method = m })).ToDictionary(p => p.Parameter, p => p.Method);
+        foreach (var type in module.GetTypes()) {
+            foreach (var owner in new IHasCustomAttribute[] { type }.Concat(type.Methods.Cast<IHasCustomAttribute>()).Concat(type.Methods.SelectMany(m => m.ParamDefs).Cast<IHasCustomAttribute>()).ToArray()) {
+                var restored = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var attribute in owner.CustomAttributes.ToArray()) {
+                    if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                    string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                    if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                    var parts = feature.Substring(prefix.Length).Split('|');
+                    if (parts.Length != 2) throw new InvalidDataException("Invalid parameter name instruction.");
+                    MethodDef method = owner as MethodDef;
+                    if (owner is ParamDef parameterOwner) method = parameterOwners[parameterOwner];
+                    if (parts[0].StartsWith("d", StringComparison.Ordinal) && owner is TypeDef) {
+                        var name = new UTF8String(Convert.FromBase64String(parts[0].Substring(1)));
+                        method = type.Methods.Single(m => m.IsRuntime && m.Name == name);
+                    }
+                    else if (parts[0].StartsWith("c", StringComparison.Ordinal) && owner is TypeDef) {
+                        var name = new UTF8String(Convert.FromBase64String(parts[0].Substring(1)));
+                        method = type.Methods.Single(m => m.IsConstructor && m.Name == name && m.MethodSig.Params.Count == 0);
+                    }
+                    else if (parts[0] != "s") throw new InvalidDataException("Invalid parameter name target.");
+                    foreach (var row in parts[1].Split(';')) {
+                        var columns = row.Split(':');
+                        if (columns.Length != 3 || !restored.Add(parts[0] + ":" + columns[0] + ":" + columns[1])) throw new InvalidDataException("Invalid or duplicate parameter name row.");
+                        ushort index = ushort.Parse(columns[1], CultureInfo.InvariantCulture);
+                        var name = new UTF8String(Convert.FromBase64String(columns[2]));
+                        if (columns[0] == "g") {
+                            var parameters = method == null ? type.GenericParameters : method.GenericParameters;
+                            parameters.Single(p => p.Number == index).Name = name;
+                        }
+                        else if (columns[0] == "p" && method != null && index <= method.MethodSig.Params.Count) {
+                            var parameter = method.ParamDefs.SingleOrDefault(p => p.Sequence == index);
+                            if (parameter == null) { parameter = new ParamDefUser(name, index); method.ParamDefs.Add(parameter); }
+                            else parameter.Name = name;
+                        }
+                        else throw new InvalidDataException("Invalid parameter name position.");
+                    }
+                    owner.CustomAttributes.Remove(attribute); changed = true;
+                }
             }
         }
         return changed;
