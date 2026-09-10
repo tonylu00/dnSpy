@@ -271,6 +271,23 @@ establish compatibility of the user's separate P-01C0 data or cover a 6.4
 password round trip. The original profile/add-in and all 1,877 tracked original
 data hashes were restored; the test-only workspace was backed up and removed.
 
+### Source aliases on state-machine methods
+
+`Invoke-SourceStateMachineAliasRegression.ps1` maps async and iterator methods
+on a generic declaring type, including a generic async method. It checks readable
+source aliases, execution, original method/state-machine reflection names and
+attributes, unchanged input bytes, and byte-stable incremental builds with one
+and four export workers. `state-owner-regression2` passed these runtime checks.
+
+The expanded 496-method 6.4 map compiled in source16 and passed the SDK contract
+audit (172 projects, zero issues). Comparing its bodies with source14 exposed
+generated state-machine names containing source aliases. Runtime metadata
+restoration now restores those owner names through their state-machine attribute
+associations while retaining compiler ordinals and generic arity. Raw iterator
+bodies also retain the original association attribute; only reconstructed
+async/iterator syntax can rely on the compiler to recreate it. These focused
+checks do not replace the next full 6.3-first, then 6.4 validation.
+
 ### Rebuilt 6.4 password round trips
 
 `ets64-password-live1` used source14 in a separate runtime with the current

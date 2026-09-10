@@ -631,6 +631,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         }
         if (methods) {
             AvoidGeneratedMethodCollisions(module, definitions, references, memberNames);
+            RestoreStateMachineTypeNames(module, definitions);
             foreach (var method in module.GetTypes().SelectMany(t => t.Methods))
                 foreach (var marker in method.CustomAttributes.Where(IsOriginalDuplicateMarker).ToArray()) method.CustomAttributes.Remove(marker);
         }
@@ -641,6 +642,48 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         }
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
+    }
+
+    static void RestoreStateMachineTypeNames(ModuleDef module, Dictionary<IMemberDef, UTF8String> methodNames) {
+        var names = new Dictionary<TypeDef, UTF8String>();
+        foreach (var entry in methodNames) {
+            var method = entry.Key as MethodDef;
+            if (method == null || method.Name == entry.Value) continue;
+            foreach (var attribute in method.CustomAttributes) {
+                if (attribute.TypeFullName != "System.Runtime.CompilerServices.AsyncStateMachineAttribute" &&
+                    attribute.TypeFullName != "System.Runtime.CompilerServices.IteratorStateMachineAttribute" &&
+                    attribute.TypeFullName != "System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute") continue;
+                if (attribute.ConstructorArguments.Count != 1) continue;
+                var signature = attribute.ConstructorArguments[0].Value as TypeSig;
+                var state = signature == null ? null : signature.ToTypeDefOrRef().ResolveTypeDef();
+                if (state == null || state.Module != module || state.DeclaringType != method.DeclaringType ||
+                    !state.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute") ||
+                    !state.Name.String.StartsWith("<" + method.Name.String + ">d__", StringComparison.Ordinal)) continue;
+                // Retain the compiler ordinal/arity and the original method's raw
+                // UTF8 bytes. References and state-machine attributes share the type.
+                var name = new UTF8String(new byte[] { (byte)'<' }.Concat(entry.Value.Data)
+                    .Concat(state.Name.Data.Skip(1 + method.Name.Data.Length)).ToArray());
+                UTF8String previous;
+                if (names.TryGetValue(state, out previous) && previous != name)
+                    throw new InvalidDataException("Conflicting state-machine owner names.");
+                names[state] = name;
+            }
+        }
+        foreach (var entry in names) {
+            foreach (var other in entry.Key.DeclaringType.NestedTypes) {
+                UTF8String planned;
+                if (other != entry.Key && (names.TryGetValue(other, out planned) ? planned : other.Name) == entry.Value)
+                    throw new InvalidDataException("State-machine name restoration would create duplicate nested types.");
+            }
+        }
+        var references = new Dictionary<TypeRef, UTF8String>();
+        foreach (var reference in module.GetTypeRefs()) {
+            if (reference.DefinitionAssembly == null || reference.DefinitionAssembly.FullName != module.Assembly.FullName) continue;
+            foreach (var entry in names)
+                if (reference.FullName == entry.Key.FullName) references.Add(reference, entry.Value);
+        }
+        foreach (var entry in references) entry.Key.Name = entry.Value;
+        foreach (var entry in names) entry.Key.Name = entry.Value;
     }
 
     static bool IsOriginalDuplicateMarker(CustomAttribute attribute) => attribute.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
