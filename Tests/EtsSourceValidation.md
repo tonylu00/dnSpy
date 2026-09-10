@@ -6,6 +6,20 @@ The current tool runtime is `D:\knx_analysis\delegate-cache-runtime2`, including
 the state-machine and delegate-cache name fixes. Full 6.3 source45 validation
 passed before starting the corresponding 6.4 source18 run.
 
+These passing builds do not yet cover every shipped application assembly. A
+physical input inventory found three additional 6.3 assemblies under
+`Uploader/Windows` absent from the source45 export. The uploader's telemetry
+abstraction assembly differs from the root copy, so it needs its own context.
+`ets63-uploader-validation2` exports all three as SDK projects, compiles with zero
+errors and audits 86 types / 304 methods / 35 fields with zero contract issues.
+The expanded full validation is `ets63-api-source-validation46`, using 114 inputs
+and uploader-specific dependency/configuration contexts; its final checks are
+pending. The 6.4 inventory also identifies uncovered uploader/application files;
+that expansion follows the 6.3 gate. Inventory artifacts are
+`ets63-source-coverage-20260911.json` and `ets64-source-coverage-20260911.json`.
+The 6.4 inventory covers its primary input tree; the 172-project export also
+includes explicit external 6.3 compatibility contexts.
+
 - **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
   zero SDK contract issues. All 193,872 method-body fingerprints match the
   live-tested source44 without additional name normalization. Original mapped
