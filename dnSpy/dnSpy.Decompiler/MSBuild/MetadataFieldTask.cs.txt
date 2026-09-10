@@ -25,6 +25,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreTupleNames(module);
                 if (!TupleNamesOnly) {
                 changed |= RestoreAccessorContracts(module);
+                changed |= RestorePropertyNames(module);
                 changed |= RestoreDelegateMethods(module);
                 changed |= RestoreProtectedCalls(module);
                 changed |= RestoreMemberNames(module, true);
@@ -372,6 +373,23 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                     else ((MethodDef)owner).Attributes = (MethodAttributes)flags;
                     owner.CustomAttributes.Remove(attribute); changed = true;
                 }
+            }
+        }
+        return changed;
+    }
+
+    bool RestorePropertyNames(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.property-name.v1|";
+        bool changed = false;
+        foreach (var property in module.GetTypes().SelectMany(t => t.Properties)) {
+            int count = 0;
+            foreach (var attribute in property.CustomAttributes.ToArray()) {
+                if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+                if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                if (++count != 1) throw new InvalidDataException("Duplicate property name instruction.");
+                property.Name = new UTF8String(Convert.FromBase64String(feature.Substring(prefix.Length)));
+                property.CustomAttributes.Remove(attribute); changed = true;
             }
         }
         return changed;

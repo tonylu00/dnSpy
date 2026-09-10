@@ -4,6 +4,20 @@ using System.Collections;
 using System.Threading.Tasks;
 public static class LoopControlFixture {
     static int cleanupCount;
+    static int EscapingArrayItem(int[] values, int target) {
+        int item;
+        if (target < 0) { item = -target; goto found; }
+        for (int index = 0; index < values.Length; index++) {
+            item = values[index];
+            if (item == target) goto found;
+        }
+        return -1;
+    found:
+        for (int pass = 0; pass < 3; pass++) cleanupCount += Consume(item + pass);
+        return Consume(item);
+    }
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+    static int Consume(int item) { return item + 100; }
     static void Bump(ref int value) { value += 2; }
     static int MutableArray(int[] values) {
         int sum = 0;
@@ -121,6 +135,12 @@ public static class LoopControlFixture {
         return value;
     }
     public static int Main() {
+        if (EscapingArrayItem(new[] { 3, 7, 9 }, 7) != 107 ||
+            EscapingArrayItem(new[] { 3, 7, 9 }, 9) != 109 ||
+            EscapingArrayItem(new int[0], 7) != -1 ||
+            EscapingArrayItem(new[] { 3, 7, 9 }, 5) != -1 ||
+            EscapingArrayItem(new int[0], -5) != 105 || cleanupCount != 972)
+            throw new Exception("Escaping iteration value changed");
         var numbers = new[] { 3, 7 };
         if (MutableArray(numbers) != 14 || MutableGeneric(numbers) != 14 || MutableNonGeneric(numbers) != 14 || numbers[0] != 3 || numbers[1] != 7)
             throw new Exception("Writable iteration storage changed");
