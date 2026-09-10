@@ -16,6 +16,7 @@ public sealed class ReferenceStore {
     public ReferenceStore(SecondValue value) { storage = value; }
     public object Read() { return storage; }
     public SecondValue ReadSecond() { return storage as SecondValue; }
+    public FirstValue ReadFirst() { return storage as FirstValue; }
     public static object Choose(bool first) { object value; if (first) value = new FirstValue(); else value = new SecondValue(); return value; }
     public static System.Security.Cryptography.SymmetricAlgorithm ChooseCrypto(bool first) {
         if (first) return new System.Security.Cryptography.AesCryptoServiceProvider();

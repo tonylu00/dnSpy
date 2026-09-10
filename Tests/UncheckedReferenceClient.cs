@@ -8,6 +8,9 @@ class UncheckedReferenceClient {
         var left = new ReferenceStore(first); var right = new ReferenceStore(second);
         Check(ReferenceEquals(left.Read(), first) && ReferenceEquals(right.Read(), second));
         Check(left.ReadSecond() == null && ReferenceEquals(right.ReadSecond(), second));
+        Check(ReferenceEquals(left.ReadFirst(), first));
+        object firstResult = right.ReadFirst();
+        Console.WriteLine("First test on second reference: " + (firstResult == null ? "null" : firstResult.GetType().FullName));
         Check(new ReferenceStore((SecondValue)null).ReadSecond() == null);
         Check(((BaseValue)ReferenceStore.Choose(true)).Name == "first");
         Check(((BaseValue)ReferenceStore.Choose(false)).Name == "second");
