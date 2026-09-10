@@ -1,5 +1,9 @@
 # Decompiler regression checks
 
+For comparisons of complete rebuilt application trees, see
+[SourceMethodBodies.md](SourceMethodBodies.md). The audit uses de4dotEx's shared
+method fingerprints and rejects missing physical compatibility projects.
+
 After building `dnSpy.sln` in Release, run these scripts with a new output folder
 outside the repository (so repository build settings do not affect the fixtures):
 

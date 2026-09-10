@@ -27,5 +27,6 @@ Both protected scenarios now export, compile and execute in both physical contex
 The existing duplicate type/generic/parameter regression also passes with one/four
 workers and exact parameter-name restoration. Evidence is under
 `D:\knx_analysis\reactor-final-audit1`, `reactor-final-source-audit4` and
-`invalid-interface-names-regression1`. This change still needs the next full ETS
-regression; earlier full-tree/live evidence is recorded in `EtsSourceValidation.md`.
+`invalid-interface-names-regression1`. Subsequent full 6.3 source45 and 6.4
+source18 builds pass; their contract, body and live validation evidence is
+recorded in `EtsSourceValidation.md`.

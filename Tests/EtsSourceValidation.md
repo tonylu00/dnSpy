@@ -1,6 +1,65 @@
 # ETS source recompilation milestones
 
-## Expanded reference-map validation in progress
+## Current checkpoint: 2026-09-11
+
+The current tool runtime is `D:\knx_analysis\delegate-cache-runtime2`, including
+the state-machine and delegate-cache name fixes. Full 6.3 source45 validation
+passed before starting the corresponding 6.4 source18 run.
+
+- **6.3:** `ets63-api-source-validation45` compiles 107 managed projects, with
+  zero SDK contract issues. All 193,872 method-body fingerprints match the
+  live-tested source44 without additional name normalization. Original mapped
+  names and all 3,005 local state-machine attributes pass independent audits.
+  `ETS6.3_source45` preserves the full staged tree; the unchanged official-SDK
+  MCP add-in loads 407 types.
+- **6.3 live evidence:** `ets63-source44-live1` verifies Chinese UI, test-mcp
+  project access, an SDK metadata update surviving a process restart, and
+  password-protected project opening. Original profile/add-in and all 4,811
+  recorded original data-file hashes were restored; ETS and its daemon exited.
+- **6.4:** `ets64-api-source-validation18` compiles 172 managed projects with
+  zero SDK contract issues. All 496 reviewed method aliases across 25 modules
+  retain their original runtime names, and all 5,883 local state-machine
+  attributes resolve. Its 385,160 method bodies match the tested source14 after
+  71 verified generated-owner name corrections. The two delegate-cache
+  mismatches from source17 are fixed, including exact instruction-text checks
+  of the affected constructor/disposal bodies. Staging preserves 397 assembly/
+  satellite overlays and the unchanged SDK add-in loads 410 types.
+- **6.4 live evidence:** `ets64-source18-live1` verifies Chinese UI and an
+  unchanged official-SDK MCP add-in accessing test-mcp (29 devices and 502 group
+  addresses). Its SDK metadata update survives an ETS process restart. Fresh
+  frozen password-protected projects from both 6.3 and 6.4 open successfully.
+  Saving is not suppressed. This run does not separately prove a protected
+  project save/reopen cycle. Cleanup verifies the original profile, add-in,
+  all 4,811 recorded original data files and frozen fixtures are unchanged;
+  ETS and its daemon exited, and port 37620 is free.
+
+`delegate-cache-regression4` covers async methods, iterators, constructor
+lambdas, ordinary/generic delegate caches, original reflection names, event
+subscription/removal and incremental rebuilds with one/four export workers.
+`delegate-cache-baml-regression1` additionally covers WPF type/event aliases,
+resource-URI loading and opaque resource preservation on this tool build.
+
+The repository runner in `SourceMethodBodies.md` independently repeats the
+full comparison: `source45-body-audit-repo2` checks 107 projects / 193,872 bodies
+with zero differences and no alignment; `source18-body-audit-repo1` checks 172
+projects / 385,160 bodies with 71 verified owner-name corrections and zero
+remaining differences. The first 6.3 runner attempt completed comparisons but
+failed its Windows PowerShell summary formatting; repo2 includes that fix.
+`source-body-audit-regression1` verifies physical duplicate isolation, changed-body
+and missing-project rejection, and unchanged input hashes. A separate negative
+check also detects both source17 delegate-cache regressions.
+
+`goal-api-audit-20260911-1` reruns de4dot's lexical/SDK caller checks, including
+meaningful overloads, learned vocabulary and journal hashes.
+`goal-name-candidates-public-audit1` checks guarded cross-version maps and physical
+contexts after exposing the shared fingerprint API in de4dotEx commit `9d745a7d`.
+`goal-parameter-audit-20260911-1` repeats duplicate generic/parameter export with
+one/four workers, successful execution and exact restoration of 38 parameter rows.
+
+Artifact names above are under `D:\knx_analysis`; exported source trees are under
+`D:\git`. The sections below retain the evidence and failures that led here.
+
+## Earlier expanded reference-map validation
 
 The 496-method, 25-module 6.4 map exposed a BAML export omission in source15:
 the C# event handlers had source aliases, while reconstructed XAML still used
