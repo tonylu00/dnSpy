@@ -52,11 +52,6 @@ namespace dnSpy.Contracts.Decompiler {
 		}
 
 		static readonly ConditionalWeakTable<ModuleDef, Dictionary<MethodDef, string>> names = new ConditionalWeakTable<ModuleDef, Dictionary<MethodDef, string>>();
-		static bool IsGenerated(TypeDef type) {
-			for (; type != null; type = type.DeclaringType)
-				if (type.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute")) return true;
-			return false;
-		}
 		static MethodDef? FindBaseMethod(MethodDef method) {
 			if (!method.IsVirtual || method.IsNewSlot) return null;
 			var reference = method.DeclaringType.BaseType;
@@ -89,7 +84,6 @@ namespace dnSpy.Contracts.Decompiler {
 				used.UnionWith(type.Methods.SelectMany(m => m.GenericParameters).Select(p => p.Name.String));
 				var parent = type.BaseType?.ResolveTypeDef();
 				if (parent != null) used.UnionWith(Allocate(parent));
-				bool generated = IsGenerated(type);
 				var collisions = new HashSet<MethodDef>();
 				var comparer = new SigComparer();
 				foreach (var group in type.Methods.Where(m => !m.IsConstructor && m.MethodSig != null).GroupBy(m => new { Name = m.Name.String, Arity = m.GenericParameters.Count, Count = m.MethodSig.Params.Count })) {
@@ -101,10 +95,32 @@ namespace dnSpy.Contracts.Decompiler {
 				}
 				foreach (var method in type.Methods.OrderBy(m => m.MDToken.Raw)) {
 					bool collision = collisions.Contains(method);
-					if (method.IsConstructor || method.HasOverrides || (!collision && (MetadataTypeNames.IsIdentifier(method.Name) ||
-						!(generated || method.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"))))) continue;
+					if (method.IsConstructor || method.HasOverrides || method.SemanticsAttributes != 0 || (!collision && MetadataTypeNames.IsIdentifier(method.Name))) continue;
 					var baseMethod = FindBaseMethod(method);
-					if (baseMethod != null && result.TryGetValue(baseMethod, out var shared)) {
+					string? ContractName(MethodDef contract) {
+						if (contract.Module != module) return GetName(contract);
+						Allocate(contract.DeclaringType);
+						return result.TryGetValue(contract, out var contractAlias) ? contractAlias : contract.Name.String;
+					}
+					var shared = baseMethod == null ? null : ContractName(baseMethod);
+					if (shared == null && method.IsVirtual && !type.IsInterface) {
+						var contracts = new HashSet<string>(StringComparer.Ordinal);
+						var seenInterfaces = new HashSet<string>(StringComparer.Ordinal);
+						void VisitInterface(ITypeDefOrRef reference) {
+							if (!seenInterfaces.Add(reference.DefinitionAssembly?.FullName + "|" + reference.FullName)) return;
+							var definition = reference.ResolveTypeDef();
+							if (definition == null) return;
+							var arguments = ((reference as TypeSpec)?.TypeSig as GenericInstSig)?.GenericArguments;
+							foreach (var contract in definition.Methods.Where(m => m.Name == method.Name && new SigComparer().Equals(GenericArgumentResolver.Resolve(m.MethodSig, arguments, null), method.MethodSig)))
+								contracts.Add(ContractName(contract)!);
+							foreach (var inherited in definition.Interfaces)
+								VisitInterface(GenericArgumentResolver.Resolve(inherited.Interface.ToTypeSig(), arguments, null).ToTypeDefOrRef());
+						}
+						foreach (var implementation in type.Interfaces) VisitInterface(implementation.Interface);
+						if (contracts.Count > 1) throw new InvalidOperationException("Ambiguous source aliases for implicit interface method: " + method.FullName);
+						shared = contracts.SingleOrDefault();
+					}
+					if (shared != null && shared != method.Name.String) {
 						result.Add(method, shared); used.Add(shared); continue;
 					}
 					string stem = (collision && MetadataTypeNames.IsIdentifier(method.Name) ? method.Name.String + "_" : "method_") + method.MDToken.Raw.ToString("X8", CultureInfo.InvariantCulture), alias = stem;
