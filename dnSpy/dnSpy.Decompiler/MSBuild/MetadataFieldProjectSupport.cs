@@ -8,9 +8,18 @@ using dnSpy.Contracts.Decompiler;
 namespace dnSpy.Decompiler.MSBuild {
 	static class MetadataFieldProjectSupport {
 		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
-			(MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
+			(MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
 		public static void Write(Project project, XmlWriter writer) {
+			if (project.Options.DecompilationContext.RestoreMetadataOnlyFields) {
+				// WPF's temporary compilation invokes CoreCompile directly. Resolve
+				// source reference assemblies there too, before runtime names are restored.
+				writer.WriteStartElement("Target");
+				writer.WriteAttributeString("Name", "DnSpyResolveCompilationReferences");
+				writer.WriteAttributeString("BeforeTargets", "CoreCompile");
+				writer.WriteAttributeString("DependsOnTargets", "FindReferenceAssembliesForReferences");
+				writer.WriteEndElement();
+			}
 			if (!Required(project)) return;
 			string directory = Path.Combine(project.Directory, ".dnspy-metadata");
 			System.IO.Directory.CreateDirectory(directory);
@@ -63,6 +72,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				"DelegateMethods.cs records typed companion-to-delegate mappings. Static helper bodies compile in companion classes; the task moves them onto the delegate, repairs local and external method references (including generic calls), and removes mapping attributes and companion types. Reference assemblies retain the source companions so dependent projects can compile.\n" +
 				"TypeNames.cs records reversible type aliases for metadata names that C# cannot declare, including collisions with methods or enclosing types. Runtime definitions and external type references regain their original names; reference assemblies retain source aliases for compilation. Method names and overload families stay intact. The mapping uses the resolved input assembly context, assembly name/version/culture, and full nested source name.\n" +
 				"EntryPoint.cs allows C# to compile executables whose CLR entry method has another name. The build task selects the marked original method and removes the stub; its original name, signature, attributes and body remain intact.\n" +
+				"Protected-call stubs allow nested source code to reach hidden, nonvirtual protected methods within the same module. The task redirects calls (including generic method specifications) to the original methods and removes the stubs from runtime assemblies. Original access flags, names and bodies remain unchanged; reference assemblies retain the compilation stubs. Unexpected inherited generic declaring-type references fail explicitly.\n" +
 				"The task requires an unsigned build output and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +
 				"Only supported, unreferenced private/compiler-controlled string fields are handled; other unrepresentable metadata remains visible as a source error.\n");
 			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))

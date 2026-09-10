@@ -20,6 +20,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             using (var module = ModuleDefMD.Load(AssemblyPath, new ModuleCreationOptions { TryToLoadPdbFromDisk = true })) {
                 module.LoadEverything();
                 changed |= RestoreDelegateMethods(module);
+                changed |= RestoreProtectedCalls(module);
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
@@ -107,6 +108,56 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (File.Exists(temporary)) File.Delete(temporary);
             if (File.Exists(temporaryPdb)) File.Delete(temporaryPdb);
         }
+    }
+
+    static bool RestoreProtectedCalls(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.protected-call.v1|";
+        var maps = new Dictionary<MethodDef, MethodDef>();
+        foreach (var type in module.GetTypes()) foreach (var stub in type.Methods) {
+            foreach (var attribute in stub.CustomAttributes) {
+                if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
+                string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
+                if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                var name = new UTF8String(Convert.FromBase64String(text.Substring(prefix.Length)));
+                var target = type.Methods.SingleOrDefault(m => m != stub && m.Name == name && new SigComparer().Equals(m.MethodSig, stub.MethodSig));
+                if (target == null || !target.IsFamily || target.IsVirtual || target.IsStatic || !stub.IsFamily || stub.IsStatic || stub.IsVirtual)
+                    throw new InvalidDataException("Invalid protected call compilation stub.");
+                maps.Add(stub, target);
+            }
+        }
+        if (maps.Count == 0) return false;
+        var byName = maps.Keys.ToDictionary(m => m.Name.String, StringComparer.Ordinal);
+        var methods = module.GetTypes().SelectMany(t => t.Methods).ToArray();
+        var references = new HashSet<MemberRef>(module.GetMemberRefs());
+        foreach (var method in methods.Where(m => m.HasBody)) foreach (var instruction in method.Body.Instructions) {
+            var called = instruction.Operand as IMethod;
+            var specification = called as MethodSpec;
+            var reference = (specification == null ? called : specification.Method) as MemberRef;
+            if (reference != null) references.Add(reference);
+            var definition = (specification == null ? called : specification.Method) as MethodDef;
+            MethodDef target;
+            if (definition != null && maps.TryGetValue(definition, out target)) {
+                if (specification != null) specification.Method = target; else instruction.Operand = target;
+            }
+        }
+        foreach (var reference in references) {
+            MethodDef stub;
+            if (!reference.IsMethodRef || !byName.TryGetValue(reference.Name, out stub)) continue;
+            var owner = reference.DeclaringType.ResolveTypeDef();
+            // These stubs are module-local. Never reinterpret an unrelated
+            // external member merely because its name matches a local stub.
+            if (owner == null || owner.Module != module) continue;
+            if (!new SigComparer().Equals(reference.MethodSig, stub.MethodSig)) throw new InvalidDataException("Protected stub signature mismatch.");
+            var target = maps[stub];
+            if (owner != target.DeclaringType) {
+                if (target.DeclaringType.HasGenericParameters) throw new InvalidDataException("Protected stub generic owner requires an exact declaring-type reference.");
+                reference.Class = target.DeclaringType;
+            }
+            reference.Name = target.Name;
+        }
+        foreach (var stub in maps.Keys) stub.DeclaringType.Methods.Remove(stub);
+        return true;
     }
 
     static bool RestoreEntryPoint(ModuleDef module) {

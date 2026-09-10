@@ -57,6 +57,8 @@ public static class ExtensionBindingFixture {
         return query.Sum(item => item.Value + item.Twice);
     }
     public static int Main() {
+        Check(FirstExternalExtensions.Measure("value") == "First:value", "First external extension binding");
+        Check(SecondExternalExtensions.Measure("value") == "Second:value", "Second external extension binding");
         Check(FirstMeasure(new int[0]) == 17 && SecondMeasure(new int[0]) == 31, "Competing extension selection");
         Check(FirstMeasure(null) == -17 && SecondMeasure(null) == -31, "Competing null extension selection");
         Check(FirstExtensions.Calls == 2 && SecondExtensions.Calls == 2, "Competing extension effects");

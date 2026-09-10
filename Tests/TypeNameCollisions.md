@@ -28,6 +28,11 @@ an entry point on a type also named `Main`, including cross-module alias
 qualification. A temporary compiler entry stub is removed after the build, and
 both CLR and PDB entry points are redirected to the original method.
 
+`-Wpf` adds a WPF resource requiring temporary assembly compilation. The exported
+build explicitly resolves reference assemblies before CoreCompile, including the
+temporary pass. The regression loads BAML resources and checks their aliased
+dependency calls with both rebuilt and unchanged binary clients.
+
 Additional binding regressions cover inherited field aliases, protected calls
 from nested helpers, instantiated generic return receivers, nonvirtual
 grandparent calls, and instance members which hide extension methods. Inherited

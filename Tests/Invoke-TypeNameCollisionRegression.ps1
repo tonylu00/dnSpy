@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$OutputDirectory,[ValidateSet('b','Main')][string]$EntryPointName='b')
+param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$OutputDirectory,[ValidateSet('b','Main')][string]$EntryPointName='b',[switch]$Wpf)
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new output directory.'}
@@ -7,6 +7,13 @@ foreach($dir in 'library','client','emitter','input'){New-Item -ItemType Directo
 foreach($pair in @(@('TypeNameCollisionLibrary.cs','library'),@('TypeNameCollisionClient.cs','client'),@('EmitTypeNameCollision.cs','emitter'))){Copy-Item (Join-Path $PSScriptRoot $pair[0]) (Join-Path $OutputDirectory $pair[1])}
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><Optimize>true</Optimize></PropertyGroup></Project>' | Set-Content (Join-Path $OutputDirectory 'library\TypeNameCollisionLibrary.csproj')
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize></PropertyGroup><ItemGroup><ProjectReference Include="..\library\TypeNameCollisionLibrary.csproj" /></ItemGroup></Project>' | Set-Content (Join-Path $OutputDirectory 'client\TypeNameCollisionClient.csproj')
+if($Wpf){
+ $clientProject=Join-Path $OutputDirectory 'client\TypeNameCollisionClient.csproj'
+ (Get-Content $clientProject -Raw).Replace('<Optimize>true</Optimize>','<Optimize>true</Optimize><UseWPF>true</UseWPF>') | Set-Content $clientProject
+ foreach($file in 'WpfAliasProbe.cs','WpfAliasProbe.xaml'){Copy-Item (Join-Path $PSScriptRoot $file) (Join-Path $OutputDirectory 'client')}
+ $clientSource=Join-Path $OutputDirectory 'client\TypeNameCollisionClient.cs'
+ (Get-Content $clientSource -Raw).Replace('var alpha = new Alpha();','WpfAliasProbe.Check(); var alpha = new Alpha();') | Set-Content $clientSource
+}
 $dnlib=[Security.SecurityElement]::Escape((Join-Path (Split-Path ([IO.Path]::GetFullPath($DnSpyConsole))) 'dnlib.dll'))
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $OutputDirectory 'emitter\Emitter.csproj')
 dotnet build (Join-Path $OutputDirectory 'client\TypeNameCollisionClient.csproj') -c Release --nologo -v quiet

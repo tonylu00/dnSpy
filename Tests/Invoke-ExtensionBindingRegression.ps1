@@ -9,6 +9,20 @@ $inputDirectory=Join-Path $OutputDirectory 'input'
 New-Item -ItemType Directory -Path $inputDirectory | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'ExtensionBindingFixture.cs') -Destination $inputDirectory
 '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize><LangVersion>latest</LangVersion></PropertyGroup><ItemGroup><PackageReference Include="System.Memory" Version="4.6.3"/></ItemGroup></Project>' | Set-Content (Join-Path $inputDirectory 'ExtensionBindingFixture.csproj')
+foreach($name in 'First','Second') {
+    $dependency=Join-Path $OutputDirectory $name
+    New-Item -ItemType Directory -Path $dependency | Out-Null
+    "public static class ${name}ExternalExtensions { public static string Measure(this string value) { return `"${name}:`" + value; } }" | Set-Content (Join-Path $dependency 'Extensions.cs')
+    '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework></PropertyGroup></Project>' | Set-Content (Join-Path $dependency ($name+'.csproj'))
+}
+$inputProject=Join-Path $inputDirectory 'ExtensionBindingFixture.csproj'
+[xml]$inputXml=Get-Content $inputProject
+$inputGroup=$inputXml.Project.AppendChild($inputXml.CreateElement('ItemGroup'))
+foreach($name in 'First','Second') {
+    $reference=$inputGroup.AppendChild($inputXml.CreateElement('ProjectReference'))
+    $reference.SetAttribute('Include',"..\$name\$name.csproj")
+}
+$inputXml.Save($inputProject)
 dotnet build (Join-Path $inputDirectory 'ExtensionBindingFixture.csproj') -c Release --nologo -v quiet
 if($LASTEXITCODE -ne 0){throw 'Extension fixture build failed.'}
 $original=Join-Path $inputDirectory 'bin\Release\net48\ExtensionBindingFixture.exe'
