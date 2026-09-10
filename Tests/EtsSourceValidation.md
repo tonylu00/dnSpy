@@ -176,3 +176,12 @@ Its fixture regression passed 93 checks, including suppression, recovery, and
 continued open/close access (`automation-save-suppression-regression2.log`).
 The new guard has not yet been restaged into an ETS live runtime. Password
 round-trip validation still requires a host configuration that permits saving.
+
+DevKit provenance subsequently confirmed that `ETS6.3_orig` already contains an
+injected `KnxVirtualDongle.Vd`; its default optional-feature array includes
+`ExtendedLoggingAvailable`. Source39 preserves that input behavior. The current
+VirtualDongle runtime source excludes the feature, and source14's injected runtime
+has no such static-initializer literal. Evidence:
+`D:\knx_analysis\ets-devkit-runtime-provenance1.json`. Consequently, the 6.3
+directory named `orig` must not be described as an untouched vendor distribution.
+The patcher now reports this distinction in profiles and instrumentation manifests.
