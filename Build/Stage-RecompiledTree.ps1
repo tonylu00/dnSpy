@@ -30,9 +30,15 @@ foreach ($root in @($InputDirectory, $ExportDirectory)) {
 if ($map.DnSpyExportMap.ExportErrors -ne '0') { throw 'Export map reports errors.' }
 $overlays = [Collections.Generic.Dictionary[string,object]]::new([StringComparer]::OrdinalIgnoreCase)
 $references = [Collections.Generic.List[object]]::new()
-function AddOverlay([string]$source, [string]$built, [string]$kind) {
+$satelliteCandidates = [Collections.Generic.List[object]]::new()
+$satelliteInputs = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+function AddOverlay([string]$source, [string]$built, [string]$kind, [bool]$resolved = $false) {
     $relative = RelativeWithin $InputDirectory $source
     if (!(Test-Path -LiteralPath $source -PathType Leaf)) { throw "Missing input file: $source" }
+    if ($kind -eq 'Satellite' -and !$resolved) {
+        $satelliteCandidates.Add([pscustomobject]@{ Relative=$relative; Source=$source; Built=$built; Hash=(Get-FileHash -LiteralPath $built).Hash; Selected=$false })
+        return
+    }
     if ($overlays.ContainsKey($relative)) { throw "Duplicate destination: $relative" }
     $overlays.Add($relative, [pscustomobject]@{ Relative=$relative; Built=$built; Kind=$kind; Hash=(Get-FileHash -LiteralPath $built).Hash })
 }
@@ -82,19 +88,37 @@ foreach ($entry in $map.DnSpyExportMap.Project) {
         try { $culture = [Globalization.CultureInfo]::GetCultureInfo($directory.Name).Name } catch { continue }
         if (!$culture) { continue }
         foreach ($original in @((Join-Path $directory.FullName $satelliteName), (Join-Path $directory.FullName "$($entry.AssemblyName)\$satelliteName"))) {
-            if ((Test-Path -LiteralPath $original -PathType Leaf) -and !$overlays.ContainsKey((RelativeWithin $InputDirectory $original))) {
-                # Some application trees ship a byte-identical satellite in more
-                # than one culture directory. Preserve each physical location.
-                $originalHash = (Get-FileHash -LiteralPath $original).Hash
-                $matching = @($overlays.Values | Where-Object {
-                    $_.Kind -eq 'Satellite' -and
-                    (Get-FileHash -LiteralPath (Join-Path $InputDirectory $_.Relative)).Hash -eq $originalHash
-                })
-                if ($matching.Count -eq 0) { throw "Missing rebuilt satellite: $original" }
-                AddOverlay $original $matching[0].Built 'Satellite'
-            }
+            if (Test-Path -LiteralPath $original -PathType Leaf) { [void]$satelliteInputs.Add($original) }
         }
     }
+}
+# Resolve shared destinations only after collecting every project's candidates.
+# Compatibility parents can share a simple name while requiring different versions.
+# The original physical satellite determines which version belongs at that path.
+foreach ($group in $satelliteCandidates | Group-Object Relative) {
+    $expected = [Reflection.AssemblyName]::GetAssemblyName($group.Group[0].Source)
+    $matching = @($group.Group | Where-Object {
+        $actual = [Reflection.AssemblyName]::GetAssemblyName($_.Built)
+        $actual.Name -eq $expected.Name -and $actual.Version -eq $expected.Version -and $actual.CultureName -eq $expected.CultureName
+    } | Sort-Object Built)
+    # A rebuilt unsigned tree legitimately changes keys. Parent/satellite key
+    # consistency was already checked above; do not require the input's key here.
+    if (!$matching.Count) { throw "Missing compatible rebuilt satellite: $($group.Name)" }
+    if (@($matching.Hash | Sort-Object -Unique).Count -ne 1) { throw "Conflicting rebuilt satellite content: $($group.Name)" }
+    $matching[0].Selected = $true
+    AddOverlay $matching[0].Source $matching[0].Built 'Satellite' $true
+}
+foreach ($original in $satelliteInputs) {
+    if ($overlays.ContainsKey((RelativeWithin $InputDirectory $original))) { continue }
+    # Preserve byte-identical input satellites stored at extra culture locations.
+    $originalHash = (Get-FileHash -LiteralPath $original).Hash
+    $matching = @($overlays.Values | Where-Object {
+        $_.Kind -eq 'Satellite' -and
+        (Get-FileHash -LiteralPath (Join-Path $InputDirectory $_.Relative)).Hash -eq $originalHash
+    } | Sort-Object Built)
+    if (!$matching.Count) { throw "Missing rebuilt satellite: $original" }
+    if (@($matching.Hash | Sort-Object -Unique).Count -ne 1) { throw "Conflicting rebuilt satellite content: $original" }
+    AddOverlay $original $matching[0].Built 'Satellite' $true
 }
 $tree = @(Get-ChildItem -LiteralPath $InputDirectory -Recurse -Force)
 if ($tree | Where-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }) { throw 'Input contains a link or junction.' }
@@ -110,6 +134,6 @@ foreach ($file in $hashes) {
     if ((Get-FileHash -LiteralPath (Join-Path $OutputDirectory $relative)).Hash -ne $expected) { throw "Output mismatch: $relative" }
 }
 if (@(Get-ChildItem -LiteralPath $OutputDirectory -Recurse -Force).Count -ne $tree.Count) { throw 'Runtime tree shape changed.' }
-@{ Input=$InputDirectory; Export=$ExportDirectory; Output=$OutputDirectory; Files=$hashes.Count; Overlays=@($overlays.Values | Sort-Object Relative); ReferenceOnlyProjects=@($references | Sort-Object Source) } |
+@{ Input=$InputDirectory; Export=$ExportDirectory; Output=$OutputDirectory; Files=$hashes.Count; Overlays=@($overlays.Values | Sort-Object Relative); ReferenceOnlyProjects=@($references | Sort-Object Source); SatelliteCandidates=@($satelliteCandidates | Sort-Object Relative,Built) } |
     ConvertTo-Json -Depth 5 | Set-Content ($OutputDirectory + '-manifest.json')
 Write-Output "PASS: staged $($overlays.Count) assemblies and satellites; input hashes and tree structure preserved."

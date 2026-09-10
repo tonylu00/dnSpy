@@ -36,3 +36,14 @@ It also checks resource sets without a neutral counterpart and byte-identical
 satellites distributed under additional culture paths. The exporter preserves
 the resource manifest names; staging copies the matching rebuilt satellite to
 each original physical location.
+
+When differently versioned parents share a satellite destination, staging collects
+all candidates before selecting the original physical satellite's name, version
+and culture. Each candidate must still match its rebuilt parent's signing key.
+This supports unsigned rebuilds without allowing a compatibility parent's older
+satellite to replace the current one. Both parent assembly paths are retained.
+The manifest records selected and unused candidates. Matching candidates must
+have identical bytes; conflicting content or a missing version fails before copy.
+
+`Invoke-SharedSatelliteStagingRegression.ps1` verifies both project orders,
+localized lookup, retention of both parents, and missing/conflicting rejection.
