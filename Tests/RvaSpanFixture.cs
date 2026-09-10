@@ -18,6 +18,12 @@ public static class RvaSpanFixture {
     public static ulong[] ULongs() { return new ulong[] { 0, 9223372036854775808, ulong.MaxValue }; }
     public static char[] Chars() { return new char[] { '\0', 'A', '\uD800', '\uFFFF' }; }
     public static byte[] EmptyBlob() { return new byte[0]; }
+    public static byte[] Conditional(bool useInput, byte[] input) {
+        byte[] value;
+        if (useInput) value = input;
+        else value = new byte[] { 7, 11, 13, 17, 19 };
+        return value;
+    }
     static void Check(bool value, string message) { checks++; if (!value) throw new Exception(message); }
     static void Verify<T>(Func<T[]> read, T[] expected) {
         var first = read(); var second = read();
@@ -27,6 +33,9 @@ public static class RvaSpanFixture {
         Check(second.SequenceEqual(expected) && read().SequenceEqual(expected), "Mutating a copy leaves later copies unchanged");
     }
     public static int Main() {
+        var supplied = new byte[] { 31 };
+        Check(ReferenceEquals(Conditional(true, supplied), supplied), "Conditional input identity");
+        Verify(() => Conditional(false, supplied), new byte[] { 7, 11, 13, 17, 19 });
         Check(header.SequenceEqual(Encoding.UTF8.GetBytes("ontology\0namespace")), "Static UTF8 initializer");
         Verify(Text, Encoding.UTF8.GetBytes("Grüße 世界 😀\0"));
         Verify(Short, Encoding.UTF8.GetBytes("abc"));

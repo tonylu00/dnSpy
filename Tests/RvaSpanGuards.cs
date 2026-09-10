@@ -47,6 +47,28 @@ class RvaSpanGuards {
         Check(!Rewrite(item) && item.Expression.Code == ILCode.Call && item.Construction.Code == ILCode.Newobj, name);
     }
     static void Main() {
+        var inline = new Case();
+        var variable = new ILVariable("values") { Type = new SZArraySig(inline.Module.CorLibTypes.Byte) };
+        var initializer = new MemberRefUser(inline.Module, "InitializeArray", MethodSig.CreateStatic(inline.Module.CorLibTypes.Void,
+            new ClassSig(inline.Module.CorLibTypes.GetTypeRef("System", "Array")), new ValueTypeSig(inline.Module.CorLibTypes.GetTypeRef("System", "RuntimeFieldHandle"))),
+            inline.Module.CorLibTypes.GetTypeRef("System.Runtime.CompilerServices", "RuntimeHelpers"));
+        Func<ILExpression> makeInline = () => new ILExpression(ILCode.Call, initializer,
+            new ILExpression(ILCode.Stloc, variable, new ILExpression(ILCode.Newarr, inline.Module.CorLibTypes.Byte.TypeDefOrRef, new ILExpression(ILCode.Ldc_I4, 3))),
+            new ILExpression(ILCode.Ldtoken, inline.Field));
+        Func<ILExpression, bool> rewriteInline = call => (bool)typeof(ILAstOptimizer).GetMethod("TransformInlineInitializeArray", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { call, inline.Context });
+        var inlineCall = makeInline();
+        Check(rewriteInline(inlineCall) &&
+            inlineCall.Code == ILCode.Stloc && inlineCall.Operand == variable && inlineCall.Arguments[0].Code == ILCode.InitArray &&
+            inlineCall.Arguments[0].Arguments.Select(a => (int)a.Operand).SequenceEqual(new[] { 7, 11, 13 }), "Inline allocation retains destination and exact data");
+        var oversized = makeInline(); oversized.Arguments[0].Arguments[0].Arguments[0].Operand = 99;
+        Check(!rewriteInline(oversized) && oversized.Code == ILCode.Call, "Oversized inline copy retains runtime failure");
+        var negative = makeInline(); negative.Arguments[0].Arguments[0].Arguments[0].Operand = -1;
+        Check(!rewriteInline(negative), "Negative allocation retained");
+        inline.Context.Settings.MaxArrayElements = 2;
+        Check(!rewriteInline(makeInline()), "Inline data not truncated for display limits");
+        inline.Context.Settings.MaxArrayElements = 100;
+        ((TypeRef)initializer.DeclaringType).ResolutionScope = new AssemblyRefUser("UserApplication");
+        Check(!rewriteInline(makeInline()), "Lookalike InitializeArray is not rewritten");
         var ordinary = new Case(); ordinary.Address.ILSpans.Add(new ILSpan(10, 1));
         Check(Rewrite(ordinary) && ordinary.Expression.Code == ILCode.InitArray && ordinary.Expression.Arguments.Select(a => (int)a.Operand).SequenceEqual(new[] { 7, 11, 13 }), "Only requested bytes are copied");
         Check(ordinary.Expression.ILSpans.Any(s => s.Start == 10 && s.End == 11), "Consumed data-address debug span retained");
