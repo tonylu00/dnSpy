@@ -30,12 +30,31 @@ rows. A map from another build is rejected rather than matched by filename or
 assembly name. The accepted map is saved as `dnspy-source-name-map.xml` beside
 the export manifest.
 
-Version 1 supports non-generic types and ordinary nonvirtual methods. It rejects
-constructors, accessors, runtime/PInvoke methods and virtual/override methods.
+Version 1 supports non-generic types, ordinary nonvirtual methods and complete
+implicit interface/virtual override families. Constructors, accessors,
+runtime/PInvoke methods, explicit `MethodImpl` declarations and static virtual
+contracts remain unsupported.
 Choose type/method aliases unique across their module, including original
 type/member names, namespace segments, parameters and generic parameters.
 Alias swaps and invisible Unicode format characters are rejected. These
 conservative limits avoid ambiguous compiler binding and metadata restoration.
+
+For an interface or virtual family, generate the map with NameCandidates
+`--review-families` and `--update-map`. Select a descriptive `NewName` on one
+reviewed member; the updater expands the actual metadata family and allocates
+one alias for all its declarations, implementations and overrides. Each resulting
+method row carries a `ContractFamily` identifier. dnSpy recomputes that graph
+using the complete export inputs and validates all members and aliases before
+registering any names. The only exception to module-wide alias uniqueness is
+the shared alias of one fully validated family. Generic interface/base argument
+substitution, inherited implementations and separate overloads are supported;
+ambiguous or external contracts are blocked. Physical duplicate assembly
+identities retain their dependency contexts.
+
+`ContractFamilyRegression` exports and builds a multi-assembly fixture with
+one/four workers, then runs rebuilt and unchanged binary callers through generic,
+virtual, inherited, overload and async dispatch. It also checks original reflection
+names, parameter names, incremental hashes and incomplete-family rejection.
 
 Ordinary method rows also accept source-only parameter aliases:
 

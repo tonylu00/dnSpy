@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using dnlib.DotNet;
 using dnSpy.Contracts.Decompiler;
+using SourceNameMapping;
 
 namespace dnSpy.Decompiler.MSBuild {
 	static class SourceNameMap {
@@ -20,6 +21,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			var modules = inputs.ToDictionary(m => Path.GetFullPath(m.Location), StringComparer.OrdinalIgnoreCase);
 			var proposals = new Dictionary<IMemberDef, string>();
 			var parameterProposals = new Dictionary<Parameter, string>();
+			var contractProposals = new Dictionary<MethodDef, string>();
 			foreach (var entry in root.Elements()) {
 				if (entry.Name != "Module") throw new InvalidDataException("Unsupported source-map entry: " + entry.Name);
 				var location = Path.GetFullPath(Path.Combine(directory, Required(entry, "Path")));
@@ -38,7 +40,12 @@ namespace dnSpy.Decompiler.MSBuild {
 					if (name != null) ValidateName(name);
 					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name or parameters.");
 					if (member is TypeDef type && (type.IsGlobalModuleType || type.HasGenericParameters)) throw new InvalidDataException("This source-map version requires a non-generic type.");
-					if (member is MethodDef method && (method.IsConstructor || method.IsVirtual || method.HasOverrides || method.IsRuntimeSpecialName || method.IsSpecialName || method.IsPinvokeImpl || method.IsRuntime)) throw new InvalidDataException("Source method alias requires an ordinary nonvirtual method.");
+					string? contract = (string?)row.Attribute("ContractFamily");
+					if (member is MethodDef method) {
+						if (MethodContractFamilies.MethodBlocker(method) != null || contract == null && method.IsVirtual) throw new InvalidDataException("Source method alias requires an ordinary method or a supported complete contract family.");
+						if (contract != null) contractProposals.Add(method, contract);
+					}
+					else if (contract != null) throw new InvalidDataException("ContractFamily requires a method row.");
 					if (name != null) proposals.Add(member, name);
 					foreach (var parameterRow in row.Elements()) {
 						if (parameterRow.Name != "Parameter" || parameterRow.HasElements || !(member is MethodDef owner)) throw new InvalidDataException("Expected a parameter alias.");
@@ -48,6 +55,20 @@ namespace dnSpy.Decompiler.MSBuild {
 						string alias = Required(parameterRow, "NewName"); ValidateName(alias);
 						parameterProposals.Add(parameter, alias);
 					}
+				}
+			}
+			if (contractProposals.Count != 0) {
+				var graph = new MethodContractFamilies(modules.Values, module => {
+					var location = Path.GetFullPath(module.Location);
+					return (location.StartsWith(directory, StringComparison.OrdinalIgnoreCase) ? location.Substring(directory.Length) : location).Replace('\\', '/');
+				}, useHostResolver: true);
+				foreach (var proposal in contractProposals) {
+					var family = graph.Get(proposal.Key);
+					if (family == null || family.Id != proposal.Value || family.Blockers.Length != 0)
+						throw new InvalidDataException("Stale or unsupported source contract family: " + proposal.Key.FullName);
+					if (family.Methods.Any(m => !contractProposals.TryGetValue(m, out var id) || id != family.Id || !proposals.ContainsKey(m)) ||
+						family.Methods.Select(m => proposals[m]).Distinct(StringComparer.Ordinal).Count() != 1)
+						throw new InvalidDataException("Source contract family must be mapped completely with one name: " + proposal.Key.FullName);
 				}
 			}
 			foreach (var group in parameterProposals.GroupBy(p => p.Key.Method)) {
@@ -61,6 +82,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			// and collisions with unmodified declarations, including nested members.
 			foreach (var group in proposals.GroupBy(p => p.Key is TypeDef t ? t.Module : p.Key.DeclaringType.Module)) {
 				var used = new HashSet<string>(StringComparer.Ordinal);
+				var shared = new Dictionary<string, string>(StringComparer.Ordinal);
 				foreach (var type in group.Key.GetTypes()) {
 					used.UnionWith((type.Namespace.String ?? "").Split('.'));
 					used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
@@ -73,7 +95,12 @@ namespace dnSpy.Decompiler.MSBuild {
 					used.UnionWith(type.Properties.Select(p => p.Name.String));
 					used.UnionWith(type.Events.Select(e => e.Name.String));
 				}
-				foreach (var proposal in group) if (!used.Add(proposal.Value)) throw new InvalidDataException("Source alias collision: " + proposal.Value);
+				foreach (var proposal in group) {
+					string? family = proposal.Key is MethodDef method && contractProposals.TryGetValue(method, out var id) ? id : null;
+					if (!used.Add(proposal.Value) && (family == null || !shared.TryGetValue(proposal.Value, out var previous) || previous != family))
+						throw new InvalidDataException("Source alias collision: " + proposal.Value);
+					if (family != null) shared[proposal.Value] = family;
+				}
 				if (parameterProposals.Any(p => p.Key.Method.Module == group.Key && group.Any(m => m.Value == p.Value))) throw new InvalidDataException("Source parameter alias collides with a mapped member.");
 			}
 			foreach (var proposal in proposals) SourceNameAliases.Register(proposal.Key, proposal.Value);
