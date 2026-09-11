@@ -33,6 +33,20 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteEndElement(); writer.WriteEndElement();
 			}
 			var typeNames = MetadataTypeNames.GetMappings(project.Module);
+			// Explicit parameter aliases also name compiler-hoisted state fields.
+			// Record only requested aliases, leaving automatic source sanitization alone.
+			var parameterFields = project.Module.GetTypes().SelectMany(t => t.Methods)
+				.SelectMany(m => m.Parameters.Where(p => p.IsNormalMethodParameter && SourceNameAliases.GetParameter(p) != null)
+					.Select(p => "dnSpy.metadata.source-parameter-fields.v1|" + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(m.FullName)) + "|" +
+						(p.MethodSigIndex + 1).ToString(System.Globalization.CultureInfo.InvariantCulture) + "|" +
+						Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SourceNameAliases.GetParameter(p)!)) + "|" + Convert.ToBase64String(p.ParamDef.Name.Data))).ToArray();
+			if (parameterFields.Length != 0) {
+				File.WriteAllText(Path.Combine(directory, "ParameterFields.cs"), string.Join("\n", parameterFields.Select(m =>
+					"[assembly: global::System.Reflection.ObfuscationAttribute(Feature = \"" + m + "\")]")) + "\n");
+				writer.WriteStartElement("ItemGroup"); writer.WriteStartElement("Compile");
+				writer.WriteAttributeString("Include", ".dnspy-metadata/ParameterFields.cs");
+				writer.WriteEndElement(); writer.WriteEndElement();
+			}
 			var methodNames = MetadataMethodNames.GetMappings(project.Module);
 			if (methodNames.Length != 0) {
 				File.WriteAllText(Path.Combine(directory, "MethodNames.cs"), string.Join("\n", methodNames.Select(m =>

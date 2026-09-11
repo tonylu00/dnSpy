@@ -23,13 +23,17 @@ void Project(string name, string source, string references = "", bool exe = fals
 }
 Project("Contracts", """
 using System.Threading.Tasks;
+using System.Collections.Generic;
 public interface IParser<T> { T a(T value); string b<U>(T value, U suffix); }
 public interface IScore { int c(int value); int c(string value); }
 public interface ISub : IScore { }
 public interface IAsyncTask { Task<string> d(string value); }
+public interface ISequence<T> { IEnumerable<T> e(T value); }
+public interface IGenericAsync<T> { Task<U> f<U>(T value, U result); }
 """);
 Project("Implementation", """
 using System.Threading.Tasks;
+using System.Collections.Generic;
 public class Base<T> : IParser<T> {
     public virtual T a(T value) { return value; }
     public virtual string b<U>(T value, U suffix) { return value + "|" + suffix; }
@@ -41,14 +45,25 @@ public class Derived : Base<string>, ISub {
 }
 public class Leaf : Derived { public override int c(int value) { return base.c(value) + 2; } }
 public class AsyncTask : IAsyncTask { public async Task<string> d(string value) { await Task.Yield(); return value + ":async"; } }
+public class Sequence<T> : ISequence<T> { public IEnumerable<T> e(T value) { yield return value; yield return value; } }
+public class GenericAsync<T> : IGenericAsync<T> { public async Task<U> f<U>(T value, U result) { await Task.Yield(); System.GC.KeepAlive(value); return result; } }
 """, "<ProjectReference Include=\"../Contracts/Contracts.csproj\"/>");
 Project("Client", """
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 class Program {
     static void Main() {
         IParser<string> parser = new Derived(); IScore score = new Leaf(); IAsyncTask task = new AsyncTask();
         if (parser.a("text") != "TEXT" || parser.b<int>("text", 17) != "text|17" || score.c(10) != 17 || score.c("text") != 4 || task.d("text").GetAwaiter().GetResult() != "text:async") throw new Exception("Contract dispatch changed");
+        if (!new Sequence<string>().e("text").SequenceEqual(new[] { "text", "text" }) || new GenericAsync<string>().f<int>("text", 17).GetAwaiter().GetResult() != 17) throw new Exception("Generic state dispatch changed");
+        foreach (var method in new[] { typeof(AsyncTask).GetMethod("d"), typeof(Sequence<string>).GetMethod("e"), typeof(GenericAsync<string>).GetMethod("f") }) {
+            var state = method.GetCustomAttribute<StateMachineAttribute>().StateMachineType;
+            var fields = state.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Select(f => f.Name).ToArray();
+            if (!fields.Contains("value") || fields.Any(f => f.Contains("inputValue"))) throw new Exception("Hoisted parameter field name changed: " + method);
+            if (method.Name == "e" && !fields.Contains("<>3__value")) throw new Exception("Iterator argument copy name changed");
+        }
         if (typeof(Derived).GetMethods().Any(m => m.Name.StartsWith("Reviewed")) || typeof(IParser<>).GetMethod("a").GetParameters()[0].Name != "value") throw new Exception("Runtime name restoration failed");
         Console.WriteLine("PASS generic interfaces, inherited implementations, virtual overrides, overloads, async dispatch and original reflection names");
     }
@@ -63,11 +78,12 @@ string reviewPath = Path.Combine(root, "review.json"), map = Path.Combine(root, 
 await Run("dotnet", true, names, "--review-families", input, reviewPath);
 var review = JsonNode.Parse(File.ReadAllText(reviewPath))!;
 var members = review["Methods"]!.AsArray();
-foreach (var member in members.Where(m => m!["Module"]!.GetValue<string>() == "Contracts.dll")) {
+foreach (var member in members) {
     string original = member!["OriginalName"]!.GetValue<string>();
-    if (!new[] { "a", "b", "c", "d" }.Contains(original)) continue;
+    if (!new[] { "a", "b", "c", "d", "e", "f" }.Contains(original)) continue;
     if (member["MappingBlocker"] != null) throw new Exception("Supported contract was blocked: " + member);
-    member["NewName"] = "Reviewed" + original + (original == "c" && member["Signature"]!.GetValue<string>().Contains("System.String)") ? "Text" : "Value");
+    if (member["Module"]!.GetValue<string>() == "Contracts.dll")
+        member["NewName"] = "Reviewed" + original + (original == "c" && member["Signature"]!.GetValue<string>().Contains("System.String)") ? "Text" : "Value");
     foreach (var parameter in member["ParameterNames"]!.AsArray()) if (parameter!["OriginalName"]!.GetValue<string>() == "value") parameter["NewName"] = "inputValue";
 }
 File.WriteAllText(reviewPath, review.ToJsonString());
@@ -89,4 +105,4 @@ var invalid = XDocument.Load(map); invalid.Descendants("Method").First().Remove(
 string invalidPath = Path.Combine(root, "incomplete.xml"); invalid.Save(invalidPath);
 await Run(exporter, false, "--no-color", "--source-name-map", invalidPath, "-o", Path.Combine(root, "invalid-export"), Path.Combine(input, "Contracts.dll"), Path.Combine(input, "Implementation.dll"), Path.Combine(input, "Client.exe"));
 if (inputHashes.Any(p => !p.Value.SequenceEqual(SHA256.HashData(File.ReadAllBytes(p.Key))))) throw new Exception("Input changed");
-Console.WriteLine("PASS family exports with one/four workers, rebuilt and original callers, reflection, incremental hashes and incomplete-map rejection.");
+Console.WriteLine("PASS family exports with one/four workers, rebuilt and original callers, reflection, async/iterator/generic hoisted parameter fields, incremental hashes and incomplete-map rejection.");

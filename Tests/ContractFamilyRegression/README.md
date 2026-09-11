@@ -11,7 +11,9 @@ family review map from metadata, exports with one and four workers, and rebuilds
 the generated sources. Both rebuilt callers and unchanged original callers must
 retain generic interface dispatch, inherited implementations, virtual overrides,
 overloads and async results. Reflection must retain original method/parameter
-names; incremental output hashes and input hashes must remain stable. An
+names; async, iterator and generic async state fields must also retain the
+original parameter names, including the iterator's initial argument copy.
+Incremental output hashes and input hashes must remain stable. An
 incomplete family map must fail export. Each child command has a separate log.
 
 This end-to-end fixture executes .NET Framework 4.8 assemblies and dnSpy, so it

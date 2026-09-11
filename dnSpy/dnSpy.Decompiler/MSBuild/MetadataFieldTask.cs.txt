@@ -39,6 +39,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreStaticValueTypes(module);
                 changed |= RestoreUncheckedReferences(module);
                 changed |= RestoreParameterNames(module);
+                changed |= RestoreSourceParameterFields(module);
                 changed |= RestoreFieldData(module);
                 changed |= RestoreEntryPoint(module);
                 var rawTypes = module.GetTypes().Where(t => t.CustomAttributes.Any(a => a.TypeFullName == "System.Reflection.ObfuscationAttribute" &&
@@ -362,6 +363,81 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             }
         }
         return changed;
+    }
+
+    static bool RestoreSourceParameterFields(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.source-parameter-fields.v1|";
+        var fields = new Dictionary<FieldDef, UTF8String>();
+        var markers = new List<CustomAttribute>();
+        var methods = module.GetTypes().SelectMany(t => t.Methods).ToLookup(m => m.FullName, StringComparer.Ordinal);
+        foreach (var attribute in module.Assembly.CustomAttributes) {
+            if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+            string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+            if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
+            var parts = feature.Substring(prefix.Length).Split('|');
+            if (parts.Length != 4) throw new InvalidDataException("Invalid source parameter field instruction.");
+            string signature = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(parts[0]));
+            ushort sequence = ushort.Parse(parts[1], CultureInfo.InvariantCulture);
+            string sourceName = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(parts[2]));
+            var originalName = new UTF8String(Convert.FromBase64String(parts[3]));
+            var candidates = methods[signature].Where(m => m.ParamDefs.Any(p => p.Sequence == sequence && p.Name == originalName)).ToArray();
+            if (sequence == 0 || candidates.Length != 1) throw new InvalidDataException("Missing or ambiguous source parameter field owner: " + signature);
+            var method = candidates[0];
+            foreach (var stateAttribute in method.CustomAttributes) {
+                if (stateAttribute.TypeFullName != "System.Runtime.CompilerServices.AsyncStateMachineAttribute" &&
+                    stateAttribute.TypeFullName != "System.Runtime.CompilerServices.IteratorStateMachineAttribute" &&
+                    stateAttribute.TypeFullName != "System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute") continue;
+                var stateSignature = stateAttribute.ConstructorArguments.Count == 1 ? stateAttribute.ConstructorArguments[0].Value as TypeSig : null;
+                var state = stateSignature == null ? null : stateSignature.ToTypeDefOrRef().ResolveTypeDef();
+                if (state == null || state.Module != module || state.DeclaringType != method.DeclaringType || !IsGeneratedType(state))
+                    throw new InvalidDataException("Unproven state owner for source parameter: " + signature);
+                // Async parameters use their source names; iterators also keep
+                // an initial argument copy under the <>3__ prefix.
+                foreach (string stem in new[] { "", "<>3__" }) {
+                    var matches = state.Fields.Where(f => f.Name == stem + sourceName).ToArray();
+                    if (matches.Length > 1) throw new InvalidDataException("Ambiguous hoisted source parameter field.");
+                    if (matches.Length == 0) continue; // Unused parameters need no field.
+                    var name = new UTF8String(System.Text.Encoding.UTF8.GetBytes(stem).Concat(originalName.Data).ToArray());
+                    UTF8String previous;
+                    if (fields.TryGetValue(matches[0], out previous) && previous != name) throw new InvalidDataException("Conflicting hoisted source parameter fields.");
+                    fields[matches[0]] = name;
+                }
+            }
+            markers.Add(attribute);
+        }
+        if (markers.Count == 0) return false;
+        foreach (var entry in fields) {
+            foreach (var other in entry.Key.DeclaringType.Fields.Where(f => f != entry.Key)) {
+                UTF8String planned;
+                if (!fields.TryGetValue(other, out planned)) planned = other.Name;
+                if (planned == entry.Value) throw new InvalidDataException("Hoisted parameter restoration would collide with another field.");
+            }
+        }
+        var references = new HashSet<MemberRef>(module.GetMemberRefs().Where(r => r.IsFieldRef));
+        foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody))
+            foreach (var instruction in method.Body.Instructions)
+                if (instruction.Operand is MemberRef reference && reference.IsFieldRef) references.Add(reference);
+        var referenceNames = new Dictionary<MemberRef, UTF8String>();
+        foreach (var reference in references) {
+            var definition = reference.ResolveFieldDef();
+            if (definition == null) {
+                // A constructed generic state can express its field type using
+                // caller variables. Resolve the already-proven local state and
+                // its unique source field name without conflating type scopes.
+                var owner = reference.DeclaringType.ResolveTypeDef();
+                if (owner != null && owner.Module == module) {
+                    var matches = owner.Fields.Where(f => f.Name == reference.Name && fields.ContainsKey(f)).ToArray();
+                    if (matches.Length > 1) throw new InvalidDataException("Ambiguous generic hoisted parameter field reference.");
+                    if (matches.Length == 1) definition = matches[0];
+                }
+            }
+            UTF8String name;
+            if (definition != null && fields.TryGetValue(definition, out name)) referenceNames.Add(reference, name);
+        }
+        foreach (var entry in referenceNames) entry.Key.Name = entry.Value;
+        foreach (var entry in fields) entry.Key.Name = entry.Value;
+        foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
+        return true;
     }
 
     static bool RestoreDefinitionFlags(ModuleDef module) {

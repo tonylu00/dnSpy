@@ -76,6 +76,11 @@ mapped type/method aliases are rejected. Generic methods are supported.
 Source bodies and declarations use the aliases together. The existing parameter
 metadata restoration instructions preserve original reflection-visible names in
 runtime output; compiler reference assemblies retain source names for compilation.
+Explicit parameter aliases also restore the compiler's captured parameter fields
+in async and iterator state machines, including iterator initial-argument copies.
+Only fields on the method's proven local generated state type are changed.
+Constructed generic field references follow those restored definitions. Ordinary
+automatic parameter sanitization retains its existing behavior.
 `Invoke-SourceParameterAliasRegression.ps1` checks combined method/parameter maps,
 parameter-only maps, generic methods, one/four workers, unchanged callers, runtime
 reflection names, input preservation and invalid-map rejection.
