@@ -21,7 +21,7 @@ try {
     $row=$map.DocumentElement.SelectSingleNode('Module')
     $row.SetAttribute('Path','Fixture.exe');$row.SetAttribute('Mvid',$module.Mvid.ToString());$row.SetAttribute('Sha256',$hash)
     $owner=$module.GetTypes() | Where-Object FullName -EQ 'Container`1'
-    foreach($pair in @(@('a','ComputeValueAsync'),@('b','EnumerateValues'),@('c','EchoValueAsync'),@('e','OnChanged'),@('f','OnPayloadChanged'))){
+    foreach($pair in @(@('a','ComputeValueAsync'),@('b','EnumerateValues'),@('c','EchoValueAsync'),@('d','RunCapturedAsync'),@('e','OnChanged'),@('f','OnPayloadChanged'),@('g','SumPositiveDoubles'),@('h','CreateOffsetCallback'))){
         $method=$owner.Methods | Where-Object {$_.Name.String -ceq $pair[0]}
         $entry=$map.CreateElement('Method')
         $entry.SetAttribute('Token',('0x{0:X8}' -f $method.MDToken.Raw));$entry.SetAttribute('ExpectedName',$method.Name.String)
@@ -33,7 +33,7 @@ foreach($workers in 1,4){
     & $DnSpyConsole --no-color --source-name-map "$root/names.xml" --threads $workers -o "$root/export$workers" $original
     if($LASTEXITCODE){throw 'Mapped fixture export failed.'}
     $source=Get-Content "$root/export$workers/Fixture/Container.cs" -Raw
-    foreach($alias in 'ComputeValueAsync','EnumerateValues','EchoValueAsync','OnChanged','OnPayloadChanged'){
+    foreach($alias in 'ComputeValueAsync','EnumerateValues','EchoValueAsync','RunCapturedAsync','OnChanged','OnPayloadChanged','SumPositiveDoubles','CreateOffsetCallback'){
         if($source -notmatch ('\b'+$alias+'(?:<U>)?\(')){throw "Readable source alias missing: $alias"}
     }
     dotnet build "$root/export$workers/solution.sln" -c Release --nologo -v quiet

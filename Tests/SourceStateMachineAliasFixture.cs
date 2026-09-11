@@ -31,6 +31,13 @@ public class Container<T> {
         };
         return callback();
     }
+    public static int g(int[] values) {
+        return values.Where(value => value > 0).Sum(value => value * 2);
+    }
+    public static Func<int, int> h(int offset) {
+        int AddOffset(int value) { return value + offset; }
+        return AddOffset;
+    }
     public sealed class Captured {
         public readonly Func<Task<int>> Callback;
         readonly int value;
@@ -56,6 +63,7 @@ public static class Program {
             !Container<int>.b(4).SequenceEqual(new[] { 4, 9 }) ||
             Container<int>.c("payload").GetAwaiter().GetResult() != "payload" ||
             Container<int>.d(7).GetAwaiter().GetResult() != 8 ||
+            Container<int>.g(new[] { -1, 2, 3 }) != 10 || Container<int>.h(5)(7) != 12 ||
             new Container<int>.Captured(7).Callback().GetAwaiter().GetResult() != 9)
             throw new Exception("State-machine behavior changed.");
         foreach (var name in new[] { "a", "b", "c" }) {
@@ -75,6 +83,8 @@ public static class Program {
                 if (field.Name.EndsWith("__OnChanged", StringComparison.Ordinal) || field.Name.EndsWith("__OnPayloadChanged", StringComparison.Ordinal))
                     throw new Exception("Delegate cache still contains the source alias.");
         foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly)) {
+            if (new[] { "RunCapturedAsync", "SumPositiveDoubles", "CreateOffsetCallback" }.Any(alias => method.Name.StartsWith("<" + alias + ">", StringComparison.Ordinal)))
+                throw new Exception("Generated lambda/local-function name still contains the source alias: " + method.Name);
             foreach (StateMachineAttribute attribute in method.GetCustomAttributes(typeof(StateMachineAttribute), false)) {
                 // Lambda state types can end in >d; ordinary async methods use >d__N.
                 if (!attribute.StateMachineType.Name.StartsWith("<" + method.Name.Replace('.', '-') + ">d", StringComparison.Ordinal))

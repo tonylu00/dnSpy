@@ -630,6 +630,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (key != null && maps.TryGetValue(key, out name)) memberNames.Add(reference, name);
         }
         if (methods) {
+            RestoreGeneratedClosureMethodNames(module, definitions, references, memberNames);
             AvoidGeneratedMethodCollisions(module, definitions, references, memberNames);
             RestoreStateMachineTypeNames(module, definitions);
             RestoreDelegateCacheFieldNames(module, definitions, memberNames);
@@ -644,6 +645,65 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
     }
+
+    static void RestoreGeneratedClosureMethodNames(ModuleDef module, Dictionary<IMemberDef, UTF8String> names,
+        HashSet<MemberRef> references, Dictionary<MemberRef, UTF8String> referenceNames) {
+        var generated = new Dictionary<MethodDef, UTF8String>();
+        var methods = module.GetTypes().SelectMany(t => t.Methods).ToArray();
+        foreach (var entry in names.ToArray()) {
+            var owner = entry.Key as MethodDef;
+            if (owner == null || owner.Name == entry.Value) continue;
+            var prefix = "<" + owner.Name.String.Replace('.', '-') + ">";
+            foreach (var method in methods) {
+                if (names.ContainsKey(method) || !method.Name.String.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                var suffix = method.Name.String.Substring(prefix.Length);
+                var ordinal = suffix.StartsWith("b__", StringComparison.Ordinal) ? suffix.Substring(3) : null;
+                if (suffix.StartsWith("g__", StringComparison.Ordinal)) {
+                    var delimiter = suffix.LastIndexOf('|');
+                    if (delimiter > 3) ordinal = suffix.Substring(delimiter + 1);
+                }
+                if (ordinal == null || !IsGeneratedOrdinal(ordinal)) continue;
+                var type = method.DeclaringType;
+                if (type == owner.DeclaringType) {
+                    if (!method.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute")) continue;
+                }
+                else {
+                    // Only compiler-generated descendants of this physical owner
+                    // belong to its closures. A same-named nested user type does not.
+                    while (type != null && type != owner.DeclaringType &&
+                        type.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"))
+                        type = type.DeclaringType;
+                    if (type != owner.DeclaringType) continue;
+                }
+                var restored = new UTF8String(new byte[] { (byte)'<' }
+                    .Concat(entry.Value.Data.Select(b => b == (byte)'.' ? (byte)'-' : b))
+                    .Concat(method.Name.Data.Skip(1 + owner.Name.Data.Length)).ToArray());
+                UTF8String previous;
+                if (generated.TryGetValue(method, out previous) && previous != restored)
+                    throw new InvalidDataException("Conflicting generated closure owner names.");
+                generated[method] = restored;
+            }
+        }
+        foreach (var reference in references) {
+            var owner = reference.DeclaringType;
+            if (owner is TypeSpec specification) {
+                var generic = specification.TypeSig.RemovePinnedAndModifiers() as GenericInstSig;
+                if (generic == null) continue;
+                owner = generic.GenericType.TypeDefOrRef;
+            }
+            if (owner.DefinitionAssembly == null || owner.DefinitionAssembly.FullName != module.Assembly.FullName) continue;
+            var type = owner as TypeDef ?? module.Find(owner.FullName, false);
+            if (type == null || type.Module != module) continue;
+            var matches = type.Methods.Where(m => m.Name == reference.Name &&
+                new SigComparer().Equals(m.MethodSig, reference.MethodSig)).ToArray();
+            UTF8String restored;
+            if (matches.Length == 1 && generated.TryGetValue(matches[0], out restored)) referenceNames[reference] = restored;
+        }
+        foreach (var entry in generated) names.Add(entry.Key, entry.Value);
+    }
+
+    static bool IsGeneratedOrdinal(string value) => value.Length != 0 &&
+        value.Split('_', '`').All(part => part.Length != 0 && part.All(c => c >= '0' && c <= '9'));
 
     static void RestoreDelegateCacheFieldNames(ModuleDef module, Dictionary<IMemberDef, UTF8String> methodNames,
         Dictionary<MemberRef, UTF8String> referenceNames) {
@@ -737,9 +797,13 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 if (attribute.ConstructorArguments.Count != 1) continue;
                 var signature = attribute.ConstructorArguments[0].Value as TypeSig;
                 var state = signature == null ? null : signature.ToTypeDefOrRef().ResolveTypeDef();
+                var prefix = "<" + method.Name.String.Replace('.', '-') + ">d";
                 if (state == null || state.Module != module || state.DeclaringType != method.DeclaringType ||
-                    !state.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute") ||
-                    !state.Name.String.StartsWith("<" + method.Name.String + ">d__", StringComparison.Ordinal)) continue;
+                    !IsGeneratedType(state) ||
+                    !state.Name.String.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                var suffix = state.Name.String.Substring(prefix.Length);
+                if (suffix.Length != 0 && !(suffix.StartsWith("__", StringComparison.Ordinal) && IsGeneratedOrdinal(suffix.Substring(2))) &&
+                    !(suffix.StartsWith("`", StringComparison.Ordinal) && IsGeneratedOrdinal(suffix.Substring(1)))) continue;
                 // Retain the compiler ordinal/arity and raw UTF8 bytes, except
                 // that C# substitutes '-' for '.' in generated owner names
                 // (notably constructor lambdas). Dots confuse reflection type parsing.
