@@ -1,5 +1,10 @@
 # External-agent handoff: infer readable ETS names
 
+The first personally reviewed batch and its per-method evidence are in
+[`NameReview/2026-09-11`](NameReview/2026-09-11/README.md). Rebuilt runtime aliases
+can now be checked using the portable
+[`SourceAliasContracts`](SourceAliasContracts/README.md) command.
+
 ## Start with the cross-platform review inventory
 
 Use the C#/.NET 8 NameCandidates tool, not ad hoc PowerShell regex filters.
