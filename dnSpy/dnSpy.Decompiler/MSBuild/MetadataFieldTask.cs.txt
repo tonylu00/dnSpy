@@ -28,9 +28,12 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 changed |= RestoreAccessorContracts(module);
                 changed |= RestorePropertyNames(module);
                 changed |= RestoreDelegateMethods(module);
-                changed |= RestoreProtectedCalls(module);
                 changed |= RestoreMemberNames(module, true);
                 changed |= RestoreMemberNames(module, false);
+                // Protected stubs record the original target name. Restore
+                // source aliases first, while declaring types still have the
+                // source names used by the member-name map.
+                changed |= RestoreProtectedCalls(module);
                 changed |= RestoreTypeNames(module);
                 changed |= RestoreDefinitionFlags(module);
                 changed |= RestoreStaticValueTypes(module);

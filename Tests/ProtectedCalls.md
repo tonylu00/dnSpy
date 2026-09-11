@@ -20,6 +20,12 @@ behavior, reflection flags and stub removal through one/four-worker exports.
 Both rebuilt clients and unchanged binary clients execute against the rebuilt
 library, and original input hashes must remain unchanged.
 
+Run again with `-SourceAliases` to cover aliased protected types, ordinary and
+async methods, generic methods and their parameters. The C# fixture emitter
+writes an exact hash/MVID/token source map. Member aliases must be restored
+before the protected-call pass resolves its original target; otherwise a valid
+mapped ZIP helper, for example, fails with an invalid compilation-stub error.
+
 Source exports retain explicit static extension calls to preserve the selected
 container across assemblies. `Invoke-ExtensionBindingRegression.ps1` covers
 competing extensions in separate binary dependencies as well as receiver

@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$OutputDirectory)
+param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$OutputDirectory,[switch]$SourceAliases)
 $ErrorActionPreference='Stop'
 $OutputDirectory=[IO.Path]::GetFullPath($OutputDirectory)
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new output directory.'}
@@ -12,7 +12,10 @@ $dnlib=[Security.SecurityElement]::Escape((Join-Path (Split-Path ([IO.Path]::Get
 dotnet build (Join-Path $OutputDirectory 'client\ProtectedCallClient.csproj') -c Release --nologo -v quiet
 if($LASTEXITCODE -ne 0){throw 'Input build failed.'}
 $inputDir=Join-Path $OutputDirectory 'input'
-dotnet run --project (Join-Path $OutputDirectory 'emitter\Emitter.csproj') -c Release -- (Join-Path $OutputDirectory 'library\bin\Release\net48\ProtectedCallLibrary.dll') (Join-Path $OutputDirectory 'client\bin\Release\net48\ProtectedCallClient.exe') $inputDir
+$aliasFile=Join-Path $OutputDirectory 'source-names.xml'
+$emitArguments=@(); $exportArguments=@()
+if($SourceAliases){$emitArguments=@($aliasFile);$exportArguments=@('--source-name-map',$aliasFile)}
+dotnet run --project (Join-Path $OutputDirectory 'emitter\Emitter.csproj') -c Release -- (Join-Path $OutputDirectory 'library\bin\Release\net48\ProtectedCallLibrary.dll') (Join-Path $OutputDirectory 'client\bin\Release\net48\ProtectedCallClient.exe') $inputDir @emitArguments
 if($LASTEXITCODE -ne 0){throw 'Metadata emission failed.'}
 $exe=Join-Path $inputDir 'ProtectedCallClient.exe'; $library=Join-Path $inputDir 'ProtectedCallLibrary.dll'
 $hashes=@(Get-FileHash $exe,$library | ForEach-Object Hash)
@@ -20,7 +23,7 @@ $hashes=@(Get-FileHash $exe,$library | ForEach-Object Hash)
 if($LASTEXITCODE -ne 0){throw 'Original protected references failed.'}
 foreach($threads in 1,4){
  $export=Join-Path $OutputDirectory "export-$threads"
- & $DnSpyConsole --no-color --sdk-project --threads $threads --asm-path $inputDir -o $export $library $exe
+ & $DnSpyConsole --no-color --sdk-project --threads $threads --asm-path $inputDir @exportArguments -o $export $library $exe
  if($LASTEXITCODE -ne 0){throw 'Export failed.'}
  $project=Get-ChildItem $export -Recurse -Filter ProtectedCallClient.csproj | Select-Object -First 1
  $rebuilt=Join-Path $OutputDirectory "rebuilt-$threads"

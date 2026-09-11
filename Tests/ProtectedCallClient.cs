@@ -12,6 +12,7 @@ class ProtectedCallClient {
         if (generic.Run(17) != "converted:17" || generic.Result != 17) throw new Exception("Generic protected body binding changed");
         var method = typeof(ProtectedBase).GetMethod("a", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
         if (method == null || !method.IsFamily || method.IsVirtual) throw new Exception("Original protected method contract changed");
+        if (method.GetParameters().Single().Name != "error") throw new Exception("Original protected parameter name changed");
         if (typeof(ProtectedBase).Assembly.GetTypes().SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             .Any(m => m.Name.StartsWith("__DnSpyProtected_"))) throw new Exception("Compilation stub leaked into runtime");
         if (typeof(ProtectedBase).Assembly.GetTypes().Any(t => t.Name.Contains("__DnSpyProtected_")))
