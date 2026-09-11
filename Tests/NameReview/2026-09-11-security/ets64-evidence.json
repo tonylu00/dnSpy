@@ -1,0 +1,296 @@
+[
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x060002E8",
+    "OriginalName": "method_0",
+    "Signature": "System.Byte[] Knx.Ets.Common.Security.Encryptor::method_0(Knx.Ets.Common.EtsSecureString,System.String,System.Int32,System.Int32)",
+    "ProposedName": "DerivePbkdf2Sha256PasswordBytes",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "etsSecureString_0",
+        "HasMetadata": true,
+        "NewName": "password"
+      },
+      {
+        "Sequence": 2,
+        "OriginalName": "string_0",
+        "HasMetadata": true,
+        "NewName": "salt"
+      },
+      {
+        "Sequence": 3,
+        "OriginalName": "int_0",
+        "HasMetadata": true,
+        "NewName": "iterationCount"
+      },
+      {
+        "Sequence": 4,
+        "OriginalName": "int_1",
+        "HasMetadata": true,
+        "NewName": "derivedKeyLengthInBytes"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Copies UTF-16 secure password bytes, clears the unmanaged copy, normalizes salt with FormKC/UTF8, and derives the requested byte count using PBKDF2-SHA256.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x060002F2",
+    "OriginalName": "smethod_2",
+    "Signature": "System.IO.DirectoryInfo Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor::smethod_2(System.IO.DirectoryInfo)",
+    "ProposedName": "GetDeviceTemplateDirectory",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "directoryInfo_0",
+        "HasMetadata": true,
+        "NewName": "rootDirectory"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Returns a DirectoryInfo for the full path of the Device child directory.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x0600030A",
+    "OriginalName": "method_0",
+    "Signature": "FluentResults.Result Knx.Ets.Common.Security.EtsZipExtractorBase::method_0(System.IO.DirectoryInfo,System.IO.FileInfo,Knx.Ets.Common.Security.IKeyProvider)",
+    "ProposedName": "TryExtractNestedZipWithKey",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "directoryInfo_0",
+        "HasMetadata": true,
+        "NewName": "workingDirectory"
+      },
+      {
+        "Sequence": 2,
+        "OriginalName": "fileInfo_0",
+        "HasMetadata": true,
+        "NewName": "zipFile"
+      },
+      {
+        "Sequence": 3,
+        "OriginalName": "ikeyProvider_0",
+        "HasMetadata": true,
+        "NewName": "keyProvider"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Sets the ZIP password from Key and extracts into the file stem directory; converts bad-password and zlib failures into InvalidPasswordError.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x060002FA",
+    "OriginalName": "method_0",
+    "Signature": "System.Void Knx.Ets.Common.Security.EtsExportZipper::method_0(System.String)",
+    "ProposedName": "WriteProjectInfoJson",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "string_0",
+        "HasMetadata": true,
+        "NewName": "infoFilePath"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Writes an indented JSON document containing project name, GUID and password-protection status, replacing the target file.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x06000301",
+    "OriginalName": "method_1",
+    "Signature": "System.Boolean Knx.Ets.Common.Security.EtsZipExtractor::method_1(System.String)",
+    "ProposedName": "ContainsNestedProjectArchives",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "string_1",
+        "HasMetadata": true,
+        "NewName": "directoryPath"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Returns whether the directory contains any immediate P-*.zip files.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x0600034D",
+    "OriginalName": "method_0",
+    "Signature": "System.Void Knx.Ets.Common.Security.Pbkdf2DeriveBytes::method_0()",
+    "ProposedName": "EnsurePbkdf2AlgorithmProvider",
+    "Parameters": [],
+    "Confidence": "high",
+    "Evidence": "Returns if the provider handle already exists; otherwise opens the selected BCrypt algorithm with the HMAC flag and resets/throws on nonzero status.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Type",
+    "Module": "Knx.Ets.Common.dll",
+    "Token": "0x0200007B",
+    "OriginalName": "Class88",
+    "Signature": "Knx.Ets.Common.Security.Pbkdf2DeriveBytes/Class88",
+    "ProposedName": "BcryptPbkdf2NativeMethods",
+    "Parameters": [],
+    "Confidence": "high",
+    "Evidence": "Nested static native wrapper contains only BCryptDeriveKeyPBKDF2, BCryptOpenAlgorithmProvider, BCryptCloseAlgorithmProvider and associated constants.",
+    "Reference": null,
+    "Source": "D:/git/ets64-name-self01",
+    "InputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+    "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.ObjectModel.dll",
+    "Token": "0x06000674",
+    "OriginalName": "method_9",
+    "Signature": "System.String Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::method_9()",
+    "ProposedName": "OpenNestedProjectZipAndGetPassword",
+    "Parameters": [],
+    "Confidence": "high",
+    "Evidence": "Finds the project ZIP entry, copies it to a rewound memory stream, constructs the inner ZipWrapper, obtains and assigns the password, and returns that password.",
+    "Source": "D:/git/ets64-name-self01/Knx.Ets.ObjectModel.2/ZipContainerStore",
+    "InputSha256": "8833B1209CA0E529833680B4BE13FAC78210CA42CA66CE552FC64267D1DF82A2",
+    "Mvid": "484ff6a5-f1b3-4f33-ad19-2dd22dc9ae04"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.ObjectModel.dll",
+    "Token": "0x06000679",
+    "OriginalName": "method_10",
+    "Signature": "System.Boolean Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::method_10(Knx.Ets.Common.Zip.IZipEntry)",
+    "ProposedName": "IsNestedProjectZipEntry",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "izipEntry_0",
+        "HasMetadata": true,
+        "NewName": "entry"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Checks whether the entry filename equals the project ID followed by .zip.",
+    "Source": "D:/git/ets64-name-self01/Knx.Ets.ObjectModel.2/ZipContainerStore",
+    "InputSha256": "8833B1209CA0E529833680B4BE13FAC78210CA42CA66CE552FC64267D1DF82A2",
+    "Mvid": "484ff6a5-f1b3-4f33-ad19-2dd22dc9ae04"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.ObjectModel.dll",
+    "Token": "0x060006D5",
+    "OriginalName": "method_5",
+    "Signature": "System.String Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::method_5()",
+    "ProposedName": "ReadProjectNameFromProjectInformation",
+    "Parameters": [],
+    "Confidence": "high",
+    "Evidence": "Reads project records until the ProjectInformation record, returns its Name field, and otherwise returns the empty string.",
+    "Source": "D:/git/ets64-name-self01/Knx.Ets.ObjectModel.2/ZipContainerStore",
+    "InputSha256": "8833B1209CA0E529833680B4BE13FAC78210CA42CA66CE552FC64267D1DF82A2",
+    "Mvid": "484ff6a5-f1b3-4f33-ad19-2dd22dc9ae04"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.ObjectModel.dll",
+    "Token": "0x060006DD",
+    "OriginalName": "method_6",
+    "Signature": "Knx.Ets.Common.Licensing.Certificate Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::method_6(Knx.Ets.Common.Licensing.License,System.String)",
+    "ProposedName": "CreateValidProjectCertificateWithRetries",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "license_0",
+        "HasMetadata": true,
+        "NewName": "license"
+      },
+      {
+        "Sequence": 2,
+        "OriginalName": "string_1",
+        "HasMetadata": true,
+        "NewName": "signature"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Requests an ID.certificate from the license up to five times, accepts a valid certificate, logs failures and delays after invalid certificates, then throws InvalidExportCertificateException.",
+    "Source": "D:/git/ets64-name-self01/Knx.Ets.ObjectModel.2/ZipContainerStore",
+    "InputSha256": "8833B1209CA0E529833680B4BE13FAC78210CA42CA66CE552FC64267D1DF82A2",
+    "Mvid": "484ff6a5-f1b3-4f33-ad19-2dd22dc9ae04"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.ObjectModel.dll",
+    "Token": "0x060006E0",
+    "OriginalName": "method_7",
+    "Signature": "System.IO.Stream Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::method_7(System.String)",
+    "ProposedName": "CreateRewoundTextStream",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "string_1",
+        "HasMetadata": true,
+        "NewName": "content"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Writes text through StreamWriter into a MemoryStream, flushes it, rewinds to position zero and returns the stream.",
+    "Source": "D:/git/ets64-name-self01/Knx.Ets.ObjectModel.2/ZipContainerStore",
+    "InputSha256": "8833B1209CA0E529833680B4BE13FAC78210CA42CA66CE552FC64267D1DF82A2",
+    "Mvid": "484ff6a5-f1b3-4f33-ad19-2dd22dc9ae04"
+  },
+  {
+    "Kind": "Method",
+    "Module": "Knx.Ets.ObjectModel.dll",
+    "Token": "0x060006E1",
+    "OriginalName": "method_8",
+    "Signature": "System.Void Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::method_8(System.Boolean,System.String)",
+    "ProposedName": "LogCertificateValidationResult",
+    "Parameters": [
+      {
+        "Sequence": 1,
+        "OriginalName": "bool_0",
+        "HasMetadata": true,
+        "NewName": "isValid"
+      },
+      {
+        "Sequence": 2,
+        "OriginalName": "string_1",
+        "HasMetadata": true,
+        "NewName": "details"
+      }
+    ],
+    "Confidence": "high",
+    "Evidence": "Logs failed certificate validation at Error and successful validation at Info.",
+    "Source": "D:/git/ets64-name-self01/Knx.Ets.ObjectModel.2/ZipContainerStore",
+    "InputSha256": "8833B1209CA0E529833680B4BE13FAC78210CA42CA66CE552FC64267D1DF82A2",
+    "Mvid": "484ff6a5-f1b3-4f33-ad19-2dd22dc9ae04"
+  }
+]
