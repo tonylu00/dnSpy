@@ -1,5 +1,36 @@
 # External-agent handoff: infer readable ETS names
 
+## Start with the cross-platform review inventory
+
+Use the C#/.NET 8 NameCandidates tool, not ad hoc PowerShell regex filters.
+From the de4dotEx checkout, these commands work with platform-local paths on
+Windows, macOS or Linux:
+
+```text
+dotnet build tools/NameCandidates/NameCandidates.csproj -c Release
+dotnet tools/NameCandidates/bin/Release/net8.0/NameCandidates.dll --review-obfuscated ./restored ./methods.json
+dotnet tools/NameCandidates/bin/Release/net8.0/NameCandidates.dll --review-map ./reviewed.json ./restored ./source-names.xml
+```
+
+Copy the inventory to `reviewed.json` and fill in accepted rows' `NewName`.
+All identity fields are already populated. Use `--review` for every method,
+including those not classified as obfuscated. `--review-obfuscated` includes
+unrecognized short names and suffixes such as `a`, `b`, `c_1`, `d_1`, while
+preserving meaningful words and learned vocabulary. It is independent of
+cross-version body matching. `MappingBlocker` exposes unsupported contract
+cases; keep those proposals in the ledger rather than losing them from the list.
+Conversion repairs ordinary alias collisions with deterministic suffixes and
+checks authoritative metadata. It writes a new map; merge with seed maps as
+described below. Fresh inventories are available on this machine under
+`D:\knx_analysis\method-review-20260911` (`obfuscated63.json` and
+`obfuscated64.json`; `methods63.json`/`methods64.json` contain all methods).
+
+The existing `name-review-01/List-ObfuscatedMethods.ps1` uses a case-insensitive
+regex that incorrectly includes `Load`, `Map`, `On`, `Save` and misses suffixed
+short names. Replace its use with this tool. No regex evaluation or inventory
+generation in this workflow requires PowerShell. The historical Windows paths
+below identify the prepared ETS datasets, not a platform requirement for naming.
+
 ## Objective and current state
 
 Infer descriptive type, method and parameter names from behavior, first in ETS
