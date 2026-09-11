@@ -20,8 +20,18 @@ preserving meaningful words and learned vocabulary. It is independent of
 cross-version body matching. `MappingBlocker` exposes unsupported contract
 cases; keep those proposals in the ledger rather than losing them from the list.
 Conversion repairs ordinary alias collisions with deterministic suffixes and
-checks authoritative metadata. It writes a new map; merge with seed maps as
-described below. Fresh inventories are available on this machine under
+checks authoritative metadata. For an existing seed map, use the executable
+merge and preflight commands instead of editing XML:
+
+```text
+dotnet tools/NameCandidates/bin/Release/net8.0/NameCandidates.dll --update-map ./reviewed.json ./seed-names.xml ./updated-names.xml ./update-report.json
+dotnet tools/NameCandidates/bin/Release/net8.0/NameCandidates.dll --check-map ./updated-names.xml ./check-report.json
+```
+
+The updater preserves untouched rows and parameter/type aliases, resolves name
+collisions against the merged map, and reports per-entry errors before export.
+It never overwrites the seed and publishes no map if any entry fails.
+Fresh inventories are available on this machine under
 `D:\knx_analysis\method-review-20260911` (`obfuscated63.json` and
 `obfuscated64.json`; `methods63.json`/`methods64.json` contain all methods).
 
@@ -139,15 +149,19 @@ fields and only the accepted entries in `Candidates`. You may revise
 dotnet D:\git\de4dotEx\tools\NameCandidates\bin\Release\net8.0\NameCandidates.dll --source-map D:\knx_analysis\name-review-01\selected64.json D:\knx_analysis\ETS6.4_api_preserved5 D:\knx_analysis\name-review-01\generated64.xml
 ```
 
-Merge accepted generated method rows into the copied 6.4 seed map using an XML
-API. Key modules by exact physical path and entries by metadata token; require
-matching identity/signature data. Retain seed type/parameter rows, coalesce
-identical entries, and explicitly resolve differing aliases for the same token.
-Do not concatenate XML or silently replace existing mappings. Check alias
-collisions across the entire merged module; conversion's deterministic suffixes
-only account for the declarations and suggestions it received. Validate the
-merged map through export. Investigate unmatched 6.4 code using the same ledger
-and behavioral process as 6.3.
+Merge the accepted generated method map with the seed using the executable
+updater; it retains seed type/parameter rows, validates physical identities and
+resolves collisions across the merged module:
+
+```text
+dotnet tools/NameCandidates/bin/Release/net8.0/NameCandidates.dll --merge-map ./generated64.xml ./names64.xml ./merged64.xml ./merge64-report.json
+dotnet tools/NameCandidates/bin/Release/net8.0/NameCandidates.dll --check-map ./merged64.xml ./check64-report.json
+```
+
+Review the report's requested/applied aliases. Invalid entries produce a full
+diagnostic report and no map; do not concatenate XML or bypass the failure.
+Validate the merged map through export. Investigate unmatched 6.4 code using
+the same ledger and behavioral process as 6.3.
 
 ## 3. Export, build and verify each batch — 6.3 first
 
