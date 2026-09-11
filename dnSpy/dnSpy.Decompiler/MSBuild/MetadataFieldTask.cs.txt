@@ -383,6 +383,8 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             var candidates = methods[signature].Where(m => m.ParamDefs.Any(p => p.Sequence == sequence && p.Name == originalName)).ToArray();
             if (sequence == 0 || candidates.Length != 1) throw new InvalidDataException("Missing or ambiguous source parameter field owner: " + signature);
             var method = candidates[0];
+            var captureBodies = new HashSet<MethodDef> { method };
+            var parameterFields = new HashSet<FieldDef>();
             foreach (var stateAttribute in method.CustomAttributes) {
                 if (stateAttribute.TypeFullName != "System.Runtime.CompilerServices.AsyncStateMachineAttribute" &&
                     stateAttribute.TypeFullName != "System.Runtime.CompilerServices.IteratorStateMachineAttribute" &&
@@ -391,6 +393,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 var state = stateSignature == null ? null : stateSignature.ToTypeDefOrRef().ResolveTypeDef();
                 if (state == null || state.Module != module || state.DeclaringType != method.DeclaringType || !IsGeneratedType(state))
                     throw new InvalidDataException("Unproven state owner for source parameter: " + signature);
+                foreach (var body in state.Methods) captureBodies.Add(body);
                 // Async parameters use their source names; iterators also keep
                 // an initial argument copy under the <>3__ prefix.
                 foreach (string stem in new[] { "", "<>3__" }) {
@@ -401,8 +404,44 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                     UTF8String previous;
                     if (fields.TryGetValue(matches[0], out previous) && previous != name) throw new InvalidDataException("Conflicting hoisted source parameter fields.");
                     fields[matches[0]] = name;
+                    parameterFields.Add(matches[0]);
                 }
             }
+            // Lambdas capture source parameters in display-class fields too.
+            // Prove the value comes directly from this parameter (or its proven
+            // hoisted copy), rather than renaming same-named fields globally.
+            bool addedCapture;
+            do {
+                addedCapture = false;
+                foreach (var body in captureBodies.Where(m => m.HasBody)) {
+                    var instructions = body.Body.Instructions;
+                    var branchTargets = new HashSet<Instruction>();
+                    foreach (var instruction in instructions) {
+                        if (instruction.Operand is Instruction target) branchTargets.Add(target);
+                        if (instruction.Operand is IList<Instruction> targets) foreach (var item in targets) branchTargets.Add(item);
+                    }
+                    for (int i = 1; i < instructions.Count; i++) {
+                        var store = instructions[i];
+                        if (store.OpCode != OpCodes.Stfld || branchTargets.Contains(store)) continue;
+                        var field = ResolveLocalParameterField(store.Operand as IField, module);
+                        if (field == null || parameterFields.Contains(field) || field.Name != sourceName ||
+                            field.DeclaringType.DeclaringType != method.DeclaringType || !IsGeneratedType(field.DeclaringType) ||
+                            !field.DeclaringType.Name.String.StartsWith("<>c__DisplayClass", StringComparison.Ordinal)) continue;
+                        var value = instructions[i - 1];
+                        var argument = value.IsLdarg() && body == method ? value.GetParameter(body.Parameters) : null;
+                        bool fromParameter = argument != null && !argument.IsHiddenThisParameter && argument.MethodSigIndex + 1 == sequence;
+                        if (!fromParameter && value.OpCode == OpCodes.Ldfld)
+                            fromParameter = parameterFields.Contains(ResolveLocalParameterField(value.Operand as IField, module));
+                        if (!fromParameter) continue;
+                        UTF8String previous;
+                        if (fields.TryGetValue(field, out previous) && previous != originalName)
+                            throw new InvalidDataException("Conflicting captured source parameter fields.");
+                        fields[field] = originalName;
+                        parameterFields.Add(field);
+                        addedCapture = true;
+                    }
+                }
+            } while (addedCapture);
             markers.Add(attribute);
         }
         if (markers.Count == 0) return false;
@@ -438,6 +477,18 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         foreach (var entry in fields) entry.Key.Name = entry.Value;
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
+    }
+
+    static FieldDef ResolveLocalParameterField(IField reference, ModuleDef module) {
+        if (reference == null) return null;
+        var resolved = reference.ResolveFieldDef();
+        if (resolved != null) return resolved.Module == module ? resolved : null;
+        // Constructed generic closure/state fields can use caller variables.
+        // Their exact local owner and unique field name identify the definition.
+        var owner = reference.DeclaringType.ResolveTypeDef();
+        if (owner == null || owner.Module != module || !IsGeneratedType(owner)) return null;
+        var matches = owner.Fields.Where(f => f.Name == reference.Name).ToArray();
+        return matches.Length == 1 ? matches[0] : null;
     }
 
     static bool RestoreDefinitionFlags(ModuleDef module) {
