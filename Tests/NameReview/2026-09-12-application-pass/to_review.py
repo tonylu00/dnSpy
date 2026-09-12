@@ -12,9 +12,10 @@ import sys
 ledger_path, output = map(Path, sys.argv[1:3])
 assert not output.exists() and not output.with_suffix('.pending.json').exists()
 ledger = json.loads(ledger_path.read_text())
-roots = set(); modules = {}; methods = {}; fields = {}; types = {}; contract_methods = {}; contract_groups = {}
+roots = set(); modules = {}; methods = {}; fields = {}; types = {}; contract_methods = {}; contract_groups = {}; reference_hashes = set()
 for filename in sys.argv[3:]:
     inventory = json.loads(Path(filename).read_text(encoding='utf-8-sig'))
+    if inventory.get('ContractReferenceSha256'): reference_hashes.add(inventory['ContractReferenceSha256'].upper())
     root = Path(inventory['TargetRoot']); roots.add(root)
     for entry in inventory.get('Fields', []):
         fields[root / entry['Module'], entry['Token']] = entry
@@ -33,6 +34,7 @@ for filename in sys.argv[3:]:
             contract_methods[key] = entry
             contract_groups.setdefault(family, {})[key] = entry
 assert len(roots)==1, 'A review-map input must have one physical root; split different roots explicitly'
+assert len(reference_hashes)<=1, 'Family inventories require one consistent contract reference manifest'
 root = roots.pop()
 # Family IDs are hashes of the complete physical path/token set, computed by
 # the .NET discovery tool. Validate the supplied set so a trimmed seed inventory
@@ -65,6 +67,7 @@ for family, reviews in family_reviews.items():
         family_pending[family]='; '.join(blockers); continue
     family_bindings[family]=actual_id
 result={'Format':1,'Kind':'SymbolReview','TargetRoot':str(root),'Methods':[],'Types':[],'Fields':[],'Skips':[]}
+if reference_hashes: result['ContractReferenceSha256']=next(iter(reference_hashes))
 pending=[]
 for decision in ledger['Decisions']:
     for member in decision['Members']:

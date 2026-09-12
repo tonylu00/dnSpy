@@ -71,6 +71,12 @@ Current reviewed chains include:
   (`conversion_results.py`). The schema reader returns the first version it
   finds; it does not prove that every input document uses the same version.
   Resource base names, keys, culture fallback and log severities stay intact.
+- XML reader/writer interfaces and implementations, typed attribute readers,
+  mutable XML node names, recursive element materialization and schema validation
+  (`conversion_xml.py`). Required byte arrays use Base64; optional arrays use
+  hexadecimal pairs. The `Enabled` comparison and XML Boolean parser remain
+  distinct. Writer state means a write request was received, even for an ignored
+  node kind; its alias does not promise bytes were written.
 
 For example, `RequiresCacheRebuild` describes both language-pair and cache-format
 checks, including the distinction between optional and required missing caches.
@@ -102,8 +108,18 @@ names and collisions.
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v14.xml` and `names64-staged-v6.xml`
+The current staged maps are `names63-staged-v15.xml` and `names64-staged-v6.xml`
 under the application pass directory; `progress.json` records their hashes.
+
+The 6.3 map now includes XML contracts whose inherited `IDisposable` interface
+needs reference metadata during map preflight. Use de4dotEx's
+`--contract-references D:/knx_analysis/application-name-pass01/contract-references63.json`
+before `--update-map` or `--check-map`. `contract-references63.json` records the
+exact local reference assembly identity, MVID and SHA; reference dependencies
+never become editable input assemblies. The resolver uses exact identities and
+has no GAC/framework substitution. The tool accepts paths relative to the
+manifest for portable reference bundles. `to_review.py` preserves the reference
+manifest hash and rejects conflicting family-inventory manifests.
 
 The supplemental `property-fields63.json` / `property-fields64.json` reviews
 carry direct getter evidence and source locations for field roles across the

@@ -118,3 +118,17 @@ with tempfile.TemporaryDirectory() as directory:
     pending=json.loads(output.with_suffix('.pending.json').read_text())['Pending']
     assert len(pending)==1 and pending[0]['ParameterNames']==names and pending[0]['NewName'] is None,pending
 print('PASS retained constructor names cannot hide reviewed formal parameter proposals.')
+
+with tempfile.TemporaryDirectory() as directory:
+    root=Path(directory); ledger=root/'ledger.json'; ledger.write_text(json.dumps({'Decisions':[]}))
+    inventory=root/'inventory.json'; second=root/'second.json'
+    data={'TargetRoot':str(root),'Methods':[],'ContractReferenceSha256':'AA'*32}
+    inventory.write_text(json.dumps(data)); output=root/'review.json'
+    command=[sys.executable,str(Path(__file__).with_name('to_review.py')),str(ledger),str(output),str(inventory)]
+    run=subprocess.run(command,capture_output=True,text=True)
+    assert run.returncode==0 and json.loads(output.read_text())['ContractReferenceSha256']=='AA'*32,run.stderr
+    second.write_text(json.dumps(dict(data,ContractReferenceSha256='BB'*32)))
+    command[3]=str(root/'conflicting.json'); command.append(str(second))
+    run=subprocess.run(command,capture_output=True,text=True)
+    assert run.returncode!=0 and 'consistent contract reference manifest' in run.stderr and not Path(command[3]).exists()
+print('PASS contract reference provenance survives conversion and conflicting manifests are rejected.')

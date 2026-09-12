@@ -87,4 +87,4 @@ def review(add):
              'Symbols':['m0046:'+f'0x{token:08X}' for token in [0x04000003,0x04000005,0x04000006,0x04000009,0x0400000E,0x0400005E,0x04000061]],
              'Reason':'Unreferenced string fields carry dnSpy metadata.field-data storage contracts; no meaningful role is established. Preserve until original metadata/storage restoration is reviewed.'},
             {'Component':'CvNext conversion orchestration',
-             'Reason':'Result, diagnostic/resource and input-validation leaves are reviewed. Dispatcher, conversion graph, document interfaces, validator contract and signing internals still need complete family/caller review before the remaining orchestration names.'}]
+             'Reason':'Result, diagnostic/resource, input-validation and XML adapter/validator leaves are reviewed. Dispatcher, conversion graph, document storage interfaces and signing internals still need complete family/caller review before the remaining orchestration names.'}]
