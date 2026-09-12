@@ -6,6 +6,11 @@ packed records, byte/hash helpers and event dispatch before their callers.
 Names describe observed behavior, not recovered vendor identifiers. Naming
 remains in progress.
 
+The source tree was subsequently edited for the user's `CheckProjectData`
+example. See [the focused correction](../2026-09-12-project-check/README.md)
+for its separate validation and the measured ETS6N coverage gap. The results
+below describe this earlier helper-library batch, not full ETS readability.
+
 | New aliases | ETS 6.3 | ETS 6.4 | Total |
 | --- | ---: | ---: | ---: |
 | Methods | 200 | 130 | 330 |
