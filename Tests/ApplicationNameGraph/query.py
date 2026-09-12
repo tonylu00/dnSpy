@@ -6,10 +6,10 @@ worklist DB MODULE_ID [SOURCE_SUFFIX]
 """
 import json
 import hashlib
-import re
 from pathlib import Path
 import sqlite3
 import sys
+from review_candidates import source_review_reasons
 
 def emit(value): print(json.dumps(value, indent=2, ensure_ascii=False))
 
@@ -54,21 +54,10 @@ else:
     elif action == 'worklist':
         suffix = sys.argv[4] if len(sys.argv)>4 else ''
         items = {}
-        placeholder = re.compile(r'^(?:(?:[gsv]?method|field)_[0-9A-Fa-f]+|Type_[0-9]+|G?(?:Class|Struct|Enum)[0-9]+)$')
-        short_identifier = re.compile(r'^[a-z]{1,2}(?:_[0-9]+)?$')
-        numbered_field = re.compile(r'^[A-Za-z][A-Za-z0-9]*_[0-9]+$')
         for definition,location in db.execute('SELECT s.data,l.data FROM symbols s JOIN source l ON l.id=s.id WHERE s.module=? ORDER BY s.id',(key,)):
             symbol = json.loads(definition); row = json.loads(location)
             if not row['Source'].endswith(suffix) or not row.get('Name'): continue
-            reasons = []
-            if placeholder.fullmatch(row['Name']): reasons.append('emitted-source-placeholder')
-            if short_identifier.fullmatch(row['Name']): reasons.append('short-source-identifier-review')
-            if symbol.get('Kind')=='Field' and numbered_field.fullmatch(row['Name']):
-                reasons.append('numbered-source-field-review')
-            # An obfuscated accessor can already have a readable reconstructed
-            # property, and a mapped method can already have a readable alias.
-            if row['Kind']=='MethodDeclaration' and not symbol.get('Alias') and symbol.get('ReviewReason'):
-                reasons.append(symbol['ReviewReason'])
+            reasons = source_review_reasons(symbol,row)
             if not reasons: continue
             item = items.setdefault(symbol['Id'],{'Symbol':symbol,'Reasons':set(),'Declarations':[]})
             item['Reasons'].update(reasons)

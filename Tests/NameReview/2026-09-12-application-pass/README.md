@@ -85,8 +85,41 @@ names and collisions.
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v9.xml` and `names64-staged-v2.xml`
+The current staged maps are `names63-staged-v10.xml` and `names64-staged-v4.xml`
 under the application pass directory; `progress.json` records their hashes.
+
+The supplemental `property-fields63.json` / `property-fields64.json` reviews
+carry direct getter evidence and source locations for field roles across the
+physical application tree. They supplement the manual decision ledgers rather
+than pretending each deterministic property projection was a manual method
+review. de4dotEx's `--suggest-property-fields` reads metadata without executing
+it; `stage_property_fields.py` restricts its proposals to visible unreadable
+fields in the exact graph/source snapshot. Normal compiler backing fields,
+already readable source names, retained binary-only components, and existing
+manual decisions are preserved. The source candidate rules are shared with
+the graph's `worklist` command.
+
+Examples include project-store `projectGuid`, project `pluginDeviceCount`,
+archive `projectFilePath`, SDK argument/property state and XML schema values.
+Compatibility paths and the 6.4 XML ObjectModel `_orig` copy have separate
+identities and evidence. They are never collapsed into one assembly name.
+`refine_property_fields64.py` records additional source review for
+`currentAccessKey`, `operationProjectName`, and `updateOnlineCatalogCommand`,
+including its task, running predicate, execution and progress callbacks.
+The predicate's existing condition remains unchanged.
+
+Reproduce source selection with the graph database and fresh .NET proposal file:
+
+```text
+python stage_property_fields.py GRAPH_DB PROPOSALS NEW_REVIEW MANUAL_LEDGER
+```
+
+Use the full `PropertyEvidence`, `SourceEvidence`, `SourceExclusions` and manual
+`BehaviorRefinements` when resuming naming. These supplemental reviews are
+already included in the current staged maps. The latest property map reports
+are separate from the preceding manual-review reports, preserving both stages
+of evidence. Neither review size nor absence from a proposal list proves that
+the remaining application is readable.
 
 Graph v3 fixes field MemberRef classification: dnlib MemberRef implements both
 method and field interfaces, so the signature must decide the edge kind. Earlier
