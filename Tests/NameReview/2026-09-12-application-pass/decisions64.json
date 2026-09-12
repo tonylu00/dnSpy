@@ -1,0 +1,317 @@
+{
+  "Format": 1,
+  "Kind": "ApplicationBehaviorReview",
+  "Graph": "D:\\knx_analysis\\application-name-pass01\\graph64-v2",
+  "GraphManifestSha256": "280488202ff24e4a7926324e27625f7c8c4fd2cae9a02de772d63e064b7b8f02",
+  "Status": "staged; most ETS 6.4 application reviews remain",
+  "Decisions": [
+    {
+      "Order": 1,
+      "ProposedName": "FindProcessPerformanceCounterInstance",
+      "Reason": "Matches the PID using the ID Process counter and preserves the final-instance fallback; same reviewed operation as ETS 6.3.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x060001DF",
+          "Token": "0x060001DF",
+          "Kind": "Method",
+          "OriginalName": "WnfbakZbFw",
+          "Signature": "System.String ETS.ProcessExtensions::WnfbakZbFw(System.Int32)",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/ProcessExtensions.cs",
+          "SourceSha256": "285FAAC5616E8092E7CFA12C679043ED4B6CD746EDF1047D0E4023DBC081E47C",
+          "Line": 11,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "int_0",
+              "NewName": "processId"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "instanceName",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 614,
+                  "Length": 4,
+                  "Line": 16,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "i",
+              "ProposedName": "instanceIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "i",
+                  "Start": 648,
+                  "Length": 1,
+                  "Line": 17,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "ProposedName": "GetParentProcessFromPerformanceCounterInstance",
+      "Reason": "Reads Creating Process ID for the instance, then calls Process.GetProcessById.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x060001E0",
+          "Token": "0x060001E0",
+          "Kind": "Method",
+          "OriginalName": "OWgbFsFHaZ",
+          "Signature": "System.Diagnostics.Process ETS.ProcessExtensions::OWgbFsFHaZ(System.String)",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/ProcessExtensions.cs",
+          "SourceSha256": "285FAAC5616E8092E7CFA12C679043ED4B6CD746EDF1047D0E4023DBC081E47C",
+          "Line": 29,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_0",
+              "NewName": "instanceName"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "ProposedName": "availabilityCheckCount",
+      "Reason": "Incremented once per periodic check attempt; percentage denominator.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x0400010D",
+          "Token": "0x0400010D",
+          "Kind": "Field",
+          "OriginalName": "libbHJZGwm",
+          "Signature": "System.Int32 ETS.InternetAvailabilityCounter::libbHJZGwm",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 40,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "ProposedName": "successfulAvailabilityCheckCount",
+      "Reason": "Incremented only on successful availability results; percentage numerator.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x0400010E",
+          "Token": "0x0400010E",
+          "Kind": "Field",
+          "OriginalName": "hqPbmHsYjU",
+          "Signature": "System.Int32 ETS.InternetAvailabilityCounter::hqPbmHsYjU",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 43,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "ProposedName": "CountInternetAvailabilityAsync",
+      "Reason": "Resets counters, samples availability until cancellation and delays one minute per iteration; retains cancellation handling.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x060001C8",
+          "Token": "0x060001C8",
+          "Kind": "Method",
+          "OriginalName": "zSLczSL3JM",
+          "Signature": "System.Threading.Tasks.Task ETS.InternetAvailabilityCounter/<>c__DisplayClass2_0::zSLczSL3JM()",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 51,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "flag",
+              "ProposedName": "isInternetAvailable",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "flag",
+                  "Start": 2100,
+                  "Length": 4,
+                  "Line": 61,
+                  "Type": "bool"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "ProposedName": "counter",
+      "Reason": "Captured InternetAvailabilityCounter whose totals this loop updates.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x0400010F",
+          "Token": "0x0400010F",
+          "Kind": "Field",
+          "OriginalName": "xKpvMVenG2",
+          "Signature": "ETS.InternetAvailabilityCounter ETS.InternetAvailabilityCounter/<>c__DisplayClass2_0::xKpvMVenG2",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 75,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "ProposedName": "internetService",
+      "Reason": "Captured IInternetAvailabilityService used by the sampling loop.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x04000110",
+          "Token": "0x04000110",
+          "Kind": "Field",
+          "OriginalName": "LMsvUw3HrX",
+          "Signature": "Knx.Ets.Common.Internet.IInternetAvailabilityService ETS.InternetAvailabilityCounter/<>c__DisplayClass2_0::LMsvUw3HrX",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 78,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "ProposedName": "cancellationToken",
+      "Reason": "Captured cancellation token passed to availability checks and delay.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x04000111",
+          "Token": "0x04000111",
+          "Kind": "Field",
+          "OriginalName": "pZuvoYfGh6",
+          "Signature": "System.Threading.CancellationToken ETS.InternetAvailabilityCounter/<>c__DisplayClass2_0::pZuvoYfGh6",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 81,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "ProposedName": "InternetAvailabilitySamplingLoop",
+      "Reason": "Captures counter, service and cancellation token for the periodic asynchronous sampling loop.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6N.exe",
+          "Sha256": "8B447568C2D1C7BE7D1171496E67B97A438ED40B2BF94020BD02EA91CAC23810",
+          "Mvid": "237e7ec3-6a31-406a-9c4f-1b3927a31b34",
+          "Id": "m0093:0x02000049",
+          "Token": "0x02000049",
+          "Kind": "Type",
+          "OriginalName": "<>c__DisplayClass2_0",
+          "Signature": "ETS.InternetAvailabilityCounter/<>c__DisplayClass2_0",
+          "ExistingAlias": null,
+          "Source": "ETS6N.2/ETS/InternetAvailabilityCounter.cs",
+          "SourceSha256": "CCD3257D26BE16F1931A1E7F7CFDD0C49F4BE522C44898298968F31C462954C3",
+          "Line": 46,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    }
+  ],
+  "Unresolved": [
+    {
+      "Module": "D:\\knx_analysis\\ETS6.4_api_preserved5\\ETS6C.exe",
+      "Reason": "ETS6C input has empty performance-counter strings where ETS6N has Process, ID Process and Creating Process ID. Names/body differ despite matching MVID/token layout; do not transfer decisions or claim behavioral equivalence."
+    }
+  ]
+}
