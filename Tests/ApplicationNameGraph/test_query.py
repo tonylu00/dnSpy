@@ -46,20 +46,25 @@ with tempfile.TemporaryDirectory() as directory:
             ('typedField', 'FieldDeclaration', 'cancellationTokenSource_0', None, None, 'Service/ProjectService.cs'),
             ('badAlias', 'MethodDeclaration', 'b', 'b', None, 'Service/ProjectService.cs'),
             ('type', 'ClassDeclaration', 'Type_683', None, None, 'Service/ProjectService.cs'),
+            ('compactType', 'ClassDeclaration', 'arx', None, None, 'Service/ProjectService.cs'),
+            ('digitType', 'ClassDeclaration', 'b8j', None, None, 'Service/ProjectService.cs'),
+            ('readableType', 'ClassDeclaration', 'Uri', None, None, 'Service/ProjectService.cs'),
+            ('mappedType', 'ClassDeclaration', 'ProjectStoreFactory', 'ProjectStoreFactory', 'short-name', 'Service/ProjectService.cs'),
             ('property', 'PropertyDeclaration', 'ProjectName', None, 'short-name', 'Service/ProjectService.cs'),
             ('mapped', 'MethodDeclaration', 'CheckProjectStoreVersionCompatibility', 'CheckProjectStoreVersionCompatibility', 'short-name', 'Service/ProjectService.cs'),
             ('readable', 'MethodDeclaration', 'OpenProject', None, None, 'Service/ProjectService.cs'),
             ('otherFile', 'MethodDeclaration', 'c', None, 'short-name', 'Other.cs')]
         for key,kind,name,alias,reason,source in cases:
-            symbol = {'Id':key, 'Kind':'Field' if kind=='FieldDeclaration' else 'Method', 'Alias':alias, 'ReviewReason':reason}
+            symbol = {'Id':key, 'Kind':{'FieldDeclaration':'Field','ClassDeclaration':'Type'}.get(kind,'Method'), 'Alias':alias, 'ReviewReason':reason}
             row = {'Source':source, 'Kind':kind, 'Name':name, 'Line':1, 'Sha256':'evidence'}
             db.execute('INSERT INTO symbols VALUES (?,?,?)', (key, 'm0000', json.dumps(symbol)))
             db.execute('INSERT INTO source VALUES (?,?)', (key, json.dumps(row)))
         db.commit()
     result = subprocess.run([sys.executable, str(tool), 'worklist', str(db_path), 'm0000', '/ProjectService.cs'], capture_output=True, text=True, check=True)
     items = {r['Symbol']['Id']:r for r in json.loads(result.stdout)}
-    assert set(items)=={'helper','field','shortField','typedField','badAlias','type'}, items
+    assert set(items)=={'helper','field','shortField','typedField','badAlias','type','compactType','digitType'}, items
     assert items['helper']['Reasons']==['emitted-source-placeholder']
     assert items['badAlias']['Reasons']==['short-source-identifier-review']
     assert items['typedField']['Reasons']==['numbered-source-field-review']
+    assert items['compactType']['Reasons']==items['digitType']['Reasons']==['compact-source-type-review']
 print('PASS worklist catches emitted placeholders and short names while preserving readable aliases/properties and physical file selection.')

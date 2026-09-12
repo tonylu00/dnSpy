@@ -38,6 +38,10 @@ selected_files.update({'ETS/Services/AppIntegrityCheckService.cs', 'ETS/Services
                        'ETS/Debugging/WpfBindingErrorListener.cs', 'ETS/CommandLine/DialogCliSyntaxErrorHandler.cs',
                        'ETS/CommandLine/ConsoleCliSyntaxErrorHandler.cs'})
 selected_files.update({'e.cs','q.cs','r.cs','s.cs','ae.cs','h.cs','Interface0.cs','u.cs','v.cs','t.cs','x.cs','g.cs'})
+selected_files.update({'FileSystemStore/InstallationGuidWriter.cs','FileSystemStore/HashedFileStream.cs',
+                       'FileSystemStore/FileStreamStore.cs','FileSystemStore/FileProjectStore.cs','FileSystemStore/FileDataStore.cs',
+                       'Import/ProjectIdPatcher.cs','ZipContainerStore/ZipContainerProjectStore.cs',
+                       'ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs'})
 locations = {}
 for line in (graph / 'source.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
@@ -199,6 +203,8 @@ from script_bindings import review as review_script_bindings
 review_script_bindings(add)
 from calculation_chains import review as review_calculation_chains
 review_calculation_chains(add)
+from project_storage import review as review_project_storage
+review_project_storage(add)
 add('Knx.Ets.Common.3',0x060000DD,'GetLatestSupportedConversionSchemaVersion','Returns Version23; initializes the CvNext conversion target and supplies the CLI highest-supported-target diagnostic. All indexed callers were inspected.')
 add(cv,0x0400000F,'LatestSupportedConversionSchemaVersion','Initialized by the Common conversion-version getter; used as the default/latest target by conversion entry points, as the template current-version exclusion, and as the import minimum after conversion. The corrected field-reference graph resolves the exact Common/CvNext dependency.')
 add(cv,0x04000015,'LatestSupportedConversionXmlNamespace','Namespace.GetXmlNamespace of LatestSupportedConversionSchemaVersion, assigned by the static initializer.')

@@ -46914,6 +46914,4756 @@
     },
     {
       "Order": 934,
+      "ProposedName": "CopyStringCharacterBytes",
+      "Reason": "Allocates two bytes per character and Buffer.BlockCopy copies the char array; used for the HMAC key and store-ID message.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E56",
+          "Token": "0x06005E56",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.Byte[] Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::a(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 128,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_0",
+              "NewName": "text"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "array",
+              "ProposedName": "characterBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array",
+                  "Start": 4735,
+                  "Length": 5,
+                  "Line": 131,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 935,
+      "ProposedName": "CreateAndWriteInstallerGuid",
+      "Reason": "Creates a new Guid, writes its text as UTF-8 at the supplied path, and returns it.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E54",
+          "Token": "0x06005E54",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "System.Guid Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::b(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 112,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_0",
+              "NewName": "installerGuidPath"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "guid",
+              "ProposedName": "installerGuid",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "guid",
+                  "Start": 4017,
+                  "Length": 4,
+                  "Line": 115,
+                  "Type": "Guid"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 936,
+      "ProposedName": "EnsureInstallerDataDirectory",
+      "Reason": "Creates the configured root directory when absent and returns its DirectoryInfo.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E53",
+          "Token": "0x06005E53",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::a()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 101,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 937,
+      "ProposedName": "ReplaceStoreHmacFile",
+      "Reason": "Deletes any existing file then writes the supplied HMAC text as UTF-8; this is not an atomic replace.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E50",
+          "Token": "0x06005E50",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::a(System.String,System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 46,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_0",
+              "NewName": "hmacFilePath"
+            },
+            {
+              "Sequence": 2,
+              "OriginalName": "string_1",
+              "NewName": "hmacText"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 938,
+      "ProposedName": "LoadOrCreateInstallerGuid",
+      "Reason": "Ensures the directory, reads and parses installer.guid, or recreates it when missing or unreadable; returns normalized Guid text.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E52",
+          "Token": "0x06005E52",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::b()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 75,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "installerGuidPath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 3010,
+                  "Length": 4,
+                  "Line": 78,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text2",
+              "ProposedName": "storedGuidText",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text2",
+                  "Start": 3229,
+                  "Length": 5,
+                  "Line": 88,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "guid",
+              "ProposedName": "installerGuid",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "guid",
+                  "Start": 3095,
+                  "Length": 4,
+                  "Line": 79,
+                  "Type": "Guid"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 939,
+      "ProposedName": "installerDataDirectory",
+      "Reason": "Constructor root directory used for installer.guid storage.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BE7",
+          "Token": "0x04002BE7",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 137,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 940,
+      "ProposedName": null,
+      "Reason": "Retain ApplyStoreHmac; the implicit-installer overload loads or creates installer.guid before writing the store HMAC.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E4D",
+          "Token": "0x06005E4D",
+          "Kind": "Method",
+          "OriginalName": "ApplyStoreHmac",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::ApplyStoreHmac(Knx.Ets.Ids.Id,System.Func`1<System.String>)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 20,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "installerGuid",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 807,
+                  "Length": 4,
+                  "Line": 23,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text2",
+              "ProposedName": "storeHmac",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text2",
+                  "Start": 835,
+                  "Length": 5,
+                  "Line": 24,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text3",
+              "ProposedName": "hmacFilePath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text3",
+                  "Start": 889,
+                  "Length": 5,
+                  "Line": 25,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "4772FADAE57867A12CD5E6ABD465B83308FFEBA78DBB37179C76585659AC09B9",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 941,
+      "ProposedName": null,
+      "Reason": "Retain ApplyStoreHmac; explicit installer GUID is used to calculate the store HMAC.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E4E",
+          "Token": "0x06005E4E",
+          "Kind": "Method",
+          "OriginalName": "ApplyStoreHmac",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::ApplyStoreHmac(System.String,Knx.Ets.Ids.Id,System.Func`1<System.String>)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 30,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "storeHmac",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 1243,
+                  "Length": 4,
+                  "Line": 33,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text2",
+              "ProposedName": "hmacFilePath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text2",
+                  "Start": 1305,
+                  "Length": 5,
+                  "Line": 34,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "9F14BAFCDF84197876BAFF98A944644E9E20C54BEEC5508D661F0B3BA3D4F215",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 942,
+      "ProposedName": null,
+      "Reason": "Retain InstallerGuid accessor; it ensures the directory but returns empty and logs if installer.guid is absent, unlike LoadOrCreateInstallerGuid.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005E51",
+          "Token": "0x06005E51",
+          "Kind": "Method",
+          "OriginalName": "get_InstallerGuid",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.InstallationGuidWriter::get_InstallerGuid()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/InstallationGuidWriter.cs",
+          "SourceSha256": "10BCEC0FD4CA576E33209C731BBD45A154BC0124365E43F1BECB8087D00B472E",
+          "Line": 58,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "installerGuidPath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 2507,
+                  "Length": 4,
+                  "Line": 64,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "6FC64FC27E880247BA033FFBBE8F8E16797472590767B19CAF7DEC46A418D6DF",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 943,
+      "ProposedName": "GetConsistencyHashFilePath",
+      "Reason": "Appends the initialized .ets5hash extension, removing a leading $ from transactional data filenames.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DD3",
+          "Token": "0x06005DD3",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::a()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 34,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileName",
+              "ProposedName": "dataFileName",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileName",
+                  "Start": 1210,
+                  "Length": 8,
+                  "Line": 37,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "hashFilePath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 1260,
+                  "Length": 4,
+                  "Line": 38,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 944,
+      "ProposedName": "ComputeMaskedConsistencyHashBase64",
+      "Reason": "Seeks to the beginning, hashes with the shared SHA1 provider, adds 41 modulo 256, XORs alternating mask bytes and encodes Base64. The later Seek uses the first Seek result (zero), not the original position.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DD5",
+          "Token": "0x06005DD5",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::a(System.IO.FileStream,System.UInt16)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 128,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "fileStream_1",
+              "NewName": "dataStream"
+            },
+            {
+              "Sequence": 2,
+              "OriginalName": "ushort_0",
+              "NewName": "integrityMask"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "num",
+              "ProposedName": "hashStartPosition",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num",
+                  "Start": 4733,
+                  "Length": 3,
+                  "Line": 131,
+                  "Type": "long"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "sha1CryptoServiceProvider",
+              "ProposedName": "hashProviderLock",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "sha1CryptoServiceProvider",
+                  "Start": 4820,
+                  "Length": 25,
+                  "Line": 132,
+                  "Type": "SHA1CryptoServiceProvider"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array",
+              "ProposedName": "hashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array",
+                  "Start": 4879,
+                  "Length": 5,
+                  "Line": 133,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "i",
+              "ProposedName": "hashByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "i",
+                  "Start": 5071,
+                  "Length": 1,
+                  "Line": 139,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array2",
+              "ProposedName": "incrementedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array2",
+                  "Start": 5158,
+                  "Length": 6,
+                  "Line": 143,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num2",
+              "ProposedName": "incrementedByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num2",
+                  "Start": 5184,
+                  "Length": 4,
+                  "Line": 144,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array3",
+              "ProposedName": "wrappedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array3",
+                  "Start": 5279,
+                  "Length": 6,
+                  "Line": 149,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num3",
+              "ProposedName": "wrappedByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num3",
+                  "Start": 5305,
+                  "Length": 4,
+                  "Line": 150,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array4",
+              "ProposedName": "maskBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array4",
+                  "Start": 5388,
+                  "Length": 6,
+                  "Line": 154,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "j",
+              "ProposedName": "maskedByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "j",
+                  "Start": 5490,
+                  "Length": 1,
+                  "Line": 159,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num4",
+              "ProposedName": "maskByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num4",
+                  "Start": 5505,
+                  "Length": 4,
+                  "Line": 160,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 945,
+      "ProposedName": "dataFilePath",
+      "Reason": "Constructor filename; source of the transactional consistency-hash path.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BD1",
+          "Token": "0x04002BD1",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 339,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 946,
+      "ProposedName": "dataStream",
+      "Reason": "RetryableFileStream underlying all Stream operations; closed after hash persistence.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BD2",
+          "Token": "0x04002BD2",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.IO.FileStream Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 342,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 947,
+      "ProposedName": "sharedSha1Provider",
+      "Reason": "Shared SHA1 provider; locked around ComputeHash in writing and checking.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BD3",
+          "Token": "0x04002BD3",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "System.Security.Cryptography.SHA1CryptoServiceProvider Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 345,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 948,
+      "ProposedName": "consistencyHashExtension",
+      "Reason": "Initially a dot, lazily expanded to .ets5hash before path operations.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BD4",
+          "Token": "0x04002BD4",
+          "Kind": "Field",
+          "OriginalName": "d",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::d",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 348,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 949,
+      "ProposedName": "integrityMask",
+      "Reason": "Constructor mask applied to alternating consistency-hash bytes.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BD5",
+          "Token": "0x04002BD5",
+          "Kind": "Field",
+          "OriginalName": "e",
+          "Signature": "System.UInt16 Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::e",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 351,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 950,
+      "ProposedName": null,
+      "Reason": "Retain HashedFileStream constructor; initialization flag indicates that the hash suffix has not yet been expanded.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DD2",
+          "Token": "0x06005DD2",
+          "Kind": "Method",
+          "OriginalName": ".ctor",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::.ctor(System.String,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,System.UInt16)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 16,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "flag",
+              "ProposedName": "needsHashExtensionInitialization",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "flag",
+                  "Start": 618,
+                  "Length": 4,
+                  "Line": 18,
+                  "Type": "bool"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": "constructor"
+        }
+      ]
+    },
+    {
+      "Order": 951,
+      "ProposedName": null,
+      "Reason": "Retain Check; names distinguish stored hash, transformed computed hash and allowed files without hash sidecars. Validation and all exceptions remain unchanged.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DD4",
+          "Token": "0x06005DD4",
+          "Kind": "Method",
+          "OriginalName": "Check",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::Check(System.String,System.UInt16)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 47,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "storedHashBase64",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 2176,
+                  "Length": 4,
+                  "Line": 61,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array",
+              "ProposedName": "storedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array",
+                  "Start": 2260,
+                  "Length": 5,
+                  "Line": 62,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "invalidHashEncodingException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 2364,
+                  "Length": 2,
+                  "Line": 67,
+                  "Type": "FormatException"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileStream",
+              "ProposedName": "dataStream",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileStream",
+                  "Start": 2561,
+                  "Length": 10,
+                  "Line": 72,
+                  "Type": "FileStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "sha1CryptoServiceProvider",
+              "ProposedName": "hashProviderLock",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "sha1CryptoServiceProvider",
+                  "Start": 2701,
+                  "Length": 25,
+                  "Line": 74,
+                  "Type": "SHA1CryptoServiceProvider"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array2",
+              "ProposedName": "computedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array2",
+                  "Start": 2762,
+                  "Length": 6,
+                  "Line": 75,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "i",
+              "ProposedName": "hashByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "i",
+                  "Start": 2908,
+                  "Length": 1,
+                  "Line": 80,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array3",
+              "ProposedName": "incrementedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array3",
+                  "Start": 3005,
+                  "Length": 6,
+                  "Line": 84,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num",
+              "ProposedName": "incrementedByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num",
+                  "Start": 3034,
+                  "Length": 3,
+                  "Line": 85,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array4",
+              "ProposedName": "wrappedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array4",
+                  "Start": 3136,
+                  "Length": 6,
+                  "Line": 90,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num2",
+              "ProposedName": "wrappedByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num2",
+                  "Start": 3165,
+                  "Length": 4,
+                  "Line": 91,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array5",
+              "ProposedName": "maskBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array5",
+                  "Start": 3256,
+                  "Length": 6,
+                  "Line": 95,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "j",
+              "ProposedName": "maskedByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "j",
+                  "Start": 3360,
+                  "Length": 1,
+                  "Line": 100,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num3",
+              "ProposedName": "maskByteIndex",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num3",
+                  "Start": 3377,
+                  "Length": 4,
+                  "Line": 101,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "file",
+              "ProposedName": "dataFileName",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "file",
+                  "Start": 3816,
+                  "Length": 5,
+                  "Line": 116,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array6",
+              "ProposedName": "hashExemptFileNames",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array6",
+                  "Start": 3865,
+                  "Length": 6,
+                  "Line": 117,
+                  "Type": "string[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "array7",
+              "ProposedName": "hashExemptExtensions",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "array7",
+                  "Start": 3975,
+                  "Length": 6,
+                  "Line": 118,
+                  "Type": "string[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "string_0",
+              "ProposedName": "hashExemption",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "string_0",
+                  "Start": 4064,
+                  "Length": 8,
+                  "Line": 119,
+                  "Type": "string"
+                },
+                {
+                  "Kind": "Parameter",
+                  "Name": "string_0",
+                  "Start": 4228,
+                  "Length": 8,
+                  "Line": 119,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 952,
+      "ProposedName": null,
+      "Reason": "Retain HashFile; distinguish source data and the UTF-8 Base64 sidecar streams.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DD6",
+          "Token": "0x06005DD6",
+          "Kind": "Method",
+          "OriginalName": "HashFile",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::HashFile(System.String,System.UInt16)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 171,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileStream",
+              "ProposedName": "dataStream",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileStream",
+                  "Start": 6024,
+                  "Length": 10,
+                  "Line": 179,
+                  "Type": "FileStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileStream2",
+              "ProposedName": "hashFileStream",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileStream2",
+                  "Start": 6133,
+                  "Length": 11,
+                  "Line": 181,
+                  "Type": "FileStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "bytes",
+              "ProposedName": "encodedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "bytes",
+                  "Start": 6274,
+                  "Length": 5,
+                  "Line": 183,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 953,
+      "ProposedName": null,
+      "Reason": "Retain Close; flush data, write its consistency hash transactionally, then dispose and clear the underlying stream.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DD9",
+          "Token": "0x06005DD9",
+          "Kind": "Method",
+          "OriginalName": "Close",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::Close()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 213,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "transactionalFileStream",
+              "ProposedName": "hashFileStream",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "transactionalFileStream",
+                  "Start": 7541,
+                  "Length": 23,
+                  "Line": 219,
+                  "Type": "TransactionalFileStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "bytes",
+              "ProposedName": "encodedHashBytes",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "bytes",
+                  "Start": 7656,
+                  "Length": 5,
+                  "Line": 221,
+                  "Type": "byte[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "6D0C8D772D4A2B8AD563D6648B5FBCAE336AC6C750CE1E46E492A24EFA1B0CB2",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 954,
+      "ProposedName": null,
+      "Reason": "Retain DeleteHashFile; suffix initialization is separate from existence checking.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DE4",
+          "Token": "0x06005DE4",
+          "Kind": "Method",
+          "OriginalName": "DeleteHashFile",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.HashedFileStream::DeleteHashFile(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/HashedFileStream.cs",
+          "SourceSha256": "8BED7F21A2080DFD941C626BD079FE06F22045DF093944E5445F9D5CB51CF441",
+          "Line": 319,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "flag",
+              "ProposedName": "needsHashExtensionInitialization",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "flag",
+                  "Start": 11232,
+                  "Length": 4,
+                  "Line": 322,
+                  "Type": "bool"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 955,
+      "ProposedName": "OpenStoreReadOrTransactionStream",
+      "Reason": "Writable requests create TransactionalFileStream with the multi-write flag. Reads resolve the current transaction path, check hashes only for non-copy/non-$ files when enabled, or return VoidStream when absent.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DCD",
+          "Token": "0x06005DCD",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.IO.Stream Knx.Ets.ObjectModel.FileSystemStore.FileStreamStore::a(System.Boolean,System.Boolean)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileStreamStore.cs",
+          "SourceSha256": "0BFCCBC79F471C31B2D678D375D90069DA95D1DFAC22EA2248F23B1B6D262600",
+          "Line": 118,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "bool_1",
+              "NewName": "readOnly"
+            },
+            {
+              "Sequence": 2,
+              "OriginalName": "bool_2",
+              "NewName": "allowMultipleWritesInTransaction"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "currentDataFilePath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 4410,
+                  "Length": 4,
+                  "Line": 125,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 956,
+      "ProposedName": "checkIntegrityOnRead",
+      "Reason": "Constructor check flag used before HashedFileStream.Check; copied/transactional temporary files have separate conditions.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BCE",
+          "Token": "0x04002BCE",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.Boolean Knx.Ets.ObjectModel.FileSystemStore.FileStreamStore::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileStreamStore.cs",
+          "SourceSha256": "0BFCCBC79F471C31B2D678D375D90069DA95D1DFAC22EA2248F23B1B6D262600",
+          "Line": 176,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 957,
+      "ProposedName": "originalFileInfo",
+      "Reason": "Constructor file identity returned by OriginalFileInfo; FileInfo may instead resolve to the active transaction path.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BCD",
+          "Token": "0x04002BCD",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "System.IO.FileInfo Knx.Ets.ObjectModel.FileSystemStore.FileStreamStore::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileStreamStore.cs",
+          "SourceSha256": "0BFCCBC79F471C31B2D678D375D90069DA95D1DFAC22EA2248F23B1B6D262600",
+          "Line": 173,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 958,
+      "ProposedName": "integrityMask",
+      "Reason": "Mask setter storage, supplied to HashedFileStream.Check and TransactionalFileStream; MaxValue also activates CopyActive.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BCF",
+          "Token": "0x04002BCF",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "System.UInt16 Knx.Ets.ObjectModel.FileSystemStore.FileStreamStore::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileStreamStore.cs",
+          "SourceSha256": "0BFCCBC79F471C31B2D678D375D90069DA95D1DFAC22EA2248F23B1B6D262600",
+          "Line": 179,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 959,
+      "ProposedName": null,
+      "Reason": "Retain FileInfo accessor; resolve an active transactional path or return the original FileInfo.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DC4",
+          "Token": "0x06005DC4",
+          "Kind": "Method",
+          "OriginalName": "get_FileInfo",
+          "Signature": "System.IO.FileInfo Knx.Ets.ObjectModel.FileSystemStore.FileStreamStore::get_FileInfo()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileStreamStore.cs",
+          "SourceSha256": "0BFCCBC79F471C31B2D678D375D90069DA95D1DFAC22EA2248F23B1B6D262600",
+          "Line": 30,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "currentDataFilePath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 1375,
+                  "Length": 4,
+                  "Line": 35,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 960,
+      "ProposedName": "EnsureProjectStoreDirectory",
+      "Reason": "Creates and refreshes a missing supplied directory, returning the same instance.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D82",
+          "Token": "0x06005D82",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a(System.IO.DirectoryInfo)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 38,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "directoryInfo_5",
+              "NewName": "directory"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 961,
+      "ProposedName": "ApplyProjectMaskToStreamStore",
+      "Reason": "If copy state was marked, assign MaxValue first to activate FileStreamStore.CopyActive; then assign the actual mask and return the stream store.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D89",
+          "Token": "0x06005D89",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "Knx.Ets.ObjectModel.IStreamStore Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a(Knx.Ets.ObjectModel.IStreamStore)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 122,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "istreamStore_0",
+              "NewName": "streamStore"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 962,
+      "ProposedName": "ApplyProjectMaskToObjectStore",
+      "Reason": "Same copy marker and actual mask assignments through IStreamStore, preserving the IStore return type.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D8A",
+          "Token": "0x06005D8A",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "Knx.Ets.ObjectModel.IStore Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a(Knx.Ets.ObjectModel.IStore)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 134,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "istore_0",
+              "NewName": "objectStore"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 963,
+      "ProposedName": "CreateUserFileIdFromStoredFile",
+      "Reason": "Uses this project ID and removes the leading U prefix from the stored filename.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DB2",
+          "Token": "0x06005DB2",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "Knx.Ets.Ids.Project.UserFileId Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::b(System.IO.FileInfo)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 590,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "fileInfo_0",
+              "NewName": "storedFile"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 964,
+      "ProposedName": "CreateAddinDataIdFromStoredFile",
+      "Reason": "Uses project ID, parent directory name as add-in ID and the complete filename as data name.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DB3",
+          "Token": "0x06005DB3",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "Knx.Ets.Ids.Project.AddinDataId Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a(System.IO.FileInfo)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 598,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "fileInfo_0",
+              "NewName": "storedFile"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 965,
+      "ProposedName": "GetProjectIntegrityFiles",
+      "Reason": "Collects top-level *.-matching project files and adds project.jpg if it exists; caller excludes storeversion before hash checks.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DAB",
+          "Token": "0x06005DAB",
+          "Kind": "Method",
+          "OriginalName": "c",
+          "Signature": "System.Collections.Generic.IEnumerable`1<System.IO.FileInfo> Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::c()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 508,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "list",
+              "ProposedName": "integrityFiles",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "list",
+                  "Start": 21009,
+                  "Length": 4,
+                  "Line": 511,
+                  "Type": "List<FileInfo>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileInfo",
+              "ProposedName": "projectImageFile",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileInfo",
+                  "Start": 21130,
+                  "Length": 8,
+                  "Line": 512,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 966,
+      "ProposedName": "CheckProjectFileConsistencyHashes",
+      "Reason": "Enumerates GetProjectIntegrityFiles, skips storeversion case-insensitively, and calls HashedFileStream.Check with the project mask.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DB4",
+          "Token": "0x06005DB4",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 606,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "enumerator",
+              "ProposedName": "integrityFileEnumerator",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "enumerator",
+                  "Start": 25002,
+                  "Length": 10,
+                  "Line": 610,
+                  "Type": "IEnumerator<FileInfo>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileInfo",
+              "ProposedName": "integrityFile",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileInfo",
+                  "Start": 25119,
+                  "Length": 8,
+                  "Line": 614,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 967,
+      "ProposedName": "GetCurrentProjectHmacFilePath",
+      "Reason": "Combines the project root directory with its project ID plus .store.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DAE",
+          "Token": "0x06005DAE",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::b()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 535,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 968,
+      "ProposedName": "ReadStoreHmacOrEmpty",
+      "Reason": "Reads the supplied file when it exists; otherwise returns empty text. CheckStoreHmac supplies the .store path.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DAF",
+          "Token": "0x06005DAF",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::b(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 542,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_5",
+              "NewName": "hmacFilePath"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 969,
+      "ProposedName": "InitializeLegacyProjectStoreHmac",
+      "Reason": "Only when the store HMAC is absent: inspect the first manufacturer directory/version file, retain absence for a parsed version >=3, otherwise ApplyStoreHmac.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DB1",
+          "Token": "0x06005DB1",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 562,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_5",
+              "NewName": "installerGuid"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "directories",
+              "ProposedName": "manufacturerDirectories",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "directories",
+                  "Start": 23365,
+                  "Length": 11,
+                  "Line": 567,
+                  "Type": "DirectoryInfo[]"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "directoryInfo",
+              "ProposedName": "firstManufacturerDirectory",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "directoryInfo",
+                  "Start": 23504,
+                  "Length": 13,
+                  "Line": 570,
+                  "Type": "DirectoryInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileInfo",
+              "ProposedName": "manufacturerVersionFile",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileInfo",
+                  "Start": 23632,
+                  "Length": 8,
+                  "Line": 573,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "manufacturerVersionText",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 23772,
+                  "Length": 4,
+                  "Line": 576,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "num",
+              "ProposedName": "manufacturerStoreVersion",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num",
+                  "Start": 23843,
+                  "Length": 3,
+                  "Line": 577,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 970,
+      "ProposedName": "ConsistencyHashExtension",
+      "Reason": "Literal .ets5hash excluded from data-file enumeration.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BB7",
+          "Token": "0x04002BB7",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 624,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 971,
+      "ProposedName": "UserFileNamePrefix",
+      "Reason": "Literal U prepended to stored user-file names and removed by the ID selector.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BB8",
+          "Token": "0x04002BB8",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 627,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 972,
+      "ProposedName": "MinimumManufacturerStoreVersionRequiringHmac",
+      "Reason": "Literal 3; versions at least this value do not receive a missing-HMAC legacy fallback.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BB9",
+          "Token": "0x04002BB9",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "System.Int32 Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 630,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 973,
+      "ProposedName": "projectStoreFactories",
+      "Reason": "Metadata-bearing store constructors; Areas selects the factory whose Type metadata is Areas, and Clone preserves the collection.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BBA",
+          "Token": "0x04002BBA",
+          "Kind": "Field",
+          "OriginalName": "d",
+          "Signature": "System.Collections.Generic.IEnumerable`1<Autofac.Features.Metadata.Meta`1<System.Func`3<System.IO.DirectoryInfo,System.String,Knx.Ets.ObjectModel.IStore>>> Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::d",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 633,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 974,
+      "ProposedName": "installationGuidWriter",
+      "Reason": "Constructor service creates, reads and verifies installer/store HMAC information.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BBB",
+          "Token": "0x04002BBB",
+          "Kind": "Field",
+          "OriginalName": "e",
+          "Signature": "Knx.Ets.ObjectModel.FileSystemStore.IInstallationGuidWriter Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::e",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 636,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 975,
+      "ProposedName": "projectDirectory",
+      "Reason": "Created project root holding object stores and project.jpg.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BBC",
+          "Token": "0x04002BBC",
+          "Kind": "Field",
+          "OriginalName": "directoryInfo_1",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::directoryInfo_1",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 639,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 976,
+      "ProposedName": "binaryDataDirectory",
+      "Reason": "Created BinaryData subdirectory used for device binary .dat files.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BBD",
+          "Token": "0x04002BBD",
+          "Kind": "Field",
+          "OriginalName": "directoryInfo_2",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::directoryInfo_2",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 642,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 977,
+      "ProposedName": "addinDataDirectory",
+      "Reason": "Created AddinData subdirectory; add-in IDs form its child directories.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BBE",
+          "Token": "0x04002BBE",
+          "Kind": "Field",
+          "OriginalName": "directoryInfo_3",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::directoryInfo_3",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 645,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 978,
+      "ProposedName": "userFilesDirectory",
+      "Reason": "Created UserFiles subdirectory used for U-prefixed user files.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BBF",
+          "Token": "0x04002BBF",
+          "Kind": "Field",
+          "OriginalName": "i",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::i",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 648,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 979,
+      "ProposedName": "projectMask",
+      "Reason": "Computed from ProjectGuid and project ID, returned by Mask and assigned to each project stream/object store.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BC0",
+          "Token": "0x04002BC0",
+          "Kind": "Field",
+          "OriginalName": "ushort_0",
+          "Signature": "System.UInt16 Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::ushort_0",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 651,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 980,
+      "ProposedName": "isProjectCopy",
+      "Reason": "Set when ProjectGuid receives Guid.Empty, including Clone; causes the MaxValue mask marker that activates CopyActive in FileStreamStore.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002BC2",
+          "Token": "0x04002BC2",
+          "Kind": "Field",
+          "OriginalName": "bool_0",
+          "Signature": "System.Boolean Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::bool_0",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 657,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 981,
+      "ProposedName": null,
+      "Reason": "Retain GetProjectMaskFromGuid; sum Guid bytes and UTF-8 bytes of the long project ID into a ushort.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D86",
+          "Token": "0x06005D86",
+          "Kind": "Method",
+          "OriginalName": "GetProjectMaskFromGuid",
+          "Signature": "System.UInt16 Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::GetProjectMaskFromGuid(System.Guid,Knx.Ets.Ids.Project.ProjectId)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 84,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "num",
+              "ProposedName": "projectMask",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "num",
+                  "Start": 3662,
+                  "Length": 3,
+                  "Line": 87,
+                  "Type": "ushort"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "b",
+              "ProposedName": "guidByte",
+              "Occurrences": [
+                {
+                  "Kind": "ForEachStatement",
+                  "Name": "b",
+                  "Start": 3689,
+                  "Length": 1,
+                  "Line": 88,
+                  "Type": "byte"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "b2",
+              "ProposedName": "projectIdByte",
+              "Occurrences": [
+                {
+                  "Kind": "ForEachStatement",
+                  "Name": "b2",
+                  "Start": 3789,
+                  "Length": 2,
+                  "Line": 92,
+                  "Type": "byte"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 982,
+      "ProposedName": null,
+      "Reason": "Retain Areas accessor; select the factory registered with Type=Areas.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D95",
+          "Token": "0x06005D95",
+          "Kind": "Method",
+          "OriginalName": "get_Areas",
+          "Signature": "Knx.Ets.ObjectModel.IStore Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::get_Areas()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 257,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "meta2",
+              "ProposedName": "areaStoreFactory",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "meta2",
+                  "Start": 9576,
+                  "Length": 5,
+                  "Line": 262,
+                  "Type": "Meta<Func<DirectoryInfo, string, IStore>>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "meta",
+              "ProposedName": "storeFactory",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "meta",
+                  "Start": 9813,
+                  "Length": 4,
+                  "Line": 262,
+                  "Type": "Meta<Func<DirectoryInfo, string, IStore>>"
+                },
+                {
+                  "Kind": "Parameter",
+                  "Name": "meta",
+                  "Start": 9902,
+                  "Length": 4,
+                  "Line": 262,
+                  "Type": "Meta<Func<DirectoryInfo, string, IStore>>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "380ECB3D02264E3DFA4E387683363AF7F364557CBF6657585281C8ACFBE0DEFB",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 983,
+      "ProposedName": null,
+      "Reason": "Retain AllAreas accessor; exclude hash sidecars and construct AreaId values.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D96",
+          "Token": "0x06005D96",
+          "Kind": "Method",
+          "OriginalName": "get_AllAreas",
+          "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Ids.Project.AreaId> Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::get_AllAreas()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 269,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileInfo_0",
+              "ProposedName": "areaFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "fileInfo_0",
+                  "Start": 10496,
+                  "Length": 10,
+                  "Line": 274,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "info",
+              "ProposedName": "areaFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "info",
+                  "Start": 10614,
+                  "Length": 4,
+                  "Line": 274,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "A5142F41D35E4B1D60BA2CD0AFCCDF76671710D5B32F3CE70CD17B7F7A19DA69",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 984,
+      "ProposedName": null,
+      "Reason": "Retain AllUserFiles accessor; exclude hash sidecars before the reviewed ID selector.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D97",
+          "Token": "0x06005D97",
+          "Kind": "Method",
+          "OriginalName": "get_AllUserFiles",
+          "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Ids.Project.UserFileId> Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::get_AllUserFiles()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 280,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileInfo_0",
+              "ProposedName": "userFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "fileInfo_0",
+                  "Start": 11134,
+                  "Length": 10,
+                  "Line": 285,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "241F71C3228F8C208AB8E0F41422D199D625AC6A8CB710174FB5E1739AAAF4F9",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 985,
+      "ProposedName": null,
+      "Reason": "Retain AllDeviceBinaryData accessor; filename without .dat becomes GuidId when parseable, otherwise DeviceBinaryDataId.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D98",
+          "Token": "0x06005D98",
+          "Kind": "Method",
+          "OriginalName": "get_AllDeviceBinaryData",
+          "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Ids.Id> Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::get_AllDeviceBinaryData()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 291,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileInfo_0",
+              "ProposedName": "binaryDataFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "fileInfo_0",
+                  "Start": 11769,
+                  "Length": 10,
+                  "Line": 296,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "info",
+              "ProposedName": "binaryDataFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "info",
+                  "Start": 11890,
+                  "Length": 4,
+                  "Line": 296,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "binaryDataIdText",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 11916,
+                  "Length": 4,
+                  "Line": 298,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "guid",
+              "ProposedName": "parsedBinaryDataGuid",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "guid",
+                  "Start": 11999,
+                  "Length": 4,
+                  "Line": 299,
+                  "Type": "Guid"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "1965C36640E247734C621FB04A9BE8794803FF1EA8C873C5F71AD01BCEDFA2DC",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 986,
+      "ProposedName": null,
+      "Reason": "Retain AllAddInData accessor; recursively enumerate .dat files before the reviewed ID selector.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D99",
+          "Token": "0x06005D99",
+          "Kind": "Method",
+          "OriginalName": "get_AllAddInData",
+          "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Ids.Project.AddinDataId> Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::get_AllAddInData()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 311,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileInfo_0",
+              "ProposedName": "addinDataFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "fileInfo_0",
+                  "Start": 12677,
+                  "Length": 10,
+                  "Line": 316,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "58B7BCA98E77AE7D0E9D02F92393213FCCD39080D0559851E2B047889D44A90A",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 987,
+      "ProposedName": null,
+      "Reason": "Retain Area; create a missing area file before opening its masked store.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005D9C",
+          "Token": "0x06005D9C",
+          "Kind": "Method",
+          "OriginalName": "Area",
+          "Signature": "Knx.Ets.ObjectModel.IStore Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::Area(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 339,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "fileInfo",
+              "ProposedName": "areaFile",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileInfo",
+                  "Start": 13914,
+                  "Length": 8,
+                  "Line": 342,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "B9DA1293BF49D2FCD30E757352C99BC637ED4D13F1A744B9BB770D0EE1ADA9D5",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 988,
+      "ProposedName": null,
+      "Reason": "Retain Clone; transactionally copy and patch IDs, mark copied-store state, assign a new project GUID and apply its HMAC.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DA7",
+          "Token": "0x06005DA7",
+          "Kind": "Method",
+          "OriginalName": "Clone",
+          "Signature": "Knx.Ets.ObjectModel.IProjectStore Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::Clone(Knx.Ets.Ids.Project.ProjectId)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 449,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "projectStore",
+              "ProposedName": "clonedStore",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "projectStore",
+                  "Start": 18328,
+                  "Length": 12,
+                  "Line": 452,
+                  "Type": "IProjectStore"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "transactionScope",
+              "ProposedName": "cloneTransaction",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "transactionScope",
+                  "Start": 18370,
+                  "Length": 16,
+                  "Line": 453,
+                  "Type": "TransactionScope"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "projectIdPatcher",
+              "ProposedName": "idPatcher",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "projectIdPatcher",
+                  "Start": 18441,
+                  "Length": 16,
+                  "Line": 455,
+                  "Type": "ProjectIdPatcher"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "transactionalDirectoryInfo",
+              "ProposedName": "cloneDirectory",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "transactionalDirectoryInfo",
+                  "Start": 18530,
+                  "Length": 26,
+                  "Line": 456,
+                  "Type": "TransactionalDirectoryInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileProjectStore2",
+              "ProposedName": "clonedFileStore",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileProjectStore2",
+                  "Start": 18902,
+                  "Length": 17,
+                  "Line": 459,
+                  "Type": "FileProjectStore"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "57F6FD28F98A9E9D784C711828DCFAB0F507E5ECCED941B45307F1FC04B6A24B",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 989,
+      "ProposedName": null,
+      "Reason": "Retain LoadName; read ProjectInformation Name from the P file, preserving the dash fallback.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DA9",
+          "Token": "0x06005DA9",
+          "Kind": "Method",
+          "OriginalName": "LoadName",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::LoadName()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 476,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "projectName",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 19795,
+                  "Length": 4,
+                  "Line": 479,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileStream",
+              "ProposedName": "projectFileStream",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "fileStream",
+                  "Start": 19829,
+                  "Length": 10,
+                  "Line": 480,
+                  "Type": "FileStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "xmlReader",
+              "ProposedName": "projectReader",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "xmlReader",
+                  "Start": 19987,
+                  "Length": 9,
+                  "Line": 482,
+                  "Type": "XmlReader"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "F61A655059DFA0033FFAB8F1D3697B7D12EC8254726011088E865898E8B2899D",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 990,
+      "ProposedName": null,
+      "Reason": "Retain CheckStoreHmac; initialize only eligible legacy stores, then compare stored and expected HMAC text.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005DB0",
+          "Token": "0x06005DB0",
+          "Kind": "Method",
+          "OriginalName": "CheckStoreHmac",
+          "Signature": "System.Boolean Knx.Ets.ObjectModel.FileSystemStore.FileProjectStore::CheckStoreHmac(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileProjectStore.cs",
+          "SourceSha256": "63EF2A2B688D7A51A1647E7491313C41C16F12DE9537E0E489F27E832A34CA0E",
+          "Line": 553,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "expectedStoreHmac",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 22854,
+                  "Length": 4,
+                  "Line": 557,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "028881D6CB395EEDA713D73B639637014794EA304DAD09AEB5976129F93C92CE",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 991,
+      "ProposedName": "oldProjectIdText",
+      "Reason": "Long-form old project ID matched at the beginning of strings in Patch.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002A65",
+          "Token": "0x04002A65",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.Import.ProjectIdPatcher::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/Import/ProjectIdPatcher.cs",
+          "SourceSha256": "47251B46F468FCDCA0C3501B0C44F739806287EF661B18F7726FD5B72EC8789A",
+          "Line": 61,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 992,
+      "ProposedName": "newProjectIdText",
+      "Reason": "Long-form replacement project ID prepended to the unmodified suffix.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002A66",
+          "Token": "0x04002A66",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.Import.ProjectIdPatcher::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/Import/ProjectIdPatcher.cs",
+          "SourceSha256": "47251B46F468FCDCA0C3501B0C44F739806287EF661B18F7726FD5B72EC8789A",
+          "Line": 64,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 993,
+      "ProposedName": "projectIdsMatch",
+      "Reason": "Invariant-culture case-insensitive equality result; bypasses replacement when IDs already match.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002A67",
+          "Token": "0x04002A67",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "System.Boolean Knx.Ets.ObjectModel.Import.ProjectIdPatcher::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/Import/ProjectIdPatcher.cs",
+          "SourceSha256": "47251B46F468FCDCA0C3501B0C44F739806287EF661B18F7726FD5B72EC8789A",
+          "Line": 67,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 994,
+      "ProposedName": "OpenStoreVersionReaderIfPresent",
+      "Reason": "Combines the supplied store directory with storeVersion and opens a StreamReader if the existing repeated existence check succeeds.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CDC",
+          "Token": "0x06005CDC",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.IO.StreamReader Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::a(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 252,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_1",
+              "NewName": "storeDirectoryPath"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "storeVersionPath",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 10210,
+                  "Length": 4,
+                  "Line": 255,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 995,
+      "ProposedName": "ReadStoredProjectSchemaVersion",
+      "Reason": "Reads and parses the first storeVersion line as a KNX schema version; absent file returns null, parse/read errors log and rethrow.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CDA",
+          "Token": "0x06005CDA",
+          "Kind": "Method",
+          "OriginalName": "c",
+          "Signature": "System.Nullable`1<Knx.Ets.Common.Schema.KnxXmlSchemaVersion> Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::c(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 184,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_1",
+              "NewName": "storeDirectoryPath"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "streamReader",
+              "ProposedName": "storeVersionReader",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "streamReader",
+                  "Start": 8320,
+                  "Length": 12,
+                  "Line": 187,
+                  "Type": "StreamReader"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "knxXmlSchemaVersion",
+              "ProposedName": "schemaVersion",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "knxXmlSchemaVersion",
+                  "Start": 8380,
+                  "Length": 19,
+                  "Line": 188,
+                  "Type": "KnxXmlSchemaVersion?"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "versionReadException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 8672,
+                  "Length": 2,
+                  "Line": 198,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 996,
+      "ProposedName": "ReadStoredProjectToolVersion",
+      "Reason": "Reads the second storeVersion line after skipping schema version; absent file and read errors return null, with errors logged.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CDB",
+          "Token": "0x06005CDB",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::b(System.String)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 218,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "string_1",
+              "NewName": "storeDirectoryPath"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "streamReader",
+              "ProposedName": "storeVersionReader",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "streamReader",
+                  "Start": 9320,
+                  "Length": 12,
+                  "Line": 221,
+                  "Type": "StreamReader"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "toolVersion",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 9366,
+                  "Length": 4,
+                  "Line": 222,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "versionReadException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 9618,
+                  "Length": 2,
+                  "Line": 233,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 997,
+      "ProposedName": "GetProjectStoreHmacPath",
+      "Reason": "Combines data-store root, long project ID directory, and project ID plus .store; supplied to the new-store HMAC writer.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CD5",
+          "Token": "0x06005CD5",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::a(Knx.Ets.Ids.Project.ProjectId)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 80,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "projectId_0",
+              "NewName": "projectId"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 998,
+      "ProposedName": "OpenProjectStoreDirectory",
+      "Reason": "Invokes the constructor-supplied project store factory for each enumerated P-???? directory.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CE1",
+          "Token": "0x06005CE1",
+          "Kind": "Method",
+          "OriginalName": "b",
+          "Signature": "Knx.Ets.ObjectModel.IProjectStore Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::b(System.IO.DirectoryInfo)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 331,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "directoryInfo_1",
+              "NewName": "projectDirectory"
+            }
+          ],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 999,
+      "ProposedName": "MoveUnsupportedProjectStoreToBackup",
+      "Reason": "Reads stored schema version; if it differs from current and is below 21, moves the directory to a schema-version-prefixed sibling and logs the backup.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CE2",
+          "Token": "0x06005CE2",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::a(System.IO.DirectoryInfo)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 339,
+          "ParameterNames": [
+            {
+              "Sequence": 1,
+              "OriginalName": "directoryInfo_1",
+              "NewName": "projectDirectory"
+            }
+          ],
+          "LocalNames": [
+            {
+              "OriginalName": "knxXmlSchemaVersion",
+              "ProposedName": "storedSchemaVersion",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "knxXmlSchemaVersion",
+                  "Start": 13455,
+                  "Length": 19,
+                  "Line": 343,
+                  "Type": "KnxXmlSchemaVersion?"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "knxXmlSchemaVersion2",
+              "ProposedName": "versionToCompare",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "knxXmlSchemaVersion2",
+                  "Start": 13598,
+                  "Length": 20,
+                  "Line": 346,
+                  "Type": "KnxXmlSchemaVersion?"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "knxXmlSchemaVersion3",
+              "ProposedName": "currentSchemaVersion",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "knxXmlSchemaVersion3",
+                  "Start": 13667,
+                  "Length": 20,
+                  "Line": 347,
+                  "Type": "KnxXmlSchemaVersion"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "backupDirectoryName",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 14051,
+                  "Length": 4,
+                  "Line": 353,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1000,
+      "ProposedName": "CleanDataStoreAtStartup",
+      "Reason": "Deletes root *.tmp files and invokes the unsupported-store backup helper for P-???? directories. The outer catch logs and swallows failures.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CE0",
+          "Token": "0x06005CE0",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::a()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 312,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "file",
+              "ProposedName": "temporaryFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "file",
+                  "Start": 12424,
+                  "Length": 5,
+                  "Line": 317,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "cleanupException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 12738,
+                  "Length": 2,
+                  "Line": 324,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1001,
+      "ProposedName": "RestorePointExtension",
+      "Reason": "Literal .restorepoint used by backup creation and lookup.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002B66",
+          "Token": "0x04002B66",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 362,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1002,
+      "ProposedName": "dataStoreDirectory",
+      "Reason": "Constructor root for project directories, restore-point files and cleanup.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002B67",
+          "Token": "0x04002B67",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.IO.DirectoryInfo Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 365,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1003,
+      "ProposedName": "createProjectStore",
+      "Reason": "Constructor factory used by new-project creation and existing-directory enumeration.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002B68",
+          "Token": "0x04002B68",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "System.Func`2<System.IO.DirectoryInfo,Knx.Ets.ObjectModel.IProjectStore> Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 368,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1004,
+      "ProposedName": "installationGuidWriter",
+      "Reason": "Writes the HMAC for a newly created project store.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002B69",
+          "Token": "0x04002B69",
+          "Kind": "Field",
+          "OriginalName": "d",
+          "Signature": "Knx.Ets.ObjectModel.FileSystemStore.IInstallationGuidWriter Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::d",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 371,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1005,
+      "ProposedName": "RestorePointFailureContext",
+      "Reason": "Captures the restore exception for a deferred error-message expression.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x02000D07",
+          "Token": "0x02000D07",
+          "Kind": "Type",
+          "OriginalName": "<>c__DisplayClass15_0",
+          "Signature": "Knx.Ets.ObjectModel.FileSystemStore.FileDataStore/<>c__DisplayClass15_0",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 374,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1006,
+      "ProposedName": "restoreException",
+      "Reason": "Exception stored in RestorePointFailureContext and accessed by the deferred Message expression; original runtime metadata name remains required by its reflection string.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04002B70",
+          "Token": "0x04002B70",
+          "Kind": "Field",
+          "OriginalName": "e",
+          "Signature": "System.Exception Knx.Ets.ObjectModel.FileSystemStore.FileDataStore/<>c__DisplayClass15_0::e",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 379,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1007,
+      "ProposedName": null,
+      "Reason": "Retain Create; reject duplicate IDs, create a transactional project directory and apply its store HMAC.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CD4",
+          "Token": "0x06005CD4",
+          "Kind": "Method",
+          "OriginalName": "Create",
+          "Signature": "Knx.Ets.ObjectModel.IProjectStore Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::Create(Knx.Ets.Ids.Project.ProjectId)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 67,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "store",
+              "ProposedName": "existingStore",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "store",
+                  "Start": 2791,
+                  "Length": 5,
+                  "Line": 70,
+                  "Type": "IProjectStore"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "directory",
+              "ProposedName": "projectDirectory",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "directory",
+                  "Start": 2973,
+                  "Length": 9,
+                  "Line": 74,
+                  "Type": "DirectoryInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "66EAC931DB95E22FE92492A6EBDEEE881F5A5D23A1644E16E1E78F17333C32B9",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1008,
+      "ProposedName": null,
+      "Reason": "Retain CreateRestorePoint; execute its operation only after successful validation.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CD7",
+          "Token": "0x06005CD7",
+          "Kind": "Method",
+          "OriginalName": "CreateRestorePoint",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::CreateRestorePoint(Knx.Ets.ObjectModel.Project.IProject,System.DateTime,System.Int32)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 98,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "createRestorePointOperation",
+              "ProposedName": "restorePointOperation",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "createRestorePointOperation",
+                  "Start": 4259,
+                  "Length": 27,
+                  "Line": 101,
+                  "Type": "CreateRestorePointOperation"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "71C6915106DBF6ED81D71B5DEAE0A2B6F0642CA76BDEFD1FD2AA07712958D6DF",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1009,
+      "ProposedName": null,
+      "Reason": "Retain GetRestorePoints; parse UTC filename timestamps, log invalid entries and order newest first.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CD8",
+          "Token": "0x06005CD8",
+          "Kind": "Method",
+          "OriginalName": "GetRestorePoints",
+          "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.ProjectRestorePointInfo> Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::GetRestorePoints(Knx.Ets.Ids.Project.ProjectId)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 109,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "list",
+              "ProposedName": "restorePointFiles",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "list",
+                  "Start": 4892,
+                  "Length": 4,
+                  "Line": 112,
+                  "Type": "List<FileInfo>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "result",
+              "ProposedName": "restorePoints",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "result",
+                  "Start": 5068,
+                  "Length": 6,
+                  "Line": 113,
+                  "Type": "List<ProjectRestorePointInfo>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "fileInfo_0",
+              "ProposedName": "restorePointFile",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "fileInfo_0",
+                  "Start": 5149,
+                  "Length": 10,
+                  "Line": 114,
+                  "Type": "FileInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "restorePointInfoException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 5581,
+                  "Length": 2,
+                  "Line": 125,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "projectRestorePointInfo_0",
+              "ProposedName": "restorePoint",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "projectRestorePointInfo_0",
+                  "Start": 5864,
+                  "Length": 25,
+                  "Line": 130,
+                  "Type": "ProjectRestorePointInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "4C80B34A6F20B8EC15F4674D38A0F8F8B78EE1CAB2267D1FA8595C4111CABD2A",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1010,
+      "ProposedName": null,
+      "Reason": "Retain RestoreRestorePoint; move the current directory aside, extract the selected archive, read the previous tool version and roll back on failure. Existing final cleanup and reflected error-message behavior remain unchanged.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CD9",
+          "Token": "0x06005CD9",
+          "Kind": "Method",
+          "OriginalName": "RestoreRestorePoint",
+          "Signature": "System.String Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::RestoreRestorePoint(Knx.Ets.ObjectModel.Project.ProjectRestorePointInfo)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 134,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "previousProjectDirectory",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 6205,
+                  "Length": 4,
+                  "Line": 137,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text2",
+              "ProposedName": "restoredProjectDirectory",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text2",
+                  "Start": 6323,
+                  "Length": 5,
+                  "Line": 138,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "flag",
+              "ProposedName": "previousProjectWasMoved",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "flag",
+                  "Start": 6438,
+                  "Length": 4,
+                  "Line": 139,
+                  "Type": "bool"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text3",
+              "ProposedName": "previousToolVersion",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text3",
+                  "Start": 6498,
+                  "Length": 5,
+                  "Line": 141,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "zipWrapper",
+              "ProposedName": "restorePointArchive",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipWrapper",
+                  "Start": 6633,
+                  "Length": 10,
+                  "Line": 147,
+                  "Type": "ZipWrapper"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "enumerator",
+              "ProposedName": "archiveEntryEnumerator",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "enumerator",
+                  "Start": 6744,
+                  "Length": 10,
+                  "Line": 149,
+                  "Type": "IEnumerator<IZipEntry>"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "zipEntry",
+              "ProposedName": "archiveEntry",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipEntry",
+                  "Start": 6880,
+                  "Length": 8,
+                  "Line": 153,
+                  "Type": "IZipEntry"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "restoreException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 7094,
+                  "Length": 2,
+                  "Line": 163,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "local_1",
+              "ProposedName": "failureContext",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "local_1",
+                  "Start": 7133,
+                  "Length": 7,
+                  "Line": 165,
+                  "Type": "FileDataStore.Type_3335"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex2",
+              "ProposedName": "capturedRestoreException",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "ex2",
+                  "Start": 7189,
+                  "Length": 3,
+                  "Line": 166,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "91D79570641F4B7CB0C8AD794EF6A07215EE08910DEE924F22ACCE2A5BB9AEF2",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1011,
+      "ProposedName": null,
+      "Reason": "Retain ClearAllRestorePoints; each listed restore-point path is deleted.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CDD",
+          "Token": "0x06005CDD",
+          "Kind": "Method",
+          "OriginalName": "ClearAllRestorePoints",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::ClearAllRestorePoints(Knx.Ets.Ids.Project.ProjectId)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 264,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "projectRestorePointInfo_0",
+              "ProposedName": "restorePoint",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "projectRestorePointInfo_0",
+                  "Start": 10763,
+                  "Length": 25,
+                  "Line": 267,
+                  "Type": "ProjectRestorePointInfo"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "9109A2B76CF399F7CC2567F70CFAEE8AC8DC48459C604F73E4C1A0E5E8FB2FE9",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1012,
+      "ProposedName": null,
+      "Reason": "Retain CreateBackup; UTF-8 is the default zip encoding, and existing exception logging/swallowing remains.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x06005CDE",
+          "Token": "0x06005CDE",
+          "Kind": "Method",
+          "OriginalName": "CreateBackup",
+          "Signature": "System.Void Knx.Ets.ObjectModel.FileSystemStore.FileDataStore::CreateBackup(Knx.Ets.ObjectModel.Project.Project,System.String,System.IO.Stream,System.Text.Encoding)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/FileSystemStore/FileDataStore.cs",
+          "SourceSha256": "2E98928B6BEDF0C9304BF5E7A8A354D511779AFD7570BECA395D1C609FBF5601",
+          "Line": 274,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "encoding2",
+              "ProposedName": "selectedArchiveEncoding",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "encoding2",
+                  "Start": 11195,
+                  "Length": 9,
+                  "Line": 277,
+                  "Type": "Encoding"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "zipWrapper",
+              "ProposedName": "backupArchive",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipWrapper",
+                  "Start": 11353,
+                  "Length": 10,
+                  "Line": 286,
+                  "Type": "ZipWrapper"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "ex",
+              "ProposedName": "backupException",
+              "Occurrences": [
+                {
+                  "Kind": "CatchDeclaration",
+                  "Name": "ex",
+                  "Start": 11650,
+                  "Length": 2,
+                  "Line": 294,
+                  "Type": "Exception"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "8F08C929B3985C392627890B3FAD5A240F3FCD7CA1EABC2F95EBDDF9B4558FD7",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1013,
+      "ProposedName": "projectArchive",
+      "Reason": "Constructor ZIP wrapper used to find signature entries and add certificate/validation entries.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04000172",
+          "Token": "0x04000172",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "Knx.Ets.Common.Zip.IZipWrapper Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 547,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1014,
+      "ProposedName": "projectName",
+      "Reason": "Constructor name or ProjectInformation Name; exposed by ExtraData and FilePath in this archive implementation.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04000173",
+          "Token": "0x04000173",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.String Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 550,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1015,
+      "ProposedName": "projectSignatureCreator",
+      "Reason": "Created from the project ID; collects written ZIP entries and is returned with other signature creators.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04000174",
+          "Token": "0x04000174",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "Knx.Ets.ObjectModel.Import.DirectorySignatureCreator Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 553,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1016,
+      "ProposedName": "projectMask",
+      "Reason": "Backing storage for the archive project Mask property; no additional mask behavior is inferred.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04000176",
+          "Token": "0x04000176",
+          "Kind": "Field",
+          "OriginalName": "e",
+          "Signature": "System.UInt16 Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::e",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 560,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1017,
+      "ProposedName": "outerProjectArchive",
+      "Reason": "ZIP archive containing the nested project ZIP; disposed alongside the nested wrapper.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x0400016E",
+          "Token": "0x0400016E",
+          "Kind": "Field",
+          "OriginalName": "a",
+          "Signature": "Knx.Ets.Common.Zip.IZipWrapper Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::a",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 104,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1018,
+      "ProposedName": "requestProjectPassword",
+      "Reason": "Constructor callback invoked when opening the nested archive.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x0400016F",
+          "Token": "0x0400016F",
+          "Kind": "Field",
+          "OriginalName": "b",
+          "Signature": "System.Func`1<System.String> Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::b",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 107,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1019,
+      "ProposedName": "suppliedProjectName",
+      "Reason": "Constructor name is stored but not read by the inspected implementation.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04000170",
+          "Token": "0x04000170",
+          "Kind": "Field",
+          "OriginalName": "c",
+          "Signature": "System.String Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::c",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 110,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1020,
+      "ProposedName": "nestedProjectArchive",
+      "Reason": "In-memory ZIP wrapper loaded from the project-ID .zip entry and assigned the requested password.",
+      "Status": "reviewed",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x04000171",
+          "Token": "0x04000171",
+          "Kind": "Field",
+          "OriginalName": "d",
+          "Signature": "Knx.Ets.Common.Zip.IZipWrapper Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::d",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 113,
+          "ParameterNames": [],
+          "LocalNames": [],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1021,
+      "ProposedName": null,
+      "Reason": "Retain CreateValidProjectCertificateWithRetries; distinguish certificate attempt number and returned certificate.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x0600051A",
+          "Token": "0x0600051A",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "art Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::a(ar4,System.String)",
+          "ExistingAlias": "CreateValidProjectCertificateWithRetries",
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 463,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "i",
+              "ProposedName": "certificateAttempt",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "i",
+                  "Start": 16966,
+                  "Length": 1,
+                  "Line": 467,
+                  "Type": "int"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "art",
+              "ProposedName": "projectCertificate",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "art",
+                  "Start": 17020,
+                  "Length": 3,
+                  "Line": 469,
+                  "Type": "global::EtsCertificate"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1022,
+      "ProposedName": null,
+      "Reason": "Retain AddCertificate; names follow signature entry -> certificate creation -> archive write -> verification report.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x0600051B",
+          "Token": "0x0600051B",
+          "Kind": "Method",
+          "OriginalName": "AddCertificate",
+          "Signature": "System.Boolean Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::AddCertificate(ar4)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 489,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "certFile",
+              "ProposedName": "signatureEntryName",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "certFile",
+                  "Start": 17967,
+                  "Length": 8,
+                  "Line": 494,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "zipEntry",
+              "ProposedName": "signatureEntry",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipEntry",
+                  "Start": 18042,
+                  "Length": 8,
+                  "Line": 495,
+                  "Type": "IZipEntry"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "izipEntry_0",
+              "ProposedName": "archiveEntry",
+              "Occurrences": [
+                {
+                  "Kind": "Parameter",
+                  "Name": "izipEntry_0",
+                  "Start": 18119,
+                  "Length": 11,
+                  "Line": 495,
+                  "Type": "IZipEntry"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "projectSignature",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 18182,
+                  "Length": 4,
+                  "Line": 496,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "art",
+              "ProposedName": "projectCertificate",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "art",
+                  "Start": 18340,
+                  "Length": 3,
+                  "Line": 497,
+                  "Type": "global::EtsCertificate"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "flag",
+              "ProposedName": "certificateDataVerified",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "flag",
+                  "Start": 18560,
+                  "Length": 4,
+                  "Line": 499,
+                  "Type": "bool"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "stringBuilder",
+              "ProposedName": "validationReportBuilder",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "stringBuilder",
+                  "Start": 18619,
+                  "Length": 13,
+                  "Line": 500,
+                  "Type": "StringBuilder"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text2",
+              "ProposedName": "validationReport",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text2",
+                  "Start": 19025,
+                  "Length": 5,
+                  "Line": 505,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1023,
+      "ProposedName": null,
+      "Reason": "Retain CreateRewoundTextStream; distinguish the result memory buffer and text writer.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x0600051D",
+          "Token": "0x0600051D",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.IO.Stream Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerProjectStore::a(System.String)",
+          "ExistingAlias": "CreateRewoundTextStream",
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerProjectStore.cs",
+          "SourceSha256": "1474241D23A571E29AEA6BE622999B5A6197FCF9AC7EBB8B951F6CCB1CD5D9F2",
+          "Line": 521,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "memoryStream",
+              "ProposedName": "textBuffer",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "memoryStream",
+                  "Start": 19934,
+                  "Length": 12,
+                  "Line": 525,
+                  "Type": "MemoryStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "streamWriter",
+              "ProposedName": "textWriter",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "streamWriter",
+                  "Start": 19986,
+                  "Length": 12,
+                  "Line": 526,
+                  "Type": "StreamWriter"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1024,
+      "ProposedName": null,
+      "Reason": "Retain OpenNestedProjectZipAndGetPassword; copy the nested entry to memory, open its wrapper and assign the callback password.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x060004E9",
+          "Token": "0x060004E9",
+          "Kind": "Method",
+          "OriginalName": "a",
+          "Signature": "System.String Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::a()",
+          "ExistingAlias": "OpenNestedProjectZipAndGetPassword",
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 26,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "zipEntry",
+              "ProposedName": "nestedZipEntry",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipEntry",
+                  "Start": 1050,
+                  "Length": 8,
+                  "Line": 29,
+                  "Type": "IZipEntry"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "memoryStream",
+              "ProposedName": "nestedZipBuffer",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "memoryStream",
+                  "Start": 1182,
+                  "Length": 12,
+                  "Line": 30,
+                  "Type": "MemoryStream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "stream",
+              "ProposedName": "nestedZipEntryStream",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "stream",
+                  "Start": 1235,
+                  "Length": 6,
+                  "Line": 31,
+                  "Type": "Stream"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "text",
+              "ProposedName": "projectPassword",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 1470,
+                  "Length": 4,
+                  "Line": 37,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": null,
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1025,
+      "ProposedName": null,
+      "Reason": "Retain Project accessor; open project.xml from the nested archive with its password.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x060004EA",
+          "Token": "0x060004EA",
+          "Kind": "Method",
+          "OriginalName": "get_Project",
+          "Signature": "Knx.Ets.ObjectModel.IStore Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::get_Project()",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 44,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "text",
+              "ProposedName": "projectPassword",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "text",
+                  "Start": 1845,
+                  "Length": 4,
+                  "Line": 49,
+                  "Type": "string"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "2A610A450095EFD0EC9404E87AE1CBB7C9EEA85F7BA302DBB17401DD3DB4AFA1",
+          "MapBlocker": "accessor-operator-or-runtime-special-name"
+        }
+      ]
+    },
+    {
+      "Order": 1026,
+      "ProposedName": null,
+      "Reason": "Retain Dispose; the outer archive and nested archive are distinct owned resources.",
+      "Status": "retain-method-name",
+      "ApplicationStatus": "staged; application-wide pass in progress",
+      "Members": [
+        {
+          "Module": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ObjectModel.dll",
+          "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+          "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+          "Id": "m0057:0x060004ED",
+          "Token": "0x060004ED",
+          "Kind": "Method",
+          "OriginalName": "Dispose",
+          "Signature": "System.Void Knx.Ets.ObjectModel.ZipContainerStore.ZipContainerPasswordProtectedProjectStore::Dispose(System.Boolean)",
+          "ExistingAlias": null,
+          "Source": "Knx.Ets.ObjectModel/ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs",
+          "SourceSha256": "16CB9B5DA3C3BA7E200191730F0FB1F631BA631CCB07AB1107A2E4DEB23F2F3F",
+          "Line": 75,
+          "ParameterNames": [],
+          "LocalNames": [
+            {
+              "OriginalName": "zipWrapper",
+              "ProposedName": "outerArchiveToDispose",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipWrapper",
+                  "Start": 2962,
+                  "Length": 10,
+                  "Line": 80,
+                  "Type": "IZipWrapper"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            },
+            {
+              "OriginalName": "zipWrapper2",
+              "ProposedName": "nestedArchiveToDispose",
+              "Occurrences": [
+                {
+                  "Kind": "VariableDeclarator",
+                  "Name": "zipWrapper2",
+                  "Start": 3088,
+                  "Length": 11,
+                  "Line": 85,
+                  "Type": "IZipWrapper"
+                }
+              ],
+              "Status": "source-declarations-located; semantic references pending"
+            }
+          ],
+          "Family": "2D3A35803E983E167F4A943A66EA6AFA92F649EC7DC5E612BED946BC49237296",
+          "MapBlocker": null
+        }
+      ]
+    },
+    {
+      "Order": 1027,
       "ProposedName": "GetLatestSupportedConversionSchemaVersion",
       "Reason": "Returns Version23; initializes the CvNext conversion target and supplies the CLI highest-supported-target diagnostic. All indexed callers were inspected.",
       "Status": "reviewed",
@@ -46940,7 +51690,7 @@
       ]
     },
     {
-      "Order": 935,
+      "Order": 1028,
       "ProposedName": "LatestSupportedConversionSchemaVersion",
       "Reason": "Initialized by the Common conversion-version getter; used as the default/latest target by conversion entry points, as the template current-version exclusion, and as the import minimum after conversion. The corrected field-reference graph resolves the exact Common/CvNext dependency.",
       "Status": "reviewed",
@@ -46967,7 +51717,7 @@
       ]
     },
     {
-      "Order": 936,
+      "Order": 1029,
       "ProposedName": "LatestSupportedConversionXmlNamespace",
       "Reason": "Namespace.GetXmlNamespace of LatestSupportedConversionSchemaVersion, assigned by the static initializer.",
       "Status": "reviewed",

@@ -54,6 +54,12 @@ Current reviewed chains include:
   (`calculation_chains.py`). Captured predicates, node types, fields, parameters
   and locals use the same terms as their callers. A detected cycle still logs
   and returns the ordered portion; no runtime repair is claimed.
+- Project-store stream opening, consistency hashes, clone ID/mask handling,
+  installer GUID/HMAC persistence, startup cleanup and restore-point rollback
+  (`project_storage.py`). Leaf helpers are reviewed before their file/project
+  callers, with fields and locals following the same terminology. Existing
+  archive certificate/password helpers retain their useful names and gain
+  reviewed field/local roles.
 
 For example, `RequiresCacheRebuild` describes both language-pair and cache-format
 checks, including the distinction between optional and required missing caches.
@@ -85,7 +91,7 @@ names and collisions.
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v10.xml` and `names64-staged-v4.xml`
+The current staged maps are `names63-staged-v12.xml` and `names64-staged-v4.xml`
 under the application pass directory; `progress.json` records their hashes.
 
 The supplemental `property-fields63.json` / `property-fields64.json` reviews
@@ -120,6 +126,31 @@ already included in the current staged maps. The latest property map reports
 are separate from the preceding manual-review reports, preserving both stages
 of evidence. Neither review size nor absence from a proposal list proves that
 the remaining application is readable.
+
+The supplemental `field-accessors63.json` review records exact pure-field-write
+evidence for two additional DynamicData methods. The portable .NET
+`--suggest-field-accessors` command derives proposals from existing physical
+field aliases; `stage_property_fields.py` now applies source/identity guards to
+these method proposals too. Actual properties, contract methods, computed
+bodies, existing method aliases and field aliases without lexical role evidence
+are preserved or explicitly skipped. Its 6.4 scan found no additional eligible
+methods, which says nothing about completion of that application.
+
+`map-update63.json` is the latest combined manual/accessor update report;
+`reviewed63.json` and `field-accessors63.json` retain the two reviews separately.
+`reviewed63-combined.json` is the exact combined input recorded by that report.
+The source worklist also includes compact lowercase/digit type names such as
+`arx` and `b8j`, which escaped its earlier one/two-letter rule. Inclusion requests
+behavioral review; it never authorizes a replacement name.
+
+Storage evidence preserves distinctions that matter for readable behavior:
+FileStreamStore's MaxValue mask setter activates `CopyActive`, so the project
+clone flag is `isProjectCopy`; the real mask assignment still follows it.
+`ComputeMaskedConsistencyHashBase64` records that its first Seek returns zero,
+so the later Seek is not described as restoring the original position.
+The deferred restore-point error expression uses a literal original field name;
+the field alias retains owner-qualified runtime restoration instructions. Its
+consolidated export/build validation remains pending with the rest of the tree.
 
 Graph v3 fixes field MemberRef classification: dnlib MemberRef implements both
 method and field interfaces, so the signature must decide the edge kind. Earlier

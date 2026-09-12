@@ -44,4 +44,28 @@ with tempfile.TemporaryDirectory() as directory:
     except AssertionError as error: assert 'Stale physical module' in str(error)
     else: raise AssertionError('Different physical assembly was accepted')
     assert not (root/'different-copy.json').exists()
+    # The same source guards apply to ordinary accessors inferred from mapped
+    # field roles; a readable method and a mismatched field proof stay excluded.
+    db=sqlite3.connect(database)
+    methods=[]; access_evidence=[]
+    for index,name in [(1,'a'),(2,'AlreadyReadable')]:
+        token=f'0x0600001{index}'; symbol_id='m0000:'+token
+        signature=f'System.Int32 Service::{name}()'
+        db.execute('INSERT INTO symbols VALUES (?,?)',(symbol_id,json.dumps({'Kind':'Method','OriginalName':name,'Signature':signature})))
+        db.execute('INSERT INTO source VALUES (?,?)',(symbol_id,json.dumps({'Source':'Service.cs','Name':name,'Kind':'MethodDeclaration','Line':1,'Sha256':sha})))
+        methods.append({'Module':'Main.dll','Token':token,'Mvid':'mvid','Sha256':'hash','OriginalName':name,'Signature':signature,'NewName':'GetCount'})
+        access_evidence.append({'Module':'Main.dll','MethodToken':token,'MethodSignature':signature,'FieldToken':'0x04000001','FieldSignature':'System.Int32 Service::a'})
+    db.commit(); db.close()
+    accessor={'Format':1,'Kind':'SymbolReview','InferenceKind':'FieldAccessor','TargetRoot':str(inputs),'Methods':methods,'Types':[],'Fields':[],'PropertyEvidence':[],'FieldAccessorEvidence':access_evidence}
+    proposals.write_text(json.dumps(accessor))
+    stage(database,proposals,root/'accessors.json')
+    result=json.loads((root/'accessors.json').read_text())
+    assert [m['Token'] for m in result['Methods']]==['0x06000011']
+    assert result['SourceExclusions'][0]['Reason']=='Existing source method name is already readable'
+    access_evidence[0]['FieldSignature']='System.Int32 DifferentCopy::a'
+    proposals.write_text(json.dumps(accessor))
+    try: stage(database,proposals,root/'wrong-field.json')
+    except AssertionError as error: assert 'Access evidence identity mismatch' in str(error)
+    else: raise AssertionError('Different accessed field was accepted')
+    assert not (root/'wrong-field.json').exists()
 print('PASS source visibility/readability, manual decisions, stale source and physical assembly identity guards.')
