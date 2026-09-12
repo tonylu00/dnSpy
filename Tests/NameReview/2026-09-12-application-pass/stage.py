@@ -49,6 +49,7 @@ selected_files.update({'FileSystemStore/TransactionalDirectoryInfo.cs','FileSyst
 selected_files.update({'ant.cs','anu.cs','anv.cs','anx.cs','an2.cs','Class160.Designer.cs','Class161.cs',
                        'Class162.Designer.cs','Exceptions/ConverterExceptionReason.cs'})
 selected_files.update({'an6.cs','an7.cs','Class164.cs','aob.cs','aod.cs','aoh.cs','aoe.cs','aoi.cs','ape.cs','aok.cs','aol.cs'})
+selected_files.update({'aoc.cs','aog.cs','aof.cs','aoj.cs','ap2.cs','ap3.cs','ap4.cs','ap5.cs','ap6.cs','ap7.cs','ap8.cs','ap9.cs','aqa.cs','aqb.cs','aqc.cs'})
 locations = {}
 for line in (graph / 'source.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
@@ -215,6 +216,10 @@ from conversion_results import review as review_conversion_results
 source_issues.extend(review_conversion_results(add))
 from conversion_xml import review as review_conversion_xml
 source_issues.extend(review_conversion_xml(add))
+from conversion_nodes import review as review_conversion_nodes
+source_issues.extend(review_conversion_nodes(add))
+from conversion_collectors import review as review_conversion_collectors
+source_issues.extend(review_conversion_collectors(add))
 add('Knx.Ets.Common.3',0x060000DD,'GetLatestSupportedConversionSchemaVersion','Returns Version23; initializes the CvNext conversion target and supplies the CLI highest-supported-target diagnostic. All indexed callers were inspected.')
 add(cv,0x0400000F,'LatestSupportedConversionSchemaVersion','Initialized by the Common conversion-version getter; used as the default/latest target by conversion entry points, as the template current-version exclusion, and as the import minimum after conversion. The corrected field-reference graph resolves the exact Common/CvNext dependency.')
 add(cv,0x04000015,'LatestSupportedConversionXmlNamespace','Namespace.GetXmlNamespace of LatestSupportedConversionSchemaVersion, assigned by the static initializer.')

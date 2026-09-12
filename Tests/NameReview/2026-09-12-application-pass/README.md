@@ -77,6 +77,19 @@ Current reviewed chains include:
   hexadecimal pairs. The `Enabled` comparison and XML Boolean parser remain
   distinct. Writer state means a write request was received, even for an ignored
   node kind; its alias does not promise bytes were written.
+- Materialized XML attributes/elements, captured name predicates, ordered child
+  insertion, subtree pruning, attribute lookup and ID parsing
+  (`conversion_nodes.py`). `InsertChildAfterNamedSiblings` prepends by default;
+  an ordering list selects the last permitted predecessor. `RemoveChildIfLeaf`
+  preserves its existing true result for null/non-leaf inputs without removal.
+- Conversion data collection and its complete shared contracts
+  (`conversion_collectors.py`): baggage path/ID indexing, legacy help references,
+  application-program ETS styles, project AddInData/UserFiles, and installation
+  Puid allocation. `CollectCurrentNodeAndContinue` means continue scanning; false
+  removes the collector from the active list. `ApplicationProgramEtsStyle` has
+  `PreEts4`, `Ets4` and `Ets5` values, with `Ets4` preserving the lookup fallback.
+  The collector state, query interfaces, private predicates and source-local
+  proposals use the same terms. The Puid allocator remains an incremented integer.
 
 For example, `RequiresCacheRebuild` describes both language-pair and cache-format
 checks, including the distinction between optional and required missing caches.
@@ -108,7 +121,7 @@ names and collisions.
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v15.xml` and `names64-staged-v6.xml`
+The current staged maps are `names63-staged-v17.xml` and `names64-staged-v6.xml`
 under the application pass directory; `progress.json` records their hashes.
 
 The 6.3 map now includes XML contracts whose inherited `IDisposable` interface
