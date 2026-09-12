@@ -16,15 +16,27 @@ expected_modules = {'ETS6N':'1046CFAD6A073108252AE51537750DCA040D21143B0481899C2
                     'ETS6N.2':'633DEFF4A77C53A822DB3BC1C531116C036F94EBB4FEE9FED6BB1C2FECACDD17',
                     'Knx.Ets.ObjectModel':'FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1',
                     'Knx.Ets.CvNext':'A01E4D30377F1354EB3F37F3B1734E9922CEEDEF30BC9D1C0B9F54634B8C2AB3',
-                    'Knx.Ets.Common.3':'13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20'}
+                    'Knx.Ets.Common.3':'13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20',
+                    'Knx.Ets.ViewModel':'FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2',
+                    'Knx.Ets.CalculatedParameters':'4721C85B0D3865C80E4FDE6C209B8ECA2A9FD6D6C88DC3D86C53868CD148CD6C',
+                    'Knx.Ets.PluginLoader':'3A7D505B161E6F5665469556E6F7A4E5D4244143EA94246B948C4B87DECA2A84',
+                    'Knx.Ets.Compatibility':'ADEE4BC3DE0B7C42E5BC3BE46CE15A03E8AE5669BB8A5F036A363AF003E8E65B'}
 assert all(modules[p]['Sha256']==h for p,h in expected_modules.items()), 'This recipe requires the reviewed ETS 6.3 input snapshots'
-projects = ['ETS6N', 'ETS6N.2', 'Knx.Ets.ObjectModel', 'Knx.Ets.CvNext', 'Knx.Ets.Common.3']
+projects = list(expected_modules)
 module_ids = {modules[p]['Id'] for p in projects}
 symbols = {}
 for line in (graph / 'symbols.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
     if row['Id'].split(':')[0] in module_ids: symbols[row['Id']] = row
-selected_files = {'ETS/EtsBootstrapper.cs', 'ETS/CheckProjectData.cs', 'ETS/CheckProductData.cs', 'ETS/ProcessExtensions.cs', 'ETS/InternetAvailabilityCounter.cs', 'ManufacturerCacheProvider.cs', 'any.cs', 'an4.cs', 'arn.cs'}
+selected_files = {'Service/ProjectService.cs', 'ETS/ApplicationCommandHandler.cs', 'ETS/EtsBootstrapper.cs', 'ETS/CheckProjectData.cs', 'ETS/CheckProductData.cs', 'ETS/ProcessExtensions.cs', 'ETS/InternetAvailabilityCounter.cs', 'ManufacturerCacheProvider.cs', 'any.cs', 'an4.cs', 'arn.cs'}
+selected_files.update({'ETS/Startup.cs', 'ETS/SingleInstanceApplication/SingleInstanceApplicationWatcher.cs',
+                       'ETS/SingleInstanceApplication/SingleInstanceApplicationLock.cs', 'z.Designer.cs', 'mr.cs', 'Class142.cs'})
+selected_files.update({'ETS/App.xaml.cs', 'ETS/Services/RadTabbedWindowAdapter.cs', 'ETS/PreNotification/PreNotificationWindowLauncher.cs'})
+selected_files.update({'ETS/Services/AppIntegrityCheckService.cs', 'ETS/Services/TelerikTabbedWindowFactory.cs',
+                       'ETS/Licensing/IocModule.cs', 'ETS/Licensing/LicenseManager.cs', 'ETS/Licensing/LicenseManagerDataPoints.cs',
+                       'ETS/Licensing/LicenseStateCounter.cs', 'ETS/IocModule.cs', 'ETS/EtsCrashIndicator.cs',
+                       'ETS/Debugging/WpfBindingErrorListener.cs', 'ETS/CommandLine/DialogCliSyntaxErrorHandler.cs',
+                       'ETS/CommandLine/ConsoleCliSyntaxErrorHandler.cs'})
 locations = {}
 for line in (graph / 'source.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
@@ -121,7 +133,7 @@ for token,name,parameter,reason in [
     (0x0600035A,'IsCalculatedParameterCacheAlive','cache','Tests a calculated parameter cache reference for non-null.'),
     (0x0600035B,'GetLiveComObjectCache','entry','Returns the strong/weak wrapper Ref for a communication-object cache entry.'),
     (0x0600035C,'IsComObjectCacheAlive','cache','Tests a communication-object cache reference for non-null.'),
-    (0x0600035D,'ReloadComObjectCache','cache','Calls Reload on the supplied communication-object cache.')]: add(obj,token,name,reason,(parameter,))
+    (0x0600035D,'ReloadComObjectCache','comObjectCache','Calls Reload on the supplied communication-object cache.')]: add(obj,token,name,reason,(parameter,))
 add(obj,0x06000334,'BuildDynamicTranslationDictionary','Adds each translation tuple to a string dictionary; duplicate keys still throw.',('translations',),{'dictionary':'translationsById','enumerator':'translationEnumerator','tuple':'translation'})
 add(obj,0x06000335,'GetOrCreateApplicationProgramCache','Under the cache lock, reuses a live strong/weak entry or creates and wraps a cache with the current weak-reference policy.',('applicationProgramId','cacheEntries','createCache'),{'obj':'cacheLock','t':'cache','t2':'result','smartStrongAndWeakRef':'cacheReference'})
 add(obj,0x0600033B,'UpdateCacheReferenceStrength','Switches an entry to weak/strong retention; removes entries whose target cannot be retained.',('cacheEntries','entry','allowWeakReferences'))
@@ -167,6 +179,19 @@ for token,name,reason in [(0x04000010,'minimumConvertibleSchemaVersion','Constan
 
 from bootstrapper import review as review_bootstrapper
 review_bootstrapper(add)
+from commands import review as review_commands
+def inspect_command(token):
+    key=modules['ETS6N.2']['Id']+f':0x{token:08X}'
+    return symbols[key], locations[key][0].get('Bindings', []) or []
+review_commands(add, inspect_command)
+from project_service import review as review_project_service
+review_project_service(add)
+from startup import review as review_startup
+review_startup(add)
+from application_ui import review as review_application_ui
+review_application_ui(add)
+from services import review as review_services
+review_services(add)
 add('Knx.Ets.Common.3',0x060000DD,'GetLatestSupportedConversionSchemaVersion','Returns Version23; initializes the CvNext conversion target and supplies the CLI highest-supported-target diagnostic. All indexed callers were inspected.')
 add(cv,0x0400000F,'LatestSupportedConversionSchemaVersion','Initialized by the Common conversion-version getter; used as the default/latest target by conversion entry points, as the template current-version exclusion, and as the import minimum after conversion. The corrected field-reference graph resolves the exact Common/CvNext dependency.')
 add(cv,0x04000015,'LatestSupportedConversionXmlNamespace','Namespace.GetXmlNamespace of LatestSupportedConversionSchemaVersion, assigned by the static initializer.')

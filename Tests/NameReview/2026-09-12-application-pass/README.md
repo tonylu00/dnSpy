@@ -28,6 +28,19 @@ Current reviewed chains include:
 - Common's conversion-schema getter and CvNext's latest supported target version
   and namespace, following their exact references from template checks, conversion,
   import validation and the conversion command-line tool.
+- The command handler's clipboard, panel navigation, project, device and window
+  command/availability paths, including captured query state (`commands.py`).
+- ProjectService's project authentication/opening, progress and integrity-check
+  callbacks, store updates, project creation/password callbacks, DCA export
+  selectors and project-schema metrics (`project_service.py`). Useful public
+  method names remain unchanged; visible compiler placeholders are reviewed too.
+- Startup registration, script-engine preference and input/output/source storage,
+  single-instance mutex/pipe transport and its argument-line iterator, plugin
+  registration and identity-check state (`startup.py`).
+- App language/logging/startup/disposal, tab-window title/event forwarding and
+  pre-notification window helpers (`application_ui.py`).
+- Executable service fields, CLI warning/help paths, add-in signature completion,
+  licensing configuration and shared LicenseManager state (`services.py`).
 
 For example, `RequiresCacheRebuild` describes both language-pair and cache-format
 checks, including the distinction between optional and required missing caches.
@@ -53,7 +66,7 @@ identities and reports requested/applied names and collisions.
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v5.xml` and `names64-staged-v2.xml`
+The current staged maps are `names63-staged-v8.xml` and `names64-staged-v2.xml`
 under the application pass directory; `progress.json` records their hashes.
 
 Graph v3 fixes field MemberRef classification: dnlib MemberRef implements both
@@ -66,12 +79,18 @@ was needed. A wrong-vendor field fixture still fails reference preflight.
 
 ## Current limitations and next work
 
-- This is still a partial review of the full indexed application. Command
-  handling, project loading, conversion internals and many other call
-  chains remain. Do not use the ledger count as an application readability metric.
+- This is still a partial review of the full indexed application. Deeper project
+  loading/conversion internals, scripting implementations, compatibility callback
+  roles and many other components remain. Do not use the ledger count as an
+  application readability metric. The portable source `worklist` query also finds
+  emitted helpers that the metadata-only method review list missed.
 - Field maps pass metadata/exporter allocation checks; consolidated source export,
   compilation and runtime restoration validation remain. Source-local application
   needs a semantic reference pass; syntax locations alone cannot authorize edits.
+- Uncertain short string fields with special storage metadata and a compatibility
+  callback with an unestablished consumer role are explicitly unresolved. Both
+  the ledger and converted pending list retain these, even without a proposed
+  name. Their absence from the accepted map is not completion.
 - Common's unreferenced `f` getter and XML document/signing getter `e` still need
   their roles reviewed. Getter `d` has a reviewed conversion-specific name.
 - **ETS 6.4's ETS6C input is not interchangeable with ETS6N.** Its process counter

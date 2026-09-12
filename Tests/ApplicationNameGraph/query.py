@@ -2,9 +2,11 @@
 
 build GRAPH DB; show DB SYMBOL_ID; callers DB SYMBOL_ID;
 methods DB MODULE_ID [review]; source DB SYMBOL_ID; body DB SYMBOL_ID [SYMBOL_ID ...]
+worklist DB MODULE_ID [SOURCE_SUFFIX]
 """
 import json
 import hashlib
+import re
 from pathlib import Path
 import sqlite3
 import sys
@@ -49,6 +51,30 @@ else:
                 body = units[row['Start']*2:(row['Start']+row['Length'])*2].decode('utf-16-le')
                 display = body.replace('\r\n', '\n')
                 print(f"{key} {row['Source']}:{row['Line']}\n{display}\n")
+    elif action == 'worklist':
+        suffix = sys.argv[4] if len(sys.argv)>4 else ''
+        items = {}
+        placeholder = re.compile(r'^(?:(?:[gsv]?method|field)_[0-9A-Fa-f]+|Type_[0-9]+|G?(?:Class|Struct|Enum)[0-9]+)$')
+        short_identifier = re.compile(r'^[a-z]{1,2}(?:_[0-9]+)?$')
+        numbered_field = re.compile(r'^[A-Za-z][A-Za-z0-9]*_[0-9]+$')
+        for definition,location in db.execute('SELECT s.data,l.data FROM symbols s JOIN source l ON l.id=s.id WHERE s.module=? ORDER BY s.id',(key,)):
+            symbol = json.loads(definition); row = json.loads(location)
+            if not row['Source'].endswith(suffix) or not row.get('Name'): continue
+            reasons = []
+            if placeholder.fullmatch(row['Name']): reasons.append('emitted-source-placeholder')
+            if short_identifier.fullmatch(row['Name']): reasons.append('short-source-identifier-review')
+            if symbol.get('Kind')=='Field' and numbered_field.fullmatch(row['Name']):
+                reasons.append('numbered-source-field-review')
+            # An obfuscated accessor can already have a readable reconstructed
+            # property, and a mapped method can already have a readable alias.
+            if row['Kind']=='MethodDeclaration' and not symbol.get('Alias') and symbol.get('ReviewReason'):
+                reasons.append(symbol['ReviewReason'])
+            if not reasons: continue
+            item = items.setdefault(symbol['Id'],{'Symbol':symbol,'Reasons':set(),'Declarations':[]})
+            item['Reasons'].update(reasons)
+            item['Declarations'].append({k:row[k] for k in ['Source','Name','Line','Sha256']})
+        for item in items.values(): item['Reasons']=sorted(item['Reasons'])
+        emit(list(items.values()))
     elif action == 'show':
         row=db.execute('SELECT data FROM symbols WHERE id=?',(key,)).fetchone()
         if row is None: raise SystemExit('Unknown physical symbol ID')

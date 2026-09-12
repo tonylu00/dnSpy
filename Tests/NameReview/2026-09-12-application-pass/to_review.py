@@ -30,6 +30,10 @@ for decision in ledger['Decisions']:
         physical=Path(member['Module']); metadata=modules[physical]
         assert metadata['Mvid']==member['Mvid'] and metadata['Sha256']==member['Sha256'], ('Stale module',physical)
         if member['LocalNames']:pending.append({'Id':member['Id'],'Reason':'Local semantic reference mapping pending','Names':member['LocalNames']})
+        if decision['Status'].startswith('unresolved-'):
+            pending.append({'Id':member['Id'],'Reason':decision['Reason'],'Status':decision['Status'],
+                            'NewName':decision['ProposedName']})
+            continue
         if member['Kind']=='Field':
             actual = fields.get((physical,member['Token']))
             if actual is None or actual['MappingBlocker']:

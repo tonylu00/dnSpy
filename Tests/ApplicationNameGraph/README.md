@@ -13,6 +13,7 @@ python Tests/ApplicationNameGraph/query.py show graph.sqlite m0001:0x06000001
 python Tests/ApplicationNameGraph/query.py callers graph.sqlite m0001:0x06000001
 python Tests/ApplicationNameGraph/query.py methods graph.sqlite m0001 review
 python Tests/ApplicationNameGraph/query.py body graph.sqlite m0001:0x06000001
+python Tests/ApplicationNameGraph/query.py worklist graph.sqlite m0001 /ProjectService.cs
 ```
 
 The NameCandidates project normally lives in a sibling `de4dotEx` checkout.
@@ -37,6 +38,17 @@ source locations; ambiguous declarations must be resolved before editing.
 CRLF and UTF16 offsets before formatting its output. Multiple symbol IDs can be
 supplied in one call. `test_query.py` checks BOMs, non-BMP offsets and stale-source
 rejection. Python 3.9 or later is required.
+
+`worklist` joins metadata candidates to actual emitted source names. It includes
+compiler placeholders such as `method_060012E5`/`Type_683`, short names such as
+`a_2`, and numbered fields such as `cancellationTokenSource_0`. A readable original
+compiler name does not exclude a placeholder in the output. Conversely old
+obfuscated metadata does not reclassify a readable source alias or reconstructed
+property. The output retains physical symbol IDs, reasons, source paths, lines
+and hashes. These are review candidates, never automatic rename decisions; short
+or numbered names can be intentional. The optional suffix selects source files
+within that physical module. Use the behavioral ledger to distinguish already
+staged decisions from the unchanged source snapshot.
 
 This is evidence for a naming pass, not a complete dynamic call graph. Virtual
 dispatch, reflection and delegated calls can add runtime targets. An unresolved

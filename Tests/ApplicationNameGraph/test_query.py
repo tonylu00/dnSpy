@@ -1,4 +1,4 @@
-"""Exercise the body reader with CRLF, BOMs, non-BMP spans and stale evidence."""
+"""Exercise evidence extraction and source-readability worklist boundaries."""
 import hashlib
 from contextlib import closing
 import json
@@ -31,3 +31,35 @@ with tempfile.TemporaryDirectory() as directory:
         run = subprocess.run(command,capture_output=True,text=True)
         assert run.returncode != 0 and 'Stale source:' in run.stderr and not run.stdout
 print('PASS exact body extraction for CRLF/non-BMP UTF8/UTF16/UTF32 inputs and stale-source rejection.')
+
+with tempfile.TemporaryDirectory() as directory:
+    db_path = Path(directory)/'worklist.sqlite'
+    with closing(sqlite3.connect(db_path)) as db:
+        db.executescript('CREATE TABLE symbols(id TEXT, module TEXT, data TEXT); CREATE TABLE source(id TEXT, data TEXT);')
+        # Compiler-generated metadata can produce placeholders without matching
+        # the obfuscated-name detector. Conversely reconstructed properties and
+        # readable source aliases must not be reclassified from old metadata.
+        cases = [
+            ('helper', 'MethodDeclaration', 'method_060012E5', None, None, 'Service/ProjectService.cs'),
+            ('field', 'FieldDeclaration', 'field_04000BDF', None, None, 'Service/ProjectService.cs'),
+            ('shortField', 'FieldDeclaration', 'a_2', None, None, 'Service/ProjectService.cs'),
+            ('typedField', 'FieldDeclaration', 'cancellationTokenSource_0', None, None, 'Service/ProjectService.cs'),
+            ('badAlias', 'MethodDeclaration', 'b', 'b', None, 'Service/ProjectService.cs'),
+            ('type', 'ClassDeclaration', 'Type_683', None, None, 'Service/ProjectService.cs'),
+            ('property', 'PropertyDeclaration', 'ProjectName', None, 'short-name', 'Service/ProjectService.cs'),
+            ('mapped', 'MethodDeclaration', 'CheckProjectStoreVersionCompatibility', 'CheckProjectStoreVersionCompatibility', 'short-name', 'Service/ProjectService.cs'),
+            ('readable', 'MethodDeclaration', 'OpenProject', None, None, 'Service/ProjectService.cs'),
+            ('otherFile', 'MethodDeclaration', 'c', None, 'short-name', 'Other.cs')]
+        for key,kind,name,alias,reason,source in cases:
+            symbol = {'Id':key, 'Kind':'Field' if kind=='FieldDeclaration' else 'Method', 'Alias':alias, 'ReviewReason':reason}
+            row = {'Source':source, 'Kind':kind, 'Name':name, 'Line':1, 'Sha256':'evidence'}
+            db.execute('INSERT INTO symbols VALUES (?,?,?)', (key, 'm0000', json.dumps(symbol)))
+            db.execute('INSERT INTO source VALUES (?,?)', (key, json.dumps(row)))
+        db.commit()
+    result = subprocess.run([sys.executable, str(tool), 'worklist', str(db_path), 'm0000', '/ProjectService.cs'], capture_output=True, text=True, check=True)
+    items = {r['Symbol']['Id']:r for r in json.loads(result.stdout)}
+    assert set(items)=={'helper','field','shortField','typedField','badAlias','type'}, items
+    assert items['helper']['Reasons']==['emitted-source-placeholder']
+    assert items['badAlias']['Reasons']==['short-source-identifier-review']
+    assert items['typedField']['Reasons']==['numbered-source-field-review']
+print('PASS worklist catches emitted placeholders and short names while preserving readable aliases/properties and physical file selection.')
