@@ -15,7 +15,8 @@ modules = {m['Project'].replace('\\', '/').split('/')[0]: m for m in manifest['M
 expected_modules = {'ETS6N':'1046CFAD6A073108252AE51537750DCA040D21143B0481899C23A0B9CF0C78D5',
                     'ETS6N.2':'633DEFF4A77C53A822DB3BC1C531116C036F94EBB4FEE9FED6BB1C2FECACDD17',
                     'Knx.Ets.ObjectModel':'FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1',
-                    'Knx.Ets.CvNext':'A01E4D30377F1354EB3F37F3B1734E9922CEEDEF30BC9D1C0B9F54634B8C2AB3'}
+                    'Knx.Ets.CvNext':'A01E4D30377F1354EB3F37F3B1734E9922CEEDEF30BC9D1C0B9F54634B8C2AB3',
+                    'Knx.Ets.Common.3':'13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20'}
 assert all(modules[p]['Sha256']==h for p,h in expected_modules.items()), 'This recipe requires the reviewed ETS 6.3 input snapshots'
 projects = ['ETS6N', 'ETS6N.2', 'Knx.Ets.ObjectModel', 'Knx.Ets.CvNext', 'Knx.Ets.Common.3']
 module_ids = {modules[p]['Id'] for p in projects}
@@ -23,7 +24,7 @@ symbols = {}
 for line in (graph / 'symbols.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
     if row['Id'].split(':')[0] in module_ids: symbols[row['Id']] = row
-selected_files = {'ETS/CheckProductData.cs', 'ETS/ProcessExtensions.cs', 'ETS/InternetAvailabilityCounter.cs', 'ManufacturerCacheProvider.cs', 'any.cs', 'an4.cs', 'arn.cs'}
+selected_files = {'ETS/EtsBootstrapper.cs', 'ETS/CheckProjectData.cs', 'ETS/CheckProductData.cs', 'ETS/ProcessExtensions.cs', 'ETS/InternetAvailabilityCounter.cs', 'ManufacturerCacheProvider.cs', 'any.cs', 'an4.cs', 'arn.cs'}
 locations = {}
 for line in (graph / 'source.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
@@ -69,6 +70,11 @@ def add(project, token, name, reason, parameters=(), locals_=None, status='revie
 
 # Leaf methods first. Log message text and concrete library operations establish
 # roles; names do not claim to recover vendor identifiers.
+for token,name,reason in [
+    (0x040000AC,'root','Constructor-supplied IRoot; enumerates its DataStore.ProjectStores for tool/schema compatibility.'),
+    (0x040000AD,'messageBoxService','Constructor-supplied service; shows the incompatible project-store error dialog.'),
+    (0x040000AE,'logger','CheckProjectData logger; logs the incompatible project-store message.')]:
+    add('ETS',token,name,reason)
 for token,name in [(0x06000118,'LogManufacturerHashCheckDuration'),(0x06000119,'LogProductStoreCheckDuration'),
                    (0x0600011A,'LogProductStoreLanguageCheckDuration'),(0x0600011B,'LogTemplateStoreCheckDuration'),
                    (0x0600011C,'LogTemplateStoreUpdateDuration')]:
@@ -159,9 +165,15 @@ for token,name,reason in [(0x04000010,'minimumConvertibleSchemaVersion','Constan
                         (0x04000016,'supportedContainerExtensions','Explicit list of supported input file extensions.'),
                         (0x04000017,'converterToolVersion','Constructor tool version or executing assembly version, returned by the getter.')]:add(cv,token,name,reason)
 
+from bootstrapper import review as review_bootstrapper
+review_bootstrapper(add)
+add('Knx.Ets.Common.3',0x060000DD,'GetLatestSupportedConversionSchemaVersion','Returns Version23; initializes the CvNext conversion target and supplies the CLI highest-supported-target diagnostic. All indexed callers were inspected.')
+add(cv,0x0400000F,'LatestSupportedConversionSchemaVersion','Initialized by the Common conversion-version getter; used as the default/latest target by conversion entry points, as the template current-version exclusion, and as the import minimum after conversion. The corrected field-reference graph resolves the exact Common/CvNext dependency.')
+add(cv,0x04000015,'LatestSupportedConversionXmlNamespace','Namespace.GetXmlNamespace of LatestSupportedConversionSchemaVersion, assigned by the static initializer.')
+
 result={'Format':1,'Kind':'ApplicationBehaviorReview','Graph':str(graph),'GraphManifestSha256':hashlib.sha256((graph/'manifest.json').read_bytes()).hexdigest(),
         'Status':'staged, incomplete application-wide pass; no source application or ETS verification this round',
-        'Decisions':decisions,'Unresolved':[{'Component':'CvNext/Common','Symbol':'any.a / CurrentProjectSchemaInformation.d','Reason':'Cross-component field signature currently unresolved; distinguish the constant-return schema getters by all callers before assigning their specific roles.'},
-        {'Component':'Application-wide','Reason':'Fields and source-local references need semantic application support; declaration locations alone do not authorize text replacement.'}]}
+        'Decisions':decisions,'Unresolved':[{'Component':'Common','Symbol':'CurrentProjectSchemaInformation.f/e','Reason':'The unreferenced constant getter and the XML document/signing getter still need their roles reviewed. Conversion getter d and CvNext field a now have resolved reference evidence and staged names.'},
+        {'Component':'Application-wide','Reason':'Source-local references still need semantic application support; declaration locations alone do not authorize text replacement. Field aliases require the field-aware map exporter.'}]}
 destination.write_text(json.dumps(result,indent=2)+'\n')
 print(f'Staged {len(decisions)} behavior decisions across {len({m["Module"] for d in decisions for m in d["Members"]})} physical inputs. No source or binary changes.')

@@ -12,6 +12,7 @@ python Tests/ApplicationNameGraph/query.py build new-graph graph.sqlite
 python Tests/ApplicationNameGraph/query.py show graph.sqlite m0001:0x06000001
 python Tests/ApplicationNameGraph/query.py callers graph.sqlite m0001:0x06000001
 python Tests/ApplicationNameGraph/query.py methods graph.sqlite m0001 review
+python Tests/ApplicationNameGraph/query.py body graph.sqlite m0001:0x06000001
 ```
 
 The NameCandidates project normally lives in a sibling `de4dotEx` checkout.
@@ -32,6 +33,10 @@ contains interface/override groups and their blockers. `source.jsonl` maps token
 to source hashes, declarations and variable/parameter/foreach/catch/pattern
 bindings. Spans use UTF16 code units, as Roslyn does. Query results retain all
 source locations; ambiguous declarations must be resolved before editing.
+`body` verifies the source hash and reads the exact declaration span, preserving
+CRLF and UTF16 offsets before formatting its output. Multiple symbol IDs can be
+supplied in one call. `test_query.py` checks BOMs, non-BMP offsets and stale-source
+rejection. Python 3.9 or later is required.
 
 This is evidence for a naming pass, not a complete dynamic call graph. Virtual
 dispatch, reflection and delegated calls can add runtime targets. An unresolved
@@ -44,6 +49,9 @@ The regression creates same-identity libraries in separate physical deployments,
 valid and wrong-vendor callers, field uses, source bindings and a retained binary.
 It proves the wrong-signature edge stays unresolved and verifies UTF16 spans with
 a non-BMP character before the declarations.
+Field MemberRefs implement both dnlib's method and field interfaces; the graph
+uses the metadata signature to classify them. The fixture covers field references
+through both compatibility deployments and rejects the wrong vendor's signature.
 
 ```text
 dotnet run --project Tests/ApplicationNameGraphRegression -c Release -- Tests/ApplicationNameGraph/bin/Release/net8.0/ApplicationNameGraph.dll fresh-regression

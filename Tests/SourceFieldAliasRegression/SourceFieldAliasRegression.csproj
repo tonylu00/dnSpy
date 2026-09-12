@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings><Nullable>annotations</Nullable>
+    <NameCandidatesProject Condition="'$(NameCandidatesProject)' == ''">../../../de4dotEx/tools/NameCandidates/NameCandidates.csproj</NameCandidatesProject>
+    <MetadataMethodNamesSource Condition="'$(MetadataMethodNamesSource)' == ''">../../dnSpy/dnSpy.Contracts.Logic/Decompiler/MetadataMethodNames.cs</MetadataMethodNamesSource>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(NameCandidatesProject)" />
+    <Compile Include="../../dnSpy/dnSpy.Decompiler/MSBuild/SourceNameMap.cs" Link="SourceNameMap.cs" />
+    <Compile Include="../../dnSpy/dnSpy.Contracts.Logic/Decompiler/SourceNameAliases.cs" Link="SourceNameAliases.cs" />
+    <Compile Include="../../dnSpy/dnSpy.Contracts.Logic/Decompiler/MetadataFieldNames.cs" Link="MetadataFieldNames.cs" />
+    <Compile Include="../../dnSpy/dnSpy.Contracts.Logic/Decompiler/MetadataTypeNames.cs" Link="MetadataTypeNames.cs" />
+    <Compile Include="../../dnSpy/dnSpy.Contracts.Logic/Decompiler/GenericArgumentResolver.cs" Link="GenericArgumentResolver.cs" />
+    <Compile Include="$(MetadataMethodNamesSource)" Link="MetadataMethodNames.cs" />
+  </ItemGroup>
+</Project>

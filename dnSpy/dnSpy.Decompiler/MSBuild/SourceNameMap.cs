@@ -31,15 +31,16 @@ namespace dnSpy.Decompiler.MSBuild {
 					if (!string.Equals(BitConverter.ToString(hash.ComputeHash(stream)).Replace("-", ""), Required(entry, "Sha256"), StringComparison.OrdinalIgnoreCase))
 						throw new InvalidDataException("Source map input hash mismatch: " + location);
 				foreach (var row in entry.Elements()) {
-					if ((row.Name != "Type" && row.Name != "Method") || row.Name == "Type" && row.HasElements) throw new InvalidDataException("Source maps accept types and ordinary methods with parameter aliases.");
+					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter aliases.");
 					string tokenText = Required(row, "Token");
 					if (!tokenText.StartsWith("0x", StringComparison.Ordinal)) throw new InvalidDataException("Expected hexadecimal metadata token.");
 					var member = module.ResolveToken(uint.Parse(tokenText.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture)) as IMemberDef;
-					if (member == null || (row.Name == "Type" ? !(member is TypeDef) : !(member is MethodDef)) || member.Name != Required(row, "ExpectedName") || member.FullName != Required(row, "Signature")) throw new InvalidDataException("Source map token/name/signature mismatch.");
+					if (member == null || (row.Name == "Type" ? !(member is TypeDef) : row.Name == "Field" ? !(member is FieldDef) : !(member is MethodDef)) || member.Name != Required(row, "ExpectedName") || member.FullName != Required(row, "Signature")) throw new InvalidDataException("Source map token/name/signature mismatch.");
 					string? name = (string?)row.Attribute("NewName");
 					if (name != null) ValidateName(name);
 					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name or parameters.");
 					if (member is TypeDef type && (type.IsGlobalModuleType || type.HasGenericParameters)) throw new InvalidDataException("This source-map version requires a non-generic type.");
+					if (member is FieldDef field && FieldAliasScope.Blocker(field) != null) throw new InvalidDataException("Unsupported source field alias: " + FieldAliasScope.Blocker(field));
 					string? contract = (string?)row.Attribute("ContractFamily");
 					if (member is MethodDef method) {
 						if (MethodContractFamilies.MethodBlocker(method) != null || contract == null && method.IsVirtual) throw new InvalidDataException("Source method alias requires an ordinary method or a supported complete contract family.");
@@ -80,7 +81,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			}
 			// Reserve aliases across each module to avoid ambiguous restore instructions
 			// and collisions with unmodified declarations, including nested members.
-			foreach (var group in proposals.GroupBy(p => p.Key is TypeDef t ? t.Module : p.Key.DeclaringType.Module)) {
+			foreach (var group in proposals.Where(p => !(p.Key is FieldDef)).GroupBy(p => p.Key is TypeDef t ? t.Module : p.Key.DeclaringType.Module)) {
 				var used = new HashSet<string>(StringComparer.Ordinal);
 				var shared = new Dictionary<string, string>(StringComparer.Ordinal);
 				foreach (var type in group.Key.GetTypes()) {
@@ -102,6 +103,12 @@ namespace dnSpy.Decompiler.MSBuild {
 					if (family != null) shared[proposal.Value] = family;
 				}
 				if (parameterProposals.Any(p => p.Key.Method.Module == group.Key && group.Any(m => m.Value == p.Value))) throw new InvalidDataException("Source parameter alias collides with a mapped member.");
+			}
+			if (proposals.Keys.Any(m => m is FieldDef)) {
+				var scope = new FieldAliasScope(modules.Values, useHostResolver: true);
+				foreach (var proposal in proposals.Where(p => p.Key is FieldDef))
+					if (scope.Reserved((FieldDef)proposal.Key, member => proposals.TryGetValue(member, out var alias) ? alias : null).Contains(proposal.Value))
+						throw new InvalidDataException("Source field alias collision in declaration/inheritance scope: " + proposal.Key.FullName + " -> " + proposal.Value);
 			}
 			foreach (var proposal in proposals) SourceNameAliases.Register(proposal.Key, proposal.Value);
 			foreach (var proposal in parameterProposals) SourceNameAliases.RegisterParameter(proposal.Key, proposal.Value);

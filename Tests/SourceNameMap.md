@@ -30,7 +30,7 @@ rows. A map from another build is rejected rather than matched by filename or
 assembly name. The accepted map is saved as `dnspy-source-name-map.xml` beside
 the export manifest.
 
-Version 1 supports non-generic types, ordinary nonvirtual methods and complete
+Version 1 supports non-generic types, ordinary fields, ordinary nonvirtual methods and complete
 implicit interface/virtual override families. Constructors, accessors,
 runtime/PInvoke methods, explicit `MethodImpl` declarations and static virtual
 contracts remain unsupported.
@@ -46,10 +46,28 @@ one alias for all its declarations, implementations and overrides. Each resultin
 method row carries a `ContractFamily` identifier. dnSpy recomputes that graph
 using the complete export inputs and validates all members and aliases before
 registering any names. The only exception to module-wide alias uniqueness is
-the shared alias of one fully validated family. Generic interface/base argument
+the shared alias of one fully validated family (fields use their separate declaration scopes). Generic interface/base argument
 substitution, inherited implementations and separate overloads are supported;
 ambiguous or external contracts are blocked. Physical duplicate assembly
 identities retain their dependency contexts.
+
+Field rows use `Token`, `ExpectedName`, `Signature`, and `NewName` in the same
+format. Generate them with NameCandidates `--review-fields` and `--update-map`.
+Field names are reserved in their declaring class and inheritance chain, so
+unrelated classes can both use `logger`. Original member names are also reserved;
+name swaps and shadowing inherited storage are rejected. Ordinary fields and
+enum literals are supported; global/runtime-special fields and fields requiring
+separate RVA/compiler-controlled/nonliteral-constant restoration are blocked.
+The existing `FieldNames.cs` instructions restore runtime names and references
+by source owner and resolved assembly identity. See `FieldNames.md`.
+
+`SourceFieldAliasRegression` consumes `fields.xml` from the portable
+NameCandidates regression and checks the actual exporter map parser, field
+allocation, generic inherited receiver instructions and literal storage.
+`ApplicationNameGraphRegression` optionally accepts the `SourceAliasReferences`
+DLL and verifies that a wrong-vendor field signature is reported rather than
+bound to an alias in a same-name compatibility assembly. These are metadata
+checks; consolidated exported-source and runtime validation is still required.
 
 `ContractFamilyRegression` exports and builds a multi-assembly fixture with
 one/four workers, then runs rebuilt and unchanged binary callers through generic,

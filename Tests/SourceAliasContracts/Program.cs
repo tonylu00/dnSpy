@@ -9,7 +9,7 @@ if (args.Length != 2) {
     return 2;
 }
 var issues = new List<string>();
-int modules = 0, types = 0, methods = 0, parameters = 0;
+int modules = 0, types = 0, methods = 0, parameters = 0, fields = 0;
 var pathComparer = OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
 string Full(string root, string relative) => Path.GetFullPath(Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar)));
 string Required(XElement element, string name) => (string)element.Attribute(name) ?? throw new InvalidDataException($"Missing {name}");
@@ -77,12 +77,21 @@ try {
                         issues.Add($"{input} {token:X8} parameter {sequence}: original name missing");
                 }
             }
+            else if (entry.Name == "Field") {
+                fields++;
+                var expected = original as FieldDef ?? throw new InvalidDataException("Expected field token.");
+                var restored = outputTypes.SelectMany(t => t.Fields).Where(f => f.FullName == expected.FullName).ToArray();
+                if (restored.Length != 1 || !SameBytes(expected.Name, restored[0].Name) || !SameTypeNames(expected.DeclaringType, restored[0].DeclaringType) ||
+                    expected.Attributes != restored[0].Attributes || expected.FieldOffset != restored[0].FieldOffset ||
+                    expected.Constant?.Type != restored[0].Constant?.Type || !Equals(expected.Constant?.Value, restored[0].Constant?.Value))
+                    issues.Add($"{input} {token:X8}: original field name/signature/storage missing or changed");
+            }
             else throw new InvalidDataException($"Unknown source alias kind: {entry.Name}");
         }
     }
     using var stream = new FileStream(args[1], FileMode.CreateNew, FileAccess.Write);
-    JsonSerializer.Serialize(stream, new { Export = export, Modules = modules, Types = types, Methods = methods, Parameters = parameters, IssueCount = issues.Count, Issues = issues }, new JsonSerializerOptions { WriteIndented = true });
-    Console.WriteLine($"{(issues.Count == 0 ? "PASS" : "FAIL")}: {modules} modules, {types} types, {methods} methods, {parameters} parameters; {issues.Count} issues.");
+    JsonSerializer.Serialize(stream, new { Export = export, Modules = modules, Types = types, Methods = methods, Fields = fields, Parameters = parameters, IssueCount = issues.Count, Issues = issues }, new JsonSerializerOptions { WriteIndented = true });
+    Console.WriteLine($"{(issues.Count == 0 ? "PASS" : "FAIL")}: {modules} modules, {types} types, {methods} methods, {fields} fields, {parameters} parameters; {issues.Count} issues.");
     return issues.Count == 0 ? 0 : 1;
 }
 catch (Exception ex) {

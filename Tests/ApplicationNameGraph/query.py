@@ -1,9 +1,10 @@
 """Portable cached graph queries. No source or analyzed assembly execution.
 
 build GRAPH DB; show DB SYMBOL_ID; callers DB SYMBOL_ID;
-methods DB MODULE_ID [review]; source DB SYMBOL_ID
+methods DB MODULE_ID [review]; source DB SYMBOL_ID; body DB SYMBOL_ID [SYMBOL_ID ...]
 """
 import json
+import hashlib
 from pathlib import Path
 import sqlite3
 import sys
@@ -30,7 +31,25 @@ if sys.argv[1] == 'build':
 else:
     action, path, key = sys.argv[1:4]
     db = sqlite3.connect(Path(path).resolve().as_uri()+'?mode=ro', uri=True)
-    if action == 'show':
+    if action == 'body':
+        manifest = json.loads(db.execute('SELECT data FROM meta').fetchone()[0])
+        root = Path(manifest['Export']).resolve().parent
+        for key in sys.argv[3:]:
+            locations = [json.loads(r[0]) for r in db.execute('SELECT data FROM source WHERE id=?',(key,))]
+            if not locations: raise SystemExit('No source declaration for '+key)
+            for row in locations:
+                source = (root/row['Source']).resolve()
+                if not source.is_relative_to(root): raise SystemExit('Source path leaves export root')
+                raw = source.read_bytes()
+                if hashlib.sha256(raw).hexdigest().upper() != row['Sha256'].upper(): raise SystemExit('Stale source: '+str(source))
+                encoding = 'utf-32' if raw.startswith((b'\xff\xfe\x00\x00', b'\x00\x00\xfe\xff')) else 'utf-16' if raw.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8-sig'
+                # Roslyn spans count UTF16 code units, with original newlines.
+                # read_text's newline normalization would shift CRLF spans.
+                units = raw.decode(encoding).encode('utf-16-le')
+                body = units[row['Start']*2:(row['Start']+row['Length'])*2].decode('utf-16-le')
+                display = body.replace('\r\n', '\n')
+                print(f"{key} {row['Source']}:{row['Line']}\n{display}\n")
+    elif action == 'show':
         row=db.execute('SELECT data FROM symbols WHERE id=?',(key,)).fetchone()
         if row is None: raise SystemExit('Unknown physical symbol ID')
         emit({'Symbol':json.loads(row[0]),'Source':[json.loads(r[0]) for r in db.execute('SELECT data FROM source WHERE id=?',(key,))], 'Uses':[json.loads(r[0]) for r in db.execute('SELECT data FROM edges WHERE source=?',(key,))]})

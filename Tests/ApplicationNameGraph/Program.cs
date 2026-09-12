@@ -93,7 +93,7 @@ try {
         foreach (var type in module.GetTypes()) {
             string typeId = Key(type, module)!;
             Write(nodes, new { Kind = "Type", Id = typeId, Module = info.Id, Token = type.MDToken.ToString(), OriginalName = type.Name.String, Signature = type.FullName, Alias = aliases.GetValueOrDefault(typeId), BaseType = type.BaseType?.FullName, Interfaces = type.Interfaces.Select(i => i.Interface.FullName).ToArray() });
-            foreach (var field in type.Fields) Write(nodes, new { Kind = "Field", Id = Key(field, module), Owner = typeId, Token = field.MDToken.ToString(), OriginalName = field.Name.String, Signature = field.FullName, field.IsStatic, field.IsLiteral, field.IsInitOnly });
+            foreach (var field in type.Fields) Write(nodes, new { Kind = "Field", Id = Key(field, module), Owner = typeId, Token = field.MDToken.ToString(), OriginalName = field.Name.String, Signature = field.FullName, Alias = aliases.GetValueOrDefault(Key(field, module)!), Blocker = FieldAliasScope.Blocker(field), field.IsStatic, field.IsLiteral, field.IsInitOnly });
             foreach (var method in type.Methods) {
                 var id = Key(method, module)!;
                 var reason = method.IsConstructor ? null : MethodReview.Reason(method.Name, vocabulary);
@@ -106,7 +106,9 @@ try {
                 if (!method.HasBody) continue;
                 foreach (var instruction in method.Body.Instructions) {
                     Target target; string kind;
-                    if (instruction.Operand is IMethod reference) {
+                    // MemberRef implements both IMethod and IField. Its signature
+                    // determines the kind; interface matching alone loses fields.
+                    if (instruction.Operand is IMethod reference && reference.MethodSig != null) {
                         if (!cache.TryGetValue(reference, out target!)) {
                             MethodDef? resolved = null; string? error = null;
                             try { resolved = reference.ResolveMethodDef(); } catch (Exception e) { error = e.Message; }

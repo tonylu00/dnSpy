@@ -72,7 +72,15 @@ namespace dnSpy.Contracts.Decompiler {
 					inheritedNames.UnionWith(baseNames);
 				}
 				var used = new HashSet<string>(occupied.Concat(type.Fields.Select(f => f.Name.String)), StringComparer.Ordinal);
+				used.UnionWith(type.Fields.Select(SourceNameAliases.Get).Where(n => n != null));
 				foreach (var field in type.Fields.OrderBy(f => f.MDToken.Raw)) {
+					var requested = SourceNameAliases.Get(field);
+					if (requested != null) {
+						if (!occupied.Add(requested)) throw new System.IO.InvalidDataException("Requested field alias collides with an emitted member: " + field.FullName + " -> " + requested);
+						inheritedNames.Add(requested);
+						result.Add(field, requested);
+						continue;
+					}
 					var name = field.Name.String;
 					bool legal = MetadataTypeNames.IsIdentifier(name);
 					if (legal && occupied.Add(name)) { inheritedNames.Add(name); continue; }

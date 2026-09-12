@@ -17,6 +17,7 @@ if (File.Exists(args[2])) { Console.Error.WriteLine("Choose a new report path.")
 var issues = new List<object>();
 var modules = new List<ModuleDefMD>();
 int references = 0, resolvedAliases = 0, nativeInputs = 0;
+int fieldReferences = 0, resolvedFieldAliases = 0;
 var pathComparer = OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
 var paths = new List<string>();
 string? contexts = null, config = null;
@@ -59,6 +60,8 @@ try {
     var root = Path.GetFullPath(Required(map, "InputDirectory"));
     var mapped = new HashSet<MethodDef>();
     var typeAliases = new Dictionary<TypeDef, string>();
+    var fieldAliases = new Dictionary<FieldDef, string>();
+    var allAliases = new Dictionary<IMemberDef, string>();
     foreach (var row in map.Elements("Module")) {
         var input = Path.GetFullPath(Path.Combine(root, Required(row, "Path")));
         if (!byPath.TryGetValue(input, out var module)) throw new InvalidDataException("Mapped module absent from inputs: " + input);
@@ -70,12 +73,39 @@ try {
             if (method == null || method.Name != Required(alias, "ExpectedName") || method.FullName != Required(alias, "Signature"))
                 throw new InvalidDataException("Stale method identity in " + input);
             mapped.Add(method);
+            allAliases.Add(method, Required(alias, "NewName"));
         }
         foreach (var alias in row.Elements("Type")) {
             var type = module.ResolveToken(Convert.ToUInt32(Required(alias, "Token").Substring(2), 16)) as TypeDef;
             if (type == null || type.Name != Required(alias, "ExpectedName") || type.FullName != Required(alias, "Signature"))
                 throw new InvalidDataException("Stale type identity in " + input);
             typeAliases.Add(type, Required(alias, "NewName"));
+            allAliases.Add(type, Required(alias, "NewName"));
+        }
+        foreach (var alias in row.Elements("Field")) {
+            var field = module.ResolveToken(Convert.ToUInt32(Required(alias, "Token").Substring(2), 16)) as FieldDef;
+            if (field == null || field.Name != Required(alias, "ExpectedName") || field.FullName != Required(alias, "Signature"))
+                throw new InvalidDataException("Stale field identity in " + input);
+            if (SourceNameMapping.FieldAliasScope.Blocker(field) != null) throw new InvalidDataException("Unsupported field alias: " + field.FullName);
+            fieldAliases.Add(field, Required(alias, "NewName")); allAliases.Add(field, Required(alias, "NewName"));
+        }
+    }
+    if (fieldAliases.Count != 0) {
+        var scope = new SourceNameMapping.FieldAliasScope(modules, useHostResolver: true);
+        foreach (var pair in fieldAliases) if (scope.Reserved(pair.Key, m => allAliases.GetValueOrDefault(m)).Contains(pair.Value))
+            issues.Add(new { Module = pair.Key.Module.Location, Token = pair.Key.MDToken.ToString(), Reason = "Field alias collides in resolved declaration/inheritance scope.", Alias = pair.Value });
+        var fieldOwners = fieldAliases.Keys.GroupBy(f => f.DeclaringType).ToDictionary(g => g.Key, g => g.ToArray());
+        foreach (var module in modules) foreach (var reference in module.GetMemberRefs().Where(r => r.IsFieldRef)) {
+            var candidates = new List<FieldDef>(); var visited = new HashSet<TypeDef>();
+            for (var owner = reference.DeclaringType?.ResolveTypeDef(); owner != null && visited.Add(owner); owner = owner.BaseType?.ResolveTypeDef())
+                if (fieldOwners.TryGetValue(owner, out var fields)) candidates.AddRange(fields.Where(f => f.Name == reference.Name));
+            if (candidates.Count == 0) continue;
+            fieldReferences++;
+            var resolved = reference.ResolveFieldDef();
+            if (resolved != null) { if (fieldAliases.ContainsKey(resolved)) resolvedFieldAliases++; continue; }
+            issues.Add(new { Module = module.Location, Token = reference.MDToken.ToString(), Reference = reference.FullName,
+                Reason = "Unresolved field reference may target an alias. Supply exact signature dependencies; do not bind by spelling alone.",
+                Candidates = candidates.Select(f => new { Module = f.Module.Location, Token = f.MDToken.ToString(), Signature = f.FullName }).ToArray() });
         }
     }
     // A new global type can shadow a readable imported type in another project,
@@ -129,10 +159,11 @@ try {
 catch (Exception ex) { issues.Add(new { Reason = ex.Message }); }
 finally { foreach (var module in modules) module.Dispose(); }
 var report = new { Inputs = Path.GetFullPath(args[0]), Map = Path.GetFullPath(args[1]), Projects = modules.Count, NativeInputs = nativeInputs,
-    ReferencesToMappedOwners = references, ResolvedAliasReferences = resolvedAliases, IssueCount = issues.Count, Issues = issues };
+    ReferencesToMappedOwners = references, ResolvedAliasReferences = resolvedAliases, FieldReferencesToMappedOwners = fieldReferences,
+    ResolvedFieldAliasReferences = resolvedFieldAliases, IssueCount = issues.Count, Issues = issues };
 // Never replace an existing report, including on an argument or validation error.
 using (var output = new FileStream(args[2], FileMode.CreateNew, FileAccess.Write)) JsonSerializer.Serialize(output, report, new JsonSerializerOptions { WriteIndented = true });
-Console.WriteLine($"{(issues.Count == 0 ? "PASS" : "FAIL")}: {resolvedAliases} resolved alias references; {issues.Count} issues. {args[2]}");
+Console.WriteLine($"{(issues.Count == 0 ? "PASS" : "FAIL")}: {resolvedAliases} method and {resolvedFieldAliases} field alias references resolved; {issues.Count} issues. {args[2]}");
 return issues.Count == 0 ? 0 : 1;
 
 static string Required(XElement element, string name) => (string?)element.Attribute(name) ?? throw new InvalidDataException("Missing " + name);
