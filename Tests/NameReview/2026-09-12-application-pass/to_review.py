@@ -5,24 +5,65 @@ Local work and unsupported contracts are explicitly listed in OUTPUT's
 adjacent .pending.json file, never silently treated as applied.
 """
 import json
+import hashlib
 from pathlib import Path
 import sys
 
 ledger_path, output = map(Path, sys.argv[1:3])
 assert not output.exists() and not output.with_suffix('.pending.json').exists()
 ledger = json.loads(ledger_path.read_text())
-roots = set(); modules = {}; methods = {}; fields = {}
+roots = set(); modules = {}; methods = {}; fields = {}; types = {}; contract_methods = {}; contract_groups = {}
 for filename in sys.argv[3:]:
     inventory = json.loads(Path(filename).read_text(encoding='utf-8-sig'))
     root = Path(inventory['TargetRoot']); roots.add(root)
     for entry in inventory.get('Fields', []):
         fields[root / entry['Module'], entry['Token']] = entry
-    for entry in inventory['Methods'] + inventory.get('Fields', []):
+    for entry in inventory.get('Types', []):
+        types[root / entry['Module'], entry['Token']] = entry
+    for entry in inventory['Methods'] + inventory.get('Fields', []) + inventory.get('Types', []):
         physical = root / entry['Module']
         modules[physical] = entry
         methods[physical,entry['Token']] = entry
+    for entry in inventory['Methods']:
+        family = entry.get('ContractFamily')
+        if family:
+            key = (root / entry['Module'], entry['Token'])
+            if key in contract_methods:
+                assert contract_methods[key] == entry, ('Conflicting family inventory', key)
+            contract_methods[key] = entry
+            contract_groups.setdefault(family, {})[key] = entry
 assert len(roots)==1, 'A review-map input must have one physical root; split different roots explicitly'
 root = roots.pop()
+# Family IDs are hashes of the complete physical path/token set, computed by
+# the .NET discovery tool. Validate the supplied set so a trimmed seed inventory
+# cannot cause unreviewed overrides to be added later by the atomic updater.
+for family, entries in contract_groups.items():
+    ordered = sorted(entries.values(), key=lambda e:(e['Module'].encode('utf-16-be'),int(e['Token'],16)))
+    evidence = '\n'.join(e['Module'].replace('\\','/')+'|'+f"{int(e['Token'],16):08X}" for e in ordered)
+    assert hashlib.sha256(evidence.encode('utf-8')).hexdigest().upper()==family, ('Incomplete family inventory', family)
+family_reviews = {}
+for decision in ledger['Decisions']:
+    if decision['Status']!='reviewed' or not decision['ProposedName']: continue
+    for member in decision['Members']:
+        if member['Family']:
+            family_reviews.setdefault(member['Family'], {})[Path(member['Module']),member['Token']] = decision['ProposedName']
+family_bindings = {}; family_pending = {}
+for family, reviews in family_reviews.items():
+    entries = [contract_methods.get(key) for key in reviews]
+    if any(entry is None for entry in entries):
+        family_pending[family]='Fresh complete family inventory required'; continue
+    actual_ids = {entry['ContractFamily'] for entry in entries}
+    if len(actual_ids)!=1:
+        family_pending[family]='Physical contract grouping changed'; continue
+    actual_id = actual_ids.pop()
+    if set(reviews)!=set(contract_groups[actual_id]):
+        family_pending[family]='Every physical family member needs a behavior review'; continue
+    if len(set(reviews.values()))!=1:
+        family_pending[family]='Reviewed names disagree within the contract family'; continue
+    blockers = sorted({entry['MappingBlocker'] for entry in entries if entry['MappingBlocker']})
+    if blockers:
+        family_pending[family]='; '.join(blockers); continue
+    family_bindings[family]=actual_id
 result={'Format':1,'Kind':'SymbolReview','TargetRoot':str(root),'Methods':[],'Types':[],'Fields':[],'Skips':[]}
 pending=[]
 for decision in ledger['Decisions']:
@@ -34,18 +75,26 @@ for decision in ledger['Decisions']:
             pending.append({'Id':member['Id'],'Reason':decision['Reason'],'Status':decision['Status'],
                             'NewName':decision['ProposedName']})
             continue
-        if member['Kind']=='Field':
-            actual = fields.get((physical,member['Token']))
+        if member['Kind'] in ('Field','Type'):
+            kind = member['Kind'].lower()
+            actual = (fields if kind=='field' else types).get((physical,member['Token']))
             if actual is None or actual['MappingBlocker']:
-                pending.append({'Id':member['Id'],'Reason':actual['MappingBlocker'] if actual else 'Fresh field inventory required','NewName':decision['ProposedName']});continue
+                pending.append({'Id':member['Id'],'Reason':actual['MappingBlocker'] if actual else f'Fresh {kind} inventory required','NewName':decision['ProposedName']});continue
             assert actual['Signature']==member['Signature'] and actual['OriginalName']==member['OriginalName']
-        if member['MapBlocker'] or member['Family'] or decision['Status']!='reviewed':
-            if decision['ProposedName']:pending.append({'Id':member['Id'],'Reason':member['MapBlocker'] or ('Contract family needs map-root binding' if member['Family'] else decision['Status'])})
+        family_blocker = family_pending.get(member['Family']) if member['Family'] else None
+        if member['MapBlocker'] or family_blocker or decision['Status']!='reviewed':
+            if decision['ProposedName'] or member['ParameterNames']:
+                pending.append({'Id':member['Id'],'Reason':member['MapBlocker'] or family_blocker or decision['Status'],
+                                'NewName':decision['ProposedName'],'ParameterNames':member['ParameterNames']})
             continue
-        if not decision['ProposedName']:continue
+        if not decision['ProposedName']:
+            if member['ParameterNames']:
+                pending.append({'Id':member['Id'],'Reason':'Parameter-only mapping requires semantic application',
+                                'NewName':None,'ParameterNames':member['ParameterNames']})
+            continue
         row={'Module':physical.relative_to(root).as_posix(),'Identity':metadata['Identity'],'Mvid':member['Mvid'],'Sha256':member['Sha256'],
              'Type':member['Signature'],'Token':member['Token'],'Signature':member['Signature'],'OriginalName':member['OriginalName'],
-             'MappingBlocker':None,'ContractFamily':None,'NewName':decision['ProposedName'],'ParameterNames':[]}
+             'MappingBlocker':None,'ContractFamily':family_bindings.get(member['Family']),'NewName':decision['ProposedName'],'ParameterNames':[]}
         if member['Kind']=='Method':
             actual=methods[physical,member['Token']]
             assert actual['Signature']==member['Signature'] and actual['OriginalName']==member['OriginalName']

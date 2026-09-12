@@ -41,6 +41,19 @@ Current reviewed chains include:
   pre-notification window helpers (`application_ui.py`).
 - Executable service fields, CLI warning/help paths, add-in signature completion,
   licensing configuration and shared LicenseManager state (`services.py`).
+- CalculatedParameters' ActiveScript, NiL.JS and interpreted VBScript execution,
+  validation and value-conversion contracts, plus reflective argument storage
+  (`scripting.py`). Each accepted contract includes every physical family member;
+  engine limitations are recorded in the individual behavioral reasons.
+- Module argument lookup and template expansion, left/right parameter binding,
+  dictionary execution, script callback adapters and device event dispatch
+  (`script_bindings.py`). The SDK Device.ExecuteEventHandler caller establishes
+  the roles of the device, management and progress arguments.
+- Parameter dependency graph construction and ordering, cached calculation
+  chains, inline/static execution and proposed-value validation
+  (`calculation_chains.py`). Captured predicates, node types, fields, parameters
+  and locals use the same terms as their callers. A detected cycle still logs
+  and returns the ordered portion; no runtime repair is claimed.
 
 For example, `RequiresCacheRebuild` describes both language-pair and cache-format
 checks, including the distinction between optional and required missing caches.
@@ -59,14 +72,20 @@ versions rather than guessing by token. They only write a new review ledger.
 NameCandidates review format using fresh metadata inventories. It writes an
 explicit pending list for locals and unsupported contracts. These cannot
 silently disappear from completion accounting. Local occurrences need semantic
-reference binding before edits. Contract-family IDs must be bound to map roots
-before those families are published. The .NET updater validates the exact input
-identities and reports requested/applied names and collisions.
+reference binding before edits. The converter binds graph-local contract-family
+IDs to fresh map-root inventories only when the complete physical member set
+has a consistent behavioral review. It verifies the inventory family digest,
+rejects trimmed sets and retains conflicting or blocked families as pending.
+Fresh type inventories also expose unsupported generic aliases before an update
+is attempted. Constructor parameter proposals survive in pending work even when
+the constructor name is retained. The .NET updater independently validates the
+exact input identities and complete contracts, and reports requested/applied
+names and collisions.
 
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v8.xml` and `names64-staged-v2.xml`
+The current staged maps are `names63-staged-v9.xml` and `names64-staged-v2.xml`
 under the application pass directory; `progress.json` records their hashes.
 
 Graph v3 fixes field MemberRef classification: dnlib MemberRef implements both
@@ -80,13 +99,17 @@ was needed. A wrong-vendor field fixture still fails reference preflight.
 ## Current limitations and next work
 
 - This is still a partial review of the full indexed application. Deeper project
-  loading/conversion internals, scripting implementations, compatibility callback
+  loading/conversion internals, scripting facades and diagnostics, compatibility callback
   roles and many other components remain. Do not use the ledger count as an
   application readability metric. The portable source `worklist` query also finds
   emitted helpers that the metadata-only method review list missed.
 - Field maps pass metadata/exporter allocation checks; consolidated source export,
   compilation and runtime restoration validation remain. Source-local application
   needs a semantic reference pass; syntax locations alone cannot authorize edits.
+- Generic type aliases and constructor parameter-only mapping remain unsupported.
+  Reviewed names are retained explicitly in pending work. Dynamic reflective
+  field creation/removal contracts also remain pending while the fresh family
+  inventory cannot resolve their external IReflect contract.
 - Uncertain short string fields with special storage metadata and a compatibility
   callback with an unestablished consumer role are explicitly unresolved. Both
   the ledger and converted pending list retain these, even without a proposed
