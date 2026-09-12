@@ -58,6 +58,7 @@ try {
     if (map.Name != "SourceNameMap" || (string?)map.Attribute("Version") != "1") throw new InvalidDataException("Expected version 1 source map.");
     var root = Path.GetFullPath(Required(map, "InputDirectory"));
     var mapped = new HashSet<MethodDef>();
+    var typeAliases = new Dictionary<TypeDef, string>();
     foreach (var row in map.Elements("Module")) {
         var input = Path.GetFullPath(Path.Combine(root, Required(row, "Path")));
         if (!byPath.TryGetValue(input, out var module)) throw new InvalidDataException("Mapped module absent from inputs: " + input);
@@ -69,6 +70,41 @@ try {
             if (method == null || method.Name != Required(alias, "ExpectedName") || method.FullName != Required(alias, "Signature"))
                 throw new InvalidDataException("Stale method identity in " + input);
             mapped.Add(method);
+        }
+        foreach (var alias in row.Elements("Type")) {
+            var type = module.ResolveToken(Convert.ToUInt32(Required(alias, "Token").Substring(2), 16)) as TypeDef;
+            if (type == null || type.Name != Required(alias, "ExpectedName") || type.FullName != Required(alias, "Signature"))
+                throw new InvalidDataException("Stale type identity in " + input);
+            typeAliases.Add(type, Required(alias, "NewName"));
+        }
+    }
+    // A new global type can shadow a readable imported type in another project,
+    // even when the alias is unique in its own module. Follow exact physical
+    // dependency edges; disjoint compatibility deployments must stay separate.
+    var inputNames = modules.Select(m => m.Assembly?.Name.String).ToHashSet(StringComparer.OrdinalIgnoreCase);
+    var inputModules = modules.ToHashSet();
+    var dependencies = modules.ToDictionary(m => m, m => m.GetAssemblyRefs()
+        .Where(r => inputNames.Contains(r.Name.String))
+        .SelectMany(r => resolver.Resolve(r, m)?.Modules.AsEnumerable() ?? Enumerable.Empty<ModuleDef>())
+        .Where(inputModules.Contains).ToArray());
+    foreach (var module in modules) {
+        var reachable = new HashSet<ModuleDef>();
+        var pending = new Stack<ModuleDef>(); pending.Push(module);
+        while (pending.TryPop(out var current)) if (reachable.Add(current))
+            foreach (var dependency in dependencies[(ModuleDefMD)current]) pending.Push(dependency);
+        var globals = typeAliases.Where(p => !p.Key.IsNested && UTF8String.IsNullOrEmpty(p.Key.Namespace) &&
+            reachable.Contains(p.Key.Module) && (p.Key.Module == module || p.Key.IsPublic)).ToArray();
+        if (globals.Length == 0) continue;
+        var names = globals.Select(p => p.Value).ToHashSet(StringComparer.Ordinal);
+        var candidates = module.GetTypes().Concat(module.GetTypeRefs().Where(r => names.Contains(r.Name.String))
+            .Select(r => r.ResolveTypeDef()).OfType<TypeDef>()).Concat(globals.Select(p => p.Key)).Distinct();
+        foreach (var global in globals) foreach (var candidate in candidates) {
+            if (candidate == global.Key || candidate.IsNested) continue;
+            var name = typeAliases.TryGetValue(candidate, out var alias) ? alias : candidate.Name.String;
+            if (name != global.Value) continue;
+            issues.Add(new { Module = module.Location, Reason = "Global type alias can shadow another source type. Choose a distinct alias before export.",
+                Alias = global.Value, AliasedType = global.Key.FullName, AliasModule = global.Key.Module.Location,
+                ConflictingType = candidate.FullName, ConflictingModule = candidate.Module.Location });
         }
     }
     var owners = mapped.GroupBy(m => m.DeclaringType).ToDictionary(g => g.Key, g => g.ToArray());

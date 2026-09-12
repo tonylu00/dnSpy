@@ -68,3 +68,52 @@ void Run(string name, string[] callers, int expectedIssues, int expectedResolved
 Run("same-identities-separate-deployments", new[] { validA, validB }, 0, 2);
 Run("wrong-vendor-scope", new[] { invalidA }, 1, 0);
 Console.WriteLine("PASS: exact physical duplicate deployments remain separate; same-named vendor types are not substituted.");
+// Two disjoint deployments use identically named global aliases. Only one
+// consumer also imports an existing namespaced type with that simple name.
+var aliasRoot = Path.Combine(root, "global-alias");
+var globalPaths = new List<string>();
+foreach (var side in new[] { "a", "b" }) {
+    string directory = Path.Combine(aliasRoot, side);
+    var library = NewModule("GlobalLibrary", directory);
+    var globalType = AddType(library, "a"); globalType.Namespace = "";
+    globalPaths.Add(Write(library, directory));
+    var consumer = NewModule("Consumer" + side, directory);
+    var consumerType = AddType(consumer, "Consumer");
+    consumerType.Fields.Add(new FieldDefUser("Aliased", new FieldSig(new ClassSig(new TypeRefUser(consumer, "", "a",
+        new AssemblyRefUser("GlobalLibrary", new Version(1, 0, 0, 0))))), FieldAttributes.Public));
+    if (side == "a") consumerType.Fields.Add(new FieldDefUser("Original", new FieldSig(new ClassSig(Payload(consumer, "VendorA"))), FieldAttributes.Public));
+    globalPaths.Add(Write(consumer, directory));
+}
+var globalMap = new XElement("SourceNameMap", new XAttribute("Version", "1"), new XAttribute("InputDirectory", root));
+foreach (var path in globalPaths.Where(p => Path.GetFileName(p) == "GlobalLibrary.dll")) {
+    using var module = ModuleDefMD.Load(path);
+    var type = module.Types.Single(t => t.Name == "a");
+    globalMap.Add(new XElement("Module", new XAttribute("Path", Path.GetRelativePath(root, path)), new XAttribute("Mvid", module.Mvid!),
+        new XAttribute("Sha256", Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(path)))),
+        new XElement("Type", new XAttribute("Token", "0x" + type.MDToken.Raw.ToString("X8")), new XAttribute("ExpectedName", "a"),
+            new XAttribute("Signature", type.FullName), new XAttribute("NewName", "Payload"))));
+}
+var globalMapPath = Path.Combine(root, "global-names.xml");
+var globalInputs = Path.Combine(root, "global-inputs.json");
+File.WriteAllText(globalInputs, JsonSerializer.Serialize(globalPaths.Append(aPath)));
+void RunGlobal(string name, int expectedIssues) {
+    new XDocument(globalMap).Save(globalMapPath);
+    var report = Path.Combine(root, name + ".json");
+    var info = new ProcessStartInfo("dotnet") { UseShellExecute = false };
+    foreach (var arg in new[] { tool, globalInputs, globalMapPath, report, "--no-gac" }) info.ArgumentList.Add(arg);
+    using var process = Process.Start(info)!; process.WaitForExit();
+    using var result = JsonDocument.Parse(File.ReadAllText(report));
+    if (process.ExitCode != (expectedIssues == 0 ? 0 : 1) || result.RootElement.GetProperty("IssueCount").GetInt32() != expectedIssues)
+        throw new Exception("Unexpected global-alias result: " + name);
+    if (name == "global-type-shadow") {
+        var issue = result.RootElement.GetProperty("Issues")[0];
+        if (issue.GetProperty("Module").GetString() != globalPaths[1] || issue.GetProperty("AliasModule").GetString() != globalPaths[0])
+            throw new Exception("Global alias collision leaked into the other deployment.");
+    }
+}
+RunGlobal("global-type-shadow", 1);
+foreach (var type in globalMap.Descendants("Type")) type.SetAttributeValue("NewName", "GlobalLibraryPayload");
+RunGlobal("distinct-global-alias", 0);
+globalMap.Descendants("Type").First().SetAttributeValue("Signature", "stale");
+RunGlobal("stale-type-alias", 1);
+Console.WriteLine("PASS: global type shadowing detected before export; distinct aliases and disjoint duplicate deployments pass; stale type rows rejected.");
