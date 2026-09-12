@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+from binding_reviews import local_reviews
 
 graph, destination = map(Path, sys.argv[1:3])
 manifest = json.loads((graph / 'manifest.json').read_text())
@@ -42,6 +43,11 @@ selected_files.update({'FileSystemStore/InstallationGuidWriter.cs','FileSystemSt
                        'FileSystemStore/FileStreamStore.cs','FileSystemStore/FileProjectStore.cs','FileSystemStore/FileDataStore.cs',
                        'Import/ProjectIdPatcher.cs','ZipContainerStore/ZipContainerProjectStore.cs',
                        'ZipContainerStore/ZipContainerPasswordProtectedProjectStore.cs'})
+selected_files.update({'FileSystemStore/TransactionalDirectoryInfo.cs','FileSystemStore/TransactionalFileStream.cs',
+                       'FileSystemStore/TransactionalFileStreamManager.cs','FileSystemStore/RetryableFileStream.cs',
+                       'FileSystemStore/Retryable.cs','FileSystemStore/FileProductStore.cs'})
+selected_files.update({'ant.cs','anu.cs','anv.cs','anx.cs','an2.cs','Class160.Designer.cs','Class161.cs',
+                       'Class162.Designer.cs','Exceptions/ConverterExceptionReason.cs'})
 locations = {}
 for line in (graph / 'source.jsonl').open(encoding='utf-8'):
     row = json.loads(line)
@@ -66,12 +72,7 @@ def add(project, token, name, reason, parameters=(), locals_=None, status='revie
         assert hashes[path] == source['Sha256'], ('Stale source', path)
         if parameters:
             assert len(parameters) == len(symbol['Parameters']), (key, parameters, symbol['Parameters'])
-        local_rows = []
-        for old, new in (locals_ or {}).items():
-            matches = [b for b in source.get('Bindings', []) or [] if b['Name'] == old]
-            assert matches, ('Missing source binding', key, old)
-            local_rows.append({'OriginalName': old, 'ProposedName': new, 'Occurrences': matches,
-                               'Status': 'source-declarations-located; semantic references pending'})
+        local_rows = local_reviews(source,locals_,key)
         members.append({'Module': module['Input'], 'Sha256': module['Sha256'], 'Mvid': module['Mvid'],
                         'Id': key, 'Token': token, 'Kind': symbol['Kind'], 'OriginalName': symbol['OriginalName'],
                         'Signature': symbol['Signature'], 'ExistingAlias': symbol.get('Alias'),
@@ -205,6 +206,12 @@ from calculation_chains import review as review_calculation_chains
 review_calculation_chains(add)
 from project_storage import review as review_project_storage
 review_project_storage(add)
+from file_transactions import review as review_file_transactions
+source_issues=review_file_transactions(add)
+from product_storage import review as review_product_storage
+review_product_storage(add)
+from conversion_results import review as review_conversion_results
+source_issues.extend(review_conversion_results(add))
 add('Knx.Ets.Common.3',0x060000DD,'GetLatestSupportedConversionSchemaVersion','Returns Version23; initializes the CvNext conversion target and supplies the CLI highest-supported-target diagnostic. All indexed callers were inspected.')
 add(cv,0x0400000F,'LatestSupportedConversionSchemaVersion','Initialized by the Common conversion-version getter; used as the default/latest target by conversion entry points, as the template current-version exclusion, and as the import minimum after conversion. The corrected field-reference graph resolves the exact Common/CvNext dependency.')
 add(cv,0x04000015,'LatestSupportedConversionXmlNamespace','Namespace.GetXmlNamespace of LatestSupportedConversionSchemaVersion, assigned by the static initializer.')
@@ -213,5 +220,6 @@ result={'Format':1,'Kind':'ApplicationBehaviorReview','Graph':str(graph),'GraphM
         'Status':'staged, incomplete application-wide pass; no source application or ETS verification this round',
         'Decisions':decisions,'Unresolved':[{'Component':'Common','Symbol':'CurrentProjectSchemaInformation.f/e','Reason':'The unreferenced constant getter and the XML document/signing getter still need their roles reviewed. Conversion getter d and CvNext field a now have resolved reference evidence and staged names.'},
         {'Component':'Application-wide','Reason':'Source-local references still need semantic application support; declaration locations alone do not authorize text replacement. Field aliases require the field-aware map exporter.'}]}
+result['Unresolved'].extend(source_issues)
 destination.write_text(json.dumps(result,indent=2)+'\n')
 print(f'Staged {len(decisions)} behavior decisions across {len({m["Module"] for d in decisions for m in d["Members"]})} physical inputs. No source or binary changes.')

@@ -60,6 +60,17 @@ Current reviewed chains include:
   callers, with fields and locals following the same terminology. Existing
   archive certificate/password helpers retain their useful names and gain
   reviewed field/local roles.
+- Transactional directory creation, stream enlistment, commit journals, queued
+  copies/deletions and interrupted-commit recovery (`file_transactions.py`).
+- Product-store directory callbacks, weak cache tracking, cache file codes,
+  manufacturer master hashes/HMACs and version information (`product_storage.py`).
+  The master hash remains the existing sum of UTF-8 hash-text bytes; naming
+  does not replace its algorithm.
+- Conversion errors/notices and result combination, logger/resource wrappers,
+  input-directory signatures, supported XML namespace reading and extraction
+  (`conversion_results.py`). The schema reader returns the first version it
+  finds; it does not prove that every input document uses the same version.
+  Resource base names, keys, culture fallback and log severities stay intact.
 
 For example, `RequiresCacheRebuild` describes both language-pair and cache-format
 checks, including the distinction between optional and required missing caches.
@@ -91,7 +102,7 @@ names and collisions.
 Field aliases now use declaring/inherited scopes in both updater and exporter,
 so ordinary names such as `logger` can be reused in unrelated classes. The same
 map includes the CheckProjectData fields already corrected in the source baseline.
-The current staged maps are `names63-staged-v12.xml` and `names64-staged-v4.xml`
+The current staged maps are `names63-staged-v14.xml` and `names64-staged-v6.xml`
 under the application pass directory; `progress.json` records their hashes.
 
 The supplemental `property-fields63.json` / `property-fields64.json` reviews
@@ -136,9 +147,11 @@ bodies, existing method aliases and field aliases without lexical role evidence
 are preserved or explicitly skipped. Its 6.4 scan found no additional eligible
 methods, which says nothing about completion of that application.
 
-`map-update63.json` is the latest combined manual/accessor update report;
+`map-update63.json` is the latest manual update report (prior accessor aliases
+remain in its base map);
 `reviewed63.json` and `field-accessors63.json` retain the two reviews separately.
-`reviewed63-combined.json` is the exact combined input recorded by that report.
+`reviewed63-combined.json` retains the preceding storage/accessor combined input
+for provenance; the current manual report uses `reviewed63.json`.
 The source worklist also includes compact lowercase/digit type names such as
 `arx` and `b8j`, which escaped its earlier one/two-letter rule. Inclusion requests
 behavioral review; it never authorizes a replacement name.
@@ -151,6 +164,40 @@ so the later Seek is not described as restoring the original position.
 The deferred restore-point error expression uses a literal original field name;
 the field alias retains owner-qualified runtime restoration instructions. Its
 consolidated export/build validation remains pending with the rest of the tree.
+
+`cross-version64.json` stages additional 6.4 method/parameter names from the
+unique-body/call matches in `cross-version64-from63-v12.json` under the application
+pass directory. `stage_correspondence.py` binds both physical input identities,
+signatures, source hashes and the reference map; it preserves readable target
+source and previously staged aliases. Parameter names transfer only with exact
+sequence/type/metadata matches. `CorrespondenceEvidence` and `SourceEvidence`
+record the actual pairs, including independent ETS6C/ETS6N paths. The known 6.4
+counter-string discrepancy remains unresolved and is not hidden by other matches.
+
+```text
+python stage_correspondence.py REF_DB TARGET_DB CANDIDATES BASE_MAP NEW_REVIEW
+```
+
+`binding_reviews.py` also supports a precise declaration selector for shadowed
+names: `{'NewName': 'transactionRootPath', 'Kind': 'Parameter', 'Start': 8965}`.
+The selector must match exactly one declaration in an unchanged source file;
+ambiguous/stale selectors fail. These are still declaration proposals awaiting
+semantic reference application, not text replacements.
+
+One real case is TransactionalFileStreamManager's transaction scope predicate:
+the current source prints `string_0.StartsWith(string_0, ...)`, shadowing the
+outer argument. The original lambda instructions load captured `fullName` then
+the lambda argument before `String.StartsWith(InvariantCultureIgnoreCase)`.
+The staged roles are outer `filePath` and inner `transactionRootPath`.
+`transaction-scope63-il.json` preserves that evidence; consolidated export must
+prove the correct captured-versus-lambda binding. No source fix is claimed yet.
+
+de4dotEx's parameter updater now treats a requested original metadata name as
+preservation/restoration and removes any old source override. It no longer
+produces `title2` when `title` was already correct. The two 6.4 window-title
+parameters keep their original `title` names; all current manual/correspondence
+map reports have zero requested-versus-applied name adjustments. Genuine
+collisions with other bindings still receive explicit allocation diagnostics.
 
 Graph v3 fixes field MemberRef classification: dnlib MemberRef implements both
 method and field interfaces, so the signature must decide the edge kind. Earlier
@@ -185,7 +232,8 @@ was needed. A wrong-vendor field fixture still fails reference preflight.
   `Creating Process ID` and `#`. Names also differ despite equal MVID/token layout.
   `ets64-counter-string-discrepancy.json` records evidence from the input metadata.
   This discrepancy is unresolved; no string restoration or behavior equivalence
-  is claimed. The current 6.4 decisions apply only to the main ETS6N input.
+  is claimed. The process-counter review applies only to the main ETS6N input;
+  other method correspondences are checked independently at each physical path.
 - No ETS exports, builds, full audits or live launches were performed for this
   pass. Only portable tool regressions and identity/mapping/reference checks ran.
 
