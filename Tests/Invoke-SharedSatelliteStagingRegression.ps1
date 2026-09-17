@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$OutputDirectory)
+﻿param([Parameter(Mandatory)][string]$OutputDirectory)
 $ErrorActionPreference='Stop'
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new test directory.'}
 $root=[IO.Path]::GetFullPath($OutputDirectory)
@@ -11,7 +11,7 @@ foreach($name in 'Current','Compatibility','Conflict'){
  $version=if($name -eq 'Compatibility'){'1.0.0.0'}else{'2.0.0.0'}
  "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><AssemblyName>Fixture</AssemblyName><RootNamespace>Fixture</RootNamespace><AssemblyVersion>$version</AssemblyVersion></PropertyGroup></Project>" | Set-Content (Join-Path $folder 'Fixture.csproj')
  'class Program { static int Main(string[] args) { var r = new System.Resources.ResourceManager("Fixture.Text",typeof(Program).Assembly); return r.GetString("Greeting",System.Globalization.CultureInfo.GetCultureInfo("zh-CN")) == args[0] ? 0 : 1; } }' | Set-Content (Join-Path $folder 'Program.cs')
- "<root><resheader name=`"resmimetype`"><value>text/microsoft-resx</value></resheader><resheader name=`"version`"><value>2.0</value></resheader><resheader name=`"reader`"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name=`"writer`"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name=`"Greeting`"><value>$name 中文</value></data></root>" | Set-Content (Join-Path $folder 'Text.zh-CN.resx')
+ "<root><resheader name=`"resmimetype`"><value>text/microsoft-resx</value></resheader><resheader name=`"version`"><value>2.0</value></resheader><resheader name=`"reader`"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name=`"writer`"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name=`"Greeting`"><value>$name 中文</value></data></root>" | Set-Content (Join-Path $folder 'Text.zh-CN.resx') -Encoding UTF8
  dotnet build (Join-Path $folder 'Fixture.csproj') -c Release --nologo -v quiet
  if($LASTEXITCODE){throw 'Fixture build failed.'}
  Copy-Item -LiteralPath (Join-Path $folder 'bin\Release\net48\Fixture.exe') -Destination (Join-Path $inputRoot "$name.exe")

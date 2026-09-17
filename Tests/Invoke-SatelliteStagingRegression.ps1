@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$DnSpyConsole, [Parameter(Mandatory)][string]$OutputDirectory)
+﻿param([Parameter(Mandatory)][string]$DnSpyConsole, [Parameter(Mandatory)][string]$OutputDirectory)
 $ErrorActionPreference = 'Stop'
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new output directory.' }
 $inputRoot = Join-Path $OutputDirectory 'input'
@@ -25,7 +25,7 @@ class Program {
         return actual == args[0] && satelliteOnly == args[0] && neutralCopy == args[0].Replace("中文", "English") ? 0 : 1;
     }
 }
-'@ | Set-Content (Join-Path $source 'Program.cs')
+'@ | Set-Content (Join-Path $source 'Program.cs') -Encoding UTF8
     @'
 <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><AssemblyName>Fixture</AssemblyName><RootNamespace>Fixture</RootNamespace><SignAssembly>true</SignAssembly><AssemblyOriginatorKeyFile>..\fixture.snk</AssemblyOriginatorKeyFile></PropertyGroup><ItemGroup><EmbeddedResource Update="NeutralCopy.resx"><WithCulture>false</WithCulture><LogicalName>Fixture.Text.zh-CN.resources</LogicalName><ManifestResourceName>Fixture.NeutralCopy</ManifestResourceName></EmbeddedResource></ItemGroup></Project>
 '@ | Set-Content (Join-Path $source 'Fixture.csproj')
@@ -33,7 +33,7 @@ class Program {
         $value = if ($locale) { "$variant 中文" } else { "$variant English" }
         $suffix = if ($locale) { '.' + $locale } else { '' }
         "<root><resheader name=`"resmimetype`"><value>text/microsoft-resx</value></resheader><resheader name=`"version`"><value>2.0</value></resheader><resheader name=`"reader`"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name=`"writer`"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name=`"Greeting`" xml:space=`"preserve`"><value>$value</value></data></root>" |
-            Set-Content (Join-Path $source "Text$suffix.resx")
+            Set-Content (Join-Path $source "Text$suffix.resx") -Encoding UTF8
     }
     Copy-Item -LiteralPath (Join-Path $source 'Text.zh-CN.resx') -Destination (Join-Path $source 'SatelliteOnly.zh-CN.resx')
     Copy-Item -LiteralPath (Join-Path $source 'Text.resx') -Destination (Join-Path $source 'NeutralCopy.resx')

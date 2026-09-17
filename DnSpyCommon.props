@@ -66,4 +66,12 @@
 
   <Import Project="$(MSBuildThisFileDirectory)Build\ConvertToNetstandardReferences\ConvertToNetstandardReferences.tasks" Condition=" '$(IsDotNet)' == 'true' " />
 
+  <!-- Use dnlib's netstandard2.0 asset in all outputs. NuGet selects the net6.0 asset for
+       modern target frameworks, but it references System.Runtime 6.0.0.0, which breaks
+       PowerShell hosts loading it and the .NET Framework inline tasks of exported projects. -->
+  <Target Name="UseNetstandardDnlib" AfterTargets="Build"
+          Condition="Exists('$(NuGetPackageRoot)dnlib\$(DnlibVersion)\lib\netstandard2.0\dnlib.dll') and Exists('$(TargetDir)dnlib.dll')">
+    <Copy SourceFiles="$(NuGetPackageRoot)dnlib\$(DnlibVersion)\lib\netstandard2.0\dnlib.dll" DestinationFiles="$(TargetDir)dnlib.dll" SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

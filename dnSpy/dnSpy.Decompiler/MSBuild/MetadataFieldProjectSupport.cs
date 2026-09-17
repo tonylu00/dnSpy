@@ -7,6 +7,17 @@ using dnSpy.Contracts.Decompiler;
 
 namespace dnSpy.Decompiler.MSBuild {
 	static class MetadataFieldProjectSupport {
+		static string GetDnlibCopyPath() {
+			// The exported project's inline build task compiles against the target project's
+			// reference assemblies. dnlib's net6.0 flavor references System.Runtime 6.0.0.0,
+			// which doesn't exist in .NET Framework reference assemblies, so prefer the
+			// netstandard2.0 flavor shipped next to the app when it's available.
+			string assemblyPath = typeof(ModuleDef).Assembly.Location;
+			string directory = Path.GetDirectoryName(assemblyPath) ?? string.Empty;
+			string sidecar = Path.Combine(directory, "netstandard2.0", "dnlib.dll");
+			return File.Exists(sidecar) ? sidecar : assemblyPath;
+		}
+
 		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
 			(project.Module.GetTypes().Any(t => !t.IsGlobalModuleType) || project.Module.GetMemberRefs().Any(r => r.IsMethodRef) || MetadataMethodNames.GetMappings(project.Module).Length != 0 || MetadataFieldNames.GetMappings(project.Module).Length != 0 || MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || MetadataUncheckedReferences.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
@@ -103,7 +114,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteAttributeString("Include", ".dnspy-metadata/RawExceptions.cs");
 				writer.WriteEndElement(); writer.WriteEndElement();
 			}
-			File.Copy(typeof(ModuleDef).Assembly.Location, Path.Combine(directory, "dnlib.dll"), true);
+			File.Copy(GetDnlibCopyPath(), Path.Combine(directory, "dnlib.dll"), true);
 			File.WriteAllText(Path.Combine(directory, "README.md"),
 				"This project contains metadata requiring restoration after C# compilation: private string fields on static classes or delegates, attribute usage rules, or raw exception operations.\n" +
 				"Generated ObfuscationAttribute instructions preserve field names, flags, constants and original AttributeUsage.ValidOn values. The SDK build runs RestoreFields.cs after CoreCompile, restores metadata and debug symbols, and removes the instructions.\n" +

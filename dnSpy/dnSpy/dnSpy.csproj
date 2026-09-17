@@ -68,6 +68,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- The exported project's inline metadata-restoration task compiles against the
+         exported project's reference assemblies, so ship the netstandard2.0 dnlib flavor
+         next to the app for it (the net6.0 flavor needs System.Runtime 6.0.0.0). -->
+    <None Include="$(NuGetPackageRoot)dnlib\$(DnlibVersion)\lib\netstandard2.0\dnlib.dll" Link="netstandard2.0\dnlib.dll" CopyToOutputDirectory="PreserveNewest" Condition="Exists('$(NuGetPackageRoot)dnlib\$(DnlibVersion)\lib\netstandard2.0\dnlib.dll')" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\dnSpy.ico" />
     <EmbeddedResource Include="LicenseInfo\CREDITS.txt" />
     <None Remove="app.config" Condition=" '$(IsDotNetFramework)' != 'true' " />

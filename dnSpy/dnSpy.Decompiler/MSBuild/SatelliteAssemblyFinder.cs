@@ -35,7 +35,20 @@ namespace dnSpy.Decompiler.MSBuild {
 			openedModules = new Dictionary<string, ModuleDef?>(StringComparer.OrdinalIgnoreCase);
 		}
 
-		bool IsValidCulture(string name) => !string.IsNullOrEmpty(name) && cultures.Contains(name);
+		bool IsValidCulture(string name) {
+			if (string.IsNullOrEmpty(name))
+				return false;
+			if (cultures.Contains(name))
+				return true;
+			// Newer runtimes enumerate standardized culture names (e.g. zh-Hans-CN)
+			// while deployed satellite directories can use legacy names (e.g. zh-CN).
+			try {
+				return CultureInfo.GetCultureInfo(name).Name.Length != 0;
+			}
+			catch (CultureNotFoundException) {
+				return false;
+			}
+		}
 
 		public IEnumerable<ModuleDef> GetSatelliteAssemblies(ModuleDef module) {
 			var asm = module.Assembly;

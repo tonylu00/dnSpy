@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$SigningKey,[Parameter(Mandatory)][string]$OutputDirectory,[string]$StrongNameTool)
+﻿param([Parameter(Mandatory)][string]$DnSpyConsole,[Parameter(Mandatory)][string]$SigningKey,[Parameter(Mandatory)][string]$OutputDirectory,[string]$StrongNameTool)
 $ErrorActionPreference='Stop'
 if(Test-Path -LiteralPath $OutputDirectory){throw 'Choose a new test directory'}
 $root=[IO.Path]::GetFullPath($OutputDirectory)
@@ -12,7 +12,7 @@ public static class Api {
 }
 '@ | Set-Content "$root\library\Api.cs"
 foreach($pair in @(@('Words.resx','Hello'),@('Words.zh-CN.resx','你好'))){
- ('<root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name="Label" xml:space="preserve"><value>'+ $pair[1]+'</value></data></root>') | Set-Content (Join-Path "$root\library" $pair[0])
+  ('<root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name="Label" xml:space="preserve"><value>'+ $pair[1]+'</value></data></root>') | Set-Content (Join-Path "$root\library" $pair[0]) -Encoding UTF8
 }
 dotnet build "$root\library\SignedLibrary.csproj" -c Release --nologo -v quiet
 if($LASTEXITCODE){throw 'Original library failed'}
@@ -27,7 +27,7 @@ class Program { static int Main() {
  if(result.Count!=42 || result.Label!="你好" || Api.Hidden()!=7) throw new System.Exception("SDK, friend or satellite mismatch");
  System.Console.WriteLine("PASS tuple contract, keyed friend and translated satellite"); return 0;
 } }
-'@ | Set-Content "$root\friend\Program.cs"
+'@ | Set-Content "$root\friend\Program.cs" -Encoding UTF8
 dotnet build "$root\friend\Friend.csproj" -c Release --nologo -v quiet
 if($LASTEXITCODE){throw 'Original friend failed'}
 & "$root\friend\bin\Release\net48\Friend.exe"
