@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace dnSpy.Contracts.Decompiler {
 	/// <summary>Explicit source identifiers; original metadata remains the runtime contract.</summary>
 	public static class SourceNameAliases {
 		static readonly ConditionalWeakTable<IMemberDef, Holder> names = new ConditionalWeakTable<IMemberDef, Holder>();
 		static readonly ConditionalWeakTable<Parameter, Holder> parameters = new ConditionalWeakTable<Parameter, Holder>();
+		static readonly ConditionalWeakTable<Local, Holder> locals = new ConditionalWeakTable<Local, Holder>();
 		sealed class Holder { public readonly string Name; public Holder(string name) => Name = name; }
 		/// <summary>Register before any decompilation or metadata-name cache is initialized.</summary>
 		public static void Register(IMemberDef member, string name) {
@@ -23,5 +25,12 @@ namespace dnSpy.Contracts.Decompiler {
 		}
 		/// <summary>Returns a source-only argument name, if present.</summary>
 		public static string? GetParameter(Parameter parameter) => parameters.TryGetValue(parameter, out var value) ? value.Name : null;
+		/// <summary>Register a source-only local name before decompilation.</summary>
+		public static void RegisterLocal(Local local, string name) {
+			if (!MetadataTypeNames.IsIdentifier(name)) throw new ArgumentException("Invalid source identifier.", nameof(name));
+			locals.Add(local, new Holder(name));
+		}
+		/// <summary>Returns a source-only local name, if present.</summary>
+		public static string? GetLocal(Local? local) => local != null && locals.TryGetValue(local, out var value) ? value.Name : null;
 	}
 }

@@ -20,6 +20,14 @@ try {
   $entry.SetAttribute('Token',('0x{0:X8}' -f $member.MDToken.Raw));$entry.SetAttribute('ExpectedName',$member.Name.String)
   $entry.SetAttribute('Signature',$member.FullName);$entry.SetAttribute('NewName',$item[1]);$null=$row.AppendChild($entry)
  }
+ $compute=$type.Methods | Where-Object {$_.Name.String -eq 'Compute'}
+ $entry=$map.CreateElement('Method')
+ $entry.SetAttribute('Token',('0x{0:X8}' -f $compute.MDToken.Raw));$entry.SetAttribute('ExpectedName','Compute')
+ $entry.SetAttribute('Signature',$compute.FullName);$entry.SetAttribute('NewName','ComputeTotal')
+ $local=$compute.Body.Variables[0]
+ $localRow=$map.CreateElement('Local')
+ $localRow.SetAttribute('Index','0');$localRow.SetAttribute('ExpectedType',$local.Type.FullName);$localRow.SetAttribute('NewName','runningTotal')
+ $null=$entry.AppendChild($localRow);$null=$row.AppendChild($entry)
  $map.Save("$root\names.xml")
 } finally {$module.Dispose()}
 & $DnSpyConsole --public-sign --source-name-map "$root\names.xml" --no-color -o "$root\export" "$inputRoot\SignedLibrary.dll" "$inputRoot\Friend.exe"
@@ -27,7 +35,7 @@ if($LASTEXITCODE){throw 'Source alias export failed'}
 [xml]$snapshot=Get-Content "$root\export\dnspy-source-name-map.xml"
 if($snapshot.DocumentElement.OuterXml -ne $map.DocumentElement.OuterXml){throw 'Source map snapshot differs'}
 $source=(Get-ChildItem "$root\export\SignedLibrary" -Recurse -Filter '*.cs' | Get-Content) -join "`n"
-if($source -notmatch 'class ReadableLibrary' -or $source -notmatch 'ReadCountAndLabel'){throw 'Readable source aliases absent'}
+if($source -notmatch 'class ReadableLibrary' -or $source -notmatch 'ReadCountAndLabel' -or $source -notmatch 'ComputeTotal' -or $source -notmatch 'runningTotal'){throw 'Readable source aliases absent'}
 dotnet build "$root\export\solution.sln" -c Release --nologo -v quiet
 if($LASTEXITCODE){throw 'Source alias build failed'}
 $runtime="$root\export\Friend\bin\Release\net48"
@@ -41,13 +49,18 @@ try {
  $type=$rebuilt.GetTypes() | Where-Object FullName -eq Api
  if(!$type -or !($type.Methods | Where-Object {$_.Name.String -eq 'Read'}) -or ($rebuilt.GetTypes() | Where-Object FullName -eq ReadableLibrary)){throw 'Original runtime names were not restored'}
 } finally {$rebuilt.Dispose()}
-foreach($case in 'stale-mvid','stale-hash','stale-signature','collision','original-name-collision','invisible-format'){
+foreach($case in 'stale-mvid','stale-hash','stale-signature','collision','original-name-collision','invisible-format','stale-local-index','stale-local-type','local-collision','invalid-local-name'){
  [xml]$bad=Get-Content "$root\names.xml"
+ $computeLocal=($bad.SourceNameMap.Module.Method | Where-Object { $_.ExpectedName -eq 'Compute' }).Local
  if($case -eq 'stale-mvid'){$bad.SourceNameMap.Module.SetAttribute('Mvid',[guid]::NewGuid().ToString())}
  elseif($case -eq 'stale-hash'){$bad.SourceNameMap.Module.SetAttribute('Sha256','00')}
  elseif($case -eq 'stale-signature'){$bad.SourceNameMap.Module.Method[0].SetAttribute('Signature','wrong signature')}
  elseif($case -eq 'original-name-collision'){$bad.SourceNameMap.Module.Method[0].SetAttribute('NewName','Hidden')}
  elseif($case -eq 'invisible-format'){$bad.SourceNameMap.Module.Method[0].SetAttribute('NewName',('Read'+[char]0x200B+'Count'))}
+ elseif($case -eq 'stale-local-index'){$computeLocal.SetAttribute('Index','99')}
+ elseif($case -eq 'stale-local-type'){$computeLocal.SetAttribute('ExpectedType','System.String')}
+ elseif($case -eq 'local-collision'){$computeLocal.SetAttribute('NewName','input')}
+ elseif($case -eq 'invalid-local-name'){$computeLocal.SetAttribute('NewName','running total')}
  else {$bad.SourceNameMap.Module.Method[0].SetAttribute('NewName','ReadableLibrary')}
  $bad.Save("$root\$case.xml")
  & $DnSpyConsole --public-sign --source-name-map "$root\$case.xml" --no-color -o "$root\$case" "$inputRoot\SignedLibrary.dll" "$inputRoot\Friend.exe"

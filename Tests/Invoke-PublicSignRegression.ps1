@@ -9,8 +9,9 @@ Copy-Item -LiteralPath $SigningKey -Destination "$root\test.snk"
 public static class Api {
  internal static int Hidden() => 7;
  public static (int Count,string Label) Read() => (42, new System.Resources.ResourceManager("SignedLibrary.Words",typeof(Api).Assembly).GetString("Label"));
+ internal static int Compute(int input) { int total = input + 1; for (int i = 0; i < 3; i++) total += i; return total; }
 }
-'@ | Set-Content "$root\library\Api.cs"
+'@ | Set-Content "$root\library\Api.cs" -Encoding UTF8
 foreach($pair in @(@('Words.resx','Hello'),@('Words.zh-CN.resx','你好'))){
   ('<root><resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>2.0</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader><data name="Label" xml:space="preserve"><value>'+ $pair[1]+'</value></data></root>') | Set-Content (Join-Path "$root\library" $pair[0]) -Encoding UTF8
 }

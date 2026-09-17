@@ -103,6 +103,28 @@ automatic parameter sanitization retains its existing behavior.
 parameter-only maps, generic methods, one/four workers, unchanged callers, runtime
 reflection names, input preservation and invalid-map rejection.
 
+Method rows also accept source-only local variable aliases:
+
+```xml
+<Method Token="0x06000002" ExpectedName="b"
+        Signature="System.Int32 Example.Api::b(System.Int32)">
+  <Local Index="0" ExpectedType="System.Int32" NewName="runningTotal" />
+</Method>
+```
+
+`Index` is the zero-based slot in the method body's variable list, and
+`ExpectedType` must equal that variable's dnlib `TypeSig.FullName` exactly. The
+row is rejected when the index or the type does not match, so a stale map fails
+loudly instead of renaming an unrelated variable. `NewName` must be a valid
+identifier that does not collide with the method's parameters (original or
+aliased), generic parameter names in scope, or other local aliases of the same
+method; invisible Unicode format characters and swaps are rejected. The alias
+wins over debug-symbol names; when the alias is unusable the exporter falls back
+to the existing name generation. Locals are source-only names: local variables
+are not persisted in metadata, so no runtime restoration is required. The
+application naming pass records local aliases in the same staged maps as member
+and parameter decisions.
+
 BAML connector export uses the same method-name lookup as C# when reconstructing
 ordinary event attributes, attached events and style `EventSetter` handlers.
 This keeps mapped handler declarations and XAML references consistent without

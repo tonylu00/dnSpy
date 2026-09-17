@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Xml;
 using System.Xml.Linq;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 using dnSpy.Contracts.Decompiler;
 using SourceNameMapping;
 
@@ -21,6 +22,8 @@ namespace dnSpy.Decompiler.MSBuild {
 			var modules = inputs.ToDictionary(m => Path.GetFullPath(m.Location), StringComparer.OrdinalIgnoreCase);
 			var proposals = new Dictionary<IMemberDef, string>();
 			var parameterProposals = new Dictionary<Parameter, string>();
+			var localProposals = new Dictionary<Local, string>();
+			var localOwners = new Dictionary<Local, MethodDef>();
 			var contractProposals = new Dictionary<MethodDef, string>();
 			foreach (var entry in root.Elements()) {
 				if (entry.Name != "Module") throw new InvalidDataException("Unsupported source-map entry: " + entry.Name);
@@ -31,14 +34,14 @@ namespace dnSpy.Decompiler.MSBuild {
 					if (!string.Equals(BitConverter.ToString(hash.ComputeHash(stream)).Replace("-", ""), Required(entry, "Sha256"), StringComparison.OrdinalIgnoreCase))
 						throw new InvalidDataException("Source map input hash mismatch: " + location);
 				foreach (var row in entry.Elements()) {
-					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter aliases.");
+					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter or local aliases.");
 					string tokenText = Required(row, "Token");
 					if (!tokenText.StartsWith("0x", StringComparison.Ordinal)) throw new InvalidDataException("Expected hexadecimal metadata token.");
 					var member = module.ResolveToken(uint.Parse(tokenText.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture)) as IMemberDef;
 					if (member == null || (row.Name == "Type" ? !(member is TypeDef) : row.Name == "Field" ? !(member is FieldDef) : !(member is MethodDef)) || member.Name != Required(row, "ExpectedName") || member.FullName != Required(row, "Signature")) throw new InvalidDataException("Source map token/name/signature mismatch.");
 					string? name = (string?)row.Attribute("NewName");
 					if (name != null) ValidateName(name);
-					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name or parameters.");
+					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name, parameters or locals.");
 					if (member is TypeDef type && (type.IsGlobalModuleType || type.HasGenericParameters)) throw new InvalidDataException("This source-map version requires a non-generic type.");
 					if (member is FieldDef field && FieldAliasScope.Blocker(field) != null) throw new InvalidDataException("Unsupported source field alias: " + FieldAliasScope.Blocker(field));
 					string? contract = (string?)row.Attribute("ContractFamily");
@@ -48,13 +51,24 @@ namespace dnSpy.Decompiler.MSBuild {
 					}
 					else if (contract != null) throw new InvalidDataException("ContractFamily requires a method row.");
 					if (name != null) proposals.Add(member, name);
-					foreach (var parameterRow in row.Elements()) {
-						if (parameterRow.Name != "Parameter" || parameterRow.HasElements || !(member is MethodDef owner)) throw new InvalidDataException("Expected a parameter alias.");
-						int sequence = int.Parse(Required(parameterRow, "Sequence"), CultureInfo.InvariantCulture);
-						var parameter = owner.Parameters.SingleOrDefault(p => !p.IsHiddenThisParameter && p.MethodSigIndex + 1 == sequence);
-						if (sequence <= 0 || parameter?.ParamDef == null || parameter.Name != Required(parameterRow, "ExpectedName")) throw new InvalidDataException("Source parameter sequence/name mismatch or absent metadata row.");
-						string alias = Required(parameterRow, "NewName"); ValidateName(alias);
-						parameterProposals.Add(parameter, alias);
+					foreach (var aliasRow in row.Elements()) {
+						if (aliasRow.HasElements || !(member is MethodDef owner)) throw new InvalidDataException("Expected a parameter or local alias.");
+						if (aliasRow.Name == "Parameter") {
+							int sequence = int.Parse(Required(aliasRow, "Sequence"), CultureInfo.InvariantCulture);
+							var parameter = owner.Parameters.SingleOrDefault(p => !p.IsHiddenThisParameter && p.MethodSigIndex + 1 == sequence);
+							if (sequence <= 0 || parameter?.ParamDef == null || parameter.Name != Required(aliasRow, "ExpectedName")) throw new InvalidDataException("Source parameter sequence/name mismatch or absent metadata row.");
+							string alias = Required(aliasRow, "NewName"); ValidateName(alias);
+							parameterProposals.Add(parameter, alias);
+						}
+						else if (aliasRow.Name == "Local") {
+							var body = owner.Body;
+							int index = int.Parse(Required(aliasRow, "Index"), CultureInfo.InvariantCulture);
+							if (body == null || index < 0 || index >= body.Variables.Count || body.Variables[index].Type?.FullName != Required(aliasRow, "ExpectedType")) throw new InvalidDataException("Source local index/type mismatch.");
+							string alias = Required(aliasRow, "NewName"); ValidateName(alias);
+							localProposals.Add(body.Variables[index], alias);
+							localOwners[body.Variables[index]] = owner;
+						}
+						else throw new InvalidDataException("Expected a parameter or local alias.");
 					}
 				}
 			}
@@ -78,6 +92,14 @@ namespace dnSpy.Decompiler.MSBuild {
 				for (var type = group.Key.DeclaringType; type != null; type = type.DeclaringType)
 					used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
 				foreach (var proposal in group) if (!used.Add(proposal.Value)) throw new InvalidDataException("Source parameter alias collision: " + proposal.Value);
+			}
+			foreach (var group in localProposals.GroupBy(p => localOwners[p.Key])) {
+				var used = new HashSet<string>(group.Key.Parameters.Where(p => !p.IsHiddenThisParameter).Select(p => p.Name), StringComparer.Ordinal);
+				used.UnionWith(group.Key.GenericParameters.Select(p => p.Name.String));
+				for (var type = group.Key.DeclaringType; type != null; type = type.DeclaringType)
+					used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
+				foreach (var proposal in parameterProposals) if (proposal.Key.Method == group.Key) used.Add(proposal.Value);
+				foreach (var proposal in group) if (!used.Add(proposal.Value)) throw new InvalidDataException("Source local alias collision: " + proposal.Value);
 			}
 			// Reserve aliases across each module to avoid ambiguous restore instructions
 			// and collisions with unmodified declarations, including nested members.
@@ -112,6 +134,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			}
 			foreach (var proposal in proposals) SourceNameAliases.Register(proposal.Key, proposal.Value);
 			foreach (var proposal in parameterProposals) SourceNameAliases.RegisterParameter(proposal.Key, proposal.Value);
+			foreach (var proposal in localProposals) SourceNameAliases.RegisterLocal(proposal.Key, proposal.Value);
 			return root.ToString(SaveOptions.DisableFormatting);
 		}
 		static void ValidateName(string name) {
