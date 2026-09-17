@@ -68,3 +68,32 @@ with tempfile.TemporaryDirectory() as directory:
     assert items['typedField']['Reasons']==['numbered-source-field-review']
     assert items['compactType']['Reasons']==items['digitType']['Reasons']==['compact-source-type-review']
 print('PASS worklist catches emitted placeholders and short names while preserving readable aliases/properties and physical file selection.')
+
+with tempfile.TemporaryDirectory() as directory:
+    db_path = Path(directory)/'seeded.sqlite'
+    with closing(sqlite3.connect(db_path)) as db:
+        db.executescript('CREATE TABLE symbols(id TEXT, module TEXT, data TEXT); CREATE TABLE source(id TEXT, data TEXT); CREATE TABLE edges(source TEXT, target TEXT, data TEXT);')
+        # Boundary seeds call outside their physical module (cross-module id or
+        # a non-core external assembly); a core-library-only caller stays
+        # unreachable, and the helper is called by a seed.
+        cases = ['helper', 'seed', 'caller', 'orphan', 'libcall']
+        for key in cases:
+            module = 'm0001' if key == 'foreign' else 'm0000'
+            db.execute('INSERT INTO symbols VALUES (?,?,?)', (module+':'+key, module, json.dumps({'Id':module+':'+key, 'Kind':'Method'})))
+            db.execute('INSERT INTO source VALUES (?,?)', (module+':'+key, json.dumps({'Source':'Service/ProjectService.cs', 'Kind':'MethodDeclaration', 'Name':'b', 'Line':1, 'Sha256':'evidence'})))
+        for source,target,data in [
+            ('m0000:seed','m0000:helper',{'Id':'m0000:helper'}),
+            ('m0000:caller','m0000:seed',{'Id':'m0000:seed'}),
+            ('m0000:seed','m0001:foreign',{'Id':'m0001:foreign'}),
+            ('m0000:orphan',None,{'Id':None,'Status':'external','Assembly':'mscorlib, Version=4.0.0.0','Signature':'System.Void System.Object::.ctor()'}),
+            ('m0000:libcall',None,{'Id':None,'Status':'external','Assembly':'Newtonsoft.Json, Version=13.0.0.0','Signature':'System.String Newtonsoft.Json.JsonConvert::SerializeObject(System.Object)'})]:
+            db.execute('INSERT INTO edges VALUES (?,?,?)', (source, target, json.dumps({'From':source, 'Target':data})))
+        db.commit()
+    result = subprocess.run([sys.executable, str(tool), 'seeded-worklist', str(db_path), 'm0000'], capture_output=True, text=True, check=True)
+    rows = json.loads(result.stdout)
+    assert [r['Phase'] for r in rows] == ['seed', 'helper', 'seed', 'caller', 'unreached'], rows
+    assert [r['Symbol']['Id'] for r in rows] == ['m0000:libcall', 'm0000:helper', 'm0000:seed', 'm0000:caller', 'm0000:orphan'], rows
+    assert [r['Depth'] for r in rows] == [0, 1, 0, 1, None], rows
+    assert rows[1]['Seed'] == 'm0000:seed' and rows[2]['Seed'] == 'm0000:seed', rows
+    assert rows[0]['Reasons'] == ['short-source-identifier-review'], rows
+print('PASS seeded worklist orders helpers innermost-first, boundary seeds (cross-module and non-core libraries), outward callers and unreachable core-only candidates last.')

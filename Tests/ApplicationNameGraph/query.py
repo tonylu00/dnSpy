@@ -3,6 +3,7 @@
 build GRAPH DB; show DB SYMBOL_ID; callers DB SYMBOL_ID;
 methods DB MODULE_ID [review]; source DB SYMBOL_ID; body DB SYMBOL_ID [SYMBOL_ID ...]
 worklist DB MODULE_ID [SOURCE_SUFFIX]
+seeded-worklist DB MODULE_ID
 """
 import json
 import hashlib
@@ -64,6 +65,75 @@ else:
             item['Declarations'].append({k:row[k] for k in ['Source','Name','Line','Sha256']})
         for item in items.values(): item['Reasons']=sorted(item['Reasons'])
         emit(list(items.values()))
+    elif action == 'seeded-worklist':
+        # Recommended review order: start at methods that call outside their
+        # physical module (recognizable library boundaries), emit their
+        # in-module helper chains innermost-first, then walk callers outward
+        # (callee before caller). Everything unreachable from a boundary is
+        # listed last. Phases: helper, seed, caller, unreached. The order is a
+        # review recommendation, never a rename decision.
+        suffix = sys.argv[4] if len(sys.argv)>4 else ''
+        items = {}
+        for definition,location in db.execute('SELECT s.data,l.data FROM symbols s JOIN source l ON l.id=s.id WHERE s.module=? ORDER BY s.id',(key,)):
+            symbol = json.loads(definition); row = json.loads(location)
+            if not row['Source'].endswith(suffix) or not row.get('Name'): continue
+            reasons = source_review_reasons(symbol,row)
+            if not reasons: continue
+            item = items.setdefault(symbol['Id'],{'Symbol':symbol,'Reasons':set(),'Declarations':[]})
+            item['Reasons'].update(reasons)
+            item['Declarations'].append({k:row[k] for k in ['Source','Name','Line','Sha256']})
+        prefix = key + ':'
+        low, high = prefix, prefix[:-1] + chr(ord(prefix[-1]) + 1)
+        module_symbols = {row[0] for row in db.execute('SELECT id FROM symbols WHERE module=?',(key,))}
+        # A boundary is a call to another indexed physical module or to a
+        # non-core external assembly (the recognizable library surface).
+        # Calls into the core libraries exist everywhere and are not seeds.
+        core = {'mscorlib', 'System', 'System.Core', 'System.Runtime', 'System.Private.CoreLib', 'netstandard'}
+        outgoing, incoming, boundary = {}, {}, set()
+        for source,target,data in db.execute('SELECT source,target,data FROM edges WHERE source>=? AND source<?',(low,high)):
+            if target is None:
+                edge = json.loads(data); external = edge.get('Target') or {}
+                if external.get('Status') == 'external':
+                    simple = (external.get('Assembly') or '').split(',')[0].strip()
+                    if simple and simple not in core: boundary.add(source)
+                continue
+            if target.startswith(prefix): outgoing.setdefault(source,[]).append(target)
+            else: boundary.add(source)
+        for source,target in db.execute('SELECT source,target FROM edges WHERE target>=? AND target<?',(low,high)):
+            if source is None: continue
+            incoming.setdefault(target,[]).append(source)
+        ordered, emitted, visited, visiting = [], set(), set(), set()
+        def item_row(phase,depth,seed,item):
+            return {'Phase':phase,'Depth':depth,'Seed':seed,'Symbol':item['Symbol'],'Reasons':sorted(item['Reasons']),'Declarations':item['Declarations']}
+        def visit(node,depth,seed):
+            visiting.add(node)
+            for target in sorted(outgoing.get(node,())): 
+                if target in visiting or target in visited or target not in module_symbols: continue
+                visit(target,depth+1,seed)
+                if target in items and target not in emitted:
+                    emitted.add(target); ordered.append(item_row('helper',depth+1,seed,items[target]))
+            visiting.discard(node); visited.add(node)
+        seeds = sorted(i for i in items if i in boundary)
+        for seed in seeds:
+            if seed not in visited: visit(seed,0,seed)
+            if seed not in emitted:
+                emitted.add(seed); ordered.append(item_row('seed',0,seed,items[seed]))
+        frontier, depth = set(visited), 0
+        while frontier:
+            depth += 1
+            nxt = set()
+            for target in frontier:
+                for caller in incoming.get(target,()):
+                    if caller in visited or caller in nxt or caller not in module_symbols: continue
+                    nxt.add(caller)
+            for caller in sorted(nxt):
+                visited.add(caller)
+                if caller in items and caller not in emitted:
+                    emitted.add(caller); ordered.append(item_row('caller',depth,None,items[caller]))
+            frontier = nxt
+        for remaining in sorted(set(items) - emitted):
+            ordered.append(item_row('unreached',None,None,items[remaining]))
+        emit(ordered)
     elif action == 'show':
         row=db.execute('SELECT data FROM symbols WHERE id=?',(key,)).fetchone()
         if row is None: raise SystemExit('Unknown physical symbol ID')

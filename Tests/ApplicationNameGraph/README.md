@@ -14,6 +14,7 @@ python Tests/ApplicationNameGraph/query.py callers graph.sqlite m0001:0x06000001
 python Tests/ApplicationNameGraph/query.py methods graph.sqlite m0001 review
 python Tests/ApplicationNameGraph/query.py body graph.sqlite m0001:0x06000001
 python Tests/ApplicationNameGraph/query.py worklist graph.sqlite m0001 /ProjectService.cs
+python Tests/ApplicationNameGraph/query.py seeded-worklist graph.sqlite m0001
 ```
 
 The NameCandidates project normally lives in a sibling `de4dotEx` checkout.
@@ -49,6 +50,15 @@ and hashes. These are review candidates, never automatic rename decisions; short
 or numbered names can be intentional. The optional suffix selects source files
 within that physical module. Use the behavioral ledger to distinguish already
 staged decisions from the unchanged source snapshot.
+
+`seeded-worklist` orders the same review candidates for a naming pass. It starts
+at methods that call outside their physical module (recognizable library call
+boundaries), emits their in-module helper chains innermost-first, then walks
+callers outward in callee-before-caller order by increasing distance. Candidates
+unreachable from any boundary are listed last. Every row carries `Phase`
+(`helper`, `seed`, `caller`, `unreached`) and `Depth`. The order is the
+recommended review sequence, not a rename decision: each row still needs its
+graph and source evidence reviewed like any other candidate.
 
 This is evidence for a naming pass, not a complete dynamic call graph. Virtual
 dispatch, reflection and delegated calls can add runtime targets. An unresolved
