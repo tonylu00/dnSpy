@@ -16,6 +16,24 @@ namespace dnSpy.Contracts.Decompiler {
 				other.Name == method.Name && new SigComparer().Equals(other.MethodSig, method.MethodSig));
 		/// <summary>Returns the source identifier from the resolved declaring module.</summary>
 		public static string GetName(MethodDef method) => SourceNameAliases.Get(method) ?? (method.Module != null && names.GetValue(method.Module, Find).TryGetValue(method, out var alias) ? alias : method.Name.String);
+		/// <summary>Resolves a method reference, retrying without type scopes for facade-only differences.</summary>
+		public static MethodDef? ResolveMethodDefExtended(IMethod method) {
+			var resolved = method.ResolveMethodDef();
+			if (resolved != null) return resolved;
+			// References compiled against equivalent facade assemblies can fail strict
+			// signature comparison; accept a unique name/signature match without type scopes.
+			var reference = method is MethodSpec spec ? spec.Method : method;
+			var typeDef = reference.DeclaringType?.ResolveTypeDef();
+			if (typeDef == null) return null;
+			var comparer = new SigComparer(SigComparerOptions.DontCompareTypeScope);
+			MethodDef? match = null;
+			foreach (var candidate in typeDef.Methods) {
+				if (candidate.Name != reference.Name || !comparer.Equals(candidate.MethodSig, reference.MethodSig)) continue;
+				if (match != null) return null;
+				match = candidate;
+			}
+			return match;
+		}
 		static readonly ConditionalWeakTable<ModuleDef, string[]> mappings = new ConditionalWeakTable<ModuleDef, string[]>();
 		/// <summary>Instructions use resolved assembly context and source owner/alias pairs.</summary>
 		public static string[] GetMappings(ModuleDef module) => mappings.GetValue(module, CreateMappings);
@@ -23,7 +41,7 @@ namespace dnSpy.Contracts.Decompiler {
 			var localTypes = module.GetTypes().ToArray();
 			var usedMethods = new HashSet<MethodDef>(localTypes.SelectMany(t => t.Methods));
 			foreach (var reference in module.GetMemberRefs().Where(r => r.IsMethodRef)) {
-				var method = reference.ResolveMethodDef();
+				var method = ResolveMethodDefExtended(reference);
 				if (method != null) usedMethods.Add(method);
 			}
 			var types = new HashSet<TypeDef>(localTypes);
