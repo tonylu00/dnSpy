@@ -191,6 +191,7 @@ namespace dnSpy_Console {
 		readonly List<string> userGacPaths;
 		readonly List<string> gacFiles;
 		string language = DecompilerConstants.LANGUAGE_CSHARP.ToString();
+		string? ilDumpFile;
 		readonly DecompilationContext decompilationContext;
 		readonly ModuleContext moduleContext;
 		readonly AssemblyResolver assemblyResolver;
@@ -441,6 +442,7 @@ namespace dnSpy_Console {
 			"sdk-project",
 			"public-sign",
 			"source-name-map",
+			"il-dump",
 			"asm-path",
 			"app-config",
 			"assembly-contexts",
@@ -498,6 +500,12 @@ namespace dnSpy_Console {
 					case "--source-name-map":
 						if (next is null) throw new ErrorException("Missing source name map.");
 						sourceNameMap = Path.GetFullPath(next); sdkProject = true; i++;
+						break;
+					case "--il-dump":
+						// Whole-assembly IL text dump. The IL language cannot create
+						// project files, so this writes a single text file instead.
+						if (next is null) throw new ErrorException("Missing IL dump file.");
+						ilDumpFile = Path.GetFullPath(next); i++;
 						break;
 					case "--public-sign":
 						publicSign = true; sdkProject = true;
@@ -744,6 +752,23 @@ namespace dnSpy_Console {
 			string guidFormat = guidStr.Substring(0, 36 - 8) + "{0:X8}";
 			foreach (var file in files.OrderBy(a => a.Module.Location, StringComparer.InvariantCultureIgnoreCase))
 				file.ProjectGuid = new Guid(string.Format(guidFormat, guidNum++));
+
+			if (ilDumpFile is not null) {
+				if (files.Count == 0)
+					throw new ErrorException(dnSpy_Console_Resources.MissingDotNetFilename);
+				var ilLanguage = GetLanguage();
+				using var dumpWriter = new StreamWriter(ilDumpFile);
+				var dumpOutput = new TextWriterDecompilerOutput(dumpWriter, GetIndenter());
+				foreach (var file in files.OrderBy(a => a.Module.Location, StringComparer.InvariantCultureIgnoreCase)) {
+					foreach (var type in file.Module.GetTypes()) {
+						if (type.IsGlobalModuleType)
+							continue;
+						dumpWriter.WriteLine("// ===== " + file.Module.Location + " | " + type.FullName);
+						ilLanguage.Decompile(type, dumpOutput, decompilationContext);
+					}
+				}
+				return;
+			}
 
 			if (mdToken != 0 || typeName is not null) {
 				if (files.Count == 0)
