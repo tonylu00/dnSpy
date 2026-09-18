@@ -354,3 +354,12 @@ Standing rules for this pass:
 - **dnSpy source maps accept name-only rows.** `SourceNameMap` rows without a
   `Token` attribute are resolved by `ExpectedName` + `Signature` inside the module;
   ambiguous or missing matches fail the export instead of guessing.
+- **Inner-reference evidence (`scratch-innerfp2.py`).** When a method has no name
+  in the 6.4 counterpart, the matcher scores 6.3/6.4 pairs by what the body
+  references: `System.*`/framework call signatures, string literals, mapped field
+  and local types. Score with a clear winner (`>=0.6`, gap `>=0.2`) transfers the
+  6.4 name; anything ambiguous is listed for manual review instead of guessed.
+  For DevKit the 6.4 transfer is now largely exhausted for the remaining event
+  accessors (many 6.4 accessors are themselves obfuscated), so the remaining
+  `akj`/`akg`/`al6`/`Class23` members need behavioural naming from callers,
+  strings and native-callback wiring, using `dnSpy.Console --lang IL`.
