@@ -35,10 +35,7 @@ namespace dnSpy.Decompiler.MSBuild {
 						throw new InvalidDataException("Source map input hash mismatch: " + location);
 				foreach (var row in entry.Elements()) {
 					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter or local aliases.");
-					string tokenText = Required(row, "Token");
-					if (!tokenText.StartsWith("0x", StringComparison.Ordinal)) throw new InvalidDataException("Expected hexadecimal metadata token.");
-					var member = module.ResolveToken(uint.Parse(tokenText.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture)) as IMemberDef;
-					if (member == null || (row.Name == "Type" ? !(member is TypeDef) : row.Name == "Field" ? !(member is FieldDef) : !(member is MethodDef)) || member.Name != Required(row, "ExpectedName") || member.FullName != Required(row, "Signature")) throw new InvalidDataException("Source map token/name/signature mismatch.");
+					var member = ResolveRow(module, row);
 					string? name = (string?)row.Attribute("NewName");
 					if (name != null) ValidateName(name);
 					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name, parameters or locals.");
@@ -136,6 +133,26 @@ namespace dnSpy.Decompiler.MSBuild {
 			foreach (var proposal in parameterProposals) SourceNameAliases.RegisterParameter(proposal.Key, proposal.Value);
 			foreach (var proposal in localProposals) SourceNameAliases.RegisterLocal(proposal.Key, proposal.Value);
 			return root.ToString(SaveOptions.DisableFormatting);
+		}
+
+		// A row may name its member by metadata token or by signature. Name-only rows
+		// let a mapping be authored without tokens as long as the signature identifies
+		// exactly one member in the module.
+		static IMemberDef ResolveRow(ModuleDef module, XElement row) {
+			string? tokenText = (string?)row.Attribute("Token");
+			if (tokenText != null) {
+				if (!tokenText.StartsWith("0x", StringComparison.Ordinal)) throw new InvalidDataException("Expected hexadecimal metadata token.");
+				var member = module.ResolveToken(uint.Parse(tokenText.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture)) as IMemberDef;
+				if (member == null || (row.Name == "Type" ? !(member is TypeDef) : row.Name == "Field" ? !(member is FieldDef) : !(member is MethodDef)) || member.Name != Required(row, "ExpectedName") || member.FullName != Required(row, "Signature")) throw new InvalidDataException("Source map token/name/signature mismatch.");
+				return member;
+			}
+			string expected = Required(row, "ExpectedName");
+			string signature = Required(row, "Signature");
+			var matches = module.GetTypes().SelectMany(type => row.Name == "Type" ? new IMemberDef[] { type } :
+				row.Name == "Field" ? type.Fields.Cast<IMemberDef>() : type.Methods.Cast<IMemberDef>())
+				.Where(m => m.Name == expected && m.FullName == signature).ToArray();
+			if (matches.Length != 1) throw new InvalidDataException("Source map name-only row must identify exactly one member: " + signature + " (" + matches.Length + " matches)");
+			return matches[0];
 		}
 		static void ValidateName(string name) {
 			if (!MetadataTypeNames.IsIdentifier(name) || name.Any(c => char.GetUnicodeCategory(c) == UnicodeCategory.Format)) throw new InvalidDataException("Invalid source alias: " + name);
