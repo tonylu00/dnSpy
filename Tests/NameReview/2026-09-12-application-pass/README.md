@@ -363,3 +363,9 @@ Standing rules for this pass:
   accessors (many 6.4 accessors are themselves obfuscated), so the remaining
   `akj`/`akg`/`al6`/`Class23` members need behavioural naming from callers,
   strings and native-callback wiring, using `dnSpy.Console --lang IL`.
+- **Verified reference propagation.** `Tests/SourceNameOnlyMapRegression` exports
+  two projects from a map whose rows carry only `ExpectedName` + `Signature`: the
+  renamed definition and the call site in the other project both change, and a row
+  whose signature matches nothing fails the export. Together with the de4dotEx
+  `--apply-map` regression this covers both the source-export and binary paths, so
+  renamers only ever record the implementation.
