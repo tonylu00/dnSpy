@@ -388,3 +388,33 @@ Standing rules for this pass:
   parameter or a namespace component still receives a deterministic suffix. Wave
   87's 24 name-reservation losses are unblocked; the existing staged map still
   passes `--check-map` because it satisfied the stricter module-wide rule.
+- **Structural 6.4 transfer (`scratch-transfer.py`, wave 88).** Type names are the
+  weaker half of the evidence: only 46 of 962 HawkNET and 362 of 2087 Falcon 6.3
+  types are readable, so names transfer through structure. Types pair by exact
+  readable name first and then by a mutual-best containment match (`Shapes` 0.42,
+  framework `Calls` 0.24, `Strings` 0.20, `Fields` 0.08, threshold 0.85, margin
+  0.10); tuning on ObjectModel's 3331 known pairs measured 0.97 precision. Members
+  then match by signature shape in which every non-framework type name collapses
+  to one placeholder, so an obfuscated reference compares equal to the readable
+  one, with the C# member class (ordinary/get/set/ctor/operator/explicit) part of
+  the key so accessors and constructors cannot masquerade as ordinary methods. A
+  shape with a single occupant transfers directly; several occupants require body
+  evidence (framework calls, strings, locals, already-paired internal references)
+  with `>=0.6` and a `>=0.2` margin. An audit using the 6.3 build's own readable
+  names as anchors measured 2915/2917 ObjectModel, 319/319 Falcon and 43/43
+  HawkNET agreements, so the pairs and the shape rule are sound.
+- **Wave 88 (checkpointed).** 298 rows: 193 Falcon, 74 HawkNET, 31 ObjectModel,
+  including the 24 ObjectModel rows wave 87 skipped for name reservation. The
+  updater reported 6535 reviewed edits, 0 errors and published
+  `names63-staged-v88.xml` (SHA256 972BFCD3...); `--check-map` passes, the SDK
+  audit again freezes only `Knx.Ets.CalculatedParameters.z`, and the filtered
+  export map reports `Success=True, sdk-visible=0, sdk-referenced-types=0`. 74
+  proposals inside one type keep a deterministic suffix (`Create2`...`Create7`,
+  `UpdateRootPathsOfCurrentTransaction2`): those are genuine same-scope collisions
+  because the rebuild instruction is keyed by declaring type and alias.
+- **Transfer ceiling (measured).** For ObjectModel, 224 candidates have no 6.4
+  counterpart shape, 2200 have only placeholder counterparts and 555 have a
+  readable one (312 unique). The 6.4 builds are therefore close to exhausted for
+  this class of work: the remaining ~15,000 candidates across the graph need
+  behavioural naming from the 6.3 binaries themselves (strings, call sites,
+  property/event/native wiring, delegate targets) rather than another build.
