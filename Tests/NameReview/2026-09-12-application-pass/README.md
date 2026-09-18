@@ -369,3 +369,22 @@ Standing rules for this pass:
   whose signature matches nothing fails the export. Together with the de4dotEx
   `--apply-map` regression this covers both the source-export and binary paths, so
   renamers only ever record the implementation.
+- **Readable reference builds for the pending modules.** The ETS 6.4 tree carries
+  newer builds of the same libraries next to the identical shared copies:
+  `Knx.Ets.ObjectModel.2` (m0120, 22,503 readable methods), `Knx.Ets.HawkNET.2`
+  (m0113, 5,546) and `Knx.Falcon.2` (m0153, 11,712). `Knx.Ets.ObjectModel.dll`,
+  `Knx.Ets.HawkNET.dll` and `Knx.Falcon.dll` are byte-identical between the 6.3 and
+  6.4 trees, so those `.2` copies are the naming source, not the identical ones.
+  `scratch-crossmodule.py` pairs types by exact name first (3,360 pairs for
+  ObjectModel) then matches members by signature shape plus inner-reference score,
+  with readability decided by `NameCandidates --name-analysis` (the same lexical
+  analysis the review pipeline uses) and a recurring-token check to reject
+  obfuscated names.
+- **Next tooling task: type-scoped name allocation.** The map validator reserves
+  NewName values module-wide, so repeated member names across different types get
+  auto-suffixed (`Create2`, `set_IsActive3`, ...). Wave 87 hit this on 24 of 32
+  ObjectModel proposals (e.g. six `Factory`/`Create` overloads, `Dispose` in
+  several writers); those rows stay pending. Allocating names per declaring type
+  (as .NET itself scopes them) instead of per module would unlock that class of
+  names without inventing qualifiers, and would not invalidate existing maps
+  because they already satisfy the stricter rule.
