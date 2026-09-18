@@ -45,8 +45,11 @@ reviewed member; the updater expands the actual metadata family and allocates
 one alias for all its declarations, implementations and overrides. Each resulting
 method row carries a `ContractFamily` identifier. dnSpy recomputes that graph
 using the complete export inputs and validates all members and aliases before
-registering any names. The only exception to module-wide alias uniqueness is
-the shared alias of one fully validated family (fields use their separate declaration scopes). Generic interface/base argument
+registering any names. Member, type and field aliases are reserved in their C#
+declaration scope — the declaring type, its base chain and its nested declarations —
+so unrelated types may both use one name and an unmodified declaration still blocks
+it. The only sharing allowed beyond that is the single alias of one fully validated
+family. Generic interface/base argument
 substitution, inherited implementations and separate overloads are supported;
 ambiguous or external contracts are blocked. Physical duplicate assembly
 identities retain their dependency contexts.
@@ -183,5 +186,5 @@ Together with the two schema-method aliases, the expanded map rebuilt five
 modules. The SDK contract audit reported no differences, and a separate metadata
 check found all twelve mapped methods under their exact original runtime names
 and signatures. Repeated candidate names received distinct descriptive aliases
-where required by the source map's module-wide collision guard. This validation
+where required by the source map's declaration-scope collision guard. This validation
 does not replace a full-tree build or application launch with the expanded map.

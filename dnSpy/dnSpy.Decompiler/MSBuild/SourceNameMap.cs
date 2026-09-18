@@ -98,30 +98,33 @@ namespace dnSpy.Decompiler.MSBuild {
 				foreach (var proposal in parameterProposals) if (proposal.Key.Method == group.Key) used.Add(proposal.Value);
 				foreach (var proposal in group) if (!used.Add(proposal.Value)) throw new InvalidDataException("Source local alias collision: " + proposal.Value);
 			}
-			// Reserve aliases across each module to avoid ambiguous restore instructions
-			// and collisions with unmodified declarations, including nested members.
-			foreach (var group in proposals.Where(p => !(p.Key is FieldDef)).GroupBy(p => p.Key is TypeDef t ? t.Module : p.Key.DeclaringType.Module)) {
-				var used = new HashSet<string>(StringComparer.Ordinal);
-				var shared = new Dictionary<string, string>(StringComparer.Ordinal);
-				foreach (var type in group.Key.GetTypes()) {
-					used.UnionWith((type.Namespace.String ?? "").Split('.'));
-					used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
-					used.UnionWith(type.Methods.SelectMany(m => m.GenericParameters).Select(p => p.Name.String));
-					used.UnionWith(type.Methods.SelectMany(m => m.Parameters).Select(p => p.Name));
-					// Reserve original names too: swaps can make restore ordering ambiguous.
-					used.Add(MetadataTypeNames.SimpleName(type.Name));
-					foreach (var method in type.Methods) used.Add(method.Name);
-					used.UnionWith(type.Fields.Select(f => f.Name.String));
-					used.UnionWith(type.Properties.Select(p => p.Name.String));
-					used.UnionWith(type.Events.Select(e => e.Name.String));
-				}
-				foreach (var proposal in group) {
+			// C# scopes member names by declaring type, not by module, and every
+			// rebuild instruction is qualified by its source owner. Reserve
+			// aliases in their declaration scope, keeping original names reserved
+			// because swaps can make restore ordering ambiguous.
+			if (proposals.Any(p => !(p.Key is FieldDef))) {
+				var scope = new MemberNameScope(modules.Values, useHostResolver: true);
+				var claims = new MemberNameClaims(scope);
+				foreach (var proposal in proposals.Where(p => !(p.Key is FieldDef))) {
 					string? family = proposal.Key is MethodDef method && contractProposals.TryGetValue(method, out var id) ? id : null;
-					if (!used.Add(proposal.Value) && (family == null || !shared.TryGetValue(proposal.Value, out var previous) || previous != family))
-						throw new InvalidDataException("Source alias collision: " + proposal.Value);
-					if (family != null) shared[proposal.Value] = family;
+					if (claims.Conflicts(proposal.Key, proposal.Value, family))
+						throw new InvalidDataException("Source alias collision: " + proposal.Key.FullName + " -> " + proposal.Value);
+					claims.Claim(proposal.Key, proposal.Value, family);
 				}
-				if (parameterProposals.Any(p => p.Key.Method.Module == group.Key && group.Any(m => m.Value == p.Value))) throw new InvalidDataException("Source parameter alias collides with a mapped member.");
+				var parameters = new Dictionary<TypeDef, HashSet<string>>();
+				foreach (var proposal in parameterProposals) {
+					var owner = proposal.Key.Method.DeclaringType;
+					if (owner == null) continue;
+					if (!parameters.TryGetValue(owner, out var names)) parameters.Add(owner, names = new HashSet<string>(StringComparer.Ordinal));
+					names.Add(proposal.Value);
+				}
+				// A source parameter name only shadows members visible from the
+				// body that declares it, so the reservation stays in its type scope.
+				foreach (var proposal in proposals.Where(p => !(p.Key is FieldDef) && p.Key.DeclaringType != null)) {
+					foreach (var type in scope.Types(proposal.Key.DeclaringType))
+						if (parameters.TryGetValue(type, out var names) && names.Contains(proposal.Value))
+							throw new InvalidDataException("Source parameter alias collides with a mapped member: " + proposal.Key.FullName + " -> " + proposal.Value);
+				}
 			}
 			if (proposals.Keys.Any(m => m is FieldDef)) {
 				var scope = new FieldAliasScope(modules.Values, useHostResolver: true);

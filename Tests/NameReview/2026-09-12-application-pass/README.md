@@ -380,11 +380,11 @@ Standing rules for this pass:
   with readability decided by `NameCandidates --name-analysis` (the same lexical
   analysis the review pipeline uses) and a recurring-token check to reject
   obfuscated names.
-- **Next tooling task: type-scoped name allocation.** The map validator reserves
-  NewName values module-wide, so repeated member names across different types get
-  auto-suffixed (`Create2`, `set_IsActive3`, ...). Wave 87 hit this on 24 of 32
-  ObjectModel proposals (e.g. six `Factory`/`Create` overloads, `Dispose` in
-  several writers); those rows stay pending. Allocating names per declaring type
-  (as .NET itself scopes them) instead of per module would unlock that class of
-  names without inventing qualifiers, and would not invalidate existing maps
-  because they already satisfy the stricter rule.
+- **Declaration-scoped name allocation (done).** The map updater, the map writer
+  and dnSpy's `SourceNameMap.Apply` now reserve aliases through the shared
+  `MemberNameScope`/`MemberNameClaims` pair: a member is reserved against its own
+  and inherited declarations only, so unrelated types may both use `Create` while
+  a same-type or inherited collision, an unmodified declaration, a generic
+  parameter or a namespace component still receives a deterministic suffix. Wave
+  87's 24 name-reservation losses are unblocked; the existing staged map still
+  passes `--check-map` because it satisfied the stricter module-wide rule.
