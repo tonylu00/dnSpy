@@ -269,3 +269,34 @@ was needed. A wrong-vendor field fixture still fails reference preflight.
 Continue the complete naming pass before exports/builds. Keep unclear roles as
 explicit work items. Completion requires applied readable source, consistent
 references/contracts and consolidated verification over the whole intended tree.
+
+## ETS 6.4 vendor-name correspondence (DevKit, waves 78-79)
+
+`D:\knx_analysis\ETS6.4_api_preserved5` is **not** obfuscated at the public API
+level: `Knx.DevKit.dll` (graph `m0099`) keeps readable type names, event
+accessors (`add_DongleAdded`), raisers (`OnDongleAdded`) and property accessors,
+while only private members carry random names. That makes 6.4 a naming source for
+6.3 rather than only a transfer target.
+
+- Wave 78 recovered the whole `akj` (= `Knx.DevKit.SecureDongle.DongleManager`)
+  event surface: `akh` (14 Dongle events), `alk` (18 manager events), `aku`
+  (license added/removed) and the five `System.EventHandler` events. Field
+  declaration order is stable across the two builds, counts match per field type,
+  and the mapping is cross-checked by subscriber symmetry:
+  `arx::a()` (6.3) and `Knx.Ets.Common.Licensing.DongleManager::InitializeAsync`
+  (6.4) both subscribe to DongleAdded/Removed/Locked/Unlocked/InvalidSignature.
+  Raisers are named `On<Event>`; 25 virtual raisers go through the
+  `--review-families` contract path.
+- Wave 79 transfers 24 type names (`akg`=`Dongle`, `akj`=`DongleManager`,
+  `al2`=`TimeManager`, `al6`=`Bootloader`, `amh`=`UpdateManager`, the event
+  handler/args pairs, ...). Correspondence evidence is member-shape overlap plus
+  near-equal member counts (e.g. `amh` 249 vs `UpdateManager` 246). `aly` is named
+  `TimeLicense` because the module already reserves `Time`
+  (`SignatureType::Time`).
+
+Working helpers: `scratch-align-events.py` (field-order alignment),
+`scratch-match-types63to64.py` (member-shape type correspondence),
+`scratch-fieldraisers.py` (event field -> add/remove/raiser), and
+`devkit-event-align.json` / `devkit-event-split.json`. The next DevKit steps are
+enum-member alignment by declaration order, property accessor transfer for the
+matched types, and the remaining `akg`/`amh`/`al6`/`Class23` members.
