@@ -300,3 +300,37 @@ Working helpers: `scratch-align-events.py` (field-order alignment),
 `devkit-event-align.json` / `devkit-event-split.json`. The next DevKit steps are
 enum-member alignment by declaration order, property accessor transfer for the
 matched types, and the remaining `akg`/`amh`/`al6`/`Class23` members.
+
+## Mapping-only policy and tool support (2026-09-19)
+
+Standing rules for this pass:
+
+- **No script rewrites ETS source text.** Scripts may only produce mapping and
+  review artifacts (JSON ledgers, `names63-staged-vNN.xml`). All renames are
+  applied by *tools*. The legacy `2026-09-12-project-check/apply.py` does textual
+  source replacement and must not be used again.
+- **Evidence comes from dnSpy/ILSpy, not ad-hoc dumpers.** dnSpy.Console can dump
+  any member (`--lang IL --md 0xTOKEN file.dll`) and now dumps a whole assembly:
+
+  ```text
+  dnSpy.Console.exe --lang IL --il-dump out.txt <assembly>
+  ```
+
+  The IL text includes enum literals with their constant values, event/field
+  definitions and full method bodies, which is what the earlier native-records and
+  DevKit passes needed.
+- **Batch rename from the map (de4dotEx).** `NameCandidates --apply-map
+  <map.xml> <output-tree> <report.json> [--preserve-public]` renames the mapped
+  definitions and then rewrites every `TypeRef`/`MemberRef` in the whole tree that
+  resolves to them, including cross-assembly calls. A map author therefore records
+  the *implementation* only; reference tokens are never needed. Rows may carry a
+  token or, for hand-written maps, just `ExpectedName`/`Signature`. Regression:
+  `tests/ApplyMapRegression`.
+- **ETS SDK public API is frozen.** Third-party ETS apps ship as compiled binaries
+  and cannot be rebuilt against our modified SDK, so public/protected members of
+  SDK assemblies must keep their names. Use `--apply-map ... --preserve-public`
+  (reported in `SkippedPublicApi`) and dnSpy's `--public-sign`/`--source-name-map`
+  export path, which keeps runtime identities.
+- **dnSpy source maps accept name-only rows.** `SourceNameMap` rows without a
+  `Token` attribute are resolved by `ExpectedName` + `Signature` inside the module;
+  ambiguous or missing matches fail the export instead of guessing.
