@@ -331,6 +331,26 @@ Standing rules for this pass:
   SDK assemblies must keep their names. Use `--apply-map ... --preserve-public`
   (reported in `SkippedPublicApi`) and dnSpy's `--public-sign`/`--source-name-map`
   export path, which keeps runtime identities.
+- **SDK compatibility gate (63).** The shipped SDK package
+  (`sdk_extract/Knx.Ets.Sdk.nuspec`) contains `Knx.Ets.Sdk.dll`,
+  `Knx.Ets.Sdk.AddIns.AddInViews.dll`, `Knx.Ets.Common.Types.dll` and
+  `Knx.Ets.Common.Resources.dll`. The gate is:
+
+  ```text
+  NameCandidates --public-api-audit names63-staged-vNN.xml audit.json \
+      --sdk-module Knx.Ets.Sdk.dll --sdk-module Knx.Ets.Sdk.AddIns.AddInViews.dll \
+      --sdk-module Knx.Ets.Common.Types.dll --sdk-module Knx.Ets.Common.Resources.dll
+  NameCandidates --filter-map names63-staged-vNN.xml audit.json names63-sdkfrozen-vNN.xml
+  ```
+
+  `--public-api-audit` reports SDK-visible renames *and* types used by SDK public
+  signatures that are renamed in another module, and emits a machine-readable
+  `Freeze` list. `--filter-map` writes the export map with those rows left at their
+  original names; `--apply-map` accepts the same list via `--freeze` for binaries.
+  The current state (`public-api-audit63.json`, map `names63-staged-v85-sdkfrozen.xml`)
+  froze `Knx.Ets.CalculatedParameters.z`, which `Knx.Ets.Sdk.ScriptFacades.DeviceFacade`
+  and `DeviceManagementFacade` expose in public signatures; the filtered map passes
+  with `sdk-visible=0` and `sdk-referenced-types=0`.
 - **dnSpy source maps accept name-only rows.** `SourceNameMap` rows without a
   `Token` attribute are resolved by `ExpectedName` + `Signature` inside the module;
   ambiguous or missing matches fail the export instead of guessing.
