@@ -1627,3 +1627,18 @@ Standing rules for this pass:
   `ApplyMapRegression` builds a `Generic<int>.Original` call whose operand
   instance differs from the table instance and asserts the applied output binds
   `Calculate`.
+- **The last serial tree walks (de4dotEx `f4486852`).** Every other
+  NameCandidates command already parsed its modules on all cores; the two
+  property/field suggestions and the public API audit still walked the whole
+  tree on one thread, so they ran at roughly one core from start to finish.
+  Both now split their per-module work over `Environment.ProcessorCount`
+  threads and merge the rows in file order, the audit fills its resolver cache
+  in that same order, and both print `NAMECANDIDATES_TIMING=1` phases.
+  6.3 tree (wall / CPU / busy cores): `--suggest-property-fields`
+  2.5 s / 2.9 s (1.2) -> 1.2 s / 3.2 s (2.6), `--suggest-field-accessors`
+  3.1 s / 4.3 s (1.4) -> 1.6 s / 6.6 s (4.1), `--public-api-audit`
+  1.2 s / 0.9 s (0.8) -> 0.9 s / 1.0 s (1.1); the audit lists and loads its
+  528 modules in 73 ms. The 553-assembly 6.4 tree behaves the same way, all 18
+  report files (9 kinds on both trees) are byte-identical to the previous
+  build, and `PublicApiAuditFixture` plus the existing property/field fixtures
+  pass in the full fixture suite.
