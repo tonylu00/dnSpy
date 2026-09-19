@@ -704,6 +704,12 @@ Standing rules for this pass:
   byte-identical to the previous output and every copied module byte-identical
   to its input (all 528 still load). de4dotEx `050f7a09`; see
   `tools/NameCandidates/README.md` for the profile and the regression fixture.
+  The follow-up `21748706` skips resolving references whose own name matches no
+  renamed definition (dnlib resolves a TypeRef by full name and a MemberRef by
+  member name, so those references can never produce a row): the 553-assembly
+  6.4 tree's cold `--apply-map` went 43.5 s -> 8.5 s and the 6.3 wave-101/wave-102
+  maps now apply in 8.6 s, all outputs byte-identical (553/553 and 528/528
+  files, SHA256).
 - **Wave 102: the remaining string-evidenced members.** The same rule as wave
   101 applied to the members whose literal states the operation directly:
   `"Invalid signature detected: {0}"` -> `ValidateSignature` in both ETS6C/N
