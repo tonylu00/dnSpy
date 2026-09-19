@@ -1816,6 +1816,21 @@ Standing rules for this pass:
   The batch apply rewrote 10,352 methods in 528/528 modules with 0 errors in
   7.3 s and `verify-map.cs` reports `canonical_rows=539 definitions_missing=0
   stale_references=0`.
+- **Wave 144: HawkNET `Class511::a(IEnumerable<lx>)`.** The body is
+  `items.Where(x => x != null && x.SecureLinks != null)`
+  `.SelectMany(x => x.SecureLinks)` (element type
+  `Knx.Ets.Hawk.DataProvider.SecureLink`) `.Distinct(link comparer)`
+  `.Select((link, index) => Class511.Factory((uint)index, link))`, so it
+  returns the distinct secure links of the supplied items each paired with its
+  index; the three cached lambdas are the predicate, the array selector and the
+  indexed projection. Named `GetDistinctSecureLinks` →
+  `<GetDistinctSecureLinks>b__3_0..2`. `names63-staged-v144.xml` =
+  `277C91FB9856B3E0C43F7CB273C003B6E24C8F6E0B509A8C274B054E2BB407A6`, 11,837
+  reviewed edits (4 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `4A596BAC90373D9F…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,356 methods in 528/528 modules with 0 errors in
+  6.2 s and `verify-map.cs` reports `canonical_rows=542 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
