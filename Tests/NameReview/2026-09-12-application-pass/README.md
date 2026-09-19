@@ -2081,3 +2081,22 @@ Standing rules for this pass:
   The batch apply rewrote 10,409 methods in 528/528 modules with 0 errors in
   6.0 s, and `--verify-applied` reports `canonical_rows=573
   definitions_missing=0 stale_references=0` in 3.5 s.
+- **Wave 156: the IoT source-address provider interface.** 6.3 `Interface41`
+  (`0x020002FE`) is the released
+  `Knx.Falcon.IoT.Stack.Network.IIoTSourceIpAddressProvider`: it is the
+  parameter type of the wave-155 `Ipv6AddressHelper` methods whose released
+  counterparts declare that interface, and its two members match the released
+  interface 1:1 (`imethod_0()`/`get_EnableAutomaticSourceAddressSelection()`,
+  `imethod_1()`/`GetSourceIpAddresses()`). The applied tree now prints the
+  provider overloads as
+  `…ForDestinationEndpoint(Knx.Falcon.IoT.Stack.Network.IIoTSourceIpAddressProvider)`.
+  The interface *methods* are virtual, so they stay blocked for the
+  contract-family flow (`--check-map` rejects an interface method alias with
+  "Unsupported method alias", verified on a scratch map).
+  `names63-staged-v156.xml` =
+  `E96FDAFE0688A9212569FFFF5B8882DF11743B1297E50AA065F0C33A18188D29`, 11,896
+  reviewed edits (1 row), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `BD110165741C8280…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 809 types in 528/528 modules with 0 errors in 6.2 s,
+  and `--verify-applied` reports `canonical_rows=573 definitions_missing=0
+  stale_references=0` in 3.5 s.
