@@ -32,7 +32,12 @@ namespace SourceNameMapping {
         // Signature comparison and reference resolution dominate a large graph;
         // both are pure, so one comparer and a per-caller cache are enough.
         static readonly SigComparer Comparer = new SigComparer();
-        readonly Dictionary<(ITypeDefOrRef Reference, ModuleDef Caller), Use> resolves = new Dictionary<(ITypeDefOrRef, ModuleDef), Use>();
+        // Every cache below is filled from several threads at once (the type
+        // walk and the root pass run in parallel), holds only pure answers and
+        // is never mutated after publication, so a concurrent map keeps the
+        // lookup lock-free instead of serialising the analysis.
+        readonly System.Collections.Concurrent.ConcurrentDictionary<(ITypeDefOrRef Reference, ModuleDef Caller), Use> resolves =
+            new System.Collections.Concurrent.ConcurrentDictionary<(ITypeDefOrRef, ModuleDef), Use>();
         // Tooling hook: the NameCandidates CLI prints per-phase timings when
         // NAMECANDIDATES_TIMING=1; product code leaves this null and pays
         // nothing beyond a field comparison per phase.
@@ -46,9 +51,12 @@ namespace SourceNameMapping {
         // Method lookup by name and memoized generic substitution: a large graph
         // compares the same contracts against the same hierarchy slots thousands
         // of times, so scanning every method of a type is pure waste.
-        readonly Dictionary<TypeDef, Dictionary<string, MethodDef[]>> named = new Dictionary<TypeDef, Dictionary<string, MethodDef[]>>();
-        readonly Dictionary<TypeDef, MethodDef[]> overriding = new Dictionary<TypeDef, MethodDef[]>();
-        readonly Dictionary<(MethodSig Signature, object Arguments), MethodSig> substituted = new Dictionary<(MethodSig, object), MethodSig>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<TypeDef, System.Collections.Concurrent.ConcurrentDictionary<string, MethodDef[]>> named =
+            new System.Collections.Concurrent.ConcurrentDictionary<TypeDef, System.Collections.Concurrent.ConcurrentDictionary<string, MethodDef[]>>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<TypeDef, MethodDef[]> overriding =
+            new System.Collections.Concurrent.ConcurrentDictionary<TypeDef, MethodDef[]>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<(MethodSig Signature, object Arguments), MethodSig> substituted =
+            new System.Collections.Concurrent.ConcurrentDictionary<(MethodSig, object), MethodSig>();
         // Explicit implementations are rare; indexing them keeps the interface
         // walk from scanning every method of every hierarchy level.
         MethodDef[] Overriding(TypeDef type) {
@@ -61,7 +69,8 @@ namespace SourceNameMapping {
         // walk visits one type from several passes, so the per-type list is
         // read once. The order is the metadata order the rest of the tool
         // depends on; this cache is only touched by the sequential analysis.
-        readonly Dictionary<TypeDef, MethodDef[]> methodLists = new Dictionary<TypeDef, MethodDef[]>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<TypeDef, MethodDef[]> methodLists =
+            new System.Collections.Concurrent.ConcurrentDictionary<TypeDef, MethodDef[]>();
         MethodDef[] Methods(TypeDef type) {
             if (!methodLists.TryGetValue(type, out var methods))
                 methodLists[type] = methods = type.Methods.ToArray();
@@ -71,12 +80,14 @@ namespace SourceNameMapping {
         // MethodDef.Overrides makes dnlib build a MemberRef (and resolve its
         // declaring type) per candidate method. A module without any such row
         // can never contribute one, which skips that work entirely.
-        readonly Dictionary<ModuleDef, bool> methodImpls = new Dictionary<ModuleDef, bool>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<ModuleDef, bool> methodImpls =
+            new System.Collections.Concurrent.ConcurrentDictionary<ModuleDef, bool>();
         bool HasMethodImpls(ModuleDef module) {
             if (!methodImpls.TryGetValue(module, out bool has)) {
                 var md = module as ModuleDefMD;
                 var stream = md?.Metadata?.TablesStream;
-                methodImpls.Add(module, has = stream == null || stream.MethodImplTable.Rows > 0);
+                methodImpls.TryAdd(module, stream == null || stream.MethodImplTable.Rows > 0);
+                methodImpls.TryGetValue(module, out has);
             }
             return has;
         }
@@ -86,7 +97,8 @@ namespace SourceNameMapping {
         // TypeDefOrRef, so the resolution can stay off.
         static TypeSig TypeSigOf(ITypeDefOrRef reference) => reference?.ToTypeSig(resolveToCheckValueType: false);
         MethodDef[] Named(TypeDef type, string name) {
-            if (!named.TryGetValue(type, out var index)) named[type] = index = new Dictionary<string, MethodDef[]>(StringComparer.Ordinal);
+            if (!named.TryGetValue(type, out var index))
+                named[type] = index = new System.Collections.Concurrent.ConcurrentDictionary<string, MethodDef[]>(StringComparer.Ordinal);
             if (!index.TryGetValue(name, out var methods))
                 index[name] = methods = type.Methods.Where(m => m.Name == name).ToArray();
             return methods;
@@ -178,10 +190,14 @@ namespace SourceNameMapping {
                 foreach (var owner in hierarchy) foreach (var item in owner.Type.Interfaces)
                     VisitInterface(Substitute(TypeSigOf(item.Interface), owner.Arguments)?.ToTypeDefOrRef(), owner.Type.Module, hierarchy, visited, type);
             }
-            // The per-type walk shares too many small indexes (resolutions,
-            // name lookup, union-find) for several threads to pay off, so it
-            // stays sequential; the passes around it scale cleanly.
-            foreach (var type in types) Analyze(type);
+            // The per-type walk reads only its own type and the shared caches
+            // above; the union-find, the blocker sets and the finished members
+            // are the only shared state and they stay under the gate. A
+            // union-find partition does not depend on the order its relations
+            // arrive in, and the family id and blocker list are derived from
+            // sorted members, so several threads produce the same graph as the
+            // sequential walk did.
+            System.Threading.Tasks.Parallel.For(0, types.Length, i => Analyze(types[i]));
             Mark("contract graph: contracts joined");
             System.Threading.Tasks.Parallel.ForEach(parents.Keys.ToArray().GroupBy(Root).ToArray(), group => {
                 var members = group.OrderBy(m => moduleKey(m.Module), StringComparer.Ordinal).ThenBy(m => m.MDToken.Raw).ToArray();
@@ -222,10 +238,14 @@ namespace SourceNameMapping {
                 references.Remove(module);
             }
             foreach (var module in analysisModules.ToArray()) Include(module);
-            foreach (var module in modules.ToArray()) {
-                if (analysisModules.Contains(module)) continue;
-                references[module] = ReferencedTypes(module);
-            }
+            // Reading a module's reference tables touches only that module's
+            // own metadata, so the scan runs from several threads; each entry
+            // is written under the same gate the sequential version implied.
+            var pending = modules.Where(m => !analysisModules.Contains(m)).ToArray();
+            System.Threading.Tasks.Parallel.For(0, pending.Length, i => {
+                var set = ReferencedTypes(pending[i]);
+                lock (references) references[pending[i]] = set;
+            });
             for (bool changed = true; changed;) {
                 changed = false;
                 foreach (var pair in references.ToArray().Where(p => p.Value.Overlaps(analyzedTypes)).ToArray()) {
@@ -408,13 +428,15 @@ namespace SourceNameMapping {
         // hierarchy resolves the same module thousands of times, so index the
         // module's types once. The index matches dnlib's first-match lookup:
         // GetTypes() enumerates the same types in the same order.
-        readonly Dictionary<ModuleDef, Dictionary<string, TypeDef>> typeNames = new Dictionary<ModuleDef, Dictionary<string, TypeDef>>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<ModuleDef, Dictionary<string, TypeDef>> typeNames =
+            new System.Collections.Concurrent.ConcurrentDictionary<ModuleDef, Dictionary<string, TypeDef>>();
         TypeDef FindInModule(ModuleDef module, string fullName) {
             if (!typeNames.TryGetValue(module, out var index)) {
                 index = new Dictionary<string, TypeDef>(StringComparer.Ordinal);
                 foreach (var type in module.GetTypes())
                     if (!index.ContainsKey(type.FullName)) index.Add(type.FullName, type);
-                typeNames.Add(module, index);
+                typeNames.TryAdd(module, index);
+                typeNames.TryGetValue(module, out index);
             }
             return index.TryGetValue(fullName, out var match) ? match : null;
         }

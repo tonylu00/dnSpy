@@ -777,3 +777,25 @@ Standing rules for this pass:
   check applied it to the 528-assembly tree in 8.7 s (0 errors); all outputs
   load, the new names are present and the renamed helper is still called by
   `Synchronize`.
+- **Tooling performance: the "slow but idle" runs (de4dotEx `4853fa45`).** The
+  wave tools spent tens of seconds at a fraction of one core with no disk
+  traffic. Two causes: a console app gets the *workstation* collector, which
+  serialised the metadata allocations of every parallel phase (the waiting does
+  not appear as CPU), and several serial/quadratic passes (`--update-map`
+  re-scanned every row of a module per edit and again per method row).
+  `ServerGarbageCollection` is now on (the runtime config carries
+  `System.GC.Server=true`; `DOTNET_gcServer=0` opts out for a lower peak working
+  set), module reads/parses/hashes and the per-module inventories, the per-type
+  contract walk, the implementation closure and the accessor scan run in
+  parallel with results merged in input order, and a module's rows are indexed
+  by (kind, token) and its alias set built once.
+  Measured on the 528-assembly 6.3 tree, every output byte-identical
+  (wall / process CPU): `--check-map` 5.6 s/7.4 s -> 3.1 s/8.0 s,
+  `--update-map` 6.6 s/8.7 s -> 3.4 s/7.0 s, `--review-families` 10.8 s/19.8 s
+  -> 4.6 s/33.6 s, `--suggest-accessors` 11.7 s/18.3 s -> 4.4 s/32.0 s,
+  `--review` 23.8 s/42.3 s -> 7.7 s, `--review-obfuscated` 12.5 s/15.8 s ->
+  3.5 s/18.8 s, `--apply-map` 9.0 s -> 4.8 s (528/528 applied files
+  SHA256-identical). The 553-assembly 6.4 tree's `--review` went 25.4 s -> 8.4 s.
+  The NameCandidates fixture suite and the ten dnSpy source-map regressions
+  pass; `dnSpy.Decompiler/MSBuild/MethodContractFamilies.cs` is the mirrored
+  copy.
