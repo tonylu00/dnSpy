@@ -766,9 +766,9 @@ Standing rules for this pass:
   and the mapped neighbours that call it (`AddArea`/`AddLine` -> the
   `AddAreaOperations`/`AddLineOperation` loops). 40 rows in
   `Knx.Ets.ObjectModel.dll`'s `Operations.ExtendedCopy.ExtendedCopyImporter`;
-  each ledger row carries its evidence in `Reason`. Members whose evidence does
-  not fix a name (`GetMediumType`'s out parameters, the device address reader,
-  the group-range strategy predicates) stay pending.
+  each ledger row carries its evidence in `Reason`. The type is now complete
+  except `0x060049CF`, the device address/domain-address reader, whose evidence
+  does not fix a name yet.
   `names63-staged-v104.xml` =
   `6EF55F077D208CB962C935F72F5324CE897D7713DAF43E955AD2E0C08AD18841`, 10,677
   reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
