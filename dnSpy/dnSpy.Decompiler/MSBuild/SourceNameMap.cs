@@ -37,6 +37,10 @@ namespace dnSpy.Decompiler.MSBuild {
 					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter or local aliases.");
 					var member = ResolveRow(module, row);
 					string? name = (string?)row.Attribute("NewName");
+					// A renamer may paste the metadata name of a generic type
+					// (`Foo`1); the alias itself never carries the arity because the
+					// restore instruction adds it back from the type's parameters.
+					if (name != null && member is TypeDef aliasType) name = NormalizeTypeName(name, aliasType);
 					if (name != null) {
 						// A type alias may carry the namespace the obfuscator flattened
 						// away; everything else stays a single identifier.
@@ -44,7 +48,7 @@ namespace dnSpy.Decompiler.MSBuild {
 						else ValidateName(name);
 					}
 					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name, parameters or locals.");
-					if (member is TypeDef type && (type.IsGlobalModuleType || type.HasGenericParameters)) throw new InvalidDataException("This source-map version requires a non-generic type.");
+					if (member is TypeDef type && type.IsGlobalModuleType) throw new InvalidDataException("This source-map version does not alias the global module type.");
 					if (member is FieldDef field && FieldAliasScope.Blocker(field) != null) throw new InvalidDataException("Unsupported source field alias: " + FieldAliasScope.Blocker(field));
 					string? contract = (string?)row.Attribute("ContractFamily");
 					if (member is MethodDef method) {
@@ -179,6 +183,17 @@ namespace dnSpy.Decompiler.MSBuild {
 		static void ValidateTypeName(string name) {
 			if (name.Split('.').Any(part => !MetadataTypeNames.IsIdentifier(part)) || name.Any(c => char.GetUnicodeCategory(c) == UnicodeCategory.Format))
 				throw new InvalidDataException("Invalid source type alias: " + name);
+		}
+		/// <summary>The type's own generic arity; nested types count only their own parameters.</summary>
+		static int OwnArity(TypeDef type) => Math.Max(0, type.GenericParameters.Count - (type.DeclaringType?.GenericParameters.Count ?? 0));
+		static string NormalizeTypeName(string name, TypeDef type) {
+			int index = name.LastIndexOf('`');
+			if (index < 0) return name;
+			string digits = name.Substring(index + 1);
+			if (digits.Length == 0 || !digits.All(char.IsDigit)) throw new InvalidDataException("Invalid generic arity suffix: " + name);
+			if (int.Parse(digits, CultureInfo.InvariantCulture) != OwnArity(type))
+				throw new InvalidDataException("Generic arity mismatch for " + type.FullName + ": " + name);
+			return name.Substring(0, index);
 		}
 		static string Leaf(string name) {
 			int index = name.LastIndexOf('.');
