@@ -2146,3 +2146,23 @@ Standing rules for this pass:
   The batch apply rewrote 10,423 methods in 528/528 modules with 0 errors in
   6.7 s, and `--verify-applied` reports `canonical_rows=575
   definitions_missing=0 stale_references=0` in 3.5 s.
+- **Wave 159: the compatibility plugin host/installer and the Hawk network
+  interface.** Three type rows whose readable 6.4 counterparts the new
+  signature-shape scan finds uniquely: 6.3 `Class144` (`Knx.Ets.Compatibility.dll`,
+  `0x0200000D`) → `Knx.Ets.Compatibility.PluginHost` (29 shape matches, incl.
+  the whole `Sdk*`/`TryGetCachedPluginInformation` cluster),
+  `Class158` (`0x02000020`) → `Knx.Ets.Compatibility.PluginInstaller` (12,
+  incl. `AnyPluginRequiresElevation`/`InstallEts3Plugins`) and HawkNET `fb`
+  (`0x02000080`) → `Knx.Ets.Hawk.IAsyncNetworkAccessProvider` (22; its members
+  mirror the already-named `FalconNetworkAccessProvider`). The matched
+  `PluginInstaller` plugin methods and every `IPluginHost` implementation member
+  are virtual: `--update-map` rejects them with
+  `virtual-or-override: use --review-families`, so the wave ships the three type
+  rows and leaves those members to the contract-family flow.
+  `names63-staged-v159.xml` =
+  `FD020834E9084B7EE9B325C0F36CEE0A6E462090D2D7CBD8DEDE705A2CC50B93`, 11,914
+  reviewed edits (3 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `E1D999D2B57E2CF2…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 812 types in 528/528 modules with 0 errors in 6.2 s,
+  and `--verify-applied` reports `canonical_rows=575 definitions_missing=0
+  stale_references=0` in 3.5 s.
