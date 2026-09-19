@@ -1051,3 +1051,25 @@ Standing rules for this pass:
   10.2 s/73.5 s. `NAMECANDIDATES_TIMING=1` prints the scanner's
   map/list/read/seed/round/hash split; the NameCandidates fixture suite and the
   ten source-map regressions pass.
+- **Wave 114: creating devices from a template.** 16 rows in
+  `Knx.Ets.ObjectModel.dll`'s
+  `Operations.Devices.CreateDeviceFromTemplateOperation`: the template filter
+  (`GetTemplatesValidForSegment`, which feeds the `SpecializedValidate`
+  closure) and the product import (`ImportDeviceProducts`,
+  `CreateProgressManager`), the segment and security checks
+  (`CanAddDeviceToSegment`, `CreateIpSecureBackboneValidator`,
+  `HasMyProductsLicense`, `IsModularApplication`), the parameter plumbing
+  (`AttachNonDefaultParameterValues`, `CreateNonDefaultParameterCache`,
+  `CreateParameterIdForDevice`, `FindComObjectInstance`,
+  `RebindModuleInstanceIdToDevice`), the com-object flags
+  (`ApplyComObjectInfoElement`, `ParseDatapointTypeIds`) and the IP handling
+  (`CreateIpConfig`, `ParseIpConfigAssignments`). `names63-staged-v114.xml` =
+  `E62F0D37FCC328827E3BD4F543C29FB576F2224AF51BA7B2AABD1FC2023F3D49`, 10,871
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v114-sdkfrozen.xml`
+  (`CA83C9E9FD3E852C…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (`CreateValidators`,
+  `SpecializedExecute`, `SetParameterAndComObjectInfosForModularApplications`,
+  `TransferParametersAndFlags`, `DetermineSecurityImpacts`, the constructor and
+  the `SpecializedValidate` closure).
