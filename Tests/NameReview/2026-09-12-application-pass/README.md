@@ -2312,3 +2312,20 @@ Standing rules for this pass:
   `Class794` = `…CRI`, and the four callers are `TunnelingCRD`,
   `ConnectResponse`, `TunnelingCRI`, `ConnectRequest` — the technique (who
   constructs the type) resolves shape-identical pairs that bodies cannot.
+- **Wave 166: the connect data structures and their tunneling wrappers.**
+  Call-site evidence resolved the shape-identical CRD/CRI pair: `Class791` is
+  built by `Class792::.ctor(IndividualAddress)` and `Class793::.ctor()` — the
+  exactly-matching callers of the released `TunnelingCRD` and the
+  connect-response frame that build `CRD` — and `Class794` by
+  `Class795::.ctor(TunnelingKnxLayer, IndividualAddress?)` and
+  `Class796::.ctor()`, mirroring `TunnelingCRI` and the connect-request frame
+  that build `CRI`. Shipped: type rows `Class791` → `Knx.Falcon.KnxnetIp.Frames.CRD`,
+  `Class794` → `…CRI`, `Class792` → `…Tunneling.TunnelingCRD`
+  (`Class795` was already mapped to `TunnelingCRI` by an earlier wave) and
+  member rows `Class792::a()`/`Class795::a()` → `get_IndividualAddress`,
+  `Class795::b()` → `get_Layer`. The applied tree now shows
+  `CRD`, `CRI`, `TunnelingCRD : CRD`, `TunnelingCRI : CRI`.
+  `names63-staged-v166.xml` =
+  `95E224716AFC1CFEECD3354C292963C762FB6612461C49B1CCD5AFAD5D8BD1B6`, 12,214
+  reviewed edits, 0 errors, same 51 suffixes; export `4B809A63519730EC…` audits
+  `0/0`; apply 825 types / 10,710 methods; `canonical_rows=575`.
