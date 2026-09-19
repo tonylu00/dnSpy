@@ -1379,3 +1379,35 @@ Standing rules for this pass:
   `InstantiateModule`/`UninstantiateModule`, and the strategy's creators and
   predicates from `Initialize`, `FallBackForThreeLevelGroupStructure` and
   `SearchNextAvailableRange`.
+- **Wave 126: the RF ack-slot copy validator and the paste-special resolver.**
+  20 rows in `Knx.Ets.ObjectModel.dll`.
+  `Operations.RfMulti.FreeFastAckSlotCopyValidator` (10 rows) gets the two
+  validation helpers (`FilterToValidatedDevices`, `ValidateAckSlotCapacity` —
+  the 63-slot limit), the other-project slot collection
+  (`CollectExistingAckSlotsForOtherProject`), the sharing rule
+  (`CanShareFastAckSlots`) and five device/bus-interface predicates — two
+  identical pairs told apart by their call site (`IsAddressedValidatedDevice`
+  and `IsAddressedValidatedDeviceForNewAddresses`,
+  `IsBusInterfaceOnAddressedValidatedDevice` and
+  `IsBusInterfaceOnAddressedValidatedDeviceForNewAddresses`) plus
+  `IsValidatedDevice` and `IsForeignDevice`.
+  `Operations.PasteSpecial.GroupAddressConflictsAcrossInstallationResolver`
+  (10 rows) gets the copy pipeline of `Apply`
+  (`SelectRangeCreator`, `FindTargetAndConflictingRange`,
+  `CopyIntoRangeAtSourceAddress`, `EnsureCapacityAndCopyIntoRange`,
+  `ExecuteCopyIntoRange`), the three style-specific range creators
+  (`CreateTwoLevelRangeForCopy`, `CreateThreeLevelMiddleGroupForCopy`,
+  `ResolveWithFreeGroupRangeForCopy`) and the two range/address comparisons
+  (`HasSameAddressRangeAsSource`, `HasSameAddressAsSource`).
+  `names63-staged-v126.xml` =
+  `F82CB56013465D28AEC33A534F589AFF38AB1E15A5D5FDD6568E349E11B48D62`, 11,132
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v126-sdkfrozen.xml`
+  (`387777DF6B118590…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528
+  load); every renamed helper still binds — the filter, capacity check and
+  collection from `ValidateSameProject`/`ValidateOtherProject`, the sharing
+  rule from `CollectExistingAckSlotsForOtherProject`, the predicates from
+  `FilterToValidatedDevices`, `GetConnectedDevices` and
+  `ConnectedDevicesForNewGroupAddresses`, and the resolver's pipeline from
+  `Apply`, `SelectRangeCreator` and `FindTargetAndConflictingRange`.
