@@ -1929,3 +1929,26 @@ Standing rules for this pass:
   report files (9 kinds on both trees) are byte-identical to the previous
   build, and `PublicApiAuditFixture` plus the existing property/field fixtures
   pass in the full fixture suite.
+- **The applied-tree gate is a built command (de4dotEx, `--verify-applied`).**
+  The post-apply verifier ran as `dotnet run perfcheck2/verify-map.cs`, which
+  paid a file-based-app build/package probe per wave (23.1 s cold, 4.8 s warm,
+  0.3 s CPU and no reported IO in the CLI parent) and then parsed all 528
+  modules on one thread (4.6 s wall / 5.1 s CPU, ~1 core), so a whole wave cost
+  ~40 s for ~16 s of work. `NameCandidates --verify-applied <applied-root>
+  <map.xml> [expected-canonical-rows]` keeps the same report
+  (`loaded=`, `canonical_rows=`, `definitions_missing=`, `stale_references=`,
+  `VERIFY PASS/FAIL`) but lists and parses the tree on
+  `Environment.ProcessorCount` threads, matches canonical rows by name plus
+  applied declaring type and checks stale `MemberRefs` through a leaf index.
+  Nested type aliases compose from the outermost alias down, so a renamed
+  display class inside a renamed type is matched (the script looked nested
+  aliases up under the already-renamed prefix). Wave-149 tree: 23.1 s / 4.8 s
+  -> 1.7 s wall at 2.8 busy cores; all wave 137-149 applied trees re-verify
+  identically (`definitions_missing=0 stale_references=0`) in 1.3-3.5 s, and
+  the whole wave batch (update, check, audits, filter, apply, gate) costs
+  18.0 s instead of ~40 s.
+  `wave-pipeline.ps1 -ApplyRoot <dir>` now runs the gate after its apply step,
+  and `tests/NameCandidates/AppliedVerificationFixture.cs` pins the pass shape,
+  the nested-alias composition, a missing definition, a stale reference, an
+  unloadable input and the expected-row-count failure.
+
