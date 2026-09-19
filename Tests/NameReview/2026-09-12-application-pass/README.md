@@ -1804,6 +1804,18 @@ Standing rules for this pass:
   The batch apply rewrote 10,348 methods in 528/528 modules with 0 errors in
   6.2 s and `verify-map.cs` reports `canonical_rows=536 definitions_missing=0
   stale_references=0`.
+- **Wave 143: HawkNET `Class501::a(ly[])`.** The body is
+  `ly[].Where(predicate).SelectMany(x => lv[]).Select(x => GroupAddress).Distinct()`,
+  i.e. it collects the distinct group addresses reachable from the supplied
+  items; named `GetDistinctGroupAddresses`, which also names its three cached
+  lambdas `<GetDistinctGroupAddresses>b__0_0..2`.
+  `names63-staged-v143.xml` =
+  `F58967D639A8DFBFB64A7BD50339F3C2CA667F88876A287F987D783D9596546E`, 11,833
+  reviewed edits (4 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `F7FF45803B804D24…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,352 methods in 528/528 modules with 0 errors in
+  7.3 s and `verify-map.cs` reports `canonical_rows=539 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
