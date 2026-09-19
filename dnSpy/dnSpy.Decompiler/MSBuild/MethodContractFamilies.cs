@@ -33,6 +33,16 @@ namespace SourceNameMapping {
         // both are pure, so one comparer and a per-caller cache are enough.
         static readonly SigComparer Comparer = new SigComparer();
         readonly Dictionary<(ITypeDefOrRef Reference, ModuleDef Caller), Use> resolves = new Dictionary<(ITypeDefOrRef, ModuleDef), Use>();
+        // Tooling hook: the NameCandidates CLI prints per-phase timings when
+        // NAMECANDIDATES_TIMING=1; product code leaves this null and pays
+        // nothing beyond a field comparison per phase.
+        public static Action<string> TimingHook;
+        static void Mark(string phase) => TimingHook?.Invoke(phase);
+        // The union-find state, the blocker sets and the finished members are
+        // the only state shared by the parallel passes, and this gate guards
+        // them. The lookup indexes below are only ever touched from the
+        // sequential per-type analysis, so they stay unlocked.
+        readonly object gate = new object();
         // Method lookup by name and memoized generic substitution: a large graph
         // compares the same contracts against the same hierarchy slots thousands
         // of times, so scanning every method of a type is pure waste.
@@ -43,9 +53,28 @@ namespace SourceNameMapping {
         // walk from scanning every method of every hierarchy level.
         MethodDef[] Overriding(TypeDef type) {
             if (!overriding.TryGetValue(type, out var methods))
-                overriding[type] = methods = type.Methods.Where(m => m.Overrides.Count != 0).ToArray();
+                overriding[type] = methods = HasMethodImpls(type.Module)
+                    ? type.Methods.Where(m => m.Overrides.Count != 0).ToArray() : Array.Empty<MethodDef>();
             return methods;
         }
+        // Method overrides can only come from MethodImpl rows, and reading
+        // MethodDef.Overrides makes dnlib build a MemberRef (and resolve its
+        // declaring type) per candidate method. A module without any such row
+        // can never contribute one, which skips that work entirely.
+        readonly Dictionary<ModuleDef, bool> methodImpls = new Dictionary<ModuleDef, bool>();
+        bool HasMethodImpls(ModuleDef module) {
+            if (!methodImpls.TryGetValue(module, out bool has)) {
+                var md = module as ModuleDefMD;
+                var stream = md?.Metadata?.TablesStream;
+                methodImpls.Add(module, has = stream == null || stream.MethodImplTable.Rows > 0);
+            }
+            return has;
+        }
+        // Extensions.ToTypeSig() resolves a TypeRef through the assembly
+        // resolver only to pick a class or value-type signature, and every
+        // caller here immediately converts the signature back to its
+        // TypeDefOrRef, so the resolution can stay off.
+        static TypeSig TypeSigOf(ITypeDefOrRef reference) => reference?.ToTypeSig(resolveToCheckValueType: false);
         MethodDef[] Named(TypeDef type, string name) {
             if (!named.TryGetValue(type, out var index)) named[type] = index = new Dictionary<string, MethodDef[]>(StringComparer.Ordinal);
             if (!index.TryGetValue(name, out var methods))
@@ -82,6 +111,7 @@ namespace SourceNameMapping {
         /// </summary>
         public MethodContractFamilies(IEnumerable<ModuleDef> inputs, Func<ModuleDef, string> key, bool useHostResolver = false,
                 IEnumerable<ModuleDef> analyze = null) {
+            Mark("contract graph: begin");
             modules = new HashSet<ModuleDef>(inputs);
             analysisModules = analyze == null ? modules : new HashSet<ModuleDef>(analyze);
             moduleKey = key;
@@ -89,13 +119,20 @@ namespace SourceNameMapping {
             identities = modules.Where(m => m.Assembly != null).GroupBy(m => m.Assembly.FullName, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.Ordinal);
             var types = analysisModules.SelectMany(m => m.GetTypes()).ToArray();
-            foreach (var type in types) foreach (var method in type.Methods)
-                if (method.IsVirtual || method.HasOverrides) Root(method);
-            foreach (var type in types) {
+            Mark($"contract graph: {modules.Count} modules, {types.Length} analyzed types");
+            // Both passes are independent per type; the union-find, the blocker
+            // sets and the shared indexes are the only shared state and are
+            // serially guarded, so the outcome stays identical.
+            System.Threading.Tasks.Parallel.ForEach(types, type => {
+                foreach (var method in type.Methods)
+                    if (method.IsVirtual || method.HasOverrides) Root(method);
+            });
+            Mark($"contract graph: {parents.Count} virtual roots");
+            void Analyze(TypeDef type) {
                 // A type without interfaces, inherited virtual slots or explicit
                 // implementations cannot contribute a contract of its own.
                 if (!type.IsInterface && type.Interfaces.Count == 0 &&
-                    !type.Methods.Any(m => m.IsVirtual && !m.IsNewSlot) && !type.Methods.Any(m => m.HasOverrides)) continue;
+                    !type.Methods.Any(m => m.IsVirtual && !m.IsNewSlot) && !type.Methods.Any(m => m.HasOverrides)) return;
                 var hierarchy = Hierarchy(new Use(type)).ToArray();
                 foreach (var method in type.Methods.Where(m => m.IsVirtual && !m.IsNewSlot)) {
                     bool found = false;
@@ -114,43 +151,56 @@ namespace SourceNameMapping {
                         Comparer.Equals(SubstituteCached(m.MethodSig, use.Arguments), SubstituteCached(declaration.MethodSig, use.Arguments))).ToArray();
                     if (matches.Length == 1) Join(method, matches[0]); else Block(method, "ambiguous explicit contract");
                 }
-                if (type.IsInterface) continue;
+                if (type.IsInterface) return;
                 var visited = new HashSet<string>(StringComparer.Ordinal);
                 foreach (var owner in hierarchy) foreach (var item in owner.Type.Interfaces)
-                    VisitInterface(Substitute(item.Interface.ToTypeSig(), owner.Arguments)?.ToTypeDefOrRef(), owner.Type.Module, hierarchy, visited, type);
+                    VisitInterface(Substitute(TypeSigOf(item.Interface), owner.Arguments)?.ToTypeDefOrRef(), owner.Type.Module, hierarchy, visited, type);
             }
-            using var hasher = SHA256.Create();
-            foreach (var group in parents.Keys.ToArray().GroupBy(Root)) {
+            // The per-type walk shares too many small indexes (resolutions,
+            // name lookup, union-find) for several threads to pay off, so it
+            // stays sequential; the passes around it scale cleanly.
+            foreach (var type in types) Analyze(type);
+            Mark("contract graph: contracts joined");
+            System.Threading.Tasks.Parallel.ForEach(parents.Keys.ToArray().GroupBy(Root).ToArray(), group => {
                 var members = group.OrderBy(m => moduleKey(m.Module), StringComparer.Ordinal).ThenBy(m => m.MDToken.Raw).ToArray();
                 string evidence = string.Join("\n", members.Select(m => moduleKey(m.Module).Replace('\\', '/') + "|" + m.MDToken.Raw.ToString("X8")));
-                string id = BitConverter.ToString(hasher.ComputeHash(Encoding.UTF8.GetBytes(evidence))).Replace("-", "");
+                string id;
+                using (var hasher = SHA256.Create())
+                    id = BitConverter.ToString(hasher.ComputeHash(Encoding.UTF8.GetBytes(evidence))).Replace("-", "");
                 var reasons = members.Select(MethodBlocker).Where(s => s != null)
                     .Concat(members.SelectMany(m => blockers.TryGetValue(m, out var set) ? set : Enumerable.Empty<string>()))
                     .Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();
                 var family = new Family { Id = id, Methods = members, Blockers = reasons };
-                foreach (var method in members) families.Add(method, family);
-            }
+                lock (gate) foreach (var method in members) families.Add(method, family);
+            });
+            Mark($"contract graph: {families.Count} family members grouped");
         }
         MethodDef Root(MethodDef method) {
-            if (!parents.TryGetValue(method, out var parent)) {
-                parents.Add(method, method); return method;
+            lock (gate) {
+                if (!parents.TryGetValue(method, out var parent)) {
+                    parents.Add(method, method); return method;
+                }
+                return parent == method ? method : parents[method] = Root(parent);
             }
-            return parent == method ? method : parents[method] = Root(parent);
         }
         void Block(MethodDef method, string reason) {
-            Root(method);
-            if (!blockers.TryGetValue(method, out var reasons))
-                blockers[method] = reasons = new HashSet<string>(StringComparer.Ordinal);
-            reasons.Add(reason);
+            lock (gate) {
+                Root(method);
+                if (!blockers.TryGetValue(method, out var reasons))
+                    blockers[method] = reasons = new HashSet<string>(StringComparer.Ordinal);
+                reasons.Add(reason);
+            }
         }
         void Join(MethodDef left, MethodDef right) {
-            if (!modules.Contains(right.Module)) { Block(left, "external contract: " + right.FullName); return; }
-            var a = Root(left); var b = Root(right);
-            if (a != b) parents[b] = a;
+            lock (gate) {
+                if (!modules.Contains(right.Module)) { Block(left, "external contract: " + right.FullName); return; }
+                var a = Root(left); var b = Root(right);
+                if (a != b) parents[b] = a;
+            }
         }
         IEnumerable<Use> Hierarchy(Use current) {
             var seen = new HashSet<TypeDef>();
-            for (; current != null && seen.Add(current.Type); current = Resolve(Substitute(current.Type.BaseType?.ToTypeSig(), current.Arguments)?.ToTypeDefOrRef(), current.Type.Module))
+            for (; current != null && seen.Add(current.Type); current = Resolve(Substitute(TypeSigOf(current.Type.BaseType), current.Arguments)?.ToTypeDefOrRef(), current.Type.Module))
                 yield return current;
         }
         void VisitInterface(ITypeDefOrRef reference, ModuleDef caller, Use[] hierarchy, HashSet<string> visited, TypeDef implementingType) {
@@ -167,7 +217,7 @@ namespace SourceNameMapping {
                 bool explicitMatch = hierarchy.Any(h => Overriding(h.Type).Any(m => m.Overrides.Any(o => {
                     var declaration = o.MethodDeclaration;
                     if (declaration.Name != contract.Name) return false;
-                    var declaredUse = Resolve(Substitute(declaration.DeclaringType.ToTypeSig(), h.Arguments)?.ToTypeDefOrRef(), h.Type.Module);
+                    var declaredUse = Resolve(Substitute(TypeSigOf(declaration.DeclaringType), h.Arguments)?.ToTypeDefOrRef(), h.Type.Module);
                     return declaredUse?.Type == contract.DeclaringType && Comparer.Equals(
                         SubstituteCached(declaration.MethodSig, declaredUse.Arguments), SubstituteCached(contract.MethodSig, use.Arguments));
                 })));
@@ -185,7 +235,7 @@ namespace SourceNameMapping {
                 if (!found && !implementingType.IsAbstract && modules.Contains(contract.Module)) Block(contract, "missing implementation: " + implementingType.FullName);
             }
             foreach (var parent in use.Type.Interfaces)
-                VisitInterface(Substitute(parent.Interface.ToTypeSig(), use.Arguments)?.ToTypeDefOrRef(), use.Type.Module, hierarchy, visited, implementingType);
+                VisitInterface(Substitute(TypeSigOf(parent.Interface), use.Arguments)?.ToTypeDefOrRef(), use.Type.Module, hierarchy, visited, implementingType);
         }
         Use Resolve(ITypeDefOrRef reference, ModuleDef caller) {
             if (reference == null) return null;
@@ -199,9 +249,18 @@ namespace SourceNameMapping {
                 arguments = generic.GenericArguments; reference = generic.GenericType.TypeDefOrRef;
             }
             if (reference is TypeDef definition) return new Use(definition, arguments);
-            // Respect a host's already-resolved physical context first.
-            var resolved = reference.ResolveTypeDef();
-            if (useHostResolver && resolved != null && modules.Contains(resolved.Module)) return new Use(resolved, arguments);
+            // A host context owns the physical identity of a reference and wins
+            // over the name match below, but it is only consulted in that mode:
+            // ResolveTypeDef() makes dnlib walk every type of the target
+            // assembly (counting and enumerating nested types through its
+            // locked lazy lists), which costs milliseconds per reference and
+            // dominates a large graph. The identity map below answers the same
+            // lookup from modules that are already loaded.
+            TypeDef resolved = null;
+            if (useHostResolver) {
+                resolved = reference.ResolveTypeDef();
+                if (resolved != null && modules.Contains(resolved.Module)) return new Use(resolved, arguments);
+            }
             if (reference.DefinitionAssembly != null && identities.TryGetValue(reference.DefinitionAssembly.FullName, out var candidates)) {
                 if (candidates.Length > 1) {
                     string directory = Path.GetDirectoryName(moduleKey(caller));
@@ -210,10 +269,26 @@ namespace SourceNameMapping {
                     if (local.Length == 1) candidates = local;
                     else return null; // Never choose a duplicate identity by enumeration order.
                 }
-                var type = candidates[0].Find(reference.FullName, false);
+                var type = FindInModule(candidates[0], reference.FullName);
                 return type == null ? null : new Use(type, arguments);
             }
+            if (resolved == null) resolved = reference.ResolveTypeDef();
             return resolved == null ? null : new Use(resolved, arguments);
+        }
+        // ModuleDef.Find(fullName) rescans every type of the module, nested
+        // types included, and builds a full name for each candidate; a large
+        // hierarchy resolves the same module thousands of times, so index the
+        // module's types once. The index matches dnlib's first-match lookup:
+        // GetTypes() enumerates the same types in the same order.
+        readonly Dictionary<ModuleDef, Dictionary<string, TypeDef>> typeNames = new Dictionary<ModuleDef, Dictionary<string, TypeDef>>();
+        TypeDef FindInModule(ModuleDef module, string fullName) {
+            if (!typeNames.TryGetValue(module, out var index)) {
+                index = new Dictionary<string, TypeDef>(StringComparer.Ordinal);
+                foreach (var type in module.GetTypes())
+                    if (!index.ContainsKey(type.FullName)) index.Add(type.FullName, type);
+                typeNames.Add(module, index);
+            }
+            return index.TryGetValue(fullName, out var match) ? match : null;
         }
         bool Same(MethodDef left, IList<TypeSig> leftArguments, MethodDef right, IList<TypeSig> rightArguments) =>
             Comparer.Equals(SubstituteCached(left.MethodSig, leftArguments), SubstituteCached(right.MethodSig, rightArguments));
