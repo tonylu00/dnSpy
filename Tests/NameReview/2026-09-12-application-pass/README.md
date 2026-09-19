@@ -2000,3 +2000,26 @@ Standing rules for this pass:
   the input tree do not identify the same member in an applied tree; the type
   and member inventories verify an applied map by name and locate the owner of
   a method before dumping its body.
+- **Wave 152: the RF multi-tables device-info item.** 6.3 `Class339`
+  (`0x0200031D`, base `Class331` = the released `DeviceInfoItem`) carries the
+  released `Knx.Ets.Hawk.Impl.DeviceInfoItems.DeviceInfoItemRfMultiTables`
+  member list in the same order (`in`/`IncludeItemAsync`,
+  `vmethod_0`/`ProcessAsync`, `c`/`method_0`, `b`/`method_1`, `a`/`method_2`,
+  `a(BitArray)`/`smethod_2`, `vmethod_1`/`EstimateTimeAsync`, `ToString`), so
+  it takes that type name. `Class339::c` (`0x06001017`) is the received 6.4
+  `method_0(DeviceInfoOptions, DeviceManagement,
+  Dictionary<ResourceName,byte[]>, IDictionary<object,object>, DataFacade,
+  XElement, CancellationToken, IProgress<HawkProgressIndication>)` (Void, still
+  obfuscated there): it reads the `CommunicationTables` from the cache and
+  appends one `<Resource Item="<address>" Value="Rx:… Tx:… Ready Ack#…
+  SLE(…) Fast(…)">` element per entry, with the same strings in both builds and
+  the `<ProcessMediaCouplerAsync>d__5` state machine as its caller. Named
+  `AppendRfMultiTableResources`; its three cached predicates become
+  `<AppendRfMultiTableResources>b__4_0,2,3`.
+  `names63-staged-v152.xml` =
+  `FDD1AACB085C5043BAF363B8B61E2E1E5A4FAC6C23BACD23AF4D93CCDBB51B2E`, 11,883
+  reviewed edits (5 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `2310F02931C25356…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,398 methods and 807 types in 528/528 modules with
+  0 errors in 6.6 s, and `--verify-applied` reports `canonical_rows=566
+  definitions_missing=0 stale_references=0` in 3.5 s.
