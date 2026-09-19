@@ -825,3 +825,32 @@ Standing rules for this pass:
   check applied it to the 528-assembly tree in 5.0 s (0 errors, 528/528 load);
   `CopyDevices` still calls `MoveDevice` and `MergeMovedDevices`, and
   `CallDevicePlugInsHandler` still calls `ForEachCollectingFailures`.
+- **Wave 106: the group-address import pipeline.** 24 rows in
+  `Knx.Ets.ObjectModel.dll`'s
+  `Operations.GroupAddressImportExport.ImportGroupAddressesOperation`, named from
+  each member's own IL plus the readable neighbours already in the map: the
+  reader and style detection (`CreateImportReader` reads `.CSV`/`.XML` into the
+  CSV/XML reader and throws `FormatException` otherwise; `DetectGroupAddressStyle`
+  and `DetectGroupAddressStyleFromRanges` answer the `GroupAddressStyle` from the
+  `Address` attribute and from `Range.IsMainGroupCompliant/IsMiddleGroupCompliant`),
+  the CSV fix-up (`MergeMultilineCsvRecords` joins continuation lines with
+  `"\r\n"`, normalizes and rewrites the file), the import steps
+  (`ImportGroupAddress`, `ImportGroupRange`, `CreateGroupAddressForImportValue`,
+  `CreateGroupRangeForImportValue`, `EnsureGeneratedMainGroupRange`,
+  `TryMapImportedAddressToRange`, `GetTargetRangeIdForGroupAddress`,
+  `GetTargetRangeIdForGroupRange`, `FindCreatedGroupRangeId`,
+  `CollectExistingGroupAddresses`, `CreateGroupRangeMapping`), the existing-address
+  handling (`IsExistingGroupAddress`, `ResolveExistingGroupAddressFlags`,
+  `SetSecurityModeForExistingGroupAddress`), the helpers
+  (`SetFirstDatapointType`, `IsUsableImportedAddress`, `ValidateImportedGroupRange`,
+  `FormatGroupAddressMessage`, `RunWithUndoDisabled`, `ResolveInconsistency`) and
+  the inconsistency prompt. `0x06004574` is an empty method with no callers in
+  the graph and stays an open item. `names63-staged-v106.xml` =
+  `6CCF8E28697BF5F6CD529ABA28ACE6E8F1589769B65881551645215647077983`, 10,722
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v106-sdkfrozen.xml`
+  (`88B5636B1983EBA5…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 7.3 s (0 errors, 528/528 load);
+  `SpecializedValidate` still calls `CreateImportReader`/`DetectGroupAddressStyle`,
+  `SpecializedExecute` still calls `ImportGroupAddress`/`ImportGroupRange`, and
+  the address/range creation helpers keep their callers.
