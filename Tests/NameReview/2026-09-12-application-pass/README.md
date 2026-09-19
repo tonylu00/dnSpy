@@ -799,3 +799,29 @@ Standing rules for this pass:
   The NameCandidates fixture suite and the ten dnSpy source-map regressions
   pass; `dnSpy.Decompiler/MSBuild/MethodContractFamilies.cs` is the mirrored
   copy.
+- **Wave 105: the device-move helper names.** 21 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Operations.Devices.MoveDeviceAcrossProjectOperation`
+  named from their own IL and the mapped neighbours: the segment/validators
+  (`GetTargetSegment`, `GetMovableDevices`, `CreateMediumTypeValidator`,
+  `CreateRfMainLineMultiDeviceValidator`, `HasSecurityImpacts`), the per-device
+  copy steps (`MoveDevice`, `CopyDevices`, `MergeMovedDevices`,
+  `CopyLoadedImage`, `CopyBinaryData`, `CloneDeviceGroupTree`,
+  `UpdateComObjects`, `UpdateModuleInstances`, `MoveAdditionalAddress`,
+  `CanCopySerialNumber`, `IsIndividualAddressChanged`, `ToByteAddress`,
+  `GetComObjectRefCache`) and the failure collector
+  (`ForEachCollectingFailures`). The last one is worth a note: the compiler's
+  lambda name `<WithLoggingAndContinue>b__0` shows the method's original name was
+  `WithLoggingAndContinue`, but `OperationBase` already declares
+  `WithLoggingAndContinue<T>(ILog, IEnumerable<T>, Action<T>, Func<T, string>)`
+  and the two differ only in their return type, so the declaration-scope rule
+  cannot reuse it and the behaviour-derived name is used instead. The first
+  `--update-map` run suffix-ified that row (`WithLoggingAndContinue2`) and the
+  wave was re-run from the ledger per the wave rule: no new auto-suffixes.
+  `names63-staged-v105.xml` =
+  `15E8D9F804E7B0A75C20F2C0CCF8E5199E656EE72DB1579C81B76614EB9DBE50`, 10,698
+  reviewed edits, 0 errors, `--check-map` PASS, the same 51 auto-suffixes. SDK
+  surface unchanged: export map `names63-staged-v105-sdkfrozen.xml`
+  (`B1BB9B8E44AD6372…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 5.0 s (0 errors, 528/528 load);
+  `CopyDevices` still calls `MoveDevice` and `MergeMovedDevices`, and
+  `CallDevicePlugInsHandler` still calls `ForEachCollectingFailures`.
