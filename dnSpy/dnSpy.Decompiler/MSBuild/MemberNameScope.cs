@@ -12,12 +12,19 @@ namespace SourceNameMapping {
         readonly Dictionary<TypeDef, HashSet<TypeDef>> bases = new Dictionary<TypeDef, HashSet<TypeDef>>();
         readonly Dictionary<string, ModuleDef[]> identities;
         readonly bool useHostResolver;
-        public MemberNameScope(IEnumerable<ModuleDef> inputs, bool useHostResolver = false) {
+        /// <summary>
+        /// <paramref name="analyze"/> restricts which modules contribute their own
+        /// declarations. Every input still resolves, so a scoped type's external
+        /// base chain is still walked; third-party and satellite assemblies only
+        /// matter when a mapped type reaches them.
+        /// </summary>
+        public MemberNameScope(IEnumerable<ModuleDef> inputs, bool useHostResolver = false, IEnumerable<ModuleDef> analyze = null) {
             this.useHostResolver = useHostResolver;
             var modules = (inputs ?? Enumerable.Empty<ModuleDef>()).Where(m => m != null).Distinct().ToArray();
+            var analyzed = analyze == null ? modules : analyze.Where(m => m != null).Distinct().ToArray();
             identities = modules.Where(m => m.Assembly != null).GroupBy(m => m.Assembly.FullName, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.Ordinal);
-            foreach (var type in modules.SelectMany(m => m.GetTypes())) {
+            foreach (var type in analyzed.SelectMany(m => m.GetTypes())) {
                 var ancestors = new HashSet<TypeDef>();
                 var queue = new Queue<TypeDef>(); queue.Enqueue(type);
                 while (queue.Count != 0) {

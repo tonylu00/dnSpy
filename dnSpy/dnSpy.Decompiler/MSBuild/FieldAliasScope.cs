@@ -21,12 +21,17 @@ namespace SourceNameMapping {
                 return "field-storage-restoration requires separate review";
             return null;
         }
-        public FieldAliasScope(IEnumerable<ModuleDef> inputs, bool useHostResolver = false) {
+        /// <summary>
+        /// <paramref name="analyze"/> restricts which modules contribute their own
+        /// declarations; every input still resolves for inherited/derived scope.
+        /// </summary>
+        public FieldAliasScope(IEnumerable<ModuleDef> inputs, bool useHostResolver = false, IEnumerable<ModuleDef> analyze = null) {
             this.useHostResolver = useHostResolver;
             var modules = inputs.Distinct().ToArray();
+            var analyzed = analyze == null ? modules : analyze.Where(m => m != null).Distinct().ToArray();
             identities = modules.Where(m => m.Assembly != null).GroupBy(m => m.Assembly.FullName, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.Ordinal);
-            foreach (var type in modules.SelectMany(m => m.GetTypes())) {
+            foreach (var type in analyzed.SelectMany(m => m.GetTypes())) {
                 var ancestors = new HashSet<TypeDef>();
                 var queue = new Queue<TypeDef>(); queue.Enqueue(type);
                 while (queue.Count != 0) {

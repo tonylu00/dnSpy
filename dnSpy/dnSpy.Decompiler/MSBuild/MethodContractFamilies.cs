@@ -22,12 +22,41 @@ namespace SourceNameMapping {
             public Use(TypeDef type, IList<TypeSig> arguments = null) { Type = type; Arguments = arguments; }
         }
         readonly HashSet<ModuleDef> modules;
+        readonly HashSet<ModuleDef> analysisModules;
         readonly Dictionary<string, ModuleDef[]> identities;
         readonly Func<ModuleDef, string> moduleKey;
         readonly bool useHostResolver;
         readonly Dictionary<MethodDef, MethodDef> parents = new Dictionary<MethodDef, MethodDef>();
         readonly Dictionary<MethodDef, HashSet<string>> blockers = new Dictionary<MethodDef, HashSet<string>>();
         readonly Dictionary<MethodDef, Family> families = new Dictionary<MethodDef, Family>();
+        // Signature comparison and reference resolution dominate a large graph;
+        // both are pure, so one comparer and a per-caller cache are enough.
+        static readonly SigComparer Comparer = new SigComparer();
+        readonly Dictionary<(ITypeDefOrRef Reference, ModuleDef Caller), Use> resolves = new Dictionary<(ITypeDefOrRef, ModuleDef), Use>();
+        // Method lookup by name and memoized generic substitution: a large graph
+        // compares the same contracts against the same hierarchy slots thousands
+        // of times, so scanning every method of a type is pure waste.
+        readonly Dictionary<TypeDef, Dictionary<string, MethodDef[]>> named = new Dictionary<TypeDef, Dictionary<string, MethodDef[]>>();
+        readonly Dictionary<TypeDef, MethodDef[]> overriding = new Dictionary<TypeDef, MethodDef[]>();
+        readonly Dictionary<(MethodSig Signature, object Arguments), MethodSig> substituted = new Dictionary<(MethodSig, object), MethodSig>();
+        // Explicit implementations are rare; indexing them keeps the interface
+        // walk from scanning every method of every hierarchy level.
+        MethodDef[] Overriding(TypeDef type) {
+            if (!overriding.TryGetValue(type, out var methods))
+                overriding[type] = methods = type.Methods.Where(m => m.Overrides.Count != 0).ToArray();
+            return methods;
+        }
+        MethodDef[] Named(TypeDef type, string name) {
+            if (!named.TryGetValue(type, out var index)) named[type] = index = new Dictionary<string, MethodDef[]>(StringComparer.Ordinal);
+            if (!index.TryGetValue(name, out var methods))
+                index[name] = methods = type.Methods.Where(m => m.Name == name).ToArray();
+            return methods;
+        }
+        MethodSig SubstituteCached(MethodSig signature, IList<TypeSig> arguments) {
+            if (signature == null || arguments == null || arguments.Count == 0) return signature;
+            if (substituted.TryGetValue((signature, arguments), out var cached)) return cached;
+            return substituted[(signature, arguments)] = Substitute(signature, arguments);
+        }
         public IEnumerable<Family> Families => families.Values.Distinct().OrderBy(f => f.Id, StringComparer.Ordinal);
         public Family Get(MethodDef method) => families.TryGetValue(method, out var family) ? family : null;
         public static string MethodBlocker(MethodDef method) {
@@ -45,20 +74,33 @@ namespace SourceNameMapping {
             if (method.IsStatic && method.IsVirtual) return "static virtual contract";
             return null;
         }
-        public MethodContractFamilies(IEnumerable<ModuleDef> inputs, Func<ModuleDef, string> key, bool useHostResolver = false) {
+        /// <summary>
+        /// <paramref name="analyze"/> restricts which modules initiate contract
+        /// analysis. Every input still resolves (so a mapped type's external base
+        /// and interface slots resolve normally); modules outside the set are only
+        /// ever reached through a mapped type, which is all a map can reference.
+        /// </summary>
+        public MethodContractFamilies(IEnumerable<ModuleDef> inputs, Func<ModuleDef, string> key, bool useHostResolver = false,
+                IEnumerable<ModuleDef> analyze = null) {
             modules = new HashSet<ModuleDef>(inputs);
+            analysisModules = analyze == null ? modules : new HashSet<ModuleDef>(analyze);
             moduleKey = key;
             this.useHostResolver = useHostResolver;
             identities = modules.Where(m => m.Assembly != null).GroupBy(m => m.Assembly.FullName, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.Ordinal);
-            var types = modules.SelectMany(m => m.GetTypes()).ToArray();
-            foreach (var method in types.SelectMany(t => t.Methods).Where(m => m.IsVirtual || m.HasOverrides)) Root(method);
+            var types = analysisModules.SelectMany(m => m.GetTypes()).ToArray();
+            foreach (var type in types) foreach (var method in type.Methods)
+                if (method.IsVirtual || method.HasOverrides) Root(method);
             foreach (var type in types) {
+                // A type without interfaces, inherited virtual slots or explicit
+                // implementations cannot contribute a contract of its own.
+                if (!type.IsInterface && type.Interfaces.Count == 0 &&
+                    !type.Methods.Any(m => m.IsVirtual && !m.IsNewSlot) && !type.Methods.Any(m => m.HasOverrides)) continue;
                 var hierarchy = Hierarchy(new Use(type)).ToArray();
                 foreach (var method in type.Methods.Where(m => m.IsVirtual && !m.IsNewSlot)) {
                     bool found = false;
                     foreach (var parent in hierarchy.Skip(1)) {
-                        var matches = parent.Type.Methods.Where(m => m.IsVirtual && m.Name == method.Name && Same(m, parent.Arguments, method, null)).ToArray();
+                        var matches = Named(parent.Type, method.Name).Where(m => m.IsVirtual && Same(m, parent.Arguments, method, null)).ToArray();
                         if (matches.Length > 1) { Block(method, "ambiguous base slot"); break; }
                         if (matches.Length == 1) { Join(method, matches[0]); found = true; break; }
                     }
@@ -68,8 +110,8 @@ namespace SourceNameMapping {
                     var declaration = implementation.MethodDeclaration;
                     var use = Resolve(declaration.DeclaringType, type.Module);
                     if (use == null) { Block(method, "unresolved explicit contract"); continue; }
-                    var matches = use.Type.Methods.Where(m => m.Name == declaration.Name &&
-                        new SigComparer().Equals(Substitute(m.MethodSig, use.Arguments), Substitute(declaration.MethodSig, use.Arguments))).ToArray();
+                    var matches = Named(use.Type, declaration.Name).Where(m =>
+                        Comparer.Equals(SubstituteCached(m.MethodSig, use.Arguments), SubstituteCached(declaration.MethodSig, use.Arguments))).ToArray();
                     if (matches.Length == 1) Join(method, matches[0]); else Block(method, "ambiguous explicit contract");
                 }
                 if (type.IsInterface) continue;
@@ -77,23 +119,30 @@ namespace SourceNameMapping {
                 foreach (var owner in hierarchy) foreach (var item in owner.Type.Interfaces)
                     VisitInterface(Substitute(item.Interface.ToTypeSig(), owner.Arguments)?.ToTypeDefOrRef(), owner.Type.Module, hierarchy, visited, type);
             }
+            using var hasher = SHA256.Create();
             foreach (var group in parents.Keys.ToArray().GroupBy(Root)) {
                 var members = group.OrderBy(m => moduleKey(m.Module), StringComparer.Ordinal).ThenBy(m => m.MDToken.Raw).ToArray();
                 string evidence = string.Join("\n", members.Select(m => moduleKey(m.Module).Replace('\\', '/') + "|" + m.MDToken.Raw.ToString("X8")));
-                string id;
-                using (var hash = SHA256.Create()) id = BitConverter.ToString(hash.ComputeHash(Encoding.UTF8.GetBytes(evidence))).Replace("-", "");
-                var reasons = members.Select(MethodBlocker).Where(s => s != null).Concat(members.SelectMany(m => blockers[m])).Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();
+                string id = BitConverter.ToString(hasher.ComputeHash(Encoding.UTF8.GetBytes(evidence))).Replace("-", "");
+                var reasons = members.Select(MethodBlocker).Where(s => s != null)
+                    .Concat(members.SelectMany(m => blockers.TryGetValue(m, out var set) ? set : Enumerable.Empty<string>()))
+                    .Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();
                 var family = new Family { Id = id, Methods = members, Blockers = reasons };
                 foreach (var method in members) families.Add(method, family);
             }
         }
         MethodDef Root(MethodDef method) {
             if (!parents.TryGetValue(method, out var parent)) {
-                parents.Add(method, method); blockers.Add(method, new HashSet<string>(StringComparer.Ordinal)); return method;
+                parents.Add(method, method); return method;
             }
             return parent == method ? method : parents[method] = Root(parent);
         }
-        void Block(MethodDef method, string reason) { Root(method); blockers[method].Add(reason); }
+        void Block(MethodDef method, string reason) {
+            Root(method);
+            if (!blockers.TryGetValue(method, out var reasons))
+                blockers[method] = reasons = new HashSet<string>(StringComparer.Ordinal);
+            reasons.Add(reason);
+        }
         void Join(MethodDef left, MethodDef right) {
             if (!modules.Contains(right.Module)) { Block(left, "external contract: " + right.FullName); return; }
             var a = Root(left); var b = Root(right);
@@ -115,17 +164,17 @@ namespace SourceNameMapping {
                 return;
             }
             foreach (var contract in use.Type.Methods.Where(m => !m.IsStatic)) {
-                bool explicitMatch = hierarchy.Any(h => h.Type.Methods.Any(m => m.Overrides.Any(o => {
+                bool explicitMatch = hierarchy.Any(h => Overriding(h.Type).Any(m => m.Overrides.Any(o => {
                     var declaration = o.MethodDeclaration;
                     if (declaration.Name != contract.Name) return false;
                     var declaredUse = Resolve(Substitute(declaration.DeclaringType.ToTypeSig(), h.Arguments)?.ToTypeDefOrRef(), h.Type.Module);
-                    return declaredUse?.Type == contract.DeclaringType && new SigComparer().Equals(
-                        Substitute(declaration.MethodSig, declaredUse.Arguments), Substitute(contract.MethodSig, use.Arguments));
+                    return declaredUse?.Type == contract.DeclaringType && Comparer.Equals(
+                        SubstituteCached(declaration.MethodSig, declaredUse.Arguments), SubstituteCached(contract.MethodSig, use.Arguments));
                 })));
                 if (explicitMatch) continue;
                 bool found = false;
                 foreach (var owner in hierarchy) {
-                    var matches = owner.Type.Methods.Where(m => m.IsPublic && !m.IsStatic && m.Name == contract.Name && Same(m, owner.Arguments, contract, use.Arguments)).ToArray();
+                    var matches = Named(owner.Type, contract.Name).Where(m => m.IsPublic && !m.IsStatic && Same(m, owner.Arguments, contract, use.Arguments)).ToArray();
                     if (matches.Length > 1) { if (modules.Contains(contract.Module)) Block(contract, "ambiguous implicit implementation: " + implementingType.FullName); found = true; break; }
                     if (matches.Length == 1) {
                         if (modules.Contains(matches[0].Module)) Join(matches[0], contract);
@@ -140,6 +189,10 @@ namespace SourceNameMapping {
         }
         Use Resolve(ITypeDefOrRef reference, ModuleDef caller) {
             if (reference == null) return null;
+            if (resolves.TryGetValue((reference, caller), out var cached)) return cached;
+            return resolves[(reference, caller)] = ResolveCore(reference, caller);
+        }
+        Use ResolveCore(ITypeDefOrRef reference, ModuleDef caller) {
             IList<TypeSig> arguments = null;
             if (reference is TypeSpec spec) {
                 if (!(spec.TypeSig.RemovePinnedAndModifiers() is GenericInstSig generic)) return null;
@@ -162,8 +215,8 @@ namespace SourceNameMapping {
             }
             return resolved == null ? null : new Use(resolved, arguments);
         }
-        static bool Same(MethodDef left, IList<TypeSig> leftArguments, MethodDef right, IList<TypeSig> rightArguments) =>
-            new SigComparer().Equals(Substitute(left.MethodSig, leftArguments), Substitute(right.MethodSig, rightArguments));
+        bool Same(MethodDef left, IList<TypeSig> leftArguments, MethodDef right, IList<TypeSig> rightArguments) =>
+            Comparer.Equals(SubstituteCached(left.MethodSig, leftArguments), SubstituteCached(right.MethodSig, rightArguments));
         static MethodSig Substitute(MethodSig sig, IList<TypeSig> arguments) {
             if (sig == null || arguments == null || arguments.Count == 0) return sig;
             var result = new MethodSig(sig.CallingConvention) { GenParamCount = sig.GenParamCount, RetType = Substitute(sig.RetType, arguments) };
