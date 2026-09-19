@@ -1129,3 +1129,31 @@ Standing rules for this pass:
   load); every renamed helper still binds from its caller
   (`SpecializedExecute`, `SpecializedUndo`, `SpecializedRedo`, `Execute`,
   `Validate`, `PatchStores` and the two `PatchStores` patch lambdas).
+- **Wave 117: the template manager and the device template.** 27 rows in
+  `Knx.Ets.ObjectModel.dll`: `Templates.TemplateManager` (14 rows) gets the
+  handler and folder plumbing (`OnTemplateAdded`, `OnTemplateDeleted`,
+  `OnTemplateCategoryAdded`, `OnTemplateCategoryDeleted`,
+  `EnsureTemplateDirectory`), the missing-file cleanup
+  (`RemoveTemplatesWithMissingFile`, `RemoveMissingTemplatesOfCategory`), the
+  cache import (`CopyTemplatesFromCache`) and the category/template loading
+  (`LoadCategories`, `LoadCategoryNodes`, `LoadTemplatesFromDirectory`,
+  `LoadTemplate`, `CreateTemplateFromFile`, `WriteCategoryNodes`), and
+  `Templates.DeviceTemplate` (13 rows) gets the template data collection
+  (`CollectNonDefaultParameterInfo`, `IsGrantedForUseByCustomer`,
+  `CreateCatalogItemHash`, `MatchesProductIdentity`, `ExportDeviceData`,
+  `CreateTemplateDataReader`, `CreateModuleInstanceList`,
+  `CreateDeviceBinaryDataList`, `CreateDeviceNode`) and the info-element
+  helpers (`FormatDptIdRefs`, `GetElementType`, `JoinInfoValues`,
+  `SplitInfoValues`). `CreateCatalogItemHash` has an empty body and no caller
+  anywhere in the 528-assembly tree (checked with a dnlib walk); it is the
+  catalog-item counterpart of the already-mapped `CreateDeviceHash`.
+  `names63-staged-v117.xml` =
+  `73AC9D9C618C5436A8523DC4EA5AD15CD05D4460D42312D84C80AF014A54C48B`, 10,948
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v117-sdkfrozen.xml`
+  (`75471ABD9C8DF307…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.8 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (the constructor,
+  `AddTemplate`, `DeleteTemplate`, `Import`, `Load`, `SaveCategories`,
+  `InternalCollectTemplateData`, `CreateTemplateDataReader`,
+  `CreateDeviceObjectList`, `GetInfoElements` and `LoadInformation`).
