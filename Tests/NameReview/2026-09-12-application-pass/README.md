@@ -603,3 +603,20 @@ Standing rules for this pass:
   surface is unchanged: five frozen rows, export map
   `D:\knx_analysis\names63-staged-v97-sdkfrozen.xml` (`AEA35080…`) audits
   `sdk-visible=0, sdk-referenced-types=0`.
+- **Wave 98: 237 further verified types, with the type gate corrected.**
+  Re-running the pair verification showed that the strict gate rejected 253
+  pairs for the wrong reason: it reused `MethodNameAnalysis` (a *method*-name
+  heuristic) for the 6.4 **type** name, so legitimate domain nouns such as
+  `Timing`, `Session`, `SRP` or `IoTPublisher` counted as unreadable and the pair
+  failed before the shape check ran. The corrected gate asks only that the 6.4
+  name is a real identifier (no `ClassN`/`InterfaceN`/short-letter placeholder)
+  and keeps the independent evidence unchanged: membership by member votes
+  (252 of the 253 unanimous, one 17/18), member-shape containment ≥ 0.9 in both
+  directions (minimum 0.9) and the exact member-name transfer. 237 of them
+  shipped (16 dropped as unusable nested/generic aliases): 120 Falcon, 50
+  HawkNET, 43 DynamicData, 15 Common, 12 DiagnosticLibrary, 7 CloudKit, 5 DevKit,
+  1 KnxCvNext. `names63-staged-v98.xml` = `6046393110E83884…`, 8,968 reviewed
+  edits, 0 errors, `--check-map` PASS, **no new auto-suffixes** and the SDK
+  surface unchanged (five frozen rows; export map
+  `D:\knx_analysis\names63-staged-v98-sdkfrozen.xml`, `640BED9E…`, audits
+  `sdk-visible=0, sdk-referenced-types=0`).
