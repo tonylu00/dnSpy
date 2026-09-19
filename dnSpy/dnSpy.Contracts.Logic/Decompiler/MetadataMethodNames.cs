@@ -10,6 +10,17 @@ namespace dnSpy.Contracts.Decompiler {
 	public static class MetadataMethodNames {
 		/// <summary>Assembly instructions for restoring aliased methods.</summary>
 		public const string Prefix = "dnSpy.metadata.method-name.v1|";
+		/// <summary>
+		/// Signature-qualified instructions. The parameter list joins the key so two
+		/// overloads of one type may share a readable alias, which is ordinary C#.
+		/// </summary>
+		public const string PrefixV2 = "dnSpy.metadata.method-name.v2|";
+		/// <summary>Parameter list and generic arity that separate same-name overloads.</summary>
+		public static string SignatureKey(IMethod method) {
+			MethodSig signature = method?.MethodSig;
+			if (signature == null) return "";
+			return string.Join(",", signature.Params.Select(p => p.FullName)) + "/" + signature.GenParamCount.ToString(CultureInfo.InvariantCulture);
+		}
 		/// <summary>Evidence that two original private definitions share their complete signature.</summary>
 		public static bool HasOriginalDuplicate(MethodDef method) => method.IsPrivate && !method.IsVirtual && !method.HasOverrides &&
 			method.DeclaringType.Methods.Any(other => other != method && other.IsPrivate && !other.IsVirtual && !other.HasOverrides &&
@@ -61,8 +72,8 @@ namespace dnSpy.Contracts.Decompiler {
 						// C# may encode a method reference through an inheriting receiver.
 						// Record that source owner too, preserving the original target body.
 						var assembly = type.DefinitionAssembly;
-						result.Add(Prefix + string.Join("|", new[] { MetadataTypeNames.SourceFullName(type), assembly.Name.String,
-							assembly.Version.ToString(), assembly.Culture.String ?? "", alias }.Select(encode)) + "|" + Convert.ToBase64String(method.Name.Data));
+						result.Add(PrefixV2 + string.Join("|", new[] { MetadataTypeNames.SourceFullName(type), assembly.Name.String,
+							assembly.Version.ToString(), assembly.Culture.String ?? "", alias, SignatureKey(method) }.Select(encode)) + "|" + Convert.ToBase64String(method.Name.Data));
 					}
 				}
 			}

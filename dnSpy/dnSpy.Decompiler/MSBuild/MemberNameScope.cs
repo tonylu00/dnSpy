@@ -117,6 +117,24 @@ namespace SourceNameMapping {
             }
             return used;
         }
+        /// <summary>Members of the declaration scope that already own one name.</summary>
+        public IEnumerable<IMemberDef> Occupants(IMemberDef member, string name, Func<IMemberDef, string> alias) {
+            foreach (var other in ScopeMembers(member).Concat(OwnMembers(member))) {
+                if (other == member) continue;
+                if (SimpleName(other.Name.String) == name) { yield return other; continue; }
+                if (alias != null && alias(other) == name) yield return other;
+            }
+        }
+        /// <summary>Whether two methods are the same C# overload slot.</summary>
+        public static bool SameSignature(MethodDef left, MethodDef right) {
+            var first = left?.MethodSig;
+            var second = right?.MethodSig;
+            if (first == null || second == null) return first == second;
+            if (first.GenParamCount != second.GenParamCount || first.Params.Count != second.Params.Count) return false;
+            for (int i = 0; i < first.Params.Count; i++)
+                if (first.Params[i].FullName != second.Params[i].FullName) return false;
+            return true;
+        }
         // A member name cannot equal the name of its own enclosing type, so a
         // renamed type reserves its own declarations as well as its siblings.
         static IEnumerable<IMemberDef> OwnMembers(IMemberDef member) => member is TypeDef type ? Members(type) : Enumerable.Empty<IMemberDef>();
@@ -157,7 +175,16 @@ namespace SourceNameMapping {
             // Sharing is legal only inside one contract family: every other
             // occupant reserves the name, including another family's alias and
             // every declaration that carries no source alias at all.
-            return scope.Reserved(member, other => IsFamily(other, family) ? null : Alias(other)).Contains(alias);
+            if (!scope.Reserved(member, other => IsFamily(other, family) ? null : Alias(other)).Contains(alias)) return false;
+            // C# allows overloads: two methods of one type may share a name when
+            // their parameter lists differ, and the restore instruction carries
+            // the signature so each overload still restores independently.
+            var occupants = scope.Occupants(member, alias, Alias).Where(other => !IsFamily(other, family)).ToArray();
+            if (occupants.Length == 0) return true;   // namespace, generic parameter or unmodified declaration
+            if (!(member is MethodDef method)) return true;
+            foreach (var other in occupants)
+                if (!(other is MethodDef otherMethod) || MemberNameScope.SameSignature(method, otherMethod)) return true;
+            return false;
         }
         bool IsFamily(IMemberDef member, string family) =>
             family != null && families.TryGetValue(member, out var otherFamily) && otherFamily == family;

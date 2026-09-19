@@ -706,25 +706,39 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
     static bool RestoreMemberNames(ModuleDef module, bool methods) {
         string kind = methods ? "method" : "field";
         string prefix = "dnSpy.metadata." + kind + "-name.v1|";
+        string qualifiedPrefix = "dnSpy.metadata." + kind + "-name.v2|";
         var maps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
+        var qualifiedMaps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
         var markers = new List<CustomAttribute>();
         foreach (var attribute in module.Assembly.CustomAttributes) {
             if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
             var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
             string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
-            if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
-            var parts = text.Substring(prefix.Length).Split('|');
-            if (parts.Length != 6) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
-            string key = string.Join("|", parts.Take(5));
-            var name = new UTF8String(Convert.FromBase64String(parts[5]));
+            if (text == null) continue;
+            bool qualified = text.StartsWith(qualifiedPrefix, StringComparison.Ordinal);
+            if (!qualified && !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+            if (qualified && !methods) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
+            var parts = text.Substring((qualified ? qualifiedPrefix : prefix).Length).Split('|');
+            int expected = qualified ? 7 : 6;
+            if (parts.Length != expected) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
+            string key = string.Join("|", parts.Take(expected - 1));
+            var name = new UTF8String(Convert.FromBase64String(parts[expected - 1]));
             UTF8String previous;
-            if (maps.TryGetValue(key, out previous) && previous != name)
+            var target = qualified ? qualifiedMaps : maps;
+            if (target.TryGetValue(key, out previous) && previous != name)
                 throw new InvalidDataException("Conflicting " + kind + " name instructions for one assembly context.");
-            maps[key] = name;
+            target[key] = name;
             markers.Add(attribute);
         }
         if (markers.Count == 0) return false;
-        Func<ITypeDefOrRef, string, string> keyFor = (owner, name) => {
+        // v2 instructions carry the parameter list and arity, so two overloads of
+        // one type may share an alias and still restore independently.
+        Func<IMethod, string> signatureOf = method => {
+            var signature = method?.MethodSig;
+            if (signature == null) return "";
+            return string.Join(",", signature.Params.Select(p => p.FullName)) + "/" + signature.GenParamCount.ToString(CultureInfo.InvariantCulture);
+        };
+        Func<ITypeDefOrRef, string[], string> keyFor = (owner, parts) => {
             var specification = owner as TypeSpec;
             if (specification != null) {
                 var generic = specification.TypeSig.RemovePinnedAndModifiers() as GenericInstSig;
@@ -734,7 +748,16 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             var assembly = owner.DefinitionAssembly;
             if (assembly == null) return null;
             Func<string, string> encode = value => Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
-            return string.Join("|", new[] { owner.FullName, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "", name }.Select(encode));
+            return string.Join("|", new[] { owner.FullName, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "" }
+                .Concat(parts).Select(encode));
+        };
+        Func<ITypeDefOrRef, string, IMethod, UTF8String> resolve = (owner, name, method) => {
+            UTF8String found;
+            var unqualified = keyFor(owner, new[] { name });
+            if (unqualified != null && maps.TryGetValue(unqualified, out found)) return found;
+            var qualified = keyFor(owner, new[] { name, signatureOf(method) });
+            if (qualified != null && qualifiedMaps.TryGetValue(qualified, out found)) return found;
+            return null;
         };
         Func<MemberRef, bool> matches = reference => methods ? reference.IsMethodRef : reference.IsFieldRef;
         var references = new HashSet<MemberRef>(module.GetMemberRefs().Where(matches));
@@ -750,14 +773,12 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         var memberNames = new Dictionary<MemberRef, UTF8String>();
         var members = module.GetTypes().SelectMany(t => methods ? t.Methods.Cast<IMemberDef>() : t.Fields.Cast<IMemberDef>());
         foreach (var member in members) {
-            var key = keyFor(member.DeclaringType, member.Name);
-            UTF8String name;
-            if (key != null && maps.TryGetValue(key, out name)) definitions.Add(member, name);
+            var name = resolve(member.DeclaringType, member.Name, member as IMethod);
+            if (!UTF8String.IsNullOrEmpty(name)) definitions.Add(member, name);
         }
         foreach (var reference in references) {
-            var key = keyFor(reference.DeclaringType, reference.Name);
-            UTF8String name;
-            if (key != null && maps.TryGetValue(key, out name)) memberNames.Add(reference, name);
+            var name = resolve(reference.DeclaringType, reference.Name, reference);
+            if (!UTF8String.IsNullOrEmpty(name)) memberNames.Add(reference, name);
         }
         if (methods) {
             RestoreGeneratedClosureMethodNames(module, definitions, references, memberNames);
