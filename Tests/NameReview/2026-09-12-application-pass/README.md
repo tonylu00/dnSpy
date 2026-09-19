@@ -571,3 +571,25 @@ Standing rules for this pass:
   Still open: 68 of the 268 candidate type pairs are not pair-verified yet (45
   Falcon, 23 HawkNET), and the ~12k behavioural candidates that the type renames
   now make readable by owner.
+- **Wave 96: members of the verified type pairs.** The 200 renamed types give
+  every member a known 6.4 counterpart, so `scratch-transfer.py` was seeded with
+  the verified pairs (`wave96-seed.json`, 200/200 resolved) and every proposal
+  inside those types was re-checked: 527 Falcon, 316 HawkNET and 6 DevKit
+  proposals, of which 182 belong to the renamed types and are not mapped yet —
+  all of them virtual slots, so they ship as contract families. 94 editable
+  families (no blockers, no member mapped yet, one agreed name per family)
+  renamed 400 member rows in 39 Falcon and 55 HawkNET families: 8,671 reviewed
+  edits, 0 errors, `--check-map` PASS, `names63-staged-v96.xml` =
+  `7A396AEC4288D7F4…`. One new auto-suffix appears:
+  `Knx.Ets.HawkNET.dll|0x06001064` (`Class302::c`) was `Apply` and becomes
+  `Apply2` because the family now claims `Apply` for `Class302::vmethod_0`, the
+  interface slot it also implements — a Dotfuscator split twin, the same pattern
+  wave 93 deferred. The other 50 suffixes are unchanged from wave 91. The SDK
+  surface is unchanged: five frozen rows, export map
+  `D:\knx_analysis\names63-staged-v96-sdkfrozen.xml` (`5E9B0C236F771215…`) audits
+  `sdk-visible=0, sdk-referenced-types=0`.
+  Deferred to a later wave: the other 87 proposals are further members of the
+  same 94 families (the transfer matched several members of one family to the
+  same slot name, which the atomic family row already covers) and one
+  explicit-interface implementation stays blocked, plus the separate
+  `FamilyProposals` (Falcon 23) that still need per-family evidence.
