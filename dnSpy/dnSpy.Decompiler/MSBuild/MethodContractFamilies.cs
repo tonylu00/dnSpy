@@ -54,7 +54,17 @@ namespace SourceNameMapping {
         MethodDef[] Overriding(TypeDef type) {
             if (!overriding.TryGetValue(type, out var methods))
                 overriding[type] = methods = HasMethodImpls(type.Module)
-                    ? type.Methods.Where(m => m.Overrides.Count != 0).ToArray() : Array.Empty<MethodDef>();
+                    ? Methods(type).Where(m => m.Overrides.Count != 0).ToArray() : Array.Empty<MethodDef>();
+            return methods;
+        }
+        // dnlib materialises method rows through a locked lazy list and this
+        // walk visits one type from several passes, so the per-type list is
+        // read once. The order is the metadata order the rest of the tool
+        // depends on; this cache is only touched by the sequential analysis.
+        readonly Dictionary<TypeDef, MethodDef[]> methodLists = new Dictionary<TypeDef, MethodDef[]>();
+        MethodDef[] Methods(TypeDef type) {
+            if (!methodLists.TryGetValue(type, out var methods))
+                methodLists[type] = methods = type.Methods.ToArray();
             return methods;
         }
         // Method overrides can only come from MethodImpl rows, and reading
@@ -116,6 +126,13 @@ namespace SourceNameMapping {
             analysisModules = analyze == null ? modules : new HashSet<ModuleDef>(analyze);
             moduleKey = key;
             this.useHostResolver = useHostResolver;
+            // dnlib's ModuleDef.Find/TypeDefFinder rescans every type of the
+            // target module for each lookup unless its finder cache is on
+            // (the default), and the reference, MemberRef and host-resolver
+            // paths in this graph all route through it. The graph only reads
+            // metadata, so the cache can stay enabled; it never makes a
+            // lookup return a different type.
+            foreach (var module in modules) module.EnableTypeDefFindCache = true;
             identities = modules.Where(m => m.Assembly != null).GroupBy(m => m.Assembly.FullName, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.Ordinal);
             if (analyze != null) ExtendAnalysisClosure();
@@ -133,10 +150,11 @@ namespace SourceNameMapping {
             void Analyze(TypeDef type) {
                 // A type without interfaces, inherited virtual slots or explicit
                 // implementations cannot contribute a contract of its own.
+                var methods = Methods(type);
                 if (!type.IsInterface && type.Interfaces.Count == 0 &&
-                    !type.Methods.Any(m => m.IsVirtual && !m.IsNewSlot) && !type.Methods.Any(m => m.HasOverrides)) return;
+                    !methods.Any(m => m.IsVirtual && !m.IsNewSlot) && !methods.Any(m => m.HasOverrides)) return;
                 var hierarchy = Hierarchy(new Use(type)).ToArray();
-                foreach (var method in type.Methods.Where(m => m.IsVirtual && !m.IsNewSlot)) {
+                foreach (var method in methods.Where(m => m.IsVirtual && !m.IsNewSlot)) {
                     bool found = false;
                     foreach (var parent in hierarchy.Skip(1)) {
                         var matches = Named(parent.Type, method.Name).Where(m => m.IsVirtual && Same(m, parent.Arguments, method, null)).ToArray();
@@ -145,7 +163,7 @@ namespace SourceNameMapping {
                     }
                     if (!found) Block(method, "unresolved or external base slot");
                 }
-                foreach (var method in type.Methods.Where(m => m.HasOverrides)) foreach (var implementation in method.Overrides) {
+                foreach (var method in methods.Where(m => m.HasOverrides)) foreach (var implementation in method.Overrides) {
                     var declaration = implementation.MethodDeclaration;
                     var use = Resolve(declaration.DeclaringType, type.Module);
                     if (use == null) { Block(method, "unresolved explicit contract"); continue; }
@@ -293,11 +311,11 @@ namespace SourceNameMapping {
             if (use == null) {
                 // An unresolved interface could bind any public virtual slot on
                 // this hierarchy. Keep those families visible but uneditable.
-                foreach (var method in hierarchy.SelectMany(t => t.Type.Methods).Where(m => m.IsPublic && m.IsVirtual && modules.Contains(m.Module)))
+                foreach (var method in hierarchy.SelectMany(t => Methods(t.Type)).Where(m => m.IsPublic && m.IsVirtual && modules.Contains(m.Module)))
                     Block(method, "unresolved interface: " + reference.FullName);
                 return;
             }
-            foreach (var contract in use.Type.Methods.Where(m => !m.IsStatic)) {
+            foreach (var contract in Methods(use.Type).Where(m => !m.IsStatic)) {
                 bool explicitMatch = hierarchy.Any(h => Overriding(h.Type).Any(m => m.Overrides.Any(o => {
                     var declaration = o.MethodDeclaration;
                     if (declaration.Name != contract.Name) return false;
@@ -356,8 +374,32 @@ namespace SourceNameMapping {
                 var type = FindInModule(candidates[0], reference.FullName);
                 return type == null ? null : new Use(type, arguments);
             }
-            if (resolved == null) resolved = reference.ResolveTypeDef();
+            if (resolved == null) resolved = ResolveExternal(reference, caller);
             return resolved == null ? null : new Use(resolved, arguments);
+        }
+        // dnlib's TypeRef.ResolveTypeDef() walks every type of the target
+        // assembly through its module finder because
+        // ModuleDef.EnableTypeDefFindCache defaults to false; with a contract
+        // reference that is milliseconds per reference and it dominated a
+        // large graph. The reference's definition assembly comes from the
+        // module context, and the type is then answered from the same
+        // type-name index the identity path above uses. Anything the index
+        // cannot see - an exported-type forwarder, a module or nested-module
+        // scope, a reference without an assembly scope - still goes through
+        // dnlib, so the outcome is unchanged.
+        TypeDef ResolveExternal(ITypeDefOrRef reference, ModuleDef caller) {
+            if (!(reference is TypeRef typeRef)) return reference.ResolveTypeDef();
+            var scope = typeRef;
+            for (int i = 0; i < 1000 && scope.ResolutionScope is TypeRef parent; i++) scope = parent;
+            if (!(scope.ResolutionScope is AssemblyRef assemblyRef)) return reference.ResolveTypeDef();
+            var sourceModule = typeRef.Module ?? caller;
+            var definition = sourceModule?.Context?.AssemblyResolver?.Resolve(assemblyRef, sourceModule);
+            if (definition == null) return reference.ResolveTypeDef();
+            foreach (var module in definition.Modules) {
+                var type = FindInModule(module, typeRef.FullName);
+                if (type != null) return type;
+            }
+            return reference.ResolveTypeDef();
         }
         // ModuleDef.Find(fullName) rescans every type of the module, nested
         // types included, and builds a full name for each candidate; a large
