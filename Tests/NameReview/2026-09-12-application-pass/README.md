@@ -1073,3 +1073,32 @@ Standing rules for this pass:
   `SpecializedExecute`, `SetParameterAndComObjectInfosForModularApplications`,
   `TransferParametersAndFlags`, `DetermineSecurityImpacts`, the constructor and
   the `SpecializedValidate` closure).
+- **Wave 115: adding a device and linking a device to a segment.** 26 rows in
+  `Knx.Ets.ObjectModel.dll`: `Operations.Devices.AddDeviceOperation` (13 rows)
+  gets the progress manager and the transactional remote-product import
+  (`CreateProgressManager`, `ImportRemoteProductsWithFailureHandling`,
+  `RefreshCatalogOnImportFailure`), the segment-filtered product selection
+  (`GetCatalogItemsValidForSegment`, `FindCouplerCatalogItem`), the device
+  materialization (`CreateDeviceFromCatalogItem`, `ApplyHardware2ProgramImage`,
+  `ResetBusInterfacePasswords`, `ApplyAdditionalAddresses`,
+  `SetDeviceBuildingPartAndTrade`, `ToByteAddress`,
+  `SynchronizeDeviceChannels`) and the modified marking
+  (`MarkCreatedDevicesModified`), and
+  `Operations.Devices.LinkDeviceToSegmentOperation` (13 rows) gets the medium
+  and RF bookkeeping (`ResetMediumConfigLoadedForDomainAddress`,
+  `ResetMediumConfigLoadedForDomainDevices`, `RunFastAckSlotHandlers`), the
+  address changes (`ApplyIndividualAddressChange`,
+  `ApplyAdditionalAddressChanges`, `SaveAdditionalAddresses`,
+  `SetAdditionalAddress`) and the undo/redo handlers
+  (`RestoreUnassignedDevices`, `DetachUnassignedDevices`,
+  `DetachUnassignedDevicesOnRedo`, `RemoveDeviceFromOldSegment`,
+  `AddDeviceToTargetSegment`, `GetTargetSegment`). `names63-staged-v115.xml` =
+  `060D74B9876BAC6C34000648CF8C2233DF221A0541C914221CDA32C9F3BE0B49`, 10,897
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v115-sdkfrozen.xml`
+  (`54F16D46FC2A6AA2…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.8 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (the two
+  constructors, both `SpecializedValidate` closures, `SpecializedExecute`,
+  `SpecializedUndo`, `SpecializedRedo`, `DetermineSecurityImpacts`,
+  `CreateDeviceFromCatalogItem` and `BeforeOpenMarker`).
