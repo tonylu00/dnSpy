@@ -2117,3 +2117,32 @@ Standing rules for this pass:
   The batch apply rewrote 10,414 methods in 528/528 modules with 0 errors in
   6.1 s, and `--verify-applied` reports `canonical_rows=575
   definitions_missing=0 stale_references=0` in 3.5 s.
+- **Wave 158: the HawkNET `NetworkFacade` and its connection-state getters.**
+  6.3 `Class412` (`0x02000182`) is the released
+  `Knx.Ets.Hawk.Impl.NetworkFacade`: the member lists line up one-to-one in
+  declaration order (52 vs 56 methods), the 19 members shipped by earlier waves
+  already carry its names, and every remaining connection-state getter is
+  pinned by its own body — `s()`/`get_IsDirectDeviceConnection`
+  (`ConnectorType == IpDeviceManagement`), `method_2()`/
+  `get_IsLocalUsbConnection` (`!= Usb && Mode == Local`), `q()`/
+  `get_IsTunnelingConnection` (`IpTunneling`), `method_4()`/`get_IsRouting`
+  (`IpRouting`), `method_5()`/`get_IsCloudConnection` (provider flag),
+  `method_6()`/`get_SupportsLocalProgMode`
+  (`interfaceFeatures.SupportsLocalProgrammingMode`), `m()`/
+  `get_InterfaceSerialNumber` (`interfaceFeatures.SerialNumber`),
+  `method_10()`/`get_MaxSupportedGatewayApduLength`
+  (`interfaceFeatures.MaxApduLength`) and `d()`/
+  `get_OutboundSegmentCouplerAddress` (`provider.dt()`).
+  The **type row is SDK-frozen**: `Knx.Ets.Sdk.Network.NetworkManagement`
+  exposes `Class412` in a public signature, so the export filter removes the
+  type alias (the applied tree keeps `Class412` but carries all nine getter
+  names). The raw map now holds **6 freeze rows / 5 removed**; the checkpoint
+  asserts the raw SDK-visible count stays 0 and that the raw freeze set keeps at
+  least the five previously known rows, and reports the raw shape each wave.
+  `names63-staged-v158.xml` =
+  `759AED15DF247246780FBBADB35AA0D3C3D557C44C077B72BDEC2A6E6989A285`, 11,911
+  reviewed edits (10 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `65211104E835CA36…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,423 methods in 528/528 modules with 0 errors in
+  6.7 s, and `--verify-applied` reports `canonical_rows=575
+  definitions_missing=0 stale_references=0` in 3.5 s.
