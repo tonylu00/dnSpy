@@ -1876,6 +1876,21 @@ Standing rules for this pass:
   The batch apply rewrote 10,366 methods in 528/528 modules with 0 errors in
   6.6 s and `verify-map.cs` reports `canonical_rows=549 definitions_missing=0
   stale_references=0`.
+- **Wave 148: HawkNET `DeviceProfileInformation.MaySupportLongFrames`.**
+  `Class345::method_15()` returns true when `Any(additionalProfiles, p =>
+  p.MaySupportLongFrames == true)`, true for mask version `0xFFFF`, false when
+  the mask version's high nibble is not `0x1000`, otherwise the legacy flag
+  getter and finally any configuration resource named 60 — and the released
+  `DeviceProfileInformation.get_MaySupportLongFrames` has the identical
+  structure, which pins the name. The two cached lambdas are the profile and
+  resource predicates: `<get_MaySupportLongFrames>b__40_0..1`.
+  `names63-staged-v148.xml` =
+  `B428A0845100940F84DD92A2C3867D5F35A5610F42A3EA8AADAFC34EFDB4BD12`, 11,850
+  reviewed edits (3 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `49C3A3F30AC9F82D…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,369 methods in 528/528 modules with 0 errors in
+  6.0 s and `verify-map.cs` reports `canonical_rows=551 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
