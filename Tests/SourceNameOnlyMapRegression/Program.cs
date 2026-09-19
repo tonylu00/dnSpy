@@ -60,7 +60,11 @@ string clientSource = File.ReadAllText(Directory.GetFiles(export, "*.cs", Search
 if (!librarySource.Contains("Calculate(")) throw new Exception("token-less method row was not applied");
 if (librarySource.Contains("Compute(")) throw new Exception("original method name still present");
 if (!librarySource.Contains("class Gadget")) throw new Exception("token-less type row was not applied");
+if (librarySource.Contains("namespace Contracts")) throw new Exception("alias namespace was not applied to the declaration");
 if (!clientSource.Contains("Calculate(")) throw new Exception("call site was not renamed with the definition");
+if (!clientSource.Contains("Gadget()") && !clientSource.Contains("Gadget.")) throw new Exception("call site type was not renamed with the definition");
+if (clientSource.Contains("Widget")) throw new Exception("original type name still present at the call site");
+if (clientSource.Contains("Contracts.Gadget")) throw new Exception("alias namespace was not projected to the call site");
 
 // A name-only row whose signature matches nothing must fail the export instead of
 // guessing a member.

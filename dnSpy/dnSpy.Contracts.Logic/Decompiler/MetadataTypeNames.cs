@@ -80,8 +80,19 @@ namespace dnSpy.Contracts.Decompiler {
 		/// <summary>Full nested source name, including projected aliases and generic arity.</summary>
 		public static string SourceFullName(TypeDef type) {
 			var name = SourceMetadataName(type);
+			string @namespace = GetSourceNamespace(type);
 			return type.DeclaringType != null ? SourceFullName(type.DeclaringType) + "/" + name :
-				string.IsNullOrEmpty(type.Namespace) ? name : type.Namespace + "." + name;
+				string.IsNullOrEmpty(@namespace) ? name : @namespace + "." + name;
+		}
+		/// <summary>Namespace a type declaration or reference is emitted in, including alias moves.</summary>
+		public static string GetSourceNamespace(ITypeDefOrRef type) {
+			if (type == null) return string.Empty;
+			var root = type.ResolveTypeDef();
+			while (root?.DeclaringType != null) root = root.DeclaringType;
+			var alias = SourceNameAliases.GetAliasNamespace(root);
+			if (alias != null) return alias;
+			if (root != null) return root.Namespace.String ?? string.Empty;
+			return type.Namespace ?? string.Empty;
 		}
 		/// <summary>The metadata full name a type had before an alias moved it.</summary>
 		public static string OriginalFullName(TypeDef type) {
@@ -105,9 +116,9 @@ namespace dnSpy.Contracts.Decompiler {
 			foreach (var type in types) {
 				if (type.IsGlobalModuleType || type.Module?.Assembly == null) continue;
 				string source = SourceFullName(type);
-				string originalNamespace = SourceNameAliases.GetOriginalNamespace(type);
+				string originalNamespace = SourceNameAliases.GetOriginalNamespace(type) ?? type.Namespace.String ?? string.Empty;
 				string originalName = SourceNameAliases.GetOriginalName(type) ?? type.Name.String;
-				bool moved = originalNamespace != null && originalNamespace != (type.Namespace.String ?? string.Empty);
+				bool moved = originalNamespace != GetSourceNamespace(type);
 				if (!moved && SourceMetadataName(type) == originalName) continue;
 				if (moved) {
 					rows.Add(PrefixV2 + Encode(source) + "|" + Encode(type.DefinitionAssembly.Name) + "|" +

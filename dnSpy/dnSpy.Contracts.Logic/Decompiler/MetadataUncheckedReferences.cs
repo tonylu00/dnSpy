@@ -12,9 +12,14 @@ namespace dnSpy.Contracts.Decompiler {
 		static readonly ConditionalWeakTable<ModuleDef, string> names = new ConditionalWeakTable<ModuleDef, string>();
 		/// <summary>Requests a collision-free placeholder name for a module.</summary>
 		public static string Request(ModuleDef module) => names.GetValue(module, m => {
-			var used = new HashSet<string>(m.Types.Select(t => string.IsNullOrEmpty(t.Namespace)
-				? MetadataTypeNames.GetName(t).Split('`')[0] : t.Namespace.String.Split('.')[0]));
-			used.UnionWith(m.GetTypeRefs().Select(t => string.IsNullOrEmpty(t.Namespace) ? t.Name.String.Split('`')[0] : t.Namespace.String.Split('.')[0]));
+			var used = new HashSet<string>(m.Types.Select(t => {
+				var ns = MetadataTypeNames.GetSourceNamespace(t);
+				return string.IsNullOrEmpty(ns) ? MetadataTypeNames.GetName(t).Split('`')[0] : ns.Split('.')[0];
+			}));
+			used.UnionWith(m.GetTypeRefs().Select(t => {
+				var ns = MetadataTypeNames.GetSourceNamespace(t);
+				return string.IsNullOrEmpty(ns) ? MetadataTypeNames.GetName(t).Split('`')[0] : ns.Split('.')[0];
+			}));
 			string root = "__DnSpyUncheckedReference", name = root;
 			for (int suffix = 1; used.Contains(name); suffix++) name = root + suffix.ToString(CultureInfo.InvariantCulture);
 			return name;

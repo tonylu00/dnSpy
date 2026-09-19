@@ -16,6 +16,7 @@ namespace dnSpy.Contracts.Decompiler {
 		sealed class TypeOriginal {
 			public readonly string Namespace;
 			public readonly string Name;
+			public string? AliasNamespace;
 			public TypeOriginal(string @namespace, string name) { Namespace = @namespace; Name = name; }
 		}
 		/// <summary>Register before any decompilation or metadata-name cache is initialized.</summary>
@@ -38,9 +39,16 @@ namespace dnSpy.Contracts.Decompiler {
 			string @namespace = index < 0 ? string.Empty : qualifiedName.Substring(0, index);
 			string name = index < 0 ? qualifiedName : qualifiedName.Substring(index + 1);
 			var original = typeOriginals.GetValue(type, t => new TypeOriginal(t.Namespace.String ?? string.Empty, t.Name.String));
-			if (original.Namespace != @namespace) type.Namespace = @namespace;
+			// The metadata namespace is part of the runtime contract and is how
+			// every TypeRef in the input resolves its definition. Keep it intact
+			// and let the source renderer project the alias namespace instead;
+			// moving the TypeDef made every reference to the original name fail
+			// to resolve before it could pick up the alias.
+			original.AliasNamespace = @namespace;
 			names.Add(type, new Holder(name));
 		}
+		/// <summary>Alias namespace of an aliased type; null when it has no alias.</summary>
+		public static string? GetAliasNamespace(TypeDef? type) => type != null && typeOriginals.TryGetValue(type, out var original) ? original.AliasNamespace : null;
 		/// <summary>Original metadata namespace of an aliased type, if it was moved.</summary>
 		public static string GetOriginalNamespace(TypeDef type) => type != null && typeOriginals.TryGetValue(type, out var original) ? original.Namespace : null;
 		/// <summary>Original metadata name of an aliased type, if it was aliased.</summary>
