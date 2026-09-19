@@ -1181,3 +1181,30 @@ Standing rules for this pass:
   `Init`, `Save`, `WriteTo`, `DoInitialization`, `UpdateAccessKey`,
   `PerformActivityCalculationIfNeeded`, `MarkSchemaUpdateRequired`, the
   `CloseInternal` counters, `set_Tags` and the `OpenInternal` closure).
+- **Wave 119: the installation object and restoring a copy as a clone.** 24
+  rows in `Knx.Ets.ObjectModel.dll`: `Project.Installation` (12 rows) gets the
+  identity and collection setup (`GenerateInstallationId`,
+  `InitializeCollections`) and its per-store persistence pairs
+  (`PersistGroupRanges`/`WriteGroupRanges`,
+  `PersistUnassignedDevices`/`WriteUnassignedDevices`,
+  `PersistBuildings`/`WriteBuildings`, `PersistTrades`/`WriteTrades`,
+  `PersistSplitInfos`/`WriteSplitInfos`), and
+  `Operations.ProjectSync.RestoreCopyAsCloneOperation` (12 rows) gets the
+  progress and transaction plumbing (`CreateProgressManager`,
+  `PatchStoresInTransaction`), the project registration
+  (`AddRestoredProject`), the clone body
+  (`CloneProjectStoreContents`, `ExtractProjectArchiveToTempFolder`) and the
+  store-patching helpers (`RewriteStoreStream`, `GetNewProjectName`,
+  `GetNewProjectNameForStorePatcher`, `GetAreaStore`, `GetUserFileStore`,
+  `GetDeviceBinaryDataStore`, `GetAddinDataStore`). The store helpers carry
+  the same names as their `CopyProjectOperation` peers from wave 116 because
+  they are declared in different types. `names63-staged-v119.xml` =
+  `3E006CD5F5FE330916293DE2E822AC64B85CA894A198CEEE72AD22E963E0F2DD`, 11,001
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v119-sdkfrozen.xml`
+  (`2C9CBF793C10234A…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (`Installation::WriteTo`,
+  `Installation::GenerateId`, the constructor, `SpecializedExecute`,
+  `CloneProjectStore`, `CloneProjectStoreContents`, both `PatchStores` methods
+  and the four `PatchStores` patch lambdas).
