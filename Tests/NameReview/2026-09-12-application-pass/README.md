@@ -960,3 +960,31 @@ Standing rules for this pass:
   check applied it to the 528-assembly tree in 4.6 s (0 errors, 528/528 load);
   the constructors, `set_IsActive`, `set_Priority`, `get_Name`,
   `get_ParentChannel` and `set_DatapointTypes` all keep their callees.
+- **Wave 111: the project merger's element and attribute handlers.** 14 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Import.ProjectMerger`.
+  `get_ProjectTagElementSettings` pairs `Naming.Project`,
+  `Naming.ProjectInformation` and `Naming.ProjectTags` with
+  `CloneProjectElement`, `WriteProjectInformation` (which adds
+  `Birdy-PasswordCompareHash` and `Birdy-PasswordHash-IV`) and
+  `CloneProjectTagsElement`; `get_HistoryEntriesElementSettings`,
+  `get_ToDoItemsElementSettings`, `get_ProjectTracesElementSettings`,
+  `get_DeviceCertificatesCountElementSettings` and
+  `get_DeviceCertificatesElementSettings` name
+  `CloneHistoryEntriesElement`, `CloneToDoItemsElement`,
+  `CloneProjectTracesElement`, `CountDeviceCertificateElement` (through
+  `IProjectCounter.AddSerialNumber`) and `CloneDeviceCertificatesElement`;
+  `get_AttributeCallbacks` pairs `"Password"`, `"Id"`, `"RefId"`, `"Name"`,
+  `"FDSK"` and `"Guid"` with `TransformPasswordValue` (the
+  `PasswordDescrambler`/`PasswordScrambler` and `IPasswordHandler` by
+  `Direction`), `PatchIdAttribute`, `PatchRefIdAttribute`,
+  `RenameNameAttribute` (the `WithRenamer` function), `TransformFdskValue` and
+  `PatchGuidAttribute`. `names63-staged-v111.xml` =
+  `188CEC95E99A5E5DBA42F09022F6571366DA82E06164FDB0FD2880351A62A06F`, 10,823
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v111-sdkfrozen.xml`
+  (`569FA1BD2D56538A…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 4.5 s (0 errors, 528/528 load);
+  every handler still resolves from its settings getter or
+  `get_AttributeCallbacks` (the two mergers share `TransformPasswordValue`,
+  `PatchIdAttribute` and `PatchRefIdAttribute` names because they are declared in
+  different types).
