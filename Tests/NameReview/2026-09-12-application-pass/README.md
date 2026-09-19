@@ -459,3 +459,25 @@ Standing rules for this pass:
   0.46 s field scope. Parallelising the graph needs the lazily materialised
   dnlib tables primed first; the two named per-type hotspots are the next
   candidates.
+- **Wave 92: declaration-order alignment.** The 6.3 and 6.4 builds of one
+  assembly are the same code compiled twice, so their member tables usually keep
+  declaration order. `scratch-transfer.py` now aligns the two member-shape
+  sequences (`difflib.SequenceMatcher`) and transfers the 6.4 name for paired
+  slots where one readable name shares its shape with obfuscated placeholders.
+  Order drifted in some assemblies, so the tool measures the alignment first -
+  readable pairs on both sides must agree - and only trusts it when a module
+  pair clears 97% over at least 100 pairs and the individual type clears the
+  same bar after four pairs. Measured: Falcon 1153/1154 (enabled),
+  ConverterEngine 315/316, Common.3 308/316, ObjectModel 0.958 (disabled),
+  HawkNET 0.489 (disabled). All 91 Falcon slots the body-fingerprint matcher
+  could also decide agree with the aligned name, so wave 92 shipped 98
+  order-aligned Falcon rows (the two Common.3 rows were deferred): 7303 reviewed
+  edits, 0 errors, check-map PASS, no new auto-suffixes (the 50 pre-existing
+  wave-91 collisions stay), the SDK audit still freezes only
+  `Knx.Ets.CalculatedParameters.z` and the filtered export map reports
+  `sdk-visible=0, sdk-referenced-types=0`. Deferred:
+  `Knx.Ets.Common.Wpf.BindableBase::a(System.String)` aligns to the 6.4
+  `OnPropertyChanged(System.String)` overload, but a descendant
+  (`Knx.Ets.ObjectModel.DomObject`) already declares that signature; the sibling
+  `b(System.String)` keeps its v91 name `NotifyPropertyChanged` instead of the
+  colliding 6.4 alias.
