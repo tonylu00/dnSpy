@@ -691,3 +691,35 @@ Standing rules for this pass:
   The SDK surface is unchanged: five frozen rows, export map
   `D:\knx_analysis\names63-staged-v101-sdkfrozen.xml` (`E212402A…`) audits
   `sdk-visible=0, sdk-referenced-types=0`.
+- **Batch-applier performance (same turn as wave 102).** The 40 s "low CPU, low
+  IO" report was the `--apply-map` write phase: dnlib's normal writer
+  re-materializes every module and every lazily materialized `MemberRef` asks
+  `AssemblyResolver.Resolve` for its declaring type, which serializes all
+  writer threads on one exclusive lock (the tree asks ~600k times for ~5k
+  distinct (scope, type) pairs). The applier now memoizes that fallback per
+  (source directory, scope identity, type name) and copies modules the map
+  cannot change byte for byte instead of rewriting them (`CopiedModules`,
+  `ModulesCopied`). Wave-101 batch apply: 29.4 s -> 10.6 s wall, 72.4 s ->
+  24.6 s CPU, 68 modules rewritten and 460 copied, every rewritten module
+  byte-identical to the previous output and every copied module byte-identical
+  to its input (all 528 still load). de4dotEx `050f7a09`; see
+  `tools/NameCandidates/README.md` for the profile and the regression fixture.
+- **Wave 102: the remaining string-evidenced members.** The same rule as wave
+  101 applied to the members whose literal states the operation directly:
+  `"Invalid signature detected: {0}"` -> `ValidateSignature` in both ETS6C/N
+  executables, `"Invalid shift for replay window"` -> `SetReplayWindowShift`,
+  `"The HKDF algorithm {0} is not supported!"` -> `CreateKeyDerivationFunction`,
+  the four COSE attribute readers, `"Unknown association table format"`-style
+  validators, `"IoT Failed to extract KNX serial number from mDNS Name {0}"` ->
+  `ExtractSerialNumberFromMdnsName`, and so on. 17 rows ship in HawkNET (3),
+  Falcon (12) and the two executables (2); one further candidate
+  (`Knx.Ets.HawkNET.dll|0x0600009A`) is deferred because it is a virtual member
+  whose contract family has no evidence for its other members, exactly like
+  wave 101's two deferrals. `names63-staged-v102.xml` =
+  `EA3DE48F704FE63614923FCC2E5F610B7D2E3D601074DAF0255183F7369EEC3C`, 9,052
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). The SDK surface is unchanged: five frozen rows, export map
+  `names63-staged-v102-sdkfrozen.xml` (`C4D4A55D…`) audits `sdk-visible=0,
+  sdk-referenced-types=0`. The batch check applied that export map to the
+  528-assembly tree in 10.6 s wall (0 errors) and all 528 outputs load with the
+  wave-102 names present.
