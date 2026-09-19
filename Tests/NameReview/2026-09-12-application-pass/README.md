@@ -1208,3 +1208,30 @@ Standing rules for this pass:
   `Installation::GenerateId`, the constructor, `SpecializedExecute`,
   `CloneProjectStore`, `CloneProjectStoreContents`, both `PatchStores` methods
   and the four `PatchStores` patch lambdas).
+- **Wave 120: exporting a keyring and patching topology addresses.** 22 rows in
+  `Knx.Ets.ObjectModel.dll`: `Operations.KeyringExport.ExportKeyringOperation`
+  (11 rows) gets the collected inputs (`CollectUserIds`,
+  `CollectSecureDeviceInformation`, `CollectInterfaces`,
+  `CollectRelatedGroupAddresses`, `GetIndividualAddress`,
+  `IsSecureInterface`, `ToSecureString`), the document work
+  (`CreateKeyringDocument`, `AddGroupAddressElements`, `SignAndSaveKeyring`) and
+  the export body `ExportKeyring` (which logs
+  `"Failed exporting keyring for bus interfaces: {0}"`), and
+  `Operations.ExtendedCopy.Patcher.TopologyAddressesPatcher` (11 rows) gets the
+  element dispatch and walk (`CalculateAddressesForElement`,
+  `CalculateAddressesForChildElements` already mapped,
+  `CreateAdditionalAddressStrategy`, `ResetAddressZeroFlag`,
+  `IndexAddressElements`), the device passing (`PatchDeviceElements`,
+  `PatchDeviceAddresses`, `IsAddressAlreadyUsed`) and the address element
+  writers (`PatchAddressElement`, `PatchChildElements`, `CreateAddressElement`,
+  `AddAddressElementAttributes`). `names63-staged-v120.xml` =
+  `83DB7DCBDAD57329047490602EADABA0DAC2DD83299CAD80634263960EAEB663`, 11,023
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v120-sdkfrozen.xml`
+  (`5E9756556FE01F6C…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.6 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller
+  (`SpecializedExecute`, `AddInterface`, `AddDeviceElements`, the constructor,
+  `Patch`, `CalculateAddressesForElement`,
+  `CalculateAddressesForChildElements`, `CalculateAddressesForLineElements`
+  and the `BusInterfaceInfo` accessor).
