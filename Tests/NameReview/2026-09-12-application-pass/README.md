@@ -418,3 +418,28 @@ Standing rules for this pass:
   this class of work: the remaining ~15,000 candidates across the graph need
   behavioural naming from the 6.3 binaries themselves (strings, call sites,
   property/event/native wiring, delegate targets) rather than another build.
+- **Waves 89-90: member-vote seeds and state-machine evidence.** The type-level
+  score alone missed pairs such as HawkNET `eo` -> `Knx.Ets.Hawk.DeviceManagement`
+  or `lp` -> `DataProvider.ApplicationProgramOptions`; the member-vote matcher
+  (`scratch-membervote.py`, majority of mutually matched members) now seeds the
+  type map first, which raised Falcon 219 -> 626 and HawkNET 129 -> 469 proposals
+  while the anchor audit improved to 444/444 and 92/92. Async and iterator
+  wrappers only call `AsyncTaskMethodBuilder::Start`, so their state machine's
+  body (calls, strings, locals) is now folded into the wrapper; that resolved
+  ties such as `Bus::b` -> `ConnectAsync` and `Bus::a` -> `ChangeConnectorMode`
+  with 0.48/0.64 margins. Wave 89 shipped 552 rows, wave 90 shipped 118 rows and
+  covered every other pending module with a 6.4 peer (DevKit, ConverterEngine,
+  DynamicData.6, Sdk, ActiveTree, ProjectCompare, Common.3, InformationExtract,
+  CloudKit, DiagnosticLibrary, SemanticExport, PrintLibrary, PluginLoader,
+  KnxCvNext). The CV/<version>/ compatibility copies are addressed through their
+  tree-relative path, not the file name.
+- **Wave 91: overload aliases.** The rebuild instruction was keyed by declaring
+  type and alias only, so two overloads of one type could never share a name and
+  the updater emitted `Create2..Create7`, `UpdateFirmware2..4` and hundreds of
+  other artificial suffixes. Method instructions are now version 2 and carry the
+  parameter list and generic arity, the shared `MemberNameClaims` allows a name
+  when every other occupant is a method with a different signature, and
+  `Tests/Invoke-OverloadAliasRegression.ps1` proves the round trip: two overloads
+  export under one alias, the rebuilt assembly restores both original names and
+  signatures, and the original caller still runs. Re-allocating the ledger
+  dropped the artificial suffixes from 206 to 50.
