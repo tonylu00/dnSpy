@@ -1677,6 +1677,28 @@ Standing rules for this pass:
   `cross-version64-v135.json`, `map-update64.json`,
   `rename64-staged-v7-check.json`, `public-api-audit64.json`; `progress.json`
   now records the v7 map and its export audit.
+- **Wave 136: the constructor- and explicit-implementation-declared lambdas.**
+  Wave 135 stopped at the 409 lambdas whose declaring method carried an
+  obfuscated name. Two groups are still fully determined by Roslyn's own
+  scheme: a lambda declared in a constructor is `<.ctor>b__N_M` /
+  `<.cctor>b__N_M`, and a lambda declared in an explicit interface
+  implementation uses the last segment of the qualified name
+  (`<MoveNext>b__N_M`). The readable 6.4/compat graphs confirm both shapes
+  (1,637 `<.ctor>b__…` and 316 `<.cctor>b__…` methods there). Extending the
+  wave-135 evidence rule produced 123 more proposals; 119 were new rows (four
+  were already named by earlier waves with plain identifiers). The wave is
+  mostly the 52 cached lambdas of HawkNET's `en::.cctor` and the constructor
+  lambdas of Falcon's `Class1462`, `Class311`, `Class402` and the
+  `IAsyncStateMachine.MoveNext` implementers. `names63-staged-v136.xml` =
+  `6DE8387635FE68AA52536D60EE0DF63C9F1CE4013E55ED418CDEE6C92D964A0A`, 11,743
+  reviewed edits, 0 errors, `--check-map` PASS, the same 51 auto-suffixes; the
+  export map `EAA3B96096017614…` audits `sdk-visible=0, sdk-referenced-types=0`
+  (raw map keeps the same five freeze rows / four removed). The batch apply
+  renamed 10,269 methods in 528/528 modules with 0 errors and
+  `verify-wave136` reports `stale_references=0`. Decompiling HawkNET gives 89
+  `=>` on the wave-135 tree and 137 on the wave-136 tree with no leftover
+  `b__` names. 214 lambdas stay deferred — their declaring methods are still
+  obfuscated user methods (`Class1462::a`, `Class311::a`, …).
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
