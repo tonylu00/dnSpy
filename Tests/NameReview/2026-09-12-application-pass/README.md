@@ -645,3 +645,31 @@ Standing rules for this pass:
   The SDK surface is unchanged: five frozen rows, export map
   `D:\knx_analysis\names63-staged-v99-sdkfrozen.xml` (`1F739A79…`) audits
   `sdk-visible=0, sdk-referenced-types=0`.
+- **Wave 100: generic type aliases and the Falcon event raisers.** The map
+  updater used to reject every generic type, so 16 verified wave-98 pairs
+  (`TreeNode`1`, `FileCache`1`, `AsyncStateTransition`4`, …) could never ship.
+  A generic type's metadata name carries its arity while its source alias does
+  not: the binary applier writes the suffix back from the type's own generic
+  parameters and `MetadataTypeNames.SourceMetadataName` already appends it for
+  the rebuild instruction, so the renamer now pastes `Foo`1`, the tools check
+  the arity and normalise it, and both the binary and the source path stay
+  correct (`de4dotEx 2fd0dedf`, `dnSpy 09dda453a`, with the new
+  `Invoke-GenericTypeAliasRegression.ps1` and the ApplyMapReference `Box<T>`
+  case). 15 of the 16 ship — the DevKit pair's 6.4 name is itself obfuscated
+  (`t2K3r6oJiIcJNf2FY2aX.kw9mOEoJ1scMbFbydwLH`1`), so it is skipped on purpose.
+  The wave also names the three `Knx.Falcon.Bus` event raisers behind the
+  already-mapped accessors: `0x060025CB`→`OnConnectionPropertyChanged`,
+  `0x060025CD`→`OnGroupMessageReceived`, `0x060025D0`→`OnKnxMessageReceived`
+  (each invokes the delegate field of its event and logs
+  `Exception in <event>: {0}`).
+  `names63-staged-v100.xml` = `FAD1D714DE6238C1…` (9,001 reviewed edits, 0
+  errors, `--check-map` PASS, still the 51 known auto-suffixes). The SDK
+  surface is unchanged: five frozen rows, export map
+  `D:\knx_analysis\names63-staged-v100-sdkfrozen.xml` (`674D2C0E…`) audits
+  `sdk-visible=0, sdk-referenced-types=0`.
+  Batch rename check: `--apply-map` applied that export map to the 528-assembly
+  tree in 58 s wall / 60 s CPU (1.04 cores) — 803 types, 7,669 methods, 1,259
+  fields, 1,359 parameters plus 521 TypeRefs and 949 MemberRefs rewritten
+  without naming a single reference token, 528 modules written, 0 errors; all
+  528 output assemblies still load and the renamed generic types keep their
+  arity (`Knx.Ets.Common.Caching.FileCache`1`, `Knx.Falcon.Impl.TreeNode`1`).
