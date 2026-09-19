@@ -1011,3 +1011,24 @@ Standing rules for this pass:
   check applied it to the 528-assembly tree in 4.4 s (0 errors, 528/528 load);
   `SpecializedExecute`, `CreateValidators`, `get_Connectors` and
   `UnlinkComObjectInstance` all keep their callees.
+- **Wave 113: the device copy operation.** 19 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Operations.Devices.CopyDeviceOperation`: the two
+  entry points (`GetCopyableDevices` for the dialog list and `CopyDevices` for
+  the workspace clone), the content copier (`CopyDeviceContents` and its
+  `CloneGroupTree`, `CopyFirmwareImage`, `CopyBinaryData`,
+  `CopyNonDefaultComObjects`, `CopyModuleInstances`, `CopySecuritySettings`
+  steps), the address/segment handling (`CreateCopiedIpConfig`,
+  `MarkCopiedDevicesModified`, `ChangeAdditionalAddress`, `ToByteAddress`,
+  `GetTargetSegment`), the plug-in notification (`NotifyDevicePlugIns`,
+  `ForEachCollectingFailures`) and the sharing caches/validators
+  (`GetComObjectRefCache`, `CreateMediumTypeValidator`,
+  `CreateRfMainLineMultiDeviceValidator`). `names63-staged-v113.xml` =
+  `3629B068C3F77BF70E602B81AB972864CBA898995978BA59127E6DEE29BE3E13`, 10,855
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v113-sdkfrozen.xml`
+  (`9D8A84DB21C227CB5E39375533249F926D2CB8D607D020757A19CF9EB1870B42`) audits
+  `sdk-visible=0, sdk-referenced-types=0`. The batch check applied it to the
+  528-assembly tree in 4.8 s (0 errors, 528/528 load); every renamed copier
+  still binds from `CopyDevices`/`CopyDeviceContents` and
+  `GetComObjectRefCache` keeps its 20 callers across `MoveDeviceAcrossProjectOperation`,
+  `ObjectContext`, `Caches` and `AppPrgInfoDynamicFacade`.
