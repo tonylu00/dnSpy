@@ -1282,3 +1282,26 @@ Standing rules for this pass:
   load); every renamed helper still binds from its caller (`Validate`,
   `get_HardwareInfo`, `get_ApplicationProgramInfo`, `DetermineCouplingDirection`,
   `CheckSubLine`, `CheckMainline` and the constructor).
+- **Wave 123: the group address conflict rule.** 13 rows in
+  `Knx.Ets.ObjectModel.dll`'s
+  `Operations.SplitAndMerge.MergeRules.GroupAddressConflictRule`: the
+  conflicting-range creators the constructor installs
+  (`GetOrCreateConflictingGroupRange`, `CreateMiddleGroupForConflict`,
+  `CreateMainGroupForConflict`), the classification
+  (`ClassifyGroupAddressesByTargetRange`, `AddGroupAddressToRange`,
+  `HandleGroupAddressPropertyMismatches`), the copy path
+  (`ResolveRangeConflicts`, `ResolveTargetGroupRange`,
+  `CopyMissingGroupAddressesIntoRange`, `CreateGroupAddressesForRange`,
+  `HandleCopiedGroupAddress`, `HandleCopiedGroupAddressForRange`) and the
+  failure report `ReportUncopiedGroupAddresses` (which logs
+  `"GroupAddressCannotBeCopiedNoMoreFreeAddresses"`).
+  `names63-staged-v123.xml` =
+  `BCDCC9EF0DD4F1EFDFB9B1BBE7171913C183CB69021633B71099691D7FB47EFB`, 11,072
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v123-sdkfrozen.xml`
+  (`7C23FDE34F5692BE…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.4 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (the constructor,
+  `Apply`, `ResolveRangeConflicts`,
+  `CopyMissingGroupAddressesIntoRange` and
+  `ClassifyGroupAddressesByTargetRange`).
