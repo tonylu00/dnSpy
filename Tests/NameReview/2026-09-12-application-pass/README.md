@@ -571,6 +571,9 @@ Standing rules for this pass:
   concurrent map instead of a lock taken twice per member. `--check-map`,
   `--update-map`, `--review-families` and `--review-obfuscated` still reproduce
   `36A04057…`, `60463931…/CA39B033…`, `27B6C6F3…` and `8179AFA4…` byte for byte.
+  Measured on the same 528-assembly tree (wall / process CPU):
+  `--check-map` 5.3 s / 7.2 s, `--update-map` 6.1 s / 8.0 s,
+  `--review-families` 10.8 s / 21.3 s, `--review-obfuscated` 12.6 s / 15.9 s.
   The SDK surface is unchanged: `--public-api-audit` freezes five rows
   (`sdk-visible=0`, `sdk-referenced-types=5` on the full map) and the filtered
   export map `D:\knx_analysis\names63-staged-v95-sdkfrozen.xml`
