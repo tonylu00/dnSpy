@@ -1539,3 +1539,31 @@ Standing rules for this pass:
   `CreateTransactionAndAddItem`, `Do`, `TryCreateExclusive`,
   `QueueScope::Dispose`, `BirdyTransactionScope::Dispose`, and
   `SpecializedValidate`/`SpecializedExecute` for the security operation.
+- **Wave 132: the shrink-project operation and the additional group addresses
+  operation.** 16 rows in `Knx.Ets.ObjectModel.dll`.
+  `Operations.Projects.ShrinkProjectOperation` (8 rows) gets the validator
+  iterator (`GetValidators`), the progress pipeline
+  (`CreateProgressManager`, called by `BeforeExecute`), the four deletion
+  helpers (`DeleteCatalogItems`, `DeleteUnreferencedHardware`,
+  `DeleteApplicationPrograms`, `DeleteManufacturerData`, called by
+  `SpecializedExecute`), the manufacturer-folder cleanup
+  (`DeleteManufacturerFolder`) and the referenced-baggage collector
+  (`CollectReferencedBaggages`, called by `BeforeExecute`).
+  `Operations.Line.AddAdditionalGroupAddressesOperation` (8 rows) gets the
+  execute/undo actions the three constructors install
+  (`AddAddressesToSegment`, `RemoveAddressesFromSegment`,
+  `AddAddressRangeToSegment`, `RemoveAddressRangeFromSegment`), the three
+  validators (`ValidateSegment`, `ValidateAddressRange`,
+  `ValidateAddressRangeWithOptionalEnd`) and
+  `InvalidateCouplerCommunicationPart` (called by `SpecializedExecute`,
+  `SpecializedRedo` and `SpecializedUndo`).
+  `names63-staged-v132.xml` =
+  `4460F15817A85A234DD29A7924514B73FC670D8AAFF4C576E707949EE4C20081`, 11,239
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v132-sdkfrozen.xml`
+  (`7D901A023ACF6D14…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 6.3 s (0 errors, 528/528
+  load); every renamed helper still binds — `SpecializedValidate`,
+  `BeforeExecute` and `SpecializedExecute` for the shrink operation, the three
+  constructors plus `SpecializedExecute`/`SpecializedRedo`/`SpecializedUndo`
+  for the group-address operation.
