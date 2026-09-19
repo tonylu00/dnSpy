@@ -1627,6 +1627,36 @@ Standing rules for this pass:
   `ApplyMapRegression` builds a `Generic<int>.Original` call whose operand
   instance differs from the table instance and asserts the applied output binds
   `Calculate`.
+- **Wave 135: the compiler's own names for generated members (de4dotEx
+  `3f10bfbc`).** Dotfuscator renamed the compiler-generated *methods* but left
+  the evidence Roslyn emitted in place: a cached lambda still stores into its
+  canonical `<>9__N_M` field, a display-class lambda is still taken with
+  `ldftn` from its declaring method, and an iterator's finally helper still
+  clears the state field and disposes its stored resource.
+  `perfprobe/wave135-evidence2.py` reads those edges out of the name graph and
+  restores `<Source>b__N_M`, `<Source>b__K` and `<>m__FinallyK`; the declaring
+  method's reviewed (or already readable) name supplies `<Source>`. The finally
+  numbering is verified against the readable 6.4 copies:
+  `Import.Exporter/<GetInstallationSources>d__33` has `<>m__Finally1..7` in the
+  same metadata order as the 7 pending 6.3 rows, and
+  `TemplateCategory/<get_AggregatedCategories>d__9` has `<>m__Finally1`. The
+  map updater, reference-map reader and batch applier now accept those
+  compiler patterns for method and field rows (types, parameters and locals
+  stay source identifiers), so dnSpy re-renders the shapes instead of showing
+  a delegate creation: decompiling HawkNET from the wave-134 tree yields 12
+  `=>` occurrences and from the wave-135 tree 89, with no leftover `b__`
+  names. `names63-staged-v135.xml` = `B9CB8B07877A4DD5…`, 11,624 reviewed
+  edits (350 rows: 222 new rows plus 128 rows earlier waves had left
+  unnamed), 0 errors, `--check-map` PASS, no new auto-suffixes (the same 51).
+  SDK surface unchanged: export map `names63-staged-v135-sdkfrozen.xml`
+  (`02184A4986AF99E5…`) audits `sdk-visible=0, sdk-referenced-types=0`; the raw
+  map keeps the same five freeze rows and `--filter-map` removes four. The
+  batch apply rewrote 10,150 method names in 528/528 modules with 0 errors, and
+  `perfcheck2/verify-wave135b.cs` reloads every output, finds all 350 new
+  definitions and reports `stale_references=0` — every `ldftn` and MemberRef
+  site was rewritten with the map. 596 lambdas whose declaring method still
+  carries an obfuscated name stay for a later wave, as do the member names of
+  the remaining user methods in Falcon and HawkNET.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
