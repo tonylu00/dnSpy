@@ -1491,3 +1491,29 @@ Standing rules for this pass:
   store registrations, `ExportZipped`/`Export`, `ExportProjectStore`,
   `ExportApplicationPrograms` and
   `CreateTargetXmlWithFilterAndWrite`.
+- **Wave 130: the group-range address generator and the extended copy
+  operation.** 18 rows in `Knx.Ets.ObjectModel.dll`.
+  `Operations.ExtendedCopy.AddressGeneratorForGroupRangeStructure` (9 rows)
+  gets the address assignment helpers the already-named `Apply*` methods drive
+  (`GetOrCreateAddressStrategy`, `AssignMiddleGroupRangeAddress`,
+  `AssignMainGroupRangeAddress`, `AssignFreeGroupRangeAddresses`,
+  `SetRangeAttributes`, `GetNumberOfCopy`), the two structure parsers
+  (`ParseGroupRangeValues`, `ParseAddressValues`) and the recursive
+  `ResetBehaviorToCreate`.
+  `Operations.ExtendedCopy.ExtendedCopyOperation` (9 rows) gets the validate
+  and prepare steps (`ValidateForConflicts`, `PrepareXmlDocument`), the
+  patcher pipeline (`RunPatcherPipeline`, `SetBehaviorAttribute`,
+  `SaveXmlDocument`, `SetXmlDocumentFromXDocument`), the cleanup helpers
+  (`RemoveEmptyGroupRanges`, `MarkBehaviorsAsLoose`) and
+  `SourceBuildingPartHasDevices` (the same guard the XML patcher uses).
+  `names63-staged-v130.xml` =
+  `D8D1DCDE93B611848D77F34F6D4CF8F38F6E8FA38404E4698060EFB3D1B146DC`, 11,207
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v130-sdkfrozen.xml`
+  (`8EA3008C03399E41…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.4 s (0 errors, 528/528
+  load); every renamed helper still binds — the ten `Apply*` drivers and
+  `CreateGroupAddressesInKeepedRanges` for the address generator, and
+  `SpecializedValidate`, `GetPreviewXml`, `AddBehaviorToGroupRange`,
+  `CleanupGroupAddressStructureXml`, `PerformCleanUpEmpty{Trades,BuildingParts}`
+  and `ApplyGroupRangeStrategy` for the operation.
