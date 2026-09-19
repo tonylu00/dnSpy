@@ -673,3 +673,21 @@ Standing rules for this pass:
   without naming a single reference token, 528 modules written, 0 errors; all
   528 output assemblies still load and the renamed generic types keep their
   arity (`Knx.Ets.Common.Caching.FileCache`1`, `Knx.Falcon.Impl.TreeNode`1`).
+- **Wave 101: behavioural names from the members' own strings.** The 6.4
+  transfer is exhausted (`scratch-transfer.py` was re-run for the last module
+  pairs: ObjectModel's 6.4 build proposes only already-mapped members and real
+  accessors, the ETS executables propose nothing; the 6.4 build of
+  `ExtendedCopyImporter` carries the same `method_N` names as 6.3). 698 pending
+  members do state what they do in their own literals, e.g.
+  `"Failed to delete cache directory '"`, `"Cannot get Challenge from encrypted
+  message"`, `"Cannot extract ZIP container {0} …"`. Wave 101 ships the 34
+  whose statement maps one-to-one onto a name (`DeleteCacheDirectory`,
+  `GetChallenge`, `ExtractZipFile`, `UpgradeTemplateFile`, `ProcessFrame`,
+  `ReadKnxPackage`, …) in ObjectModel (19), Falcon (12) and Common (3);
+  `names63-staged-v101.xml` = `C4F783D4066F0BB3…`, 9,035 reviewed edits, 0
+  errors, `--check-map` PASS, the same 51 auto-suffixes. Two candidates are
+  deferred because they are contract-family members whose other members have no
+  evidence (the `IObjectRepresentationData::iz` slot with 12 implementations).
+  The SDK surface is unchanged: five frozen rows, export map
+  `D:\knx_analysis\names63-staged-v101-sdkfrozen.xml` (`E212402A…`) audits
+  `sdk-visible=0, sdk-referenced-types=0`.
