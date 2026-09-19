@@ -1975,3 +1975,28 @@ Standing rules for this pass:
   7.0 s, and the new built gate reports `canonical_rows=560
   definitions_missing=0 stale_references=0` in 3.5 s (the file-based
   `dotnet run` verifier it replaced cost ~21 s for the same report).
+- **Wave 151: `DataFacade.FinalizeImage` and the restart load controls.** The
+  released `Knx.Ets.Hawk.Impl.DataFacade::FinalizeImage(CreateImageContext)`
+  and 6.3 `Class319::a(Class300)` (`0x06000662`) are the same algorithm:
+  combine the image's adjacent segments, return unless `RequireRestart`, find
+  the last `LoadControlBase` through the same three cached predicates, keep an
+  existing `LoadControls.Restart`/`LoadControls.MasterReset`, otherwise read
+  `DeviceProfileInformation.get_SupportsConfirmedRestart` (the wave-149
+  `Class345::method_12`) and append `Restart` or a `MasterReset` carrying
+  `LdCtrlMasterReset.EraseCode = 1`. The method takes `FinalizeImage` and its
+  three cached predicates become `<FinalizeImage>b__62_0..2`; the two wrappers
+  it keeps are `Knx.Ets.Hawk.Impl.LoadControls.MasterReset` (6.3 `Class391`,
+  `Class363<LdCtrlMasterReset>`) and `...LoadControls.Restart` (6.3 `Class395`,
+  `Class363<LdCtrlRestart>`), both already carrying a mapped `ExecuteAsync`.
+  `names63-staged-v151.xml` =
+  `EC02368E1FD122E099CC8826552B6DAD0ECDE5577C6DE081806641E75B8D42E3`, 11,878
+  reviewed edits (6 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `D915E4110A69A9DE…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,394 methods and 806 types in 528/528 modules with
+  0 errors in 6.5 s, and `--verify-applied` reports `canonical_rows=563
+  definitions_missing=0 stale_references=0` in 3.5 s.
+- **IlDump now lists types and members** (`IlDump <assembly> --types [filter]`
+  and `--members <type-full-name>`). The applier compacts RIDs, so tokens from
+  the input tree do not identify the same member in an applied tree; the type
+  and member inventories verify an applied map by name and locate the owner of
+  a method before dumping its body.
