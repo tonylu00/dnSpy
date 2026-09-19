@@ -2194,3 +2194,24 @@ Standing rules for this pass:
   `Knx.Ets.Hawk.IAsyncNetworkAccessProvider::get_OutboundSegmentCouplerAddress`,
   `get_IsCloudConnection`, `ConnectDeviceLocalAsync`, `GetAuthorizationLevel`,
   `PingIndividualAddressAsync`, …
+- **Wave 161: the compatibility plugin interfaces and their implementations.**
+  Fifteen contract-family seeds (from the full-tree inventory) expand to the
+  `Knx.Ets.ObjectModel.Compatibility.IPluginHost` and `…IPluginInstaller`
+  declarations plus every implementation in the tree, named from the released
+  interfaces by unique shape match: `ShowParameterDialogAsync`,
+  `ShowPropertyPages`, `InvokeContextMenuItem`, `DeletingAssociation`,
+  `ChangedSendingAssociation`, `ChangedGroupAddress`, `CanAddAssociation`,
+  `TransferParameters`, `CheckDevice`, `ExportDevice`, `ImportedDevice`,
+  `BeforeHawkPluginAccess`, `CreateEts3Plugin`, `AnyPluginRequiresElevation` and
+  `InstallEts3Plugins`. The update reported 58 new `ContractMethod` rows
+  (10,459 → 10,517 renamed methods) with 0 errors across twelve modules, and the
+  applied `Knx.Ets.ObjectModel.dll` now shows
+  `IPluginHost::ShowParameterDialogAsync/ShowPropertyPages/InvokeContextMenuItem/
+  DeletingAssociation/…` by name.
+  `names63-staged-v161.xml` =
+  `8A1CC4F9F8870828C91F2CDF6482C8D5AF45107158487CAABC5ECBF00E34BA39`, 12,008
+  reviewed edits (15 seeds), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `49A5303A80DBF028…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,517 methods and 812 types in 528/528 modules with
+  0 errors in 6.9 s, and `--verify-applied` reports `canonical_rows=575
+  definitions_missing=0 stale_references=0` in 3.3 s.
