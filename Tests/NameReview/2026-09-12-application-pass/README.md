@@ -443,3 +443,19 @@ Standing rules for this pass:
   export under one alias, the rebuilt assembly restores both original names and
   signatures, and the original caller still runs. Re-allocating the ledger
   dropped the artificial suffixes from 206 to 50.
+- **Preflight performance (wave 91 checkpoint).** `--check-map` over the 6.3 tree
+  took 40.5 s on one busy core because the contract-family graph, the member
+  scope and the field scope were built over all 528 tree assemblies (101k types,
+  DevExpress and 271 translated satellites included). The analysis now runs only
+  over the modules a map references while every assembly still resolves, and the
+  graph got name-indexed method lookup, memoized substitution, one shared
+  comparer, lazy blocker sets and a single SHA256. Measured with
+  `NAMECANDIDATES_TIMING=1` on `names63-staged-v91.xml`: 6.6 s (`--update-map`
+  7.9 s), and both runs reproduce the checkpointed files byte for byte. The
+  remaining single-core time: 0.4 s tree load (528 files / 363 MB), 1.2 s
+  virtual-slot seeding (0.75 s of it dnlib's lazy per-type `Overrides`
+  initialisation), 3.2 s contract walk (2.7 s interfaces, 1.5 s of that the
+  explicit-implementation scan), 0.35 s family hashing, 0.5 s map validation,
+  0.46 s field scope. Parallelising the graph needs the lazily materialised
+  dnlib tables primed first; the two named per-type hotspots are the next
+  candidates.
