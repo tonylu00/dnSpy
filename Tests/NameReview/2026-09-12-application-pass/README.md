@@ -1831,6 +1831,22 @@ Standing rules for this pass:
   The batch apply rewrote 10,356 methods in 528/528 modules with 0 errors in
   6.2 s and `verify-map.cs` reports `canonical_rows=542 definitions_missing=0
   stale_references=0`.
+- **Wave 145: HawkNET `CompareDeviceTask` address-space resolution.**
+  `eh::a(eo device, gi image, ResourceName resource, ResourceName
+  fallbackResource, go procedure)` resolves the `Class430` resource for the
+  first name and returns its address space (`fx` =
+  `Knx.Ets.Hawk.AddressSpace`); when that fails it repeats with the fallback
+  name and finally looks the segment controls up in the procedure
+  (`go::b()` → `OfType<Class365>().FirstOrDefault(predicate)`) and converts the
+  segment through `Class299`. Named `ResolveResourceAddressSpace`; the three
+  cached `FirstOrDefault` predicates become
+  `<ResolveResourceAddressSpace>b__26_0..2`. `names63-staged-v145.xml` =
+  `530D53A48F2DA21FEA73ACD7006A75BF992EDB402D0A27C6C6FC6592A1E4381C`, 11,841
+  reviewed edits (4 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `5CC508D3492EB2AC…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,360 methods in 528/528 modules with 0 errors in
+  6.8 s and `verify-map.cs` reports `canonical_rows=545 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
