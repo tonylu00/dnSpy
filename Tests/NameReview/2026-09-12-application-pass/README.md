@@ -1411,3 +1411,30 @@ Standing rules for this pass:
   `FilterToValidatedDevices`, `GetConnectedDevices` and
   `ConnectedDevicesForNewGroupAddresses`, and the resolver's pipeline from
   `Apply`, `SelectRangeCreator` and `FindTargetAndConflictingRange`.
+- **Wave 127: adding a device by product/hardware/program and the add-in data
+  merger.** 20 rows in `Knx.Ets.ObjectModel.dll`.
+  `Operations.Devices.AddDeviceWithProductAndHardwareToProgramOperation`
+  (10 rows) gets the constructor's helpers (`CreateProgressManager`,
+  `SetOperationDescription`), the validate steps (`RunProductImporter`,
+  `CollectValidators`), the security-impact guard
+  (`NeedsCouplerSecurityImpacts`), the execute helpers (`MarkDevicesModified`,
+  `ApplyHardware2ProgramImage`, `AssignAdditionalAddresses`,
+  `ToNullableByteAddress`, `CalculateInitialActivity`).
+  `Import.AdditionalProjectDataMerger` (10 rows) gets the three element
+  handlers (`WriteAddinDataIntoStore`, `GetAddinDataFromStore`,
+  `CloneUserFilesToWriter`), the two id-mapping actions (`MapAddinDataId`,
+  `MapUserFileId`) and the five attribute callbacks (`PatchIdAttribute`,
+  `PatchRefIdAttribute`, `RewriteNameAttribute`, `WriteProjectPasswordValue`,
+  `WriteFdskValue`) — the two patch names match the sibling
+  `InstallationMerger`/`ProjectMerger` callbacks. `names63-staged-v127.xml` =
+  `A20BEDCA2E0F39D9F34A96A9C8EC8EC5CC8FD558B54647D3C380ABE86B469422`, 11,152
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v127-sdkfrozen.xml`
+  (`6BCF41AF7895669B…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.9 s (0 errors, 528/528
+  load); every renamed helper still binds — the constructor steps,
+  `<SpecializedValidate>b__0`, `DetermineSecurityImpacts`, `SpecializedExecute`
+  (including `AddDeviceOperation::CreateDeviceFromCatalogItem` for
+  `ApplyHardware2ProgramImage`), `CreateDeviceInstance`, and the merger's
+  `get_ElementSettings`/`get_AddinDataSettings`/`get_UserFileSettings`/
+  `get_AttributeCallbacks`.
