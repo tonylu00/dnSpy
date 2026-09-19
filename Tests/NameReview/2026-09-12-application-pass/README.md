@@ -1847,6 +1847,20 @@ Standing rules for this pass:
   The batch apply rewrote 10,360 methods in 528/528 modules with 0 errors in
   6.8 s and `verify-map.cs` reports `canonical_rows=545 definitions_missing=0
   stale_references=0`.
+- **Wave 146: HawkNET `Class313::b(CreateImageContext)`.**
+  The body returns unless the `InternalLoadDeviceOptions` flags carry bit 2
+  without bit 1, finds a load control with the cached predicate, reads the
+  image at the fixed address `(9, 0, 52, 0)` and — when there is no data —
+  logs "Remove {0} because no data present" and removes the control (the second
+  cached lambda is the removal filter). Called only by the reviewed `Apply`.
+  Named `RemoveControlsWithoutData`; lambdas
+  `<RemoveControlsWithoutData>b__8_0..1`. `names63-staged-v146.xml` =
+  `A441D5BED0624D5F44E7BDED2A02FACE8A5D782A38893BBC9068FCCD12D0B9BE`, 11,844
+  reviewed edits (3 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `033FB037343BB94E…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,363 methods in 528/528 modules with 0 errors in
+  6.4 s and `verify-map.cs` reports `canonical_rows=547 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
