@@ -2237,3 +2237,27 @@ Standing rules for this pass:
   apply rewrote 10,696 methods and 812 types in 528/528 modules with 0 errors in
   6.6 s, and `--verify-applied` reports `canonical_rows=575
   definitions_missing=0 stale_references=0` in 3.6 s.
+- **Wave 163: verified type rows from the queue.** Six type rows whose
+  non-compat 6.4 counterpart is the unique shape match and was checked by hand:
+  `Class915` (all nine member shapes) → `Knx.Falcon.KnxMessages.ApplicationLayer.NetworkParameterMessageBase`,
+  `Class831` (8/9) → `…DeviceDescriptorResponseMessage`, `Class828` (7/9) →
+  `…ConfirmedRestartMessage`, `Class844` (7/9) → `…CheckChunkBlockRequestMessage`,
+  `Class754` (10/21, clear best) → `Knx.Falcon.KnxnetIp.Frames.KnxIpFrame` and
+  `asm` (5/5) → `Knx.Ets.Common.Http.IHttpClient`. The new
+  `perfprobe/verify-type-list.py` ranks the top non-compat 6.4 candidates for a
+  list of 6.3 types (it excludes the `ETS6.3_compat_api2` copies).
+  Deliberately left open because shape evidence cannot separate them:
+  `Class791`/`Class794` vs `CRD`/`CRI` (identical members and bodies; only the
+  declaration order suggests 791=CRD), `Class908`/`Class909`/`Class910` vs the
+  read/write message classes (response classes share the same member shapes),
+  `Class857`/`Class854` (two file-frame candidates tie), `Class907` (only
+  compat matches) and `Class1196` (its counterpart is itself obfuscated).
+  `names63-staged-v163.xml` =
+  `ED0DA0EA6689A658BA9CDCE7391C09D5204570DB9AF9D1359D6C13DC850129DE`, 12,193
+  reviewed edits (6 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `1CCAB5A387EEFD3C…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 818 types in 528/528 modules with 0 errors in 6.3 s,
+  and `--verify-applied` reports `canonical_rows=575 definitions_missing=0
+  stale_references=0` in 3.7 s. Applied tree: `NetworkParameterMessageBase`,
+  `ConfirmedRestartMessage`, `DeviceDescriptorResponseMessage` and
+  `Knx.Ets.Common.Http.IHttpClient` are all visible by name.
