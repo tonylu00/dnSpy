@@ -2100,3 +2100,20 @@ Standing rules for this pass:
   The batch apply rewrote 809 types in 528/528 modules with 0 errors in 6.2 s,
   and `--verify-applied` reports `canonical_rows=573 definitions_missing=0
   stale_references=0` in 3.5 s.
+- **Wave 157: the Falcon top-score address filter.** The deferred lambdas of
+  `Class1036/a::b(IPAddress[], Func<IPAddress,IPAddress,int>)` (`0x060011BF`)
+  belong to the helper that the wave-155
+  `SelectIpv6SourceAddressForDestinationEndpoint` overload calls once per
+  comparer: it scores every candidate (score, address), takes the descending
+  first score and returns every address tied with it
+  (`Class1036/b::d(ValueTuple)` is literally `Item1 == captured best`). Named
+  `SelectHighestScoringAddresses`; the closure methods became `ScoreAddress`
+  and `HasHighestScore`, and the two cached projections
+  `<SelectHighestScoringAddresses>b__5_6,8`.
+  `names63-staged-v157.xml` =
+  `94ED61BEF13FDD17B34841ED5208B48A490537007640A0586EB53CE49D532BD2`, 11,901
+  reviewed edits (5 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `F3EF637D0326E6A1…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,414 methods in 528/528 modules with 0 errors in
+  6.1 s, and `--verify-applied` reports `canonical_rows=575
+  definitions_missing=0 stale_references=0` in 3.5 s.
