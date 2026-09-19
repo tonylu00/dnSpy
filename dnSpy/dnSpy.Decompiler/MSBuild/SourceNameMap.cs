@@ -37,7 +37,12 @@ namespace dnSpy.Decompiler.MSBuild {
 					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter or local aliases.");
 					var member = ResolveRow(module, row);
 					string? name = (string?)row.Attribute("NewName");
-					if (name != null) ValidateName(name);
+					if (name != null) {
+						// A type alias may carry the namespace the obfuscator flattened
+						// away; everything else stays a single identifier.
+						if (member is TypeDef) ValidateTypeName(name);
+						else ValidateName(name);
+					}
 					else if (!row.HasElements) throw new InvalidDataException("A source-map row must propose a name, parameters or locals.");
 					if (member is TypeDef type && (type.IsGlobalModuleType || type.HasGenericParameters)) throw new InvalidDataException("This source-map version requires a non-generic type.");
 					if (member is FieldDef field && FieldAliasScope.Blocker(field) != null) throw new InvalidDataException("Unsupported source field alias: " + FieldAliasScope.Blocker(field));
@@ -105,11 +110,16 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (proposals.Any(p => !(p.Key is FieldDef))) {
 				var scope = new MemberNameScope(modules.Values, useHostResolver: true);
 				var claims = new MemberNameClaims(scope);
+				var fullAliases = new HashSet<string>(StringComparer.Ordinal);
 				foreach (var proposal in proposals.Where(p => !(p.Key is FieldDef))) {
 					string? family = proposal.Key is MethodDef method && contractProposals.TryGetValue(method, out var id) ? id : null;
-					if (claims.Conflicts(proposal.Key, proposal.Value, family))
+					// A dotted type alias moves the type into another namespace: the
+					// declaration scope reserves its leaf, the full alias stays unique.
+					string scopeName = proposal.Key is TypeDef ? Leaf(proposal.Value) : proposal.Value;
+					bool duplicate = proposal.Key is TypeDef && !fullAliases.Add(proposal.Value);
+					if (duplicate || claims.Conflicts(proposal.Key, scopeName, family))
 						throw new InvalidDataException("Source alias collision: " + proposal.Key.FullName + " -> " + proposal.Value);
-					claims.Claim(proposal.Key, proposal.Value, family);
+					claims.Claim(proposal.Key, scopeName, family);
 				}
 				var parameters = new Dictionary<TypeDef, HashSet<string>>();
 				foreach (var proposal in parameterProposals) {
@@ -132,7 +142,10 @@ namespace dnSpy.Decompiler.MSBuild {
 					if (scope.Reserved((FieldDef)proposal.Key, member => proposals.TryGetValue(member, out var alias) ? alias : null).Contains(proposal.Value))
 						throw new InvalidDataException("Source field alias collision in declaration/inheritance scope: " + proposal.Key.FullName + " -> " + proposal.Value);
 			}
-			foreach (var proposal in proposals) SourceNameAliases.Register(proposal.Key, proposal.Value);
+			foreach (var proposal in proposals) {
+				if (proposal.Key is TypeDef type) SourceNameAliases.RegisterTypeName(type, proposal.Value);
+				else SourceNameAliases.Register(proposal.Key, proposal.Value);
+			}
 			foreach (var proposal in parameterProposals) SourceNameAliases.RegisterParameter(proposal.Key, proposal.Value);
 			foreach (var proposal in localProposals) SourceNameAliases.RegisterLocal(proposal.Key, proposal.Value);
 			return root.ToString(SaveOptions.DisableFormatting);
@@ -159,6 +172,14 @@ namespace dnSpy.Decompiler.MSBuild {
 		}
 		static void ValidateName(string name) {
 			if (!MetadataTypeNames.IsIdentifier(name) || name.Any(c => char.GetUnicodeCategory(c) == UnicodeCategory.Format)) throw new InvalidDataException("Invalid source alias: " + name);
+		}
+		static void ValidateTypeName(string name) {
+			if (name.Split('.').Any(part => !MetadataTypeNames.IsIdentifier(part)) || name.Any(c => char.GetUnicodeCategory(c) == UnicodeCategory.Format))
+				throw new InvalidDataException("Invalid source type alias: " + name);
+		}
+		static string Leaf(string name) {
+			int index = name.LastIndexOf('.');
+			return index < 0 ? name : name.Substring(index + 1);
 		}
 		static string Required(XElement element, string name) => (string?)element.Attribute(name) ?? throw new InvalidDataException("Missing source-map attribute: " + name);
 	}

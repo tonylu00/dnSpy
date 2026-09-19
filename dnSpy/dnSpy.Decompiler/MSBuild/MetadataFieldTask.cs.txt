@@ -1040,39 +1040,54 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
 
     static bool RestoreTypeNames(ModuleDef module) {
         const string prefix = "dnSpy.metadata.type-name.v1|";
-        var maps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
+        const string prefixV2 = "dnSpy.metadata.type-name.v2|";
+        var maps = new Dictionary<string, TypeRestore>(StringComparer.Ordinal);
         var markers = new List<CustomAttribute>();
         foreach (var attribute in module.Assembly.CustomAttributes) {
             if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
             var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
             string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
-            if (text == null || !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
-            var parts = text.Substring(prefix.Length).Split('|');
-            if (parts.Length != 5) throw new InvalidDataException("Invalid dnSpy type name instruction.");
+            bool v2 = text != null && text.StartsWith(prefixV2, StringComparison.Ordinal);
+            if (text == null || !v2 && !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+            var parts = text.Substring((v2 ? prefixV2 : prefix).Length).Split('|');
+            if (parts.Length != (v2 ? 6 : 5)) throw new InvalidDataException("Invalid dnSpy type name instruction.");
             string key = string.Join("|", parts.Take(4));
-            var name = new UTF8String(Convert.FromBase64String(parts[4]));
-            UTF8String previous;
-            if (maps.TryGetValue(key, out previous) && previous != name)
+            var restore = new TypeRestore(
+                v2 ? System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(parts[4])) : null,
+                System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(v2 ? parts[5] : parts[4])));
+            TypeRestore previous;
+            if (maps.TryGetValue(key, out previous) && !previous.Equals(restore))
                 throw new InvalidDataException("Conflicting type name instructions for one assembly context.");
-            maps[key] = name;
+            maps[key] = restore;
             markers.Add(attribute);
         }
         if (markers.Count == 0) return false;
         // Capture every key before changing an enclosing type. TypeRefs are also
         // used by generic signatures, method bodies, constraints and attributes.
-        var renames = new List<KeyValuePair<ITypeDefOrRef, UTF8String>>();
+        var renames = new List<KeyValuePair<ITypeDefOrRef, TypeRestore>>();
+        var planned = new Dictionary<TypeDef, UTF8String>();
         foreach (var type in module.GetTypes().Cast<ITypeDefOrRef>().Concat(module.GetTypeRefs())) {
             var assembly = type.DefinitionAssembly;
             if (assembly == null) continue;
             Func<string, string> encode = value => Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
             string key = string.Join("|", new[] { type.FullName, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "" }.Select(encode));
-            UTF8String name;
-            if (maps.TryGetValue(key, out name)) renames.Add(new KeyValuePair<ITypeDefOrRef, UTF8String>(type, name));
+            TypeRestore restore;
+            if (maps.TryGetValue(key, out restore)) {
+                renames.Add(new KeyValuePair<ITypeDefOrRef, TypeRestore>(type, restore));
+                if (type is TypeDef definition) planned[definition] = new UTF8String(restore.Name);
+            }
         }
-        AvoidGeneratedTypeCollisions(module, renames);
+        var adjusted = AvoidGeneratedTypeCollisions(module, planned);
         var originalTypeKeys = module.GetTypes().Cast<ITypeDefOrRef>().Concat(module.GetTypeRefs())
             .Where(t => t.DefinitionAssembly != null).ToDictionary(t => t, t => BamlTypeKey(t.ReflectionFullName, t.DefinitionAssembly));
-        foreach (var rename in renames) rename.Key.Name = rename.Value;
+        foreach (var rename in renames) {
+            if (rename.Value.Namespace != null) {
+                if (rename.Key is TypeDef definition) definition.Namespace = rename.Value.Namespace;
+                else if (rename.Key is TypeRef reference) reference.Namespace = rename.Value.Namespace;
+            }
+            rename.Key.Name = new UTF8String(rename.Value.Name);
+        }
+        foreach (var rename in adjusted) rename.Key.Name = rename.Value;
         var bamlNames = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var type in originalTypeKeys) {
             if (type.Value == BamlTypeKey(type.Key.ReflectionFullName, type.Key.DefinitionAssembly)) continue;
@@ -1088,6 +1103,18 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
 
     static string BamlTypeKey(string name, IAssembly assembly) {
         return name + "|" + new AssemblyNameInfo(assembly.FullName).FullName;
+    }
+
+    sealed class TypeRestore : IEquatable<TypeRestore> {
+        public readonly string Namespace;
+        public readonly string Name;
+        public TypeRestore(string @namespace, string name) { Namespace = @namespace; Name = name; }
+        public bool Equals(TypeRestore other) => other != null && Namespace == other.Namespace && Name == other.Name;
+        public override bool Equals(object obj) => Equals(obj as TypeRestore);
+        public override int GetHashCode() {
+            int hash = Name == null ? 0 : Name.GetHashCode();
+            return ((Namespace == null ? 0 : Namespace.GetHashCode()) * 397) ^ hash;
+        }
     }
 
     static bool UsesStandardResourceReader(byte[] data) {
@@ -1183,9 +1210,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         return false;
     }
 
-    static void AvoidGeneratedTypeCollisions(ModuleDef module, List<KeyValuePair<ITypeDefOrRef, UTF8String>> renames) {
+    static List<KeyValuePair<ITypeDefOrRef, UTF8String>> AvoidGeneratedTypeCollisions(ModuleDef module, Dictionary<TypeDef, UTF8String> names) {
         var types = module.GetTypes().ToArray();
-        var names = renames.Where(p => p.Key is TypeDef).ToDictionary(p => (TypeDef)p.Key, p => p.Value);
+        var renames = new List<KeyValuePair<ITypeDefOrRef, UTF8String>>();
         var originalInstructions = new HashSet<TypeDef>(names.Keys);
         var generated = new Dictionary<TypeDef, UTF8String>();
         var used = new HashSet<string>(types.Select(t => t.Name.String).Concat(names.Values.Select(n => n.String)), StringComparer.Ordinal);
@@ -1204,7 +1231,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 names[type] = generated[type] = new UTF8String(alias);
             }
         }
-        if (generated.Count == 0) return;
+        if (generated.Count == 0) return renames;
         var empty = new Dictionary<TypeDef, UTF8String>();
         var oldNames = generated.ToDictionary(p => PlannedTypeKey(p.Key, empty), p => p.Value);
         foreach (var reference in module.GetTypeRefs()) {
@@ -1214,6 +1241,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (oldNames.TryGetValue(PlannedTypeKey(reference, empty), out name)) renames.Add(new KeyValuePair<ITypeDefOrRef, UTF8String>(reference, name));
         }
         renames.AddRange(generated.Select(p => new KeyValuePair<ITypeDefOrRef, UTF8String>(p.Key, p.Value)));
+        return renames;
     }
 
     static string TypeKey(ITypeDefOrRef type) { return type.FullName + ", " + type.DefinitionAssembly.FullName; }

@@ -11,6 +11,8 @@ namespace dnSpy.Contracts.Decompiler {
 	public static class MetadataTypeNames {
 		/// <summary>Assembly-level instructions for restoring source aliases after compilation.</summary>
 		public const string Prefix = "dnSpy.metadata.type-name.v1|";
+		/// <summary>Version 2 additionally restores the original namespace.</summary>
+		public const string PrefixV2 = "dnSpy.metadata.type-name.v2|";
 		static readonly ConditionalWeakTable<ModuleDef, Dictionary<TypeDef, string>> names = new ConditionalWeakTable<ModuleDef, Dictionary<TypeDef, string>>();
 		static readonly ConditionalWeakTable<ModuleDef, string[]> mappings = new ConditionalWeakTable<ModuleDef, string[]>();
 		/// <summary>Removes the generic arity suffix used in metadata.</summary>
@@ -22,9 +24,14 @@ namespace dnSpy.Contracts.Decompiler {
 		public static string GetName(ITypeDefOrRef type) {
 			var definition = type.ResolveTypeDef();
 			var requested = SourceNameAliases.Get(definition);
-			if (requested != null) return requested;
+			if (requested != null) return Leaf(requested);
 			return definition?.Module != null && names.GetValue(definition.Module, Find).TryGetValue(definition, out var alias)
 				? alias : SimpleName(type.Name);
+		}
+		/// <summary>The identifier part of an alias; a type alias may carry a namespace.</summary>
+		static string Leaf(string name) {
+			int index = name.LastIndexOf('.');
+			return index < 0 ? name : name.Substring(index + 1);
 		}
 		/// <summary>Whether a string can be emitted as a C# identifier (keywords can be escaped).</summary>
 		public static bool IsIdentifier(string name) {
@@ -76,6 +83,12 @@ namespace dnSpy.Contracts.Decompiler {
 			return type.DeclaringType != null ? SourceFullName(type.DeclaringType) + "/" + name :
 				string.IsNullOrEmpty(type.Namespace) ? name : type.Namespace + "." + name;
 		}
+		/// <summary>The metadata full name a type had before an alias moved it.</summary>
+		public static string OriginalFullName(TypeDef type) {
+			string @namespace = SourceNameAliases.GetOriginalNamespace(type);
+			string name = SourceNameAliases.GetOriginalName(type) ?? type.Name.String;
+			return string.IsNullOrEmpty(@namespace) ? name : @namespace + "." + name;
+		}
 		static string SourceMetadataName(TypeDef type) {
 			int arity = Math.Max(0, type.GenericParameters.Count - (type.DeclaringType?.GenericParameters.Count ?? 0));
 			return GetName(type) + (arity == 0 ? "" : "`" + arity.ToString(CultureInfo.InvariantCulture));
@@ -88,10 +101,25 @@ namespace dnSpy.Contracts.Decompiler {
 			foreach (var reference in module.GetTypeRefs()) {
 				for (var type = reference.ResolveTypeDef(); type != null; type = type.DeclaringType) types.Add(type);
 			}
-			return types.Where(t => !t.IsGlobalModuleType && t.Module?.Assembly != null && SourceMetadataName(t) != t.Name.String)
-				.Select(t => Prefix + Encode(SourceFullName(t)) + "|" + Encode(t.DefinitionAssembly.Name) + "|" +
-					Encode(t.DefinitionAssembly.Version.ToString()) + "|" + Encode(t.DefinitionAssembly.Culture ?? "") + "|" + Convert.ToBase64String(t.Name.Data))
-				.Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();
+			var rows = new List<string>();
+			foreach (var type in types) {
+				if (type.IsGlobalModuleType || type.Module?.Assembly == null) continue;
+				string source = SourceFullName(type);
+				string originalNamespace = SourceNameAliases.GetOriginalNamespace(type);
+				string originalName = SourceNameAliases.GetOriginalName(type) ?? type.Name.String;
+				bool moved = originalNamespace != null && originalNamespace != (type.Namespace.String ?? string.Empty);
+				if (!moved && SourceMetadataName(type) == originalName) continue;
+				if (moved) {
+					rows.Add(PrefixV2 + Encode(source) + "|" + Encode(type.DefinitionAssembly.Name) + "|" +
+						Encode(type.DefinitionAssembly.Version.ToString()) + "|" + Encode(type.DefinitionAssembly.Culture ?? "") + "|" +
+						Encode(originalNamespace) + "|" + Encode(originalName));
+					continue;
+				}
+				rows.Add(Prefix + Encode(source) + "|" + Encode(type.DefinitionAssembly.Name) + "|" +
+					Encode(type.DefinitionAssembly.Version.ToString()) + "|" + Encode(type.DefinitionAssembly.Culture ?? "") + "|" +
+					Encode(originalName));
+			}
+			return rows.Distinct().OrderBy(s => s, StringComparer.Ordinal).ToArray();
 		}
 	}
 }
