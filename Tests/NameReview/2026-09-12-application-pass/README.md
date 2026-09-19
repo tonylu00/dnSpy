@@ -481,3 +481,22 @@ Standing rules for this pass:
   (`Knx.Ets.ObjectModel.DomObject`) already declares that signature; the sibling
   `b(System.String)` keeps its v91 name `NotifyPropertyChanged` instead of the
   colliding 6.4 alias.
+- **Wave 93: names leaked by compiler-generated remnants.** Dotfuscator renamed
+  the methods but left the compiler's own names in place: a method that declares
+  a lambda still points at `<>c::<Name>b__K` / `<>c__DisplayClassN_M::<Name>b__K`,
+  and an async method is wrapped by `<Name>d__N`. `scratch-lambda-evidence.py`
+  names every pending candidate whose body references exactly one such name
+  (overloads of one source method share it and stay apart by signature; the
+  compiler-generated members themselves and explicit implementations are
+  filtered out). Measured before shipping: 6.3 methods that still carry a
+  readable name reproduce it from the closure evidence 4272/4296 (99.44%) and
+  from the state machine 1142/1158; the exceptions are `method_N` placeholders
+  that the evidence names correctly and `IAsyncDisposable.DisposeAsync`
+  implementations. Cross-checked against the readable 6.4 counterpart, 227/227
+  comparable ObjectModel members agree. Wave 93 shipped 752 rows (751 ObjectModel,
+  1 Falcon): 8055 reviewed edits, 0 errors, check-map PASS, no new auto-suffixes,
+  the SDK audit still freezes only `Knx.Ets.CalculatedParameters.z` and the
+  filtered export map reports `sdk-visible=0, sdk-referenced-types=0`. Twelve
+  ObjectModel rows are deferred: Dotfuscator split one source method into
+  identical-signature halves, so the declaration scope would suffix their shared
+  name (`SpecializedValidate2`, `AfterSpecializedUndo2`, ...).
