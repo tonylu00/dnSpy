@@ -2061,3 +2061,23 @@ Standing rules for this pass:
   The batch apply rewrote 10,405 methods in 528/528 modules with 0 errors in
   6.5 s, and `--verify-applied` reports `canonical_rows=571
   definitions_missing=0 stale_references=0` in 3.5 s.
+- **Wave 155: the IPv6 candidate lookup behind the Falcon address helper.** The
+  `Knx.Falcon.IoT.Stack.Network.Ipv6AddressHelper` type row and its two
+  `Select...` overloads were shipped earlier; the deferred lambdas belonged to
+  the still-obfuscated candidate lookup. `Class1036::a(Interface41)`
+  (`0x060011B2`) is body-identical to the released
+  `GetIpv6SourceAddressCandidatesForDestinationEndpoint(
+  IIoTSourceIpAddressProvider)` — the same two-stage IPv6 `Where` filters, the
+  same `Any` gate, the same cached filters and the same "It is not possible to
+  select an source IPv6 address …" exception — and `0x060011B0` is the released
+  no-argument overload (new `IoTSourceIpAddressProvider` + delegate). Both take
+  that name and the two cached filters become `<…>b__6_0,1`. The applied tree
+  now shows all four overloads by name; `Interface41`, the nested display class
+  and the three comparison delegates stay open.
+  `names63-staged-v155.xml` =
+  `AF6CB8075DA00DDA3C1B39E55B1891F224E0077BC67CD39E0E42D1D39B532E81`, 11,895
+  reviewed edits (4 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `BD075BAE71AAA65F…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,409 methods in 528/528 modules with 0 errors in
+  6.0 s, and `--verify-applied` reports `canonical_rows=573
+  definitions_missing=0 stale_references=0` in 3.5 s.
