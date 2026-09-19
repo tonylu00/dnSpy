@@ -753,3 +753,27 @@ Standing rules for this pass:
   its accessors linked. dnSpy enforces the same derived-name rule in
   `SourceNameMap` (`Tests/Invoke-AccessorAliasRegression.ps1`), and the whole
   10-test battery passes.
+- **Wave 104: the ExtendedCopy importer's behavioural names.** The 6.4 transfer
+  and the mechanical channels are exhausted, so this wave names members from the
+  physical evidence of their own bodies, read with dnSpy's IL output: the
+  operation type a method creates (`LinkGroupAddressRefToFunctionOperation` ->
+  `LinkGroupAddressRefsToFunctions`, `ChangeDeviceSecurityOperation` ->
+  `ApplySecurityChanges`), the framework/ETS call it is built from
+  (`CopyDeviceOperation.CallDevicePlugInsHandler` -> `CallDevicePluginsHandler`,
+  `Strategy.CreateThreeLevelMiddleGroup...` -> `CreateThreeLevelGroupRange`), the
+  XML attribute it reads or writes (`"IsActivityCalculated"` ->
+  `SetActivityCalculated`, `"Required attribute '"` -> `GetRequiredUInt16Attribute`)
+  and the mapped neighbours that call it (`AddArea`/`AddLine` -> the
+  `AddAreaOperations`/`AddLineOperation` loops). 40 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Operations.ExtendedCopy.ExtendedCopyImporter`;
+  each ledger row carries its evidence in `Reason`. Members whose evidence does
+  not fix a name (`GetMediumType`'s out parameters, the device address reader,
+  the group-range strategy predicates) stay pending.
+  `names63-staged-v104.xml` =
+  `6EF55F077D208CB962C935F72F5324CE897D7713DAF43E955AD2E0C08AD18841`, 10,677
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v104-sdkfrozen.xml`
+  (`BA5C859EBC9FFEDB…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 8.7 s (0 errors); all outputs
+  load, the new names are present and the renamed helper is still called by
+  `Synchronize`.
