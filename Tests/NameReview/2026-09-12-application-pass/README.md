@@ -1102,3 +1102,30 @@ Standing rules for this pass:
   constructors, both `SpecializedValidate` closures, `SpecializedExecute`,
   `SpecializedUndo`, `SpecializedRedo`, `DetermineSecurityImpacts`,
   `CreateDeviceFromCatalogItem` and `BeforeOpenMarker`).
+- **Wave 116: deleting objects and copying a project.** 24 rows in
+  `Knx.Ets.ObjectModel.dll`: `Operations.DeleteOperation` (12 rows) gets the
+  certificate handling (`SaveDeviceCertificates`, `DetachDeviceCertificates`),
+  the location and plug-in bookkeeping (`DirtyDeviceLocations`,
+  `NotifyPluginDeletingDevice`), the connector/bus-interface unlinks
+  (`RemoveConnectorsFromGroupAddress`, `RemoveConnectorsFromBusInterface`,
+  `RemoveBusInterfacesFromGroupAddress` and the redo variant
+  `RemoveConnectorsFromGroupAddressOnRedo`) and the collection handlers
+  (`RemoveObjectsFromAllDevices`, `RemoveObjectsFromAllDevicesOnRedo`,
+  `RestoreObjectsInAllDevices`, `IsObjectMissingFromAllDevices`), and
+  `Operations.Projects.CopyProjectOperation` (12 rows) gets the validator
+  iterator (`GetValidators`, the `<GetValidators>d__12` state machine whose
+  only caller is `Validate`), the copy driver
+  (`SaveProjectAndCopy`, `CopyProjectWithTiming`, `RunCopyProjectSteps`,
+  `PatchStoresInTransaction`), the store patching helpers
+  (`RewriteStoreStream`, `GetNewProjectName`,
+  `GetNewProjectNameForStorePatcher`, `GetAreaStore`, `GetUserFileStore`,
+  `GetDeviceBinaryDataStore`, `GetAddinDataStore`).
+  `names63-staged-v116.xml` =
+  `3C9A9410FF29A46D1E62C51A985B1688215389C99AF49A1D28D9AEF520C98A56`, 10,921
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v116-sdkfrozen.xml`
+  (`3EAD875ADA46DBB6…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.3 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller
+  (`SpecializedExecute`, `SpecializedUndo`, `SpecializedRedo`, `Execute`,
+  `Validate`, `PatchStores` and the two `PatchStores` patch lambdas).
