@@ -2281,3 +2281,34 @@ Standing rules for this pass:
   otherwise count as raw `sdk-visible` rows and make the export filter drop
   extra rows. A future queue revision should skip members whose current name
   already passes the readability test (`MethodReview.Reason == null`).
+- **Wave 165: the extended-memory quartet, and a member-name correction.** The
+  four Falcon memory classes are now separated by call sites and distinguishing
+  bodies: `Class907` → `…MemoryExtendedReadMessage` (built by the already-named
+  `<ReadExtendedMemoryAsync>` lambda), `Class909` → `…MemoryExtendedWriteMessage`
+  (built by `<WriteExtendedMemoryAsync>`), `Class908` →
+  `…MemoryExtendedReadResponseMessage` and `Class910` →
+  `…MemoryExtendedWriteResponseMessage` — their `GetFormattedData` bodies are the
+  discriminator (the read response uses the unconditional three-argument
+  `"Address=… ResultCode=… Data=…"` form, the write response has the
+  short-data branch), and each matches its released counterpart body-for-body.
+  Because `Class910` is the *write* response, wave 162's
+  `get_MemoryData`/`set_MemoryData` on `0x06000DA3/0x06000DA4` were **wrong**;
+  this wave corrected them to `get_ConfirmationData`/`set_ConfirmationData`
+  (the update report carries both as `Method … get_MemoryData →
+  get_ConfirmationData`). Applied tree:
+  `MemoryExtended{Read,Write}{Message,ResponseMessage}` and
+  `…WriteResponseMessage::get_ConfirmationData()`.
+  `names63-staged-v165.xml` =
+  `D72714E87E0184753DF318D5CC8D1821A38415F01132E799FADE1996B98B8B8D`, 12,208
+  reviewed edits, 0 errors, same 51 suffixes; export `A860529BD144621B…` audits
+  `0/0`; apply 822 types / 10,707 methods, `canonical_rows=575`.
+- **CRD/CRI are now resolved too** (next wave): `Class791` is built by
+  `Class792::.ctor(IndividualAddress)` and `Class793::.ctor()`, which mirror the
+  released `TunnelingCRD::.ctor(IndividualAddress)` and the connect-response
+  frame that build `CRD`; `Class794` is built by
+  `Class795::.ctor(TunnelingKnxLayer, IndividualAddress?)` and
+  `Class796::.ctor()`, mirroring `TunnelingCRI` and the connect-request frame
+  that build `CRI`. So `Class791` = `Knx.Falcon.KnxnetIp.Frames.CRD`,
+  `Class794` = `…CRI`, and the four callers are `TunnelingCRD`,
+  `ConnectResponse`, `TunnelingCRI`, `ConnectRequest` — the technique (who
+  constructs the type) resolves shape-identical pairs that bodies cannot.
