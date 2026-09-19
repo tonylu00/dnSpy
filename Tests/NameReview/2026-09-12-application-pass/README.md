@@ -2261,3 +2261,23 @@ Standing rules for this pass:
   stale_references=0` in 3.7 s. Applied tree: `NetworkParameterMessageBase`,
   `ConfirmedRestartMessage`, `DeviceDescriptorResponseMessage` and
   `Knx.Ets.Common.Http.IHttpClient` are all visible by name.
+- **Wave 164: the queue's remaining readable-name members.** Applying the
+  alignment gate (`build-wave164.py`: best non-compat type by unique shape
+  match, then an ordered-member LCS ratio ≥ 0.6) to the queue left six types with
+  37 queued members; 9 families carry blockers and 17 pairs were already
+  readable no-ops (`get_Dynamic`, `get_Version`, `CreatePluginHost`,
+  `IsDownwardCompatibleTo`, …), so 11 plain rows shipped
+  (10,696 → 10,707 renamed methods).
+  `names63-staged-v164.xml` =
+  `3FEC75009E3076A4A78EB37D14A35CF3C63123B25EB43FBE4C38838962F055FF`, 12,205
+  reviewed edits, 0 errors, `--check-map` PASS, same 51 suffixes; the export map
+  `71AFA5E9C15E77B0…` audits `sdk-visible=0, sdk-referenced-types=0`. Apply
+  rewrote 10,707 methods in 528/528 modules with 0 errors in 6.3 s;
+  `--verify-applied` `definitions_missing=0 stale_references=0`.
+- **Queue insight.** `correspondence-queue.py` lists members that have no map
+  row, but a member may already carry a readable name in the binary (the
+  compatibility/object-model assemblies were only partially obfuscated). Those
+  pairs are no-ops (`NewName == OriginalName`) and must be filtered — they would
+  otherwise count as raw `sdk-visible` rows and make the export filter drop
+  extra rows. A future queue revision should skip members whose current name
+  already passes the readability test (`MethodReview.Reason == null`).
