@@ -1438,3 +1438,32 @@ Standing rules for this pass:
   `ApplyHardware2ProgramImage`), `CreateDeviceInstance`, and the merger's
   `get_ElementSettings`/`get_AddinDataSettings`/`get_UserFileSettings`/
   `get_AttributeCallbacks`.
+- **Wave 128: the additional-info XML patcher and the parameter instance.**
+  19 rows in `Knx.Ets.ObjectModel.dll`.
+  `Operations.ExtendedCopy.Patcher.AddAdditionalInfoToXmlPatcher` (10 rows)
+  gets the three behavior handlers `Patch` dispatches to
+  (`ApplyConnectorAndFunctionBehavior`, `ApplyConnectorBehavior`,
+  `ApplySingleArgumentBehavior`), the behavior writers
+  (`SetBehaviorAttribute`, `SetBehaviorOnGroupRange`, `ApplyGroupAddressBehavior`
+  with its `@Central`/`KeepCentral` rule), the guard
+  (`SourceBuildingPartHasDevices`), the project comparison
+  (`IsSameProjectAsTarget`) and the post-processing
+  (`NormalizeKeepBehaviorsInDocument`, `PropagateKeepToParentGroupRanges`).
+  `Project.ParameterInstance` (9 rows) gets the value pipeline
+  (`ConvertTypedValue` with its converter-exception log and
+  `TryConvertTypedValue`, `SetValueFromActivityCalculator`,
+  `EvaluateParameterCalculation`), the calculation scope
+  (`GetAffectedModuleDefinitionIds`,
+  `ExecuteCalculationsForRelevantModules`),
+  `ApplyInitialValueWhenActivated`, `RaiseValueChanged` and the
+  `IsValidationErrorMessage` predicate. `names63-staged-v128.xml` =
+  `AF2918F3D1B4ACC25C1102A777B5FC262B91B34752737FAB339004353F4EB2A8`, 11,171
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v128-sdkfrozen.xml`
+  (`7A7AECF82D80CAE4…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528
+  load); every renamed helper still binds — the three patcher handlers and the
+  post-processing from `Patch`, the writers from those handlers and
+  `Patch`, and the parameter pipeline from `set_Value`, `set_IsActive`,
+  `PerformParameterCalculation`, `ParameterInstanceFacade::set_Value` and the
+  default-value getters.
