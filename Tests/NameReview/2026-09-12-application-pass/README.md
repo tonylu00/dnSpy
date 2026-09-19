@@ -1058,6 +1058,18 @@ Standing rules for this pass:
   12.4 s / 15.9 s CPU (1.3 busy cores) -> 2.9 s, and the plain 6.4 -> 6.3
   whole-tree scan 58.4 s / 59.0 s CPU (1.01 busy cores) -> 10.0 s / 74.6 s
   (7.5 busy cores). Every report the two builds wrote is byte-identical.
+- **`--review-map` and the contract-reference manifest (de4dotEx `e8b0d15a`).**
+  `--review-map` turns a reviewed ledger into a source map, and for an
+  inventory that carries type, field, parameter, local or contract-family rows
+  it delegates to the transactional updater — which refuses a ledger whose
+  `ContractReferenceSha256` is set unless it receives the same manifest. The
+  CLI only accepted `--contract-references` for `--review-families`,
+  `--suggest-accessors`, `--update-map`, `--merge-map` and `--check-map`, so
+  every manifest-bound review failed the check with no way to satisfy it.
+  `--review-map` now takes the manifest as well (help text and tool README
+  updated). The wave-124 ledger converts in 3.4 s with 11,092 edits and 0
+  errors; `--update-map`/`--check-map` still publish byte-identical maps and
+  reports, and the fixture suite's 20 scenarios pass.
 - **Wave 114: creating devices from a template.** 16 rows in
   `Knx.Ets.ObjectModel.dll`'s
   `Operations.Devices.CreateDeviceFromTemplateOperation`: the template filter
