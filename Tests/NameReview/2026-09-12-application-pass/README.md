@@ -563,6 +563,14 @@ Standing rules for this pass:
   5.1 s (6.7 s with the implementation closure), `--update-map` 7.6 s -> 6.0 s,
   `--review-families` 21.7 s -> 13.9 s, `--review-obfuscated` 21.4 s -> 12.9 s,
   every output byte-identical to the previous run.
+  A second pass (`de4dotEx 06b6213f`, mirrored as `dnSpy 8b6a94d43`) removed the
+  remaining dnlib type-finder rescans: the contract context now resolves every
+  reference from a per-module type-name index (dnlib only sees exported-type
+  forwarders and misses), a type's method list and a member's parameter list are
+  read once per pass instead of five and two times, and name classification is a
+  concurrent map instead of a lock taken twice per member. `--check-map`,
+  `--update-map`, `--review-families` and `--review-obfuscated` still reproduce
+  `36A04057…`, `60463931…/CA39B033…`, `27B6C6F3…` and `8179AFA4…` byte for byte.
   The SDK surface is unchanged: `--public-api-audit` freezes five rows
   (`sdk-visible=0`, `sdk-referenced-types=5` on the full map) and the filtered
   export map `D:\knx_analysis\names63-staged-v95-sdkfrozen.xml`
@@ -620,3 +628,17 @@ Standing rules for this pass:
   surface unchanged (five frozen rows; export map
   `D:\knx_analysis\names63-staged-v98-sdkfrozen.xml`, `640BED9E…`, audits
   `sdk-visible=0, sdk-referenced-types=0`).
+- **Wave 99: the transfer's members inside the wave-98 types.** The second
+  seeded transfer run proposed 169 members of the wave-98 renamed types (94
+  HawkNET, 75 Falcon), all with one agreed name per contract family. 92 of the
+  96 families they touch were already mapped in waves 96-97 and one stays
+  blocked as an explicit interface implementation, so the wave ships 3
+  contract families (12 member rows) plus 3 ordinary Falcon methods
+  (`FromFailure`, `FromInvalidJson`, `TryGetFailureReport`) that have no family
+  row at all — `families63-w96.json` lists only virtual members, and the first
+  version of the apply script silently dropped every candidate without one.
+  `names63-staged-v99.xml` = `ED481D1F5F2C6823…` (8,983 reviewed edits, 0
+  errors, `--check-map` PASS, still the 51 known auto-suffixes, no new ones).
+  The SDK surface is unchanged: five frozen rows, export map
+  `D:\knx_analysis\names63-staged-v99-sdkfrozen.xml` (`1F739A79…`) audits
+  `sdk-visible=0, sdk-referenced-types=0`.
