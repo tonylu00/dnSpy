@@ -906,3 +906,33 @@ Standing rules for this pass:
   check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528 load);
   every handler still resolves from `get_ElementSettings`,
   `get_AttributeCallbacks`, `get_DeviceSettings` and `get_LocationsSettings`.
+- **Wave 109: the project device's collection, certificate and usage plumbing.**
+  23 rows in `Knx.Ets.ObjectModel.dll`'s `Project.Device`: `InitializeCollections`
+  (builds `BinaryDatas`, `AdditionalAddressesCollection`, the consistency
+  validator, `BusInterfaceCollection`, the non-default channel/com-object
+  managers and `LazyChannelInstanceCollection`),
+  `OnUsageChannelsChanged` / `IsAddedUsageForApplicationProgram` /
+  `IsRemovedUsageForApplicationProgram` (the usage-collection wiring through
+  `UsageInstallationEventManager` and `Usage.MatchesAppPrg`),
+  `UpdateDeviceCertificateAssignment` (the `DeviceCertificateCollection`
+  registration moves with the serial number), `ResetIndividualAddress` /
+  `OnIndividualAddressReferenceChanged` (the address plus bus-interface display
+  names), `SynchronizeDeviceState` / `SynchronizeNonDefaultParameters` (the
+  reader side of `InternalSynchronize`),
+  `AttachPasswordChangeObserver` / `DisposePasswordChangeObserver` /
+  `OnIsProvidingSecureTunnelingChanged` (the `"Password"`/`"PasswordHash"`
+  observer over `BusInterfaceCollection`), `WriteGroupTree`,
+  `AcquireInitialParamCalcLock` / `ReleaseInitialParamCalcLock` (the volatile
+  counter behind `GetInitialParamCalcActiveLock`), `OnAfterBind`,
+  `OnActiveComObjectInstancesChanged` / `OnActiveComObjectsLoaded` /
+  `OnActiveChannelInstancesChanged`, `LoadApplicationProgramDynamic`,
+  `EnsureCalculator`, `NotifyTextParameterRefChanged` and `OnDispose`.
+  `names63-staged-v109.xml` =
+  `3E14805AE84907253AC546CA12DAD5B3444F6137069D0EF52FA7DA7E4DDA6B61`, 10,789
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v109-sdkfrozen.xml`
+  (`96FEB7B6A48E4D8B…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 4.5 s (0 errors, 528/528 load);
+  the device constructor, `InternalSynchronize`, `Dispose`,
+  `set_Address`/`SetAddressWithoutUndo` and the explicit
+  `IInternalDevice` members all keep their callees.
