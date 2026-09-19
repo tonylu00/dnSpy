@@ -500,3 +500,29 @@ Standing rules for this pass:
   ObjectModel rows are deferred: Dotfuscator split one source method into
   identical-signature halves, so the declaration scope would suffix their shared
   name (`SpecializedValidate2`, `AfterSpecializedUndo2`, ...).
+- **Wave 94: stripped event accessors.** Where the obfuscator removed the event
+  row, its `add_`/`remove_` accessors look like ordinary methods and never match
+  the 6.4 build's readable counterparts, because the transfer matches by C#
+  member class. The body still shows the operation (`Delegate::Combine`/`Remove`)
+  and the backing field, so `scratch-event-accessors.py` matches accessors by
+  (operation, delegate type) and, when several events share one delegate type,
+  by the backing field's position in the paired types. Wave 94 shipped 16 rows
+  (10 Falcon.Bus event accessors, 6 Bus segment-coupler helpers matched by exact
+  shape plus body evidence): 8071 reviewed edits, 0 errors, check-map PASS, no
+  new auto-suffixes, SDK audit unchanged, filtered export map
+  `sdk-visible=0, sdk-referenced-types=0`. The same rule finds 54 more accessors
+  in ObjectModel, Sdk, Common, DynamicData, ActiveTree, CloudKit and
+  SemanticExport, but those keep their `SpecialName` bit and stay blocked as
+  `accessor-operator-or-runtime-special-name`.
+- **Type renames are the next lever (tooling gap).** `scratch-type-pair-verify.py`
+  verified 268 placeholder 6.3 types against readable 6.4 counterparts
+  (unanimous member votes, member-shape containment >= 0.9 both ways, matching
+  string literals): 177 Falcon (`Class1009` -> `Knx.Falcon.IoT.Stack.Oscore.Utility.OscoreByteConverter`,
+  `nc` -> `Knx.Falcon.Device`, `oc` -> `Knx.Falcon.Network`), 89 HawkNET, 2
+  DevKit, 1 DynamicData. They cannot be shipped yet: Dotfuscator flattened those
+  types into the global namespace, so the alias must carry a namespace, but the
+  updater rejects dotted type aliases (`Identifier()`), dnSpy's `SourceNameMap`
+  rejects them (`ValidateName`), and the exporter's declaration/restore path only
+  carries a leaf alias (`MetadataTypeNames.GetName` + `SourceFullName` prefix the
+  type's metadata namespace). Supporting `Namespace.Name` type aliases in those
+  three places (plus a declaration-namespace hook in the C# output) unlocks them.
