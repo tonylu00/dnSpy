@@ -1861,6 +1861,21 @@ Standing rules for this pass:
   The batch apply rewrote 10,363 methods in 528/528 modules with 0 errors in
   6.4 s and `verify-map.cs` reports `canonical_rows=547 definitions_missing=0
   stale_references=0`.
+- **Wave 147: HawkNET tunnelling-user controls.**
+  `Class304::a(CreateImageContext, lr, lo)` in
+  `AddIpSecurityConfigDataTask` builds the `LdCtrlWriteProp` list for the
+  `PID_TUNNELLING_USERS` table: it distincts and orders the tunnelling-user
+  `(byte, byte)` entries with the two cached selectors, guards the table size
+  ("PID_TUNNELLING_USERS table overflow: required {0} entries, available {1}
+  entries") and writes ObjType 11 / PropId 97 controls per entry. Named
+  `CreateTunnellingUserControls`; lambdas `<CreateTunnellingUserControls>b__7_0..1`.
+  `names63-staged-v147.xml` =
+  `D083E8178ED4802ED9A69CE8CB6348965B1938453B87EBBB6FFC9F487E72D01D`, 11,847
+  reviewed edits (3 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `8F683CAA64294E70…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,366 methods in 528/528 modules with 0 errors in
+  6.6 s and `verify-map.cs` reports `canonical_rows=549 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
