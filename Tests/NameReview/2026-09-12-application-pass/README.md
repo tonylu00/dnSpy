@@ -2215,3 +2215,25 @@ Standing rules for this pass:
   The batch apply rewrote 10,517 methods and 812 types in 528/528 modules with
   0 errors in 6.9 s, and `--verify-applied` reports `canonical_rows=575
   definitions_missing=0 stale_references=0` in 3.3 s.
+- **Wave 162: the correspondence queue, first bulk wave.** The shape queue
+  against the wave-161 map yields 154 actionable members across the Falcon
+  KNX-message classes (`MemoryExtended*Message`, `NetworkParameterMessageBase`,
+  `ConfirmedRestartMessage`, `DeviceDescriptorResponseMessage`,
+  `FileControl/FileOperationState/CheckChunkBlock*`, `CRI`, `KnxIpFrame`), the
+  compatibility/object-model facades and a few HawkNET types. 18 of them are
+  virtual/interface slots and ship as contract-family seeds (expanded by
+  `--update-map`), the other 74 as plain rows; six no-op pairs
+  (`IsDownwardCompatibleTo`, `get_ManagementModel`, `get_Version`,
+  `get_MgmtDescriptor01`, `get_MaskEntries`, `GetHawkConfigurationData` — all in
+  `Knx.Ets.Sdk.dll`, name → same name) are filtered out so the raw audit keeps
+  `sdk-visible=0`. The families expand to 179 new renamed methods
+  (10,517 → 10,696). New helper `perfprobe/family-seeds-batch2.py` splits a
+  queue into family seeds and plain rows in one streaming pass over the 332 MB
+  inventory.
+  `names63-staged-v162.xml` =
+  `D372B9BD4C75DACC53F6CE091CB68FE79E3D6AAE185F7F5994378E7CD882C5EF`, 12,187
+  reviewed edits, 0 errors, `--check-map` PASS, same 51 suffixes; the export map
+  `8B05F4A6253A8C80…` audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  apply rewrote 10,696 methods and 812 types in 528/528 modules with 0 errors in
+  6.6 s, and `--verify-applied` reports `canonical_rows=575
+  definitions_missing=0 stale_references=0` in 3.6 s.
