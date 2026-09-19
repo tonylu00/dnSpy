@@ -1260,3 +1260,25 @@ Standing rules for this pass:
   `UpdateRename`, `DeactivateRename`, `ClearRenames`, `UpdateGroupAddresses`,
   `UpdateFunctions`, `get_Name`/`get_DisplayName`/`ToString`,
   `TextParameterOnTextChanged` and the `UsageChannel` setters).
+- **Wave 122: the coupler validator.** 15 rows in
+  `Knx.Ets.ObjectModel.dll`'s
+  `Operations.Validators.CouplerValidator`: the resolution helpers
+  (`GetHardware2ProgramInfo`, `FindHardwareInfo`,
+  `FindApplicationProgramInfo`, `HasHardwareInfo`), the placement checks
+  (`DetermineCouplingDirection`, `ValidateCoupling`, `ValidateIpCoupler`,
+  `IsCouplerHardware`, `IsOtherWorldCoupler`) and the medium-type selectors
+  (`IsSupportedMediumType`, `IsNeededUpperLine`,
+  `IsNeededUpperLineForNonSegmentCoupler`, `IsNeededUpperLineOnSubLine`,
+  `IsNeededUpperLineForSubLineCoupler`, `IsNeededUpperLineOnMainLine`). The five
+  "needed upper line" selectors share one body (`mediumType.Id ==
+  Coupler.NeededUpperLine`) and are distinguished by their call site: the
+  coupling-direction helper, the non-segment coupler branch, the sub line check
+  (twice) and the main line check. `names63-staged-v122.xml` =
+  `77EF0B7F26421EDF03D597C22F8D51CCBB2A0A460177DFFBA37EF0011C258CAB`, 11,059
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v122-sdkfrozen.xml`
+  (`7BB9956A3340EBD6…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.8 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (`Validate`,
+  `get_HardwareInfo`, `get_ApplicationProgramInfo`, `DetermineCouplingDirection`,
+  `CheckSubLine`, `CheckMainline` and the constructor).
