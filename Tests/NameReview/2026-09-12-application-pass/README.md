@@ -1738,6 +1738,26 @@ Standing rules for this pass:
   Reusable tooling added: `perfcheck3/wave-pipeline.ps1 -Wave <n> -ApplyRoot
   <dir>` (update, check, audit, filter, apply, hashes) and
   `application-name-pass01/checkpoint-wave.py <n>`.
+- **Wave 139: lambdas declared in explicit interface implementations.**
+  Roslyn names a lambda after its declaring method, and when that method is an
+  explicit interface implementation the `<Source>` part is the *qualified*
+  name — the readable graph carries 31 such rows, e.g.
+  `<Knx.Ets.ObjectModel.Project.IInternalDevice.SetAddressWithoutUndo>b__0`.
+  Two deferred declarers are exactly that shape and stay blocked themselves
+  (the accessor/operator guard owns them), but their cached closure lambdas are
+  ordinary methods: HawkNET `Class494/b::b` implements
+  `System.Collections.IEnumerator.MoveNext`, so its four lambdas become
+  `<System.Collections.IEnumerator.MoveNext>b__22_0, 3, 4, 5`, and Falcon
+  `Class1364/Struct965::e` implements
+  `System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext`, so its four
+  become `<System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext>b__5_2,
+  3, 5, 6`. `names63-staged-v139.xml` =
+  `41212AC047D1AA297C311234DDABC36BFC99B5B9751EE16F041955CF2FCE7C70`, 11,791
+  reviewed edits (8 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `4ACAD4E9457AE039CFB85A50946A571268B1BF578B8B29001AB2F67FA15CC31B`
+  audits `sdk-visible=0, sdk-referenced-types=0`. The batch apply rewrote
+  10,310 methods in 528/528 modules with 0 errors in 6.6 s, and `verify-map.cs`
+  reports `canonical_rows=500 definitions_missing=0 stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
