@@ -1595,3 +1595,35 @@ Standing rules for this pass:
   calls `InitializeDescription`, `BeforeExecute` calls `CaptureUndoData`,
   `SpecializedUndo` calls `RestoreUndoData`, and `SpecializedExecute` calls
   the five identity steps.
+- **Wave 134: the container-items aggregate and the hardware-merger family.**
+  19 rows in `Knx.Ets.ObjectModel.dll`.
+  `Project.ContainerItemsAggregateCollection`2` (8 rows) gets the aggregate
+  bookkeeping (`GetAggregateIndex`, `GetCollectionCount`, `AddCollectionCount`),
+  the subscription plumbing (`Subscribe`, `GetItems`), the two change handlers
+  (`OnSubContainerCollectionChanged`, `OnItemsCollectionChanged`) and
+  `RaiseCollectionChanged`. `Import.HardwareMerger` (1 row) gets
+  `GetHardwareElement`; its `FilterDecorator` (2 rows) gets `MarkAncestorKeys`
+  and `IsFiltered`; its `InternalHardwareMerger` (8 rows) gets the container
+  factories (`CreateProductsElement`, `CreateHardware2ProgramsElement`), the
+  merge callbacks (`MergeHardware`, `MergeProduct`, `MergeHardware2Program`),
+  the hash guard (`EnsureSameHash`), `GetHardwareElement` and `GetChildElement`.
+  `names63-staged-v134.xml` =
+  `3048CFD8389E307A66B126E6940C74B8D7937D4C563B08147F15744DFDAC2CAE`, 11,274
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v134-sdkfrozen.xml`
+  (`4BF1FD32E3A5A6E1…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 7.3 s (0 errors, 528/528
+  load); every renamed member still binds, with `Subscribe`, `AddCollectionCount`
+  and `GetItems` now visible at their intra-module call sites too.
+- **Batch applier: same-module generic MemberRef operands (de4dotEx
+  `b249c6e7`).** dnlib can materialize one MemberRef row twice:
+  `GetMemberRefs()` returns the default-context instance while a generic method
+  body's `call`/`ldftn` operand carries a context-specific instance, and the
+  writer serializes the operand. An implementation-only map therefore renamed
+  a generic type's definition while same-module call sites kept the old
+  MemberRef name. The applier now walks every method body and updates those
+  operand instances. Re-applying waves 132/133 with the fixed applier changed
+  17 modules and 963 references, and both verify scripts pass; the extended
+  `ApplyMapRegression` builds a `Generic<int>.Original` call whose operand
+  instance differs from the table instance and asserts the applied output binds
+  `Calculate`.
