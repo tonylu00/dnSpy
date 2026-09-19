@@ -1051,6 +1051,13 @@ Standing rules for this pass:
   10.2 s/73.5 s. `NAMECANDIDATES_TIMING=1` prints the scanner's
   map/list/read/seed/round/hash split; the NameCandidates fixture suite and the
   ten source-map regressions pass.
+  Re-measured on this machine (16 logical processors) with a fresh Release
+  build of `50c7c61c` and the wave-124 map, against the pre-fix build kept in
+  `D:\knx_analysis\perfcheck3\before-root`: `--check-map` 5.8 s / 7.3 s CPU ->
+  3.2 s / 8.4 s, `--update-map` 3.9 s / 7.2 s, `--review-obfuscated`
+  12.4 s / 15.9 s CPU (1.3 busy cores) -> 2.9 s, and the plain 6.4 -> 6.3
+  whole-tree scan 58.4 s / 59.0 s CPU (1.01 busy cores) -> 10.0 s / 74.6 s
+  (7.5 busy cores). Every report the two builds wrote is byte-identical.
 - **Wave 114: creating devices from a template.** 16 rows in
   `Knx.Ets.ObjectModel.dll`'s
   `Operations.Devices.CreateDeviceFromTemplateOperation`: the template filter
@@ -1305,3 +1312,24 @@ Standing rules for this pass:
   `Apply`, `ResolveRangeConflicts`,
   `CopyMissingGroupAddressesIntoRange` and
   `ClassifyGroupAddressesByTargetRange`).
+- **Wave 124: unlinking the addresses a delete removes.** 20 rows in
+  `Knx.Ets.ObjectModel.dll`, ten in
+  `Operations.GroupRanges.DeleteGroupRangeOperation` and ten in
+  `Operations.GroupAddress.DeleteGroupAddressOperation` (different namespaces,
+  so the shared names are legal): the unlink drivers the execute/undo/redo
+  wrappers install (`InvokeGroupAddressUnlink`, `InvokeBusInterfaceUnlink`,
+  `ExecuteUnlinkWithUndoDisabled`, `ExecuteBusInterfaceUnlinkWithUndoDisabled`,
+  `UndoUnlinkWithUndoDisabled`, `UndoBusInterfaceUnlinkWithUndoDisabled`,
+  `RedoUnlinkWithUndoDisabled`, `RedoBusInterfaceUnlinkWithUndoDisabled`) and
+  the recent-address bookkeeping — `RemoveFromRecentGroupAddresses` and
+  `GetRecordedGroupAddresses` on the group-range delete,
+  `RemoveSourceAddressesFromRecent` and `AddSourceAddressesToRecent` on the
+  group-address delete. `names63-staged-v124.xml` =
+  `E8F47FC08023C15193994ACC014B8B925D5443BA673D3D8843159852973C9809`, 11,092
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v124-sdkfrozen.xml`
+  (`39C0E578372E8A48…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.8 s (0 errors, 528/528
+  load); the unlink drivers and the bookkeeping helpers still bind from
+  `BeforeSpecializedExecute`/`AfterSpecializedUndo`/`AfterSpecializedRedo` and
+  from both types' `Execute`/`Undo`/`Redo` wrappers.
