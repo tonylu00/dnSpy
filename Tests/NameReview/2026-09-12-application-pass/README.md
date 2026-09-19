@@ -936,3 +936,27 @@ Standing rules for this pass:
   the device constructor, `InternalSynchronize`, `Dispose`,
   `set_Address`/`SetAddressWithoutUndo` and the explicit
   `IInternalDevice` members all keep their callees.
+- **Wave 110: the communication-object instance.** 20 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Project.ComObjectInstance`:
+  `RegisterTextParameterRef` / `UpdateTextFromParameterRef` /
+  `InvalidateTextCache` (the `TextParameterRefManager` registration and the
+  `ModuleArgManager.CheckArgumentText` call for the `"TextParam"` argument),
+  `InitializeFromComObjectRefInfo` (the `ComObjectRefInfo` initializer),
+  `UpdateTextsFromModuleArguments` / `OnTextChanged` / `OnFunctionTextChanged`
+  (the `"Text"`/`"FunctionText"` arguments),
+  `UpdateChannelInstanceFromUsage` / `FindChannelInstance` plus the four
+  predicates the search passes to its collections (`MatchesDeviceChannel`,
+  `MatchesMainModuleChannel`, `MatchesSubModuleChannel`,
+  `MatchesParentModuleChannel` — all compare `AppPrgChannelId` with the
+  instance's `ChannelId`), `NotifyComObjectActivityChanged`,
+  `UpdateDatapointTypeRefs`, `ResolveDatapointType` /
+  `ResolveDatapointTypeForDefaults` (master-data lookups),
+  `IsToDoItemOfThisInstance`, `OnPriorityChanged`, `OnNameChanged` and
+  `OnDispose`'s neighbours. `names63-staged-v110.xml` =
+  `FDA638C9F5B254E0A5AC948E679BC7D84544EC234ECFD0991916C9516393B987`, 10,809
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v110-sdkfrozen.xml`
+  (`B7406D05D01CEA08…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 4.6 s (0 errors, 528/528 load);
+  the constructors, `set_IsActive`, `set_Priority`, `get_Name`,
+  `get_ParentChannel` and `set_DatapointTypes` all keep their callees.
