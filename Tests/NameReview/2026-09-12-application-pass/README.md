@@ -1891,6 +1891,29 @@ Standing rules for this pass:
   The batch apply rewrote 10,369 methods in 528/528 modules with 0 errors in
   6.0 s and `verify-map.cs` reports `canonical_rows=551 definitions_missing=0
   stale_references=0`.
+- **Wave 149: the HawkNET `DeviceProfileInformation` capability cluster.**
+  Eleven capability getters of `Knx.Ets.Hawk.Impl.DeviceProfileInformation`
+  are pinned by their own bodies and cached predicates and by the identical
+  bodies of their released counterparts: `get_SupportsInterfaceObjects`
+  (`Any(profiles, p => p.SupportsInterfaceObjects)`), `get_SupportsConfirmedRestart`
+  (same list), `get_SupportsMemoryExtendedServices`, `get_SupportsPropertyExtendedServices`,
+  `get_MaySupportLongMemoryServices` (long-frame support plus the memory mask
+  bits), `get_FirstAppObjectIdx` (feature name 1, Byte),
+  `get_HasGroupCommunication` (resource name 11), `get_HasFilterTable`
+  (resource name 15), `get_HasSecondaryRouterObject` (version `10528`),
+  `get_HasMemoryMappedLoadControls` (configuration feature 11) and
+  `get_RestartTime` (feature 6, default 200). Six of their cached predicates
+  also become canonical (`<get_SupportsInterfaceObjects>b__32_0`,
+  `<get_SupportsConfirmedRestart>b__34_0`, `<get_SupportsMemoryExtendedServices>b__36_0`,
+  `<get_SupportsPropertyExtendedServices>b__38_0`,
+  `<get_MaySupportLongMemoryServices>b__42_0`, `<get_FirstAppObjectIdx>b__44_0`).
+  `names63-staged-v149.xml` =
+  `1E026B6E222B166A9B8B5F2BDFCC7AB77872FE90E1F2961F829C82EF296083CB`, 11,867
+  reviewed edits (17 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `FF010C13A31BD33D…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,386 methods in 528/528 modules with 0 errors in
+  6.5 s and `verify-map.cs` reports `canonical_rows=557 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
