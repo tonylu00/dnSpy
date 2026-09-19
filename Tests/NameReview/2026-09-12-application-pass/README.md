@@ -1790,6 +1790,20 @@ Standing rules for this pass:
   The batch apply rewrote 10,320 methods in 528/528 modules with 0 errors in
   6.2 s and `verify-map.cs` reports `canonical_rows=508 definitions_missing=0
   stale_references=0`.
+- **Wave 142: every remaining lambda of a blocked explicit implementation.**
+  Twenty of the deferred declarers are explicit interface implementations and
+  stay blocked themselves, but each one's MethodImpl target gives the
+  qualified name Roslyn used for its lambdas. `probe-overrides.cs` shows all
+  twenty implement either `System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext`
+  (18) or `System.Collections.IEnumerator.MoveNext` (2 — HawkNET
+  `Class345/Class351::c`, Falcon `m8/a::d`), so their 28 cached lambdas take
+  those qualified names. `names63-staged-v142.xml` =
+  `667AFD222B691B6B74A79E00811839E8B1BC7BBEF212540118E1F03F13F59E6E`, 11,829
+  reviewed edits (28 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `42F8DB0A1813E44A…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,348 methods in 528/528 modules with 0 errors in
+  6.2 s and `verify-map.cs` reports `canonical_rows=536 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
