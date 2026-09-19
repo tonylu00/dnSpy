@@ -1657,6 +1657,26 @@ Standing rules for this pass:
   site was rewritten with the map. 596 lambdas whose declaring method still
   carries an obfuscated name stay for a later wave, as do the member names of
   the remaining user methods in Falcon and HawkNET.
+- **The 6.4 tree re-staged from the wave-135 map.** The cross-version scanner
+  (`--reference-source-map names63-staged-v135-sdkfrozen.xml`) re-ran over the
+  two trees: 557 targets, 492 physical module pairs, 1,096 review candidates
+  and 895 skips in 11.5 s wall with the work spread over 7.4 cores. Converting
+  the candidates to the target's source map, merging them onto
+  `names64-staged-v6.xml` and preflighting produces `names64-staged-v7.xml` =
+  `605F70D72849603EDA6051D7848AFF8C5DB24D89C62AFA5F4AE9417E9DC68E01` (2,925
+  rows: 613 names the 6.4 tree did not have, plus 69 rows whose earlier
+  collision suffix — `ExtractParentId2`, `Deserialize2`, `GetImage3` — became
+  the clean name), 1,096 edits, 0 errors, `--check-map` PASS. The 6.4 SDK gate
+  is clean on both maps (`renamed=2,925, visible=323, sdk-visible=0,
+  sdk-referenced-types=0`; `--filter-map` removes nothing), and `--apply-map`
+  rewrote 1,583 methods, 53 types, 1,289 fields and 266 parameters in all 553
+  modules with 0 errors in 7.2 s. `perfcheck2/verify64-v7.cs` reloads every
+  output (553/553) and finds all map names, and the applied ConverterEngine
+  decompiles with the transferred names (`FindManufacturerLanguage`,
+  `CompareCultures`, `LogMessageToFile`, `DecodeAndIntern`). Artifacts:
+  `cross-version64-v135.json`, `map-update64.json`,
+  `rename64-staged-v7-check.json`, `public-api-audit64.json`; `progress.json`
+  now records the v7 map and its export audit.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
