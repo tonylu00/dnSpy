@@ -1517,3 +1517,25 @@ Standing rules for this pass:
   `SpecializedValidate`, `GetPreviewXml`, `AddBehaviorToGroupRange`,
   `CleanupGroupAddressStructureXml`, `PerformCleanUpEmpty{Trades,BuildingParts}`
   and `ApplyGroupRangeStrategy` for the operation.
+- **Wave 131: the transaction helper and the IP routing backbone security
+  operation.** 16 rows in `Knx.Ets.ObjectModel.dll`. `OnTransaction` (8 rows)
+  gets the scope factory (`CreateBirdyTransactionScope`, `CreateTransaction`,
+  `CreateTransactionScope`, `TryTakeExclusiveTransaction`), the
+  `TransactionManager` reflection helper (`SetTransactionManagerField`), the
+  queue drain (`FlushQueuedOperations`), `CloseTransaction` and — kept at its
+  readable original name — `Do`, which 44 call sites across the module use.
+  `Operations.ChangeIpRoutingBackboneSecurityOperation` (8 rows) gets
+  `CollectValidators`, the backbone-key handling (`UpdateBackboneKey`,
+  `ShouldHaveBackboneKey`, `HasBackboneKey`), the confirmation pair
+  (`ConfirmChange`, `ConfirmChangeForUnprotectedProject`) and the device work
+  (`ParkFilteredIpDevices`, `IsAffectedBySecurityChange`).
+  `names63-staged-v131.xml` =
+  `6C963416EEAE4C6240D62460CD0C05B2EE835D8796C61EC75A884C25415E3A36`, 11,223
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v131-sdkfrozen.xml`
+  (`3A5C96DF57AD6A84…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.6 s (0 errors, 528/528
+  load); every renamed helper still binds — `CreateDefault`,
+  `CreateTransactionAndAddItem`, `Do`, `TryCreateExclusive`,
+  `QueueScope::Dispose`, `BirdyTransactionScope::Dispose`, and
+  `SpecializedValidate`/`SpecializedExecute` for the security operation.
