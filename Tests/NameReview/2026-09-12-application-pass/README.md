@@ -593,3 +593,13 @@ Standing rules for this pass:
   same slot name, which the atomic family row already covers) and one
   explicit-interface implementation stays blocked, plus the separate
   `FamilyProposals` (Falcon 23) that still need per-family evidence.
+- **Wave 97: the transfer's remaining re-matches.** The seeded run also named
+  members of types whose pairing it had previously missed: 18 editable families
+  (60 member rows) in Falcon (11), HawkNET (6) and DevKit (1) —
+  `names63-staged-v97.xml` = `1A009659BEE1DB67…`, 8,731 reviewed edits, 0 errors,
+  `--check-map` PASS and **no new auto-suffixes** (still the 50 pre-existing
+  ones plus the wave-96 split twin). Three proposals stay blocked as explicit
+  interface implementations, and two families were already mapped. The SDK
+  surface is unchanged: five frozen rows, export map
+  `D:\knx_analysis\names63-staged-v97-sdkfrozen.xml` (`AEA35080…`) audits
+  `sdk-visible=0, sdk-referenced-types=0`.
