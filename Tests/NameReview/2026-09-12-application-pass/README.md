@@ -2166,3 +2166,31 @@ Standing rules for this pass:
   The batch apply rewrote 812 types in 528/528 modules with 0 errors in 6.2 s,
   and `--verify-applied` reports `canonical_rows=575 definitions_missing=0
   stale_references=0` in 3.5 s.
+- **Wave 160: the contract-family flow, exercised end to end.** The wave-159
+  type row named HawkNET `fb` as `Knx.Ets.Hawk.IAsyncNetworkAccessProvider`, but
+  its members stayed blocked (`--update-map`: *virtual-or-override: use
+  --review-families*). This wave uses the supported flow: a full-tree
+  `--review-families` inventory (4.6 s, 332 MB, 141,360 families / 279,799
+  members) supplies one seed row per family with its family id, and
+  `--update-map` expands every seed to all members of that slot across the tree
+  (the interface declaration and each implementation) under one name. Twelve
+  families ship here, named from the released interface by unique shape match:
+  `dt()`/`get_OutboundSegmentCouplerAddress`, `dz()`/`get_IsCloudConnection`,
+  `d1`/`ReadLocalProgModeAsync`,
+  `d2`/`SetRfMultiSlowDeviceToFastReceptionModeAsync`,
+  `d5`/`ConnectDeviceLocalAsync`, `ef`/`GetAuthorizationLevel`,
+  `e4`/`WriteToolKeyAsync`, `e5` and `fi`/`SecureSyncAsync`,
+  `e7`/`GetNetworkAsync`, `e8`/`SetNetworkRfMode`,
+  `e9`/`PingIndividualAddressAsync`. `ec()` keeps its
+  explicit-method-implementation blocker and stays open. The update reported 36
+  `ContractMethod` rows (10,423 → 10,459 renamed methods) with 0 errors.
+  `names63-staged-v160.xml` =
+  `026B3353F384CEE0AAC880C8BD13D8F2F2A5E7224087BD3E38BA471FA4DAF89E`, 11,950
+  reviewed edits (12 seeds), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `830FE687E4B4BE0F…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,459 methods and 812 types in 528/528 modules with
+  0 errors in 6.2 s, and `--verify-applied` reports `canonical_rows=575
+  definitions_missing=0 stale_references=0` in 3.4 s. Applied tree:
+  `Knx.Ets.Hawk.IAsyncNetworkAccessProvider::get_OutboundSegmentCouplerAddress`,
+  `get_IsCloudConnection`, `ConnectDeviceLocalAsync`, `GetAuthorizationLevel`,
+  `PingIndividualAddressAsync`, …
