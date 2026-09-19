@@ -2023,3 +2023,23 @@ Standing rules for this pass:
   The batch apply rewrote 10,398 methods and 807 types in 528/528 modules with
   0 errors in 6.6 s, and `--verify-applied` reports `canonical_rows=566
   definitions_missing=0 stale_references=0` in 3.5 s.
+- **Wave 153: the Falcon master-data provider.** 6.3 `Class703`
+  (`0x0200013E`, implements `Interface29`, 26 methods) is the released
+  `Knx.Falcon.MasterData.MasterDataProviderFromXml`: four members already
+  carried that type's names (`GetKnxMasterData`, `Validate`,
+  `UpdateDefaultFromHigherVersion`, `<GetKnxMasterData>b__20_0`), its
+  constructors take the released String/FileInfo/Stream/XDocument/empty/
+  `IEnumerable<string>` set, and it fills the document version, medium-type
+  array and manufacturer dictionary. `Class703::c(XDocument)` (`0x06000659`)
+  is the released `method_0(XDocument)` (still obfuscated there) — the private
+  loader called by the FileInfo, XDocument and `IEnumerable<string>`
+  constructors in both builds — named `LoadFromXDocument`, with its three
+  cached selectors becoming `<LoadFromXDocument>b__18_0,2,3`. No SDK row
+  mentions `Class703`.
+  `names63-staged-v153.xml` =
+  `2743157D18B87F81B145D0132C53981C6688079CE936176164DA76C9E20AF3B7`, 11,888
+  reviewed edits (5 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `004AC2CC56E9149F…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,402 methods and 808 types in 528/528 modules with
+  0 errors in 6.2 s, and `--verify-applied` reports `canonical_rows=569
+  definitions_missing=0 stale_references=0` in 3.9 s.
