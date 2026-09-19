@@ -729,3 +729,27 @@ Standing rules for this pass:
   sdk-referenced-types=0`. The batch check applied that export map to the
   528-assembly tree in 10.6 s wall (0 errors) and all 528 outputs load with the
   wave-102 names present.
+- **Wave 103: property and event accessors restored from their own rows.** The
+  obfuscator renamed accessor *methods* but left the property/event rows (and
+  their names) intact, so `get_Foo`/`set_Foo`/`add_Changed` is derived evidence:
+  C# binds an accessor to its row only through that conventional prefix plus the
+  row's own name. The new `--suggest-accessors` command (de4dotEx `48d9f6c1`)
+  derives those names, and the map updater now accepts an accessor row only when
+  it equals the derived name (never a suffix). Of 1,635 candidates, 1,299 ship:
+  956 new rows plus 343 rows that were recorded as explicit *unresolved*
+  decisions ("property accessor; SourceNameMap v1 does not alias runtime special
+  names") in earlier waves. Deliberate interop names (`get_uri` in WebView2's raw
+  COM interfaces, WinRT `put_`) and accessors whose own row carries no readable
+  name (23,880) stay explicit work items. One row is deferred:
+  `Knx.Ets.DynamicData.dll|0x06000291` derives `get_Id`, which collides in its
+  declaration scope, and an accessor name is never suffixed. Rows in the four SDK
+  modules stay untouched. `names63-staged-v103.xml` =
+  `4DA5229684D9A1C31C386ECF53F4ABD8D1BA047D9D7FAA96E53613FF91A244A7`, 10,637
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v103-sdkfrozen.xml`
+  (`61D711DE04AAA422…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 8.7 s (0 errors); every output
+  loads, the renamed accessors are present and `ey.Address` still keeps both of
+  its accessors linked. dnSpy enforces the same derived-name rule in
+  `SourceNameMap` (`Tests/Invoke-AccessorAliasRegression.ps1`), and the whole
+  10-test battery passes.

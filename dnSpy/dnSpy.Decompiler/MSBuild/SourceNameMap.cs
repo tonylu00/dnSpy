@@ -53,6 +53,12 @@ namespace dnSpy.Decompiler.MSBuild {
 					string? contract = (string?)row.Attribute("ContractFamily");
 					if (member is MethodDef method) {
 						if (MethodContractFamilies.MethodBlocker(method) != null || contract == null && method.IsVirtual) throw new InvalidDataException("Source method alias requires an ordinary method or a supported complete contract family.");
+						// A property/event accessor cannot choose a name: C# binds it
+						// to its row only through the conventional name derived from
+						// that row, so the map's row must carry exactly that name.
+						string? derived = PropertyAccessorNames.Derive(method);
+						if (derived != null && name != null && name != derived)
+							throw new InvalidDataException("A property/event accessor alias must be the conventional name: " + derived);
 						if (contract != null) contractProposals.Add(method, contract);
 					}
 					else if (contract != null) throw new InvalidDataException("ContractFamily requires a method row.");
