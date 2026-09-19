@@ -1699,6 +1699,27 @@ Standing rules for this pass:
   `=>` on the wave-135 tree and 137 on the wave-136 tree with no leftover
   `b__` names. 214 lambdas stay deferred — their declaring methods are still
   obfuscated user methods (`Class1462::a`, `Class311::a`, …).
+- **Wave 137: the IoT JSON template analysis cluster (Falcon).** `Class1462`
+  is `Knx.Falcon.…Json.Analysis.IoTJsonAnalyzer` and `Class1461` its result
+  type; the released 6.4 build keeps the readable names, so the rows transfer
+  one to one. The result type gets its six backing fields
+  (`usedTemplate`, `originalJsonPayload`, `analysisWasSuccessful`,
+  `failureInfoData`, `exception`, `analysisResult`), their six accessors
+  (`get_UsedTemplate`, `get_OriginalJsonPayload`, `get_AnalysisWasSuccessful`,
+  `get_FailureInfoData`, `get_ExceptionDuringParsing`, `get_AnalysisResult`)
+  and the two factories (`FromFailure`, `FromInvalidJson`); the analyzer gets
+  `jsonTemplates`, `get_JsonTemplates`, `Analyze`, `TryAnalyze` — and with
+  `TryAnalyze` named, the 15 cached lambdas it declares become
+  `<TryAnalyze>b__5_0..14` (the canonical `<>9__5_M` fields supply the index).
+  `0x06002399` (the indexer accessor that would be `get_Item`) stays blocked by
+  the accessor/operator guard because no property row was left behind.
+  `names63-staged-v137.xml` = `2939E5707FC8962140859C9D75ABFA7B7A184C0B09FBD5E9AF78AC347894F5A4`,
+  11,774 reviewed edits (31 rows), 0 errors, `--check-map` PASS; the export map
+  `AB0F06A612921C99…` audits `sdk-visible=0, sdk-referenced-types=0` (raw map
+  keeps the same five freeze rows / four removed). The batch apply rewrote
+  10,293 methods and 1,266 fields in 528/528 modules with 0 errors in 6.6 s,
+  and `verify-map.cs` reports `canonical_rows=484 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
