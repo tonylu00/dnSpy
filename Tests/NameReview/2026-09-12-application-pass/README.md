@@ -1032,3 +1032,22 @@ Standing rules for this pass:
   still binds from `CopyDevices`/`CopyDeviceContents` and
   `GetComObjectRefCache` keeps its 20 callers across `MoveDeviceAcrossProjectOperation`,
   `ObjectContext`, `Caches` and `AppPrgInfoDynamicFacade`.
+- **Cross-version scanner performance (de4dotEx `50c7c61c`).** The remaining
+  "40 s at a fraction of one core" command was the scanner behind
+  `--reference-source-map` (and the plain `<reference-tree> <target-tree>`
+  candidate scan, which shares its walk): the module pairs ran on one thread and
+  each of its up to eight rounds rebuilt both fingerprint indexes from scratch,
+  plus a per-group re-scan of every type seed. The pairs are pure, so they now
+  run on `ProcessorCount` threads and merge in target order (a module's failure
+  is rethrown after the merge, exactly like the sequential loop stopped); a
+  fingerprint is cached per method and only the callers of a method that just
+  gained an anchor are recomputed; the declaring-type rule for type anchors is
+  indexed once per pair and an embedded `MemberRef`'s declaring-type walk is
+  memoized per pair. Fingerprint values are unchanged — the document is hashed
+  from the serializer's UTF-8 bytes through a per-thread buffer instead of the
+  UTF-16 string plus its UTF-8 copy. Reports are SHA256-identical: 6.4
+  reference -> 6.3 target 50.5 s/81.0 s CPU -> 11.1 s/79.0 s, 6.3 reference ->
+  6.4 target 58.7 s/95.6 s -> 11.8 s/97.4 s, plain 6.4 -> 6.3 48.2 s/77.3 s ->
+  10.2 s/73.5 s. `NAMECANDIDATES_TIMING=1` prints the scanner's
+  map/list/read/seed/round/hash split; the NameCandidates fixture suite and the
+  ten source-map regressions pass.
