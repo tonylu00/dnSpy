@@ -1567,3 +1567,31 @@ Standing rules for this pass:
   `BeforeExecute` and `SpecializedExecute` for the shrink operation, the three
   constructors plus `SpecializedExecute`/`SpecializedRedo`/`SpecializedUndo`
   for the group-address operation.
+- **Wave 133: the device-to-segment XML copier and the device-identity
+  transfer operation.** 16 rows in `Knx.Ets.ObjectModel.dll`.
+  `Operations.ExtendedCopy.CopyDeviceToSegmentExtendedOperation` (8 rows) gets
+  the XML plumbing: `GetOrCreateTargetSegmentElement` (creates the Segment
+  under the parent Line or Area with Id/Name/Number/MediumTypeRefId/Comment/
+  Description), `CreateAttribute`, `CollectUnassignedDeviceElements` (selects
+  the `UnassignedDevices/DeviceInstance` nodes and adds the missing `Address`),
+  the reparenting pair `MoveNodesToTarget` + `DetachNodes`,
+  `SetTargetBehavior`, `ValidateCopiedDevices` (compat mode, secure-table
+  limits and the free fast-ack slot validator) and `GetTargetSegment`.
+  `Operations.Devices.TransferDeviceIdentityOperation` (8 rows) gets the
+  description (`InitializeDescription`), the undo capture/restore pair
+  (`CaptureUndoData`, `RestoreUndoData`) and the execute steps
+  (`CopySecurityIdentity`, `CopyApplicationProgramIdentity` only when both
+  devices share a `Hardware2ProgramId`, `ClearLoadedState`,
+  `ResetSourceImagesToCatalog`, `ResetSecurityCredentials`).
+  `names63-staged-v133.xml` =
+  `F701F3059D861E2DAFBF84CE7CA0CAB0F5FFD06763AFF22064461C78453E1A91`, 11,255
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v133-sdkfrozen.xml`
+  (`C8E7EB0FFB57EDDA…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 6.8 s (0 errors, 528/528
+  load); every renamed member still binds — `AddTargetElement` calls the five
+  XML helpers, `InternalValidation` calls `ValidateCopiedDevices`,
+  `CollectSourceDevicesDictionary` calls `GetTargetSegment`, the constructor
+  calls `InitializeDescription`, `BeforeExecute` calls `CaptureUndoData`,
+  `SpecializedUndo` calls `RestoreUndoData`, and `SpecializedExecute` calls
+  the five identity steps.
