@@ -2043,3 +2043,21 @@ Standing rules for this pass:
   The batch apply rewrote 10,402 methods and 808 types in 528/528 modules with
   0 errors in 6.2 s, and `--verify-applied` reports `canonical_rows=569
   definitions_missing=0 stale_references=0` in 3.9 s.
+- **Wave 154: the router-memory read overload.** Inside the wave-150
+  `Knx.Falcon.Device`, `0x060000C0`
+  (`Task<byte[]> (uint, uint, IProgress<int>, CancellationToken)`) is
+  body-identical to the released
+  `Device::ReadRouterMemoryAsync(uint, uint, IProgress<int>,
+  CancellationToken)`: the same two cached lambdas (`<>9__105_0/1` over
+  `method_4`/`method_5`), constants 4/11 and the same worker call with the same
+  argument order. Its sibling `0x060000BF` (the same method without the
+  IProgress parameter) was already mapped to `ReadRouterMemoryAsync`, and the
+  released type carries both overloads. Named `ReadRouterMemoryAsync`; its two
+  cached selectors become `<ReadRouterMemoryAsync>b__105_0,1`.
+  `names63-staged-v154.xml` =
+  `6DA1DC9EA37D7AEA1BAE08E869C83014CB0EFCE9039806378342DB60CDA8A45B`, 11,890
+  reviewed edits (3 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `807D546D2A34F1F7…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,405 methods in 528/528 modules with 0 errors in
+  6.5 s, and `--verify-applied` reports `canonical_rows=571
+  definitions_missing=0 stale_references=0` in 3.5 s.
