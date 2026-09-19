@@ -879,3 +879,30 @@ Standing rules for this pass:
   check applied it to the 528-assembly tree in 5.1 s (0 errors, 528/528 load);
   `Knx.Ets.Sdk.dll` still constructs `ChangeGroupAddressOperation`, and the
   change/undo/redo trackers keep their callers.
+- **Wave 108: the installation merger's element and attribute handlers.** 21 rows
+  in `Knx.Ets.ObjectModel.dll`'s `Import.InstallationMerger`. The pairs inside
+  `get_ElementSettings` and `get_AttributeCallbacks` are the evidence, together
+  with the writer field each `With...Writer` assigns (`WithTradesWriter` ->
+  `iwriter_2`, `WithSplitInfosWriter` -> `iwriter_7`, `WithBuildingsWriter` ->
+  `iwriter_0`, `WithGroupAddressesWriter` -> `i`,
+  `WithUnassignedDevicesWriter` -> `m`, `WithAreaWriter` -> `iwriter_4`,
+  `WithBusAccessWriter` -> `iwriter_6`, `WithInstallationWriter` -> `iwriter_3`):
+  `CloneTradesElement`, `CloneSplitInfosElement`, `CloneBuildingsElement`,
+  `CloneGroupAddressesElement`, `CloneUnassignedDevicesElement`,
+  `CloneAreaElement`, `CloneBusAccessElement`, `WriteInstallationElement`,
+  `PatchIdAttribute`, `PatchRefIdAttribute`, `PatchGroupAddressRefIdAttribute`,
+  `PatchDefaultLineAttribute`, `ScrambleBcuKeyAttribute` (BCUKey through
+  `BcuKeyScrambler`), `TransformPasswordValue` (the secret attributes through
+  `IPasswordHandler.WriteValue`/`ReadValue` by `Direction`), `FormatEdiGuid`
+  (the `Edi` attribute as `Guid.ToString("B").ToUpperInvariant()`),
+  `NormalizeDisabledAttribute`, `CollectDeviceInformation`
+  (`DeviceCount`/`AddSerialNumber`/`PopulateDevice`), `CountLineElement`,
+  `MergeBinaryDataElement`, `CountFunctionElement` and `CountRoomElement`.
+  `names63-staged-v108.xml` =
+  `2781CB1EDBE5AA41D3D430B43327115CD2620480DA5592C6951183640A661AAC`, 10,766
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v108-sdkfrozen.xml`
+  (`B1B804C12688E0EB…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528 load);
+  every handler still resolves from `get_ElementSettings`,
+  `get_AttributeCallbacks`, `get_DeviceSettings` and `get_LocationsSettings`.
