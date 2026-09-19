@@ -119,7 +119,10 @@ namespace dnSpy.Decompiler.MSBuild {
 					bool duplicate = proposal.Key is TypeDef && !fullAliases.Add(proposal.Value);
 					if (duplicate || claims.Conflicts(proposal.Key, scopeName, family))
 						throw new InvalidDataException("Source alias collision: " + proposal.Key.FullName + " -> " + proposal.Value);
-					claims.Claim(proposal.Key, scopeName, family);
+					// The registry carries the full type alias so the source
+					// namespace of a claimed type stays known; the scope check
+					// itself compares leaves.
+					claims.Claim(proposal.Key, proposal.Key is TypeDef ? proposal.Value : scopeName, family);
 				}
 				var parameters = new Dictionary<TypeDef, HashSet<string>>();
 				foreach (var proposal in parameterProposals) {

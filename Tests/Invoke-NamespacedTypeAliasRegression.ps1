@@ -95,6 +95,28 @@ try {
 $dup.Save("$root\bad-duplicate.xml")
 & $DnSpyConsole --source-name-map "$root\bad-duplicate.xml" --no-color -o "$root\bad-duplicate" "$inputRoot\Fixture.exe" 2>$null
 if($LASTEXITCODE -eq 0){throw 'A duplicate dotted type alias was accepted'}
+# Two obfuscated types may carry the same source leaf in different namespaces:
+# Dotfuscator flattens every metadata namespace to "", so the declaration scope
+# has to key on the alias namespace instead of the metadata one.
+[xml]$same=Get-Content "$root\names.xml"
+$same.SourceNameMap.Module.Type.SetAttribute('NewName','Example.Sample.RenamedHelper')
+$sameModule=[dnlib.DotNet.ModuleDefMD]::Load("$inputRoot\Fixture.exe",[dnlib.DotNet.ModuleCreationOptions]::new())
+try {
+ $other=$sameModule.GetTypes() | Where-Object FullName -eq ClassB
+ $entry3=$same.CreateElement('Type')
+ $entry3.SetAttribute('Token',('0x{0:X8}' -f $other.MDToken.Raw));$entry3.SetAttribute('ExpectedName','ClassB')
+ $entry3.SetAttribute('Signature',$other.FullName);$entry3.SetAttribute('NewName','Example.Other.RenamedHelper')
+ $null=$same.SourceNameMap.Module.AppendChild($entry3)
+} finally {$sameModule.Dispose()}
+$same.Save("$root\same-leaf.xml")
+& $DnSpyConsole --source-name-map "$root\same-leaf.xml" --no-color -o "$root\same-leaf" "$inputRoot\Fixture.exe"
+if($LASTEXITCODE){throw 'Same-leaf aliases in different namespaces were rejected'}
+$sameSource=(Get-ChildItem "$root\same-leaf\Fixture" -Recurse -Filter '*.cs' | Get-Content) -join "`n"
+if($sameSource -notmatch 'namespace Example\.Sample' -or $sameSource -notmatch 'namespace Example\.Other'){throw 'Same-leaf aliases did not produce both namespaces'}
+dotnet build "$root\same-leaf\solution.sln" -c Release --nologo -v quiet
+if($LASTEXITCODE){throw 'Same-leaf alias build failed'}
+& "$root\same-leaf\Fixture\bin\Release\net48\Fixture.exe"
+if($LASTEXITCODE -ne 5){throw "Rebuilt same-leaf fixture returned $LASTEXITCODE, expected 5"}
 Remove-Item "$root\bad-syntax.xml","$root\bad-duplicate.xml" -Force
 Remove-Item "$root\bad-syntax","$root\bad-duplicate" -Recurse -Force -ErrorAction SilentlyContinue
 Write-Host 'Namespaced type alias regression passed'

@@ -77,11 +77,33 @@ namespace SourceNameMapping {
             foreach (var property in type.Properties) yield return property;
             foreach (var evt in type.Events) yield return evt;
         }
-        static IEnumerable<TypeDef> Siblings(TypeDef type) {
+        /// <summary>The type's simple name inside an alias, e.g. <c>Ns.Type`1</c> to <c>Type</c>.</summary>
+        internal static string AliasLeaf(string alias) {
+            if (string.IsNullOrEmpty(alias)) return alias;
+            int index = alias.LastIndexOf('.');
+            return index < 0 ? alias : alias.Substring(index + 1);
+        }
+        /// <summary>
+        /// The namespace a type is declared in once aliases are applied. The
+        /// metadata namespace is the fallback; a type alias carries the
+        /// namespace the obfuscator flattened away, and two types only collide
+        /// once their aliases put them into the same source namespace.
+        /// </summary>
+        internal static string SourceNamespace(TypeDef type, Func<IMemberDef, string> alias) {
+            if (type == null) return "";
+            while (type.DeclaringType != null) type = type.DeclaringType;
+            if (alias != null && alias(type) is string name && name.Length != 0) {
+                int dot = name.LastIndexOf('.');
+                return dot < 0 ? "" : name.Substring(0, dot);
+            }
+            return type.Namespace.String ?? "";
+        }
+        static IEnumerable<TypeDef> Siblings(TypeDef type, Func<IMemberDef, string> alias) {
             if (type.DeclaringType != null) { foreach (var nested in type.DeclaringType.NestedTypes) yield return nested; yield break; }
             if (type.Module == null) yield break;
+            string scope = SourceNamespace(type, alias);
             foreach (var other in type.Module.GetTypes())
-                if (other.DeclaringType == null && other.Namespace.String == type.Namespace.String) yield return other;
+                if (other.DeclaringType == null && SourceNamespace(other, alias) == scope) yield return other;
         }
         IEnumerable<TypeDef> ScopeTypes(IMemberDef member) {
             if (member is TypeDef type) {
@@ -92,11 +114,11 @@ namespace SourceNameMapping {
             foreach (var owner in Types(member.DeclaringType)) yield return owner;
         }
         /// <summary>Every member whose source name shares the declaration scope of the requested member.</summary>
-        public IEnumerable<IMemberDef> ScopeMembers(IMemberDef member) {
+        public IEnumerable<IMemberDef> ScopeMembers(IMemberDef member, Func<IMemberDef, string> alias = null) {
             if (member == null) yield break;
             if (member is TypeDef type) {
                 // Type names live in their namespace or inside their enclosing type.
-                foreach (var sibling in Siblings(type)) yield return sibling;
+                foreach (var sibling in Siblings(type, alias)) yield return sibling;
                 for (var owner = type.DeclaringType; owner != null; owner = owner.DeclaringType) {
                     yield return owner;
                     foreach (var nested in Members(owner)) yield return nested;
@@ -112,13 +134,14 @@ namespace SourceNameMapping {
         /// <summary>Names already occupied in the member's declaration scope.</summary>
         public HashSet<string> Reserved(IMemberDef member, Func<IMemberDef, string> alias) {
             var used = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var other in ScopeMembers(member).Concat(OwnMembers(member))) {
+            foreach (var other in ScopeMembers(member, alias).Concat(OwnMembers(member))) {
                 if (other == member) continue;
                 used.Add(SimpleName(other.Name.String));
-                if (alias != null && alias(other) is string requested && requested.Length != 0) used.Add(requested);
+                if (alias != null && alias(other) is string requested && requested.Length != 0)
+                    used.Add(other is TypeDef ? SimpleName(AliasLeaf(requested)) : requested);
             }
             foreach (var type in ScopeTypes(member)) {
-                used.UnionWith((type.Namespace.String ?? "").Split('.'));
+                used.UnionWith(SourceNamespace(type, alias).Split('.'));
                 used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
                 used.UnionWith(type.Methods.SelectMany(m => m.GenericParameters).Select(p => p.Name.String));
             }
@@ -126,10 +149,10 @@ namespace SourceNameMapping {
         }
         /// <summary>Members of the declaration scope that already own one name.</summary>
         public IEnumerable<IMemberDef> Occupants(IMemberDef member, string name, Func<IMemberDef, string> alias) {
-            foreach (var other in ScopeMembers(member).Concat(OwnMembers(member))) {
+            foreach (var other in ScopeMembers(member, alias).Concat(OwnMembers(member))) {
                 if (other == member) continue;
                 if (SimpleName(other.Name.String) == name) { yield return other; continue; }
-                if (alias != null && alias(other) == name) yield return other;
+                if (alias != null && alias(other) is string requested && (other is TypeDef ? SimpleName(AliasLeaf(requested)) : requested) == name) yield return other;
             }
         }
         /// <summary>Whether two methods are the same C# overload slot.</summary>

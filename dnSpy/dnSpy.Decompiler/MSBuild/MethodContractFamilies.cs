@@ -118,6 +118,8 @@ namespace SourceNameMapping {
             this.useHostResolver = useHostResolver;
             identities = modules.Where(m => m.Assembly != null).GroupBy(m => m.Assembly.FullName, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.ToArray(), StringComparer.Ordinal);
+            if (analyze != null) ExtendAnalysisClosure();
+            Mark($"contract graph: {analysisModules.Count} modules after implementation closure");
             var types = analysisModules.SelectMany(m => m.GetTypes()).ToArray();
             Mark($"contract graph: {modules.Count} modules, {types.Length} analyzed types");
             // Both passes are independent per type; the union-find, the blocker
@@ -182,6 +184,88 @@ namespace SourceNameMapping {
                 }
                 return parent == method ? method : parents[method] = Root(parent);
             }
+        }
+        // A contract family can include members that live in a module the caller
+        // did not name: an interface implemented by another assembly, a base slot
+        // overridden there, or an explicit implementation. Renaming a family
+        // without those members would break the implementations, so every module
+        // whose types derive from, implement or override an analysed type is
+        // analysed as well, transitively. Only the reference identity already
+        // loaded here is consulted; the host resolver is never used as a fallback
+        // because that walk is what makes a large graph slow.
+        void ExtendAnalysisClosure() {
+            var analyzedTypes = new HashSet<TypeDef>();
+            var references = new Dictionary<ModuleDef, HashSet<TypeDef>>();
+            void Include(ModuleDef module) {
+                analysisModules.Add(module);
+                foreach (var type in module.GetTypes()) analyzedTypes.Add(type);
+                references.Remove(module);
+            }
+            foreach (var module in analysisModules.ToArray()) Include(module);
+            foreach (var module in modules.ToArray()) {
+                if (analysisModules.Contains(module)) continue;
+                references[module] = ReferencedTypes(module);
+            }
+            for (bool changed = true; changed;) {
+                changed = false;
+                foreach (var pair in references.ToArray().Where(p => p.Value.Overlaps(analyzedTypes)).ToArray()) {
+                    Include(pair.Key);
+                    changed = true;
+                }
+            }
+        }
+        // The types a module names through base types, interfaces and explicit
+        // implementations, read straight from the metadata tables: the per-type
+        // lazy lists materialise every type of every module instead.
+        HashSet<TypeDef> ReferencedTypes(ModuleDef module) {
+            var result = new HashSet<TypeDef>();
+            var md = module as ModuleDefMD;
+            var tables = md?.Metadata?.TablesStream;
+            if (tables == null) {
+                // Synthetic or cloned modules have no tables and few types.
+                foreach (var type in module.GetTypes()) {
+                    AddReference(type.BaseType, module, result);
+                    foreach (var implementation in type.Interfaces) AddReference(implementation.Interface, module, result);
+                    foreach (var method in type.Methods) if (method.HasOverrides)
+                        foreach (var implementation in method.Overrides) AddReference(implementation.MethodDeclaration?.DeclaringType, module, result);
+                }
+                return result;
+            }
+            for (uint rid = 1; rid <= tables.TypeDefTable.Rows; rid++)
+                if (tables.TryReadTypeDefRow(rid, out var typeRow) && typeRow.Extends != 0)
+                    AddReference(md.ResolveTypeDefOrRef(typeRow.Extends), module, result);
+            for (uint rid = 1; rid <= tables.InterfaceImplTable.Rows; rid++)
+                if (tables.TryReadInterfaceImplRow(rid, out var implementationRow))
+                    AddReference(md.ResolveTypeDefOrRef(implementationRow.Interface), module, result);
+            for (uint rid = 1; rid <= tables.MethodImplTable.Rows; rid++)
+                if (tables.TryReadMethodImplRow(rid, out var overrideRow))
+                    AddReference(md.ResolveMethodDefOrRef(overrideRow.MethodDeclaration)?.DeclaringType, module, result);
+            return result;
+        }
+        void AddReference(ITypeDefOrRef reference, ModuleDef caller, HashSet<TypeDef> result) {
+            var type = FindReference(reference, caller);
+            if (type != null) result.Add(type);
+        }
+        // Name-based lookup inside the modules that are already inputs, using the
+        // same same-directory tie-break as ResolveCore; a duplicate identity that
+        // is still ambiguous is never guessed.
+        TypeDef FindReference(ITypeDefOrRef reference, ModuleDef caller) {
+            if (reference is TypeDef definition) return definition;
+            if (reference is TypeSpec spec) {
+                if (!(spec.TypeSig.RemovePinnedAndModifiers() is GenericInstSig generic)) return null;
+                reference = generic.GenericType.TypeDefOrRef;
+            }
+            if (reference == null) return null;
+            var assembly = reference.DefinitionAssembly;
+            if (assembly == null || !identities.TryGetValue(assembly.FullName, out var candidates)) return null;
+            if (candidates.Length > 1) {
+                string directory = Path.GetDirectoryName(moduleKey(caller));
+                var local = candidates.Where(m => string.Equals(Path.GetDirectoryName(moduleKey(m)), directory,
+                    Path.DirectorySeparatorChar == '\\' ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)).ToArray();
+                if (local.Length == 1) candidates = local;
+                else return null;
+            }
+            return FindInModule(candidates[0], reference.FullName);
         }
         void Block(MethodDef method, string reason) {
             lock (gate) {

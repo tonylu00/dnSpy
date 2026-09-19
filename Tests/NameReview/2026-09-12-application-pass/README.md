@@ -526,3 +526,48 @@ Standing rules for this pass:
   carries a leaf alias (`MetadataTypeNames.GetName` + `SourceFullName` prefix the
   type's metadata namespace). Supporting `Namespace.Name` type aliases in those
   three places (plus a declaration-namespace hook in the C# output) unlocks them.
+- **Wave 95: verified type renames, namespace-aware declaration scope, closed
+  contract graph.** The tooling gap above is closed in three places:
+  `NameCandidates --update-map` accepts `Namespace.Name` for type rows and keeps
+  the full alias unique per module (`de4dotEx 22a56ae9`), dnSpy's `SourceNameMap`
+  exports/restores it (`dnSpy 428d9caa7`), and the exported project builds and
+  runs with the type moved (`Tests/Invoke-NamespacedTypeAliasRegression.ps1`).
+  Wave 95 shipped 200 of the 268 verified pairs (132 Falcon, 66 HawkNET, 2
+  DevKit): `names63-staged-v95.xml` = `4499ABA3EEAE9BFF72C1E202CF563B6F7060CA20E86BFD6083682DC27ECC7EA5`,
+  8,271 reviewed edits, 0 errors, `--check-map` PASS.
+  Two scope rules had to be corrected for this wave. Dotfuscator flattens every
+  metadata namespace to `""`, so the declaration-scope reservation used to treat
+  every root type of a module as one C# scope and suffixed the second type that
+  wanted a leaf (`Knx.Falcon.Impl.Utilities.TaskExtensions` became
+  `...TaskExtensions2`). `MemberNameScope` now scopes a type by the namespace its
+  **alias** puts it in, so only same-namespace collisions suffix; the registry
+  keeps the full type alias and the scope check still compares leaves. That
+  removed the one new auto-suffix: 51 -> 50 rows `Requested != Applied`, all 50
+  pre-existing method-overload suffixes from wave 91, none new. The same-leaf case
+  is covered by the extended namespaced-alias regression (two types, one leaf,
+  two namespaces, exported, rebuilt and executed).
+  Separately, `MethodContractFamilies` now analyses every module that can
+  contribute a family member (types that implement, derive from or explicitly
+  override an analysed type, read straight from the TypeDef/InterfaceImpl/
+  MethodImpl tables and closed transitively). Before, a review that renamed a
+  contract whose implementation lived in a module the base map did not carry yet
+  produced a family without that implementation, which would have renamed the
+  declaration alone and broken the implementation. `NameCandidates.Tests` (all
+  fixtures) and the dnSpy registry/source-alias regressions pass with it.
+  Performance: the tooling hot paths left dnlib `ResolveTypeRef`/
+  `ModuleDef.Find` scans in the profile (`de4dotEx 733c9cdc`), so the identity
+  map now answers references first, `ToTypeSig(resolveToCheckValueType: false)`
+  replaces the value-type probe, modules without `MethodImpl` rows skip override
+  materialisation, name classification is memoised and the union-find root pass
+  and family grouping run in parallel. On the 6.3 tree: `--check-map` 6.9 s ->
+  5.1 s (6.7 s with the implementation closure), `--update-map` 7.6 s -> 6.0 s,
+  `--review-families` 21.7 s -> 13.9 s, `--review-obfuscated` 21.4 s -> 12.9 s,
+  every output byte-identical to the previous run.
+  The SDK surface is unchanged: `--public-api-audit` freezes five rows
+  (`sdk-visible=0`, `sdk-referenced-types=5` on the full map) and the filtered
+  export map `D:\knx_analysis\names63-staged-v95-sdkfrozen.xml`
+  (`89971A85330DCF94BE4CF2ECA6971B8E6AC7611B1881359E4A7A8DCEB7810BD9`) audits
+  `sdk-visible=0, sdk-referenced-types=0`.
+  Still open: 68 of the 268 candidate type pairs are not pair-verified yet (45
+  Falcon, 23 HawkNET), and the ~12k behavioural candidates that the type renames
+  now make readable by owner.
