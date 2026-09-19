@@ -1720,6 +1720,24 @@ Standing rules for this pass:
   10,293 methods and 1,266 fields in 528/528 modules with 0 errors in 6.6 s,
   and `verify-map.cs` reports `canonical_rows=484 definitions_missing=0
   stale_references=0`.
+- **Wave 138: HawkNET's capability load-control insertion.**
+  `Class311::a(HawkDataProvider)` — whose only caller is the reviewed `Apply`
+  of `BasicLoadProcedureTask` — inserts the load controls the coupler
+  capabilities require: every branch is gated by
+  `Enumerable.Any(couplerCapabilities, predicate)` and ends in the procedure's
+  insert-control call, patching `Occurrence` and `AppliesTo` on the way. It is
+  named `InsertCapabilityLoadControls`, and the eight cached lambdas it
+  declares become `<InsertCapabilityLoadControls>b__5_0..4, 8..10` from their
+  canonical `<>9__5_M` fields. `names63-staged-v138.xml` =
+  `6177E8F6D6086445965E6D1570C6F61E83A669ED9095C7B1BAF2D6B2EB8FBBAA`, 11,783
+  reviewed edits (9 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `E3038831329BA01930C93DBA9D50DCC1A23B9A254C95E94FB0EF10EDD71E6AB6`
+  audits `sdk-visible=0, sdk-referenced-types=0`. The batch apply rewrote
+  10,302 methods in 528/528 modules with 0 errors in 6.3 s, and `verify-map.cs`
+  reports `canonical_rows=492 definitions_missing=0 stale_references=0`.
+  Reusable tooling added: `perfcheck3/wave-pipeline.ps1 -Wave <n> -ApplyRoot
+  <dir>` (update, check, audit, filter, apply, hashes) and
+  `application-name-pass01/checkpoint-wave.py <n>`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
