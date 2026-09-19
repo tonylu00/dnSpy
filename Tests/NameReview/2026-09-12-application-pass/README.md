@@ -854,3 +854,28 @@ Standing rules for this pass:
   `SpecializedValidate` still calls `CreateImportReader`/`DetectGroupAddressStyle`,
   `SpecializedExecute` still calls `ImportGroupAddress`/`ImportGroupRange`, and
   the address/range creation helpers keep their callers.
+- **Wave 107: the group-address change (rename) operation.** 23 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Operations.GroupAddress.ChangeGroupAddressOperation`.
+  The constructor stores `IGroupAddress.Address` in field `b` and its `value`
+  parameter in field `c`, which is what makes the three changer groups readable:
+  the `Changer` applies the new address (`TrackAddressChange`,
+  `SetNewAddressWithUndoDisabled`, `SetNewAddressAndNotifyReferences`),
+  `UndoChanger` restores the old one (`TrackAddressUndo`,
+  `SetOldAddressWithUndoDisabled`, `SetOldAddressAndNotifyReferences`) and
+  `RedoChanger` re-applies the new one (`TrackAddressRedo`,
+  `SetNewAddressForRedoWithUndoDisabled`,
+  `SetNewAddressAndNotifyReferencesForRedo`). `method_8/9/10` are the bodies
+  behind `get_Changer`/`get_UndoChanger`/`get_RedoChanger` (`ChangeItemAddress`,
+  `UndoItemAddress`, `RedoItemAddress`), `method_11` is the constructor's
+  `TrackSourceObject`, `SpecializedUndo`/`SpecializedRedo` go through
+  `UndoSwappedItem`/`RedoSwappedItem`, and `GetSubGroupAddressText` is the
+  description helper that answers with `ThreeLevelSubGroupAddress`,
+  `TwoLevelSubGroupAddress` or the plain address for
+  `GetSingleItemLocalizedWithValueDescription`. `names63-staged-v107.xml` =
+  `7DDC482FD55438F1FCA93518BD3745CE618B08E1D102CF5BA6F78CEF9EFEB7AC`, 10,745
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v107-sdkfrozen.xml`
+  (`06B276910A47494B…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 5.1 s (0 errors, 528/528 load);
+  `Knx.Ets.Sdk.dll` still constructs `ChangeGroupAddressOperation`, and the
+  change/undo/redo trackers keep their callers.
