@@ -1235,3 +1235,28 @@ Standing rules for this pass:
   `Patch`, `CalculateAddressesForElement`,
   `CalculateAddressesForChildElements`, `CalculateAddressesForLineElements`
   and the `BusInterfaceInfo` accessor).
+- **Wave 121: the store update base and the channel instance.** 21 rows in
+  `Knx.Ets.ObjectModel.dll`: `Operations.StoreUpdate.UpdateStoreOperationBase`
+  (11 rows) gets the conversion driver (`ConvertStoreContainer`,
+  `ReportConversionStep`, `ShowNewStep`, `GetConversionStepCaption`,
+  `CreateProgressManager`), the file handling (`CopyStoreFiles`,
+  `ResetTempFolders`, `BackupStoreToTransactionRoot`) and the store
+  post-processing (`CreateStoreInfoDuringSchemaUpdate`,
+  `RebuildManufacturerCaches`, `ApplyMasterHashes`), and
+  `Project.ChannelInstance` (10 rows) gets the constructor callbacks
+  (`CheckNameArgument`, `RegisterTextParameterRef`, `MatchesChannel`), the
+  rename and notification path (`SetRenameText`, `NotifyNameChanged`,
+  `GetChannelText`), the reference collections
+  (`CreateGroupAddressRefCollection`, `CreateFunctionRefCollection`) and the
+  usage handling (`OnUsageChannelPropertyChanged`,
+  `UpdateDeviceUsageVersion`). `names63-staged-v121.xml` =
+  `ED9F1632B2C8457617E8B9630BD052E682DBD0AA7FE2C5CCD1F1F5263CB4E761`, 11,044
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v121-sdkfrozen.xml`
+  (`79EB652BE2FE3865…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.5 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller
+  (`SpecializedExecute`, `BeforeExecute`, `AfterExecute`, the constructor,
+  `UpdateRename`, `DeactivateRename`, `ClearRenames`, `UpdateGroupAddresses`,
+  `UpdateFunctions`, `get_Name`/`get_DisplayName`/`ToString`,
+  `TextParameterOnTextChanged` and the `UsageChannel` setters).
