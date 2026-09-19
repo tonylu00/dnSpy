@@ -1157,3 +1157,27 @@ Standing rules for this pass:
   `AddTemplate`, `DeleteTemplate`, `Import`, `Load`, `SaveCategories`,
   `InternalCollectTemplateData`, `CreateTemplateDataReader`,
   `CreateDeviceObjectList`, `GetInfoElements` and `LoadInformation`).
+- **Wave 118: the project root object.** 29 rows in
+  `Knx.Ets.ObjectModel.dll`'s `Project.Project`: the collection and access
+  plumbing (`InitializeCollections`, `OnAfterBind`, `UpdateTagCollection`,
+  `ThrowIfNotOpen`, `CheckAccessOrThrow`, `ReportProgress`,
+  `ReportActivityProgress`, `DirtyPendingObjects`, `CreateManufacturer`), the
+  access-key handling (`UpdateAccessKeyFromResult`, `ApplyAccessKeySettings`,
+  `UpdatePasswordCompareHash`), the schema checks (`IsSchemaOutdated`,
+  `IsSchemaNewerThanImplemented`, `GetImplementedSchemaVersion`), the close
+  counters (`GetDeviceCount`, `GetRoomCount`, `GetFunctionCount`,
+  `GetLineCount`, `GetAssignedCertificateCount`,
+  `GetUnassignedCertificateCount`, `IsCountableBuildingPart`,
+  `IsCertificateAssigned`, `IsCertificateUnassigned`), the persistence chain
+  (`PersistProject`, `WriteProjectToStore`, `WriteProjectStores`,
+  `RefreshProjectImageFile`) and `GetProjectId`.
+  `names63-staged-v118.xml` =
+  `7356976DD7F6B7E61FF450A9B506924BB4E476B6D825FF666E7A3349AE40581A`, 10,977
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v118-sdkfrozen.xml`
+  (`7E5906BDF9E2DF93…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.6 s (0 errors, 528/528
+  load); every renamed helper still binds from its caller (the constructors,
+  `Init`, `Save`, `WriteTo`, `DoInitialization`, `UpdateAccessKey`,
+  `PerformActivityCalculationIfNeeded`, `MarkSchemaUpdateRequired`, the
+  `CloseInternal` counters, `set_Tags` and the `OpenInternal` closure).
