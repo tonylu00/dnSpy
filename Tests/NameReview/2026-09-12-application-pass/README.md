@@ -988,3 +988,26 @@ Standing rules for this pass:
   `get_AttributeCallbacks` (the two mergers share `TransformPasswordValue`,
   `PatchIdAttribute` and `PatchRefIdAttribute` names because they are declared in
   different types).
+- **Wave 112: the group-address unlink operation.** 13 rows in
+  `Knx.Ets.ObjectModel.dll`'s
+  `Operations.GroupAddress.UnlinkGroupAddressOperation`: the two execute paths
+  (`UnlinkConnectors` for an explicit connector list and
+  `UnlinkAllGroupAddressConnectors`, which logs
+  `"...unlinking all connectors from group address {0} {1} "`), the
+  per-com-object-instance unlink
+  (`UnlinkConnectorsFromComObjectInstance`, `TrackConnectorsOfComObjectInstance`),
+  `CollectAffectedDevices` for `CreateValidators`, and the connector/device
+  predicates of `get_Connectors` (`IsTargetConnector`,
+  `GetAffectedConnectorsOfComObjectInstance` /
+  `IsConnectorOfComObjectInstanceAffected`,
+  `GetAffectedConnectorsOfGroupAddress` / `IsConnectorOfGroupAddressAffected`)
+  and of the validator pass (`IsComObjectInstanceOnAffectedDevice`,
+  `GetConnectorsOfGroupAddressOnAffectedDevices`, `IsConnectorOnAffectedDevice`).
+  `names63-staged-v112.xml` =
+  `81FD3CA295D64926EC3248F7C12D826BDA1FC2B0BF6EA7918B5385BEC19205E4`, 10,836
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v112-sdkfrozen.xml`
+  (`C9A9CE7B73A13E90…`) audits `sdk-visible=0, sdk-referenced-types=0`. The batch
+  check applied it to the 528-assembly tree in 4.4 s (0 errors, 528/528 load);
+  `SpecializedExecute`, `CreateValidators`, `get_Connectors` and
+  `UnlinkComObjectInstance` all keep their callees.
