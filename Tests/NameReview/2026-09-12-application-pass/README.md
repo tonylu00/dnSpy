@@ -1467,3 +1467,27 @@ Standing rules for this pass:
   `Patch`, and the parameter pipeline from `set_Value`, `set_IsActive`,
   `PerformParameterCalculation`, `ParameterInstanceFacade::set_Value` and the
   default-value getters.
+- **Wave 129: the object-model IoC module and the project exporter.** 18 rows in
+  `Knx.Ets.ObjectModel.dll`. `IocModule` (9 rows) gets the registrations `Load`
+  and the store registrations drive (`RegisterTemplateManager`,
+  `RegisterXmlSerializers`, `ResolveMasterDataFile`, `ResolveMasterIconsFile`,
+  `ResolveProductExtensionDataFile`, `GetOrCreateMyProductsPath`) and the
+  versioning/signing checks (`InitializeVersioning`,
+  `CheckEntryAssemblySigning`, `CheckTypeAssemblySigning`).
+  `Import.Exporter` (9 rows) gets the export helpers (`StoreExtraDataFiles`,
+  `WriteMasterDataToProductStore`, `WriteKnxProjectHeader`,
+  `WriteElementToWriter`), the attribute collectors
+  (`CollectApplicationProgramAttribute`, `CollectTypePictureRefIds`) and three
+  iterator helpers whose compiler-generated state machines carry their original
+  names (`GetDeviceInstanceCallbacks`, `GetProjectSources`,
+  `GetInstallationSources`). `names63-staged-v129.xml` =
+  `0EBF2559DDA71A0BD0E3D2524FA0438D072E2A4521A4611E1F00CE0B1BA9B0D1`, 11,189
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v129-sdkfrozen.xml`
+  (`F009A711F49CAF2A…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.9 s (0 errors, 528/528
+  load); every renamed helper still binds — `Load`,
+  `CollectVersionInformation`'s state machine, the master-data/product-extension
+  store registrations, `ExportZipped`/`Export`, `ExportProjectStore`,
+  `ExportApplicationPrograms` and
+  `CreateTargetXmlWithFilterAndWrite`.
