@@ -1758,6 +1758,25 @@ Standing rules for this pass:
   audits `sdk-visible=0, sdk-referenced-types=0`. The batch apply rewrote
   10,310 methods in 528/528 modules with 0 errors in 6.6 s, and `verify-map.cs`
   reports `canonical_rows=500 definitions_missing=0 stale_references=0`.
+- **Wave 140: HawkNET's ex-factory image fill.** `Class402::a(Image, byte[],
+  ref byte[], uint, uint)` — `Class402` is `Knx.Ets.Hawk.Impl.LoadControlContext`
+  — is called from the async image optimisation: it builds an
+  `Enumerable.Repeat(0xFF)` fill buffer, walks the image segments, copies
+  ex-factory bytes over the areas that are still erased and logs "`{0} filled
+  {1} bytes in holes`", "`{0} filled {1} bytes in partial properties`",
+  "`{0} filled {1} partial bytes`" and "No ex-factory data for {0}". Its four
+  cached lambdas are the byte predicates (`value != 0xFF`, `value > 0` twice,
+  `value == 0`), and the released counterpart type carries
+  `OptimizeImageForExFactoryDataAsync`. Named
+  `FillMissingImageBytesFromExFactory`, so the lambdas become
+  `<FillMissingImageBytesFromExFactory>b__54_2..5`.
+  `names63-staged-v140.xml` =
+  `525A8E20CB0604B939851EC1584CAB19C8C5064D46D3BCE784E3428F75784F41`, 11,796
+  reviewed edits (5 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `EB42E64921B75002…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,315 methods in 528/528 modules with 0 errors in
+  6.9 s and `verify-map.cs` reports `canonical_rows=504 definitions_missing=0
+  stale_references=0`.
 - **The last serial tree walks (de4dotEx `f4486852`).** Every other
   NameCandidates command already parsed its modules on all cores; the two
   property/field suggestions and the public API audit still walked the whole
