@@ -1952,3 +1952,26 @@ Standing rules for this pass:
   the nested-alias composition, a missing definition, a stale reference, an
   unloadable input and the expected-row-count failure.
 
+- **Wave 150: the Falcon `Device` wrapper and its progress-reporting write
+  (de4dotEx `--verify-applied` gate).** 6.3 `nc` (`0x0200001B`, base
+  `System.Object`, `IDisposable` + `IAsyncDisposable`, 156 methods) is the
+  released `Knx.Falcon.Device`: 59 of its members were already mapped to Device
+  members (`OpenConnectionAsync`, `NegotiateMaxApduLengthAsync`,
+  `Read/WritePropertyValueAsync`, `Read/WriteRouterMemoryAsync`,
+  `WriteKeyAsync`, ...), it holds the same
+  `Knx.Falcon.Impl.KnxStack.IApplicationLayer` field, and no SDK signature
+  mentions `nc`, so the type row is safe for third-party callers. Inside it,
+  `0x060000CD` builds the same three cached lambdas and passes the same
+  constants 4/11, `get_MemoryVerifyMode()` gate and worker call as the released
+  `Knx.Falcon.Device::WriteRouterMemoryAsync(System.UInt32,
+  System.ReadOnlyMemory<byte>, System.Boolean, System.IProgress<int>,
+  System.Threading.CancellationToken)`, so it takes that overload's name and
+  its three cached lambdas become `<WriteRouterMemoryAsync>b__118_0..2`.
+  `names63-staged-v150.xml` =
+  `C58C5C18B36E3A74778B8D80FF78ECDA19DDA5682A588A5260DC53F6F0CEEE01`, 11,872
+  reviewed edits (5 rows), 0 errors, `--check-map` PASS, same 51 suffixes; the
+  export map `35D1F948E3D94A97…` audits `sdk-visible=0, sdk-referenced-types=0`.
+  The batch apply rewrote 10,390 methods in 528/528 modules with 0 errors in
+  7.0 s, and the new built gate reports `canonical_rows=560
+  definitions_missing=0 stale_references=0` in 3.5 s (the file-based
+  `dotnet run` verifier it replaced cost ~21 s for the same report).
