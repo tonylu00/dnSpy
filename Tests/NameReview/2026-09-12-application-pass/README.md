@@ -1345,3 +1345,37 @@ Standing rules for this pass:
   load); the unlink drivers and the bookkeeping helpers still bind from
   `BeforeSpecializedExecute`/`AfterSpecializedUndo`/`AfterSpecializedRedo` and
   from both types' `Execute`/`Undo`/`Redo` wrappers.
+- **Wave 125: the device calculator and the room address strategy.** 20 rows in
+  `Knx.Ets.ObjectModel.dll`. `Project.DeviceCalculator` (10 rows) gets the
+  calculator lifecycle (`AttachCalculators`, `DetachCalculators`), the three
+  callbacks it subscribes (`OnActivityCalculationFinished`,
+  `OnTextParameterRefChanged`, `MatchesComObjectInactivityFilter`), the two
+  halves of the `GetParameterInstanceFacadeByRefId` predicate
+  (`MatchesModuleInstanceId`, `MatchesSubModuleScope`), the lazy entry point
+  `EnsureParameterInstances` and the module registry pair
+  (`RegisterModuleInstance`, `UnregisterModuleInstance`).
+  `Operations.Strategies.CreateNewInThisRoomAddressStrategy` (10 rows) gets the
+  range assignment behind `TargetRange` (`AssignTargetRange`), the four
+  creators (`CreateThreeLevelMiddleGroup`, `CreateThreeLevelMainGroup`,
+  `CreateFreeGroupRange`, `CreateTwoLevelMainGroup`) and the five free-address
+  predicates — four of them share one body and are distinguished by their call
+  site, like the wave-122 coupler selectors: `IsUnusedRangeWithFreeAddresses`
+  (the final fallback of `Initialize`), `IsUnusedLeafRangeWithFreeAddresses`
+  (its leaf-only fallback), `IsUnusedChildRangeWithFreeAddresses`
+  (`FallBackForThreeLevelGroupStructure`) and the two
+  `SearchNextAvailableRange` fallbacks
+  (`IsUnusedRangeWithFreeAddressesForTwoLevelStyle`,
+  `IsUnusedRangeWithFreeAddressesForFreeStyle`). `names63-staged-v125.xml` =
+  `5D3EB2A4E1DC93039BB59050F89AA4D521E8B8DDA275C62BFC682FA0505AE983`, 11,112
+  reviewed edits, 0 errors, `--check-map` PASS, no new auto-suffixes (the same
+  51). SDK surface unchanged: export map `names63-staged-v125-sdkfrozen.xml`
+  (`C752CB6417ECA54E…`) audits `sdk-visible=0, sdk-referenced-types=0`. The
+  batch check applied it to the 528-assembly tree in 4.7 s (0 errors, 528/528
+  load); every renamed helper still binds — `AttachCalculators` from the
+  constructor, `DetachCalculators` from `Finalize`, the predicate halves from
+  `<GetParameterInstanceFacadeByRefId>b__0`, `EnsureParameterInstances` from
+  `GetActiveChannels` and the three tree getters,
+  `RegisterModuleInstance`/`UnregisterModuleInstance` from
+  `InstantiateModule`/`UninstantiateModule`, and the strategy's creators and
+  predicates from `Initialize`, `FallBackForThreeLevelGroupStructure` and
+  `SearchNextAvailableRange`.
