@@ -1,0 +1,58 @@
+{
+  "Format": 1,
+  "Status": "Wave 212 accepted (6.3): the released 6.4 build's own names",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v212.xml",
+      "Sha256": "4EBEF79F14C89AEFF41FA0DEA38160C34B29B347B5F28110446F23F343175848",
+      "PreviousMap": "names63-staged-v211.xml",
+      "PreviousMapSha256": "5D9D321077A4D6AE0C29341F46B2448E61E78BB6CCC9842736646C7FE1FF2A50",
+      "FrozenSha256": "4EBEF79F14C89AEFF41FA0DEA38160C34B29B347B5F28110446F23F343175848",
+      "AppliedToSource": false
+    }
+  },
+  "CrossVersionScan": {
+    "Reference": "ETS6.4_api_preserved5 (readable member names)",
+    "Target": "ETS6.3_api_preserved4",
+    "ReferenceMap": "names64-staged-v39.xml",
+    "Candidates": 610,
+    "Skips": 870,
+    "Modules": 492,
+    "Artifact": "D:\\knx_analysis\\application-name-pass01\\cross-version63-from64-v212.json",
+    "Sha256": "B2830325252B5A0014C315BE2BB744490545494E68CD1087E275A540074B1BEE"
+  },
+  "ConfirmedNames": 608,
+  "ReviewedAliasReplacements": [
+    {
+      "Module": "Knx.Ets.Common.dll",
+      "Token": "0x0600003A",
+      "Signature": "Knx.Ets.Common.Errors.WebServiceError aqq::a(System.Net.Http.HttpResponseMessage)",
+      "ExpectedName": "CreateHttpStatusError",
+      "NewName": "RequestFailedWithStatusCodeError",
+      "Reference": "Knx.Ets.Common.Errors.WebServiceError Knx.Ets.Common.Web.WebServiceBase::RequestFailedWithStatusCodeError(System.Net.Http.HttpResponseMessage)",
+      "ReferenceToken": "0x060001BF",
+      "Reason": "The released 6.4 build spells this member 'RequestFailedWithStatusCodeError'; the fingerprint, declaring-type evidence and body match."
+    },
+    {
+      "Module": "Knx.Ets.Common.dll",
+      "Token": "0x06000295",
+      "Signature": "System.Void asv::a<T>(System.Collections.Generic.ICollection`1<T>,System.Collections.Generic.IEnumerable`1<T>)",
+      "ExpectedName": "ReplaceCollectionItems",
+      "NewName": "SetRange",
+      "Reference": "System.Void Knx.Ets.Common.Extensions.CollectionExtension::SetRange<T>(System.Collections.Generic.ICollection`1<T>,System.Collections.Generic.IEnumerable`1<T>)",
+      "ReferenceToken": "0x06000734",
+      "Reason": "The released 6.4 build spells this member 'SetRange'; the fingerprint, declaring-type evidence and body match."
+    }
+  ],
+  "Audit": {
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 567
+  },
+  "Errors": 0
+}
