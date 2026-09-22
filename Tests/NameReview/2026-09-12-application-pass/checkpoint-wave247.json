@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 247 accepted (6.3): Knx.Ets.ObjectModel.Operations.KnxSecure",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v247.xml",
+      "Sha256": "3A36C829715B2B6550F63F54027AEC2AEF095AB4D689F042AA616B2612F9852A",
+      "PreviousMap": "names63-staged-v246.xml",
+      "PreviousMapSha256": "3FA0DC594D4C5CACB4A042E78F171FE9BE4D773878F4C1D3C261579696776598",
+      "FrozenSha256": "3A36C829715B2B6550F63F54027AEC2AEF095AB4D689F042AA616B2612F9852A",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave247.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL and from the state machines the graph records. Four of SecurityProxyFinder's six rows carry their original names in the metadata: <GetFromAssociationsToRemove>d__5, <GetFromAssociationsToAdd>d__6, <GetFromAssociationsToRemoveForCopy>d__15 and <GetFromAssociationsToAddForCopy>d__16, and SecureComObjectInstanceExtension's iterator is <GetConnectedGroupAddresses>d__9, SecurityGrpFlagService's is <AllConnectors>d__18.",
+    "validator family": "The security validators share two helpers: GetTargetSegment (the device's line/area main line or the backbone line main segment, depending on the validator) and CollectAssociationsToRemove (the projection through SecurityValidatorBase.DetermineAssociationToRemoveValidator, whose siblings are named MergeAssociationsToRemove).",
+    "handler": "SecurityImpactsHandler.ExecuteUnlinkOperations builds the UnlinkConnectorOperation and UnlinkGroupAddressFromBusInterfaceOperation, validates and executes them; GetBusInterfaceConnectors returns the distinct list; InvalidateGroupAddressStates invalidates every affected group address."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 29,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14284,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11090
+  },
+  "Errors": 0
+}
