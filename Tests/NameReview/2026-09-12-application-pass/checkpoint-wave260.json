@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 260 accepted (6.3): ZipContainerStore, Operations.StoreUpdate, Operations.Trades and Operations.BusInterfaces",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v260.xml",
+      "Sha256": "846A7DD930B3EE514CC38008B70518EF1690B60F04030F0A0F07CBB60CC7C9C4",
+      "PreviousMap": "names63-staged-v259.xml",
+      "PreviousMapSha256": "AF236A7D357AD1EBAD0732DEA6BEBA64B25F44457D9DC3D551DC934285B91846",
+      "FrozenSha256": "846A7DD930B3EE514CC38008B70518EF1690B60F04030F0A0F07CBB60CC7C9C4",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave260.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. Four namespaces in one wave: ZipContainerStore (the zip backed product, baggage, data, master data, image and text stores), Operations.StoreUpdate (the buildings/building-part and bus interface XML patchers and the device template store update), Operations.Trades (the add, copy, delete and move trade operations) and Operations.BusInterfaces (the link and unlink group address operations).",
+    "themes": "The zip stores read and write entries directly (IZipEntry.AsStream, ZipWrapper.AddEntry/RemoveEntry) and the trade and bus interface operations repeat the collection conventions the earlier waves established (CreateValidators, AddToRecentGroupAddresses, CollectAssociationsToRemove, CreateAssociationTuple); MoveTradeOperation logs 'Moving trades'; the image store's iterator is <GetPriorisedFallbackIconPaths>d__6."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 34,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14600,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11406
+  },
+  "Errors": 0
+}
