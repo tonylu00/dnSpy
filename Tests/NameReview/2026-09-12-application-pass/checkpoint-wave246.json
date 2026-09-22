@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 246 accepted (6.3): Knx.Ets.ObjectModel.CatalogProvider",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v246.xml",
+      "Sha256": "3FA0DC594D4C5CACB4A042E78F171FE9BE4D773878F4C1D3C261579696776598",
+      "PreviousMap": "names63-staged-v245.xml",
+      "PreviousMapSha256": "6939007EB067CDD9B85774674EB18992F7C2E944ED23C6F8E6C4D3FAE63EE3BF",
+      "FrozenSha256": "3FA0DC594D4C5CACB4A042E78F171FE9BE4D773878F4C1D3C261579696776598",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave246.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The catalog provider is the online-catalog and catalog-tree layer: the aggregate collection subscribes to its source collections and raises one weak collection-changed event, the tree items raise property-changed events and index their trees per CatalogItemSource, and the online classes use the download proxy over OnlineCatalogSettings.BaseUrl.",
+    "resource/format strings": "OnlineCatalogFileProvider.EnsureDirectories creates IndexFiles and MarketFile.mf; GetIndexFileName formats '{0}.idx'; OnlineCatalogSettings.GetBaseUrl reads the OnlineCatalogUrl app setting with the default http://onlinecatalog.knx.org.",
+    "skipped": "CatalogsProvider's 0x06006140 (a second ManufacturerCacheProvider factory with the same ctor call as CreateCacheProvider) and 0x06006143 (empty body) are left unresolved."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 28,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14255,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11061
+  },
+  "Errors": 0
+}
