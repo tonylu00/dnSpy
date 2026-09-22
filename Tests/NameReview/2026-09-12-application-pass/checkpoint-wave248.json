@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 248 accepted (6.3): Knx.Ets.ObjectModel.MasterData",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v248.xml",
+      "Sha256": "D9CC03C8C61DE9466DC2DEDABE9F026ABBCE2398DA94DAD16ED256060FE69355",
+      "PreviousMap": "names63-staged-v247.xml",
+      "PreviousMapSha256": "3A36C829715B2B6550F63F54027AEC2AEF095AB4D689F042AA616B2612F9852A",
+      "FrozenSha256": "D9CC03C8C61DE9466DC2DEDABE9F026ABBCE2398DA94DAD16ED256060FE69355",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave248.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The master data types are DOM objects and readers: MaskVersion reads its child mask version ids and answers two medium type id comparisons, KnxMasterData creates the master data collections and synchronizes them from the master data store (with the UI language driving BestMatchingTranslations), FormatCollection raises the collection-changed weak events, FunctionPoint reads the DatapointType attribute and answers role/type membership, MasterDataVersion parses the version text and UnsignedInteger derives its width maximum.",
+    "skipped": "MaskVersion's second medium type predicate 0x060054AF and SignedInteger's two width conversions 0x060055D2/0x060055D3 are left unresolved: the id equality and the width arithmetic alone do not say which of the two is which."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 16,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14300,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11106
+  },
+  "Errors": 0
+}
