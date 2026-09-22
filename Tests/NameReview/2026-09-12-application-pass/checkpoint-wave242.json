@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 242 accepted (6.3): the remaining single-member types of Knx.Ets.ObjectModel.Project",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v242.xml",
+      "Sha256": "535A8BAFFFD7ACD4D5840099522B3E68B01A56FD9DC27DA22B94F63E413B561E",
+      "PreviousMap": "names63-staged-v241.xml",
+      "PreviousMapSha256": "B16FB483722583CC18018D4B11FAD5FE9BDDC76176068A8B30EC6426E36E9303",
+      "FrozenSha256": "535A8BAFFFD7ACD4D5840099522B3E68B01A56FD9DC27DA22B94F63E413B561E",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave242.review.json"
+  ],
+  "Method": {
+    "evidence": "Each single-member type read from its own IL through NameCandidates --inspect-methods. The recurring patterns are the DOM-object conventions: CreateId(IIdCreator) in Connector/ProjectTag/UserFile, CreateConsistencyChecker/CreateCollections in the objects that bind a consistency checker on bind, and OnCollectionChanged in the InMemoryRefCollection subclasses.",
+    "skipped": "Four members are left unresolved because the evidence is silent: 0x0600138B (ArgumentHandler, only a field write), 0x06001D19 (IModuleArgument.Pin already carries its readable name), 0x06001E83 (ProjectTrace, obfuscated delegate fields) and 0x06002317 (Segment.a(ISegment), empty body)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 26,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14126,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10932
+  },
+  "Errors": 0
+}
