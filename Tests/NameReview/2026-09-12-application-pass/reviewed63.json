@@ -132540,9 +132540,10 @@
    "Token": "0x0600003D",
    "Signature": "System.Threading.Tasks.Task`1<FluentResults.Result`1<System.Net.Http.HttpResponseMessage>> aqq::a(System.String,System.Net.Http.HttpMethod,System.Func`2<System.Net.Http.HttpResponseMessage,FluentResults.Error>,System.Threading.CancellationToken,System.Object)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Constructs a Uri from the string then delegates to the virtual Uri overload.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "016A4593B1621F68C3F6372EC4A09709E71FD8919345EFE421A22EE3C1658981",
    "Parameters": [
     "1: System.String A_0",
@@ -132556,40 +132557,34 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "uri"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "method"
     },
     {
      "Sequence": 3,
      "OriginalName": "A_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "responseErrorHandler"
     },
     {
      "Sequence": 4,
      "OriginalName": "A_3",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cancellationToken"
     },
     {
      "Sequence": 5,
      "OriginalName": "A_4",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "requestBody"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "SendRequestAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -132603,9 +132598,10 @@
    "Token": "0x0600003E",
    "Signature": "System.Threading.Tasks.Task`1<FluentResults.Result`1<System.Net.Http.HttpResponseMessage>> aqq::a(System.Uri,System.Net.Http.HttpMethod,System.Func`2<System.Net.Http.HttpResponseMessage,FluentResults.Error>,System.Threading.CancellationToken,System.Object)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Captures the synchronous error handler in a task adapter and forwards to the asynchronous error-handler overload.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "E420E4F9C366626257BAC022FFCD0474D6602209DDB6AFC7A2A527492667E50B",
    "Parameters": [
     "1: System.Uri A_0",
@@ -132619,43 +132615,38 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "uri"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "method"
     },
     {
      "Sequence": 3,
      "OriginalName": "A_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "responseErrorHandler"
     },
     {
      "Sequence": 4,
      "OriginalName": "A_3",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cancellationToken"
     },
     {
      "Sequence": 5,
      "OriginalName": "A_4",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "requestBody"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "aqq/a",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "errorHandlerAdapter"
     }
    ],
    "NewName": "SendUriRequestAsync",
@@ -132671,9 +132662,10 @@
    "Token": "0x06000040",
    "Signature": "System.Net.Http.HttpRequestMessage aqq::a(System.Uri,System.Net.Http.HttpMethod,System.Object)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Creates a request and, only for a nonnull body, serializes JSON into UTF-8 application/json content.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "6990C858C09D64355683D0A44AB78C3C3B51E084389DF8A06D1094D137335DCF",
    "Parameters": [
     "1: System.Uri A_0",
@@ -132685,36 +132677,26 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "uri"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "method"
     },
     {
      "Sequence": 3,
      "OriginalName": "A_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "requestBody"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Net.Http.HttpRequestMessage",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 2,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "request"
     }
    ],
    "NewName": "CreateJsonRequestMessage",
@@ -132730,9 +132712,10 @@
    "Token": "0x06000049",
    "Signature": "System.Threading.Tasks.Task`1<FluentResults.Error> aqq/a::b(System.Net.Http.HttpResponseMessage)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Invokes the captured synchronous response handler, then wraps its return value with Task.FromResult. It does not read response content or catch handler exceptions.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Net.Http.HttpResponseMessage httpResponseMessage_0"
@@ -132742,17 +132725,11 @@
      "Sequence": 1,
      "OriginalName": "httpResponseMessage_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "response"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "ReadResponseErrorAsync",
+   "LocalNames": [],
+   "NewName": "InvokeResponseErrorHandlerAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -134806,9 +134783,10 @@
    "Token": "0x060001B4",
    "Signature": "FluentResults.Result arx::adi(System.String,System.String)",
    "OriginalName": "adi",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Validates nonblank session ID/token and starts the cloud session; sets the active flag only when CloudKit reports success.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "629EE16137197A56547F04DA582C2F80EF0D57DFFE9EFBCDE828355D576F9FDD",
    "Parameters": [
     "1: System.String A_0",
@@ -134819,25 +134797,19 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sessionId"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "token"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "LocalNames": [],
+   "NewName": "StartCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -134848,9 +134820,10 @@
    "Token": "0x060001B5",
    "Signature": "FluentResults.Result`1<System.String> arx::adj()",
    "OriginalName": "adj",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Requires an active session; tries pause up to five times with blocking exponential delays and clears the flag only after a nonempty token is returned.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "6CF9B530509D6E202B794D0F4E095950A2C5311695EC2EABA6EC2E1F32E81350",
    "Parameters": [],
    "ParameterNames": [],
@@ -134858,32 +134831,22 @@
     {
      "Index": 0,
      "ExpectedType": "System.String",
-     "NewName": ""
+     "NewName": "sessionToken"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Boolean",
-     "NewName": ""
+     "NewName": "paused"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "attempt"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "PauseCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -134894,9 +134857,10 @@
    "Token": "0x060001B6",
    "Signature": "FluentResults.Result arx::adk(System.String)",
    "OriginalName": "adk",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Rejects an already active session, forwards the token to CloudKit and sets the flag on success.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "8ABD23DC11A95C5A1232E1BED80AF2A6F9E6578AACEAD3D24894BCEDBF88C1BF",
    "Parameters": [
     "1: System.String A_0"
@@ -134906,24 +134870,13 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "token"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "LocalNames": [],
+   "NewName": "ResumeCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -134934,9 +134887,10 @@
    "Token": "0x060001B7",
    "Signature": "FluentResults.Result`1<System.String> arx::adl()",
    "OriginalName": "adl",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Stops through CloudKit and clears the active flag when the returned token is nonnull, including an empty string.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "51F5AD6229C56B0C03AFC43BDF1727DB441268040067E3456AAE57EDEF60C5C2",
    "Parameters": [],
    "ParameterNames": [],
@@ -134944,17 +134898,12 @@
     {
      "Index": 0,
      "ExpectedType": "System.String",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "sessionToken"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "StopCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -134965,9 +134914,10 @@
    "Token": "0x060001B8",
    "Signature": "System.Void arx::a(akg)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Adds an EtsDongle wrapper immediately when the DevKit ready flag is true, otherwise subscribes a callback that adds it once the event fires.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: akg akg_0"
@@ -134977,22 +134927,17 @@
      "Sequence": 1,
      "OriginalName": "akg_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongle"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "arx/b",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "registration"
     }
    ],
-   "NewName": "AttachDongleManager",
+   "NewName": "AddDongleWhenReady",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -135005,9 +134950,10 @@
    "Token": "0x060001C6",
    "Signature": "System.Void arx::d(System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>)",
    "OriginalName": "d",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomic delegate add/remove loop on the exact field used by the corresponding reviewed event emitter.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs> A_0"
@@ -135017,39 +134963,29 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "paired event add/remove accessor; event identity not recoverable from aggregated evidence"
+   "NewName": "SubscribeDongleLocked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135060,9 +134996,10 @@
    "Token": "0x060001C7",
    "Signature": "System.Void arx::c(System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>)",
    "OriginalName": "c",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomic delegate add/remove loop on the exact field used by the corresponding reviewed event emitter.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs> A_0"
@@ -135072,39 +135009,29 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "paired event add/remove accessor; event identity not recoverable from aggregated evidence"
+   "NewName": "UnsubscribeDongleLocked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135115,9 +135042,10 @@
    "Token": "0x060001C8",
    "Signature": "System.Void arx::b(System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomic delegate add/remove loop on the exact field used by the corresponding reviewed event emitter.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs> A_0"
@@ -135127,39 +135055,29 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "paired event add/remove accessor; event identity not recoverable from aggregated evidence"
+   "NewName": "SubscribeDongleUnlocked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135170,9 +135088,10 @@
    "Token": "0x060001C9",
    "Signature": "System.Void arx::a(System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomic delegate add/remove loop on the exact field used by the corresponding reviewed event emitter.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs> A_0"
@@ -135182,39 +135101,29 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "paired event add/remove accessor; event identity not recoverable from aggregated evidence"
+   "NewName": "UnsubscribeDongleUnlocked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135225,9 +135134,10 @@
    "Token": "0x060001CA",
    "Signature": "System.Void arx::b(System.EventHandler`1<ar8>)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomic delegate add/remove loop on the exact field used by the corresponding reviewed event emitter.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.EventHandler`1<ar8> A_0"
@@ -135237,34 +135147,24 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<ar8>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<ar8>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<ar8>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
    "NewName": "SubscribeInvalidDongleSignature",
@@ -135280,9 +135180,10 @@
    "Token": "0x060001CB",
    "Signature": "System.Void arx::a(System.EventHandler`1<ar8>)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomic delegate add/remove loop on the exact field used by the corresponding reviewed event emitter.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.EventHandler`1<ar8> A_0"
@@ -135292,34 +135193,24 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<ar8>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<ar8>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<ar8>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
    "NewName": "UnsubscribeInvalidDongleSignature",
@@ -135335,9 +135226,10 @@
    "Token": "0x060001CC",
    "Signature": "System.Void arx::adm(System.EventHandler`1<ar7>)",
    "OriginalName": "adm",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomically combines a handler into the delegate field consumed by EmitNewSessionToken.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "6EB1DED84280FE6F41C133C53A980F623F8B0950F07FADC211AD0BF1BD48B750",
    "Parameters": [
     "1: System.EventHandler`1<ar7> A_0"
@@ -135347,39 +135239,29 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<ar7>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<ar7>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<ar7>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "SubscribeNewSessionToken",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135390,9 +135272,10 @@
    "Token": "0x060001CD",
    "Signature": "System.Void arx::adn(System.EventHandler`1<ar7>)",
    "OriginalName": "adn",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomically removes a handler from the delegate field consumed by EmitNewSessionToken.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "BD2750208B7B18FBEEBE1BC948A9D4E3ED1CD533A70B71EE54274601A10ECB14",
    "Parameters": [
     "1: System.EventHandler`1<ar7> A_0"
@@ -135402,39 +135285,29 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.EventHandler`1<ar7>",
-     "NewName": ""
+     "NewName": "currentHandlers"
     },
     {
      "Index": 1,
      "ExpectedType": "System.EventHandler`1<ar7>",
-     "NewName": ""
+     "NewName": "expectedHandlers"
     },
     {
      "Index": 2,
      "ExpectedType": "System.EventHandler`1<ar7>",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "updatedHandlers"
     }
    ],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "UnsubscribeNewSessionToken",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135445,9 +135318,10 @@
    "Token": "0x060001D0",
    "Signature": "System.Void arx::a(System.Object,all)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Sets the manager initialization flag to true.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object object_1",
@@ -135458,22 +135332,16 @@
      "Sequence": 1,
      "OriginalName": "object_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "all_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "eventArgs"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "HandleInitialized",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135487,9 +135355,10 @@
    "Token": "0x060001D1",
    "Signature": "System.Void arx::d(System.Object,aki)",
    "OriginalName": "d",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Passes the event dongle to AddDongleWhenReady.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object object_1",
@@ -135500,22 +135369,16 @@
      "Sequence": 1,
      "OriginalName": "object_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "aki_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongleEvent"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "HandleDongleAttached",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135529,9 +135392,10 @@
    "Token": "0x060001D2",
    "Signature": "System.Void arx::c(System.Object,aki)",
    "OriginalName": "c",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Removes the collection entry whose identifier matches the event identifier.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object object_1",
@@ -135542,22 +135406,16 @@
      "Sequence": 1,
      "OriginalName": "object_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "aki_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongleEvent"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "HandleDongleRemoved",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135571,9 +135429,10 @@
    "Token": "0x060001D3",
    "Signature": "System.Void arx::b(System.Object,aki)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Wraps the event dongle and emits DongleLocked.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object object_1",
@@ -135584,22 +135443,16 @@
      "Sequence": 1,
      "OriginalName": "object_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "aki_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongleEvent"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "HandleDongleLocked",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135613,9 +135466,10 @@
    "Token": "0x060001D4",
    "Signature": "System.Void arx::a(System.Object,aki)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Wraps the event dongle and emits DongleUnlocked.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object object_1",
@@ -135626,22 +135480,16 @@
      "Sequence": 1,
      "OriginalName": "object_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "aki_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongleEvent"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "HandleDongleUnlocked",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135655,9 +135503,10 @@
    "Token": "0x060001D5",
    "Signature": "System.Void arx::a(System.Object,System.EventArgs)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Formats the sender signature type and sender value into invalid-signature event arguments.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object sender",
@@ -135668,22 +135517,16 @@
      "Sequence": 1,
      "OriginalName": "sender",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "e",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "eventArgs"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "HandleSignatureValidationFailed",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135697,9 +135540,10 @@
    "Token": "0x060001DE",
    "Signature": "ar4 arx/<>c::a(akq)",
    "OriginalName": "a",
-   "Reason": "cached into the canonical <>9__26_0 field, reviewed declaring name",
-   "NeedsReadableName": false,
+   "Reason": "Constructs an EtsLicense wrapper from the supplied DevKit or CloudKit license; the two overloads preserve their distinct parameter types.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: akq akq_0"
@@ -135709,17 +135553,13 @@
      "Sequence": 1,
      "OriginalName": "akq_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "license"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "<EnumerateLicensesByFeatureName>b__26_0"
+   "LocalNames": [],
+   "NewName": "CreateEtsLicense",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135730,9 +135570,10 @@
    "Token": "0x060001DF",
    "Signature": "ar4 arx/<>c::a(ajq)",
    "OriginalName": "a",
-   "Reason": "cached into the canonical <>9__26_1 field, reviewed declaring name",
-   "NeedsReadableName": false,
+   "Reason": "Constructs an EtsLicense wrapper from the supplied DevKit or CloudKit license; the two overloads preserve their distinct parameter types.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: ajq ajq_0"
@@ -135742,17 +135583,13 @@
      "Sequence": 1,
      "OriginalName": "ajq_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "license"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "<EnumerateLicensesByFeatureName>b__26_1"
+   "LocalNames": [],
+   "NewName": "CreateEtsLicense",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -135763,9 +135600,10 @@
    "Token": "0x060001E0",
    "Signature": "System.Boolean arx/<>c::b(arw)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Compares EtsDongle.Type specifically with LicenseType.SoftwareDongle.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: arw arw_0"
@@ -135775,17 +135613,11 @@
      "Sequence": 1,
      "OriginalName": "arw_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "IsLicenseTypeMatch",
+   "LocalNames": [],
+   "NewName": "IsSoftwareDongle",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -135798,9 +135630,10 @@
    "Token": "0x060001E1",
    "Signature": "System.String arx/<>c::a(arw)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Returns EtsDongle.DongleID.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: arw arw_0"
@@ -135810,16 +135643,10 @@
      "Sequence": 1,
      "OriginalName": "arw_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "GetDongleIdentifier",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135833,9 +135660,10 @@
    "Token": "0x060001E2",
    "Signature": "System.String arx/<>c::a(ajh)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Returns the CloudKit identifier used by collection comparisons.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: ajh ajh_0"
@@ -135845,16 +135673,10 @@
      "Sequence": 1,
      "OriginalName": "ajh_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cloudDongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "GetCloudDongleIdentifier",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135868,9 +135690,10 @@
    "Token": "0x060001E4",
    "Signature": "System.Void arx/a::c()",
    "OriginalName": "c",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Enumerates CloudKit, reports non-OK results, refreshes the wrapper collection and completes the retained TaskCompletionSource with the mapped result/count.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [],
    "ParameterNames": [],
@@ -135878,22 +135701,12 @@
     {
      "Index": 0,
      "ExpectedType": "ajd",
-     "NewName": ""
+     "NewName": "enumerationResult"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 2,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "dongleCount"
     }
    ],
    "NewName": "ProcessCloudKitResult",
@@ -135909,9 +135722,10 @@
    "Token": "0x060001E6",
    "Signature": "System.Void arx/b::c(System.Object,System.EventArgs)",
    "OriginalName": "c",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Unsubscribes this callback from the captured DevKit dongle readiness event and appends a new EtsDongle wrapper to its manager collection.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Object sender",
@@ -135922,23 +135736,17 @@
      "Sequence": 1,
      "OriginalName": "sender",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sender"
     },
     {
      "Sequence": 2,
      "OriginalName": "e",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "eventArgs"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "HandleDongleCollectionChanged",
+   "LocalNames": [],
+   "NewName": "AddReadyDongleAndUnsubscribe",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -135951,9 +135759,10 @@
    "Token": "0x060001E8",
    "Signature": "System.Boolean arx/c::b(arw)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Matches a wrapper ID with the captured replacement CloudKit dongle ID.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: arw arw_0"
@@ -135963,16 +135772,10 @@
      "Sequence": 1,
      "OriginalName": "arw_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "IsMatchingDongleIdentifier",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -135986,9 +135789,10 @@
    "Token": "0x060001EA",
    "Signature": "System.Boolean arx/d::b(arw)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Matches a wrapper ID against the captured removal ID.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: arw arw_0"
@@ -135998,16 +135802,10 @@
      "Sequence": 1,
      "OriginalName": "arw_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "IsDongleIdentifierMatch",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -136021,9 +135819,10 @@
    "Token": "0x060001EC",
    "Signature": "System.Boolean arx/e::b(ajh)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Matches an enumerated CloudKit ID against the captured ID for an existing entry.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: ajh ajh_0"
@@ -136033,16 +135832,10 @@
      "Sequence": 1,
      "OriginalName": "ajh_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cloudDongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "IsCloudDongleIdentifierMatch",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -136056,9 +135849,10 @@
    "Token": "0x060001EE",
    "Signature": "System.Boolean arx/Class115::b(ajh)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Matches an enumerated CloudKit ID against the captured ID of a newly discovered entry.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: ajh ajh_0"
@@ -136068,17 +135862,11 @@
      "Sequence": 1,
      "OriginalName": "ajh_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cloudDongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "IsCloudDongleNameMatch",
+   "LocalNames": [],
+   "NewName": "IsCloudDongleIdentifierMatch",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -136091,9 +135879,10 @@
    "Token": "0x060001F0",
    "Signature": "System.Boolean arx/Class116::b(arw)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Matches the wrapper ID selected for replacement by a cloud error state.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: arw arw_0"
@@ -136103,16 +135892,10 @@
      "Sequence": 1,
      "OriginalName": "arw_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "dongle"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "IsDongleIdentifierEqual",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -136126,9 +135909,10 @@
    "Token": "0x060001D6",
    "Signature": "FluentResults.Result ar1::adi(System.String,System.String)",
    "OriginalName": "adi",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Validates nonblank session ID/token and starts the cloud session; sets the active flag only when CloudKit reports success.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "629EE16137197A56547F04DA582C2F80EF0D57DFFE9EFBCDE828355D576F9FDD",
    "Parameters": [
     "1: System.String A_0",
@@ -136139,19 +135923,19 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sessionId"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "token"
     }
    ],
    "LocalNames": [],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "StartCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -136162,16 +135946,17 @@
    "Token": "0x060001D7",
    "Signature": "FluentResults.Result`1<System.String> ar1::adj()",
    "OriginalName": "adj",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Requires an active session; tries pause up to five times with blocking exponential delays and clears the flag only after a nonempty token is returned.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "6CF9B530509D6E202B794D0F4E095950A2C5311695EC2EABA6EC2E1F32E81350",
    "Parameters": [],
    "ParameterNames": [],
    "LocalNames": [],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "PauseCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -136182,9 +135967,10 @@
    "Token": "0x060001D8",
    "Signature": "FluentResults.Result ar1::adk(System.String)",
    "OriginalName": "adk",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Rejects an already active session, forwards the token to CloudKit and sets the flag on success.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "8ABD23DC11A95C5A1232E1BED80AF2A6F9E6578AACEAD3D24894BCEDBF88C1BF",
    "Parameters": [
     "1: System.String A_0"
@@ -136194,13 +135980,13 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "token"
     }
    ],
    "LocalNames": [],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "ResumeCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -136211,16 +135997,17 @@
    "Token": "0x060001D9",
    "Signature": "FluentResults.Result`1<System.String> ar1::adl()",
    "OriginalName": "adl",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Stops through CloudKit and clears the active flag when the returned token is nonnull, including an empty string.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "51F5AD6229C56B0C03AFC43BDF1727DB441268040067E3456AAE57EDEF60C5C2",
    "Parameters": [],
    "ParameterNames": [],
    "LocalNames": [],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "StopCloudSession",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -136231,9 +136018,10 @@
    "Token": "0x060001DA",
    "Signature": "System.Void ar1::adm(System.EventHandler`1<ar7>)",
    "OriginalName": "adm",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomically combines a handler into the delegate field consumed by EmitNewSessionToken.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "6EB1DED84280FE6F41C133C53A980F623F8B0950F07FADC211AD0BF1BD48B750",
    "Parameters": [
     "1: System.EventHandler`1<ar7> A_0"
@@ -136243,13 +136031,13 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "SubscribeNewSessionToken",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -136260,9 +136048,10 @@
    "Token": "0x060001DB",
    "Signature": "System.Void ar1::adn(System.EventHandler`1<ar7>)",
    "OriginalName": "adn",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Atomically removes a handler from the delegate field consumed by EmitNewSessionToken.",
    "NeedsReadableName": true,
-   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ContractFamily": "BD2750208B7B18FBEEBE1BC948A9D4E3ED1CD533A70B71EE54274601A10ECB14",
    "Parameters": [
     "1: System.EventHandler`1<ar7> A_0"
@@ -136272,13 +136061,13 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "handler"
     }
    ],
    "LocalNames": [],
-   "NewName": "",
-   "Unresolved": true,
-   "UnresolvedReason": "contract family member carries an unverifiable contract (interface/accessor); alias withheld"
+   "NewName": "UnsubscribeNewSessionToken",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -263351,9 +263140,10 @@
    "Token": "0x0600003A",
    "Signature": "Knx.Ets.Common.Errors.WebServiceError aqq::a(System.Net.Http.HttpResponseMessage)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Maps status 500 to KnxApiError; all other statuses produce a WebServiceError containing status and reason phrase.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Net.Http.HttpResponseMessage A_0"
@@ -263363,17 +263153,11 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "response"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "RequestFailedWithStatusCodeError",
+   "LocalNames": [],
+   "NewName": "CreateHttpStatusError",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -263386,9 +263170,10 @@
    "Token": "0x0600003B",
    "Signature": "System.Threading.Tasks.Task`1<FluentResults.Result`1<T>> aqq::a<T>(System.Uri,System.Func`2<System.Net.Http.HttpResponseMessage,FluentResults.Error>,System.Threading.CancellationToken)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Forwards the absolute Uri string to the generic content-result overload.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Uri A_0",
@@ -263400,29 +263185,23 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "uri"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "responseErrorHandler"
     },
     {
      "Sequence": 3,
      "OriginalName": "A_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cancellationToken"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "GetFromServerAsync",
+   "LocalNames": [],
+   "NewName": "GetResponseValueAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -263435,9 +263214,10 @@
    "Token": "0x0600003C",
    "Signature": "System.Threading.Tasks.Task`1<FluentResults.Result`1<T>> aqq::a<T>(System.String,System.Func`2<System.Net.Http.HttpResponseMessage,FluentResults.Error>,System.Threading.CancellationToken)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Sends GET, propagates a failed HTTP Result, or decodes successful content through ReadContentAsync<T> and returns Result.Ok<T>. The inner read preserves strings and deserializes other types as JSON.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.String A_0",
@@ -263449,34 +263229,23 @@
      "Sequence": 1,
      "OriginalName": "A_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "uri"
     },
     {
      "Sequence": 2,
      "OriginalName": "A_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "responseErrorHandler"
     },
     {
      "Sequence": 3,
      "OriginalName": "A_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cancellationToken"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "aqq/d<T>",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "GetFromServerAsync",
+   "LocalNames": [],
+   "NewName": "GetResponseValueAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -263889,9 +263658,10 @@
    "Token": "0x060001AB",
    "Signature": "System.Void arx::a(System.Boolean)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Stores the supplied boolean in the initialization backing field; contains no disposal operation.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Boolean bool_2"
@@ -263901,17 +263671,11 @@
      "Sequence": 1,
      "OriginalName": "bool_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "isInitialized"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
-   "NewName": "Dispose",
+   "LocalNames": [],
+   "NewName": "SetIsInitialized",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -263924,9 +263688,10 @@
    "Token": "0x060001AF",
    "Signature": "System.Threading.Tasks.Task arx::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Registers callbacks, creates DevKit/CloudKit managers, adds initial dongles and cloud headers, and subscribes to cloud events. Work is synchronous and returns Task.CompletedTask.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [],
    "ParameterNames": [],
@@ -263934,32 +263699,22 @@
     {
      "Index": 0,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<akg>",
-     "NewName": ""
+     "NewName": "dongleEnumerator"
     },
     {
      "Index": 1,
      "ExpectedType": "akg",
-     "NewName": ""
+     "NewName": "dongle"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Collections.Generic.KeyValuePair`2<System.String,System.String>>",
-     "NewName": ""
+     "NewName": "headerEnumerator"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Collections.Generic.KeyValuePair`2<System.String,System.String>",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 5,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "header"
     }
    ],
    "NewName": "InitializeAsync",
@@ -327540,10 +327295,52 @@
    "Token": "0x06000079",
    "Signature": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> aqw::a(System.IO.DirectoryInfo)",
    "OriginalName": "a",
+   "Reason": "Requires an existing container file, extracts it using ZipProtection.Password, then extracts Device/*.knxtempl with the same key if Device exists; otherwise returns the target directory. Directory input returns an empty list only after the file check.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
-   "NewName": "FindTemplateFiles",
-   "ParameterNames": []
+   "Parameters": [
+    "1: System.IO.DirectoryInfo A_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "targetDirectory"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.IO.DirectoryInfo",
+     "NewName": "deviceDirectory"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.Common.Zip.ZipWrapper",
+     "NewName": "archive"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.String",
+     "NewName": "password"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "aq8",
+     "NewName": "validAccessKey"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>",
+     "NewName": "result"
+    }
+   ],
+   "NewName": "ExtractDeviceTemplateContainer",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -327554,10 +327351,66 @@
    "Token": "0x0600007F",
    "Signature": "FluentResults.Result aqz::a(System.IO.DirectoryInfo,System.IO.FileInfo,aq8)",
    "OriginalName": "a",
+   "Reason": "Sets the supplied key, creates an output directory using the archive basename and extracts there. Only BadPasswordException/ZlibException are converted to InvalidPasswordError; other exceptions escape.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
-   "NewName": "ExtractZipFile",
-   "ParameterNames": []
+   "Parameters": [
+    "1: System.IO.DirectoryInfo directoryInfo_0",
+    "2: System.IO.FileInfo fileInfo_0",
+    "3: aq8 aq8_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "directoryInfo_0",
+     "HasMetadata": true,
+     "NewName": "workingDirectory"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "fileInfo_0",
+     "HasMetadata": true,
+     "NewName": "zipFile"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "aq8_0",
+     "HasMetadata": true,
+     "NewName": "keyProvider"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.Common.Zip.ZipWrapper",
+     "NewName": "archive"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.String",
+     "NewName": "outputDirectory"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "FluentResults.Result",
+     "NewName": "result"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Exception",
+     "NewName": "error"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isPasswordOrCompressionError"
+    }
+   ],
+   "NewName": "TryExtractNestedZipWithKey",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Ets.Common.dll",
@@ -385365,6 +385218,431 @@
    "NewName": "WriteValue",
    "Unresolved": false,
    "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqq",
+   "Token": "0x06000032",
+   "Signature": "System.Void aqq::.ctor(log4net.ILog,aso,System.Boolean)",
+   "OriginalName": ".ctor",
+   "Reason": "Retains a nonnull logger and pooled client factory plus the header inclusion policy passed to AcquireClient.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: log4net.ILog A_0",
+    "2: aso A_1",
+    "3: System.Boolean A_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "log"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "httpClientFactory"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "includeRedirectHeader"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x060001BA",
+   "Signature": "System.Void arx::a(ajh)",
+   "OriginalName": "a",
+   "Reason": "Names actual IL locals in the reviewed identifier-based collection update path; TLS_Error preserves existing IDs and replaces wrappers with error state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: ajh ajh_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ajh_0",
+     "HasMetadata": true,
+     "NewName": "cloudDongle"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "arx/c",
+     "NewName": "lookup"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "arw",
+     "NewName": "existingDongle"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "dongleIndex"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "arw",
+     "NewName": "replacementDongle"
+    }
+   ],
+   "NewName": "ReplaceChangedCloudDongle",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x060001BB",
+   "Signature": "System.Void arx::a(System.String)",
+   "OriginalName": "a",
+   "Reason": "Names actual IL locals in the reviewed identifier-based collection update path; TLS_Error preserves existing IDs and replaces wrappers with error state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "dongleId"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "arx/d",
+     "NewName": "lookup"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "arw",
+     "NewName": "dongle"
+    }
+   ],
+   "NewName": "RemoveDongleByIdentifier",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x060001C3",
+   "Signature": "System.Int32 arx::a(ajd)",
+   "OriginalName": "a",
+   "Reason": "Names actual IL locals in the reviewed identifier-based collection update path; TLS_Error preserves existing IDs and replaces wrappers with error state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: ajd ajd_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ajd_0",
+     "HasMetadata": true,
+     "NewName": "enumerationResult"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<ajh>",
+     "NewName": "cloudDongles"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "dongleCount"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Exception",
+     "NewName": "error"
+    }
+   ],
+   "NewName": "RefreshCloudDonglesFromEnumerationResult",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x060001C4",
+   "Signature": "System.Void arx::a(System.Collections.Generic.ICollection`1<ajh>,ajd)",
+   "OriginalName": "a",
+   "Reason": "Names actual IL locals in the reviewed identifier-based collection update path; TLS_Error preserves existing IDs and replaces wrappers with error state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.ICollection`1<ajh> icollection_0",
+    "2: ajd ajd_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "icollection_0",
+     "HasMetadata": true,
+     "NewName": "cloudDongles"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ajd_0",
+     "HasMetadata": true,
+     "NewName": "enumerationResult"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Object",
+     "NewName": "syncLock"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.List`1<System.String>",
+     "NewName": "existingIds"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Generic.List`1<System.String>",
+     "NewName": "enumeratedIds"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.String>",
+     "NewName": "idEnumerator"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.String",
+     "NewName": "removedId"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "arx/e",
+     "NewName": "existingLookup"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "ajh",
+     "NewName": "changedDongle"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Collections.Generic.List`1/Enumerator<System.String>",
+     "NewName": "existingIdEnumerator"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.String",
+     "NewName": "failedId"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "arx/Class115",
+     "NewName": "newLookup"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "ajh",
+     "NewName": "newDongle"
+    }
+   ],
+   "NewName": "SynchronizeCloudDongleCollection",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x060001C5",
+   "Signature": "System.Void arx::a(System.String,ajd)",
+   "OriginalName": "a",
+   "Reason": "Names actual IL locals in the reviewed identifier-based collection update path; TLS_Error preserves existing IDs and replaces wrappers with error state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_3",
+    "2: ajd ajd_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "dongleId"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ajd_0",
+     "HasMetadata": true,
+     "NewName": "enumerationResult"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "arx/Class116",
+     "NewName": "lookup"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "arw",
+     "NewName": "existingDongle"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "dongleIndex"
+    }
+   ],
+   "NewName": "ReplaceCloudDongleWithErrorState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqz",
+   "Token": "0x0600007E",
+   "Signature": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> aqz::a(System.IO.DirectoryInfo,System.Collections.Generic.IEnumerable`1<aq8>,System.String,aq8&)",
+   "OriginalName": "a",
+   "Reason": "Tries provided keys for each matching archive, retains the latest successful key, deletes extracted archives and returns paths with exactly nine final characters removed. A failed Result removes the working directory; an empty key list leaves a null Result that is dereferenced.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.IO.DirectoryInfo A_0",
+    "2: System.Collections.Generic.IEnumerable`1<aq8> A_1",
+    "3: System.String A_2",
+    "4: aq8& A_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "workingDirectory"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "accessKeys"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "zipNamePattern"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "A_3",
+     "HasMetadata": true,
+     "NewName": "validAccessKey"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<System.String>",
+     "NewName": "extractedPaths"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.IO.FileInfo[]",
+     "NewName": "matchingFiles"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.IO.FileInfo[]",
+     "NewName": "files"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": "fileIndex"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.IO.FileInfo",
+     "NewName": "zipFile"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "FluentResults.Result",
+     "NewName": "extractionResult"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<aq8>",
+     "NewName": "keyEnumerator"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "aq8",
+     "NewName": "keyProvider"
+    }
+   ],
+   "NewName": "ExtractNestedZipFiles",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   }
  ],
  "Types": [
@@ -398942,6 +399220,195 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "PooledHttpClient",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqq/a",
+   "Token": "0x02000010",
+   "Signature": "aqq/a",
+   "OriginalName": "a",
+   "Reason": "Adapts a synchronous response error factory to the task-returning overload.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ResponseErrorTaskAdapter",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x02000062",
+   "Signature": "arx/<>c",
+   "OriginalName": "<>c",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "DongleSelectors",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/a",
+   "Token": "0x02000063",
+   "Signature": "arx/a",
+   "OriginalName": "a",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "CloudEnumerationCompletion",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/b",
+   "Token": "0x02000064",
+   "Signature": "arx/b",
+   "OriginalName": "b",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "PendingDongleRegistration",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/c",
+   "Token": "0x02000065",
+   "Signature": "arx/c",
+   "OriginalName": "c",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ChangedCloudDongleLookup",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/d",
+   "Token": "0x02000066",
+   "Signature": "arx/d",
+   "OriginalName": "d",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "RemovedDongleLookup",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/e",
+   "Token": "0x02000067",
+   "Signature": "arx/e",
+   "OriginalName": "e",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ExistingCloudDongleLookup",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/Class115",
+   "Token": "0x02000068",
+   "Signature": "arx/Class115",
+   "OriginalName": "Class115",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "NewCloudDongleLookup",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/Class116",
+   "Token": "0x02000069",
+   "Signature": "arx/Class116",
+   "OriginalName": "Class116",
+   "Reason": "Captured operation or selectors used by the reviewed dongle collection call chain.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "FailedCloudDongleLookup",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -430500,6 +430967,762 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "IterationCount",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqq",
+   "Token": "0x0400001A",
+   "Signature": "System.Boolean aqq::a",
+   "OriginalName": "a",
+   "Reason": "Constructor input consumed by the reviewed request path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "includeRedirectHeader",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqq",
+   "Token": "0x0400001B",
+   "Signature": "aso aqq::b",
+   "OriginalName": "b",
+   "Reason": "Constructor input consumed by the reviewed request path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "httpClientFactory",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqq",
+   "Token": "0x0400001C",
+   "Signature": "log4net.ILog aqq::c",
+   "OriginalName": "c",
+   "Reason": "Constructor input consumed by the reviewed request path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "log",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqq/a",
+   "Token": "0x0400001E",
+   "Signature": "System.Func`2<System.Net.Http.HttpResponseMessage,FluentResults.Error> aqq/a::a",
+   "OriginalName": "a",
+   "Reason": "Delegate retained by the adapter and invoked before Task.FromResult.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "responseErrorHandler",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000127",
+   "Signature": "log4net.ILog arx::a",
+   "OriginalName": "a",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "log",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000128",
+   "Signature": "System.Object arx::b",
+   "OriginalName": "b",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "donglesSyncLock",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x0400012B",
+   "Signature": "ar2 arx::e",
+   "OriginalName": "e",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "licensingDataPoints",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x0400012C",
+   "Signature": "asg arx::asg_0",
+   "OriginalName": "asg_0",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "configuration",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x0400012D",
+   "Signature": "ajg arx::ajg_0",
+   "OriginalName": "ajg_0",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "cloudManager",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x0400012E",
+   "Signature": "akj arx::akj_0",
+   "OriginalName": "akj_0",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleManager",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x0400012F",
+   "Signature": "System.Boolean arx::i",
+   "OriginalName": "i",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isCloudSessionActive",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000130",
+   "Signature": "System.Collections.ObjectModel.ObservableCollection`1<arw> arx::observableCollection_0",
+   "OriginalName": "observableCollection_0",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongles",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000131",
+   "Signature": "System.Boolean arx::bool_1",
+   "OriginalName": "bool_1",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isInitialized",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000132",
+   "Signature": "System.Threading.SemaphoreSlim arx::semaphoreSlim_0",
+   "OriginalName": "semaphoreSlim_0",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "cloudEnumerationGate",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000133",
+   "Signature": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs> arx::m",
+   "OriginalName": "m",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleLocked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000134",
+   "Signature": "System.EventHandler`1<Knx.Ets.Common.Licensing.DongleEventArgs> arx::eventHandler_3",
+   "OriginalName": "eventHandler_3",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleUnlocked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000135",
+   "Signature": "System.EventHandler`1<ar8> arx::eventHandler_4",
+   "OriginalName": "eventHandler_4",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "invalidDongleSignature",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx",
+   "Token": "0x04000136",
+   "Signature": "System.EventHandler`1<ar7> arx::eventHandler_5",
+   "OriginalName": "eventHandler_5",
+   "Reason": "Storage role established by the inspected initialization, event dispatch, session lifecycle or synchronization operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "newSessionToken",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x04000138",
+   "Signature": "arx/<>c arx/<>c::<>9",
+   "OriginalName": "<>9",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "instance",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x04000139",
+   "Signature": "System.Func`2<akq,ar4> arx/<>c::<>9__26_0",
+   "OriginalName": "<>9__26_0",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "createDongleLicense",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x0400013A",
+   "Signature": "System.Func`2<ajq,ar4> arx/<>c::<>9__26_1",
+   "OriginalName": "<>9__26_1",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "createCloudLicense",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x0400013B",
+   "Signature": "System.Func`2<arw,System.Boolean> arx/<>c::<>9__43_0",
+   "OriginalName": "<>9__43_0",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isSoftwareDongle",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x0400013C",
+   "Signature": "System.Func`2<arw,System.String> arx/<>c::<>9__43_1",
+   "OriginalName": "<>9__43_1",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "getDongleIdentifier",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/<>c",
+   "Token": "0x0400013D",
+   "Signature": "System.Func`2<ajh,System.String> arx/<>c::<>9__43_2",
+   "OriginalName": "<>9__43_2",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "getCloudDongleIdentifier",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/a",
+   "Token": "0x0400013F",
+   "Signature": "arx arx/a::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "manager",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/a",
+   "Token": "0x04000140",
+   "Signature": "System.Threading.Tasks.TaskCompletionSource`1<FluentResults.Result`1<System.Int32>> arx/a::b",
+   "OriginalName": "b",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "completion",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/b",
+   "Token": "0x04000142",
+   "Signature": "akg arx/b::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongle",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/b",
+   "Token": "0x04000143",
+   "Signature": "arx arx/b::b",
+   "OriginalName": "b",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "manager",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/c",
+   "Token": "0x04000145",
+   "Signature": "ajh arx/c::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "cloudDongle",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/d",
+   "Token": "0x04000147",
+   "Signature": "System.String arx/d::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/e",
+   "Token": "0x04000149",
+   "Signature": "System.String arx/e::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/Class115",
+   "Token": "0x0400014B",
+   "Signature": "System.String arx/Class115::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "arx/Class116",
+   "Token": "0x0400014D",
+   "Signature": "System.String arx/Class116::a",
+   "OriginalName": "a",
+   "Reason": "Retained delegate, identifier, manager or completion source used directly by the inspected callback.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "dongleId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqz",
+   "Token": "0x04000085",
+   "Signature": "System.Int32 aqz::a",
+   "OriginalName": "a",
+   "Reason": "Literal nine used when removing the suffix from extracted archive paths; does not measure the supplied pattern dynamically.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "NestedArchiveExtensionLength",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqz",
+   "Token": "0x04000086",
+   "Signature": "log4net.ILog aqz::b",
+   "OriginalName": "b",
+   "Reason": "Logger used for nested extraction password/compression failures.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "log",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+   "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+   "Type": "aqz",
+   "Token": "0x04000087",
+   "Signature": "System.String aqz::c",
+   "OriginalName": "c",
+   "Reason": "Container path returned by its getter and assigned by its setter.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "zipContainerPath",
    "Unresolved": false,
    "UnresolvedReason": ""
   }

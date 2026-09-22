@@ -1,0 +1,2297 @@
+{
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Ets.Common.dll",
+  "Identity": "Knx.Ets.Common, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+  "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80",
+  "Sha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+  "Methods": [
+    {
+      "Token": "0x060002F2",
+      "Signature": "System.IO.DirectoryInfo Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor::smethod_2(System.IO.DirectoryInfo)",
+      "Flags": "Private, Static, HideBySig",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": 1,
+          "Name": "directoryInfo_0",
+          "Type": "System.IO.DirectoryInfo"
+        }
+      ],
+      "Locals": [],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "ldstr",
+          "Operand": "Device"
+        },
+        {
+          "Offset": 11,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000022",
+            "Text": "System.String System.IO.Path::Combine(System.String,System.String)"
+          }
+        },
+        {
+          "Offset": 16,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000228",
+            "Text": "System.String System.IO.Path::GetFullPath(System.String)"
+          }
+        },
+        {
+          "Offset": 21,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x0A00019D",
+            "Text": "System.Void System.IO.DirectoryInfo::.ctor(System.String)"
+          }
+        },
+        {
+          "Offset": 26,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x060002F3",
+      "Signature": "System.Void Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor::.ctor(System.String)",
+      "Flags": "Public, HideBySig, SpecialName, RTSpecialName",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "inputFilePath",
+          "Type": "System.String"
+        }
+      ],
+      "Locals": [],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 2,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000305",
+            "Text": "System.Void Knx.Ets.Common.Security.EtsZipExtractorBase::.ctor(System.String)"
+          }
+        },
+        {
+          "Offset": 7,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x060002F4",
+      "Signature": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor::Extract(System.IO.DirectoryInfo)",
+      "Flags": "Public, HideBySig",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "tempDirectory",
+          "Type": "System.IO.DirectoryInfo"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "System.IO.DirectoryInfo"
+        },
+        {
+          "Slot": 1,
+          "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+        },
+        {
+          "Slot": 2,
+          "Type": "System.String"
+        },
+        {
+          "Slot": 3,
+          "Type": "Knx.Ets.Common.Security.IKeyProvider"
+        },
+        {
+          "Slot": 4,
+          "Type": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000306",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::get_InputFilePath()"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000198",
+            "Text": "System.Boolean System.IO.File::Exists(System.String)"
+          }
+        },
+        {
+          "Offset": 11,
+          "OpCode": "brfalse",
+          "Operand": {
+            "BranchTarget": 166
+          }
+        },
+        {
+          "Offset": 16,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 17,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000308",
+            "Text": "System.Boolean Knx.Ets.Common.Security.EtsZipExtractorBase::get_IsDirectory()"
+          }
+        },
+        {
+          "Offset": 22,
+          "OpCode": "brtrue",
+          "Operand": {
+            "BranchTarget": 188
+          }
+        },
+        {
+          "Offset": 27,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 28,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x060002F2",
+            "Text": "System.IO.DirectoryInfo Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor::smethod_2(System.IO.DirectoryInfo)"
+          }
+        },
+        {
+          "Offset": 33,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.IO.DirectoryInfo"
+          }
+        },
+        {
+          "Offset": 35,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 36,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000306",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::get_InputFilePath()"
+          }
+        },
+        {
+          "Offset": 41,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 42,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x06000142",
+            "Text": "System.Void Knx.Ets.Common.Zip.ZipWrapper::.ctor(System.String,System.Boolean)"
+          }
+        },
+        {
+          "Offset": 47,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 49,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000136",
+            "Text": "System.String Knx.Ets.Common.Zip.ZipProtection::get_Password()"
+          }
+        },
+        {
+          "Offset": 54,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.String"
+          }
+        },
+        {
+          "Offset": 56,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 58,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.String"
+          }
+        },
+        {
+          "Offset": 60,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0600015A",
+            "Text": "System.Void Knx.Ets.Common.Zip.ZipWrapper::set_Password(System.String)"
+          }
+        },
+        {
+          "Offset": 65,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 67,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 68,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 73,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 74,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 75,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 76,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000152",
+            "Text": "System.Void Knx.Ets.Common.Zip.ZipWrapper::ExtractZipToTargetDirectory(System.String,System.String,System.Boolean,System.Boolean)"
+          }
+        },
+        {
+          "Offset": 81,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.IO.DirectoryInfo"
+          }
+        },
+        {
+          "Offset": 83,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000188",
+            "Text": "System.Boolean System.IO.FileSystemInfo::get_Exists()"
+          }
+        },
+        {
+          "Offset": 88,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 125
+          }
+        },
+        {
+          "Offset": 90,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 91,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.IO.DirectoryInfo"
+          }
+        },
+        {
+          "Offset": 93,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 94,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x02000063",
+            "Text": "Knx.Ets.Common.Security.DirectPasswordKeyProvider"
+          }
+        },
+        {
+          "Offset": 99,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 100,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 101,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.String"
+          }
+        },
+        {
+          "Offset": 103,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x060002E2",
+            "Text": "System.Void Knx.Ets.Common.Security.DirectPasswordKeyProvider::.ctor(System.String)"
+          }
+        },
+        {
+          "Offset": 108,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 109,
+          "OpCode": "ldstr",
+          "Operand": "*.knxtempl"
+        },
+        {
+          "Offset": 114,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "Knx.Ets.Common.Security.IKeyProvider"
+          }
+        },
+        {
+          "Offset": 116,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000309",
+            "Text": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> Knx.Ets.Common.Security.EtsZipExtractorBase::ExtractNestedZipFiles(System.IO.DirectoryInfo,System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Security.IKeyProvider>,System.String,Knx.Ets.Common.Security.IKeyProvider&)"
+          }
+        },
+        {
+          "Offset": 121,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>"
+          }
+        },
+        {
+          "Offset": 123,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 163
+          }
+        },
+        {
+          "Offset": 125,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x0A00022B",
+            "Text": "System.Void System.Collections.Generic.List`1<System.String>::.ctor()"
+          }
+        },
+        {
+          "Offset": 130,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 131,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 132,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 137,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00022C",
+            "Text": "System.Void System.Collections.Generic.List`1<System.String>::Add(System.String)"
+          }
+        },
+        {
+          "Offset": 142,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x2B000063",
+            "Text": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> FluentResults.Result::Ok<System.Collections.Generic.IEnumerable`1<System.String>>(System.Collections.Generic.IEnumerable`1<System.String>)"
+          }
+        },
+        {
+          "Offset": 147,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>"
+          }
+        },
+        {
+          "Offset": 149,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 163
+          }
+        },
+        {
+          "Offset": 151,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 153,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 162
+          }
+        },
+        {
+          "Offset": 155,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 157,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000069",
+            "Text": "System.Void System.IDisposable::Dispose()"
+          }
+        },
+        {
+          "Offset": 162,
+          "OpCode": "endfinally",
+          "Operand": null
+        },
+        {
+          "Offset": 163,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>"
+          }
+        },
+        {
+          "Offset": 165,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 166,
+          "OpCode": "ldstr",
+          "Operand": "File not found: "
+        },
+        {
+          "Offset": 171,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 172,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000306",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::get_InputFilePath()"
+          }
+        },
+        {
+          "Offset": 177,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000229",
+            "Text": "System.String System.String::Concat(System.String,System.String)"
+          }
+        },
+        {
+          "Offset": 182,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x0A00022A",
+            "Text": "System.Void System.IO.FileNotFoundException::.ctor(System.String)"
+          }
+        },
+        {
+          "Offset": 187,
+          "OpCode": "throw",
+          "Operand": null
+        },
+        {
+          "Offset": 188,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x0A00022B",
+            "Text": "System.Void System.Collections.Generic.List`1<System.String>::.ctor()"
+          }
+        },
+        {
+          "Offset": 193,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x2B000063",
+            "Text": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> FluentResults.Result::Ok<System.Collections.Generic.IEnumerable`1<System.String>>(System.Collections.Generic.IEnumerable`1<System.String>)"
+          }
+        },
+        {
+          "Offset": 198,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Finally",
+          "TryStart": 49,
+          "TryEnd": 151,
+          "HandlerStart": 151,
+          "HandlerEnd": 163,
+          "FilterStart": null,
+          "CatchType": null
+        }
+      ]
+    },
+    {
+      "Token": "0x06000305",
+      "Signature": "System.Void Knx.Ets.Common.Security.EtsZipExtractorBase::.ctor(System.String)",
+      "Flags": "Family, HideBySig, SpecialName, RTSpecialName",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "inputFilePath",
+          "Type": "System.String"
+        }
+      ],
+      "Locals": [],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000017",
+            "Text": "System.Void System.Object::.ctor()"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00007A",
+            "Text": "System.Text.EncodingProvider System.Text.CodePagesEncodingProvider::get_Instance()"
+          }
+        },
+        {
+          "Offset": 11,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00007B",
+            "Text": "System.Void System.Text.Encoding::RegisterProvider(System.Text.EncodingProvider)"
+          }
+        },
+        {
+          "Offset": 16,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 17,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 18,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000307",
+            "Text": "System.Void Knx.Ets.Common.Security.EtsZipExtractorBase::set_InputFilePath(System.String)"
+          }
+        },
+        {
+          "Offset": 23,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x06000306",
+      "Signature": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::get_InputFilePath()",
+      "Flags": "Family, HideBySig, SpecialName",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase"
+        }
+      ],
+      "Locals": [],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x04000186",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::string_0"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x06000307",
+      "Signature": "System.Void Knx.Ets.Common.Security.EtsZipExtractorBase::set_InputFilePath(System.String)",
+      "Flags": "Family, HideBySig, SpecialName",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "value",
+          "Type": "System.String"
+        }
+      ],
+      "Locals": [],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 2,
+          "OpCode": "stfld",
+          "Operand": {
+            "Token": "0x04000186",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::string_0"
+          }
+        },
+        {
+          "Offset": 7,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x06000308",
+      "Signature": "System.Boolean Knx.Ets.Common.Security.EtsZipExtractorBase::get_IsDirectory()",
+      "Flags": "Public, HideBySig, SpecialName",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase"
+        }
+      ],
+      "Locals": [],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000306",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::get_InputFilePath()"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00023A",
+            "Text": "System.IO.FileAttributes System.IO.File::GetAttributes(System.String)"
+          }
+        },
+        {
+          "Offset": 11,
+          "OpCode": "box",
+          "Operand": {
+            "Token": "0x01000044",
+            "Text": "System.IO.FileAttributes"
+          }
+        },
+        {
+          "Offset": 16,
+          "OpCode": "ldc.i4.s",
+          "Operand": "16"
+        },
+        {
+          "Offset": 18,
+          "OpCode": "box",
+          "Operand": {
+            "Token": "0x01000044",
+            "Text": "System.IO.FileAttributes"
+          }
+        },
+        {
+          "Offset": 23,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00023B",
+            "Text": "System.Boolean System.Enum::HasFlag(System.Enum)"
+          }
+        },
+        {
+          "Offset": 28,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x06000309",
+      "Signature": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> Knx.Ets.Common.Security.EtsZipExtractorBase::ExtractNestedZipFiles(System.IO.DirectoryInfo,System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Security.IKeyProvider>,System.String,Knx.Ets.Common.Security.IKeyProvider&)",
+      "Flags": "Family, HideBySig",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "workingDirectoryInfo",
+          "Type": "System.IO.DirectoryInfo"
+        },
+        {
+          "ArgumentIndex": 2,
+          "Sequence": 2,
+          "Name": "accessKeys",
+          "Type": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Security.IKeyProvider>"
+        },
+        {
+          "ArgumentIndex": 3,
+          "Sequence": 3,
+          "Name": "zipNamePattern",
+          "Type": "System.String"
+        },
+        {
+          "ArgumentIndex": 4,
+          "Sequence": 4,
+          "Name": "validAccessKey",
+          "Type": "Knx.Ets.Common.Security.IKeyProvider&"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "System.Collections.Generic.List`1<System.String>"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.IO.FileInfo[]"
+        },
+        {
+          "Slot": 2,
+          "Type": "System.IO.FileInfo[]"
+        },
+        {
+          "Slot": 3,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 4,
+          "Type": "System.IO.FileInfo"
+        },
+        {
+          "Slot": 5,
+          "Type": "FluentResults.Result"
+        },
+        {
+          "Slot": 6,
+          "Type": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>"
+        },
+        {
+          "Slot": 7,
+          "Type": "Knx.Ets.Common.Security.IKeyProvider"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.s",
+          "Operand": {
+            "ArgumentIndex": 4,
+            "Name": "validAccessKey",
+            "Type": "Knx.Ets.Common.Security.IKeyProvider&"
+          }
+        },
+        {
+          "Offset": 2,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 3,
+          "OpCode": "stind.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 4,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x0A00022B",
+            "Text": "System.Void System.Collections.Generic.List`1<System.String>::.ctor()"
+          }
+        },
+        {
+          "Offset": 9,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Collections.Generic.List`1<System.String>"
+          }
+        },
+        {
+          "Offset": 11,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 12,
+          "OpCode": "ldarg.3",
+          "Operand": null
+        },
+        {
+          "Offset": 13,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000240",
+            "Text": "System.IO.FileInfo[] System.IO.DirectoryInfo::GetFiles(System.String)"
+          }
+        },
+        {
+          "Offset": 18,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.IO.FileInfo[]"
+          }
+        },
+        {
+          "Offset": 20,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.IO.FileInfo[]"
+          }
+        },
+        {
+          "Offset": 22,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x2B000068",
+            "Text": "System.Boolean Knx.Ets.Common.Extensions.EnumerableExtensions::None<System.IO.FileInfo>(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo>)"
+          }
+        },
+        {
+          "Offset": 27,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 37
+          }
+        },
+        {
+          "Offset": 29,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Collections.Generic.List`1<System.String>"
+          }
+        },
+        {
+          "Offset": 31,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x2B000063",
+            "Text": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> FluentResults.Result::Ok<System.Collections.Generic.IEnumerable`1<System.String>>(System.Collections.Generic.IEnumerable`1<System.String>)"
+          }
+        },
+        {
+          "Offset": 36,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 37,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.IO.FileInfo[]"
+          }
+        },
+        {
+          "Offset": 39,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.IO.FileInfo[]"
+          }
+        },
+        {
+          "Offset": 41,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 42,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 44,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 46,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.IO.FileInfo[]"
+          }
+        },
+        {
+          "Offset": 48,
+          "OpCode": "ldlen",
+          "Operand": null
+        },
+        {
+          "Offset": 49,
+          "OpCode": "conv.i4",
+          "Operand": null
+        },
+        {
+          "Offset": 50,
+          "OpCode": "bge",
+          "Operand": {
+            "BranchTarget": 221
+          }
+        },
+        {
+          "Offset": 55,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.IO.FileInfo[]"
+          }
+        },
+        {
+          "Offset": 57,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 59,
+          "OpCode": "ldelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 60,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.IO.FileInfo"
+          }
+        },
+        {
+          "Offset": 62,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 63,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 65,
+          "OpCode": "ldarg.2",
+          "Operand": null
+        },
+        {
+          "Offset": 66,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00023C",
+            "Text": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider> System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Security.IKeyProvider>::GetEnumerator()"
+          }
+        },
+        {
+          "Offset": 71,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 6,
+            "Type": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>"
+          }
+        },
+        {
+          "Offset": 73,
+          "OpCode": "nop",
+          "Operand": null
+        },
+        {
+          "Offset": 74,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 6,
+            "Type": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>"
+          }
+        },
+        {
+          "Offset": 76,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0000BB",
+            "Text": "System.Boolean System.Collections.IEnumerator::MoveNext()"
+          }
+        },
+        {
+          "Offset": 81,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 85
+          }
+        },
+        {
+          "Offset": 83,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 135
+          }
+        },
+        {
+          "Offset": 85,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 6,
+            "Type": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>"
+          }
+        },
+        {
+          "Offset": 87,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00023D",
+            "Text": "Knx.Ets.Common.Security.IKeyProvider System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>::get_Current()"
+          }
+        },
+        {
+          "Offset": 92,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "Knx.Ets.Common.Security.IKeyProvider"
+          }
+        },
+        {
+          "Offset": 94,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 95,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 96,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.IO.FileInfo"
+          }
+        },
+        {
+          "Offset": 98,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "Knx.Ets.Common.Security.IKeyProvider"
+          }
+        },
+        {
+          "Offset": 100,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600030A",
+            "Text": "FluentResults.Result Knx.Ets.Common.Security.EtsZipExtractorBase::method_0(System.IO.DirectoryInfo,System.IO.FileInfo,Knx.Ets.Common.Security.IKeyProvider)"
+          }
+        },
+        {
+          "Offset": 105,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 107,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 109,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000114",
+            "Text": "System.Boolean FluentResults.ResultBase::get_IsSuccess()"
+          }
+        },
+        {
+          "Offset": 114,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 74
+          }
+        },
+        {
+          "Offset": 116,
+          "OpCode": "ldarg.s",
+          "Operand": {
+            "ArgumentIndex": 4,
+            "Name": "validAccessKey",
+            "Type": "Knx.Ets.Common.Security.IKeyProvider&"
+          }
+        },
+        {
+          "Offset": 118,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "Knx.Ets.Common.Security.IKeyProvider"
+          }
+        },
+        {
+          "Offset": 120,
+          "OpCode": "stind.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 121,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 135
+          }
+        },
+        {
+          "Offset": 123,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 6,
+            "Type": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>"
+          }
+        },
+        {
+          "Offset": 125,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 134
+          }
+        },
+        {
+          "Offset": 127,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 6,
+            "Type": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>"
+          }
+        },
+        {
+          "Offset": 129,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000069",
+            "Text": "System.Void System.IDisposable::Dispose()"
+          }
+        },
+        {
+          "Offset": 134,
+          "OpCode": "endfinally",
+          "Operand": null
+        },
+        {
+          "Offset": 135,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 137,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000163",
+            "Text": "System.Boolean FluentResults.ResultBase::get_IsFailed()"
+          }
+        },
+        {
+          "Offset": 142,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 163
+          }
+        },
+        {
+          "Offset": 144,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 145,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 150,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600064C",
+            "Text": "System.Void Knx.Ets.Common.IO.FileEngine::RemoveDir(System.String)"
+          }
+        },
+        {
+          "Offset": 155,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 157,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00023F",
+            "Text": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>::op_Implicit(FluentResults.Result)"
+          }
+        },
+        {
+          "Offset": 162,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 163,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.IO.FileInfo"
+          }
+        },
+        {
+          "Offset": 165,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 170,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600064F",
+            "Text": "System.Void Knx.Ets.Common.IO.FileEngine::RemoveFile(System.String)"
+          }
+        },
+        {
+          "Offset": 175,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Collections.Generic.List`1<System.String>"
+          }
+        },
+        {
+          "Offset": 177,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.IO.FileInfo"
+          }
+        },
+        {
+          "Offset": 179,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 184,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 185,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.IO.FileInfo"
+          }
+        },
+        {
+          "Offset": 187,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 192,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00002F",
+            "Text": "System.Int32 System.String::get_Length()"
+          }
+        },
+        {
+          "Offset": 197,
+          "OpCode": "ldc.i4.s",
+          "Operand": "9"
+        },
+        {
+          "Offset": 199,
+          "OpCode": "sub",
+          "Operand": null
+        },
+        {
+          "Offset": 200,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00023E",
+            "Text": "System.String System.String::Substring(System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 205,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00022C",
+            "Text": "System.Void System.Collections.Generic.List`1<System.String>::Add(System.String)"
+          }
+        },
+        {
+          "Offset": 210,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 212,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 213,
+          "OpCode": "add",
+          "Operand": null
+        },
+        {
+          "Offset": 214,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 216,
+          "OpCode": "br",
+          "Operand": {
+            "BranchTarget": 44
+          }
+        },
+        {
+          "Offset": 221,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Collections.Generic.List`1<System.String>"
+          }
+        },
+        {
+          "Offset": 223,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x2B000063",
+            "Text": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> FluentResults.Result::Ok<System.Collections.Generic.IEnumerable`1<System.String>>(System.Collections.Generic.IEnumerable`1<System.String>)"
+          }
+        },
+        {
+          "Offset": 228,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Finally",
+          "TryStart": 73,
+          "TryEnd": 123,
+          "HandlerStart": 123,
+          "HandlerEnd": 135,
+          "FilterStart": null,
+          "CatchType": null
+        }
+      ]
+    },
+    {
+      "Token": "0x0600030A",
+      "Signature": "FluentResults.Result Knx.Ets.Common.Security.EtsZipExtractorBase::method_0(System.IO.DirectoryInfo,System.IO.FileInfo,Knx.Ets.Common.Security.IKeyProvider)",
+      "Flags": "Private, HideBySig",
+      "ImplementationFlags": "IL",
+      "HasBody": true,
+      "NativeImport": null,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "directoryInfo_0",
+          "Type": "System.IO.DirectoryInfo"
+        },
+        {
+          "ArgumentIndex": 2,
+          "Sequence": 2,
+          "Name": "fileInfo_0",
+          "Type": "System.IO.FileInfo"
+        },
+        {
+          "ArgumentIndex": 3,
+          "Sequence": 3,
+          "Name": "ikeyProvider_0",
+          "Type": "Knx.Ets.Common.Security.IKeyProvider"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.String"
+        },
+        {
+          "Slot": 2,
+          "Type": "FluentResults.Result"
+        },
+        {
+          "Slot": 3,
+          "Type": "System.Exception"
+        },
+        {
+          "Slot": 4,
+          "Type": "System.Boolean"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "nop",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldarg.2",
+          "Operand": null
+        },
+        {
+          "Offset": 2,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 7,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 8,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x06000142",
+            "Text": "System.Void Knx.Ets.Common.Zip.ZipWrapper::.ctor(System.String,System.Boolean)"
+          }
+        },
+        {
+          "Offset": 13,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 15,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 17,
+          "OpCode": "ldarg.3",
+          "Operand": null
+        },
+        {
+          "Offset": 18,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0600032D",
+            "Text": "System.String Knx.Ets.Common.Security.IKeyProvider::get_Key()"
+          }
+        },
+        {
+          "Offset": 23,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0600015A",
+            "Text": "System.Void Knx.Ets.Common.Zip.ZipWrapper::set_Password(System.String)"
+          }
+        },
+        {
+          "Offset": 28,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 29,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 34,
+          "OpCode": "ldarg.2",
+          "Operand": null
+        },
+        {
+          "Offset": 35,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00022D",
+            "Text": "System.String System.IO.FileSystemInfo::get_Name()"
+          }
+        },
+        {
+          "Offset": 40,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000242",
+            "Text": "System.String System.IO.Path::GetFileNameWithoutExtension(System.String)"
+          }
+        },
+        {
+          "Offset": 45,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000022",
+            "Text": "System.String System.IO.Path::Combine(System.String,System.String)"
+          }
+        },
+        {
+          "Offset": 50,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.String"
+          }
+        },
+        {
+          "Offset": 52,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.String"
+          }
+        },
+        {
+          "Offset": 54,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A0001A2",
+            "Text": "System.IO.DirectoryInfo System.IO.Directory::CreateDirectory(System.String)"
+          }
+        },
+        {
+          "Offset": 59,
+          "OpCode": "pop",
+          "Operand": null
+        },
+        {
+          "Offset": 60,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 62,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.String"
+          }
+        },
+        {
+          "Offset": 64,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 65,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 66,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 67,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000152",
+            "Text": "System.Void Knx.Ets.Common.Zip.ZipWrapper::ExtractZipToTargetDirectory(System.String,System.String,System.Boolean,System.Boolean)"
+          }
+        },
+        {
+          "Offset": 72,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A000241",
+            "Text": "FluentResults.Result FluentResults.Result::Ok()"
+          }
+        },
+        {
+          "Offset": 77,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 79,
+          "OpCode": "leave",
+          "Operand": {
+            "BranchTarget": 225
+          }
+        },
+        {
+          "Offset": 84,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 86,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 95
+          }
+        },
+        {
+          "Offset": 88,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Ets.Common.Zip.ZipWrapper"
+          }
+        },
+        {
+          "Offset": 90,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000069",
+            "Text": "System.Void System.IDisposable::Dispose()"
+          }
+        },
+        {
+          "Offset": 95,
+          "OpCode": "endfinally",
+          "Operand": null
+        },
+        {
+          "Offset": 96,
+          "OpCode": "isinst",
+          "Operand": {
+            "Token": "0x0100001A",
+            "Text": "System.Exception"
+          }
+        },
+        {
+          "Offset": 101,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 102,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 108
+          }
+        },
+        {
+          "Offset": 104,
+          "OpCode": "pop",
+          "Operand": null
+        },
+        {
+          "Offset": 105,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 106,
+          "OpCode": "br.s",
+          "Operand": {
+            "BranchTarget": 143
+          }
+        },
+        {
+          "Offset": 108,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 110,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 112,
+          "OpCode": "isinst",
+          "Operand": {
+            "Token": "0x02000128",
+            "Text": "Knx.Ets.Common.Exceptions.BadPasswordException"
+          }
+        },
+        {
+          "Offset": 117,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 129
+          }
+        },
+        {
+          "Offset": 119,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 120,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 122,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 124,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 125,
+          "OpCode": "cgt.un",
+          "Operand": null
+        },
+        {
+          "Offset": 127,
+          "OpCode": "br.s",
+          "Operand": {
+            "BranchTarget": 143
+          }
+        },
+        {
+          "Offset": 129,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 131,
+          "OpCode": "isinst",
+          "Operand": {
+            "Token": "0x010000C6",
+            "Text": "Ionic.Zlib.ZlibException"
+          }
+        },
+        {
+          "Offset": 136,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 119
+          }
+        },
+        {
+          "Offset": 138,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 139,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 141,
+          "OpCode": "br.s",
+          "Operand": {
+            "BranchTarget": 122
+          }
+        },
+        {
+          "Offset": 143,
+          "OpCode": "endfilter",
+          "Operand": null
+        },
+        {
+          "Offset": 145,
+          "OpCode": "pop",
+          "Operand": null
+        },
+        {
+          "Offset": 146,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x04000185",
+            "Text": "log4net.ILog Knx.Ets.Common.Security.EtsZipExtractorBase::Log"
+          }
+        },
+        {
+          "Offset": 151,
+          "OpCode": "ldc.i4.5",
+          "Operand": null
+        },
+        {
+          "Offset": 152,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x0100000A",
+            "Text": "System.String"
+          }
+        },
+        {
+          "Offset": 157,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 158,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 159,
+          "OpCode": "ldstr",
+          "Operand": "Failed to extract "
+        },
+        {
+          "Offset": 164,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 165,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 166,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 167,
+          "OpCode": "ldarg.2",
+          "Operand": null
+        },
+        {
+          "Offset": 168,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00019E",
+            "Text": "System.String System.IO.FileSystemInfo::get_FullName()"
+          }
+        },
+        {
+          "Offset": 173,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 174,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 175,
+          "OpCode": "ldc.i4.2",
+          "Operand": null
+        },
+        {
+          "Offset": 176,
+          "OpCode": "ldstr",
+          "Operand": " from container "
+        },
+        {
+          "Offset": 181,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 182,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 183,
+          "OpCode": "ldc.i4.3",
+          "Operand": null
+        },
+        {
+          "Offset": 184,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 185,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06000306",
+            "Text": "System.String Knx.Ets.Common.Security.EtsZipExtractorBase::get_InputFilePath()"
+          }
+        },
+        {
+          "Offset": 190,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 191,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 192,
+          "OpCode": "ldc.i4.4",
+          "Operand": null
+        },
+        {
+          "Offset": 193,
+          "OpCode": "ldstr",
+          "Operand": ". Invalid password?"
+        },
+        {
+          "Offset": 198,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 199,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00004B",
+            "Text": "System.String System.String::Concat(System.String[])"
+          }
+        },
+        {
+          "Offset": 204,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 206,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000158",
+            "Text": "System.Void log4net.ILog::Error(System.Object,System.Exception)"
+          }
+        },
+        {
+          "Offset": 211,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x060007FB",
+            "Text": "System.Void Knx.Ets.Common.Errors.InvalidPasswordError::.ctor()"
+          }
+        },
+        {
+          "Offset": 216,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00011F",
+            "Text": "FluentResults.Result FluentResults.Result::Fail(FluentResults.IError)"
+          }
+        },
+        {
+          "Offset": 221,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 223,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 225
+          }
+        },
+        {
+          "Offset": 225,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "FluentResults.Result"
+          }
+        },
+        {
+          "Offset": 227,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Finally",
+          "TryStart": 15,
+          "TryEnd": 84,
+          "HandlerStart": 84,
+          "HandlerEnd": 96,
+          "FilterStart": null,
+          "CatchType": null
+        },
+        {
+          "Kind": "Filter",
+          "TryStart": 1,
+          "TryEnd": 96,
+          "HandlerStart": 145,
+          "HandlerEnd": 225,
+          "FilterStart": 96,
+          "CatchType": null
+        }
+      ]
+    }
+  ]
+}

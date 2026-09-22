@@ -1,0 +1,227 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80",
+   "Sha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+   "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase",
+   "Token": "0x0600030A",
+   "Signature": "FluentResults.Result Knx.Ets.Common.Security.EtsZipExtractorBase::method_0(System.IO.DirectoryInfo,System.IO.FileInfo,Knx.Ets.Common.Security.IKeyProvider)",
+   "OriginalName": "method_0",
+   "Reason": "Sets the supplied key, creates an output directory using the archive basename and extracts there. Only BadPasswordException/ZlibException are converted to InvalidPasswordError; other exceptions escape.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.IO.DirectoryInfo directoryInfo_0",
+    "2: System.IO.FileInfo fileInfo_0",
+    "3: Knx.Ets.Common.Security.IKeyProvider ikeyProvider_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "directoryInfo_0",
+     "HasMetadata": true,
+     "NewName": "workingDirectory"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "fileInfo_0",
+     "HasMetadata": true,
+     "NewName": "zipFile"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ikeyProvider_0",
+     "HasMetadata": true,
+     "NewName": "keyProvider"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.Common.Zip.ZipWrapper",
+     "NewName": "archive"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.String",
+     "NewName": "outputDirectory"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "FluentResults.Result",
+     "NewName": "result"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Exception",
+     "NewName": "error"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isPasswordOrCompressionError"
+    }
+   ],
+   "NewName": "TryExtractNestedZipWithKey",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80",
+   "Sha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+   "Type": "Knx.Ets.Common.Security.EtsZipExtractorBase",
+   "Token": "0x06000309",
+   "Signature": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> Knx.Ets.Common.Security.EtsZipExtractorBase::ExtractNestedZipFiles(System.IO.DirectoryInfo,System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Security.IKeyProvider>,System.String,Knx.Ets.Common.Security.IKeyProvider&)",
+   "OriginalName": "ExtractNestedZipFiles",
+   "Reason": "Tries provided keys for each matching archive, retains the latest successful key, deletes extracted archives and returns paths with exactly nine final characters removed. A failed Result removes the working directory; an empty key list leaves a null Result that is dereferenced.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.IO.DirectoryInfo workingDirectoryInfo",
+    "2: System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Security.IKeyProvider> accessKeys",
+    "3: System.String zipNamePattern",
+    "4: Knx.Ets.Common.Security.IKeyProvider& validAccessKey"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "workingDirectoryInfo",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "accessKeys",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "zipNamePattern",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "validAccessKey",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<System.String>",
+     "NewName": "extractedPaths"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.IO.FileInfo[]",
+     "NewName": "matchingFiles"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.IO.FileInfo[]",
+     "NewName": "files"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": "fileIndex"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.IO.FileInfo",
+     "NewName": "zipFile"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "FluentResults.Result",
+     "NewName": "extractionResult"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Security.IKeyProvider>",
+     "NewName": "keyEnumerator"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "Knx.Ets.Common.Security.IKeyProvider",
+     "NewName": "keyProvider"
+    }
+   ],
+   "NewName": "ExtractNestedZipFiles",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Ets.Common.dll",
+   "Identity": "Knx.Ets.Common, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "631c8fe5-10ad-46a3-b654-49891e3c2e80",
+   "Sha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+   "Type": "Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor",
+   "Token": "0x060002F4",
+   "Signature": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>> Knx.Ets.Common.Security.EtsDeviceTemplateZipExtractor::Extract(System.IO.DirectoryInfo)",
+   "OriginalName": "Extract",
+   "Reason": "Requires an existing container file, extracts it using ZipProtection.Password, then extracts Device/*.knxtempl with the same key if Device exists; otherwise returns the target directory. Directory input returns an empty list only after the file check.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.IO.DirectoryInfo tempDirectory"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "tempDirectory",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.IO.DirectoryInfo",
+     "NewName": "deviceDirectory"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.Common.Zip.ZipWrapper",
+     "NewName": "archive"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.String",
+     "NewName": "password"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Ets.Common.Security.IKeyProvider",
+     "NewName": "validAccessKey"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "FluentResults.Result`1<System.Collections.Generic.IEnumerable`1<System.String>>",
+     "NewName": "result"
+    }
+   ],
+   "NewName": "Extract",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

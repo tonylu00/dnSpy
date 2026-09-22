@@ -36,11 +36,12 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Explicit-interface support and snapshot providers committed as `b551440d3`.
   Event/exception diagnostics committed as `318443f46`.
   HTTP pooling/contract review committed as `76c45dd30`.
-  Current naming checkpoint: `checkpoint-wave197.json`, from accepted 196/28.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v197.xml`,
-  SHA256 `08B790EB25D9A564E3E101AE027E0C7732A260F93C0F8A2F3864E76B54AE2970`.
-- Current 6.4 map: `names64-staged-v29.xml`, SHA256
-  `9B604EC844124D5A9BC652A68DE05BDB112FBB91B2DDBD44360625CD1A808CA3`.
+  Security/envelope review committed as `f3688bc53`.
+  Current naming checkpoint: `checkpoint-wave198.json`, from accepted 197/29.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v198.xml`,
+  SHA256 `9DFE5B8299A8F8FA71238DED67ED6C66703E374FD7BE7958652E43C087951B15`.
+- Current 6.4 map: `names64-staged-v30.xml`, SHA256
+  `C960FF8326A431458A9B86F9EA568D74DBC8C8BC60BF1AB8F4EDE6F8AB0307E0`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -51,7 +52,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-197.json` and `map-update64-wave-29.json`;
+  The last update reports are `map-update63-wave-198.json` and `map-update64-wave-30.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -698,8 +699,58 @@ existing source-evidence tests pass on Windows. No ETS execution is involved.
 
 `common63-wave197-prior-alias-review.json` records remaining source/map name
 differences, bound to current source hashes and map 197. They are review hints,
-not automatically better names. The initialization helper currently called
-Dispose2 is a priority; inspect its body and event callers before replacing it.
+not automatically better names. Its Dispose2 initialization helper and five other
+listed differences are reviewed by the following wave; the historical file remains intact.
+
+## Request results, dongle lifecycle and ZIP extraction (198)
+
+`common_request_lifecycle.py` corrects thirteen prior 6.3 aliases with exact
+replacement evidence. The initialization setter becomes SetIsInitialized rather
+than Dispose2; both generic GET overloads become GetResponseValueAsync rather
+than GetFromServerAsync2. The response adapter invokes a synchronous error
+handler and wraps its value with Task.FromResult, so its role is
+InvokeResponseErrorHandlerAsync. Request/create-message virtual contracts gain
+matching parameter scopes while retaining their existing meaningful names.
+
+Dongle collection review follows inner helpers through event callers and storage.
+AddDongleWhenReady either adds a wrapper immediately or retains a pending
+registration; AddReadyDongleAndUnsubscribe handles that registration's event.
+The DevKit flag setter, event add/remove, emitter and reset are bound to their
+own physical input and source hashes. The initialization flag, cloud session flag,
+enumeration semaphore, collection lock, event delegates, captured identifiers,
+selector delegates and completion source now have names derived from those uses.
+CreateEtsLicense overloads replace two restored compiler-style lambda names.
+IsSoftwareDongle and the cloud identifier predicate correct overly vague or
+incorrect prior aliases. Complete Start/Pause/Resume/StopCloudSession and session
+token subscription families cover both the implementation and interface rows.
+
+Initialization remains synchronous despite returning Task. Pause retries at most
+five times with blocking exponential delays. Refresh releases its semaphore on
+the success path, and an exception in the worker can leave the completion source
+unfinished. HTTP transport checks cancellation before sending but passes None
+into the client; generic/non-generic error-map overloads differ in exception
+handling. These are retained observations, not behavior repairs or runtime proof.
+
+Nested ZIP bodies were independently reviewed in 6.3 and 6.4. The private helper
+tries the supplied key, extracts to an archive-basename directory and converts
+only password/compression exceptions to InvalidPasswordError. The outer helper
+removes successful source archives and strips exactly nine trailing characters
+from result paths. Empty key lists can leave a null Result that is dereferenced.
+6.3 FindTemplateFiles becomes ExtractDeviceTemplateContainer, reflecting the
+actual extraction. No archive operations ran. The 6.4 automatic InputFilePath
+property remains readable without an unsupported backing-field source binding.
+
+100/3 decisions produce 259/24 accepted edits. All selected source/IL/input hashes,
+effective scoped names, nine complete contract families (15 rows), unchanged SDK
+bindings and prior names/scopes pass the inexpensive checks. The 13 replacements
+are explicit; no new collision suffixes appeared. Preflights are
+`map-check63-wave198.json` and `map-check64-wave30.json`, both with zero errors.
+No ETS source/binary application, export, build, full audit or launch ran.
+
+`common63-wave198-prior-alias-review.json` retains 25 source/map differences as
+review hints only. Common arx::c remains unresolved: DevKit akj::l currently
+returns false, which does not establish a meaningful original purpose. The
+constructor's path/provider arguments also need deeper dependency review.
 
 ## Remaining work
 
@@ -723,14 +774,16 @@ Dispose2 is a priority; inspect its body and event callers before replacing it.
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `security63-wave197-rev3.cumulative.json` and
-  `security64-wave29-rev3.cumulative.json`; do not
+  `common63-wave198-rev2.cumulative.json` and
+  `zip64-wave30-rev2.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **197/29** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **198/30** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
   `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by
-  exact behavioral replacement. Review the other entries individually; SDK
+  exact behavioral replacement. `inherited-suffix-resolutions-wave198.json`
+  resolves the two generic GET overloads and initialization setter. Review the
+  other entries individually; SDK
   exclusions alone are not counted as semantic resolutions. No new suffixes were added.
 - Do not autoaccept the old correspondence queue: its shape normalization can
   erase library identifiers and some scripts collapse module paths to basenames.

@@ -1,0 +1,177 @@
+{
+  "Format": 1,
+  "Scope": "Selected physical input, source, IL, map and complete contract checks; no ETS application or runtime test",
+  "Versions": {
+    "63": {
+      "Map": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v198.xml",
+      "Sha256": "9DFE5B8299A8F8FA71238DED67ED6C66703E374FD7BE7958652E43C087951B15",
+      "Decisions": 100,
+      "AcceptedEdits": 259,
+      "VerifiedSourceFiles": 6,
+      "ReviewedReplacements": [
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x06000049",
+          "ExpectedName": "ReadResponseErrorAsync",
+          "NewName": "InvokeResponseErrorHandlerAsync",
+          "Reason": "Invokes the captured synchronous response handler, then wraps its return value with Task.FromResult. It does not read response content or catch handler exceptions."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600003A",
+          "ExpectedName": "RequestFailedWithStatusCodeError",
+          "NewName": "CreateHttpStatusError",
+          "Reason": "Maps status 500 to KnxApiError; all other statuses produce a WebServiceError containing status and reason phrase."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600003B",
+          "ExpectedName": "GetFromServerAsync2",
+          "NewName": "GetResponseValueAsync",
+          "Reason": "Forwards the absolute Uri string to the generic content-result overload.",
+          "ExpectedReviewName": "GetFromServerAsync"
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600003C",
+          "ExpectedName": "GetFromServerAsync2",
+          "NewName": "GetResponseValueAsync",
+          "Reason": "Sends GET, propagates a failed HTTP Result, or decodes successful content through ReadContentAsync<T> and returns Result.Ok<T>. The inner read preserves strings and deserializes other types as JSON.",
+          "ExpectedReviewName": "GetFromServerAsync"
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001AB",
+          "ExpectedName": "Dispose2",
+          "NewName": "SetIsInitialized",
+          "Reason": "Stores the supplied boolean in the initialization backing field; contains no disposal operation.",
+          "ExpectedReviewName": "Dispose"
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001E6",
+          "ExpectedName": "HandleDongleCollectionChanged",
+          "NewName": "AddReadyDongleAndUnsubscribe",
+          "Reason": "Unsubscribes this callback from the captured DevKit dongle readiness event and appends a new EtsDongle wrapper to its manager collection."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001B8",
+          "ExpectedName": "AttachDongleManager",
+          "NewName": "AddDongleWhenReady",
+          "Reason": "Adds an EtsDongle wrapper immediately when the DevKit ready flag is true, otherwise subscribes a callback that adds it once the event fires."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001DE",
+          "ExpectedName": "<EnumerateLicensesByFeatureName>b__26_0",
+          "NewName": "CreateEtsLicense",
+          "Reason": "Constructs an EtsLicense wrapper from the supplied DevKit or CloudKit license; the two overloads preserve their distinct parameter types."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001DF",
+          "ExpectedName": "<EnumerateLicensesByFeatureName>b__26_1",
+          "NewName": "CreateEtsLicense",
+          "Reason": "Constructs an EtsLicense wrapper from the supplied DevKit or CloudKit license; the two overloads preserve their distinct parameter types."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001E0",
+          "ExpectedName": "IsLicenseTypeMatch",
+          "NewName": "IsSoftwareDongle",
+          "Reason": "Compares EtsDongle.Type specifically with LicenseType.SoftwareDongle."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060001EE",
+          "ExpectedName": "IsCloudDongleNameMatch",
+          "NewName": "IsCloudDongleIdentifierMatch",
+          "Reason": "Matches an enumerated CloudKit ID against the captured ID of a newly discovered entry."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600007F",
+          "ExpectedName": "ExtractZipFile",
+          "NewName": "TryExtractNestedZipWithKey",
+          "Reason": "Sets the supplied key, creates an output directory using the archive basename and extracts there. Only BadPasswordException/ZlibException are converted to InvalidPasswordError; other exceptions escape."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x06000079",
+          "ExpectedName": "FindTemplateFiles",
+          "NewName": "ExtractDeviceTemplateContainer",
+          "Reason": "Requires an existing container file, extracts it using ZipProtection.Password, then extracts Device/*.knxtempl with the same key if Device exists; otherwise returns the target directory. Directory input returns an empty list only after the file check."
+        }
+      ],
+      "PriorAliasesPreservedExceptReviewedReplacements": true,
+      "EveryPriorScopedNamePreserved": true,
+      "EveryDecisionEffectiveInMap": true,
+      "PhysicalInputSha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+      "SdkNameWhitelistSha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
+      "MapPreflight": {
+        "Path": "D:\\knx_analysis\\application-name-pass01\\map-check63-wave198.json",
+        "Sha256": "898243DF11D9DD6723D520F6F049AB9147EBD536948D85032DB266D3CA3B204F"
+      },
+      "NewCollisionSuffixes": 0
+    },
+    "64": {
+      "Map": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v30.xml",
+      "Sha256": "C960FF8326A431458A9B86F9EA568D74DBC8C8BC60BF1AB8F4EDE6F8AB0307E0",
+      "Decisions": 3,
+      "AcceptedEdits": 24,
+      "VerifiedSourceFiles": 2,
+      "ReviewedReplacements": [],
+      "PriorAliasesPreservedExceptReviewedReplacements": true,
+      "EveryPriorScopedNamePreserved": true,
+      "EveryDecisionEffectiveInMap": true,
+      "PhysicalInputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+      "SdkNameWhitelistSha256": "E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34",
+      "MapPreflight": {
+        "Path": "D:\\knx_analysis\\application-name-pass01\\map-check64-wave30.json",
+        "Sha256": "8B49A13C51A6D054B47FA9B533D5E236F63240FE0748B08F95FBADEE96BB7EE8"
+      },
+      "NewCollisionSuffixes": 0
+    }
+  },
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsBinaryApplies": 0,
+  "EtsFullAudits": 0,
+  "EtsLaunches": 0,
+  "CompleteContractFamilies": {
+    "Count": 9,
+    "MemberRows": 15,
+    "SourceInventorySha256": "6A24B02FB263B3DBE288F73C7142228C733BAD597190904B31BB95773EAA675D",
+    "Verified": true
+  },
+  "BehaviorLimits": [
+    "Common arx::c delegates to DevKit akj::l, whose current body returns false. Intended meaning remains unresolved and no alias is assigned.",
+    "InitializeAsync performs initialization synchronously and returns Task.CompletedTask.",
+    "Request transport checks cancellation before sending but passes CancellationToken.None to the client; transport cancellation maps to NoInternetConnectionError.",
+    "Generic ExecuteWithErrorMap catches operation exceptions before mapping failed results; the nongeneric overload propagates operation exceptions.",
+    "A null synchronous response handler captured by the adapter faults when invoked; the asynchronous overload supplies a default error only when its own delegate is null.",
+    "Cloud refresh releases the semaphore on success rather than in a finally block; a worker exception can leave its completion source unfinished.",
+    "Cloud session pause retries five times with blocking exponential waits; behavior is preserved.",
+    "Nested ZIP extraction converts only BadPasswordException and ZlibException to a failure Result; successful extraction deletes source archives and derives output paths by removing exactly nine final characters.",
+    "An empty key sequence can dereference a null extraction Result. No archive was opened or extracted by this review.",
+    "The 6.4 InputFilePath backing field is decompiled as an automatic property and was not renamed; the existing property spelling is readable."
+  ],
+  "Recipe": {
+    "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\common_request_lifecycle.py",
+    "Sha256": "7D48990B3DC7FAC906534711FBEE2112A15F254672746012FBE213D9AFC259CD"
+  }
+}
