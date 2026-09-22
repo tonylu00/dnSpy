@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 253 accepted (6.3): Knx.Ets.ObjectModel.FileSystemStore",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v253.xml",
+      "Sha256": "8ED31D2AC3359AE024B14B3A05AE2A16988EBE487CC9504E1E21C3CEE6B6BB6D",
+      "PreviousMap": "names63-staged-v252.xml",
+      "PreviousMapSha256": "C72AA1130AA94997ED4A2F68366ECE79B0CC183DB8122AC8FB356A574ACD3915",
+      "FrozenSha256": "8ED31D2AC3359AE024B14B3A05AE2A16988EBE487CC9504E1E21C3CEE6B6BB6D",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave253.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. FileSystemStore is the file-backed store layer: the area store opens files through the store mask and the retryable file stream and caches transactional streams, the product stores read their manufacturer directories and expose the Catalog.xml, Hardware.xml and Baggages.xml single file stores (the import variant passes its guid writer), and the zip store wraps its entry with password handling.",
+    "strings": "DeviceTemplateProductStore and ImportFileProductStore create their stores from the literal file names Catalog.xml, Hardware.xml and Baggages.xml, ImportFileProductStore's directory helper uses the Baggages subdirectory, SingleFileStore builds '{0}.store', the V4 updater walks the Line and DeviceInstance naming pairs, and ZipSingleFileStore turns the BadPassword text into InvalidPasswordException."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 22,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14419,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11225
+  },
+  "Errors": 0
+}
