@@ -1,0 +1,46 @@
+{
+  "Format": 1,
+  "Status": "Wave 240 accepted (6.3): Knx.Ets.ObjectModel.Operations.Validators",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v240.xml",
+      "Sha256": "033A72C3A934AA894DE311FF144C179112838FD0A391407F7E80DF3986329306",
+      "PreviousMap": "names63-staged-v239.xml",
+      "PreviousMapSha256": "25FA46391B3EC1A3405F0FD0C5835F1BCC03B9E5FE5549B178411B293CB08593",
+      "FrozenSha256": "033A72C3A934AA894DE311FF144C179112838FD0A391407F7E80DF3986329306",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave240.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods; the accepted sibling names inside each validator type give the vocabulary (Validate*, Check*, Exceeds*, Determine*, Collect*, Is*).",
+    "stretch range": "ValidateStretchRangeBounds carries the GroupRangeValidationReason codes 19-22 for a start/end outside 1..65535; the four predicates around it are ContainsNewRange, IsAddressInsideNewRange and IsAddressOutsideNewRange.",
+    "max security entries": "The Link/Target variants of the max-security-individual-address-entries check name their sender and group-address collectors; the three MaxSecureGroupKeyTableEntry validators share ExceedsMaxSecureGroupKeyTableEntries in their own types.",
+    "identical helper": "The byte-identical private duplicate 0x06002BB9 (called from the same ValidateRangeToStretch as ContainsNewRange) is left unresolved rather than given a second name."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 48,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14065,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10871
+  },
+  "Errors": 0
+}
