@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 257 accepted (6.3): Knx.Ets.ObjectModel.Operations.SplitAndMerge.EditValidator and UndoRedo (plus two collision fixes)",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v257.xml",
+      "Sha256": "D7A6654102FA05E084AB972BCF76BFFC2DB13C09D4BFBDFAB17247A3FF4C872F",
+      "PreviousMap": "names63-staged-v256.xml",
+      "PreviousMapSha256": "95BB040F4CB5E5E0A4AC74261465CEF3655A5EBEFEF88745E7D53EC9CC0085B3",
+      "FrozenSha256": "D7A6654102FA05E084AB972BCF76BFFC2DB13C09D4BFBDFAB17247A3FF4C872F",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave257.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. EditValidator holds the split-and-merge edit rules (the device rule, the two position calculators, the segment and trade rules and the validator that runs them), and UndoRedo holds the undo commands and markers (the property-changed and blob-data commands, the observable stack and the parameter value change info).",
+    "collision fixes": "Two rows that the writer had suffixed because the type inherits the name were re-issued with non-colliding names in this wave: 0x0600504F (GetValidators2 -> GetApplicationProgramUpdateValidators) and 0x06003131 (Check2 -> CheckSplitAndMerge). The re-run has 0 collision suffixes.",
+    "duplicates": "DeviceRule's three predicates 0x06003113/0x06003114/0x06003115 are byte-identical; one carries IsTargetDevice and the twins stay unresolved, as do PositionCalculatorTopologyView's two position calculations whose field pairs (a/b vs c/d) do not say which direction is which."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 20,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14508,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11314
+  },
+  "Errors": 0
+}
