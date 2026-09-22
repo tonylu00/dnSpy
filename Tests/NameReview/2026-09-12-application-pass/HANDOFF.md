@@ -40,13 +40,14 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Request/dongle lifecycle review committed as `db16dfab4`.
   Collection/archive review committed as `221374f4d`.
   Clipboard/paste review committed as `4f232ad9a`.
-  Current naming checkpoint: `checkpoint-wave204.json`, from accepted 202/31,
-  through both versions of move planners and their captured callbacks.
+  Move-planner review committed as `48fc15734`.
+  Current naming checkpoint: `checkpoint-wave205.json`, from accepted 204/32,
+  through add-operation dispatch, inner creators and bus-interface link helpers.
   Candidate 6.3 v203 was rejected; corrected v204 derives directly from v202.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v204.xml`,
-  SHA256 `FBA01A13ECE16B8AB29F4AC0762A6C06FCD852B8EC68AF9020503AD020F7511F`.
-- Current 6.4 map: `names64-staged-v32.xml`, SHA256
-  `811BE24EB5D35292D7C0F17B0CD5CCAB3EC0BD1FF49352C3C315237337579497`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v205.xml`,
+  SHA256 `325E004BF4E13559DAC73CB8C133447FD9232643639C0BC185928142C49AF0F0`.
+- Current 6.4 map: `names64-staged-v33.xml`, SHA256
+  `C7A7556BBBE6A6A3A3E1EBAE336E92EE426977C5B52E6F5E425D77748CF31A14`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -57,7 +58,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-204.json` and `map-update64-wave-32.json`.
+  The last update reports are `map-update63-wave-205.json` and `map-update64-wave-33.json`.
   `map-update63-wave-203.json` is rejected self-collision evidence, not an accepted step.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
@@ -77,10 +78,53 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
 
+## Add-operation dispatch and bus-interface links (205 / 33)
+
+Resume with maps **205/33**, `add63-wave205.cumulative.json` and
+`add64-wave33-rev2.cumulative.json`. All requested names match the map, both map
+preflights pass with zero changes/errors, and checkpoint205 preserves prior
+aliases/scopes and the exact SDK whitelist bindings. No ETS operation ran.
+
+`operation_add_scopes.py` follows concrete parent/type dispatch into address
+strategies and add-operation constructors. The six generic CreateAdd wrappers,
+six private Create overloads, and named collection/building-part/usage/function
+helpers now have reviewed callback, capture, cache and used-local names. Readable
+public methods and parameters retain their names; the eight full two-member
+interface families in each version are explicitly checked. The usage-descriptor
+CreateAdd overload has no interface family and retains its original name too.
+`Create` remains an overload set without numeric suffixes.
+
+The review also covers usage-channel maximum-index selection and add/delete
+progress, the three empty default building-level callbacks, and bus-interface
+linking from addresses/references/connectors/bus connectors/ranges. Shared
+`OperationCallbacks` instances and delegate caches now have roles. Seventeen
+visible 6.4 capture types are named from their operations; inlined 6.3 captures
+are bound through exact physical usage edges without inventing source declarations.
+
+`validate_operation_add.py` checks every requested name and used scope, physical
+binary/source/inspection hashes, unchanged public families and the exact receiving
+operation constructor for each progress delegate. For generic wrappers it checks
+the receiving private Create overload, including resolved generic MemberRefs.
+Body observations that must be retained include double progress publication
+through wrapper and inner creator, max existing usage-channel index plus one,
+capacity 500/FirstFree range defaults, catalog-panel/null fallbacks, and unknown
+building enum exceptions. 6.3 uses SpaceUsage.Text for default room names; 6.4
+uses LocationUsage.Name.ToString. Bus-interface linking compares project IDs and
+only the range branch supplies the count-confirmation callback. No null checks,
+Distinct calls, or behavioral changes were introduced by the mapping.
+
+Thirty-four generated static helpers and seventeen self-typed fields have no
+application callers or established domain roles; their exact IL/incoming edges
+remain in `add-wave205-validation.json` as unresolved. This is in addition to the
+prior move-scope unresolved entries, not whole-application coverage. The factory's
+obfuscated top-level domain helper names are mapped, but its large copy/extended-
+copy/move/unlink/delete bodies and remaining nested scopes still need review.
+Continue those callers and drag/drop handling before consolidated application.
+
 ## Move-operation planners and callbacks (204 / 32)
 
-Resume with maps **204/32**, `operations63-wave203.cumulative.json` and
-`operations64-wave32.cumulative.json`. Both current map preflights pass without
+Historical checkpoint 204 used maps **204/32**, `operations63-wave203.cumulative.json` and
+`operations64-wave32.cumulative.json`. Both map preflights passed without
 errors or changes, and all requested names match their accepted aliases. Existing
 aliases, parameter/local choices and the physical SDK whitelist bindings remain.
 
@@ -926,10 +970,10 @@ completion measure. No ETS source/binary application, export, build, audit or la
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `operations63-wave203.cumulative.json` and
-  `operations64-wave32.cumulative.json`; do not
+  `add63-wave205.cumulative.json` and
+  `add64-wave33-rev2.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **204/32** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **205/33** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
   `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by

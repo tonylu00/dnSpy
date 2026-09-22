@@ -1,0 +1,55 @@
+{
+  "Checkpoint": "checkpoint-wave205.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v204.xml",
+      "Steps": [{
+        "Map": "names63-staged-v205.xml",
+        "Report": "map-update63-wave-205.json",
+        "Review": "add63-wave205.review.json",
+        "References": "contract-references63-v3.json"
+      }]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v32.xml",
+      "Steps": [{
+        "Map": "names64-staged-v33.xml",
+        "Report": "map-update64-wave-33.json",
+        "Review": "add64-wave33-rev2.review.json"
+      }]
+    }
+  },
+  "Reviews": [
+    {"Input": "add63-wave205.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "add64-wave33-rev2.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "add63-wave205-inspection.json",
+    "add64-wave33-rev2-inspection.json",
+    "add63-wave205-families.json",
+    "add64-wave33-families.json",
+    "add63-wave205.review.json",
+    "add63-wave205.evidence.json",
+    "add64-wave33-rev2.review.json",
+    "add64-wave33-rev2.evidence.json",
+    "add-wave205-validation.json",
+    "map-update63-wave-205.json",
+    "map-update64-wave-33.json",
+    "map-check63-wave205.json",
+    "map-check64-wave33.json"
+  ],
+  "ReviewedChains": [
+    "Add-operation dispatch through named collections, address-allocation strategies, building-part/usage/function choices and the six inner creator overloads, reviewed in both physical ViewModel versions.",
+    "Generic public CreateAdd wrappers through captured progress delegates and receiving operation constructors; original public names/parameters preserved across eight complete interface families per version.",
+    "Usage-channel indexing and add/delete callbacks, default building-level no-op progress handlers, and bus-interface linking through exact group-address selectors and range confirmation.",
+    "Captured contexts, delegate-cache fields and used locals now describe behavior; readable Create overloads share their original name without suffixes."
+  ],
+  "Remaining": [
+    "Application-wide naming remains incomplete. Maps 6.3 v205 and 6.4 v33 remain unapplied to ETS source and binaries.",
+    "Resume cumulative ledgers add63-wave205.cumulative.json and add64-wave33-rev2.cumulative.json with contract-references63-v3.json.",
+    "Continue the large CreateCopy/CreateExtendedCopy/CreateMove/CreateUnlink/CreateDelete bodies, their captured callbacks and drag/drop callers. Top-level obfuscated factory helper names are now mapped, but their whole nested scope is not complete.",
+    "Thirty-four generated static helpers and seventeen self-typed fields from this batch remain explicitly unresolved with exact IL and reference evidence; prior unresolved move helpers remain unchanged.",
+    "Common constructor path/provider meanings, constant-false getter purpose and explicit iterator body-local support remain unresolved; existing guards stay enforced.",
+    "Finish application-wide maps before consolidated source/binary application, SDK export/audit refresh, builds or runtime launch."
+  ]
+}
