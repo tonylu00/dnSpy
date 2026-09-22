@@ -1,0 +1,49 @@
+{
+  "Format": 1,
+  "Status": "Wave 238 accepted (6.3): Knx.Ets.ObjectModel.Project, first section - the 22 types with two or more free members",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v238.xml",
+      "Sha256": "7A46C827D3CD015D34A1C9592B8525C4FF42583430BC08C0D33A0733B9F490C5",
+      "PreviousMap": "names63-staged-v237.xml",
+      "PreviousMapSha256": "0EBE15158EBD60EE41F9D0E83ED854A32152D5B8871B696B92BB2284A03DCFD8",
+      "FrozenSha256": "7A46C827D3CD015D34A1C9592B8525C4FF42583430BC08C0D33A0733B9F490C5",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave238.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row was read from its own IL through NameCandidates --inspect-methods (perf-now/ilinspect.py) and from the accepted sibling names inside the same type. The individual-address parts come from the literal masks: GetArea = (v & 0xF000) >> 12, GetLine = (v & 0x0F00) >> 8, GetDevice = v & 0xFF.",
+    "compiler-generated lead": "ProjectCollection's two iterators are backed by state machines whose metadata names survived obfuscation, <EnumerateExistingProjectIds>d__10 and <EnumerateExistingProjectGuid>d__11, so the rows carry those exact names.",
+    "duplicate bodies": "2 of the rows (FindDatapointTypeRefForAdd / FindDatapointTypeRefForRemove) are byte-identical obfuscator duplicates reached from AddDatapointTypes and RemoveDatapointTypes; they are named for the path that reaches them because the signatures collide."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 68,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 13933,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10739
+  },
+  "SpotChecks": [
+    "TextParameterRefManager's six dictionary helpers now read SetCurrentText / SetDefaultText / GetStoredCurrentText / GetStoredDefaultText / GetSubscribers / GetFolder, one per dictionary the class owns.",
+    "ComObjectInstanceNonDefaultData: EnsureConnector creates the ConnectorData under the object lock and adds it only when the collection does not contain it; AddConnector/RemoveConnector are the list mutations RepairConnectors uses."
+  ],
+  "Errors": 0
+}
