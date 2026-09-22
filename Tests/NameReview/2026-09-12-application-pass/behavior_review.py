@@ -57,13 +57,58 @@ class BehaviorReview:
         self.delta.update(Methods=[], Types=[], Fields=[])
         self.decisions, self.pending = [], []
         self.selected = set()
+        self.accessor_sources = {}
 
     def read(self, name):
         return json.loads((self.root / name).read_text(encoding='utf-8-sig'))
 
+    def bind_accessor_sources(self, report_path, tokens):
+        """Use tool-derived property/event ownership when source omits a getter token.
+
+        This supplies source evidence only, never a naming permission or blocker
+        override. The report's physical method identity must match the inventory.
+        Cached graphs and ETS source remain unchanged.
+        """
+        path = Path(report_path)
+        report = json.loads(path.read_text(encoding='utf-8-sig'))
+        if report['Kind'] != 'AccessorReview' or Path(report['TargetRoot']).resolve() != self.target.resolve():
+            raise ValueError('Accessor evidence belongs to a different target tree')
+        report_hash = sha(path)
+        staged = {}
+        for token in tokens:
+            key = f'0x{token:08X}'
+            rows = [r for r in report['Methods'] if r['Module'].replace('\\', '/') == self.relative and r['Token'] == key]
+            proofs = [r for r in report['AccessorEvidence'] if r['Module'].replace('\\', '/') == self.relative and r['MethodToken'] == key]
+            if len(rows) != 1 or len(proofs) != 1:
+                raise ValueError('Missing or ambiguous accessor evidence: ' + key)
+            row, proof = rows[0], proofs[0]
+            entry = self.entries['Methods'][key]
+            if any(row[k] != entry[k] for k in ('Identity', 'Mvid', 'Sha256', 'Signature', 'OriginalName')):
+                raise ValueError('Accessor evidence selects a different physical method: ' + key)
+            if proof['MethodSignature'] != entry['Signature'] or proof['MethodName'] != entry['OriginalName']:
+                raise ValueError('Accessor evidence signature mismatch: ' + key)
+            table = {'Property': 0x17000000, 'Event': 0x14000000}.get(proof['OwnerKind'])
+            if table is None or int(proof['OwnerToken'], 16) & 0xFF000000 != table:
+                raise ValueError('Accessor evidence owner kind mismatch: ' + key)
+            if proof['AccessorRole'] not in ({'get', 'set'} if proof['OwnerKind'] == 'Property' else {'add', 'remove', 'raise'}):
+                raise ValueError('Accessor evidence role mismatch: ' + key)
+            if key in self.accessor_sources:
+                raise ValueError('Accessor source already bound: ' + key)
+            staged[key] = {'Path': str(path), 'Sha256': report_hash, **proof}
+        self.accessor_sources.update(staged)
+
     def source(self, token):
-        sid = self.module_id + ':' + f'0x{token:08X}'
+        key = f'0x{token:08X}'
+        sid = self.module_id + ':' + key
         rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (sid,))]
+        accessor = None
+        if not rows and key in self.accessor_sources:
+            accessor = self.accessor_sources[key]
+            owner = self.module_id + ':' + accessor['OwnerToken']
+            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (owner,))]
+            allowed = {'PropertyDeclaration', 'IndexerDeclaration'} if accessor['OwnerKind'] == 'Property' else {'EventDeclaration', 'EventFieldDeclaration'}
+            if any(row['Kind'] not in allowed for row in rows):
+                raise ValueError('Accessor source declaration kind mismatch: ' + sid)
         if not rows:
             raise ValueError('No source declaration: ' + sid)
         for row in rows:
@@ -74,7 +119,8 @@ class BehaviorReview:
                 self.verified_sources[path] = sha(path)
             if self.verified_sources[path] != row['Sha256']:
                 raise ValueError('Stale source: ' + str(path))
-        return [{'Id': sid, 'Path': r['Source'], 'Line': r['Line'], 'Sha256': r['Sha256']} for r in rows]
+        return [{'Id': sid, 'Path': r['Source'], 'Line': r['Line'], 'Sha256': r['Sha256'],
+                 **({'DeclarationId': self.module_id + ':' + accessor['OwnerToken'], 'AccessorEvidence': accessor} if accessor else {})} for r in rows]
 
     def add(self, kind, token, name, reason, parameters=None, locals_=None, evidence=(), contract=None, replace_alias=None):
         key = f'0x{token:08X}'

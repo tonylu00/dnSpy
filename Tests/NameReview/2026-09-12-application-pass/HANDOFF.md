@@ -31,11 +31,12 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   de4dotEx `5db0d23b`. Connector writes committed as `2c2290feb`.
   Secure receive/timer policy committed as `2fc81dccb`.
   Routing startup/discovery committed as `c8a5bb743`.
-  Current naming checkpoint: `checkpoint-wave192.json`, from accepted 191/25.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v192.xml`,
-  SHA256 `38AA6512FFDD9D5DE6C040E3054E24C266408ADEB1C585CE4136A6B503DCAB89`.
-- Current 6.4 map: `names64-staged-v26.xml`, SHA256
-  `2391F3F8B622D493BEC89CD6AA4E3E8E5BD6FF8093C998734E6621B4E25F2505`.
+  Unicast and programming-mode review committed as `f43016c2a`.
+  Current naming checkpoint: `checkpoint-wave193.json`, from accepted 192/26.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v193.xml`,
+  SHA256 `8565D5EBFA7299C8FDB696983F0C45E73E369A9038DAF201FA8A07EAD4C75381`.
+- Current 6.4 map: `names64-staged-v27.xml`, SHA256
+  `9D086C0AC8482D45B39B5C39BC6B7B15F45BAF2777A4C82B4344B8AA6149E129`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -46,7 +47,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-192.json` and `map-update64-wave-26.json`;
+  The last update reports are `map-update63-wave-193.json` and `map-update64-wave-27.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -63,6 +64,55 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   System.dll to resolve INotifyPropertyChanged. Preflight proved the existing map
   still valid; the five internal layer families then resolved without blockers.
   Framework references supply metadata only and are not renamed or executed.
+
+## Statistics values and aggregation (193)
+
+`statistics_values.py` names the full three-member Clone, Merge and Clear
+families and reviews the existing three-member CreateValue family. Interface63
+now has the role `Knx.Falcon.Diagnostics.Statistics.IStatisticsValue`. Constructors,
+lookup predicates, captured names and actual merge/clear loop locals connect
+definitions to values. The two definition indexers retain get_Item and gain
+parameter/local names through exact physical accessor ownership evidence.
+
+Counter clones copy the count and share the definition. Histogram clones copy
+the counters and share the definition/bucket array. Histogram merge iterates the
+source length without checking compatible definitions or equal lengths; a longer
+source can fail and a shorter one leaves destination tail counters unchanged.
+The histogram definition constructor retains its empty loop, without sorting or
+validating boundaries. These observations describe retained behavior.
+
+6.4 was independently reviewed for interval creation, current/start/value getters,
+name predicates and oldest-to-newest snapshot aggregation. Its real item-index
+local is slot 8, not the unused slot 4; updateScope is slot 2. Selector types and
+used fields carry the same roles as 6.3, with obfuscator storage left unchanged.
+
+`behavior_review.py.bind_accessor_sources` consumes the existing de4dot
+AccessorReview report, checks target path plus exact method identity/hash/MVID/
+signature, and binds a missing getter declaration to the recorded property token.
+The source hash and property/indexer kind remain mandatory. This supplies source
+evidence only and cannot alter a mapping blocker or permission. No graph rebuild,
+source substitution or ETS operation is involved. The two selected source links
+are preserved in `statistics63-wave193-accessor-sources.json`; their provenance is
+`accessors63-wave103.json`. Five portable tests in `test_behavior_review.py` pass
+on this Windows host, including physical-copy mismatch, stale source/signature,
+ambiguous owner and absent-binding rejection.
+
+Accepted cumulative reviews: `statistics63-wave193.cumulative.json` and
+`statistics64-wave27.cumulative.json`. Both map updates contain 43 edits, from
+28/27 decisions respectively; existing CreateValue names were reviewed and kept.
+Selected checks verify complete families, getter source links, every scoped
+decision and prior map preservation. SDK bindings remain, with zero errors or new
+suffixes. `statistics-wave193-validation.json` records evidence and tooling test
+scope. No ETS apply/export/build/full audit/launch ran.
+
+Next outward chain: IDiagSource snapshot providers and exception statistics.
+6.3 Interface30 `0x060006B6` belongs to the thirteen-member family
+`28F288B01A7C48F8A506C44BF6BFF2A8B42E62985061DFE117C6D48CE5A38097`
+in `usb63-layer-families-v2.json`; every member has the explicit-method-implementation
+blocker. Actual 6.4 contract is `Knx.Falcon.Diagnostics.IDiagSource.GetStatisticsSnapshot`
+(`0x06002F2E`). Enhance shared qualified-interface mapping with synthetic dispatch/
+reference tests before naming the family. Do not override inventory blockers.
+This tooling limitation does not block the overall goal; other work remains too.
 
 ## Unicast and programming-mode continuation (192)
 
@@ -101,8 +151,8 @@ complete physical families and preservation of prior aliases/scopes and SDK
 bindings. `unicast-wave192-validation.json` records selected reference evidence
 and deferred behavior checks. No ETS apply/export/build/full audit/launch ran.
 
-Next: statistics item factories/value aggregation, then remaining application
-components. Application-wide naming is still incomplete. Keep the previously
+This was followed by the statistics value/factory continuation above.
+Application-wide naming is still incomplete. Keep the previously
 recorded routing reconfiguration/construction-order anomalies and other pending
 items for consolidated verification.
 
@@ -512,18 +562,20 @@ are no new suffixes. No ETS operations or full audit ran.
   dispatch, subscription and complete write/raw-write contracts are reviewed.
   Secure-wrapper/receive handling and system-broadcast policy are now reviewed.
   Routing open/receive/discovery wiring, local programming mode and unicast
-  transport contracts are now reviewed. Continue statistics value/factory chains
-  and other application components. Review the memory-278
+  transport contracts and statistics value/factory chains are now reviewed.
+  Continue diagnostic snapshot-provider/exception chains and other application
+  components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
-- Remaining related contracts include statistics item factories/values.
+- Remaining related contracts include IDiagSource snapshot providers, whose
+  explicit implementation names need shared qualified-interface mapping support.
   Use `usb63-layer-families-v2.json`, filtering by physical module and token together.
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `unicast63-wave192-rev2.cumulative.json` and `unicast64-wave26-rev2.cumulative.json`; do not
+  `statistics63-wave193.cumulative.json` and `statistics64-wave27.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **192/26** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **193/27** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
