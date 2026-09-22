@@ -1,0 +1,647 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v11.xml",
+ "BaseMapSha256": "67E7FD3567C9F05BC26600A0E40482AAD1A00C75AC8B7274D0EB03B80645114D",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x0600323C",
+   "ProposedName": "WriteReport",
+   "Reason": "Pads/truncates to 64 bytes and writes to writable primary/secondary streams; rewinds the secondary stream if seekable. A missing primary stream throws IOException.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600323C",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 307,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "reportBuffer"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid64-wave175-il.json",
+    "Sha256": "CF3324FAE6954C1AA4E53BA3CF1BED35BA8CAC7A800E47F74BC61DE57BFDA135",
+    "Token": "0x0600323C",
+    "Slots": {
+     "0": "reportBuffer"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600323E",
+   "ProposedName": "ReadReport",
+   "Reason": "Reads one 64-byte report from the primary stream. Short reads return null; IOException closes and rethrows; cancellation returns null only when the primary stream has already been cleared.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600323E",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 339,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "reportBuffer"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "readException"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "result"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.IO.IOException",
+     "NewName": "ioException"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.OperationCanceledException",
+     "NewName": "cancellationException"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int32",
+     "NewName": "bytesRead"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid64-wave175-il.json",
+    "Sha256": "CF3324FAE6954C1AA4E53BA3CF1BED35BA8CAC7A800E47F74BC61DE57BFDA135",
+    "Token": "0x0600323E",
+    "Slots": {
+     "0": "reportBuffer",
+     "10": "bytesRead",
+     "7": "result",
+     "8": "ioException",
+     "9": "cancellationException",
+     "5": "readException"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003252",
+   "ProposedName": "ReadReportWithPolling",
+   "Reason": "Unix reader polls the descriptor in 1000 ms intervals and returns only a 64-byte read. IOException closes the device and returns null; other errors are logged and return null.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003252",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceUnix.cs",
+     "Line": 139,
+     "Sha256": "B430B3C449550D2F658B3F21E8B264DD11C4C00284BAEEB0FFC9AD1AEB9A4625"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "reportBuffer"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "result"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.IO.IOException",
+     "NewName": "ioException"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Exception",
+     "NewName": "readException"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd",
+     "NewName": "pollDescriptor"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid64-wave175-il.json",
+    "Sha256": "CF3324FAE6954C1AA4E53BA3CF1BED35BA8CAC7A800E47F74BC61DE57BFDA135",
+    "Token": "0x06003252",
+    "Slots": {
+     "0": "reportBuffer",
+     "8": "pollDescriptor",
+     "2": "result",
+     "3": "ioException",
+     "4": "readException"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003244",
+   "ProposedName": "WriteCapturedReport",
+   "Reason": "Task.Run callback invokes WriteReport with the captured device and data.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003244",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 464,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x0600323C",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 307,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003256",
+   "ProposedName": "ReadPolledReportCallback",
+   "Reason": "Task.Run delegate forwards to the Unix polling reader.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003256",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceUnix.cs",
+     "Line": 337,
+     "Sha256": "B430B3C449550D2F658B3F21E8B264DD11C4C00284BAEEB0FFC9AD1AEB9A4625"
+    },
+    {
+     "Id": "m0153:0x06003252",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceUnix.cs",
+     "Line": 139,
+     "Sha256": "B430B3C449550D2F658B3F21E8B264DD11C4C00284BAEEB0FFC9AD1AEB9A4625"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003251",
+   "ProposedName": "CloseFileDescriptor",
+   "Reason": "Returns false for a zero handle; otherwise converts it to an integer descriptor and checks libc close returns zero.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003251",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceUnix.cs",
+     "Line": 132,
+     "Sha256": "B430B3C449550D2F658B3F21E8B264DD11C4C00284BAEEB0FFC9AD1AEB9A4625"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "intptr_0",
+     "HasMetadata": true,
+     "NewName": "handle"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002151",
+   "ProposedName": "canRead",
+   "Reason": "Constructor read capability returned by CanRead.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002151",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 440,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x0600322C",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 53,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003235",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 200,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002153",
+   "ProposedName": "openedHandlers",
+   "Reason": "Opened event backing delegate.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002153",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 448,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x0600322E",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 78,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x0600322F",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 78,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003237",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 217,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002154",
+   "ProposedName": "closedHandlers",
+   "Reason": "Closed event backing delegate.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002154",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 452,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003230",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 113,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003231",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 113,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003238",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 253,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002157",
+   "ProposedName": "device",
+   "Reason": "Captured HidDevice used by WriteCapturedReport.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002157",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 485,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x0600323B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 297,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003244",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 464,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002158",
+   "ProposedName": "data",
+   "Reason": "Captured report bytes used by WriteCapturedReport.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002158",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 488,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x0600323B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 297,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    },
+    {
+     "Id": "m0153:0x06003244",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDevice.cs",
+     "Line": 464,
+     "Sha256": "36B22321FC109BD7B69CFD5227ACFC09742D527BDA7880EB8A23C89483BB289A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003279",
+   "ProposedName": "TryEnumerateDeviceInterface",
+   "Reason": "Enumerates an interface index and attempts detail/path retrieval; returns true even when detail retrieval fails and devicePath remains null.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003279",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceWindows.cs",
+     "Line": 163,
+     "Sha256": "1081B451A87F49A1C49C667C8AFE51796BDF052401108473BC9A4DBA7856CEEC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "intptr_0",
+     "HasMetadata": true,
+     "NewName": "deviceInfoSet"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "guid_0",
+     "HasMetadata": true,
+     "NewName": "interfaceClassGuid"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "uint_0",
+     "HasMetadata": true,
+     "NewName": "memberIndex"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "string_0",
+     "HasMetadata": true,
+     "NewName": "devicePath"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData",
+     "NewName": "interfaceData"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt32",
+     "NewName": "requiredSize"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData",
+     "NewName": "interfaceDetail"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData",
+     "NewName": "deviceInfo"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "detailException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid64-wave175-il.json",
+    "Sha256": "CF3324FAE6954C1AA4E53BA3CF1BED35BA8CAC7A800E47F74BC61DE57BFDA135",
+    "Token": "0x06003279",
+    "Slots": {
+     "0": "interfaceData",
+     "1": "requiredSize",
+     "2": "interfaceDetail",
+     "3": "deviceInfo",
+     "5": "detailException"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600327A",
+   "ProposedName": "CreateDeviceFromWindowsPath",
+   "Reason": "Rejects nonmatching HID paths; probes read/write access with a shared handle, then creates a device even if both capabilities remain false.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600327A",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceWindows.cs",
+     "Line": 198,
+     "Sha256": "1081B451A87F49A1C49C667C8AFE51796BDF052401108473BC9A4DBA7856CEEC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "path"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 3,
+     "ExpectedType": "System.Boolean",
+     "NewName": "canWrite"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "canRead"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Microsoft.Win32.SafeHandles.SafeFileHandle",
+     "NewName": "probeHandle"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid64-wave175-il.json",
+    "Sha256": "CF3324FAE6954C1AA4E53BA3CF1BED35BA8CAC7A800E47F74BC61DE57BFDA135",
+    "Token": "0x0600327A",
+    "Slots": {
+     "4": "canRead",
+     "3": "canWrite",
+     "5": "probeHandle"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003255",
+   "ProposedName": "CreateDeviceFromSysfs",
+   "Reason": "Reads hid-generic uevent identity or resolves the sysfs parent to idVendor/idProduct, probes /dev read/write access and creates a Unix HID device. Requested ID filters apply only in the uevent branch; the fallback does not apply them.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003255",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/HidDeviceUnix.cs",
+     "Line": 195,
+     "Sha256": "B430B3C449550D2F658B3F21E8B264DD11C4C00284BAEEB0FFC9AD1AEB9A4625"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "vendorId"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "productId"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "hidrawName"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003357",
+   "ProposedName": "MatchesDevicePath",
+   "Reason": "Exact Path equality predicate used by FirstOrDefault during USB interface discovery.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003357",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1732,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003305",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 44,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "d",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0400225D",
+   "ProposedName": "devicePath",
+   "Reason": "Captured requested path compared by MatchesDevicePath.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400225D",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1753,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003357",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1732,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003305",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 44,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0600335C",
+   "ProposedName": "MatchRequestedFeatureResponse",
+   "Reason": "Accepts only FeatureService USB messages carrying DeviceFeatureResponse for the requested feature; returns its value tuple, otherwise false/null.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600335C",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1765,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x0600331D",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 462,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "m",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0400225F",
+   "ProposedName": "requestedFeature",
+   "Reason": "Feature identifier captured by ReadFeatureInfoAsync for response matching.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400225F",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1795,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x0600331D",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 462,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x0600335C",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1765,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

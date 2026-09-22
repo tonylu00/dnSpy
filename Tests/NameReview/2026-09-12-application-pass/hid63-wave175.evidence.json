@@ -1,0 +1,3575 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v174.xml",
+ "BaseMapSha256": "A5989C13DB8549E422034FF072B108B0D5C0E10C524F5C317798FEC35C0AC23F",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x06001B5B",
+   "ProposedName": "WriteReport",
+   "Reason": "Pads/truncates to 64 bytes and writes to writable primary/secondary streams; rewinds the secondary stream if seekable. A missing primary stream throws IOException.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B5B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 299,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "reportBuffer"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid63-wave175-il.json",
+    "Sha256": "F9C885BFE8A79F6E6E65B6976975C5324B660279B7406DE00A49D20E9AC68F0E",
+    "Token": "0x06001B5B",
+    "Slots": {
+     "0": "reportBuffer"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001B5D",
+   "ProposedName": "ReadReport",
+   "Reason": "Reads one 64-byte report from the primary stream. Short reads return null; IOException closes and rethrows; cancellation returns null only when the primary stream has already been cleared.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B5D",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 332,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "reportBuffer"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "bytesRead"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "result"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.IO.IOException",
+     "NewName": "ioException"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.OperationCanceledException",
+     "NewName": "cancellationException"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "readException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid63-wave175-il.json",
+    "Sha256": "F9C885BFE8A79F6E6E65B6976975C5324B660279B7406DE00A49D20E9AC68F0E",
+    "Token": "0x06001B5D",
+    "Slots": {
+     "0": "reportBuffer",
+     "1": "bytesRead",
+     "2": "result",
+     "3": "ioException",
+     "4": "cancellationException",
+     "5": "readException"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001B75",
+   "ProposedName": "ReadReportWithPolling",
+   "Reason": "Unix reader polls the descriptor in 1000 ms intervals and returns only a 64-byte read. IOException closes the device and returns null; other errors are logged and return null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "reportBuffer"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class1306/a/a",
+     "NewName": "pollDescriptor"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "result"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.IO.IOException",
+     "NewName": "ioException"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Exception",
+     "NewName": "readException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid63-wave175-il.json",
+    "Sha256": "F9C885BFE8A79F6E6E65B6976975C5324B660279B7406DE00A49D20E9AC68F0E",
+    "Token": "0x06001B75",
+    "Slots": {
+     "0": "reportBuffer",
+     "1": "pollDescriptor",
+     "2": "result",
+     "3": "ioException",
+     "4": "readException"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001B6B",
+   "ProposedName": "WriteCapturedReport",
+   "Reason": "Task.Run callback invokes WriteReport with the captured device and data.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B6B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 445,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 299,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B79",
+   "ProposedName": "ReadPolledReportCallback",
+   "Reason": "Task.Run delegate forwards to the Unix polling reader.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B79",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 346,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B74",
+   "ProposedName": "CloseFileDescriptor",
+   "Reason": "Returns false for a zero handle; otherwise converts it to an integer descriptor and checks libc close returns zero.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B74",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 134,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "intptr_0",
+     "HasMetadata": true,
+     "NewName": "handle"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B58",
+   "ProposedName": "OpenAsync",
+   "Reason": "Full IHidDevice/HidDevice/platform family. Windows opens an overlapped FileStream; Unix opens a descriptor shared by read/write streams. Both notify Opened after stream setup.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B58",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 281,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B63",
+   "ProposedName": "OpenAsync",
+   "Reason": "Full IHidDevice/HidDevice/platform family. Windows opens an overlapped FileStream; Unix opens a descriptor shared by read/write streams. Both notify Opened after stream setup.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B63",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 34,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B71",
+   "ProposedName": "OpenAsync",
+   "Reason": "Full IHidDevice/HidDevice/platform family. Windows opens an overlapped FileStream; Unix opens a descriptor shared by read/write streams. Both notify Opened after stream setup.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B8D",
+   "ProposedName": "OpenAsync",
+   "Reason": "Full IHidDevice/HidDevice/platform family. Windows opens an overlapped FileStream; Unix opens a descriptor shared by read/write streams. Both notify Opened after stream setup.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B59",
+   "ProposedName": "Close",
+   "Reason": "Full close family releases platform streams/handles and notifies Closed. Unix swallows close errors; Windows does not share that blanket catch.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B59",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 285,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 126,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B64",
+   "ProposedName": "Close",
+   "Reason": "Full close family releases platform streams/handles and notifies Closed. Unix swallows close errors; Windows does not share that blanket catch.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B64",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 38,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 126,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B73",
+   "ProposedName": "Close",
+   "Reason": "Full close family releases platform streams/handles and notifies Closed. Unix swallows close errors; Windows does not share that blanket catch.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 126,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B8E",
+   "ProposedName": "Close",
+   "Reason": "Full close family releases platform streams/handles and notifies Closed. Unix swallows close errors; Windows does not share that blanket catch.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B8E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 126,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 126,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B5A",
+   "ProposedName": "WriteAsync",
+   "Reason": "Interface and concrete base method schedule the captured synchronous report write with Task.Run and its cancellation token.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B5A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 289,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 289,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B6B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 445,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 299,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "data"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B66",
+   "ProposedName": "WriteAsync",
+   "Reason": "Interface and concrete base method schedule the captured synchronous report write with Task.Run and its cancellation token.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B66",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 50,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B5A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 289,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B6B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 445,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 299,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "data"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B5C",
+   "ProposedName": "ReadAsync",
+   "Reason": "Interface/base/Unix family schedules the corresponding report reader. Unix immediately returns a null result if its primary stream is absent or unreadable.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B5C",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 325,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5C",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 325,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B76",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 178,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B69",
+   "ProposedName": "ReadAsync",
+   "Reason": "Interface/base/Unix family schedules the corresponding report reader. Unix immediately returns a null result if its primary stream is absent or unreadable.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B69",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 70,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B5C",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 325,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B76",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 178,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B76",
+   "ProposedName": "ReadAsync",
+   "Reason": "Interface/base/Unix family schedules the corresponding report reader. Unix immediately returns a null result if its primary stream is absent or unreadable.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B76",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 178,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B5C",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 325,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B76",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 178,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B6C",
+   "ProposedName": "EnumerateDevices",
+   "Reason": "Device-list contract dispatches by Environment.OSVersion.Platform to Windows or Unix enumeration; unsupported platforms throw.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B6C",
+     "Path": "Knx.Falcon/Class1309.cs",
+     "Line": 10,
+     "Sha256": "07DE2FD47F0D94D5A0E783748C3C53893D31F996196923CF21DE1FE49719C112"
+    },
+    {
+     "Id": "m0088:0x06001B6C",
+     "Path": "Knx.Falcon/Class1309.cs",
+     "Line": 10,
+     "Sha256": "07DE2FD47F0D94D5A0E783748C3C53893D31F996196923CF21DE1FE49719C112"
+    },
+    {
+     "Id": "m0088:0x06001B77",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 189,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8F",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 155,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B6F",
+   "ProposedName": "EnumerateDevices",
+   "Reason": "Device-list contract dispatches by Environment.OSVersion.Platform to Windows or Unix enumeration; unsupported platforms throw.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B6F",
+     "Path": "Knx.Falcon/Interface70.cs",
+     "Line": 9,
+     "Sha256": "AE2D31EA133152267BDCB58DAB5DD8AC6E6F17C22FC6CAAB9A05DDF0DEFC4C7B"
+    },
+    {
+     "Id": "m0088:0x06001B6C",
+     "Path": "Knx.Falcon/Class1309.cs",
+     "Line": 10,
+     "Sha256": "07DE2FD47F0D94D5A0E783748C3C53893D31F996196923CF21DE1FE49719C112"
+    },
+    {
+     "Id": "m0088:0x06001B77",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 189,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8F",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 155,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004D6",
+   "ProposedName": "Knx.Falcon.Connectors.UsbConnector.IHidDevice",
+   "Reason": "VID/PID/path/capability and open/close/read/write contract used by USB communication.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004D6",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 6,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B63",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 34,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B64",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 38,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B66",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 50,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    },
+    {
+     "Id": "m0088:0x06001B69",
+     "Path": "Knx.Falcon/Interface69.cs",
+     "Line": 70,
+     "Sha256": "989ABD9769EE9A64F28E27C7FA86700255150A75B33571CE08FF2DBB5AE81405"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004D9",
+   "ProposedName": "Knx.Falcon.Connectors.UsbConnector.IHidDeviceList",
+   "Reason": "Enumeration contract consumed by the USB device-path factory.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004D9",
+     "Path": "Knx.Falcon/Interface70.cs",
+     "Line": 5,
+     "Sha256": "AE2D31EA133152267BDCB58DAB5DD8AC6E6F17C22FC6CAAB9A05DDF0DEFC4C7B"
+    },
+    {
+     "Id": "m0088:0x06001B6F",
+     "Path": "Knx.Falcon/Interface70.cs",
+     "Line": 9,
+     "Sha256": "AE2D31EA133152267BDCB58DAB5DD8AC6E6F17C22FC6CAAB9A05DDF0DEFC4C7B"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004DA",
+   "ProposedName": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix",
+   "Reason": "HID implementation using libc descriptors, poll and sysfs hidraw discovery.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004DA",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 17,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B78",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 197,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004DE",
+   "ProposedName": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows",
+   "Reason": "HID implementation using CreateFile, SetupAPI discovery and USB power-management registry checks.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004DE",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 14,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B8B",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 18,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004D7",
+   "ProposedName": "WriteReportContext",
+   "Reason": "Obfuscated closure holds the device and report for Task.Run.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004D7",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 440,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 289,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B6B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 445,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B52",
+   "ProposedName": "Create",
+   "Reason": "Preserves Create; selects platform and decodes Windows VID/PID from named regex captures.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B52",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 149,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "read"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "write"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.PlatformID",
+     "NewName": "platform"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt16",
+     "NewName": "vendorId"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.UInt16",
+     "NewName": "productId"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid63-wave175-il.json",
+    "Sha256": "F9C885BFE8A79F6E6E65B6976975C5324B660279B7406DE00A49D20E9AC68F0E",
+    "Token": "0x06001B52",
+    "Slots": {
+     "0": "platform",
+     "1": "vendorId",
+     "2": "productId"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001B53",
+   "ProposedName": "Create",
+   "Reason": "Preserves Create; explicit vendor/product IDs and access capabilities feed the selected platform constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B53",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 172,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_2",
+     "HasMetadata": true,
+     "NewName": "vid"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "pid"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "read"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "write"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B54",
+   "ProposedName": "",
+   "Reason": "Stores device identity, path and advertised read/write capabilities.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B54",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 192,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_2",
+     "HasMetadata": true,
+     "NewName": "vid"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "pid"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "read"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "write"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B70",
+   "ProposedName": "",
+   "Reason": "Unix constructor forwards all identity and access values to HidDevice.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B70",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 21,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B54",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 192,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_2",
+     "HasMetadata": true,
+     "NewName": "vid"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "pid"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "read"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "write"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B8C",
+   "ProposedName": "",
+   "Reason": "Windows constructor forwards all identity and access values to HidDevice.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B8C",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 72,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B54",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 192,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_2",
+     "HasMetadata": true,
+     "NewName": "vid"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "pid"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "read"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "write"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B72",
+   "ProposedName": "OpenHandle",
+   "Reason": "Preserves OpenHandle. Uses libc open with read/write flags; share is retained but unused by this implementation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B72",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 72,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "share"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B8B",
+   "ProposedName": "IsKnxUsbFixInstalled",
+   "Reason": "Checks the matched Windows USB registry instance for EnhancedPowerManagementEnabled equal to zero.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B8B",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 18,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "path"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B77",
+   "ProposedName": "EnumerateDevicesUnix",
+   "Reason": "Creates the iterator over /sys/class/hidraw entries, retaining the currently unused diagnostic argument.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B77",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 189,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B8F",
+   "ProposedName": "EnumerateDevicesWindows",
+   "Reason": "Creates the SetupAPI HID interface iterator, retaining the currently unused diagnostic argument.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B8F",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 155,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400171C",
+   "ProposedName": "Log",
+   "Reason": "Falcon.HidDevice logger used by both platform implementations.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400171C",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 392,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5D",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 332,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400171D",
+   "ProposedName": "_majorStream",
+   "Reason": "Primary stream: read/write on Windows and read on Unix; null determines IsOpen.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400171D",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 398,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B51",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 139,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400171E",
+   "ProposedName": "_minorStream",
+   "Reason": "Secondary Unix write stream sharing the primary descriptor.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400171E",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 401,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B5B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 299,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400171F",
+   "ProposedName": "_handlerMutex",
+   "Reason": "Lock used while snapshotting Opened/Closed event delegates.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400171F",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 404,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B56",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 209,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 245,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 464,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001720",
+   "ProposedName": "vid",
+   "Reason": "Vendor ID assigned by constructor and returned by VID.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001720",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 407,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B54",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 192,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B48",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 15,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001721",
+   "ProposedName": "pid",
+   "Reason": "Product ID assigned by constructor and returned by PID.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001721",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 411,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B54",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 192,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B49",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 27,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001725",
+   "ProposedName": "openedHandlers",
+   "Reason": "Delegate invoked after platform streams open.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001725",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 427,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B56",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 209,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B71",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 27,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 78,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001726",
+   "ProposedName": "closedHandlers",
+   "Reason": "Delegate invoked after platform stream cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001726",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 431,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 245,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 464,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B73",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 98,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B8E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 126,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001727",
+   "ProposedName": "WindowsPathRegex",
+   "Reason": "Named vendor/product hexadecimal captures from Windows HID paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001727",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 395,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B52",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 149,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B91",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 201,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001729",
+   "ProposedName": "device",
+   "Reason": "Captured HidDevice used by WriteCapturedReport.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001729",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 452,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 289,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B6B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 445,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400172A",
+   "ProposedName": "data",
+   "Reason": "Captured report bytes passed to WriteReport.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400172A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 455,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B5A",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 289,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B6B",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 445,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B4D",
+   "ProposedName": "add_Opened",
+   "Reason": "Compare-exchange delegate subscription slot; the corresponding Opened/Closed dispatcher and platform caller establish its role.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B4D",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 74,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B56",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 209,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B4E",
+   "ProposedName": "remove_Opened",
+   "Reason": "Compare-exchange delegate subscription slot; the corresponding Opened/Closed dispatcher and platform caller establish its role.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B4E",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 90,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B56",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 209,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B4F",
+   "ProposedName": "add_Closed",
+   "Reason": "Compare-exchange delegate subscription slot; the corresponding Opened/Closed dispatcher and platform caller establish its role.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B4F",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 106,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 245,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 464,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B50",
+   "ProposedName": "remove_Closed",
+   "Reason": "Compare-exchange delegate subscription slot; the corresponding Opened/Closed dispatcher and platform caller establish its role.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B50",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 122,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 245,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    },
+    {
+     "Id": "m0088:0x06001B57",
+     "Path": "Knx.Falcon/Class1305.cs",
+     "Line": 464,
+     "Sha256": "171F50D8EA31CD2A17FAAA0CECFA2DAB38A690FCF7B31994DC78511686365355"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B90",
+   "ProposedName": "TryEnumerateDeviceInterface",
+   "Reason": "Enumerates an interface index and attempts detail/path retrieval; returns true even when detail retrieval fails and devicePath remains null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "intptr_0",
+     "HasMetadata": true,
+     "NewName": "deviceInfoSet"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "guid_0",
+     "HasMetadata": true,
+     "NewName": "interfaceClassGuid"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "uint_0",
+     "HasMetadata": true,
+     "NewName": "memberIndex"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "devicePath"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1307/a/a",
+     "NewName": "interfaceData"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt32",
+     "NewName": "requiredSize"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Class1307/a/b",
+     "NewName": "interfaceDetail"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class1307/a/c",
+     "NewName": "deviceInfo"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "detailException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid63-wave175-il.json",
+    "Sha256": "F9C885BFE8A79F6E6E65B6976975C5324B660279B7406DE00A49D20E9AC68F0E",
+    "Token": "0x06001B90",
+    "Slots": {
+     "0": "interfaceData",
+     "1": "requiredSize",
+     "2": "interfaceDetail",
+     "3": "deviceInfo",
+     "5": "detailException"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001B91",
+   "ProposedName": "CreateDeviceFromWindowsPath",
+   "Reason": "Rejects nonmatching HID paths; probes read/write access with a shared handle, then creates a device even if both capabilities remain false.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B91",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 201,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "path"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "canRead"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "canWrite"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Microsoft.Win32.SafeHandles.SafeFileHandle",
+     "NewName": "probeHandle"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\hid63-wave175-il.json",
+    "Sha256": "F9C885BFE8A79F6E6E65B6976975C5324B660279B7406DE00A49D20E9AC68F0E",
+    "Token": "0x06001B91",
+    "Slots": {
+     "0": "canRead",
+     "1": "canWrite",
+     "2": "probeHandle"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001B78",
+   "ProposedName": "CreateDeviceFromSysfs",
+   "Reason": "Reads hid-generic uevent identity or resolves the sysfs parent to idVendor/idProduct, probes /dev read/write access and creates a Unix HID device. Requested ID filters apply only in the uevent branch; the fallback does not apply them.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B78",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 197,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_2",
+     "HasMetadata": true,
+     "NewName": "vendorId"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "productId"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_3",
+     "HasMetadata": true,
+     "NewName": "hidrawName"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004DB",
+   "ProposedName": "LibC",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004DB",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 359,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7A",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 363,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7B",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 368,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7C",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 373,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7D",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 378,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004DC",
+   "ProposedName": "PollFd",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004DC",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 810,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B80",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 815,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B75",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 141,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004DF",
+   "ProposedName": "SetupApi",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004DF",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 233,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B92",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 237,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B93",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 242,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B94",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 247,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004E0",
+   "ProposedName": "DeviceInterfaceData",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004E0",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 273,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B98",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 278,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B93",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 242,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004E1",
+   "ProposedName": "DeviceInterfaceDetailData",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004E1",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 308,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9A",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 313,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004E2",
+   "ProposedName": "DeviceInfoData",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004E2",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 342,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9C",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 347,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004E3",
+   "ProposedName": "Hid",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004E3",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 378,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9E",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 382,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9F",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 387,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004E4",
+   "ProposedName": "Kernel32",
+   "Reason": "Native wrapper/layout role established by explicit import library/entry points, call arguments and independently readable 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004E4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 401,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA1",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 405,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA2",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 410,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B81",
+   "ProposedName": "get_NativeSize",
+   "Reason": "Marshal.SizeOf(PollFd).",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B81",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 827,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B99",
+   "ProposedName": "get_NativeSize",
+   "Reason": "Marshal.SizeOf(DeviceInterfaceData).",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B99",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 288,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B9B",
+   "ProposedName": "get_NativeSize",
+   "Reason": "Architecture-specific detail-header size: pointer size on 64-bit, UInt32 plus Char marshal size otherwise.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B9B",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 323,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B9D",
+   "ProposedName": "get_NativeSize",
+   "Reason": "Marshal.SizeOf(DeviceInfoData).",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B9D",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 357,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B3",
+   "ProposedName": "fd",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B3",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 834,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B80",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 815,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7D",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 378,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B4",
+   "ProposedName": "events",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B4",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 837,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B80",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 815,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7D",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 378,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B5",
+   "ProposedName": "revents",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B5",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 840,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B80",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 815,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B7D",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 378,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017BF",
+   "ProposedName": "Size",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017BF",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 295,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B98",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 278,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C0",
+   "ProposedName": "InterfaceClassGuid",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C0",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 298,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B98",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 278,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C1",
+   "ProposedName": "Flags",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C1",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 301,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B98",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 278,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C2",
+   "ProposedName": "Reserved",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C2",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 304,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B98",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 278,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C3",
+   "ProposedName": "cbSize",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C3",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 334,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9A",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 313,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C4",
+   "ProposedName": "DevicePath",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 337,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9A",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 313,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B90",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 163,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C5",
+   "ProposedName": "cbSize",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C5",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 364,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9C",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 347,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C6",
+   "ProposedName": "ClassGuid",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 367,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9C",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 347,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C7",
+   "ProposedName": "DevInst",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 370,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9C",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 347,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017C8",
+   "ProposedName": "Reserved",
+   "Reason": "Native structure member role verified against initialization/native argument position and matching 6.4 declaration; field type, order and marshaling remain intact.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017C8",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 373,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B9C",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 347,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001B95",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 252,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004DD",
+   "ProposedName": "EnumerateUnixDevicesIterator",
+   "Reason": "Obfuscated iterator for the reviewed platform discovery path.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004DD",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 845,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B85",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 936,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B82",
+   "ProposedName": "",
+   "Reason": "Initializes iterator state and captures the current managed thread ID.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B82",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 850,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001B85",
+   "ProposedName": "DisposeDirectoryEnumerator",
+   "Reason": "Iterator finally resets its state and releases the underlying enumeration resource.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B85",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 936,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B6",
+   "ProposedName": "state",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B6",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 1004,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B82",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 850,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B85",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 936,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B7",
+   "ProposedName": "current",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B7",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 1007,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B82",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 850,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B85",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 936,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B8",
+   "ProposedName": "initialThreadId",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B8",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 1010,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B82",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 850,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B85",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 936,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017B9",
+   "ProposedName": "directories",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017B9",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 1013,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B82",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 850,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B84",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 883,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    },
+    {
+     "Id": "m0088:0x06001B85",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 936,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004E5",
+   "ProposedName": "EnumerateWindowsDevicesIterator",
+   "Reason": "Obfuscated iterator for the reviewed platform discovery path.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004E5",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 440,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BA4",
+   "ProposedName": "",
+   "Reason": "Initializes iterator state and captures the current managed thread ID.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BA7",
+   "ProposedName": "DestroyDeviceInfoSet",
+   "Reason": "Iterator finally resets its state and releases the underlying enumeration resource.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017D2",
+   "ProposedName": "state",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017D2",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 600,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017D3",
+   "ProposedName": "current",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017D3",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 603,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017D4",
+   "ProposedName": "initialThreadId",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017D4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 606,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017D5",
+   "ProposedName": "hidClassGuid",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017D5",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 609,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017D6",
+   "ProposedName": "deviceInfoSet",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017D6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 612,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017D7",
+   "ProposedName": "memberIndex",
+   "Reason": "Iterator role established by constructor, MoveNext and resource cleanup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017D7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 615,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA4",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 445,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA6",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 478,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    },
+    {
+     "Id": "m0088:0x06001BA7",
+     "Path": "Knx.Falcon/Class1307.cs",
+     "Line": 535,
+     "Sha256": "4BC05270ADF3A439FA8D371BE4B9648BDE8948524054B7B95E49BD956F20DFCD"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C2B",
+   "ProposedName": "MatchesDevicePath",
+   "Reason": "Exact Path equality predicate used by FirstOrDefault during USB interface discovery.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C2B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1047,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface69_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400182D",
+   "ProposedName": "devicePath",
+   "Reason": "Captured requested path compared by MatchesDevicePath.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400182D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1054,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1047,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004F5",
+   "ProposedName": "DevicePathMatchContext",
+   "Reason": "Obfuscated closure retaining the requested HID path for discovery.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004F5",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1042,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1047,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BE7",
+   "ProposedName": "OpenAsync",
+   "Reason": "Preserves OpenAsync; enumerates devices, finds the requested path, then delegates to the selected-device factory.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface70_0",
+     "HasMetadata": true,
+     "NewName": "usbDeviceList"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_11",
+     "HasMetadata": true,
+     "NewName": "devicePath"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_12",
+     "HasMetadata": true,
+     "NewName": "friendlyName"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "usbDeviceDiscoveryResult_1",
+     "HasMetadata": true,
+     "NewName": "discoveryResult"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "reconnectInterval"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 7,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004FB",
+   "ProposedName": "OpenDeviceByPathStateMachine",
+   "Reason": "Async carrier for device enumeration/path matching and the selected-device OpenAsync result.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004FB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1122,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400184D",
+   "ProposedName": "state",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400184D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1179,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400184E",
+   "ProposedName": "builder",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400184E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1182,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400184F",
+   "ProposedName": "devicePath",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400184F",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1185,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001850",
+   "ProposedName": "usbDeviceList",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001850",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1188,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001851",
+   "ProposedName": "diagEventSink",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001851",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1191,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001852",
+   "ProposedName": "friendlyName",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001852",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1194,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001853",
+   "ProposedName": "discoveryResult",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001853",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1197,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001854",
+   "ProposedName": "reconnectInterval",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001854",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1200,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001855",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001855",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1203,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001856",
+   "ProposedName": "openAwaiter",
+   "Reason": "Captured factory argument/result-await role verified in wrapper assignments and MoveNext.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001856",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1206,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 39,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C36",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [
+  {
+   "Id": "m0088:0x06001B7A",
+   "ProposedName": "RealPath",
+   "Reason": "Explicit libc EntryPoint establishes the operation. Pending only: native-or-runtime-method mapping guard is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B7A",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 363,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_1",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "stringBuilder_0",
+     "HasMetadata": true,
+     "NewName": "resolvedPath"
+    }
+   ],
+   "Locals": [],
+   "Blocker": "native-or-runtime-method"
+  },
+  {
+   "Id": "m0088:0x06001B7B",
+   "ProposedName": "Open",
+   "Reason": "Explicit libc EntryPoint establishes the operation. Pending only: native-or-runtime-method mapping guard is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B7B",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 368,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_1",
+     "HasMetadata": true,
+     "NewName": "path"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_130",
+     "HasMetadata": true,
+     "NewName": "flags"
+    }
+   ],
+   "Locals": [],
+   "Blocker": "native-or-runtime-method"
+  },
+  {
+   "Id": "m0088:0x06001B7C",
+   "ProposedName": "Close",
+   "Reason": "Explicit libc EntryPoint establishes the operation. Pending only: native-or-runtime-method mapping guard is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B7C",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 373,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_130",
+     "HasMetadata": true,
+     "NewName": "fileDescriptor"
+    }
+   ],
+   "Locals": [],
+   "Blocker": "native-or-runtime-method"
+  },
+  {
+   "Id": "m0088:0x06001B7D",
+   "ProposedName": "Poll",
+   "Reason": "Explicit libc EntryPoint establishes the operation. Pending only: native-or-runtime-method mapping guard is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001B7D",
+     "Path": "Knx.Falcon/Class1306.cs",
+     "Line": 378,
+     "Sha256": "9969C544ECA1E0D722C58408D98099B7CD8308F83829A002FC140B396DA25B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "a_0",
+     "HasMetadata": true,
+     "NewName": "descriptors"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_130",
+     "HasMetadata": true,
+     "NewName": "descriptorCount"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "int_131",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    }
+   ],
+   "Locals": [],
+   "Blocker": "native-or-runtime-method"
+  }
+ ],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave174.json`. Current staged maps are **6.3 v174** and **6.4 v11**.
+`checkpoint-wave175.json`. Current staged maps are **6.3 v175** and **6.4 v12**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -20,6 +20,11 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- HID device contract families, base report reads/writes, Unix polling and Windows
+  interface enumeration/access probing (`hid_devices.py`). Methods, constructors,
+  native layout roles, iterator state and verified IL locals connect to the USB
+  device-path factory and feature-response matcher. Four libc aliases remain
+  pending behind the native-method mapping guard; their evidence is recorded.
 - USB HID validation and fragment reassembly, timestamped read-failure messages,
   feature negotiation, connection/reconnection, receive-task ownership and state
   transitions (`usb_lifecycle.py`). Ordered outbound fragments complete or fault

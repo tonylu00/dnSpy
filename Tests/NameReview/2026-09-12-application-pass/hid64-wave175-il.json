@@ -1,0 +1,2362 @@
+{
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Methods": [
+    {
+      "Token": "0x0600323C",
+      "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.HidDevice::method_0(System.Byte[])",
+      "Flags": "Private, HideBySig",
+      "HasBody": true,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDevice"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 1,
+          "Name": "byte_0",
+          "Type": "System.Byte[]"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.Int32"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 14
+          }
+        },
+        {
+          "Offset": 8,
+          "OpCode": "newobj",
+          "Operand": {
+            "Token": "0x0A0011FB",
+            "Text": "System.Void System.IO.IOException::.ctor()"
+          }
+        },
+        {
+          "Offset": 13,
+          "OpCode": "throw",
+          "Operand": null
+        },
+        {
+          "Offset": 14,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 16,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x01000020",
+            "Text": "System.Byte"
+          }
+        },
+        {
+          "Offset": 21,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 23,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 25,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 26,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 28,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A0003EE",
+            "Text": "System.Void System.Array::Clear(System.Array,System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 33,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 34,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 36,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 38,
+          "OpCode": "ldarg.1",
+          "Operand": null
+        },
+        {
+          "Offset": 39,
+          "OpCode": "ldlen",
+          "Operand": null
+        },
+        {
+          "Offset": 40,
+          "OpCode": "conv.i4",
+          "Operand": null
+        },
+        {
+          "Offset": 41,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A00034E",
+            "Text": "System.Int32 System.Math::Min(System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 46,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0A0002E9",
+            "Text": "System.Void System.Array::Copy(System.Array,System.Array,System.Int32)"
+          }
+        },
+        {
+          "Offset": 51,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 52,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 57,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0011FC",
+            "Text": "System.Boolean System.IO.Stream::get_CanWrite()"
+          }
+        },
+        {
+          "Offset": 62,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 82
+          }
+        },
+        {
+          "Offset": 64,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 65,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 70,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 72,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 73,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 75,
+          "OpCode": "ldlen",
+          "Operand": null
+        },
+        {
+          "Offset": 76,
+          "OpCode": "conv.i4",
+          "Operand": null
+        },
+        {
+          "Offset": 77,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0003F9",
+            "Text": "System.Void System.IO.Stream::Write(System.Byte[],System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 82,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 83,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214C",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_minorStream"
+          }
+        },
+        {
+          "Offset": 88,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 156
+          }
+        },
+        {
+          "Offset": 90,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 91,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214C",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_minorStream"
+          }
+        },
+        {
+          "Offset": 96,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0011FC",
+            "Text": "System.Boolean System.IO.Stream::get_CanWrite()"
+          }
+        },
+        {
+          "Offset": 101,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 156
+          }
+        },
+        {
+          "Offset": 103,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 104,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214C",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_minorStream"
+          }
+        },
+        {
+          "Offset": 109,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 111,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 112,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 114,
+          "OpCode": "ldlen",
+          "Operand": null
+        },
+        {
+          "Offset": 115,
+          "OpCode": "conv.i4",
+          "Operand": null
+        },
+        {
+          "Offset": 116,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0003F9",
+            "Text": "System.Void System.IO.Stream::Write(System.Byte[],System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 121,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 122,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214C",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_minorStream"
+          }
+        },
+        {
+          "Offset": 127,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0011FA",
+            "Text": "System.Boolean System.IO.Stream::get_CanSeek()"
+          }
+        },
+        {
+          "Offset": 132,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 156
+          }
+        },
+        {
+          "Offset": 134,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 135,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214C",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_minorStream"
+          }
+        },
+        {
+          "Offset": 140,
+          "OpCode": "ldc.i8",
+          "Operand": "0"
+        },
+        {
+          "Offset": 149,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 150,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A001198",
+            "Text": "System.Int64 System.IO.Stream::Seek(System.Int64,System.IO.SeekOrigin)"
+          }
+        },
+        {
+          "Offset": 155,
+          "OpCode": "pop",
+          "Operand": null
+        },
+        {
+          "Offset": 156,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": []
+    },
+    {
+      "Token": "0x0600323E",
+      "Signature": "System.Byte[] Knx.Falcon.Connectors.UsbConnector.HidDevice::method_1()",
+      "Flags": "Private, HideBySig",
+      "HasBody": true,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDevice"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 2,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 3,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 4,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 5,
+          "Type": "System.Exception"
+        },
+        {
+          "Slot": 6,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 7,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Slot": 8,
+          "Type": "System.IO.IOException"
+        },
+        {
+          "Slot": 9,
+          "Type": "System.OperationCanceledException"
+        },
+        {
+          "Slot": 10,
+          "Type": "System.Int32"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 21
+          }
+        },
+        {
+          "Offset": 8,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 9,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 14,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0011FE",
+            "Text": "System.Boolean System.IO.Stream::get_CanRead()"
+          }
+        },
+        {
+          "Offset": 19,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 23
+          }
+        },
+        {
+          "Offset": 21,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 22,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 23,
+          "OpCode": "nop",
+          "Operand": null
+        },
+        {
+          "Offset": 24,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 26,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x01000020",
+            "Text": "System.Byte"
+          }
+        },
+        {
+          "Offset": 31,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 33,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 34,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 39,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 41,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 42,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 44,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000400",
+            "Text": "System.Int32 System.IO.Stream::Read(System.Byte[],System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 49,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 10,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 51,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 10,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 53,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 55,
+          "OpCode": "bne.un.s",
+          "Operand": {
+            "BranchTarget": 59
+          }
+        },
+        {
+          "Offset": 57,
+          "OpCode": "br.s",
+          "Operand": {
+            "BranchTarget": 99
+          }
+        },
+        {
+          "Offset": 59,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 10,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 61,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 62,
+          "OpCode": "bgt.s",
+          "Operand": {
+            "BranchTarget": 66
+          }
+        },
+        {
+          "Offset": 64,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 21
+          }
+        },
+        {
+          "Offset": 66,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 71,
+          "OpCode": "ldstr",
+          "Operand": "Unexpected number of received bytes {0}"
+        },
+        {
+          "Offset": 76,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 77,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x01000019",
+            "Text": "System.Object"
+          }
+        },
+        {
+          "Offset": 82,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 83,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 84,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 10,
+            "Type": "System.Int32"
+          }
+        },
+        {
+          "Offset": 86,
+          "OpCode": "box",
+          "Operand": {
+            "Token": "0x01000004",
+            "Text": "System.Int32"
+          }
+        },
+        {
+          "Offset": 91,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 92,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F7B",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::WarnFormat(System.String,System.Object[])"
+          }
+        },
+        {
+          "Offset": 97,
+          "OpCode": "br.s",
+          "Operand": {
+            "BranchTarget": 64
+          }
+        },
+        {
+          "Offset": 99,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 101,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 103,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 172
+          }
+        },
+        {
+          "Offset": 105,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 8,
+            "Type": "System.IO.IOException"
+          }
+        },
+        {
+          "Offset": 107,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 112,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 8,
+            "Type": "System.IO.IOException"
+          }
+        },
+        {
+          "Offset": 114,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F79",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::Warn(System.Object)"
+          }
+        },
+        {
+          "Offset": 119,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 120,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0600323A",
+            "Text": "System.Void Knx.Falcon.Connectors.UsbConnector.HidDevice::Close()"
+          }
+        },
+        {
+          "Offset": 125,
+          "OpCode": "rethrow",
+          "Operand": null
+        },
+        {
+          "Offset": 127,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 9,
+            "Type": "System.OperationCanceledException"
+          }
+        },
+        {
+          "Offset": 129,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 130,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 135,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 151
+          }
+        },
+        {
+          "Offset": 137,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 142,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 9,
+            "Type": "System.OperationCanceledException"
+          }
+        },
+        {
+          "Offset": 144,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F79",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::Warn(System.Object)"
+          }
+        },
+        {
+          "Offset": 149,
+          "OpCode": "rethrow",
+          "Operand": null
+        },
+        {
+          "Offset": 151,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 152,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 154,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 172
+          }
+        },
+        {
+          "Offset": 156,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 158,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 163,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 165,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F79",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::Warn(System.Object)"
+          }
+        },
+        {
+          "Offset": 170,
+          "OpCode": "rethrow",
+          "Operand": null
+        },
+        {
+          "Offset": 172,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 174,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Catch",
+          "TryStart": 24,
+          "TryEnd": 105,
+          "HandlerStart": 105,
+          "HandlerEnd": 127,
+          "FilterStart": null,
+          "CatchType": "System.IO.IOException"
+        },
+        {
+          "Kind": "Catch",
+          "TryStart": 24,
+          "TryEnd": 105,
+          "HandlerStart": 127,
+          "HandlerEnd": 156,
+          "FilterStart": null,
+          "CatchType": "System.OperationCanceledException"
+        },
+        {
+          "Kind": "Catch",
+          "TryStart": 24,
+          "TryEnd": 105,
+          "HandlerStart": 156,
+          "HandlerEnd": 172,
+          "FilterStart": null,
+          "CatchType": "System.Exception"
+        }
+      ]
+    },
+    {
+      "Token": "0x06003252",
+      "Signature": "System.Byte[] Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix::method_2()",
+      "Flags": "Private, HideBySig",
+      "HasBody": true,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": null,
+          "Name": "",
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 2,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Slot": 3,
+          "Type": "System.IO.IOException"
+        },
+        {
+          "Slot": 4,
+          "Type": "System.Exception"
+        },
+        {
+          "Slot": 5,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 6,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 7,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 8,
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 6,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 21
+          }
+        },
+        {
+          "Offset": 8,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 9,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 14,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0011FE",
+            "Text": "System.Boolean System.IO.Stream::get_CanRead()"
+          }
+        },
+        {
+          "Offset": 19,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 23
+          }
+        },
+        {
+          "Offset": 21,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 22,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 23,
+          "OpCode": "nop",
+          "Operand": null
+        },
+        {
+          "Offset": 24,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 26,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x01000020",
+            "Text": "System.Byte"
+          }
+        },
+        {
+          "Offset": 31,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 33,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 34,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 39,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 54
+          }
+        },
+        {
+          "Offset": 41,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 42,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 47,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A001205",
+            "Text": "Microsoft.Win32.SafeHandles.SafeFileHandle System.IO.FileStream::get_SafeFileHandle()"
+          }
+        },
+        {
+          "Offset": 52,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 56
+          }
+        },
+        {
+          "Offset": 54,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 21
+          }
+        },
+        {
+          "Offset": 56,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 57,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 62,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A001205",
+            "Text": "Microsoft.Win32.SafeHandles.SafeFileHandle System.IO.FileStream::get_SafeFileHandle()"
+          }
+        },
+        {
+          "Offset": 67,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A001206",
+            "Text": "System.IntPtr System.Runtime.InteropServices.SafeHandle::DangerousGetHandle()"
+          }
+        },
+        {
+          "Offset": 72,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06003263",
+            "Text": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd::Create(System.IntPtr)"
+          }
+        },
+        {
+          "Offset": 77,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 8,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd"
+          }
+        },
+        {
+          "Offset": 79,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 8,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd"
+          }
+        },
+        {
+          "Offset": 81,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 82,
+          "OpCode": "ldc.i4",
+          "Operand": "1000"
+        },
+        {
+          "Offset": 87,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600325D",
+            "Text": "System.Int32 Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC::Poll(Knx.Falcon.Connectors.UsbConnector.HidDeviceUnix/LibC/PollFd\u0026,System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 92,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 93,
+          "OpCode": "ble.s",
+          "Operand": {
+            "BranchTarget": 33
+          }
+        },
+        {
+          "Offset": 95,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 96,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x0400214B",
+            "Text": "System.IO.FileStream Knx.Falcon.Connectors.UsbConnector.HidDevice::_majorStream"
+          }
+        },
+        {
+          "Offset": 101,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 103,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 104,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 106,
+          "OpCode": "ldlen",
+          "Operand": null
+        },
+        {
+          "Offset": 107,
+          "OpCode": "conv.i4",
+          "Operand": null
+        },
+        {
+          "Offset": 108,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000400",
+            "Text": "System.Int32 System.IO.Stream::Read(System.Byte[],System.Int32,System.Int32)"
+          }
+        },
+        {
+          "Offset": 113,
+          "OpCode": "ldc.i4.s",
+          "Operand": "64"
+        },
+        {
+          "Offset": 115,
+          "OpCode": "bne.un.s",
+          "Operand": {
+            "BranchTarget": 33
+          }
+        },
+        {
+          "Offset": 117,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 119,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 121,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 164
+          }
+        },
+        {
+          "Offset": 123,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.IO.IOException"
+          }
+        },
+        {
+          "Offset": 125,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 130,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.IO.IOException"
+          }
+        },
+        {
+          "Offset": 132,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F79",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::Warn(System.Object)"
+          }
+        },
+        {
+          "Offset": 137,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 138,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0600323A",
+            "Text": "System.Void Knx.Falcon.Connectors.UsbConnector.HidDevice::Close()"
+          }
+        },
+        {
+          "Offset": 143,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 21
+          }
+        },
+        {
+          "Offset": 145,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 147,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 152,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 154,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F79",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::Warn(System.Object)"
+          }
+        },
+        {
+          "Offset": 159,
+          "OpCode": "leave",
+          "Operand": {
+            "BranchTarget": 21
+          }
+        },
+        {
+          "Offset": 164,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "System.Byte[]"
+          }
+        },
+        {
+          "Offset": 166,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Catch",
+          "TryStart": 24,
+          "TryEnd": 123,
+          "HandlerStart": 123,
+          "HandlerEnd": 145,
+          "FilterStart": null,
+          "CatchType": "System.IO.IOException"
+        },
+        {
+          "Kind": "Catch",
+          "TryStart": 24,
+          "TryEnd": 123,
+          "HandlerStart": 145,
+          "HandlerEnd": 164,
+          "FilterStart": null,
+          "CatchType": "System.Exception"
+        }
+      ]
+    },
+    {
+      "Token": "0x06003279",
+      "Signature": "System.Boolean Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows::smethod_2(System.IntPtr,System.Guid,System.UInt32,System.String\u0026)",
+      "Flags": "Private, Static, HideBySig",
+      "HasBody": true,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": 1,
+          "Name": "intptr_0",
+          "Type": "System.IntPtr"
+        },
+        {
+          "ArgumentIndex": 1,
+          "Sequence": 2,
+          "Name": "guid_0",
+          "Type": "System.Guid"
+        },
+        {
+          "ArgumentIndex": 2,
+          "Sequence": 3,
+          "Name": "uint_0",
+          "Type": "System.UInt32"
+        },
+        {
+          "ArgumentIndex": 3,
+          "Sequence": 4,
+          "Name": "string_0",
+          "Type": "System.String\u0026"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.UInt32"
+        },
+        {
+          "Slot": 2,
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData"
+        },
+        {
+          "Slot": 3,
+          "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData"
+        },
+        {
+          "Slot": 4,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 5,
+          "Type": "System.Exception"
+        },
+        {
+          "Slot": 6,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 7,
+          "Type": "System.Boolean"
+        },
+        {
+          "Slot": 8,
+          "Type": "System.Int32"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldarg.3",
+          "Operand": null
+        },
+        {
+          "Offset": 1,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 2,
+          "OpCode": "stind.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 3,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06003287",
+            "Text": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData::Create()"
+          }
+        },
+        {
+          "Offset": 8,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData"
+          }
+        },
+        {
+          "Offset": 10,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 11,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0A0011FF",
+            "Text": "System.IntPtr System.IntPtr::Zero"
+          }
+        },
+        {
+          "Offset": 16,
+          "OpCode": "ldarga.s",
+          "Operand": {
+            "ArgumentIndex": 1,
+            "Name": "guid_0",
+            "Type": "System.Guid"
+          }
+        },
+        {
+          "Offset": 18,
+          "OpCode": "ldarg.2",
+          "Operand": null
+        },
+        {
+          "Offset": 19,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData"
+          }
+        },
+        {
+          "Offset": 21,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600327F",
+            "Text": "System.Boolean Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi::SetupDiEnumDeviceInterfaces(System.IntPtr,System.IntPtr,System.Guid\u0026,System.UInt32,Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData\u0026)"
+          }
+        },
+        {
+          "Offset": 26,
+          "OpCode": "brfalse",
+          "Operand": {
+            "BranchTarget": 173
+          }
+        },
+        {
+          "Offset": 31,
+          "OpCode": "nop",
+          "Operand": null
+        },
+        {
+          "Offset": 32,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 33,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.UInt32"
+          }
+        },
+        {
+          "Offset": 35,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 36,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData"
+          }
+        },
+        {
+          "Offset": 38,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0A0011FF",
+            "Text": "System.IntPtr System.IntPtr::Zero"
+          }
+        },
+        {
+          "Offset": 43,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 44,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.UInt32"
+          }
+        },
+        {
+          "Offset": 46,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0A0011FF",
+            "Text": "System.IntPtr System.IntPtr::Zero"
+          }
+        },
+        {
+          "Offset": 51,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06003280",
+            "Text": "System.Boolean Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi::SetupDiGetDeviceInterfaceDetail(System.IntPtr,Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData\u0026,System.IntPtr,System.UInt32,System.UInt32\u0026,System.IntPtr)"
+          }
+        },
+        {
+          "Offset": 56,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 90
+          }
+        },
+        {
+          "Offset": 58,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600328C",
+            "Text": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData::Create()"
+          }
+        },
+        {
+          "Offset": 63,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData"
+          }
+        },
+        {
+          "Offset": 65,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06003291",
+            "Text": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData::Create()"
+          }
+        },
+        {
+          "Offset": 70,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData"
+          }
+        },
+        {
+          "Offset": 72,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 73,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData"
+          }
+        },
+        {
+          "Offset": 75,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData"
+          }
+        },
+        {
+          "Offset": 77,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.UInt32"
+          }
+        },
+        {
+          "Offset": 79,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 1,
+            "Type": "System.UInt32"
+          }
+        },
+        {
+          "Offset": 81,
+          "OpCode": "ldloca.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData"
+          }
+        },
+        {
+          "Offset": 83,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06003281",
+            "Text": "System.Boolean Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi::SetupDiGetDeviceInterfaceDetail(System.IntPtr,Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData\u0026,Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData\u0026,System.UInt32,System.UInt32\u0026,Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInfoData\u0026)"
+          }
+        },
+        {
+          "Offset": 88,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 92
+          }
+        },
+        {
+          "Offset": 90,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 171
+          }
+        },
+        {
+          "Offset": 92,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData"
+          }
+        },
+        {
+          "Offset": 94,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x040021F4",
+            "Text": "System.String Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData::DevicePath"
+          }
+        },
+        {
+          "Offset": 99,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00067D",
+            "Text": "System.Int32 System.String::get_Length()"
+          }
+        },
+        {
+          "Offset": 104,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 105,
+          "OpCode": "ble.s",
+          "Operand": {
+            "BranchTarget": 90
+          }
+        },
+        {
+          "Offset": 107,
+          "OpCode": "ldarg.3",
+          "Operand": null
+        },
+        {
+          "Offset": 108,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 2,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData"
+          }
+        },
+        {
+          "Offset": 110,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x040021F4",
+            "Text": "System.String Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceDetailData::DevicePath"
+          }
+        },
+        {
+          "Offset": 115,
+          "OpCode": "stind.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 116,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 117,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 119,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 175
+          }
+        },
+        {
+          "Offset": 121,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 123,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0400214A",
+            "Text": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.HidDevice::Log"
+          }
+        },
+        {
+          "Offset": 128,
+          "OpCode": "ldstr",
+          "Operand": "Exception getting information for {0}: {1}"
+        },
+        {
+          "Offset": 133,
+          "OpCode": "ldc.i4.2",
+          "Operand": null
+        },
+        {
+          "Offset": 134,
+          "OpCode": "newarr",
+          "Operand": {
+            "Token": "0x01000019",
+            "Text": "System.Object"
+          }
+        },
+        {
+          "Offset": 139,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 140,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 141,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 0,
+            "Type": "Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData"
+          }
+        },
+        {
+          "Offset": 143,
+          "OpCode": "ldfld",
+          "Operand": {
+            "Token": "0x040021EF",
+            "Text": "System.Guid Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/SetupApi/DeviceInterfaceData::InterfaceClassGuid"
+          }
+        },
+        {
+          "Offset": 148,
+          "OpCode": "box",
+          "Operand": {
+            "Token": "0x010000B9",
+            "Text": "System.Guid"
+          }
+        },
+        {
+          "Offset": 153,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 154,
+          "OpCode": "dup",
+          "Operand": null
+        },
+        {
+          "Offset": 155,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 156,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "System.Exception"
+          }
+        },
+        {
+          "Offset": 158,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A0001FF",
+            "Text": "System.String System.Exception::get_Message()"
+          }
+        },
+        {
+          "Offset": 163,
+          "OpCode": "stelem.ref",
+          "Operand": null
+        },
+        {
+          "Offset": 164,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x06000F7B",
+            "Text": "System.Void Knx.Falcon.Logging.IFalconLogger::WarnFormat(System.String,System.Object[])"
+          }
+        },
+        {
+          "Offset": 169,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 171
+          }
+        },
+        {
+          "Offset": 171,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 172,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 173,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 174,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 175,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 7,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 177,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Catch",
+          "TryStart": 32,
+          "TryEnd": 121,
+          "HandlerStart": 121,
+          "HandlerEnd": 171,
+          "FilterStart": null,
+          "CatchType": "System.Exception"
+        }
+      ]
+    },
+    {
+      "Token": "0x0600327A",
+      "Signature": "Knx.Falcon.Connectors.UsbConnector.IHidDevice Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows::smethod_3(System.Object)",
+      "Flags": "Private, Static, HideBySig",
+      "HasBody": true,
+      "Parameters": [
+        {
+          "ArgumentIndex": 0,
+          "Sequence": 1,
+          "Name": "object_0",
+          "Type": "System.Object"
+        }
+      ],
+      "Locals": [
+        {
+          "Slot": 0,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 1,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 2,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 3,
+          "Type": "System.Boolean"
+        },
+        {
+          "Slot": 4,
+          "Type": "System.Boolean"
+        },
+        {
+          "Slot": 5,
+          "Type": "Microsoft.Win32.SafeHandles.SafeFileHandle"
+        },
+        {
+          "Slot": 6,
+          "Type": "System.Int32"
+        },
+        {
+          "Slot": 7,
+          "Type": "System.Int32"
+        }
+      ],
+      "Instructions": [
+        {
+          "Offset": 0,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x04002155",
+            "Text": "System.Text.RegularExpressions.Regex Knx.Falcon.Connectors.UsbConnector.HidDevice::WindowsPathRegex"
+          }
+        },
+        {
+          "Offset": 5,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 6,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A000402",
+            "Text": "System.Boolean System.Text.RegularExpressions.Regex::IsMatch(System.String)"
+          }
+        },
+        {
+          "Offset": 11,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 90
+          }
+        },
+        {
+          "Offset": 13,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 14,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 16,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 17,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 19,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 20,
+          "OpCode": "ldc.i4",
+          "Operand": "-1073741824"
+        },
+        {
+          "Offset": 25,
+          "OpCode": "ldc.i4.3",
+          "Operand": null
+        },
+        {
+          "Offset": 26,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0A0011FF",
+            "Text": "System.IntPtr System.IntPtr::Zero"
+          }
+        },
+        {
+          "Offset": 31,
+          "OpCode": "ldc.i4.3",
+          "Operand": null
+        },
+        {
+          "Offset": 32,
+          "OpCode": "ldc.i4.0",
+          "Operand": null
+        },
+        {
+          "Offset": 33,
+          "OpCode": "ldsfld",
+          "Operand": {
+            "Token": "0x0A0011FF",
+            "Text": "System.IntPtr System.IntPtr::Zero"
+          }
+        },
+        {
+          "Offset": 38,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x0600329C",
+            "Text": "Microsoft.Win32.SafeHandles.SafeFileHandle Knx.Falcon.Connectors.UsbConnector.HidDeviceWindows/Kernel32::CreateFile(System.String,System.UInt32,System.UInt32,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)"
+          }
+        },
+        {
+          "Offset": 43,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "Microsoft.Win32.SafeHandles.SafeFileHandle"
+          }
+        },
+        {
+          "Offset": 45,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "Microsoft.Win32.SafeHandles.SafeFileHandle"
+          }
+        },
+        {
+          "Offset": 47,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A001225",
+            "Text": "System.Boolean System.Runtime.InteropServices.SafeHandle::get_IsInvalid()"
+          }
+        },
+        {
+          "Offset": 52,
+          "OpCode": "brtrue.s",
+          "Operand": {
+            "BranchTarget": 60
+          }
+        },
+        {
+          "Offset": 54,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 55,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 57,
+          "OpCode": "ldc.i4.1",
+          "Operand": null
+        },
+        {
+          "Offset": 58,
+          "OpCode": "stloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 60,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 74
+          }
+        },
+        {
+          "Offset": 62,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "Microsoft.Win32.SafeHandles.SafeFileHandle"
+          }
+        },
+        {
+          "Offset": 64,
+          "OpCode": "brfalse.s",
+          "Operand": {
+            "BranchTarget": 73
+          }
+        },
+        {
+          "Offset": 66,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 5,
+            "Type": "Microsoft.Win32.SafeHandles.SafeFileHandle"
+          }
+        },
+        {
+          "Offset": 68,
+          "OpCode": "callvirt",
+          "Operand": {
+            "Token": "0x0A00018E",
+            "Text": "System.Void System.IDisposable::Dispose()"
+          }
+        },
+        {
+          "Offset": 73,
+          "OpCode": "endfinally",
+          "Operand": null
+        },
+        {
+          "Offset": 74,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 79
+          }
+        },
+        {
+          "Offset": 76,
+          "OpCode": "pop",
+          "Operand": null
+        },
+        {
+          "Offset": 77,
+          "OpCode": "leave.s",
+          "Operand": {
+            "BranchTarget": 79
+          }
+        },
+        {
+          "Offset": 79,
+          "OpCode": "ldarg.0",
+          "Operand": null
+        },
+        {
+          "Offset": 80,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 4,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 82,
+          "OpCode": "ldloc.s",
+          "Operand": {
+            "LocalSlot": 3,
+            "Type": "System.Boolean"
+          }
+        },
+        {
+          "Offset": 84,
+          "OpCode": "call",
+          "Operand": {
+            "Token": "0x06003233",
+            "Text": "Knx.Falcon.Connectors.UsbConnector.IHidDevice Knx.Falcon.Connectors.UsbConnector.HidDevice::Create(System.String,System.Boolean,System.Boolean)"
+          }
+        },
+        {
+          "Offset": 89,
+          "OpCode": "ret",
+          "Operand": null
+        },
+        {
+          "Offset": 90,
+          "OpCode": "ldnull",
+          "Operand": null
+        },
+        {
+          "Offset": 91,
+          "OpCode": "ret",
+          "Operand": null
+        }
+      ],
+      "ExceptionHandlers": [
+        {
+          "Kind": "Finally",
+          "TryStart": 45,
+          "TryEnd": 62,
+          "HandlerStart": 62,
+          "HandlerEnd": 74,
+          "FilterStart": null,
+          "CatchType": null
+        },
+        {
+          "Kind": "Catch",
+          "TryStart": 19,
+          "TryEnd": 76,
+          "HandlerStart": 76,
+          "HandlerEnd": 79,
+          "FilterStart": null,
+          "CatchType": "System.Object"
+        }
+      ]
+    }
+  ]
+}

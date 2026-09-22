@@ -1,0 +1,40 @@
+{
+  "Checkpoint": "checkpoint-wave175.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v174.xml",
+      "Steps": [
+        {"Map": "names63-staged-v175.xml", "Review": "hid63-wave175.review.json", "Report": "map-update63-wave-175.json", "References": "contract-references63-v2.json"}
+      ]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v11.xml",
+      "Steps": [
+        {"Map": "names64-staged-v12.xml", "Review": "hid64-wave12.review.json", "Report": "map-update64-wave-12.json"}
+      ]
+    }
+  },
+  "Reviews": [
+    {"Input": "hid63-wave175.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "hid64-wave12.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "hid63-wave175.review.json", "hid63-wave175.evidence.json", "hid63-wave175-il.json",
+    "hid64-wave12.review.json", "hid64-wave12.evidence.json", "hid64-wave175-il.json",
+    "map-update63-wave-175.json", "map-update64-wave-12.json",
+    "usb63-hid-selected-families-v2.json"
+  ],
+  "ReviewedChains": [
+    "Five complete 6.3 HID contract families across interface, base and platform implementations: OpenAsync, Close, WriteAsync, ReadAsync and EnumerateDevices.",
+    "64-byte report writes, blocking/polled reads, worker callbacks and their IL-verified local roles in both versions; platform error/cancellation behavior is preserved.",
+    "Windows device-interface enumeration/access probing and Unix hidraw/sysfs discovery, with constructor/capability roles, native layout types and 6.3 iterator storage.",
+    "USB device-path predicate/factory captures and 6.4 feature-response matching complete the links into the previously reviewed transport lifecycle."
+  ],
+  "Remaining": [
+    "Whole-application coverage remains incomplete; continue beyond USB into the coupled discovery/connector callers and other application components.",
+    "Four libc operation names are certain from EntryPoint, but native-method mapping is unsupported; proposals are pending in hid63-wave175.evidence.json. Extend the tool contract before accepting them.",
+    "Explicit MoveNext/local-only mapping remains unsupported. Keep canonical compiler names and uncertain unused native constants/obfuscator storage unchanged.",
+    "Inspect the 51 inherited requested/applied suffix adjustments; this checkpoint adds none.",
+    "Refresh SDK audits/frozen maps against the final maps before consolidated source export, build and reference/runtime verification."
+  ]
+}

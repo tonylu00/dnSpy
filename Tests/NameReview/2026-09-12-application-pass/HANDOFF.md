@@ -12,17 +12,19 @@ NameCandidates fixtures; the current lifecycle review used map/reference checks.
   were recovered and its current binary identities passed map preflight.
 - Recovered timeout/listener milestone committed as `d8d47f14f` before continuing
   into transport lifecycle behavior. Unrelated untracked `ILSpy/` was preserved.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v174.xml`,
-  SHA256 `A5989C13DB8549E422034FF072B108B0D5C0E10C524F5C317798FEC35C0AC23F`.
-- Current 6.4 map: `names64-staged-v11.xml`, SHA256
-  `67E7FD3567C9F05BC26600A0E40482AAD1A00C75AC8B7274D0EB03B80645114D`.
+- Lifecycle review committed as `510108d6c`; the subsequent HID review follows
+  its transport calls through native streams and platform discovery.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v175.xml`,
+  SHA256 `E7E3DE3EA6AA3D3E5748A529C765B566D22D133D475350A8F26DB31D9A285A86`.
+- Current 6.4 map: `names64-staged-v12.xml`, SHA256
+  `FB3CBC8259F8596F1EF87D695D7FDC0E55805462286FF26E736C9BEE12301469`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
   parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-174.json` and `map-update64-wave-11.json`;
+  reports are `map-update63-wave-175.json` and `map-update64-wave-12.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave174.json` records artifact hashes, validation and limits.
+  `checkpoint-wave175.json` records artifact hashes, validation and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -84,6 +86,28 @@ Canonical 6.4 async metadata names remain intact. Explicit MoveNext contract
 blockers still prevent local-only decisions inside those bodies; 6.3 captured
 fields establish the logical local roles without bypassing those guards.
 
+`hid_devices.py` now connects those calls through five full 6.3 HID contract
+families: OpenAsync, Close, WriteAsync, ReadAsync and EnumerateDevices. The base
+64-byte stream operations, Unix polling, task callbacks, platform discovery,
+device-path predicate/factory and 6.4 feature-response matcher have reviewed
+names. IL evidence binds local slots to the exact module: report buffers,
+bytes read, polling descriptor, exceptions, SetupAPI detail structures and
+access-probe handle/capabilities. Unused obfuscator locals are not named.
+
+Windows interface enumeration returns true for an existing index even if detail
+retrieval leaves a null path. The Unix sysfs fallback does not apply the requested
+VID/PID filters used by its uevent branch. Base reads rethrow I/O errors after
+closing; Unix polled reads log and return null. Naming preserves these details.
+Native structure roles and 6.3 iterator storage are named with layout/marshaling
+intact; external iterator method contracts remain unchanged.
+
+The four libc imports RealPath/Open/Close/Poll have explicit EntryPoint evidence
+but remain pending in `hid63-wave175.evidence.json`: NameCandidates currently
+blocks native-or-runtime-method mappings. Their proposed names/parameters did
+not enter either map. This is a tooling limitation to address before accepting
+those rows, not uncertainty about the imported operations. Both maps passed
+preflight and preservation checks with no new collision suffixes.
+
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
@@ -93,10 +117,12 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 
 - Whole-application naming coverage is still incomplete. Alias totals and
   duplicate compatibility copies are not a measure of completed readability.
-- USB connection/reconnection, receive reassembly and lifecycle workers have been
-  reviewed. Continue into HID device contracts and their platform implementations,
-  plus remaining USB discovery and feature-response closure helpers. Keep their
-  captured fields/parameters/locals connected to the reviewed caller terminology.
+- HID contracts, platform implementations/discovery and the remaining USB
+  path/feature-response closure helpers have been reviewed. Continue into the
+  coupled discovery/connector callers and other application components.
+- Resolve the four native-import mapping proposals in `hid63-wave175.evidence.json`
+  by extending the tool's supported contract, preserving explicit EntryPoint,
+  marshaling and reference restoration. Do not simply remove the native guard.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
 - Do not autoaccept the old correspondence queue: its shape normalization can
