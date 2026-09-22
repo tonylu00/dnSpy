@@ -1,0 +1,48 @@
+{
+  "Checkpoint": "checkpoint-wave207.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v206.xml",
+      "Steps": [{
+        "Map": "names63-staged-v207.xml",
+        "Report": "map-update63-wave-207.json",
+        "Review": "copy63-wave207.review.json",
+        "References": "contract-references63-v3.json"
+      }]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v34.xml",
+      "Steps": [{
+        "Map": "names64-staged-v35.xml",
+        "Report": "map-update64-wave-35.json",
+        "Review": "copy64-wave35.review.json"
+      }]
+    }
+  },
+  "Reviews": [
+    {"Input": "copy63-wave207.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "copy64-wave35.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "copy63-wave207-inspection.json", "copy64-wave35-inspection.json",
+    "copy63-wave207-families.json", "copy64-wave35-families.json",
+    "copy63-wave207.review.json", "copy63-wave207.evidence.json", "copy63-wave207-consumers.json",
+    "copy64-wave35.review.json", "copy64-wave35.evidence.json", "copy64-wave35-consumers.json",
+    "copy-wave207-validation.json",
+    "map-update63-wave-207.json", "map-update64-wave-35.json",
+    "map-check63-wave207.json", "map-check64-wave35.json"
+  ],
+  "ReviewedChains": [
+    "CreateCopyOperation: inner address/range selectors, send-first ordering and ordered ID collection through captured state and caller locals.",
+    "Copy/link progress and security decisions named by reviewed source/target branch, with 116 exact delegate consumers across physical ETS versions.",
+    "Target-project password checks, address strategies and copy-versus-link dispatch retain their existing behavior; public method families retain names and parameters."
+  ],
+  "Remaining": [
+    "Application-wide naming remains incomplete. Maps 6.3 v207 and 6.4 v35 remain unapplied to ETS source and binaries.",
+    "Resume cumulative ledgers copy63-wave207.cumulative.json and copy64-wave35.cumulative.json with contract-references63-v3.json.",
+    "Continue CreateExtendedCopyOperation and CreateMoveOperation captures/caller scopes, then drag/drop callers and the wider application.",
+    "Eight generated static helpers and four self-typed fields from the copy captures remain explicitly unresolved; prior unresolved entries remain unchanged.",
+    "Common constructor path/provider meanings, constant-false getter purpose and explicit iterator body-local support remain unresolved; existing guards stay enforced.",
+    "Finish application-wide maps before consolidated source/binary application, SDK export/audit refresh, builds or runtime launch."
+  ]
+}

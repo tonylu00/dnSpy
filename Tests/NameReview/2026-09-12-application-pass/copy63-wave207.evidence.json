@@ -1,0 +1,5009 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v206.xml",
+ "BaseMapSha256": "A04D51225871D211BE50DAC411D0226A553F7B9AB602A21469F3269C65CD428C",
+ "PhysicalModule": {
+  "Id": "m0082",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+  "Sha256": "FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2",
+  "Mvid": "20cac48e-7d09-4e21-86c0-6189d1115ee2",
+  "AssemblyName": "Knx.Ets.ViewModel",
+  "Project": "Knx.Ets.ViewModel\\Knx.Ets.ViewModel.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0082:0x06004D2E",
+   "ProposedName": "ReportLineCopyToAreaProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D2E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 652,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D2E",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__16(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D2E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D2F",
+   "ProposedName": "ChooseLineCopyToAreaSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D2F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 664,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D2F",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__17(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D2F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D30",
+   "ProposedName": "IsLineCopyToAreaPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D30",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 682,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D30",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__18()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D30",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D31",
+   "ProposedName": "ReportSegmentCopyToAreaProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D31",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 740,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D31",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__19(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D31",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D32",
+   "ProposedName": "ChooseSegmentCopyToAreaSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D32",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 752,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D32",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__20(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D32",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D33",
+   "ProposedName": "IsSegmentCopyToAreaPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D33",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 770,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D33",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__21()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D33",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D34",
+   "ProposedName": "ReportDeviceCopyToAreaProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D34",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 821,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D34",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__22(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D34",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D35",
+   "ProposedName": "ChooseDeviceCopyToAreaSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D35",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 835,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D35",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__23(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D35",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D36",
+   "ProposedName": "IsDeviceCopyToAreaPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D36",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 853,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D36",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__24()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D36",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D37",
+   "ProposedName": "ReportSegmentCopyToLineProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D37",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1213,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D37",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__27(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D37",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D38",
+   "ProposedName": "ChooseSegmentCopyToLineSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D38",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1225,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D38",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__28(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D38",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D39",
+   "ProposedName": "IsSegmentCopyToLinePasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D39",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1243,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D39",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__29()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D39",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D3A",
+   "ProposedName": "ReportDeviceCopyToLineProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D3A",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1293,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D3A",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__30(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D3A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D3B",
+   "ProposedName": "ChooseDeviceCopyToLineSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D3B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1307,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D3B",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__31(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D3B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D3C",
+   "ProposedName": "IsDeviceCopyToLinePasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D3C",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1325,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D3C",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__32()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D3C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D3D",
+   "ProposedName": "ReportDeviceCopyToSegmentProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D3D",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1643,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D3D",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__35(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D3D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D3E",
+   "ProposedName": "ChooseDeviceCopyToSegmentSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D3E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1657,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D3E",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__36(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D3E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D3F",
+   "ProposedName": "IsDeviceCopyToSegmentPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D3F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1675,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D3F",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__37()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D3F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D40",
+   "ProposedName": "ReportGroupAddressCopyToLevelGroupProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D40",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 1893,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D40",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__40(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D40",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D41",
+   "ProposedName": "ReportGroupAddressCopyToFreeRangeProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D41",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 2181,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D41",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__41(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D41",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D42",
+   "ProposedName": "ReportFreeRangeCopyToFreeRangeProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D42",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 2122,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D42",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__43(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D42",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D43",
+   "ProposedName": "ReportMiddleGroupCopyToMainGroupProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D43",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 2401,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D43",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__44(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D43",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D44",
+   "ProposedName": "ReportAddressLinkToFunctionProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D44",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 2820,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D44",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__45(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D44",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D45",
+   "ProposedName": "ReportReferenceLinkToFunctionProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D45",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3001,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D45",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__47(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D45",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D46",
+   "ProposedName": "ReportBusConnectorLinkToFunctionProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D46",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 2675,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D46",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__49(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D46",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D47",
+   "ProposedName": "ReportAddressLinkToComObjectProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D47",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3330,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D47",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__0(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D47",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D48",
+   "ProposedName": "ReportReferenceLinkToComObjectProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D48",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3427,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D48",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__2(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D48",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D49",
+   "ProposedName": "ReportConnectorLinkToComObjectProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D49",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3246,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D49",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__53(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D49",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D4A",
+   "ProposedName": "ReportBuildingPartCopyToBuildingPartProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D4A",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3791,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D4A",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__3(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D4A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D4B",
+   "ProposedName": "ChooseBuildingPartCopyToBuildingPartSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D4B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3803,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D4B",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__4(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D4B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D4C",
+   "ProposedName": "IsBuildingPartCopyToBuildingPartPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D4C",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3821,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D4C",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__5()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D4C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D4D",
+   "ProposedName": "ReportFunctionCopyToBuildingPartProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D4D",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3882,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D4D",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__6(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D4D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D4E",
+   "ProposedName": "ReportDeviceCopyToBuildingPartProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D4E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3709,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D4E",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__7(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D4E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D4F",
+   "ProposedName": "ChooseDeviceCopyToBuildingPartSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D4F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3723,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D4F",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__8(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D4F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D50",
+   "ProposedName": "IsDeviceCopyToBuildingPartPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D50",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3741,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D50",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__9()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D50",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D51",
+   "ProposedName": "ReportTradeCopyToTradeProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D51",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4055,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D51",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__10(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D51",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D52",
+   "ProposedName": "ChooseTradeCopyToTradeSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D52",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4067,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D52",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__11(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D52",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D53",
+   "ProposedName": "IsTradeCopyToTradePasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D53",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4085,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D53",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__12()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D53",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D54",
+   "ProposedName": "ReportDeviceCopyToTradeProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D54",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3973,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D54",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__13(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D54",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D55",
+   "ProposedName": "ChooseDeviceCopyToTradeSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D55",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3987,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D55",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__14(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D55",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D56",
+   "ProposedName": "IsDeviceCopyToTradePasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D56",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4005,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D56",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__15()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D56",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D57",
+   "ProposedName": "ReportAreaCopyToInstallationProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D57",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4410,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D57",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__63(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D57",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D58",
+   "ProposedName": "ChooseAreaCopyToInstallationSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D58",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4422,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D58",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__64(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D58",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D59",
+   "ProposedName": "IsAreaCopyToInstallationPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D59",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4440,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D59",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__65()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D59",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D5A",
+   "ProposedName": "ReportBuildingPartCopyToInstallationProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D5A",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4509,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D5A",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__54(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D5A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D5B",
+   "ProposedName": "ChooseBuildingPartCopyToInstallationSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D5B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4521,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D5B",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__55(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D5B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D5C",
+   "ProposedName": "IsBuildingPartCopyToInstallationPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D5C",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4539,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D5C",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__56()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D5C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D5D",
+   "ProposedName": "ReportTradeCopyToInstallationProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D5D",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4585,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D5D",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__57(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D5D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D5E",
+   "ProposedName": "ChooseTradeCopyToInstallationSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D5E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4597,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D5E",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__58(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D5E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D5F",
+   "ProposedName": "IsTradeCopyToInstallationPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D5F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4615,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D5F",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__59()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D5F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D60",
+   "ProposedName": "ReportThreeLevelMainGroupCopyProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D60",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4674,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D60",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__66(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D60",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D61",
+   "ProposedName": "ReportTwoLevelMainGroupCopyProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D61",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4782,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D61",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__67(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D61",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D62",
+   "ProposedName": "ReportFreeRangeCopyToInstallationProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D62",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4937,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D62",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__69(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D62",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D63",
+   "ProposedName": "ReportDeviceCopyToInstallationProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D63",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4312,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D63",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__60(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D63",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D64",
+   "ProposedName": "ChooseDeviceCopyToInstallationSecurityAction",
+   "Reason": "Asks the security service how to handle devices without security enabled for this copy branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D64",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4326,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D64",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__61(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D64",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D65",
+   "ProposedName": "IsDeviceCopyToInstallationPasswordRequired",
+   "Reason": "Asks PasswordRequired about targetItem.ObjectContext.Project for this copy branch; the source project is not substituted.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D65",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 4344,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D65",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__62()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D65",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D66",
+   "ProposedName": "ReportConnectorLinkToAddressProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D66",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 5146,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D66",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__72(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D66",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D67",
+   "ProposedName": "ReportConnectorLinkToAddressReferenceProgress",
+   "Reason": "Forwards progress through the factory progress handler for the explicitly reviewed source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D67",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 5396,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D67",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<CreateCopyOperation>b__75(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progressEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D67",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x040031FF",
+   "ProposedName": "callback",
+   "Reason": "Captures the public copy callback, factory instance or destination object assigned at entry.",
+   "Source": [
+    {
+     "Id": "m0082:0x040031FF",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x040031FF",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3556,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x040031FF",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3586,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x040031FF",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 4467,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x040031FF",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003200",
+   "ProposedName": "factory",
+   "Reason": "Captures the public copy callback, factory instance or destination object assigned at entry.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003200",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 15,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003200",
+         "Signature": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::<>4__this",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003201",
+   "ProposedName": "targetItem",
+   "Reason": "Captures the public copy callback, factory instance or destination object assigned at entry.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003201",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 22,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 64,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 428,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1015,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1267,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1477,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1617,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1861,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1913,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 1970,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2369,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2421,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2650,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2795,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2976,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3199,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3283,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3380,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3528,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3580,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3683,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3765,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3845,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3947,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 4029,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 4103,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 5087,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 5332,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003201",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CAB",
+   "ProposedName": "GetReferencedAddressForAreaLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CAB",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2641,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "gaRef",
+     "HasMetadata": true,
+     "NewName": "addressReference"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CAB",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400318D",
+   "ProposedName": "referencedAddressForAreaLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400318D",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3215,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CAC",
+   "ProposedName": "GetRangeAddressesForAreaLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CAC",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2648,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupRange_0",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CAC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400318E",
+   "ProposedName": "rangeAddressesForAreaLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400318E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3218,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CAD",
+   "ProposedName": "GetReferencedAddressForLineLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CAD",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2655,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddressRef",
+     "HasMetadata": true,
+     "NewName": "addressReference"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CAD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400318F",
+   "ProposedName": "referencedAddressForLineLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400318F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3221,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CAE",
+   "ProposedName": "GetRangeAddressesForLineLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CAE",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2662,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupRange_0",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CAE",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003190",
+   "ProposedName": "rangeAddressesForLineLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003190",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3224,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CAF",
+   "ProposedName": "GetReferencedAddressForSegmentLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CAF",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2669,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddressRef",
+     "HasMetadata": true,
+     "NewName": "addressReference"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CAF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003191",
+   "ProposedName": "referencedAddressForSegmentLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003191",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3227,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB0",
+   "ProposedName": "GetRangeAddressesForSegmentLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB0",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2676,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupRange_0",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003192",
+   "ProposedName": "rangeAddressesForSegmentLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003192",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3230,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB1",
+   "ProposedName": "GetFreeRangeForNestedCopy",
+   "Reason": "Projects the free group range start/end into a Range for the reviewed copy address strategy.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB1",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2683,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "freeGroupRange_0",
+     "HasMetadata": true,
+     "NewName": "freeGroupRange"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003193",
+   "ProposedName": "freeRangeForNestedCopySelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003193",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3233,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB2",
+   "ProposedName": "GetReferencedAddressForComObjectLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB2",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2690,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddressRef_0",
+     "HasMetadata": true,
+     "NewName": "addressReference"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003194",
+   "ProposedName": "referencedAddressForComObjectLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003194",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3236,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB3",
+   "ProposedName": "GetConnectorSendPriorityForComObjectLink",
+   "Reason": "Returns 0 for sending connectors and 1 for others; the caller orders ascending before selecting the link targets.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB3",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2697,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003195",
+   "ProposedName": "connectorSendPriorityForComObjectLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003195",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3239,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB4",
+   "ProposedName": "GetConnectorAddressForComObjectLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB4",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2704,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connector",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003196",
+   "ProposedName": "connectorAddressForComObjectLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003196",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3242,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB5",
+   "ProposedName": "GetFreeRangeForInstallationCopy",
+   "Reason": "Projects the free group range start/end into a Range for the reviewed copy address strategy.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB5",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2711,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "freeGroupRange_0",
+     "HasMetadata": true,
+     "NewName": "freeGroupRange"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003197",
+   "ProposedName": "freeRangeForInstallationCopySelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003197",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3245,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB6",
+   "ProposedName": "GetConnectorSendPriorityForAddressLink",
+   "Reason": "Returns 0 for sending connectors and 1 for others; the caller orders ascending before selecting the link targets.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB6",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2718,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003198",
+   "ProposedName": "connectorSendPriorityForAddressLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003198",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3248,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB7",
+   "ProposedName": "GetConnectorComObjectForAddressLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB7",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2725,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB7",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003199",
+   "ProposedName": "connectorComObjectForAddressLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003199",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3251,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB8",
+   "ProposedName": "GetConnectorSendPriorityForReferenceLink",
+   "Reason": "Returns 0 for sending connectors and 1 for others; the caller orders ascending before selecting the link targets.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB8",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2732,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400319A",
+   "ProposedName": "connectorSendPriorityForReferenceLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400319A",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3254,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004CB9",
+   "ProposedName": "GetConnectorComObjectForReferenceLink",
+   "Reason": "Projects the exact address, recursive range addresses or parent communication object used by the reviewed linking branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CB9",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2739,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004CB9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400319B",
+   "ProposedName": "connectorComObjectForReferenceLinkSelector",
+   "Reason": "Caches the adjacent reviewed selector delegate for this source/target branch.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400319B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 3257,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004D69",
+   "ProposedName": "IsAddressNotCollected",
+   "Reason": "Tests that the selected address ID has not yet been collected. The caller appends IDs during enumeration, preserving first occurrence order; this predicate itself does not mutate the list.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D69",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 2843,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D69",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1::<CreateCopyOperation>b__46(Knx.Ets.ObjectModel.Project.GroupAddress)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddress",
+     "HasMetadata": true,
+     "NewName": "groupAddress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D69",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003203",
+   "ProposedName": "groupAddressIds",
+   "Reason": "Ordered, distinct address IDs accumulated for linking references to a function.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003203",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2707,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003203",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2754,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003203",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2807,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003203",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003204",
+   "ProposedName": "uncollectedAddressFilter",
+   "Reason": "Cached predicate against the context address-ID list.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003204",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2720,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003204",
+         "Signature": "System.Func`2<Knx.Ets.ObjectModel.Project.GroupAddress,System.Boolean> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1::<>9__46",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2857,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003204",
+         "Signature": "System.Func`2<Knx.Ets.ObjectModel.Project.GroupAddress,System.Boolean> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1::<>9__46",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004D6B",
+   "ProposedName": "IsReferencedAddressNotCollected",
+   "Reason": "Tests that the selected address ID has not yet been collected. The caller appends IDs during enumeration, preserving first occurrence order; this predicate itself does not mutate the list.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D6B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3024,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D6B",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2::<CreateCopyOperation>b__48(Knx.Ets.ObjectModel.Project.GroupAddressRef)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddress",
+     "HasMetadata": true,
+     "NewName": "addressReference"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D6B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003206",
+   "ProposedName": "groupAddressIds",
+   "Reason": "Ordered, distinct address IDs accumulated for linking references to a function.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003206",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2883,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003206",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2930,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003206",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2988,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003206",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003207",
+   "ProposedName": "uncollectedAddressFilter",
+   "Reason": "Cached predicate against the context address-ID list.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003207",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2896,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003207",
+         "Signature": "System.Func`2<Knx.Ets.ObjectModel.Project.GroupAddressRef,System.Boolean> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2::<>9__48",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3038,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003207",
+         "Signature": "System.Func`2<Knx.Ets.ObjectModel.Project.GroupAddressRef,System.Boolean> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2::<>9__48",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004D6D",
+   "ProposedName": "IsConnectorAddressNotCollected",
+   "Reason": "Tests that the selected address ID has not yet been collected. The caller appends IDs during enumeration, preserving first occurrence order; this predicate itself does not mutate the list.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D6D",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "method",
+        "Offset": 3055,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D6D",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3::<CreateCopyOperation>b__50(Knx.Ets.ObjectModel.Project.BusInterfaceConnector)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConnector_0",
+     "HasMetadata": true,
+     "NewName": "busConnector"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004D6D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003209",
+   "ProposedName": "groupAddressIds",
+   "Reason": "Ordered, distinct address IDs accumulated for linking references to a function.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003209",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2554,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003209",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2604,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003209",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2662,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003209",
+         "Signature": "System.Collections.Generic.List`1<Knx.Ets.Ids.Project.GroupAddressId> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3::groupAddressIds",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x0400320A",
+   "ProposedName": "uncollectedAddressFilter",
+   "Reason": "Cached predicate against the context address-ID list.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400320A",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C7E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+      "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+      "SourceId": "m0082:0x06004C7E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 2567,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400320A",
+         "Signature": "System.Func`2<Knx.Ets.ObjectModel.Project.BusInterfaceConnector,System.Boolean> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3::<>9__50",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C7E",
+        "Kind": "field",
+        "Offset": 3069,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400320A",
+         "Signature": "System.Func`2<Knx.Ets.ObjectModel.Project.BusInterfaceConnector,System.Boolean> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3::<>9__50",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "SupportingTokens": [
+     "0x06004C7E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004C7E",
+   "ProposedName": "CreateCopyOperation",
+   "Reason": "Reuses IList inputs or materializes once; dispatches by the first source and target runtime types. Depending on the branch it copies objects or links addresses. Address strategies, target-project password checks, first-occurrence ID collection, send-first connector ordering and unsupported/null behavior remain unchanged. Public name and parameters stay intact.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C7E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 727,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sourceItems",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "targetItem",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "options",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_0",
+     "NewName": "copyContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IInstallationDomObject>",
+     "NewName": "selectedItems"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Type",
+     "NewName": "sourceType"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Type",
+     "NewName": "targetType"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IArea",
+     "NewName": "targetArea"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.GroupAddress>",
+     "NewName": "addressesForArea"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "referencedAddressesForArea"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "rangeAddressesForArea"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.ILine",
+     "NewName": "targetLine"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.GroupAddress>",
+     "NewName": "addressesForLine"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "referencedAddressesForLine"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "rangeAddressesForLine"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Segment",
+     "NewName": "targetSegment"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.GroupAddress>",
+     "NewName": "addressesForSegment"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "referencedAddressesForSegment"
+    },
+    {
+     "Index": 15,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "rangeAddressesForSegment"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "levelGroupAddressStrategy"
+    },
+    {
+     "Index": 17,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRanges.FreeGroupRange",
+     "NewName": "targetFreeRange"
+    },
+    {
+     "Index": 18,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "freeRangeAddressStrategy"
+    },
+    {
+     "Index": 19,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Types.Range>",
+     "NewName": "nestedSourceRanges"
+    },
+    {
+     "Index": 20,
+     "ExpectedType": "System.UInt16",
+     "NewName": "nestedRangeStartOrOffset"
+    },
+    {
+     "Index": 21,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "nestedRangeStrategy"
+    },
+    {
+     "Index": 22,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "middleGroupStrategy"
+    },
+    {
+     "Index": 23,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_1",
+     "NewName": "functionAddressContext"
+    },
+    {
+     "Index": 24,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.GroupAddress>",
+     "NewName": "functionAddresses"
+    },
+    {
+     "Index": 25,
+     "ExpectedType": "System.Func`2<Knx.Ets.ObjectModel.Project.GroupAddress,System.Boolean>",
+     "NewName": "uncollectedAddressFilter"
+    },
+    {
+     "Index": 26,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupAddress",
+     "NewName": "functionAddress"
+    },
+    {
+     "Index": 27,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_2",
+     "NewName": "functionReferenceContext"
+    },
+    {
+     "Index": 28,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.GroupAddressRef>",
+     "NewName": "functionReferences"
+    },
+    {
+     "Index": 29,
+     "ExpectedType": "System.Func`2<Knx.Ets.ObjectModel.Project.GroupAddressRef,System.Boolean>",
+     "NewName": "uncollectedReferenceFilter"
+    },
+    {
+     "Index": 30,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupAddressRef",
+     "NewName": "functionReference"
+    },
+    {
+     "Index": 31,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass31_3",
+     "NewName": "functionBusConnectorContext"
+    },
+    {
+     "Index": 32,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.BusInterfaceConnector>",
+     "NewName": "functionBusConnectors"
+    },
+    {
+     "Index": 33,
+     "ExpectedType": "System.Func`2<Knx.Ets.ObjectModel.Project.BusInterfaceConnector,System.Boolean>",
+     "NewName": "uncollectedBusConnectorFilter"
+    },
+    {
+     "Index": 34,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.BusInterfaceConnector",
+     "NewName": "functionBusConnector"
+    },
+    {
+     "Index": 35,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IBusInterface",
+     "NewName": "additionalAddressBusInterface"
+    },
+    {
+     "Index": 36,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.IOperation",
+     "NewName": "additionalAddressLinkOperation"
+    },
+    {
+     "Index": 37,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.IOperation",
+     "NewName": "busInterfaceLinkOperation"
+    },
+    {
+     "Index": 38,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Installation",
+     "NewName": "targetInstallation"
+    },
+    {
+     "Index": 39,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "areaAddressStrategy"
+    },
+    {
+     "Index": 40,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "threeLevelMainGroupStrategy"
+    },
+    {
+     "Index": 41,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "twoLevelMainGroupStrategy"
+    },
+    {
+     "Index": 42,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Types.Range>",
+     "NewName": "installationSourceRanges"
+    },
+    {
+     "Index": 43,
+     "ExpectedType": "System.UInt16",
+     "NewName": "installationRangeStartOrOffset"
+    },
+    {
+     "Index": 44,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "installationRangeStrategy"
+    },
+    {
+     "Index": 45,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IComObjectInstance>",
+     "NewName": "comObjectsForAddress"
+    },
+    {
+     "Index": 46,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupAddress",
+     "NewName": "targetGroupAddress"
+    },
+    {
+     "Index": 47,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IComObjectInstance>",
+     "NewName": "comObjectsForReference"
+    },
+    {
+     "Index": 48,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupAddress",
+     "NewName": "referencedTargetAddress"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-inspection.json",
+    "Sha256": "289E5F963885EB7C68E92EB7645849229159FE0D2068F5199D5B3F2482266B68",
+    "Token": "0x06004C7E",
+    "Slots": {
+     "0": "copyContext",
+     "1": "selectedItems",
+     "2": "sourceType",
+     "3": "targetType",
+     "4": "targetArea",
+     "5": "addressesForArea",
+     "6": "referencedAddressesForArea",
+     "7": "rangeAddressesForArea",
+     "8": "targetLine",
+     "9": "addressesForLine",
+     "10": "referencedAddressesForLine",
+     "11": "rangeAddressesForLine",
+     "12": "targetSegment",
+     "13": "addressesForSegment",
+     "14": "referencedAddressesForSegment",
+     "15": "rangeAddressesForSegment",
+     "16": "levelGroupAddressStrategy",
+     "17": "targetFreeRange",
+     "18": "freeRangeAddressStrategy",
+     "19": "nestedSourceRanges",
+     "20": "nestedRangeStartOrOffset",
+     "21": "nestedRangeStrategy",
+     "22": "middleGroupStrategy",
+     "23": "functionAddressContext",
+     "24": "functionAddresses",
+     "25": "uncollectedAddressFilter",
+     "26": "functionAddress",
+     "27": "functionReferenceContext",
+     "28": "functionReferences",
+     "29": "uncollectedReferenceFilter",
+     "30": "functionReference",
+     "31": "functionBusConnectorContext",
+     "32": "functionBusConnectors",
+     "33": "uncollectedBusConnectorFilter",
+     "34": "functionBusConnector",
+     "35": "additionalAddressBusInterface",
+     "36": "additionalAddressLinkOperation",
+     "37": "busInterfaceLinkOperation",
+     "38": "targetInstallation",
+     "39": "areaAddressStrategy",
+     "40": "threeLevelMainGroupStrategy",
+     "41": "twoLevelMainGroupStrategy",
+     "42": "installationSourceRanges",
+     "43": "installationRangeStartOrOffset",
+     "44": "installationRangeStrategy",
+     "45": "comObjectsForAddress",
+     "46": "targetGroupAddress",
+     "47": "comObjectsForReference",
+     "48": "referencedTargetAddress"
+    }
+   },
+   "ContractEvidence": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\copy63-wave207-families.json",
+    "Sha256": "535EB4A459CBFD7FBEE050F73BAFB85A94358E3A0B4F40C77512D03AA5037861",
+    "Family": "BB55A5764C41F78A0F544F05F05287D2EE12BE45D4F7D8CC7FF08D89F824ECAC"
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}
