@@ -1,0 +1,48 @@
+{
+  "Format": 1,
+  "Status": "Wave 236 accepted (6.3): Knx.Ets.ObjectModel.Import second section - baggage install/merge, broken-shape exchange and cache helpers",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v236.xml",
+      "Sha256": "8D55437D9D5EC2E09D216419CB14FBADD239E9E5034CF1CC7675283EB83E8B65",
+      "PreviousMap": "names63-staged-v235.xml",
+      "PreviousMapSha256": "FC26C72F511EE14502501DF9633A062CC64C240438A207D79C2378D47C705341",
+      "FrozenSha256": "8D55437D9D5EC2E09D216419CB14FBADD239E9E5034CF1CC7675283EB83E8B65",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave236.review.json"
+  ],
+  "Method": {
+    "member-evidence": "Each of the 18 rows was read from its own body: the members it calls, the fields it touches and the literals it embeds (perf-now/evidence-ns.py and member-evidence.py dumps). BaggageInstaller.a(BaggageInfo) installs a baggage entry; BaggageMerger.a(IEnumerable<XElement>) merges baggage elements; BaggageMergerInternal.a(...Predicate<string>) decides whether to update; BaggageDescription.b(XElement) reads the row's id attribute; BrokenShapeExchanger.a(List<Tuple<...>>) exchanges broken shapes in a closed project; Caches.a(KeyValuePair<ManufacturerId, SmartStrongAndWeakRef<IManufacturerCacheProvider>>) releases the weak manufacturer cache provider.",
+    "no-op guard": "18 rows, 0 collision suffixes and 0 errors: every requested name is unique in its declaration scope, so the writer applied each one unchanged."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 18,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 13803,
+    "VisibleRenamed": 4960,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10609
+  },
+  "SpotChecks": [
+    "BaggageMerger.a(IEnumerable<XElement>) -> MergeBaggageElements: groups the baggage description elements and rewrites them into one container.",
+    "BrokenShapeExchanger.b() -> ExchangeBrokenShapes: collects the broken tuples, calls the replacement callback and reports what it exchanged."
+  ],
+  "Errors": 0
+}
