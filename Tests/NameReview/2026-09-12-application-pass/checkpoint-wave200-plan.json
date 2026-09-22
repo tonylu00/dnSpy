@@ -1,0 +1,78 @@
+{
+  "Checkpoint": "checkpoint-wave200.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v198.xml",
+      "Steps": [
+        {
+          "Map": "names63-staged-v199.xml",
+          "Report": "map-update63-wave-199.json",
+          "Review": "collections63-wave199.review.json",
+          "References": "contract-references63-v3.json"
+        },
+        {
+          "Map": "names63-staged-v200.xml",
+          "Report": "map-update63-wave-200.json",
+          "Review": "archive63-wave200.review.json",
+          "References": "contract-references63-v3.json"
+        }
+      ],
+      "ReplacementEvidence": [
+        "collections63-wave199.evidence.json"
+      ]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v30.xml",
+      "Steps": [
+        {
+          "Map": "names64-staged-v31.xml",
+          "Report": "map-update64-wave-31.json",
+          "Review": "collections64-wave31.review.json"
+        }
+      ]
+    }
+  },
+  "Reviews": [
+    {
+      "Input": "archive63-wave200.cumulative.json",
+      "Output": "reviewed63.json",
+      "PreserveExisting": true
+    },
+    {
+      "Input": "collections64-wave31.cumulative.json",
+      "Output": "behavior-reviewed64.json",
+      "PreserveExisting": true
+    }
+  ],
+  "Artifacts": [
+    "collections63-wave199-inspection.json",
+    "collections64-wave199-inspection.json",
+    "archive63-wave200-inspection.json",
+    "collections63-wave199-objectmodel-inspection.json",
+    "collections-wave200-caller-evidence.json",
+    "collections-wave200-validation.json",
+    "common63-wave200-prior-alias-review.json",
+    "map-check63-wave200.json",
+    "map-check64-wave31.json",
+    "collections63-wave199.review.json",
+    "collections63-wave199.evidence.json",
+    "map-update63-wave-199.json",
+    "archive63-wave200.review.json",
+    "archive63-wave200.evidence.json",
+    "map-update63-wave-200.json",
+    "collections64-wave31.review.json",
+    "collections64-wave31.evidence.json",
+    "map-update64-wave-31.json"
+  ],
+  "ReviewedChains": [
+    "Collection mutation/predicates through deferred partition/generator storage and typed observable mirroring in both physical Common versions.",
+    "Physical caller references followed into archive publishing and recent group-address handling; archive lookup callbacks, locals and event storage named while public contracts stay intact.",
+    "Ten exact prior-alias corrections in 6.3; meaningful overloads share names without generated suffixes. Original readable 6.4 API names and parameters are retained."
+  ],
+  "Remaining": [
+    "Whole-application naming remains incomplete. Continue outward archive/UI callers and other application components; review hints and alias counts are not completion measures.",
+    "Resume protected maps 200/31, contract-references63-v3.json, archive63-wave200.cumulative.json and collections64-wave31.cumulative.json.",
+    "Common constructor path/provider meanings, constant-false getter purpose and explicit iterator body-local support remain unresolved; do not bypass guards.",
+    "Finish application-wide maps before consolidated source/binary application, SDK export/audit refresh, builds or runtime launch."
+  ]
+}

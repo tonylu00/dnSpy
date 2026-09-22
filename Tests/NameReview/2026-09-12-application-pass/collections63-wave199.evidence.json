@@ -1,0 +1,1797 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v198.xml",
+ "BaseMapSha256": "9DFE5B8299A8F8FA71238DED67ED6C66703E374FD7BE7958652E43C087951B15",
+ "PhysicalModule": {
+  "Id": "m0039",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.Common.dll",
+  "Sha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+  "Mvid": "279bd598-44e7-410c-861f-91a36999a7be",
+  "AssemblyName": "Knx.Ets.Common",
+  "Project": "Knx.Ets.Common.3\\Knx.Ets.Common.3.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0039:0x0600028F",
+   "ProposedName": "SyncFrom",
+   "Reason": "Materializes collection-minus-target removals, removes those values, then adds target-minus-updated-collection values. Uses set difference, not positional/order or multiplicity synchronization.",
+   "Source": [
+    {
+     "Id": "m0039:0x0600028F",
+     "Path": "Knx.Ets.Common.3/asv.cs",
+     "Line": 13,
+     "Sha256": "9FB6F361AF5F632B2631DA0B15DCD1A04E3C8CB13956C4B3A019B2E434A78693"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "collection"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "target"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<T>",
+     "NewName": "itemsToRemove"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<T>",
+     "NewName": "itemsToAdd"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x0600028F",
+    "Slots": {
+     "0": "itemsToRemove",
+     "1": "itemsToAdd"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x06000291",
+   "ProposedName": "AddRange",
+   "Reason": "Enumerates the supplied ICollection directly and adds/removes each item. The enumerable overload snapshots its input first; self-aliasing collection inputs are not copied here.",
+   "Source": [
+    {
+     "Id": "m0039:0x06000291",
+     "Path": "Knx.Ets.Common.3/asv.cs",
+     "Line": 35,
+     "Sha256": "9FB6F361AF5F632B2631DA0B15DCD1A04E3C8CB13956C4B3A019B2E434A78693"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "collection"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "items"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<T>",
+     "NewName": "itemEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "T",
+     "NewName": "item"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x06000291",
+    "Slots": {
+     "0": "itemEnumerator",
+     "1": "item"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x06000293",
+   "ProposedName": "RemoveRange",
+   "Reason": "Enumerates the supplied ICollection directly and adds/removes each item. The enumerable overload snapshots its input first; self-aliasing collection inputs are not copied here.",
+   "Source": [
+    {
+     "Id": "m0039:0x06000293",
+     "Path": "Knx.Ets.Common.3/asv.cs",
+     "Line": 61,
+     "Sha256": "9FB6F361AF5F632B2631DA0B15DCD1A04E3C8CB13956C4B3A019B2E434A78693"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "collection"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "items"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<T>",
+     "NewName": "itemEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "T",
+     "NewName": "item"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x06000293",
+    "Slots": {
+     "0": "itemEnumerator",
+     "1": "item"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x06000292",
+   "ProposedName": "AddRange",
+   "Reason": "Checks the input enumerable and snapshots it to a List before calling the ICollection overload; the overloads have distinct signatures and need no numeric suffix.",
+   "Source": [
+    {
+     "Id": "m0039:0x06000292",
+     "Path": "Knx.Ets.Common.3/asv.cs",
+     "Line": 52,
+     "Sha256": "9FB6F361AF5F632B2631DA0B15DCD1A04E3C8CB13956C4B3A019B2E434A78693"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "collection"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "items"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x06000292",
+    "ExpectedName": "AddRange2",
+    "NewName": "AddRange",
+    "Reason": "Checks the input enumerable and snapshots it to a List before calling the ICollection overload; the overloads have distinct signatures and need no numeric suffix."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x06000292",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x06000298",
+   "ProposedName": "IsEmpty",
+   "Reason": "Validates a nonnull source and returns the negation of Enumerable.Any.",
+   "Source": [
+    {
+     "Id": "m0039:0x06000298",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 27,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x06000298",
+    "ExpectedName": "None2",
+    "NewName": "IsEmpty",
+    "Reason": "Validates a nonnull source and returns the negation of Enumerable.Any."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x06000298",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x06000299",
+   "ProposedName": "HasNoMatches",
+   "Reason": "Validates the source then returns the negation of Enumerable.Any with the predicate; LINQ validates the predicate.",
+   "Source": [
+    {
+     "Id": "m0039:0x06000299",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 35,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "predicate"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x06000299",
+    "ExpectedName": "None3",
+    "NewName": "HasNoMatches",
+    "Reason": "Validates the source then returns the negation of Enumerable.Any with the predicate; LINQ validates the predicate."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x06000299",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x0600029A",
+   "ProposedName": "IsNullOrEmpty",
+   "Reason": "Returns true for null, otherwise invokes the empty-sequence predicate.",
+   "Source": [
+    {
+     "Id": "m0039:0x0600029A",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 43,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x0600029A",
+    "ExpectedName": "NullOrNone",
+    "NewName": "IsNullOrEmpty",
+    "Reason": "Returns true for null, otherwise invokes the empty-sequence predicate."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x0600029A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x0600029B",
+   "ProposedName": "IsNullOrHasNoMatches",
+   "Reason": "Returns true for null without inspecting the predicate; otherwise tests that no item matches.",
+   "Source": [
+    {
+     "Id": "m0039:0x0600029B",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 51,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "predicate"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x0600029B",
+    "ExpectedName": "NullOrNone2",
+    "NewName": "IsNullOrHasNoMatches",
+    "Reason": "Returns true for null without inspecting the predicate; otherwise tests that no item matches."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x0600029B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x0600029E",
+   "ProposedName": "SingleOrDefaultUnlessMultiple",
+   "Reason": "Returns default(T) for zero or multiple items, including zero for non-nullable value types; exactly one item is fetched by enumerating source again.",
+   "Source": [
+    {
+     "Id": "m0039:0x0600029E",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 93,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x0600029E",
+    "ExpectedName": "SingleOrNull",
+    "NewName": "SingleOrDefaultUnlessMultiple",
+    "Reason": "Returns default(T) for zero or multiple items, including zero for non-nullable value types; exactly one item is fetched by enumerating source again."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x0600029E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x060002A8",
+   "ProposedName": "GetFirstOrDefaultAndTestNonNull",
+   "Reason": "Assigns FirstOrDefault(predicate), boxes it and tests against null. A missing non-nullable value-type match therefore still returns true.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002A8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 178,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "predicate"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x060002A8",
+    "ExpectedName": "TryGetValue",
+    "NewName": "GetFirstOrDefaultAndTestNonNull",
+    "Reason": "Assigns FirstOrDefault(predicate), boxes it and tests against null. A missing non-nullable value-type match therefore still returns true."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002A8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x060002D0",
+   "ProposedName": "AsCollectionOrEmpty",
+   "Reason": "Returns Array.Empty<T> for a null value and a new one-element array otherwise.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002D0",
+     "Path": "Knx.Ets.Common.3/as1.cs",
+     "Line": 24,
+     "Sha256": "31F6DF676704A62A5F316157780C2929BDDA1C1FB3911E494A7AEA137A7D78D0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x060002D0",
+    "ExpectedName": "ToCollection",
+    "NewName": "AsCollectionOrEmpty",
+    "Reason": "Returns Array.Empty<T> for a null value and a new one-element array otherwise."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002D0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x060002C8",
+   "ProposedName": "ToReadOnlySnapshot",
+   "Reason": "Materializes a new List and wraps it read-only; it is a copied snapshot rather than a live view over the input.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002C8",
+     "Path": "Knx.Ets.Common.3/asz.cs",
+     "Line": 36,
+     "Sha256": "B4672D51EFB6014F84190C4D70297D4F503BE9F702E97697A45A5CC38952C3E2"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x060002C8",
+    "ExpectedName": "ToReadOnlyCollection",
+    "NewName": "ToReadOnlySnapshot",
+    "Reason": "Materializes a new List and wraps it read-only; it is a copied snapshot rather than a live view over the input."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002C8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x0600029D",
+   "ProposedName": "IsSingle",
+   "Reason": "Counts up to two items, disposing its enumerator before returning; true only for exactly one item.",
+   "Source": [
+    {
+     "Id": "m0039:0x0600029D",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 71,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "itemCount"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<T>",
+     "NewName": "enumerator"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "hasExactlyOne"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x0600029D",
+    "Slots": {
+     "0": "itemCount",
+     "1": "enumerator",
+     "2": "hasExactlyOne"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x060002C7",
+   "ProposedName": "IndexOf",
+   "Reason": "Enumerates in order and returns the first index satisfying Predicate<T>, or -1. Source is guarded; a null predicate faults only if an item is visited.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002C7",
+     "Path": "Knx.Ets.Common.3/asz.cs",
+     "Line": 14,
+     "Sha256": "B4672D51EFB6014F84190C4D70297D4F503BE9F702E97697A45A5CC38952C3E2"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "predicate"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "index"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<T>",
+     "NewName": "enumerator"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "T",
+     "NewName": "item"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": "matchingIndex"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002C7",
+    "Slots": {
+     "0": "index",
+     "1": "enumerator",
+     "2": "item",
+     "3": "matchingIndex"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x060002D2",
+   "ProposedName": "InsertRecentItem",
+   "Reason": "Inserts a missing item at index zero and removes one last value when a positive limit is exceeded; an existing item is removed and reinserted at zero without trimming.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002D2",
+     "Path": "Knx.Ets.Common.3/as2.cs",
+     "Line": 11,
+     "Sha256": "9D594789F17CC9399027A59DC4019BA3DD387CD1D7828F081B0B1CF740970B39"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "collection"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "item"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "maxLength"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "existingIndex"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002D2",
+    "Slots": {
+     "0": "existingIndex"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x060002D3",
+   "ProposedName": "TryPop",
+   "Reason": "Checks Count then attempts Pop; any exception inside the try becomes false/default(T). This is not a concurrent atomic operation.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002D3",
+     "Path": "Knx.Ets.Common.3/as3.cs",
+     "Line": 11,
+     "Sha256": "E4751B020D78B4A7AB66754995364768D598BCC81D5DD6C4D62D544C9D7296F3"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "stack"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "popped"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002D3",
+    "Slots": {
+     "0": "popped"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x060002AD",
+   "ProposedName": "",
+   "Reason": "Stores the supplied iterator state and captures the creating managed thread ID.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002AD",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 349,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_4",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002AD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x060002B6",
+   "ProposedName": "",
+   "Reason": "Stores the supplied iterator state and captures the creating managed thread ID.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002B6",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 207,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_5",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002B6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x020000A1",
+   "ProposedName": "PartitionIterator",
+   "Reason": "Deferred sequence implementation with separate captured inputs and active enumeration state.",
+   "Source": [
+    {
+     "Id": "m0039:0x020000A1",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 344,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x0600029C",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 59,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AF",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 382,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B4",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 483,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x0600029C",
+     "0x060002AF",
+     "0x060002B4"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x020000A2",
+   "ProposedName": "RepeatedGeneratorIterator",
+   "Reason": "Deferred sequence implementation with separate captured inputs and active enumeration state.",
+   "Source": [
+    {
+     "Id": "m0039:0x020000A2",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 202,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x06000297",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 15,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 221,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002BC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 288,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x06000297",
+     "0x060002B8",
+     "0x060002BC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000214",
+   "ProposedName": "state",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000214",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 509,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AD",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 349,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AF",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 382,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002AD",
+     "0x060002AF"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000215",
+   "ProposedName": "currentPartition",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000215",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 512,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AF",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 382,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002AF"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000216",
+   "ProposedName": "initialThreadId",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000216",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 515,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AD",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 349,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B4",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 483,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002AD",
+     "0x060002B4"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000217",
+   "ProposedName": "source",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000217",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 518,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AF",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 382,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B4",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 483,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002AF",
+     "0x060002B4"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000218",
+   "ProposedName": "initialSource",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000218",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 521,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x0600029C",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 59,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B4",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 483,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x0600029C",
+     "0x060002B4"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000219",
+   "ProposedName": "partitionSize",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000219",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 524,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AF",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 382,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B4",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 483,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002AF",
+     "0x060002B4"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400021A",
+   "ProposedName": "initialPartitionSize",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400021A",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 527,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x0600029C",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 59,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B4",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 483,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x0600029C",
+     "0x060002B4"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400021B",
+   "ProposedName": "sourceEnumerator",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400021B",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 530,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AF",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 382,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B0",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 439,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002AF",
+     "0x060002B0"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400021D",
+   "ProposedName": "state",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400021D",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 314,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B6",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 207,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 221,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002B6",
+     "0x060002B8"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400021E",
+   "ProposedName": "currentItem",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400021E",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 317,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 221,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002B8"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400021F",
+   "ProposedName": "initialThreadId",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400021F",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 320,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B6",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 207,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002BC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 288,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002B6",
+     "0x060002BC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000220",
+   "ProposedName": "generator",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000220",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 323,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 221,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002BC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 288,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002B8",
+     "0x060002BC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000221",
+   "ProposedName": "initialGenerator",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000221",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 326,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x06000297",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 15,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002BC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 288,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x06000297",
+     "0x060002BC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000222",
+   "ProposedName": "count",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000222",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 329,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 221,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002BC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 288,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002B8",
+     "0x060002BC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000223",
+   "ProposedName": "initialCount",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000223",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 332,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x06000297",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 15,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002BC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 288,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x06000297",
+     "0x060002BC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000224",
+   "ProposedName": "generatedCount",
+   "Reason": "Iterator state/input/current/counter role proven by construction, GetEnumerator input copying, MoveNext or cleanup.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000224",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 335,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002B8",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 221,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002B8"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x060002AC",
+   "ProposedName": "CreateIndexedItem",
+   "Reason": "Constructs a ValueTuple of the input item and its zero-based LINQ index.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002AC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 545,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "gparam_0",
+     "HasMetadata": true,
+     "NewName": "item"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "index"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002AC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x020000A0",
+   "ProposedName": "IndexedItemFactory",
+   "Reason": "Stateless owner of the cached selector constructing item/index tuples.",
+   "Source": [
+    {
+     "Id": "m0039:0x020000A0",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 539,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002A5",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 154,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002AC",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 545,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002A5",
+     "0x060002AC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000211",
+   "ProposedName": "instance",
+   "Reason": "Cached selector instance/delegate consumed by Enumerable.Select with its index overload.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000211",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 554,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002A5",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 154,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002A5"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x04000212",
+   "ProposedName": "createIndexedItem",
+   "Reason": "Cached selector instance/delegate consumed by Enumerable.Select with its index overload.",
+   "Source": [
+    {
+     "Id": "m0039:0x04000212",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 557,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    },
+    {
+     "Id": "m0039:0x060002A5",
+     "Path": "Knx.Ets.Common.3/asw.cs",
+     "Line": 154,
+     "Sha256": "8DA6BE159436D9125AE61DD0F3271F484EB7DF28D7DFD1FAFCDF78D65FC9548F"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002A5"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x060002CA",
+   "ProposedName": "MirrorCollectionChanges",
+   "Reason": "Initially replaces target contents if sequences differ, then returns a disposable Rx subscription that casts source items to the target type and applies collection changes.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002CA",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 26,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "target"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "as0/a<T,U>",
+     "NewName": "subscription"
+    }
+   ],
+   "Replacement": {
+    "Module": "Knx.Ets.Common.dll",
+    "Kind": "Method",
+    "Token": "0x060002CA",
+    "ExpectedName": "MirrorCollectionChanges2",
+    "NewName": "MirrorCollectionChanges",
+    "Reason": "Initially replaces target contents if sequences differ, then returns a disposable Rx subscription that casts source items to the target type and applies collection changes."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002CA",
+    "Slots": {
+     "0": "subscription"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x060002CC",
+   "ProposedName": "SubscribeToSourceCollection",
+   "Reason": "Adds the handler to the retained observable source CollectionChanged event.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002CC",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 48,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "notifyCollectionChangedEventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002CC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x060002CD",
+   "ProposedName": "UnsubscribeFromSourceCollection",
+   "Reason": "Removes the handler from the retained observable source CollectionChanged event.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002CD",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 56,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "notifyCollectionChangedEventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002CD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0039:0x060002CE",
+   "ProposedName": "ApplySourceCollectionChange",
+   "Reason": "Skips equal sequences. Adds/removes by item value; Replace adds new values before removing old values, and other actions rebuild from event Sender. It does not preserve insertion indices for Add/Replace.",
+   "Source": [
+    {
+     "Id": "m0039:0x060002CE",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 64,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventPattern_0",
+     "HasMetadata": true,
+     "NewName": "change"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.ObjectModel.ObservableCollection`1<T>",
+     "NewName": "eventSource"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.IList",
+     "NewName": "newItems"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.IList",
+     "NewName": "oldItems"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Specialized.NotifyCollectionChangedAction",
+     "NewName": "action"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "Token": "0x060002CE",
+    "Slots": {
+     "0": "eventSource",
+     "1": "newItems",
+     "2": "oldItems",
+     "3": "action"
+    }
+   }
+  },
+  {
+   "Id": "m0039:0x020000A8",
+   "ProposedName": "CollectionMirrorSubscription",
+   "Reason": "Captures the source and target plus Rx event add/remove/change callbacks.",
+   "Source": [
+    {
+     "Id": "m0039:0x020000A8",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 43,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CA",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 26,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CC",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 48,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CD",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 56,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CE",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 64,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002CA",
+     "0x060002CC",
+     "0x060002CD",
+     "0x060002CE"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400022C",
+   "ProposedName": "source",
+   "Reason": "Observable source or writable target retained by the mirroring callbacks.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400022C",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 107,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CA",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 26,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CC",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 48,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002CA",
+     "0x060002CC"
+    ]
+   }
+  },
+  {
+   "Id": "m0039:0x0400022D",
+   "ProposedName": "target",
+   "Reason": "Observable source or writable target retained by the mirroring callbacks.",
+   "Source": [
+    {
+     "Id": "m0039:0x0400022D",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 110,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CA",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 26,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    },
+    {
+     "Id": "m0039:0x060002CE",
+     "Path": "Knx.Ets.Common.3/as0.cs",
+     "Line": 64,
+     "Sha256": "90FA2FD63CB15A06DD31190806D48159A5D9D15C4ACF1A7644880CB6B3D9BAD7"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\collections63-wave199-inspection.json",
+    "Sha256": "B1DAE2C795B1DAC9042D7469486DB39142A6E7D8747F892F1388C05ACBD4C83F",
+    "SupportingTokens": [
+     "0x060002CA",
+     "0x060002CE"
+    ]
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

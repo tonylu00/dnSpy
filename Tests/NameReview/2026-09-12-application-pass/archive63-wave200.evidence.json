@@ -1,0 +1,290 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v199.xml",
+ "BaseMapSha256": "BF740C31257850FB2A7993ACEAA9582FB0FD0C160BB1772C5E9DD53921EBC286",
+ "PhysicalModule": {
+  "Id": "m0082",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+  "Sha256": "FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2",
+  "Mvid": "20cac48e-7d09-4e21-86c0-6189d1115ee2",
+  "AssemblyName": "Knx.Ets.ViewModel",
+  "Project": "Knx.Ets.ViewModel\\Knx.Ets.ViewModel.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0082:0x06002302",
+   "ProposedName": "MatchesArchiveFolderPath",
+   "Reason": "Compares a folder AbsolutePath to the captured publish path using string equality.",
+   "Source": [
+    {
+     "Id": "m0082:0x06002302",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 357,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C",
+     "SourceId": "m0082:0x060022D5",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+      "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+      "SourceId": "m0082:0x060022D5",
+      "Edges": [
+       {
+        "From": "m0082:0x060022D5",
+        "Kind": "method",
+        "Offset": 183,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06002302",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.ProjectArchive.ProjectArchiveServiceManager/<>c__DisplayClass27_0::<PublishArchiveProject>b__0(Knx.Ets.ObjectModel.Archive.IArchiveFolderInfoBase)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iarchiveFolderInfoBase_0",
+     "HasMetadata": true,
+     "NewName": "folder"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "Token": "0x06002302",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06002303",
+   "ProposedName": "MatchesRelatedProjectGuid",
+   "Reason": "Compares the candidate RelatedProjectGuid to the new archive info RelatedProjectGuid using object.Equals on boxed GUIDs.",
+   "Source": [
+    {
+     "Id": "m0082:0x06002303",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 357,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C",
+     "SourceId": "m0082:0x060022D5",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+      "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+      "SourceId": "m0082:0x060022D5",
+      "Edges": [
+       {
+        "From": "m0082:0x060022D5",
+        "Kind": "method",
+        "Offset": 78,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06002303",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.ProjectArchive.ProjectArchiveServiceManager/<>c__DisplayClass27_0::<PublishArchiveProject>b__1(Knx.Ets.ObjectModel.Archive.IArchiveProjectInfo)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iarchiveProjectInfo_0",
+     "HasMetadata": true,
+     "NewName": "projectInfo"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "Token": "0x06002303",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x060022D5",
+   "ProposedName": "PublishArchiveProject",
+   "Reason": "Finds the requested archive folder or uses the archive root; removes one entry with the same related GUID, adds new info, updates the parent count and emits Created then optional Locked. Original method and parameter names are retained.",
+   "Source": [
+    {
+     "Id": "m0082:0x060022D5",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 357,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "path",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "archiveProject",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "shouldLock",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.ProjectArchive.ProjectArchiveServiceManager/<>c__DisplayClass27_0",
+     "NewName": "lookup"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Archive.IArchiveFolderInfoBase",
+     "NewName": "targetFolder"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ObjectModel.Archive.IArchiveProjectInfo",
+     "NewName": "existingProject"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "Token": "0x060022D5",
+    "Slots": {
+     "0": "lookup",
+     "1": "targetFolder",
+     "2": "existingProject"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x04000FFD",
+   "ProposedName": "archiveProjectCreated",
+   "Reason": "Backing delegate of the corresponding original readable archive event, proven by its atomic add accessor. Event and accessor contract names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0082:0x04000FFD",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 1096,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    },
+    {
+     "Id": "m0082:0x060022CA",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 44,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "SupportingTokens": [
+     "0x060022CA"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04000FFE",
+   "ProposedName": "archiveProjectRemoved",
+   "Reason": "Backing delegate of the corresponding original readable archive event, proven by its atomic add accessor. Event and accessor contract names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0082:0x04000FFE",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 1100,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    },
+    {
+     "Id": "m0082:0x060022CC",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 79,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "SupportingTokens": [
+     "0x060022CC"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04000FFF",
+   "ProposedName": "archiveProjectLocked",
+   "Reason": "Backing delegate of the corresponding original readable archive event, proven by its atomic add accessor. Event and accessor contract names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0082:0x04000FFF",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 1104,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    },
+    {
+     "Id": "m0082:0x060022CE",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 114,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "SupportingTokens": [
+     "0x060022CE"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04001000",
+   "ProposedName": "archiveProjectUnlocked",
+   "Reason": "Backing delegate of the corresponding original readable archive event, proven by its atomic add accessor. Event and accessor contract names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0082:0x04001000",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 1108,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    },
+    {
+     "Id": "m0082:0x060022D0",
+     "Path": "Knx.Ets.ViewModel/ProjectArchive/ProjectArchiveServiceManager.cs",
+     "Line": 149,
+     "Sha256": "7071C3F3CC70ED55790E38DBE359B92978A9A6AF03FFB87F42138CAD6AF00F7C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\archive63-wave200-inspection.json",
+    "Sha256": "BF46D3ADA8A7A21D1E6AF18066C93032C38AEF99BC82930A5F29546DBBF84B25",
+    "SupportingTokens": [
+     "0x060022D0"
+    ]
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

@@ -37,11 +37,13 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Event/exception diagnostics committed as `318443f46`.
   HTTP pooling/contract review committed as `76c45dd30`.
   Security/envelope review committed as `f3688bc53`.
-  Current naming checkpoint: `checkpoint-wave198.json`, from accepted 197/29.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v198.xml`,
-  SHA256 `9DFE5B8299A8F8FA71238DED67ED6C66703E374FD7BE7958652E43C087951B15`.
-- Current 6.4 map: `names64-staged-v30.xml`, SHA256
-  `C960FF8326A431458A9B86F9EA568D74DBC8C8BC60BF1AB8F4EDE6F8AB0307E0`.
+  Request/dongle lifecycle review committed as `db16dfab4`.
+  Current naming checkpoint: `checkpoint-wave200.json`, from accepted 198/30,
+  through collection wave199 and its archive-publishing caller wave200.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v200.xml`,
+  SHA256 `D85691B5D04B54405253B79431DB3809E3311E15248AA29C2C602A5D0DE2BCB5`.
+- Current 6.4 map: `names64-staged-v31.xml`, SHA256
+  `0D60AAAAB6E9A2291B9D46A009A27587DE9A0EE116840EEC3E784A6B7CB51460`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -52,7 +54,8 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-198.json` and `map-update64-wave-30.json`;
+  The last update reports are `map-update63-wave-200.json` and `map-update64-wave-31.json`;
+  `map-update63-wave-199.json` is the preceding step of the current checkpoint.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -752,6 +755,55 @@ review hints only. Common arx::c remains unresolved: DevKit akj::l currently
 returns false, which does not establish a meaningful original purpose. The
 constructor's path/provider arguments also need deeper dependency review.
 
+## Collection state and application callers (199–200)
+
+`collection_utilities.py` follows mutation/predicate helpers into partition and
+repeated-generator iterators, indexed selectors and observable mirroring. Each
+version's bodies and actual IL storage are independently bound. Iterator types,
+captured inputs, active inputs, state, current values, source enumerators and
+generated-item counters now have readable roles. Runtime MoveNext/Dispose/
+GetEnumerator names and interface contracts stay intact; no unsupported body-local
+mapping guard was bypassed. Inlined 6.4 lambdas/captures use inspected usage edges
+to retain exact physical and source evidence.
+
+Ten 6.3 aliases have explicit behavioral replacement evidence. AddRange2 and
+MirrorCollectionChanges2 become ordinary overloads without numeric suffixes.
+IsEmpty/HasNoMatches and their null-aware counterparts replace None2/None3-style
+names. SingleOrDefaultUnlessMultiple describes the actual default(T) result,
+including zero for value types. GetFirstOrDefaultAndTestNonNull records the boxed
+non-null test rather than claiming that every true result establishes a match.
+AsCollectionOrEmpty and ToReadOnlySnapshot describe singleton/null handling and
+copied read-only storage. Original readable 6.4 API names/parameters remain intact,
+including their existing ambiguous SingleOrNull/TryGetValue spellings.
+
+Retained behavior matters here: SyncFrom uses set difference, not ordering or
+duplicate-count reconciliation. Clear-then-add can empty a self-aliased source.
+SingleOrNull enumerates again to fetch its single item. Partition/generator
+validation is deferred to first MoveNext. Mirroring appends Add/Replace values
+without preserving event indices; Replace adds before removing. Recent-item
+handling trims exactly one last item only when adding a missing item. TryPop
+catches all exceptions inside its Count/Pop try and is not an atomic operation.
+
+The physical graph and fresh caller IL connect those helpers to Common m0039,
+ViewModel m0082 PublishArchiveProject and ObjectModel m0057 AddRecentGroupAddress.
+The latter uses a limit of 42 and its existing API stays unchanged.
+`archive_publish_scopes.py` names the folder-path and related-project-GUID
+predicates, publishing locals and four anonymous event backing fields. Original
+PublishArchiveProject parameters, event names and accessor contracts are retained.
+It removes one matching project, adds new info, updates the parent count and emits
+Created followed by optional Locked. This was metadata/source review, not an
+archive operation. A fresh `archive63-wave200-methods.json` inventory was needed
+because the earlier ViewModel inventory predated local-scope support.
+
+The utility and archive reviews contain 47+7 decisions in 6.3 (102+12 edits), and
+36 decisions in 6.4 (62 edits). All effective scopes, selected hashes, prior
+aliases except the ten replacements, public contracts and bound SDK protections
+pass checks. No new collision suffixes appeared. Current preflights are
+`map-check63-wave200.json` and `map-check64-wave31.json`, both with zero errors.
+`common63-wave200-prior-alias-review.json` retains 14 review hints and records
+seven meaningful aliases retained after body review; the hint count is not a
+completion measure. No ETS source/binary application, export, build, audit or launch ran.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -774,10 +826,10 @@ constructor's path/provider arguments also need deeper dependency review.
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `common63-wave198-rev2.cumulative.json` and
-  `zip64-wave30-rev2.cumulative.json`; do not
+  `archive63-wave200.cumulative.json` and
+  `collections64-wave31.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **198/30** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **200/31** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
   `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by

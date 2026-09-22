@@ -1,0 +1,189 @@
+{
+  "Format": 1,
+  "Scope": "Selected source/input/IL identities, exact mapped scopes, alias preservation and physical caller edges; no application or runtime test",
+  "Steps": [
+    {
+      "Version": "63",
+      "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v198.xml",
+      "Map": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v199.xml",
+      "Sha256": "BF740C31257850FB2A7993ACEAA9582FB0FD0C160BB1772C5E9DD53921EBC286",
+      "Review": "collections63-wave199",
+      "Decisions": 47,
+      "AcceptedEdits": 102,
+      "VerifiedSourceFiles": 7,
+      "ReviewedReplacements": [
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x06000292",
+          "ExpectedName": "AddRange2",
+          "NewName": "AddRange",
+          "Reason": "Checks the input enumerable and snapshots it to a List before calling the ICollection overload; the overloads have distinct signatures and need no numeric suffix."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x06000298",
+          "ExpectedName": "None2",
+          "NewName": "IsEmpty",
+          "Reason": "Validates a nonnull source and returns the negation of Enumerable.Any."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x06000299",
+          "ExpectedName": "None3",
+          "NewName": "HasNoMatches",
+          "Reason": "Validates the source then returns the negation of Enumerable.Any with the predicate; LINQ validates the predicate."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600029A",
+          "ExpectedName": "NullOrNone",
+          "NewName": "IsNullOrEmpty",
+          "Reason": "Returns true for null, otherwise invokes the empty-sequence predicate."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600029B",
+          "ExpectedName": "NullOrNone2",
+          "NewName": "IsNullOrHasNoMatches",
+          "Reason": "Returns true for null without inspecting the predicate; otherwise tests that no item matches."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x0600029E",
+          "ExpectedName": "SingleOrNull",
+          "NewName": "SingleOrDefaultUnlessMultiple",
+          "Reason": "Returns default(T) for zero or multiple items, including zero for non-nullable value types; exactly one item is fetched by enumerating source again."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060002A8",
+          "ExpectedName": "TryGetValue",
+          "NewName": "GetFirstOrDefaultAndTestNonNull",
+          "Reason": "Assigns FirstOrDefault(predicate), boxes it and tests against null. A missing non-nullable value-type match therefore still returns true."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060002D0",
+          "ExpectedName": "ToCollection",
+          "NewName": "AsCollectionOrEmpty",
+          "Reason": "Returns Array.Empty<T> for a null value and a new one-element array otherwise."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060002C8",
+          "ExpectedName": "ToReadOnlyCollection",
+          "NewName": "ToReadOnlySnapshot",
+          "Reason": "Materializes a new List and wraps it read-only; it is a copied snapshot rather than a live view over the input."
+        },
+        {
+          "Module": "Knx.Ets.Common.dll",
+          "Kind": "Method",
+          "Token": "0x060002CA",
+          "ExpectedName": "MirrorCollectionChanges2",
+          "NewName": "MirrorCollectionChanges",
+          "Reason": "Initially replaces target contents if sequences differ, then returns a disposable Rx subscription that casts source items to the target type and applies collection changes."
+        }
+      ],
+      "PriorAliasesPreservedExceptReviewedReplacements": true,
+      "EveryPriorScopedNamePreserved": true,
+      "EveryDecisionEffectiveInMap": true,
+      "PhysicalInputSha256": "13FA6B5577931CC53E8F921F5E75DB434AC5C61EF948AAC037C4E9AE3F0E8F20",
+      "SdkNameWhitelistSha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
+      "NewCollisionSuffixes": 0
+    },
+    {
+      "Version": "63",
+      "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v199.xml",
+      "Map": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v200.xml",
+      "Sha256": "D85691B5D04B54405253B79431DB3809E3311E15248AA29C2C602A5D0DE2BCB5",
+      "Review": "archive63-wave200",
+      "Decisions": 7,
+      "AcceptedEdits": 12,
+      "VerifiedSourceFiles": 1,
+      "ReviewedReplacements": [],
+      "PriorAliasesPreservedExceptReviewedReplacements": true,
+      "EveryPriorScopedNamePreserved": true,
+      "EveryDecisionEffectiveInMap": true,
+      "PhysicalInputSha256": "FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2",
+      "SdkNameWhitelistSha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
+      "NewCollisionSuffixes": 0
+    },
+    {
+      "Version": "64",
+      "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v30.xml",
+      "Map": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v31.xml",
+      "Sha256": "0D60AAAAB6E9A2291B9D46A009A27587DE9A0EE116840EEC3E784A6B7CB51460",
+      "Review": "collections64-wave31",
+      "Decisions": 36,
+      "AcceptedEdits": 62,
+      "VerifiedSourceFiles": 6,
+      "ReviewedReplacements": [],
+      "PriorAliasesPreservedExceptReviewedReplacements": true,
+      "EveryPriorScopedNamePreserved": true,
+      "EveryDecisionEffectiveInMap": true,
+      "PhysicalInputSha256": "AB2855E4554AFA8E8114269679D8BE36816C03BBDA6B2A14D31D4BE5DD65FF17",
+      "SdkNameWhitelistSha256": "E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34",
+      "NewCollisionSuffixes": 0
+    }
+  ],
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsBinaryApplies": 0,
+  "EtsFullAudits": 0,
+  "EtsLaunches": 0,
+  "Preflights": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\map-check63-wave200.json",
+      "Sha256": "576FBC95A31800E77B0CD692E0DECED4D94B06DAD4563C622CAA9217B31FD194"
+    },
+    "64": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\map-check64-wave31.json",
+      "Sha256": "AAC51047C06B822532AF7A6467420320902E349BDD0672DC1268EC3D7C598AF6"
+    }
+  },
+  "ReadablePublicNamesAndParametersPreserved": {
+    "Common64": [
+      "0x0600072E",
+      "0x06000730",
+      "0x06000732",
+      "0x0600073D",
+      "0x06000781",
+      "0x06000792",
+      "0x06000794",
+      "0x06000785"
+    ],
+    "Archive63": "0x060022D5",
+    "ArchiveEventAndAccessorNamesUnchanged": true
+  },
+  "BehaviorLimits": [
+    "SyncFrom uses set difference, so it does not establish ordering or reconcile duplicate multiplicities.",
+    "ICollection add/remove overloads enumerate inputs directly; IEnumerable overloads snapshot first. Clear-then-add can empty self-aliased input.",
+    "SingleOrNull returns default(T) for zero/multiple items, and enumerates again for the single item; only the prior inferred 6.3 alias changes.",
+    "FirstOrDefault followed by boxing/non-null testing can report true for missing non-nullable value-type matches. Archive publishing uses a reference-type instantiation.",
+    "Partition/generator input validation occurs on first MoveNext. Partition owns and disposes its source enumerator; re-enumeration can reuse an untouched iterator only on its original thread.",
+    "Mirroring Add/Replace operate by value without preserving event indices; Replace adds new values before removing old ones. Other actions reset from Sender.",
+    "Recent-item handling trims exactly one last value only when adding a missing item; moving an existing item does not trim. Installation uses a limit of 42.",
+    "TryPop catches all exceptions inside its Count/Pop try and is not atomic for concurrent callers.",
+    "Archive publishing removes one existing related-GUID entry, adds the new info, updates counts and emits Created followed by optional Locked; public contracts remain unchanged.",
+    "Explicit iterator MoveNext local aliases remain outside the current scope guard; their runtime method names/contracts were preserved. No unsupported guards were bypassed."
+  ],
+  "Recipes": [
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\collection_utilities.py",
+      "Sha256": "F06220209E4250E17BDBF47458A147D0F2DD85B71B54FCE64DDF3D1D19B3EED7"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\archive_publish_scopes.py",
+      "Sha256": "5EF687F98B1C230DFC6A5A14686CB28742DE1FF41A1049481D183602CD7025D9"
+    }
+  ]
+}
