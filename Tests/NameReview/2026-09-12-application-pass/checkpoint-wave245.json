@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 245 accepted (6.3): Knx.Ets.ObjectModel.Operations.GroupRanges",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v245.xml",
+      "Sha256": "6939007EB067CDD9B85774674EB18992F7C2E944ED23C6F8E6C4D3FAE63EE3BF",
+      "PreviousMap": "names63-staged-v244.xml",
+      "PreviousMapSha256": "11DF71AE8E4D7972A57BAC2B31DF06706F4E8FBF939EDAC2623878CECFEBA75B",
+      "FrozenSha256": "6939007EB067CDD9B85774674EB18992F7C2E944ED23C6F8E6C4D3FAE63EE3BF",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave245.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The operation families repeat their conventions: CreateValidators (with MaxCountValidator over Constants.MaxMainGroups / MaxMiddleGroupsInMainGroup or FreeGroupRangeAddressStrategyValidator), the Create* DOM-object factories, the Move*/Apply* undo-redo triples and the SetDescription helper that sets the description from a neutral localized resource text.",
+    "duplicates": "SplitFreeGroupRangeOperation's four predicates are two byte-identical pairs: b(FreeGroupRange) and a(FreeGroupRange) are the same body, as are b(IGroupAddress) and a(IGroupAddress), so one of each pair is named (IsAtOrAfterSplitAddress / IsAddressAtOrAfterSplitAddress) and the twin is left unresolved.",
+    "log strings": "MoveFreeGroupRangeOperation logs 'Moving free group ranges' and MoveThreeLevelMiddleGroupOperation logs 'Moving three level middle groups'."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 29,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14227,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11033
+  },
+  "Errors": 0
+}
