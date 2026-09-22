@@ -1,0 +1,40 @@
+{
+  "Checkpoint": "checkpoint-wave182.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v181.xml",
+      "Steps": [
+        {"Map": "names63-staged-v182.xml", "Review": "usb-write63-wave182.review.json", "Report": "map-update63-wave-182.json", "References": "contract-references63-v2.json"}
+      ],
+      "ReplacementEvidence": ["usb-write63-wave182.evidence.json"]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v18.xml",
+      "Steps": [
+        {"Map": "names64-staged-v19.xml", "Review": "usb-write64-wave19.review.json", "Report": "map-update64-wave-19.json"}
+      ]
+    }
+  },
+  "Reviews": [
+    {"Input": "usb-write63-wave182.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "usb-write64-wave19.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "usb-write63-wave182.review.json", "usb-write63-wave182.evidence.json", "usb-write63-wave182-inspection.json",
+    "usb-write64-wave19.review.json", "usb-write64-wave19.evidence.json", "usb-write64-wave182-inspection.json",
+    "map-update63-wave-182.json", "map-update64-wave-19.json"
+  ],
+  "ReviewedChains": [
+    "Group-address sorting, duplicate detection, diagnostic address selection and first-entry preservation lead into RF Multi acknowledgement configuration writes. Six inherited compiler-style aliases have explicit, exact-old-name replacement evidence; parameters and earlier scoped decisions remain intact.",
+    "Individual-address EMI1/cEMI writes and PL domain/repeater read-modify-write operations feed medium configuration. RF configuration invokes reviewed acknowledgement/timeout writers and RF/communication-mode setup, with reception/filtering failure boundaries recorded.",
+    "Communication-mode encoding, busmonitor time-base reads and RF mode/additional-info selection lead into cEMI initialization and the EMI1/cEMI dispatcher. Both versions were read independently: only 6.3 retries a rejected busmonitor mode as LinkLayer in SetLocalDeviceCommModeAsync.",
+    "Twelve obfuscated 6.3 async carrier types, used captured fields, wrapper locals, cached selectors and method parameters carry the same behavioral terminology. Canonical 6.4 carrier metadata stays unchanged; actual wrapper local slots differ and are verified from IL."
+  ],
+  "Remaining": [
+    "Application-wide naming is incomplete. Continue the complete SetInterfaceConfigurationAsync contract and top-level USB configuration/open/dispatch callers, then remaining coupled application components.",
+    "Memory-278 write helper and three saved register fields need stronger register semantics. Explicit MoveNext local-only mappings remain blocked; a scoped-only tool enhancement must preserve runtime method contracts.",
+    "Keep actual differences and limits: 6.3 rejected-busmonitor retry versus 6.4 enriched failure; acknowledgement count writes ignore cancellation; timeout write errors are swallowed; RF mode selection retains requested true after failure. These are source/IL observations, not runtime equivalence results or fixes.",
+    "Review the 51 inherited requested/applied suffix adjustments. This update adds none. Historical SDK audits/frozen maps require refresh against final staged maps before consolidated application/export/build/runtime verification.",
+    "Preserve physical module paths, SHA256/MVID and the v2 contract-reference manifest. Scripts prepare exploration/mapping/evidence only; dnSpy/de4dotEx own source/binary naming and reference repair."
+  ]
+}

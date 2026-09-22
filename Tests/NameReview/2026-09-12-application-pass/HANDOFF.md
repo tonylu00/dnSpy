@@ -22,18 +22,21 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   as `be2014c8d`; the next continuation names EMI1 initialization and shutdown.
 - EMI1 initialization/shutdown committed as `3e9b9f365`; the current continuation
   follows local-memory response matching through configuration and feature reads.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v181.xml`,
-  SHA256 `1B4E3AD9743B58C8C40034AA0C0B2ABBEC05D4D58B2CF4D3E7A20E91ECB36FCF`.
-- Current 6.4 map: `names64-staged-v18.xml`, SHA256
-  `A2AF54C081CA31541C9E17C1D79CFBCF54BE189CC29593CCC6FA4AB8D2711451`.
+- Configuration/feature reads committed as `3e57125bd`; this continuation follows
+  configuration writes and cEMI initialization, including explicit selector aliases.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v182.xml`,
+  SHA256 `A1B72930DEAFC5F1488F0C9ECE92E1A5BA21DAD1A47D3773A3A48904F6F4EB77`.
+- Current 6.4 map: `names64-staged-v19.xml`, SHA256
+  `98876DD21ADA8DA2BF92AB8273F5D17EF59997D01394B877F458B767949444BE`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
-  parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-180.json`, `map-update63-wave-181.json`,
-  `map-update64-wave-17.json` and `map-update64-wave-18.json`;
+  parameter/local decisions were checked for preservation. Six compiler-style
+  source aliases now have explicit replacement review; every other earlier alias
+  is preserved. The current update reports are `map-update63-wave-182.json`
+  and `map-update64-wave-19.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave181.json` records artifact hashes, validation and limits.
+  `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -204,6 +207,33 @@ and do not refresh order on hits. Canonical 6.4 carriers remain intact; no names
 were assigned to unused obfuscator fields. Both update chains passed with no
 errors or new suffixes. All prior map and review decisions are preserved.
 
+`usb_configuration_write.py` follows the acknowledgement sort/group/duplicate
+selectors into deduplicated property writes, then connects individual-address,
+PL domain/repeater, RF acknowledgement/timeout and reception/filtering updates.
+Six previously restored `<MoveNext>b__60_*` source aliases now have explicit
+behavioral replacements, such as `HasDuplicateAcknowledgements` and
+`SelectFirstAcknowledgement`. Distinct grouping uses have distinct names, with
+no generated collision suffixes. Physical metadata identities and existing
+parameter/local decisions remain intact. These aliases name explicit helpers;
+they do not rename the original compiler metadata used for source reconstruction.
+
+Communication-mode encoding, busmonitor time-base reads and RF mode/additional
+information setup now lead through cEMI initialization and the EMI1/cEMI
+dispatcher. Twelve obfuscated 6.3 async carriers and their used fields describe
+the same roles. The actual wrapper local slot is verified: several 6.4 methods
+use slot one, unlike the 6.3 wrappers. Canonical 6.4 carrier names are preserved.
+The bodies establish an important difference: 6.3 retries rejected Busmonitor
+as LinkLayer, while the corresponding 6.4 helper throws its enriched exception.
+Acknowledgement count writes use CancellationToken.None, timeout write failures
+are swallowed, and requested RF Multi can remain true after a failed mode write.
+These are recorded behaviors, not runtime repairs or equivalence results.
+
+Both map updates passed with zero errors and no new suffixes. The checkpoint
+validates the entire maps and cumulative reviews, permitting only the six exact,
+evidence-bound replacements. Seven portable synthetic Python checks exercise
+stale/missing/wrong-physical-path approvals, scope preservation and staging guards.
+No ETS exports, builds, binary applications or launches ran.
+
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
@@ -214,15 +244,14 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 - Whole-application naming coverage is still incomplete. Alias totals and
   duplicate compatibility copies are not a measure of completed readability.
 - Catalog parsing/localization, volatile saved addresses, EMI1 initialization/
-  shutdown, configuration reads, feature discovery and cache matchers are reviewed.
-  Continue into configuration writes (6.4 `0x0600340F`–`0x06003415`, 6.3
-  `0x06001C97`–`0x06001C9D`) and cEMI initialization (`0x0600341E`–`0x06003421`,
-  6.3 `0x06001CA6`–`0x06001CA9`), then remaining open/dispatch callers and other
-  application components. Review the memory-278
+  shutdown, configuration reads/writes, feature discovery/cache and cEMI
+  initialization are reviewed. Continue the complete SetInterfaceConfigurationAsync
+  contract (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`), then remaining
+  open/dispatch callers and other application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
 - Native import proposals from wave175 are resolved. Continue from
-  `usb-features63-wave181.cumulative.json` and `usb-features64-wave18.cumulative.json`; do not
+  `usb-write63-wave182.cumulative.json` and `usb-write64-wave19.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
@@ -238,7 +267,9 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
   to NameCandidates map updates/checks. Do not pick a map by
   newest filename. The current cumulative 6.3 review binds the v2 manifest hash.
 - Leave uncertain storage fields and unsupported external contracts unresolved.
-  Preserve compiler-generated aliases used by dnSpy to reconstruct lambdas.
+  Preserve compiler-generated metadata needed for reconstruction. Existing source
+  aliases can only change through exact old/new replacement evidence bound to the
+  same physical module and base-map hash; no blanket replacement policy applies.
 - Explicit MoveNext body-local maps are still rejected by the shared guards.
   A future scope-only enhancement must preserve the runtime method name and
   implementation binding, validate actual IL local slots/types, and use portable
@@ -251,8 +282,11 @@ source replacement scripts. Tooling builds and synthetic fixtures are distinct
 from the postponed consolidated ETS export/build/runtime verification.
 `behavior_review.py` rejects implicit replacement of existing aliases (including
 restored lambda names), retains old parameter/local choices and validates source
-hashes. `checkpoint_behavior.py` uses an explicit plan to preserve prior map
-decisions and validate the update/reference hashes. The actual canonical-alias
-replacement guard and checkpoint hashes were checked without ETS execution.
+hashes. Its optional `replace_alias` requires the exact prior alias and records
+the replacement with behavioral/source evidence. `checkpoint_behavior.py` uses
+an explicit plan to preserve prior decisions except those exact replacements,
+validate their physical identity/base-map hash, and retain update/reference hashes.
+Unused replacement approvals and scoped-name changes are rejected. The guards
+and checkpoint hashes were checked without ETS execution.
 Inputs are exact snapshots. Move/rebind graph roots explicitly on another OS;
 do not substitute same-named assemblies.

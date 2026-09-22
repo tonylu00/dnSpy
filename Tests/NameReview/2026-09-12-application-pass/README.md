@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave181.json`. Current staged maps are **6.3 v181** and **6.4 v18**.
+`checkpoint-wave182.json`. Current staged maps are **6.3 v182** and **6.4 v19**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -20,6 +20,13 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- Acknowledgement sorting/duplicate selection → individual-address and PL/RF
+  configuration writers → communication/RF mode and time-base setup → cEMI
+  initialization (`usb_configuration_write.py`). Twelve 6.3 async carriers and
+  their used fields now describe these roles. Six compiler-style selector aliases
+  have exact old/new behavioral replacement evidence; all earlier scoped names
+  and other aliases remain intact. 6.3's rejected-busmonitor retry is distinguished
+  from 6.4's enriched failure. Both updates pass with no new collision suffixes.
 - PC value buffer/address/payload helpers → the complete 6.3 `IsConfirmation`
   contract → retrying local-memory reads → individual/domain/serial/descriptor
   and full interface-configuration readers (`usb_configuration.py`). The RF

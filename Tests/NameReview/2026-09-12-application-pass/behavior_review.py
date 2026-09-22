@@ -76,7 +76,7 @@ class BehaviorReview:
                 raise ValueError('Stale source: ' + str(path))
         return [{'Id': sid, 'Path': r['Source'], 'Line': r['Line'], 'Sha256': r['Sha256']} for r in rows]
 
-    def add(self, kind, token, name, reason, parameters=None, locals_=None, evidence=(), contract=None):
+    def add(self, kind, token, name, reason, parameters=None, locals_=None, evidence=(), contract=None, replace_alias=None):
         key = f'0x{token:08X}'
         if (kind, key) in self.selected:
             raise ValueError('Duplicate decision: ' + key)
@@ -89,7 +89,9 @@ class BehaviorReview:
             row['MappingBlocker'] = contract['MappingBlocker']
         base = self.aliases.get((self.relative, key))
         existing = base.get('NewName') if base is not None else None
-        if name and existing and name != existing:
+        if replace_alias is not None and (not existing or existing != replace_alias or not name or name == existing):
+            raise ValueError('Stale or unnecessary alias replacement: ' + key)
+        if name and existing and name != existing and replace_alias is None:
             raise ValueError(f'Explicit replacement review required: {key} {existing} -> {name}')
         row.update(NewName=name or existing or '', Reason=reason)
         # Restore prior scoped decisions from the map, even when an inventory
@@ -123,6 +125,9 @@ class BehaviorReview:
             locations += self.source(supporting)
         proof = {'Id': self.module_id + ':' + key, 'ProposedName': row['NewName'], 'Reason': reason,
                  'Source': locations, 'Parameters': row['ParameterNames'], 'Locals': row['LocalNames']}
+        if replace_alias is not None:
+            proof['Replacement'] = {'Module': self.relative, 'Kind': kind[:-1], 'Token': key,
+                                    'ExpectedName': replace_alias, 'NewName': name, 'Reason': reason}
         blocker = row.get('MappingBlocker')
         if kind == 'Methods' and not row['NewName']:
             blocker = row['ScopedMappingBlocker']

@@ -1,0 +1,141 @@
+{
+  "Format": 1,
+  "PreviousGoalTurn": "progress",
+  "Status": "Application-wide mapping in progress",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v182.xml",
+      "Sha256": "A1B72930DEAFC5F1488F0C9ECE92E1A5BA21DAD1A47D3773A3A48904F6F4EB77",
+      "AppliedToSource": false
+    },
+    "64": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v19.xml",
+      "Sha256": "98876DD21ADA8DA2BF92AB8273F5D17EF59997D01394B877F458B767949444BE",
+      "AppliedToSource": false
+    }
+  },
+  "Updates": [
+    {
+      "Path": "map-update63-wave-182.json",
+      "Sha256": "9F75FD265AFD3AC2C4979747B1F4728F1D74E63F33FCC920AEDBCD3FDAA8CF02"
+    },
+    {
+      "Path": "map-update64-wave-19.json",
+      "Sha256": "1FF27D7D13C308376C7FA23BA975A5D0B3157EF848D27BC062CDFF0F4B30C73F"
+    }
+  ],
+  "Artifacts": {
+    "usb-write63-wave182.review.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-write63-wave182.review.json",
+      "Sha256": "B9D7E62E5FD366CBE491E3E8736E39170F5B13E5320256A904D42B5FBD3E6C4F"
+    },
+    "usb-write63-wave182.evidence.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-write63-wave182.evidence.json",
+      "Sha256": "DFEB5DA645FC3720163EC9090232B1A7C5858BA4544387458D6EFCB02E77B326"
+    },
+    "usb-write63-wave182-inspection.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-write63-wave182-inspection.json",
+      "Sha256": "C2A9A06A7A6857C0E1A65ABDB87F831F36DE73066AB1A5E4F06883C55A6A0104"
+    },
+    "usb-write64-wave19.review.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-write64-wave19.review.json",
+      "Sha256": "38E8A77EC9B5A8BD6B161FAA5523648C5522BFC7F556CEDEC04DED1CC61EBE77"
+    },
+    "usb-write64-wave19.evidence.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-write64-wave19.evidence.json",
+      "Sha256": "C13E5D1B311E144CC0D095A9E44A0A112EBEA9D9B51F163C26F3EC0319708A66"
+    },
+    "usb-write64-wave182-inspection.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-write64-wave182-inspection.json",
+      "Sha256": "9A4B70F82E2C1476FB7C4E2E107280B6A643E9FF5EF216AFC6D7BE00F838C332"
+    },
+    "map-update63-wave-182.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-update63-wave-182.json",
+      "Sha256": "9F75FD265AFD3AC2C4979747B1F4728F1D74E63F33FCC920AEDBCD3FDAA8CF02"
+    },
+    "map-update64-wave-19.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-update64-wave-19.json",
+      "Sha256": "1FF27D7D13C308376C7FA23BA975A5D0B3157EF848D27BC062CDFF0F4B30C73F"
+    }
+  },
+  "AppliedToSource": false,
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsFullAudits": 0,
+  "EtsLaunches": 0,
+  "EtsBinaryApplies": 0,
+  "PriorMapDecisionsPreserved": false,
+  "UnreviewedDecisionsPreserved": true,
+  "ReviewedAliasReplacements": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Kind": "Method",
+      "Token": "0x06001CD5",
+      "ExpectedName": "<MoveNext>b__60_0",
+      "NewName": "SelectAcknowledgementSortAddress",
+      "Reason": "Returns GroupAddress for the stable OrderBy before duplicate detection."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Kind": "Method",
+      "Token": "0x06001CD6",
+      "ExpectedName": "<MoveNext>b__60_1",
+      "NewName": "SelectAcknowledgementDuplicateKey",
+      "Reason": "Returns GroupAddress for grouping to detect duplicate acknowledgement addresses."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Kind": "Method",
+      "Token": "0x06001CD7",
+      "ExpectedName": "<MoveNext>b__60_2",
+      "NewName": "HasDuplicateAcknowledgements",
+      "Reason": "Returns Count(group) > 1 for the duplicate-address warning."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Kind": "Method",
+      "Token": "0x06001CD8",
+      "ExpectedName": "<MoveNext>b__60_3",
+      "NewName": "SelectDuplicateAcknowledgementAddress",
+      "Reason": "Returns the duplicate group Key for the warning message."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Kind": "Method",
+      "Token": "0x06001CD9",
+      "ExpectedName": "<MoveNext>b__60_4",
+      "NewName": "SelectAcknowledgementDeduplicationKey",
+      "Reason": "Returns GroupAddress to regroup sorted acknowledgements before selecting one per address."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Kind": "Method",
+      "Token": "0x06001CDA",
+      "ExpectedName": "<MoveNext>b__60_5",
+      "NewName": "SelectFirstAcknowledgement",
+      "Reason": "Returns Enumerable.First(group), preserving the first sorted acknowledgement for a duplicate address."
+    }
+  ],
+  "NewCollisionSuffixes": 0,
+  "ReviewedChains": [
+    "Group-address sorting, duplicate detection, diagnostic address selection and first-entry preservation lead into RF Multi acknowledgement configuration writes. Six inherited compiler-style aliases have explicit, exact-old-name replacement evidence; parameters and earlier scoped decisions remain intact.",
+    "Individual-address EMI1/cEMI writes and PL domain/repeater read-modify-write operations feed medium configuration. RF configuration invokes reviewed acknowledgement/timeout writers and RF/communication-mode setup, with reception/filtering failure boundaries recorded.",
+    "Communication-mode encoding, busmonitor time-base reads and RF mode/additional-info selection lead into cEMI initialization and the EMI1/cEMI dispatcher. Both versions were read independently: only 6.3 retries a rejected busmonitor mode as LinkLayer in SetLocalDeviceCommModeAsync.",
+    "Twelve obfuscated 6.3 async carrier types, used captured fields, wrapper locals, cached selectors and method parameters carry the same behavioral terminology. Canonical 6.4 carrier metadata stays unchanged; actual wrapper local slots differ and are verified from IL."
+  ],
+  "Remaining": [
+    "Application-wide naming is incomplete. Continue the complete SetInterfaceConfigurationAsync contract and top-level USB configuration/open/dispatch callers, then remaining coupled application components.",
+    "Memory-278 write helper and three saved register fields need stronger register semantics. Explicit MoveNext local-only mappings remain blocked; a scoped-only tool enhancement must preserve runtime method contracts.",
+    "Keep actual differences and limits: 6.3 rejected-busmonitor retry versus 6.4 enriched failure; acknowledgement count writes ignore cancellation; timeout write errors are swallowed; RF mode selection retains requested true after failure. These are source/IL observations, not runtime equivalence results or fixes.",
+    "Review the 51 inherited requested/applied suffix adjustments. This update adds none. Historical SDK audits/frozen maps require refresh against final staged maps before consolidated application/export/build/runtime verification.",
+    "Preserve physical module paths, SHA256/MVID and the v2 contract-reference manifest. Scripts prepare exploration/mapping/evidence only; dnSpy/de4dotEx own source/binary naming and reference repair."
+  ],
+  "Reviews": {
+    "reviewed63.json": {
+      "Sha256": "B3237F3832BA2E38CA9541A71AA337D23F2D36309F304CD9568976E8B6C58A89"
+    },
+    "behavior-reviewed64.json": {
+      "Sha256": "196548AEE0793230831F796F8FB7E9745C590AC82CBE8AB33D967F1A7B153617"
+    }
+  }
+}
