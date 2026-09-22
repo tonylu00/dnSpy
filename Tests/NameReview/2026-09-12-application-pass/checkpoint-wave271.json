@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 271 accepted (6.3): Falcon literal-backed methods",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v271.xml",
+      "Sha256": "A7C151313D489E97116E8217AE97B2F1E52A2DF3F6318FF66E2D31B7E22DA3F6",
+      "PreviousMap": "names63-staged-v270.xml",
+      "PreviousMapSha256": "B47ED9AB82FA711A03FC86A2AAF8D05C19A37A3451FEF16E73F6A77B46DBCAB6",
+      "FrozenSha256": "A7C151313D489E97116E8217AE97B2F1E52A2DF3F6318FF66E2D31B7E22DA3F6",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave271.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods, selected by a new literal-evidence pass (literal-evidence.py) over Falcon's 2,599 open rows: the strongest evidence for a body is its own string literals. Named: the Tx:/Rx: traffic text builder, the firmware-update-session guard ('No open firmware update session by client, server communication not allowed'), the operation whose literal name is PrepareToolKey, three software-update TimeoutException factories (download, update result, state change), four discovery handlers that log the found device and write it to the channel, the timer task creator, the master data element builder (MaskVersion MV-{0:X4} and MediumTypeRefId MT-{0}), the master data version reader, and three connection action handlers (Noop, RefuseConnection, GiveUp).",
+    "themes": "Literal evidence names a method directly when the literal is its operation name or its message; the twins lesson held again (0x06000465 and 0x06000467 build the same TimeoutException, so only the first was named). Two HawkNET family rows had to be dropped: the SDK whitelist preserves eo::ct() and eo::cu() per member even though the family itself carries no blocker, so family rows are still subject to the per-member SDK check."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 16,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14835,
+    "VisibleRenamed": 5022,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11641
+  },
+  "Errors": 0
+}
