@@ -5,6 +5,12 @@ The source trees have **not** been renamed or rebuilt by this pass. Decisions ar
 being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
+The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
+`resume-wave171.json`. The current staged map is **6.3 v171**; **6.4 remains v7**.
+The current SDK audit/frozen export map still describes wave166 and must be
+refreshed against the final map before export. Historical binary apply checks
+below do not establish source application or ETS runtime behavior.
+
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
 methods or completed work. Graphs and query databases live in
@@ -2329,3 +2335,20 @@ Standing rules for this pass:
   `95E224716AFC1CFEECD3354C292963C762FB6612461C49B1CCD5AFAD5D8BD1B6`, 12,214
   reviewed edits, 0 errors, same 51 suffixes; export `4B809A63519730EC…` audits
   `0/0`; apply 825 types / 10,710 methods; `canonical_rows=575`.
+
+- **Recovered wave167 and USB report/stack-message review (waves168–171).**
+  Recovered the uncheckpointed `ApplicationProgramData` and `KnxHidFeatureReport`
+  type rows, verified the exact input identities, and continued through the HID
+  header/body classes into feature-response matching, bus-state notifications,
+  and the stack message used by outgoing sends and incoming reassembly.
+  `usb_reports.py`, `usb_constructor_parameters.py`, and `usb_stack_message.py`
+  preserve physical token/hash identity and record body/caller evidence.
+  Constructor parameter roles now map without renaming `.ctor`/`.cctor`, using
+  de4dotEx commit `f1a4eda8`; the full NameCandidates fixture suite passed.
+  The checkpoint caught and rejected replacing the existing hash lambda alias
+  `<GetHashCode>b__18_0`; wave171 preserves it and names only its parameters.
+  The v171 map is `C4A82487927C1C5226C5223F408ACE24CC57DB54D88119B71A3824974C720EDD`.
+  Update-chain validation passed with zero new requested/applied suffix changes.
+  The 51 inherited adjustments remain in `inherited-suffix-review.json` for
+  review. No ETS binary apply, source export, build, full audit, or launch ran
+  during this continuation. The application-wide pass remains incomplete.

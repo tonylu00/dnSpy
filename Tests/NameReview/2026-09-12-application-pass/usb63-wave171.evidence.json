@@ -1,0 +1,350 @@
+{
+  "Format": 1,
+  "ModuleSha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Decisions": [
+    {
+      "Id": "m0088:0x020004F1",
+      "ProposedName": "UsbStackMessage",
+      "Reason": "Nested stack message shared by outgoing USB sends and incoming reassembled packets. Carries direction, ProtocolId, HID body and send completion; remains nested in KnxUsbInterface.",
+      "Source": [
+        {
+          "Id": "m0088:0x020004F1",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "ClassDeclaration",
+          "Name": "Type_1265",
+          "Line": 860,
+          "Start": 35859,
+          "Length": 4936,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": null
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C1F",
+      "ProposedName": "<GetHashCode>b__18_0",
+      "Reason": "Preserve the existing canonical lambda name used for decompiler reconstruction. Aggregate seed is zero; each byte contributes 297 * runningHash + nextByte. Equality compares direction and bytes but does not compare ProtocolId.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C1F",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "a",
+          "Line": 966,
+          "Start": 40166,
+          "Length": 190,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": [
+            {
+              "Kind": "Parameter",
+              "Name": "int_0",
+              "Start": 40286,
+              "Length": 5,
+              "Line": 967,
+              "Type": "int"
+            },
+            {
+              "Kind": "Parameter",
+              "Name": "byte_0",
+              "Start": 40298,
+              "Length": 6,
+              "Line": 967,
+              "Type": "byte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C12",
+      "ProposedName": null,
+      "Reason": "Constructed with true for KnxTunnel/FeatureService sends and false after incoming HID reassembly; creates a completion source with asynchronous continuations.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C12",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "ConstructorDeclaration",
+          "Name": "Type_1265",
+          "Line": 864,
+          "Start": 36112,
+          "Length": 279,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": [
+            {
+              "Kind": "Parameter",
+              "Name": "bool_1",
+              "Start": 36134,
+              "Length": 6,
+              "Line": 864,
+              "Type": "bool"
+            },
+            {
+              "Kind": "Parameter",
+              "Name": "protocolId_1",
+              "Start": 36153,
+              "Length": 12,
+              "Line": 864,
+              "Type": "ProtocolId"
+            },
+            {
+              "Kind": "Parameter",
+              "Name": "byte_1",
+              "Start": 36174,
+              "Length": 6,
+              "Line": 864,
+              "Type": "byte[]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C13",
+      "ProposedName": "get_IsOutbound",
+      "Reason": "Returns direction flag. Outbound constructors pass true, receive reassembly passes false; ToString renders > or <.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C13",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "e",
+          "Line": 873,
+          "Start": 36471,
+          "Length": 147,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": []
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C14",
+      "ProposedName": "get_HidBody",
+      "Reason": "Returns stored report body, consumed by report fragmentation and compared by SequenceEqual.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C14",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "d",
+          "Line": 880,
+          "Start": 36698,
+          "Length": 149,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": []
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C15",
+      "ProposedName": "get_SendCompletion",
+      "Reason": "Returns completion source awaited by the USB send helper. This is the source, not its Task.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C15",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "c",
+          "Line": 887,
+          "Start": 36927,
+          "Length": 174,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": []
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C16",
+      "ProposedName": "get_ProtocolID",
+      "Reason": "Returns stored ProtocolId used by FeatureService response filtering and HID start-report creation.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C16",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "b",
+          "Line": 894,
+          "Start": 37181,
+          "Length": 153,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": []
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C17",
+      "ProposedName": "CompleteSend",
+      "Reason": "After the send loop finishes writing all fragments, attempts TrySetResult(default(VoidType)); does not throw if already completed.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C17",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "a",
+          "Line": 901,
+          "Start": 37414,
+          "Length": 172,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": []
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C18",
+      "ProposedName": "FailSend",
+      "Reason": "The send-loop catch passes its exception here; attempts TrySetException on the completion source.",
+      "Source": [
+        {
+          "Id": "m0088:0x06001C18",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "a",
+          "Line": 908,
+          "Start": 37666,
+          "Length": 200,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": [
+            {
+              "Kind": "Parameter",
+              "Name": "exception_0",
+              "Start": 37790,
+              "Length": 11,
+              "Line": 909,
+              "Type": "Exception"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BF3",
+      "ProposedName": "RaisePropertyChanged",
+      "Reason": "Copies the PropertyChanged delegate, checks non-null and invokes it with this and PropertyChangedEventArgs(propertyName).",
+      "Source": [
+        {
+          "Id": "m0088:0x06001BF3",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "MethodDeclaration",
+          "Name": "a",
+          "Line": 195,
+          "Start": 7984,
+          "Length": 363,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": [
+            {
+              "Kind": "Parameter",
+              "Name": "string_11",
+              "Start": 8105,
+              "Length": 9,
+              "Line": 196,
+              "Type": "string"
+            },
+            {
+              "Kind": "VariableDeclarator",
+              "Name": "propertyChangedEventHandler",
+              "Start": 8151,
+              "Length": 27,
+              "Line": 198,
+              "Type": "PropertyChangedEventHandler"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x04001821",
+      "ProposedName": "isOutbound",
+      "Reason": "Constructor direction flag used by send/receive dispatch and equality.",
+      "Source": [
+        {
+          "Id": "m0088:0x04001821",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "FieldDeclaration",
+          "Name": "a_1",
+          "Line": 943,
+          "Start": 39421,
+          "Length": 26,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": null
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x04001822",
+      "ProposedName": "protocolId",
+      "Reason": "Constructor ProtocolId used to select feature service or KNX tunnel handling.",
+      "Source": [
+        {
+          "Id": "m0088:0x04001822",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "FieldDeclaration",
+          "Name": "b_1",
+          "Line": 946,
+          "Start": 39487,
+          "Length": 32,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": null
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x04001823",
+      "ProposedName": "hidBody",
+      "Reason": "Constructor bytes sent through HID fragmentation; also the input to equality and hash accumulation.",
+      "Source": [
+        {
+          "Id": "m0088:0x04001823",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "FieldDeclaration",
+          "Name": "c_1",
+          "Line": 949,
+          "Start": 39559,
+          "Length": 28,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": null
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x04001824",
+      "ProposedName": "sendCompletion",
+      "Reason": "TaskCompletionSource<VoidType> signaled by CompleteSend/FailSend and awaited by the USB send helper.",
+      "Source": [
+        {
+          "Id": "m0088:0x04001824",
+          "Source": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Kind": "FieldDeclaration",
+          "Name": "d_1",
+          "Line": 952,
+          "Start": 39627,
+          "Length": 53,
+          "SpanUnit": "UTF16-code-unit",
+          "Bindings": null
+        }
+      ]
+    }
+  ],
+  "PreservedContracts": [
+    "ToString",
+    "Equals(Class743)",
+    "Equals(Class741/a)",
+    "GetHashCode"
+  ],
+  "Remaining": [
+    "Review timeout helper ac3 before naming its USB send caller.",
+    "Compiler-generated storage remains separate from behavioral names."
+  ]
+}

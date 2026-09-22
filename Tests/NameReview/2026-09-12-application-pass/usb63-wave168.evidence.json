@@ -1,0 +1,1609 @@
+{
+  "Format": 1,
+  "Status": "staged; source application and whole-application review remain pending",
+  "BaseMapSha256": "47036BDE85A0C1CEAC0AC30505C460C852E7A84CD566C61EE9E4648BC1E15C4B",
+  "ModuleSha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Decisions": [
+    {
+      "Id": "m0088:0x020004E7",
+      "ProposedName": "Knx.Falcon.Connectors.UsbConnector.KnxHidFeatureReport",
+      "Reason": "Reviewed 6.4 counterpart plus constructor/callers: four-byte header carries FeatureService, big-endian manufacturer code, FeatureType, then feature value.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 7
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x020004E8",
+      "ProposedName": "Knx.Falcon.Connectors.UsbConnector.KnxHidReportBase",
+      "Reason": "Owns a 64-byte report; packs report ID, packet flags, sequence and data length, and fragments/parses start/continuation reports.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 6
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x020004EA",
+      "ProposedName": "Knx.Falcon.Connectors.UsbConnector.KnxHidReportContinuation",
+      "Reason": "Rejects start packets; copies a continuation fragment after its three-byte header, matching the reviewed 6.4 class.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1318.cs",
+          "Sha256": "0E26A028A6D77CFBC39AF7039A28C18391E0C907C2DA469C92500DACF61F9118",
+          "Line": 5
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x020004EB",
+      "ProposedName": "Knx.Falcon.Connectors.UsbConnector.KnxHidReportStart",
+      "Reason": "Requires StartPacket and carries protocol version/header length/body length/protocol ID before the first 56 body bytes.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 5
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x020004EC",
+      "ProposedName": "Knx.Falcon.Connectors.UsbConnector.KnxHidTelegramReport",
+      "Reason": "EMI type and manufacturer-code header followed by telegram bytes; reviewed counterpart and start-report ToString dispatch identify the role.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 6
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001840",
+      "ProposedName": "ExtractUInt16",
+      "Reason": "Reads two bytes big-endian at the supplied offset; used for report manufacturer/body length fields.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "buffer"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "offset"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1248.cs",
+          "Sha256": "48C4125D133D203BA7503F38E57A704B65B5E5A9E94AA2755BDCF84029B6DCAA",
+          "Line": 15
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x0600184C",
+      "ProposedName": "Extract",
+      "Reason": "Allocates count bytes and Buffer.BlockCopy copies from offset; no additional bounds policy is inferred.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "buffer"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "offset"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "int_1",
+          "HasMetadata": true,
+          "NewName": "count"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1248.cs",
+          "Sha256": "48C4125D133D203BA7503F38E57A704B65B5E5A9E94AA2755BDCF84029B6DCAA",
+          "Line": 124
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB0",
+      "ProposedName": "get_HidBody",
+      "Reason": "Returns the stored feature-report bytes without copying.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 29
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB1",
+      "ProposedName": "get_FeatureService",
+      "Reason": "Casts byte zero to FeatureService.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 36
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB2",
+      "ProposedName": "set_FeatureService",
+      "Reason": "Writes FeatureService into byte zero.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "featureService_0",
+          "HasMetadata": true,
+          "NewName": "featureService"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 43
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB3",
+      "ProposedName": "get_ManufacturerCode",
+      "Reason": "Reads the big-endian UInt16 beginning at byte one.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 50
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB4",
+      "ProposedName": "set_ManufacturerCode",
+      "Reason": "Writes the high and low manufacturer-code bytes at offsets one and two.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_0",
+          "HasMetadata": true,
+          "NewName": "manufacturerCode"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 57
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB5",
+      "ProposedName": "get_FeatureIdentifier",
+      "Reason": "Casts byte three to FeatureType.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 65
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB6",
+      "ProposedName": "set_FeatureIdentifier",
+      "Reason": "Writes FeatureType at byte three.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "featureType_0",
+          "HasMetadata": true,
+          "NewName": "featureIdentifier"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 72
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB8",
+      "ProposedName": "GetFeatureValueLength",
+      "Reason": "Returns known feature widths (0, 1 or 2), or -1 for unknown/variable features.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "featureType_0",
+          "HasMetadata": true,
+          "NewName": "feature"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 95
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BBE",
+      "ProposedName": "get_RawBytes",
+      "Reason": "Returns the complete underlying 64-byte HID report.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 64
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BBF",
+      "ProposedName": "get_ReportID",
+      "Reason": "Returns the first report byte, initialized to one.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 71
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BC0",
+      "ProposedName": "get_PacketType",
+      "Reason": "Reads the low nibble of byte one as PacketType flags.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 78
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BC1",
+      "ProposedName": "set_PacketType",
+      "Reason": "Preserves the high nibble and writes packet flags; no additional input masking is added.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "packetType_0",
+          "HasMetadata": true,
+          "NewName": "packetType"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 85
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BC2",
+      "ProposedName": "get_SequenceNumber",
+      "Reason": "Reads the high nibble of byte one.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 92
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BC3",
+      "ProposedName": "set_SequenceNumber",
+      "Reason": "Preserves packet flags and writes the sequence shifted by four bits.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "sequenceNumber"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 99
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BC4",
+      "ProposedName": "get_DataLength",
+      "Reason": "Returns byte two: bytes occupied after the three-byte HID report header.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 106
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BC5",
+      "ProposedName": "set_DataLength",
+      "Reason": "Writes the data length to byte two.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "dataLength"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 113
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD0",
+      "ProposedName": "get_HidBody",
+      "Reason": "Returns all 61 bytes from offset three, including padding; does NOT trim to DataLength.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1318.cs",
+          "Sha256": "0E26A028A6D77CFBC39AF7039A28C18391E0C907C2DA469C92500DACF61F9118",
+          "Line": 26
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD4",
+      "ProposedName": "get_ProtocolVersion",
+      "Reason": "Reads start-report byte three (constructor sets zero).",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 40
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD5",
+      "ProposedName": "get_HeaderLength",
+      "Reason": "Reads start-report byte four (constructor sets eight).",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 47
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD6",
+      "ProposedName": "get_BodyLength",
+      "Reason": "Reads UInt16 at byte five; constructor stores HID body length minus three.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 54
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD7",
+      "ProposedName": "set_BodyLength",
+      "Reason": "Writes big-endian body length at bytes five and six.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_0",
+          "HasMetadata": true,
+          "NewName": "bodyLength"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 61
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD8",
+      "ProposedName": "get_ProtocolID",
+      "Reason": "Reads protocol ID from byte seven; selects feature versus KNX tunnel decoding.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 69
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD9",
+      "ProposedName": "set_ProtocolID",
+      "Reason": "Writes protocol ID at byte seven.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "protocolId_0",
+          "HasMetadata": true,
+          "NewName": "protocolId"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 76
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BDA",
+      "ProposedName": "get_HidBody",
+      "Reason": "Returns DataLength minus five bytes from offset eight, or null when DataLength is below five.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 83
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BDE",
+      "ProposedName": "get_EmiType",
+      "Reason": "Casts the telegram-report first byte to KnxUsbEmiType.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 22
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BDF",
+      "ProposedName": "set_EmiType",
+      "Reason": "Writes KnxUsbEmiType into the first byte.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "knxUsbEmiType_0",
+          "HasMetadata": true,
+          "NewName": "emiType"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 29
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BE0",
+      "ProposedName": "get_ManufacturerCode",
+      "Reason": "Reads a big-endian manufacturer code from telegram header bytes one and two.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 36
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BE1",
+      "ProposedName": "set_ManufacturerCode",
+      "Reason": "Writes the manufacturer code to telegram header bytes one and two.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_0",
+          "HasMetadata": true,
+          "NewName": "manufacturerCode"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 43
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BE2",
+      "ProposedName": "get_Message",
+      "Reason": "Copies all telegram bytes after the three-byte EMI/manufacturer header.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 51
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BE3",
+      "ProposedName": "get_HidBody",
+      "Reason": "Returns the complete telegram-report byte array without copying.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 58
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BB7",
+      "ProposedName": "get_FeatureValue",
+      "Reason": "DeviceFeatureGet has no value. Otherwise reads known feature width, or all bytes after the four-byte header for unknown widths.",
+      "Parameters": [],
+      "Locals": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": "featureValueLength"
+        }
+      ],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 79
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BBB",
+      "ProposedName": "Create",
+      "Reason": "Existing factory name retained. Emits the start report then 61-byte continuation fragments, starting at body offset 56 and sequence two.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "protocolId_0",
+          "HasMetadata": true,
+          "NewName": "protocolId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 20
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BBC",
+      "ProposedName": "Create",
+      "Reason": "Existing factory name retained. Rejects report IDs other than one, then chooses start/continuation from the StartPacket bit.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 39
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x040017D9",
+      "ProposedName": "hidBody",
+      "Reason": "Constructor-owned bytes used by the reviewed report header/body operations; no copy or ownership transfer is inferred.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 126
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x040017DB",
+      "ProposedName": "rawBytes",
+      "Reason": "Constructor-owned bytes used by the reviewed report header/body operations; no copy or ownership transfer is inferred.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 120
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x040017E9",
+      "ProposedName": "hidBody",
+      "Reason": "Constructor-owned bytes used by the reviewed report header/body operations; no copy or ownership transfer is inferred.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 73
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BFE",
+      "ProposedName": "WriteFeatureInfoAsync",
+      "Reason": "Log text and DeviceFeatureSet constructor establish a write request. Builds a FeatureService packet and passes it to the existing asynchronous send operation.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "featureType_0",
+          "HasMetadata": true,
+          "NewName": "featureType"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "featureData"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "Locals": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Byte[]",
+          "NewName": "featureReportBytes"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Class741/a",
+          "NewName": "featureRequest"
+        }
+      ],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Line": 341
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C05",
+      "ProposedName": "UpdateBusConnectionStateFromFeatureReport",
+      "Reason": "Only handles BusConnectionState Response/Info. Byte value one means Connected, other values mean MediumFailure; notifies InterfaceConnectionState only when changed.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class1316_0",
+          "HasMetadata": true,
+          "NewName": "featureReport"
+        }
+      ],
+      "Locals": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.FeatureService",
+          "NewName": "featureService"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Knx.Falcon.BusConnectionState",
+          "NewName": "reportedConnectionState"
+        }
+      ],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Line": 497
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001C2D",
+      "ProposedName": "MatchRequestedFeatureResponse",
+      "Reason": "Requires a USB FeatureService packet, DeviceFeatureResponse and the captured feature identifier; returns (true, value) only for that match.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class743_0",
+          "HasMetadata": true,
+          "NewName": "packet"
+        }
+      ],
+      "Locals": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class741/a",
+          "NewName": "usbPacket"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Class1316",
+          "NewName": "featureReport"
+        }
+      ],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Line": 1068
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x0400182F",
+      "ProposedName": "requestedFeature",
+      "Reason": "Captured FeatureType compared against an incoming feature response.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Line": 1084
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x040017F1",
+      "ProposedName": "busConnectionState",
+      "Reason": "Current USB bus state; the feature-response handler updates it before raising InterfaceConnectionState.",
+      "Parameters": [],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class741.cs",
+          "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389",
+          "Line": 685
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BAE",
+      "ProposedName": null,
+      "Reason": "Stores supplied feature report bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 11
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BAF",
+      "ProposedName": null,
+      "Reason": "Builds four-byte feature header and appends data or empty bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "featureService_0",
+          "HasMetadata": true,
+          "NewName": "featureService"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "featureType_0",
+          "HasMetadata": true,
+          "NewName": "featureType"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "featureData"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1316.cs",
+          "Sha256": "4F50F955A77E1982EE9506E70F7C17E5B1BD6BD6D2875FD834BC044AA56D4E41",
+          "Line": 17
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BBA",
+      "ProposedName": null,
+      "Reason": "Initializes the 64-byte report header. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "packetType_0",
+          "HasMetadata": true,
+          "NewName": "packetType"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "sequenceNumber"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "byte_2",
+          "HasMetadata": true,
+          "NewName": "dataLength"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 10
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BBD",
+      "ProposedName": null,
+      "Reason": "Requires exactly 64 bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1317.cs",
+          "Sha256": "1E221EBC257E044DAB8903E975EA6023D1DB7BDEFC24ED838094B5A0D168CBC1",
+          "Line": 54
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BCE",
+      "ProposedName": null,
+      "Reason": "Requires a non-start packet. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1318.cs",
+          "Sha256": "0E26A028A6D77CFBC39AF7039A28C18391E0C907C2DA469C92500DACF61F9118",
+          "Line": 9
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BCF",
+      "ProposedName": null,
+      "Reason": "Copies up to 61 continuation bytes and sets EndPacket when final. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "offset"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "byte_2",
+          "HasMetadata": true,
+          "NewName": "sequenceNumber"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1318.cs",
+          "Sha256": "0E26A028A6D77CFBC39AF7039A28C18391E0C907C2DA469C92500DACF61F9118",
+          "Line": 19
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD2",
+      "ProposedName": null,
+      "Reason": "Requires a start packet. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 9
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BD3",
+      "ProposedName": null,
+      "Reason": "Builds start-report headers and copies at most 56 initial body bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "protocolId_0",
+          "HasMetadata": true,
+          "NewName": "protocolId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1319.cs",
+          "Sha256": "8F5EDC5DBEA68A8869279956AE5D7106EAE9572A6AD75CA566783A26422FEE09",
+          "Line": 19
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BDC",
+      "ProposedName": null,
+      "Reason": "Stores telegram-report bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 10
+        }
+      ]
+    },
+    {
+      "Id": "m0088:0x06001BDD",
+      "ProposedName": null,
+      "Reason": "Builds three-byte telegram header and appends the message. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "Parameters": [
+        {
+          "Sequence": 1,
+          "OriginalName": "knxUsbEmiType_0",
+          "HasMetadata": true,
+          "NewName": "emiType"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "message"
+        }
+      ],
+      "Locals": [],
+      "Source": [
+        {
+          "Path": "Knx.Falcon/Class1321.cs",
+          "Sha256": "DA96FF5675DF71C4C954D79B3E45533FED7BD6B4A224B8BE480E2DCE7E411AB1",
+          "Line": 16
+        }
+      ]
+    }
+  ],
+  "PendingUnsupported": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1316",
+      "Token": "0x06001BAE",
+      "Signature": "System.Void Class1316::.ctor(System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Stores supplied feature report bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1316",
+      "Token": "0x06001BAF",
+      "Signature": "System.Void Class1316::.ctor(Knx.Falcon.Connectors.UsbConnector.FeatureService,Knx.Falcon.KnxMessages.Local.FeatureType,System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Builds four-byte feature header and appends data or empty bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Connectors.UsbConnector.FeatureService featureService_0",
+        "2: Knx.Falcon.KnxMessages.Local.FeatureType featureType_0",
+        "3: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "featureService_0",
+          "HasMetadata": true,
+          "NewName": "featureService"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "featureType_0",
+          "HasMetadata": true,
+          "NewName": "featureType"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "featureData"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1317",
+      "Token": "0x06001BBA",
+      "Signature": "System.Void Class1317::.ctor(Knx.Falcon.Connectors.UsbConnector.PacketType,System.Byte,System.Byte)",
+      "OriginalName": ".ctor",
+      "Reason": "Initializes the 64-byte report header. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Connectors.UsbConnector.PacketType packetType_0",
+        "2: System.Byte byte_1",
+        "3: System.Byte byte_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "packetType_0",
+          "HasMetadata": true,
+          "NewName": "packetType"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "sequenceNumber"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "byte_2",
+          "HasMetadata": true,
+          "NewName": "dataLength"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1317",
+      "Token": "0x06001BBD",
+      "Signature": "System.Void Class1317::.ctor(System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Requires exactly 64 bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1318",
+      "Token": "0x06001BCE",
+      "Signature": "System.Void Class1318::.ctor(System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Requires a non-start packet. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1318",
+      "Token": "0x06001BCF",
+      "Signature": "System.Void Class1318::.ctor(System.Byte[],System.Int32,System.Byte)",
+      "OriginalName": ".ctor",
+      "Reason": "Copies up to 61 continuation bytes and sets EndPacket when final. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_1",
+        "2: System.Int32 int_0",
+        "3: System.Byte byte_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "offset"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "byte_2",
+          "HasMetadata": true,
+          "NewName": "sequenceNumber"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1319",
+      "Token": "0x06001BD2",
+      "Signature": "System.Void Class1319::.ctor(System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Requires a start packet. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "rawBytes"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1319",
+      "Token": "0x06001BD3",
+      "Signature": "System.Void Class1319::.ctor(Knx.Falcon.Connectors.UsbConnector.ProtocolId,System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Builds start-report headers and copies at most 56 initial body bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Connectors.UsbConnector.ProtocolId protocolId_0",
+        "2: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "protocolId_0",
+          "HasMetadata": true,
+          "NewName": "protocolId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1321",
+      "Token": "0x06001BDC",
+      "Signature": "System.Void Class1321::.ctor(System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Stores telegram-report bytes. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hidBody"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1321",
+      "Token": "0x06001BDD",
+      "Signature": "System.Void Class1321::.ctor(Knx.Falcon.Connectors.UsbConnector.KnxUsbEmiType,System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Builds three-byte telegram header and appends the message. Parameter roles reviewed; constructor-only parameter application is still unsupported.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Connectors.UsbConnector.KnxUsbEmiType knxUsbEmiType_0",
+        "2: System.Byte[] byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "knxUsbEmiType_0",
+          "HasMetadata": true,
+          "NewName": "emiType"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "message"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    }
+  ],
+  "UnresolvedStorage": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1316",
+      "Token": "0x040017DA",
+      "Signature": "System.String Class1316::b",
+      "OriginalName": "b",
+      "Reason": "short-unrecognized-name",
+      "NeedsReadableName": true,
+      "MappingBlocker": "field-storage-restoration requires separate review",
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Unused metadata.field-data storage field; no behavioral data role established."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1317",
+      "Token": "0x040017DC",
+      "Signature": "System.String Class1317::b",
+      "OriginalName": "b",
+      "Reason": "short-unrecognized-name",
+      "NeedsReadableName": true,
+      "MappingBlocker": "field-storage-restoration requires separate review",
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Unused metadata.field-data storage field; no behavioral data role established."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1318",
+      "Token": "0x040017E7",
+      "Signature": "System.String Class1318::a",
+      "OriginalName": "a",
+      "Reason": "short-unrecognized-name",
+      "NeedsReadableName": true,
+      "MappingBlocker": "field-storage-restoration requires separate review",
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Unused metadata.field-data storage field; no behavioral data role established."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1319",
+      "Token": "0x040017E8",
+      "Signature": "System.String Class1319::a",
+      "OriginalName": "a",
+      "Reason": "short-unrecognized-name",
+      "NeedsReadableName": true,
+      "MappingBlocker": "field-storage-restoration requires separate review",
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Unused metadata.field-data storage field; no behavioral data role established."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1321",
+      "Token": "0x040017EA",
+      "Signature": "System.String Class1321::b",
+      "OriginalName": "b",
+      "Reason": "short-unrecognized-name",
+      "NeedsReadableName": true,
+      "MappingBlocker": "field-storage-restoration requires separate review",
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Unused metadata.field-data storage field; no behavioral data role established."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class741/d",
+      "Token": "0x04001830",
+      "Signature": "System.String Class741/d::b",
+      "OriginalName": "b",
+      "Reason": "short-unrecognized-name",
+      "NeedsReadableName": true,
+      "MappingBlocker": "field-storage-restoration requires separate review",
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Unused metadata.field-data storage field; no behavioral data role established."
+    }
+  ]
+}
