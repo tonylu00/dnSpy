@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 254 accepted (6.3): Knx.Ets.ObjectModel.Operations.Strategies",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v254.xml",
+      "Sha256": "38F24609D448C8DE3E6AFC14D2C9F49E3EA3A1025757122B3B710FD8B3BC70A7",
+      "PreviousMap": "names63-staged-v253.xml",
+      "PreviousMapSha256": "8ED31D2AC3359AE024B14B3A05AE2A16988EBE487CC9504E1E21C3CEE6B6BB6D",
+      "FrozenSha256": "38F24609D448C8DE3E6AFC14D2C9F49E3EA3A1025757122B3B710FD8B3BC70A7",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave254.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The namespace holds the address-allocation strategies: AddressStrategy's three Next* helpers are the AddressAllocation switch targets (NextFromStart, NextFromEnd, NextAlternating) behind MoveNextByAllocation, the offset strategies (bus interface, device, generic) each pair NextAvailableAddress with AllocateNextAddress, and FreeGroupRangeStrategy is the range algebra (CollectOverlaps, MergeAdjacentRanges, InsertOrExtendRange, TryAddOverlap, OverlapsExistingRange using Range.OverlapsWith, IsNextToLeft/Right and Combine).",
+    "strings": "DeviceAddressStrategy's switch still carries the 'todo: implement all other strategies...' note and throws NotImplementedException, and AddressStrategy throws NotSupportedException('Unsupported AddressAllocation {0} found')."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 20,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14439,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11245
+  },
+  "Errors": 0
+}
