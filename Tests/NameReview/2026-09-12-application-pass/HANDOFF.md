@@ -39,12 +39,14 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Security/envelope review committed as `f3688bc53`.
   Request/dongle lifecycle review committed as `db16dfab4`.
   Collection/archive review committed as `221374f4d`.
-  Current naming checkpoint: `checkpoint-wave202.json`, from accepted 200/31,
-  through clipboard predicates (201) and their paste-command callers (202).
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v202.xml`,
-  SHA256 `3F8F82B19978726E3C1CC3049B0DEB77F8C71102319E2650CE208FD7DE60A915`.
-- Current 6.4 map: `names64-staged-v31.xml`, SHA256
-  `0D60AAAAB6E9A2291B9D46A009A27587DE9A0EE116840EEC3E784A6B7CB51460`.
+  Clipboard/paste review committed as `4f232ad9a`.
+  Current naming checkpoint: `checkpoint-wave204.json`, from accepted 202/31,
+  through both versions of move planners and their captured callbacks.
+  Candidate 6.3 v203 was rejected; corrected v204 derives directly from v202.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v204.xml`,
+  SHA256 `FBA01A13ECE16B8AB29F4AC0762A6C06FCD852B8EC68AF9020503AD020F7511F`.
+- Current 6.4 map: `names64-staged-v32.xml`, SHA256
+  `811BE24EB5D35292D7C0F17B0CD5CCAB3EC0BD1FF49352C3C315237337579497`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -55,8 +57,8 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-202.json` and `map-update64-wave-31.json`;
-  `map-update63-wave-201.json` is the preceding step of the current checkpoint.
+  The last update reports are `map-update63-wave-204.json` and `map-update64-wave-32.json`.
+  `map-update63-wave-203.json` is rejected self-collision evidence, not an accepted step.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -75,10 +77,49 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
 
+## Move-operation planners and callbacks (204 / 32)
+
+Resume with maps **204/32**, `operations63-wave203.cumulative.json` and
+`operations64-wave32.cumulative.json`. Both current map preflights pass without
+errors or changes, and all requested names match their accepted aliases. Existing
+aliases, parameter/local choices and the physical SDK whitelist bindings remain.
+
+`operation_move_scopes.py` follows each version's CreateMove dispatcher into six
+line/segment/building-part/free-range/trade/device planners. Inner progress,
+unsecured-device decision and password callbacks were reviewed before assigning
+the captured context/field and caller-local roles. The real 6.4 ViewModel is
+m0146, not the retained 6.3 compatibility module. Seven visible 6.4 contexts now
+have behavioral names; the inlined 6.3 context types remain unnamed. Confirmation,
+option-lookup and fresh certificate-message-bus helpers were also reviewed.
+
+The 6.3 candidate v203 exposed a shared field-scope defect: requesting a field's
+own original name produced callback2/targetArea2/etc. It was never accepted.
+de4dotEx `5470ad2b` and the identical dnSpy helper now exclude only that definition
+from its own collision reservations. Other original declarations, aliases and
+inherited members remain reserved. The full NameCandidates suite and dnSpy's
+actual source-map parser fixture pass on Windows, including same-identity physical
+copies, alias restoration and real collision rejection. Linux/macOS were not run.
+Corrected v204 was produced directly from v202, with all 11 names preserved.
+
+`validate_operation_move.py` verifies every decision and used parameter/local,
+physical binary/source/inspection hash, and outer-to-inner call edge. Its evidence
+records behavior that naming must preserve: cross-project planning returns ordered
+move/copy then delete operations; deletion callbacks still check the target project;
+segment imports use the source store; same-project Installation targets differ for
+trades versus buildings/ranges; unsupported device targets return null. These are
+metadata/body observations, not runtime validation.
+
+Sixteen generated static helpers and eight self-typed fields have no demonstrated
+application role. Exact IL and incoming-reference evidence are retained in
+`operations64-wave32-unresolved-complete.json`; no replacement placeholders were
+invented. Continue the add/copy/link factory helpers and drag/drop callers. The
+large CreateCopy/CreateMove bodies still need comprehensive local-scope review.
+No ETS export, source/binary apply, build, full audit or launch ran.
+
 ## Clipboard and paste call chains (201–202)
 
-Resume with maps **202/31**, `paste63-wave202.cumulative.json` and
-`collections64-wave31.cumulative.json`. Preflight for v202 passes with zero
+Historical checkpoint 202 used maps **202/31**, `paste63-wave202.cumulative.json` and
+`collections64-wave31.cumulative.json`. Preflight for v202 passed with zero
 errors/changes. The checkpoint preserves previous aliases and scopes, apart
 from the explicit correction of public `ClipboardOperations.CutObjects` back
 to its original `Cut` name. Both maps remain `AppliedToSource: false`.
@@ -885,10 +926,10 @@ completion measure. No ETS source/binary application, export, build, audit or la
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `archive63-wave200.cumulative.json` and
-  `collections64-wave31.cumulative.json`; do not
+  `operations63-wave203.cumulative.json` and
+  `operations64-wave32.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **200/31** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **204/32** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
   `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by

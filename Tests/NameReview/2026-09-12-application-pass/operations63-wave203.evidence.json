@@ -1,0 +1,3689 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v202.xml",
+ "BaseMapSha256": "3F8F82B19978726E3C1CC3049B0DEB77F8C71102319E2650CE208FD7DE60A915",
+ "PhysicalModule": {
+  "Id": "m0082",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+  "Sha256": "FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2",
+  "Mvid": "20cac48e-7d09-4e21-86c0-6189d1115ee2",
+  "AssemblyName": "Knx.Ets.ViewModel",
+  "Project": "Knx.Ets.ViewModel\\Knx.Ets.ViewModel.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0082:0x06004C9C",
+   "ProposedName": "ProgressCallback",
+   "Reason": "Publishes the progress event through ApplicationMessages.ExecuteOperation, then invokes the callback without a null guard. The 6.4 object argument is explicitly cast to ProgressEventArgs; the signature is preserved.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C9C",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2469,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C9C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004D8F",
+   "ProposedName": "MatchesOptionParent",
+   "Reason": "Compares the option parent to the parent value captured by the lookup.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004D8F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1309,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C81",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C81",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C81",
+        "Kind": "method",
+        "Offset": 15,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004D8F",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass34_0::<GetExistingOrDefaultOption>b__0(Knx.Ets.ViewModel.Application.Workspace.ExtendedCopy.ExtendedCopyOptions)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "extendedCopyOptions_0",
+     "HasMetadata": true,
+     "NewName": "option"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004D8F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003212",
+   "ProposedName": "parent",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003212",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1309,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C81",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C81",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C81",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003212",
+         "Signature": "Knx.Ets.ViewModel.Enumerations.ExtendedCopy.OptionParents Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass34_0::parent",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C81",
+        "Kind": "field",
+        "Offset": 36,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003212",
+         "Signature": "Knx.Ets.ViewModel.Enumerations.ExtendedCopy.OptionParents Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass34_0::parent",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C81",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1309,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C81"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB1",
+   "ProposedName": "ReportCrossProjectMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB1",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "method",
+        "Offset": 156,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB1",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<CreateMoveLineOperation>b__0(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB2",
+   "ProposedName": "ChooseUnsecuredDeviceAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB2",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "method",
+        "Offset": 190,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB2",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<CreateMoveLineOperation>b__1(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB3",
+   "ProposedName": "CheckTargetPasswordForMove",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB3",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "method",
+        "Offset": 208,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB3",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<CreateMoveLineOperation>b__2()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB4",
+   "ProposedName": "ReportDeleteProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB4",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "method",
+        "Offset": 232,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB4",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<CreateMoveLineOperation>b__3(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB5",
+   "ProposedName": "CheckTargetPasswordForDelete",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB5",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "method",
+        "Offset": 244,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB5",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<CreateMoveLineOperation>b__4()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB6",
+   "ProposedName": "ReportWithinProjectMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB6",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "method",
+        "Offset": 81,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB6",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<CreateMoveLineOperation>b__5(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400321B",
+   "ProposedName": "callback",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400321B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400321B",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C83",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C83"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x0400321C",
+   "ProposedName": "factory",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400321C",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 15,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400321C",
+         "Signature": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::<>4__this",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C83",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C83"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x0400321D",
+   "ProposedName": "targetArea",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400321D",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C83",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C83",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 22,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400321D",
+         "Signature": "Knx.Ets.ObjectModel.Project.IArea Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::targetArea",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 51,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400321D",
+         "Signature": "Knx.Ets.ObjectModel.Project.IArea Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::targetArea",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 73,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400321D",
+         "Signature": "Knx.Ets.ObjectModel.Project.IArea Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::targetArea",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 104,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400321D",
+         "Signature": "Knx.Ets.ObjectModel.Project.IArea Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::targetArea",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C83",
+        "Kind": "field",
+        "Offset": 137,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400321D",
+         "Signature": "Knx.Ets.ObjectModel.Project.IArea Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0::targetArea",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C83",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C83"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB8",
+   "ProposedName": "ChooseUnsecuredDeviceAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB8",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C84",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C84",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C84",
+        "Kind": "method",
+        "Offset": 118,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB8",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0::<CreateMoveSegmentOperation>b__0(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DB9",
+   "ProposedName": "CheckTargetPasswordForMove",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DB9",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C84",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C84",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C84",
+        "Kind": "method",
+        "Offset": 183,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DB9",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0::<CreateMoveSegmentOperation>b__1()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DB9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DBA",
+   "ProposedName": "CheckTargetPasswordForDelete",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DBA",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C84",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C84",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C84",
+        "Kind": "method",
+        "Offset": 213,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DBA",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0::<CreateMoveSegmentOperation>b__2()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DBA",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400321F",
+   "ProposedName": "factory",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400321F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C84",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C84",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C84",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400321F",
+         "Signature": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0::<>4__this",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C84",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C84"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003220",
+   "ProposedName": "targetProject",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003220",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C84",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C84",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C84",
+        "Kind": "field",
+        "Offset": 42,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003220",
+         "Signature": "Knx.Ets.ObjectModel.Project.IProject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0::targetProject",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C84",
+        "Kind": "field",
+        "Offset": 48,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003220",
+         "Signature": "Knx.Ets.ObjectModel.Project.IProject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0::targetProject",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C84",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C84"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004DC4",
+   "ProposedName": "ReportCopyProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DC4",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 148,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DC4",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__0(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DC4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DC5",
+   "ProposedName": "ChooseUnsecuredDeviceAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DC5",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 160,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DC5",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__1(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DC5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DC6",
+   "ProposedName": "CheckTargetPasswordForCopy",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DC6",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 178,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DC6",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__2()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DC6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DC7",
+   "ProposedName": "ReportDeleteProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DC7",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 202,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DC7",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__3(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DC7",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DC8",
+   "ProposedName": "CheckTargetPasswordForDelete",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DC8",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 214,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DC8",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__4()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DC8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DC9",
+   "ProposedName": "ReportInvalidTargetProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DC9",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 251,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DC9",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__5(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DC9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DCA",
+   "ProposedName": "ReportWithinProjectMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DCA",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "method",
+        "Offset": 100,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DCA",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<CreateBuildingPartMoveOperation>b__6(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DCA",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400322A",
+   "ProposedName": "callback",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400322A",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400322A",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C8E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C8E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x0400322B",
+   "ProposedName": "factory",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400322B",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 15,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400322B",
+         "Signature": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::<>4__this",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C8E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C8E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x0400322C",
+   "ProposedName": "targetItem",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400322C",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8E",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 22,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400322C",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 51,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400322C",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 66,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400322C",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 89,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400322C",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 130,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400322C",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C8E",
+        "Kind": "field",
+        "Offset": 244,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x0400322C",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C8E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C8E"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004DCC",
+   "ProposedName": "ReportCopyProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DCC",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8F",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8F",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8F",
+        "Kind": "method",
+        "Offset": 108,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DCC",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass48_0::<CreateFreeGroupRangeMoveOperation>b__0(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DCC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DCD",
+   "ProposedName": "ReportDeleteProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DCD",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8F",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8F",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8F",
+        "Kind": "method",
+        "Offset": 132,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DCD",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass48_0::<CreateFreeGroupRangeMoveOperation>b__1(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DCD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DCE",
+   "ProposedName": "ReportInvalidTargetProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DCE",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8F",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8F",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8F",
+        "Kind": "method",
+        "Offset": 164,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DCE",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass48_0::<CreateFreeGroupRangeMoveOperation>b__2(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DCE",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DCF",
+   "ProposedName": "ReportWithinProjectMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DCF",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8F",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8F",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8F",
+        "Kind": "method",
+        "Offset": 63,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DCF",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass48_0::<CreateFreeGroupRangeMoveOperation>b__3(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DCF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x0400322E",
+   "ProposedName": "callback",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x0400322E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C8F",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C8F",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C8F",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x0400322E",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass48_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C8F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C8F"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD1",
+   "ProposedName": "ReportCopyProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD1",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 143,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD1",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__0(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD2",
+   "ProposedName": "ChooseUnsecuredDeviceAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD2",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 155,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD2",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__1(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD3",
+   "ProposedName": "CheckTargetPasswordForCopy",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD3",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 173,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD3",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__2()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD4",
+   "ProposedName": "ReportDeleteProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD4",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 197,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD4",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__3(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD5",
+   "ProposedName": "CheckTargetPasswordForDelete",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD5",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 209,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD5",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__4()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD6",
+   "ProposedName": "ReportInstallationTargetMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD6",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 245,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD6",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__5(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD7",
+   "ProposedName": "ReportWithinProjectMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD7",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "method",
+        "Offset": 95,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD7",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<CreateMoveTradeOperation>b__6(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD7",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003230",
+   "ProposedName": "callback",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003230",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003230",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C90",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C90"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003231",
+   "ProposedName": "factory",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003231",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 15,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003231",
+         "Signature": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::<>4__this",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C90",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C90"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003232",
+   "ProposedName": "targetItem",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003232",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C90",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C90",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 22,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003232",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 51,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003232",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 66,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003232",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 89,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003232",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 125,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003232",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C90",
+        "Kind": "field",
+        "Offset": 239,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003232",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C90",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C90"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004DD9",
+   "ProposedName": "ReportCrossProjectMoveProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DD9",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 172,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DD9",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__0(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DD9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DDA",
+   "ProposedName": "ChooseUnsecuredDeviceAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DDA",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 209,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DDA",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__1(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DDA",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DDB",
+   "ProposedName": "CheckTargetPasswordForMove",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DDB",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 274,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DDB",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__2()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DDB",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DDC",
+   "ProposedName": "ReportDeleteProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DDC",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 304,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DDC",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__3(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DDC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DDD",
+   "ProposedName": "CheckTargetPasswordForDelete",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DDD",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 316,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DDD",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__4()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DDD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DDE",
+   "ProposedName": "ReportSegmentLinkProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DDE",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 98,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DDE",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__5(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DDE",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DDF",
+   "ProposedName": "ChooseSegmentLinkSecurityAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DDF",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 112,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DDF",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__6(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DDF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DE0",
+   "ProposedName": "CheckTargetPasswordForSegmentLink",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DE0",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 124,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DE0",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__7()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DE0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DE1",
+   "ProposedName": "ReportLineLinkProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DE1",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 358,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DE1",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__8(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DE1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DE2",
+   "ProposedName": "ChooseLineLinkSecurityAction",
+   "Reason": "Returns the security-service decision for devices not enabled for secure operation; the caller supplies it to the indicated move/link operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DE2",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 372,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DE2",
+         "Signature": "Knx.Ets.ObjectModel.Enumerations.SecurityAddDeviceAction Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__9(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IDevice>)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "items",
+     "HasMetadata": true,
+     "NewName": "devices"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DE2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DE3",
+   "ProposedName": "CheckTargetPasswordForLineLink",
+   "Reason": "Forwards the captured target project to PasswordRequired. For deletion after a cross-project move this still checks the target project, as implemented.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DE3",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 384,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DE3",
+         "Signature": "System.Boolean Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__10()",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DE3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DE4",
+   "ProposedName": "ReportBuildingPartLinkProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DE4",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 448,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DE4",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__11(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DE4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x06004DE5",
+   "ProposedName": "ReportTradeLinkProgress",
+   "Reason": "Forwards the progress event through ProgressCallback; the name identifies the operation constructor receiving this distinct delegate.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004DE5",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "method",
+        "Offset": 480,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0082:0x06004DE5",
+         "Signature": "System.Void Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<CreateMoveDeviceOperation>b__12(Knx.Ets.ObjectModel.ProgressEventArgs)",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "args",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004DE5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0082:0x04003234",
+   "ProposedName": "callback",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003234",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 8,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003234",
+         "Signature": "System.Action`1<Knx.Ets.ObjectModel.ProgressEventArgs> Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::callback",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C91",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C91"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003235",
+   "ProposedName": "factory",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003235",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 15,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003235",
+         "Signature": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::<>4__this",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C91",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C91"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x04003236",
+   "ProposedName": "targetItem",
+   "Reason": "Captured or injected role established by the exact field assignment and its reviewed callback consumers.",
+   "Source": [
+    {
+     "Id": "m0082:0x04003236",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C",
+     "SourceId": "m0082:0x06004C91",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+      "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+      "SourceId": "m0082:0x06004C91",
+      "Edges": [
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 22,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 51,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 66,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 154,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 407,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 422,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0082:0x06004C91",
+        "Kind": "field",
+        "Offset": 503,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0082:0x04003236",
+         "Signature": "Knx.Ets.ObjectModel.Project.IInstallationDomObject Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0::targetItem",
+         "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0082:0x06004C91",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "SupportingTokens": [
+     "0x06004C91"
+    ]
+   }
+  },
+  {
+   "Id": "m0082:0x06004C81",
+   "ProposedName": "GetExistingOrDefaultOption",
+   "Reason": "Returns the first matching option, or creates an option with GeneralOption.Lose; does not append the fallback to the input sequence.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C81",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1309,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "options",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "parent",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass34_0",
+     "NewName": "optionLookup"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C81",
+    "Slots": {
+     "0": "optionLookup"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C83",
+   "ProposedName": "CreateMoveLineOperation",
+   "Reason": "Branches by project reference identity: cross-project move then deletion, or one same-project move. Uses WithOffset for the cross-project strategy and FirstFree within the project.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C83",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1795,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "targetArea",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "installationDomObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass36_0",
+     "NewName": "lineMoveContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ILine>",
+     "NewName": "lines"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
+     "NewName": "addressStrategy"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C83",
+    "Slots": {
+     "0": "lineMoveContext",
+     "1": "lines",
+     "2": "addressStrategy"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C84",
+   "ProposedName": "CreateMoveSegmentOperation",
+   "Reason": "Cross-project segment move uses the source store importer then deletes concrete Segment instances; same-project move uses one operation.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C84",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1824,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "targetLine",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "installationDomObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass37_0",
+     "NewName": "segmentMoveContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IProject",
+     "NewName": "sourceProject"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C84",
+    "Slots": {
+     "0": "segmentMoveContext",
+     "1": "sourceProject"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C8E",
+   "ProposedName": "CreateBuildingPartMoveOperation",
+   "Reason": "Copies then deletes across projects. Within one project an Installation target produces ValidationFailedOperation; an IBuildingPart target produces a move.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C8E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1930,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "targetItem",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "installationDomObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass47_0",
+     "NewName": "buildingPartMoveContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IBuildingPart>",
+     "NewName": "buildingParts"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C8E",
+    "Slots": {
+     "0": "buildingPartMoveContext",
+     "1": "buildingParts"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C8F",
+   "ProposedName": "CreateFreeGroupRangeMoveOperation",
+   "Reason": "Copies then deletes ranges across projects, rejects same-project Installation via a validation-failed operation, otherwise moves ranges.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C8F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 1968,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "targetItem",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "installationDomObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass48_0",
+     "NewName": "groupRangeMoveContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.GroupRanges.FreeGroupRange>",
+     "NewName": "groupRanges"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C8F",
+    "Slots": {
+     "0": "groupRangeMoveContext",
+     "1": "groupRanges"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C90",
+   "ProposedName": "CreateMoveTradeOperation",
+   "Reason": "Copies then deletes trades across projects; both same-project branches construct MoveTradeOperation, including an Installation target.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C90",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2006,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "targetItem",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "installationDomObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass49_0",
+     "NewName": "tradeMoveContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.Trade>",
+     "NewName": "trades"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C90",
+    "Slots": {
+     "0": "tradeMoveContext",
+     "1": "trades"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C91",
+   "ProposedName": "CreateMoveDeviceOperation",
+   "Reason": "Casts every source item to IDevice. Cross-project move is followed by deletion; same-project targets select segment/main-segment/building-part/trade linking, with null returned for unsupported targets.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C91",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2044,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "targetItem",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "installationDomObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.OperationFactory/<>c__DisplayClass50_0",
+     "NewName": "deviceMoveContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>",
+     "NewName": "devices"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Segment",
+     "NewName": "targetSegment"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Line",
+     "NewName": "targetLine"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IBuildingPart",
+     "NewName": "targetBuildingPart"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Trade",
+     "NewName": "targetTrade"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C91",
+    "Slots": {
+     "0": "deviceMoveContext",
+     "1": "devices",
+     "2": "targetSegment",
+     "3": "targetLine",
+     "4": "targetBuildingPart",
+     "5": "targetTrade"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C95",
+   "ProposedName": "IsNamedCollectionType",
+   "Reason": "Returns false for null or a non-NamedCollection object, otherwise compares its Type.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C95",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2248,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "item",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "type",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.NamedCollection.NamedCollection",
+     "NewName": "namedCollection"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C95",
+    "Slots": {
+     "0": "namedCollection"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C9E",
+   "ProposedName": "LinkGroupAddressDatapointQuestion",
+   "Reason": "Shows the differing-datapoint-types question; only OK or Yes returns true.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C9E",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2484,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Enumerations.MessageBoxResult",
+     "NewName": "dialogResult"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isConfirmed"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C9E",
+    "Slots": {
+     "0": "dialogResult",
+     "1": "isConfirmed"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004C9F",
+   "ProposedName": "MismatchingObjectSizeOnGroupAddressQuestion",
+   "Reason": "Displays the divergent sizes question and comma-separated group addresses; only OK or Yes returns true.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004C9F",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2499,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddresses",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Enumerations.MessageBoxResult",
+     "NewName": "dialogResult"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isConfirmed"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004C9F",
+    "Slots": {
+     "0": "dialogResult",
+     "1": "isConfirmed"
+    }
+   }
+  },
+  {
+   "Id": "m0082:0x06004CA1",
+   "ProposedName": "LinkGroupAddressToBusInterfaceOperationPerformanceCallBack",
+   "Reason": "Returns true strictly below GroupAddressCountLimit; otherwise shows a disposable OK/cancel information dialog and treats null confirmation as false.",
+   "Source": [
+    {
+     "Id": "m0082:0x06004CA1",
+     "Path": "Knx.Ets.ViewModel/Application/Workspace/OperationFactory.cs",
+     "Line": 2535,
+     "Sha256": "03F0B99F03E224E86BAF3098F8BFDED028EFFEBE15A9266516D8D49B27EF136C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddressCount",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Dialogs.MessageBoxes.IMessageBoxViewModel",
+     "NewName": "performanceDialog"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Nullable`1<System.Boolean>",
+     "NewName": "dialogConfirmation"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isConfirmed"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\operations63-wave203-selected-inspection.json",
+    "Sha256": "A3208186EC08BB249F9A53E86F356FDABC008A74B4CB6E42B7F341092A53655E",
+    "Token": "0x06004CA1",
+    "Slots": {
+     "0": "performanceDialog",
+     "1": "dialogConfirmation",
+     "2": "isConfirmed"
+    }
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

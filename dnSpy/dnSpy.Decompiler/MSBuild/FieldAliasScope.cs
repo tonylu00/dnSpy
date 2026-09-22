@@ -79,13 +79,15 @@ namespace SourceNameMapping {
                 var members = new IMemberDef[] { type }.Concat(type.Fields).Concat(type.Methods)
                     .Concat(type.Properties).Concat(type.Events).Concat(type.NestedTypes);
                 foreach (var member in members) {
+                    // Keeping or restoring this definition's metadata name is
+                    // not a collision. Other definitions still reserve both
+                    // their original names and aliases, including inherited ones.
+                    if (member == field) continue;
                     string original = member.Name.String;
                     if (member is TypeDef) original = original.Split('`')[0];
                     used.Add(original);
-                    if (member != field) {
-                        string requested = alias(member);
-                        if (requested != null) used.Add(requested);
-                    }
+                    string requested = alias(member);
+                    if (requested != null) used.Add(requested);
                 }
                 used.UnionWith(type.GenericParameters.Select(p => p.Name.String));
             }

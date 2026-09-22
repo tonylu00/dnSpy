@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 23 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave202.json`. Current staged maps are **6.3 v202** and **6.4 v31**.
+`checkpoint-wave204.json`. Current staged maps are **6.3 v204** and **6.4 v32**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 202/31, not by newest filename.
+Resume with 204/32, not by newest filename. Rejected 6.3 v203 was never accepted.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -31,6 +31,12 @@ methods or completed work. Graphs and query databases live in
 own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
+
+- Move planning in both physical ViewModel versions: six target-specific planners,
+  inner security/password/progress callbacks, captured contexts and used locals
+  (`operation_move_scopes.py`). Original field names now survive a no-op or
+  restoration without suffixes in de4dot/dnSpy. Generated sentinel helpers remain
+  explicitly unresolved; source and binary application remain pending.
 
 - Clipboard membership/project predicates → group-address parsing and lookup →
   paste target validation, move/copy creation and password retry callbacks
