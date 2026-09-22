@@ -20,17 +20,20 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   continuation uses shared constructor scope validation from de4dotEx `73bcaf9f`.
 - Catalog/address review and the dnSpy constructor-scope parser fix committed
   as `be2014c8d`; the next continuation names EMI1 initialization and shutdown.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v179.xml`,
-  SHA256 `47A6820DB51A0AD445699BBA336780871DB8181805863019D444F10FCD07AAA1`.
-- Current 6.4 map: `names64-staged-v16.xml`, SHA256
-  `8D3733B16874D7703A86A0C8E90A52372A56484AD48229FC5B0C04AAD160259B`.
+- EMI1 initialization/shutdown committed as `3e9b9f365`; the current continuation
+  follows local-memory response matching through configuration and feature reads.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v181.xml`,
+  SHA256 `1B4E3AD9743B58C8C40034AA0C0B2ABBEC05D4D58B2CF4D3E7A20E91ECB36FCF`.
+- Current 6.4 map: `names64-staged-v18.xml`, SHA256
+  `A2AF54C081CA31541C9E17C1D79CFBCF54BE189CC29593CCC6FA4AB8D2711451`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
   parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-179.json` and `map-update64-wave-16.json`;
+  reports are `map-update63-wave-180.json`, `map-update63-wave-181.json`,
+  `map-update64-wave-17.json` and `map-update64-wave-18.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave179.json` records artifact hashes, validation and limits.
+  `checkpoint-wave181.json` records artifact hashes, validation and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -171,6 +174,36 @@ verified wrapper local slot is `stateMachine`; explicit MoveNext locals remain
 blocked. No canonical 6.4 carrier names were replaced. Both map updates passed,
 preserving earlier decisions without new suffixes.
 
+`usb_configuration.py` now follows PC value header/address/length/payload
+helpers and constructors through the complete six-member 6.3 `IsConfirmation`
+family and `MatchesPcValueConfirmation`, into `ReadEmi1LocalMemoryAsync`.
+The selected physical contract is recorded in
+`usb-config63-confirmation-family-v2.json`; the updater revalidated it against
+the same v2 reference manifest. A zero-length PC value confirmation matches the
+request, then becomes a read failure. Timeouts retry once after 200 ms with an
+increased response timeout. The initial send lies outside the response-wait
+registration cleanup; its failure does not execute that removal. No logic was
+changed to conceal these distinctions.
+
+Those reads now lead into individual/domain address, serial number, local
+descriptor and full interface-configuration readers. RF acknowledgement records
+are read in chunks of at most 15; a reviewed selector decodes five optional
+UInt32 link-layer timeouts. Domain readers retain their exact length checks.
+Serial-number reads still ignore the supplied cancellation token. Descriptor
+fallback preserves the local-mode unsupported sentinel and PL/RF/TP precedence.
+Six 6.3 async carriers and their used captured fields describe requests, retries,
+responses, address accumulation, acknowledgement chunks and configuration roles.
+
+`usb_features.py` continues through descriptor/version matching into
+`ReadBusInterfaceFeaturesAsync`, its seventh 6.3 carrier and the HID-path feature
+cache. It names serial/APDU/medium/time-base/communication/RF/filtering feature
+roles and records the cancellation/fallback behavior. For non-cEMI interfaces,
+the BCU programming-mode test only runs when descriptor fallback was needed.
+Cache lookup and insertion use exact path equality, retain at most four entries
+and do not refresh order on hits. Canonical 6.4 carriers remain intact; no names
+were assigned to unused obfuscator fields. Both update chains passed with no
+errors or new suffixes. All prior map and review decisions are preserved.
+
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
@@ -180,13 +213,16 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 
 - Whole-application naming coverage is still incomplete. Alias totals and
   duplicate compatibility copies are not a measure of completed readability.
-- Catalog parsing/localization, volatile saved addresses and EMI1 initialization/
-  shutdown are reviewed. Continue into connector feature/configuration reading,
-  cache matchers and the remaining application components. Review the memory-278
+- Catalog parsing/localization, volatile saved addresses, EMI1 initialization/
+  shutdown, configuration reads, feature discovery and cache matchers are reviewed.
+  Continue into configuration writes (6.4 `0x0600340F`–`0x06003415`, 6.3
+  `0x06001C97`–`0x06001C9D`) and cEMI initialization (`0x0600341E`–`0x06003421`,
+  6.3 `0x06001CA6`–`0x06001CA9`), then remaining open/dispatch callers and other
+  application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
 - Native import proposals from wave175 are resolved. Continue from
-  `usb-shutdown63-wave179.cumulative.json` and `usb-shutdown64-wave16.cumulative.json`; do not
+  `usb-features63-wave181.cumulative.json` and `usb-features64-wave18.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
@@ -203,6 +239,10 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
   newest filename. The current cumulative 6.3 review binds the v2 manifest hash.
 - Leave uncertain storage fields and unsupported external contracts unresolved.
   Preserve compiler-generated aliases used by dnSpy to reconstruct lambdas.
+- Explicit MoveNext body-local maps are still rejected by the shared guards.
+  A future scope-only enhancement must preserve the runtime method name and
+  implementation binding, validate actual IL local slots/types, and use portable
+  synthetic fixtures. Never bypass the tool guard by editing inventory flags.
 
 The Python recipes operate on review data only; they do not rewrite ETS source.
 Renaming, reference repair and patching belong in dnSpy/de4dotEx. Improve those

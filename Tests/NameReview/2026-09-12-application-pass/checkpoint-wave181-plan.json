@@ -1,0 +1,44 @@
+{
+  "Checkpoint": "checkpoint-wave181.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v179.xml",
+      "Steps": [
+        {"Map": "names63-staged-v180.xml", "Review": "usb-config63-wave180.review.json", "Report": "map-update63-wave-180.json", "References": "contract-references63-v2.json"},
+        {"Map": "names63-staged-v181.xml", "Review": "usb-features63-wave181.review.json", "Report": "map-update63-wave-181.json", "References": "contract-references63-v2.json"}
+      ]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v16.xml",
+      "Steps": [
+        {"Map": "names64-staged-v17.xml", "Review": "usb-config64-wave17.review.json", "Report": "map-update64-wave-17.json"},
+        {"Map": "names64-staged-v18.xml", "Review": "usb-features64-wave18.review.json", "Report": "map-update64-wave-18.json"}
+      ]
+    }
+  },
+  "Reviews": [
+    {"Input": "usb-features63-wave181.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "usb-features64-wave18.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "usb-config63-wave180.review.json", "usb-config63-wave180.evidence.json", "usb-config63-wave180-inspection.json",
+    "usb-config64-wave17.review.json", "usb-config64-wave17.evidence.json", "usb-config64-wave180-inspection.json",
+    "usb-config63-confirmation-family-v2.json",
+    "usb-features63-wave181.review.json", "usb-features63-wave181.evidence.json", "usb-features63-wave181-inspection.json",
+    "usb-features64-wave18.review.json", "usb-features64-wave18.evidence.json", "usb-features64-wave181-inspection.json",
+    "map-update63-wave-180.json", "map-update64-wave-17.json", "map-update63-wave-181.json", "map-update64-wave-18.json"
+  ],
+  "ReviewedChains": [
+    "Local message buffer/length/address/payload helpers and constructors lead into the complete six-member 6.3 IsConfirmation contract, PC value confirmation predicate, and retrying EMI1 local-memory read.",
+    "Memory/property reads feed USB individual address, domain address, serial number, local descriptor and complete interface configuration readers. RF acknowledgement records are decoded in chunks of 15; optional link-layer timeouts use a reviewed UInt32 selector.",
+    "Device descriptor matching, feature-service and property reads, supported capability defaults and medium fallbacks lead to ReadBusInterfaceFeaturesAsync. HID-path cache lookup/insertion predicates and four-entry cache storage use matching names.",
+    "Both versions were reviewed from actual bodies. Seven 6.3 async carriers and their used captured fields now identify request/retry/response, address/configuration and feature discovery roles. Canonical 6.4 compiler metadata remains unchanged."
+  ],
+  "Remaining": [
+    "Application-wide naming is incomplete. Continue into USB configuration writes and cEMI initialization, remaining discovery/open/dispatch callers, then the other coupled application components.",
+    "Memory-278 write helper and three saved register fields remain unresolved pending stronger register semantics. Explicit MoveNext local-only mappings remain blocked by current guards; consider a scoped-only tool enhancement without changing runtime method contracts.",
+    "Preserve observed behavior: zero-length PC value confirmations match but become read failures; initial request-send errors lie outside response-registration cleanup; serial reads ignore their supplied token; feature discovery has different cancellation and descriptor fallback branches. These are observations, not fixes or runtime equivalence results.",
+    "Review the 51 inherited requested/applied suffix adjustments. These updates add none. Historical SDK audits/frozen maps still require refresh against final staged maps before consolidated application/export/build/runtime verification.",
+    "Keep physical module paths, SHA256/MVID and the v2 contract-reference manifest. Scripts only explore code and prepare mapping/evidence; dnSpy/de4dotEx own renaming, reference repair and patching."
+  ]
+}

@@ -1,0 +1,963 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v180.xml",
+ "BaseMapSha256": "5E8AC51FE935C6E4A4134E92D6CA8B5A718F18DB869B08DF1E31C50991753404",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x06001CDF",
+   "ProposedName": "MatchesDeviceDescriptorVersion",
+   "Reason": "Matches the master-data descriptor Version against the captured numeric device descriptor, enabling a medium-type override when direct medium data is unavailable.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CDF",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1258,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "op_0",
+     "HasMetadata": true,
+     "NewName": "descriptor"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features63-wave181-inspection.json",
+    "Sha256": "691131D82B17E16F04CF7229B772E6F6840E6BFC5101C2ABD14B166EBAAAE5DB",
+    "Token": "0x06001CDF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001CDC",
+   "ProposedName": "MatchesDeviceForLookup",
+   "Reason": "Compares the cache entry path with the captured HID device path using exact string equality; caller uses FirstOrDefault to retrieve features.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CDC",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1228,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF6",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1627,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "valueTuple_0",
+     "HasMetadata": true,
+     "NewName": "cacheEntry"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features63-wave181-inspection.json",
+    "Sha256": "691131D82B17E16F04CF7229B772E6F6840E6BFC5101C2ABD14B166EBAAAE5DB",
+    "Token": "0x06001CDC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001CDD",
+   "ProposedName": "MatchesDeviceForDuplicateCheck",
+   "Reason": "Uses the same exact path comparison before inserting newly read features. Caller keeps at most four entries and does not refresh order on a cache hit.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CDD",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1236,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF6",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1627,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "valueTuple_0",
+     "HasMetadata": true,
+     "NewName": "cacheEntry"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features63-wave181-inspection.json",
+    "Sha256": "691131D82B17E16F04CF7229B772E6F6840E6BFC5101C2ABD14B166EBAAAE5DB",
+    "Token": "0x06001CDD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001C81",
+   "ProposedName": "ReadBusInterfaceFeaturesAsync",
+   "Reason": "Reads device descriptor, serial number, APDU size, medium, communication modes, busmonitor time base, programming-mode support and RF/filtering capabilities. Initial feature-service descriptor failures are swallowed; later cEMI descriptor fallback may propagate errors. Missing medium uses descriptor/master-data fallback or TP1; explicit medium flags prefer PL over RF. RF physical-feature read failure uses ScanFx|TxFx|FastAck. Several property reads intentionally use CancellationToken.None. In the non-cEMI path, the BCU programming-mode test runs only when a descriptor fallback was needed.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF6",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1627,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDF",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1258,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxUsbSupportedEmiTypes_0",
+     "HasMetadata": true,
+     "NewName": "supportedEmiTypes"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_0",
+     "HasMetadata": true,
+     "NewName": "masterDataProvider"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1329/m",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features63-wave181-inspection.json",
+    "Sha256": "691131D82B17E16F04CF7229B772E6F6840E6BFC5101C2ABD14B166EBAAAE5DB",
+    "Token": "0x06001C81",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001CA2",
+   "ProposedName": "get_TimeBase",
+   "Reason": "Returns the connector busmonitor time-base storage.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CA2",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 568,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features63-wave181-inspection.json",
+    "Sha256": "691131D82B17E16F04CF7229B772E6F6840E6BFC5101C2ABD14B166EBAAAE5DB",
+    "Token": "0x06001CA2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001CA3",
+   "ProposedName": "get_SupportedLocalServices",
+   "Reason": "Uses the discovered feature services when available; otherwise assumes MProp plus LocalTransportLayer for cEMI and LocalMemory for other EMI types.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CA3",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 575,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features63-wave181-inspection.json",
+    "Sha256": "691131D82B17E16F04CF7229B772E6F6840E6BFC5101C2ABD14B166EBAAAE5DB",
+    "Token": "0x06001CA3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0400190E",
+   "ProposedName": "hidDevice",
+   "Reason": "Captured input consumed by the reviewed predicate and its caller.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400190E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1244,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDC",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1228,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDD",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1236,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001910",
+   "ProposedName": "deviceDescriptor",
+   "Reason": "Captured input consumed by the reviewed predicate and its caller.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001910",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1265,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDF",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1258,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018F6",
+   "ProposedName": "interfaceFeaturesCache",
+   "Reason": "Locked list of HID-path/features pairs. New entries go to the front, the last is removed to keep at most four, and hits do not refresh order.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018F6",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1135,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF6",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1627,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004C3",
+   "ProposedName": "Knx.Falcon.Connectors.LocalInterfaceManagement",
+   "Reason": "Owns local property/memory requests, registration with the host and response matching; Dispose unregisters the local interface.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004C3",
+     "Path": "Knx.Falcon/Class1298.cs",
+     "Line": 16,
+     "Sha256": "A7C253AE641B63087A32B8EDF73BFD623F5641580676540DA5653A1F5D220205"
+    },
+    {
+     "Id": "m0088:0x06001B0F",
+     "Path": "Knx.Falcon/Class1298.cs",
+     "Line": 20,
+     "Sha256": "A7C253AE641B63087A32B8EDF73BFD623F5641580676540DA5653A1F5D220205"
+    },
+    {
+     "Id": "m0088:0x06001B10",
+     "Path": "Knx.Falcon/Class1298.cs",
+     "Line": 27,
+     "Sha256": "A7C253AE641B63087A32B8EDF73BFD623F5641580676540DA5653A1F5D220205"
+    },
+    {
+     "Id": "m0088:0x06001B3C",
+     "Path": "Knx.Falcon/Class1298.cs",
+     "Line": 1584,
+     "Sha256": "A7C253AE641B63087A32B8EDF73BFD623F5641580676540DA5653A1F5D220205"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000513",
+   "ProposedName": "InterfaceFeaturesCacheContext",
+   "Reason": "Captures a HID device for cache lookup and duplicate detection.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000513",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1223,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDC",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1228,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDD",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1236,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF6",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1627,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000514",
+   "ProposedName": "DeviceDescriptorMatchContext",
+   "Reason": "Captures the read descriptor value for master-data medium resolution.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000514",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1253,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CDF",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1258,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0200051E",
+   "ProposedName": "ReadBusInterfaceFeaturesAsyncState",
+   "Reason": "Async carrier whose complete MoveNext body builds the discovered BusInterfaceFeatures.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200051E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2231,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001965",
+   "ProposedName": "state",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001965",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2850,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001966",
+   "ProposedName": "builder",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001966",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2853,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001967",
+   "ProposedName": "connector",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001967",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2856,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001968",
+   "ProposedName": "cancellationToken",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001968",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2859,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001969",
+   "ProposedName": "descriptorMatchContext",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001969",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2862,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400196A",
+   "ProposedName": "masterDataProvider",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400196A",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2865,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400196B",
+   "ProposedName": "supportedEmiTypes",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400196B",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2868,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400196C",
+   "ProposedName": "serialNumber",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400196C",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2871,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400196D",
+   "ProposedName": "maxApduLength",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400196D",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2874,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400196E",
+   "ProposedName": "mediumTypes",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400196E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2877,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400196F",
+   "ProposedName": "busmonitorRelativeTimeBase",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400196F",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2880,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001970",
+   "ProposedName": "supportedRfTypes",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001970",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2883,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001971",
+   "ProposedName": "rfMultiPhysicalFeatures",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001971",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2886,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001972",
+   "ProposedName": "supportedCommModes",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001972",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2889,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001973",
+   "ProposedName": "supportedFilteringModes",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001973",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2892,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001974",
+   "ProposedName": "supportsLocalProgrammingMode",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001974",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2895,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001975",
+   "ProposedName": "descriptorAwaiter",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001975",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2898,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001976",
+   "ProposedName": "localInterface",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001976",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2901,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001977",
+   "ProposedName": "optionalPropertyAwaiter",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001977",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2904,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001978",
+   "ProposedName": "propertyReadAwaiter",
+   "Reason": "Used captured role traced through wrapper input assignments, property reads, fallback branches and final BusInterfaceFeatures construction.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001978",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2908,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C81",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 71,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001CF8",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 2237,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

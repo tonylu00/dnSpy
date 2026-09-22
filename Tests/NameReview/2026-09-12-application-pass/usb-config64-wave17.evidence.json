@@ -1,0 +1,403 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v16.xml",
+ "BaseMapSha256": "8D3733B16874D7703A86A0C8E90A52372A56484AD48229FC5B0C04AAD160259B",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x060031EE",
+   "ProposedName": "MatchesPcValueConfirmation",
+   "Reason": "Requires a PC value response and delegates request-specific matching to IsConfirmation. A zero-length confirmation matches here, then becomes a read failure in the caller.",
+   "Source": [
+    {
+     "Id": "m0153:0x060031EE",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 709,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    },
+    {
+     "Id": "m0153:0x060031CD",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 370,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "m",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.Local.PcValueResponseMessage",
+     "NewName": "confirmation"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x060031EE",
+    "Slots": {
+     "0": "confirmation"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060031CD",
+   "ProposedName": "",
+   "Reason": "Sends PC_GetValue_req, awaits a matching confirmation, returns nonempty memory data, and retries once after a 200 ms delay on timeout with a 200 ms larger response timeout. Cancellation propagates. Registration is removed around response wait/retry; the initial send is outside that finally, so send failures do not run that removal.",
+   "Source": [
+    {
+     "Id": "m0153:0x060031CD",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 370,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    },
+    {
+     "Id": "m0153:0x060031EE",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 709,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "address",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "count",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.LocalInterfaceManagement/<ReadEmi1LocalMemoryAsync>d__24",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x060031CD",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600345F",
+   "ProposedName": "DecodeLinkLayerTimeout",
+   "Reason": "Extracts one UInt32 at four times the index from the optional PID_RF_MULTI_LL_TIMEOUT_VALUES response. Caller enumerates exactly five indices only when response data is present.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600345F",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2908,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x06003401",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 693,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "i",
+     "HasMetadata": true,
+     "NewName": "index"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x0600345F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x040020BA",
+   "ProposedName": "request",
+   "Reason": "Captured PC value request used for confirmation matching.",
+   "Source": [
+    {
+     "Id": "m0153:0x040020BA",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 731,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    },
+    {
+     "Id": "m0153:0x060031EE",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 709,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    },
+    {
+     "Id": "m0153:0x060031CD",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 370,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040020BB",
+   "ProposedName": "confirmationPredicate",
+   "Reason": "Cached confirmation matcher reused across read retries.",
+   "Source": [
+    {
+     "Id": "m0153:0x040020BB",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 734,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    },
+    {
+     "Id": "m0153:0x060031CD",
+     "Path": "Knx.Falcon.2/Connectors/LocalInterfaceManagement.cs",
+     "Line": 370,
+     "Sha256": "5FA808170D8D11FC6FB65781117EBC7342CF1FF57F0F3BB1EC5C77ECA930C38B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002351",
+   "ProposedName": "timeoutPropertyResponse",
+   "Reason": "Captured optional RF link-layer timeout property response.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002351",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2929,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x0600345F",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2908,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x06003401",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 693,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003401",
+   "ProposedName": "ReadInterfaceConfigurationAsync",
+   "Reason": "Reads individual/domain addresses and PL/RF configuration using cEMI properties or EMI1 memory. RF multi acknowledgement records are read in chunks of at most 15; five link-layer timeouts and filtering mode are optional. Saves the reception band on the connector and returns a BusInterfaceConfiguration. Errors propagate and the local interface is disposed.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003401",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 693,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadInterfaceConfigurationAsync>d__38",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x06003401",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003402",
+   "ProposedName": "",
+   "Reason": "Combines cEMI address properties 0/57 and 0/58, or reads two EMI1 bytes at address 279, then returns IndividualAddress. Uses the caller cancellation token.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003402",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 835,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadIndividualAddressAsync>d__39",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x06003402",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003403",
+   "ProposedName": "",
+   "Reason": "Reads cEMI property 0/82 only as a six-byte domain, or EMI1 memory 258 only as a two-byte domain. Null/wrong-length buffers return DomainAddress.None; read errors propagate.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003403",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 865,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadDomainAddressAsync>d__40",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x06003403",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003404",
+   "ProposedName": "",
+   "Reason": "Tries cEMI property 0/11 and returns its serial number when data exists, otherwise SerialNumber.None. The supplied cancellation token is unused; the request uses CancellationToken.None.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003404",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 903,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadSerialNumberAsync>d__41",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x06003404",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003419",
+   "ProposedName": "ReadLocalDeviceDescriptor",
+   "Reason": "Uses EMI1 memory 78, an active local transport service, or PID_DEVICE_DESCRIPTOR as appropriate. Local-mode LocalServiceNotSupported returns UInt16.MaxValue; other local read errors propagate. The general property fallback infers PL before RF before TP from medium bits. All requests use CancellationToken.None.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003419",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 1599,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "localInterfaceManagement_0",
+     "HasMetadata": true,
+     "NewName": "localInterface"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadLocalDeviceDescriptor>d__66",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-config64-wave180-inspection.json",
+    "Sha256": "BCF296FEAA3EB99A3F0A2D6963FAAF614E00D30868150A5768C296E78EEF26B0",
+    "Token": "0x06003419",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

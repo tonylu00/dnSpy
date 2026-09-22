@@ -2979,6 +2979,442 @@
    "NewName": "UninitializeLocalDeviceAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.LocalInterfaceManagement/<>c__DisplayClass24_0",
+   "Token": "0x060031EE",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.LocalInterfaceManagement/<>c__DisplayClass24_0::method_0(Knx.Falcon.KnxMessages.KnxMessage)",
+   "OriginalName": "method_0",
+   "Reason": "Requires a PC value response and delegates request-specific matching to IsConfirmation. A zero-length confirmation matches here, then becomes a read failure in the caller.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxMessage m"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "m",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.Local.PcValueResponseMessage",
+     "NewName": "confirmation"
+    }
+   ],
+   "NewName": "MatchesPcValueConfirmation",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.LocalInterfaceManagement",
+   "Token": "0x060031CD",
+   "Signature": "System.Threading.Tasks.Task`1<System.Byte[]> Knx.Falcon.Connectors.LocalInterfaceManagement::ReadEmi1LocalMemoryAsync(System.UInt16,System.Byte,System.Threading.CancellationToken)",
+   "OriginalName": "ReadEmi1LocalMemoryAsync",
+   "Reason": "Sends PC_GetValue_req, awaits a matching confirmation, returns nonempty memory data, and retries once after a 200 ms delay on timeout with a 200 ms larger response timeout. Cancellation propagates. Registration is removed around response wait/retry; the initial send is outside that finally, so send failures do not run that removal.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt16 address",
+    "2: System.Byte count",
+    "3: System.Threading.CancellationToken cancellationToken"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "address",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "count",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.LocalInterfaceManagement/<ReadEmi1LocalMemoryAsync>d__24",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass38_0",
+   "Token": "0x0600345F",
+   "Signature": "System.UInt32 Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass38_0::method_0(System.Int32)",
+   "OriginalName": "method_0",
+   "Reason": "Extracts one UInt32 at four times the index from the optional PID_RF_MULTI_LL_TIMEOUT_VALUES response. Caller enumerates exactly five indices only when response data is present.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 i"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "i",
+     "HasMetadata": true,
+     "NewName": "index"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "DecodeLinkLayerTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003401",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.BusInterfaceConfiguration> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::method_1(System.Threading.CancellationToken)",
+   "OriginalName": "method_1",
+   "Reason": "Reads individual/domain addresses and PL/RF configuration using cEMI properties or EMI1 memory. RF multi acknowledgement records are read in chunks of at most 15; five link-layer timeouts and filtering mode are optional. Saves the reception band on the connector and returns a BusInterfaceConfiguration. Errors propagate and the local interface is disposed.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadInterfaceConfigurationAsync>d__38",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "ReadInterfaceConfigurationAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003402",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.IndividualAddress> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::ReadIndividualAddressAsync(System.Threading.CancellationToken)",
+   "OriginalName": "ReadIndividualAddressAsync",
+   "Reason": "Combines cEMI address properties 0/57 and 0/58, or reads two EMI1 bytes at address 279, then returns IndividualAddress. Uses the caller cancellation token.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadIndividualAddressAsync>d__39",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003403",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.DomainAddress> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::ReadDomainAddressAsync(System.Threading.CancellationToken)",
+   "OriginalName": "ReadDomainAddressAsync",
+   "Reason": "Reads cEMI property 0/82 only as a six-byte domain, or EMI1 memory 258 only as a two-byte domain. Null/wrong-length buffers return DomainAddress.None; read errors propagate.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadDomainAddressAsync>d__40",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003404",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.SerialNumber> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::ReadSerialNumberAsync(System.Threading.CancellationToken)",
+   "OriginalName": "ReadSerialNumberAsync",
+   "Reason": "Tries cEMI property 0/11 and returns its serial number when data exists, otherwise SerialNumber.None. The supplied cancellation token is unused; the request uses CancellationToken.None.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadSerialNumberAsync>d__41",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003419",
+   "Signature": "System.Threading.Tasks.Task`1<System.UInt16> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::method_8(Knx.Falcon.Connectors.LocalInterfaceManagement)",
+   "OriginalName": "method_8",
+   "Reason": "Uses EMI1 memory 78, an active local transport service, or PID_DEVICE_DESCRIPTOR as appropriate. Local-mode LocalServiceNotSupported returns UInt16.MaxValue; other local read errors propagate. The general property fallback infers PL before RF before TP from medium bits. All requests use CancellationToken.None.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.LocalInterfaceManagement localInterfaceManagement_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "localInterfaceManagement_0",
+     "HasMetadata": true,
+     "NewName": "localInterface"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadLocalDeviceDescriptor>d__66",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "ReadLocalDeviceDescriptor",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass27_0",
+   "Token": "0x0600345A",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass27_0::method_0(Knx.Falcon.MasterData.DeviceDescriptor)",
+   "OriginalName": "method_0",
+   "Reason": "Matches the master-data descriptor Version against the captured numeric device descriptor, enabling a medium-type override when direct medium data is unavailable.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.MasterData.DeviceDescriptor mv"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "mv",
+     "HasMetadata": true,
+     "NewName": "descriptor"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesDeviceDescriptorVersion",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass26_0",
+   "Token": "0x06003454",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass26_0::method_0(System.ValueTuple`2<System.String,Knx.Falcon.BusInterfaceFeatures>)",
+   "OriginalName": "method_0",
+   "Reason": "Compares the cache entry path with the captured HID device path using exact string equality; caller uses FirstOrDefault to retrieve features.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.ValueTuple`2<System.String,Knx.Falcon.BusInterfaceFeatures> d"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "d",
+     "HasMetadata": true,
+     "NewName": "cacheEntry"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesDeviceForLookup",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass26_0",
+   "Token": "0x06003455",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass26_0::method_1(System.ValueTuple`2<System.String,Knx.Falcon.BusInterfaceFeatures>)",
+   "OriginalName": "method_1",
+   "Reason": "Uses the same exact path comparison before inserting newly read features. Caller keeps at most four entries and does not refresh order on a cache hit.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.ValueTuple`2<System.String,Knx.Falcon.BusInterfaceFeatures> _"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "cacheEntry"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesDeviceForDuplicateCheck",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x060033F9",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.BusInterfaceFeatures> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::method_0(Knx.Falcon.Connectors.UsbConnector.KnxUsbSupportedEmiTypes,System.Func`1<Knx.Falcon.MasterData.Interface14>,System.Threading.CancellationToken)",
+   "OriginalName": "method_0",
+   "Reason": "Reads device descriptor, serial number, APDU size, medium, communication modes, busmonitor time base, programming-mode support and RF/filtering capabilities. Initial feature-service descriptor failures are swallowed; later cEMI descriptor fallback may propagate errors. Missing medium uses descriptor/master-data fallback or TP1; explicit medium flags prefer PL over RF. RF physical-feature read failure uses ScanFx|TxFx|FastAck. Several property reads intentionally use CancellationToken.None. In the non-cEMI path, the BCU programming-mode test runs only when a descriptor fallback was needed.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxUsbSupportedEmiTypes knxUsbSupportedEmiTypes_0",
+    "2: System.Func`1<Knx.Falcon.MasterData.Interface14> func_0",
+    "3: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxUsbSupportedEmiTypes_0",
+     "HasMetadata": true,
+     "NewName": "supportedEmiTypes"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_0",
+     "HasMetadata": true,
+     "NewName": "masterDataProvider"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadBusInterfaceFeaturesAsync>d__27",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "ReadBusInterfaceFeaturesAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   }
  ],
  "Types": [
@@ -4304,6 +4740,132 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "requestedHidPath",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.LocalInterfaceManagement/<>c__DisplayClass24_0",
+   "Token": "0x040020BA",
+   "Signature": "Knx.Falcon.KnxMessages.Local.PcValueReadMessage Knx.Falcon.Connectors.LocalInterfaceManagement/<>c__DisplayClass24_0::pcValueReadMessage_0",
+   "OriginalName": "pcValueReadMessage_0",
+   "Reason": "Captured PC value request used for confirmation matching.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "request",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.LocalInterfaceManagement/<>c__DisplayClass24_0",
+   "Token": "0x040020BB",
+   "Signature": "System.Func`2<Knx.Falcon.KnxMessages.KnxMessage,System.Boolean> Knx.Falcon.Connectors.LocalInterfaceManagement/<>c__DisplayClass24_0::func_0",
+   "OriginalName": "func_0",
+   "Reason": "Cached confirmation matcher reused across read retries.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "confirmationPredicate",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass38_0",
+   "Token": "0x04002351",
+   "Signature": "System.ValueTuple`2<System.Byte[],Knx.Falcon.ConnectorException> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass38_0::valueTuple_0",
+   "OriginalName": "valueTuple_0",
+   "Reason": "Captured optional RF link-layer timeout property response.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "timeoutPropertyResponse",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass26_0",
+   "Token": "0x0400234D",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.IHidDevice Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass26_0::ihidDevice_0",
+   "OriginalName": "ihidDevice_0",
+   "Reason": "Captured input consumed by the reviewed predicate and its caller.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "hidDevice",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass27_0",
+   "Token": "0x0400234F",
+   "Signature": "System.UInt16 Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<>c__DisplayClass27_0::ushort_0",
+   "OriginalName": "ushort_0",
+   "Reason": "Captured input consumed by the reviewed predicate and its caller.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceDescriptor",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x04002335",
+   "Signature": "System.Collections.Generic.List`1<System.ValueTuple`2<System.String,Knx.Falcon.BusInterfaceFeatures>> Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::list_0",
+   "OriginalName": "list_0",
+   "Reason": "Locked list of HID-path/features pairs. New entries go to the front, the last is removed to keep at most four, and hits do not refresh order.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "interfaceFeaturesCache",
    "Unresolved": false,
    "UnresolvedReason": ""
   }

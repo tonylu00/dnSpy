@@ -1,0 +1,255 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v17.xml",
+ "BaseMapSha256": "E49E59F39EA4D948E96E5C38164CE2CA8B525E33A2DFFB3EC09A88D5DF883FF1",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x0600345A",
+   "ProposedName": "MatchesDeviceDescriptorVersion",
+   "Reason": "Matches the master-data descriptor Version against the captured numeric device descriptor, enabling a medium-type override when direct medium data is unavailable.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600345A",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2875,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x060033F9",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 322,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "mv",
+     "HasMetadata": true,
+     "NewName": "descriptor"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features64-wave181-inspection.json",
+    "Sha256": "A25241C5E926167E8705E65A10A3FC56BFDBFA952D031CC3F3979BF630720C59",
+    "Token": "0x0600345A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003454",
+   "ProposedName": "MatchesDeviceForLookup",
+   "Reason": "Compares the cache entry path with the captured HID device path using exact string equality; caller uses FirstOrDefault to retrieve features.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003454",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2833,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x060033F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 157,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "d",
+     "HasMetadata": true,
+     "NewName": "cacheEntry"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features64-wave181-inspection.json",
+    "Sha256": "A25241C5E926167E8705E65A10A3FC56BFDBFA952D031CC3F3979BF630720C59",
+    "Token": "0x06003454",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003455",
+   "ProposedName": "MatchesDeviceForDuplicateCheck",
+   "Reason": "Uses the same exact path comparison before inserting newly read features. Caller keeps at most four entries and does not refresh order on a cache hit.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003455",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2841,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x060033F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 157,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "cacheEntry"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features64-wave181-inspection.json",
+    "Sha256": "A25241C5E926167E8705E65A10A3FC56BFDBFA952D031CC3F3979BF630720C59",
+    "Token": "0x06003455",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060033F9",
+   "ProposedName": "ReadBusInterfaceFeaturesAsync",
+   "Reason": "Reads device descriptor, serial number, APDU size, medium, communication modes, busmonitor time base, programming-mode support and RF/filtering capabilities. Initial feature-service descriptor failures are swallowed; later cEMI descriptor fallback may propagate errors. Missing medium uses descriptor/master-data fallback or TP1; explicit medium flags prefer PL over RF. RF physical-feature read failure uses ScanFx|TxFx|FastAck. Several property reads intentionally use CancellationToken.None. In the non-cEMI path, the BCU programming-mode test runs only when a descriptor fallback was needed.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033F9",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 322,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x060033F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 157,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x0600345A",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2875,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxUsbSupportedEmiTypes_0",
+     "HasMetadata": true,
+     "NewName": "supportedEmiTypes"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_0",
+     "HasMetadata": true,
+     "NewName": "masterDataProvider"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<ReadBusInterfaceFeaturesAsync>d__27",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-features64-wave181-inspection.json",
+    "Sha256": "A25241C5E926167E8705E65A10A3FC56BFDBFA952D031CC3F3979BF630720C59",
+    "Token": "0x060033F9",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0400234D",
+   "ProposedName": "hidDevice",
+   "Reason": "Captured input consumed by the reviewed predicate and its caller.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400234D",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2863,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x06003454",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2833,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x06003455",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2841,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0400234F",
+   "ProposedName": "deviceDescriptor",
+   "Reason": "Captured input consumed by the reviewed predicate and its caller.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400234F",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2896,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x0600345A",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2875,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x060033F9",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 322,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002335",
+   "ProposedName": "interfaceFeaturesCache",
+   "Reason": "Locked list of HID-path/features pairs. New entries go to the front, the last is removed to keep at most four, and hits do not refresh order.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002335",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 2646,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    },
+    {
+     "Id": "m0153:0x060033F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 157,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}
