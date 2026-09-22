@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 250 accepted (6.3): Knx.Ets.ObjectModel.Operations.GroupAddress",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v250.xml",
+      "Sha256": "FF6BCF1B492FF83D467C1A413142D15A7C1D07E638592BF786B317484E3F60F3",
+      "PreviousMap": "names63-staged-v249.xml",
+      "PreviousMapSha256": "FCB803413D0B85CC348A4711B93F0066782343BF36BE5B7923226D9F1E777D5B",
+      "FrozenSha256": "FF6BCF1B492FF83D467C1A413142D15A7C1D07E638592BF786B317484E3F60F3",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave250.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The group address operations repeat their conventions: CreateValidators (AddressStrategyValidator/GroupAddressStyleValidator), the AddToRecentGroupAddresses / RemoveFromRecentGroupAddresses pair on every add/copy/link operation, the undo helpers (DatapointClearer, DatapointAssigner, CollectAssociationsToRemove) and the security pair ExecuteSecurityImpacts plus ResetAppropriateCouplerFlagsAfterOperation.",
+    "state machine": "MoveGroupAddressOperation's iterator is <DetermineRfSegments>d__10 and CopySegmentOperation's is <GetDevicesWithAddresses>d__38, so those rows carry the original names.",
+    "log and resource strings": "MoveGroupAddressOperation logs 'Move group addresses', UnlinkConnectorOperation logs '...unlinking all group addresses from ComObjectInstanceRef {0}', and LinkGroupAddressesValidationResult carries the note that it is replaced by SplitAndMergeValidationResult plus the ComObjectSecureAndPlainComObjects and RemoteSecureIndAddrLimitReachedReasonSetSecure resources."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 25,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14351,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11157
+  },
+  "Errors": 0
+}
