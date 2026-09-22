@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-sdk-whitelist184.json`. Current staged maps are **6.3 v184** and **6.4 v20**.
+`checkpoint-wave185.json`. Current staged maps are **6.3 v185** and **6.4 v20**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -19,7 +19,9 @@ The SDK transition excludes 1,974/167 protected or related contract rows from
 review ledgers retain the behavioral evidence; the bound maps determine which
 aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
-The 6.3 v183 candidate was never accepted. Resume with 184/20, not by newest filename.
+The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
+behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
+Resume with 185/20, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -30,6 +32,12 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- Additional-address list reads/writes and local individual-address writes → the
+  complete eight-member `SetInterfaceConfigurationAsync` contract, including
+  USB, IP tunneling, storage-only and unsupported implementations. Parameters,
+  callbacks, seven async carrier types and their used fields carry the same
+  roles (`interface_configuration.py`). SDK binding and existing aliases remain;
+  no new collision suffixes or ETS writes occurred.
 - Acknowledgement sorting/duplicate selection → individual-address and PL/RF
   configuration writers → communication/RF mode and time-base setup → cEMI
   initialization (`usb_configuration_write.py`). Twelve 6.3 async carriers and

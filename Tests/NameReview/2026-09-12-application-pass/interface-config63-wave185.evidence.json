@@ -1,0 +1,2428 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v184.xml",
+ "BaseMapSha256": "1AE0CFBE13B5FDBD3241FB6ECB97888AFC336939077764AF0228F1C7EBA44924",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x06001DF8",
+   "ProposedName": "SetLocalIndividualAddressAsync",
+   "Reason": "Writes the individual address as two big-endian bytes to object type 11 property 52, forwarding cancellation and propagating write failure.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class1298_0",
+     "HasMetadata": true,
+     "NewName": "localInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "individualAddress"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1342/Struct938",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001DF8",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001E73",
+   "ProposedName": "ReadAdditionalIndividualAddressesAsync",
+   "Reason": "Reads property 11/1/53 count from index zero, then address elements in chunks of at most 15 starting at index one. Decodes two-byte addresses and advances the element offset by 15. The connection-context argument is unused and not captured.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class709_0",
+     "HasMetadata": true,
+     "NewName": "deviceManagement"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1343/Struct952",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001E73",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001E74",
+   "ProposedName": "WriteAdditionalIndividualAddressesAsync",
+   "Reason": "Reads property 11/1/53 count, best-effort shortens it when larger than the requested list, then writes big-endian address chunks of at most 15 from index one. Shortening exceptions including cancellation are logged and swallowed; later element-write failures propagate. The connection-context argument is unused.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class709_0",
+     "HasMetadata": true,
+     "NewName": "deviceManagement"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "individualAddresses"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1343/Struct954",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001E74",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D4E",
+   "ProposedName": "OnPropertyChanged",
+   "Reason": "Snapshots the event delegate and invokes it with this connector and the supplied property name when non-null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D4E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 398,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_15",
+     "HasMetadata": true,
+     "NewName": "propertyName"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001D4E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001DF6",
+   "ProposedName": "OnPropertyChanged",
+   "Reason": "Snapshots the event delegate and invokes it with this connector and the supplied property name when non-null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001DF6",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 311,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "propertyName"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001DF6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600240F",
+   "ProposedName": "OnPropertyChanged",
+   "Reason": "Snapshots the event delegate and invokes it with this connector and the supplied property name when non-null.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600240F",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 251,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_4",
+     "HasMetadata": true,
+     "NewName": "propertyName"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x0600240F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001C96",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "USB dispatches EMI1/cEMI individual-address and PL/RF writes in a disposable timeout-configured local scope. A previous unfinished write forces differencesOnly false. Clones settings, clears the pending flag and notifies only after success; a failure leaves the flag set.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1329/x",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001C96",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001CCD",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Shared connector contract for applying interface configuration. All seven concrete members and their complete bodies were reviewed; the name is one family decision, propagated consistently.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CCD",
+     "Path": "Knx.Falcon/Connectors/IBusConnector.cs",
+     "Line": 56,
+     "Sha256": "519FB7F645E1C7A8CFA75FC5181EA8585763AD6969531DCBF09648CB6D5A10F3"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_0",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_0",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001CCD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D4F",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Stores the individual address, clones the supplied settings, notifies InterfaceConfiguration and returns CompletedTask. This implementation ignores differencesOnly and cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D4F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 410,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001D4F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001DF7",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Skips an unchanged individual address when differencesOnly is true; otherwise writes property 11/52 using a timeout-configured local scope. Clones settings and notifies after success.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1342/e",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001DF7",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001E6D",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Requires a live tunneling connection. Newer feature support writes IndividualAddress directly. Older support opens device management, replaces the old additional address while rejecting duplicates, or writes the host device address after verifying discovery identity. Disposes management asynchronously, then stores configuration. An unchanged address with differencesOnly returns without copying other settings.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1343/i",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001E6D",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001EA8",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Clones and stores configuration, then returns CompletedTask without I/O or change notification. This implementation ignores differencesOnly and cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001EA8",
+     "Path": "Knx.Falcon/Class1346.cs",
+     "Line": 218,
+     "Sha256": "013F1D3A630D93FA9AA132F111C2E6AE0A01122B6663BEB0B853C922936BEE3D"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_0",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06001EA8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06002410",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Writes individual-address bytes to EMI1 memory 279 unless unchanged with differencesOnly, disposes the local management scope, then clones settings and notifies InterfaceConfiguration.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_1",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1480/i",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x06002410",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060024D9",
+   "ProposedName": "SetInterfaceConfigurationAsync",
+   "Reason": "Unsupported connector implementation always throws NotImplementedException; the shared contract name does not claim that this implementation succeeds.",
+   "Source": [
+    {
+     "Id": "m0088:0x060024D9",
+     "Path": "Knx.Falcon/Class1505.cs",
+     "Line": 112,
+     "Sha256": "0D75372879FCCF04DDAA508E719208189DAA09145477D28E0EC783174A93A6D8"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "busInterfaceConfiguration_1",
+     "HasMetadata": true,
+     "NewName": "configuration"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "differencesOnly"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\interface-config63-wave185-inspection.json",
+    "Sha256": "710BA8B2667E469FAEC486827CEE1A629FD5970FECEBCA60814D68B2A037AA98",
+    "Token": "0x060024D9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x02000529",
+   "ProposedName": "SetInterfaceConfigurationAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000529",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4167,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019CD",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019CD",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4386,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019CE",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019CE",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4389,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019CF",
+   "ProposedName": "connector",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019CF",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4392,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019D0",
+   "ProposedName": "differencesOnly",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019D0",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4395,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019D1",
+   "ProposedName": "configuration",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019D1",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4398,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019D2",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019D2",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4401,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019D3",
+   "ProposedName": "localInterface",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019D3",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4404,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040019D4",
+   "ProposedName": "writeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040019D4",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4407,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C96",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 383,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001D0E",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 4173,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000557",
+   "ProposedName": "SetInterfaceConfigurationAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000557",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1252,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B84",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B84",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1330,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B85",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B85",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1333,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B86",
+   "ProposedName": "differencesOnly",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B86",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1336,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B87",
+   "ProposedName": "configuration",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B87",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B88",
+   "ProposedName": "connector",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B88",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1342,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B89",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B89",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1345,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B8A",
+   "ProposedName": "localInterface",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B8A",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1348,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B8B",
+   "ProposedName": "writeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B8B",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1351,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF7",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 323,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E31",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1258,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000558",
+   "ProposedName": "SetLocalIndividualAddressAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000558",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1360,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B8D",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B8D",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1414,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B8E",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B8E",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1417,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B8F",
+   "ProposedName": "individualAddress",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B8F",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1420,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B90",
+   "ProposedName": "localInterface",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B90",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1423,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B91",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B91",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1426,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001B92",
+   "ProposedName": "writeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B92",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1429,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF8",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 339,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001E33",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 1366,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0200056B",
+   "ProposedName": "ReadAdditionalIndividualAddressesAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200056B",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2717,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C46",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C46",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2803,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C47",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C47",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2806,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C48",
+   "ProposedName": "deviceManagement",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C48",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2809,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C49",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C49",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2812,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C4A",
+   "ProposedName": "addressCount",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C4A",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2815,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C4B",
+   "ProposedName": "addresses",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C4B",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2818,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C4C",
+   "ProposedName": "readAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C4C",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2821,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C4D",
+   "ProposedName": "addressOffset",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C4D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2824,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E73",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 537,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E90",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2723,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0200056C",
+   "ProposedName": "SetInterfaceConfigurationAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200056C",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2251,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C4F",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C4F",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2492,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C50",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C50",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2495,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C51",
+   "ProposedName": "connector",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C51",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2498,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C52",
+   "ProposedName": "differencesOnly",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C52",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2501,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C53",
+   "ProposedName": "configuration",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C53",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2504,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C54",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C54",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2507,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C55",
+   "ProposedName": "writeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C55",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2510,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C56",
+   "ProposedName": "deviceManagement",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C56",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2513,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C57",
+   "ProposedName": "connectAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C57",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2516,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C58",
+   "ProposedName": "pendingException",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C58",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2519,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C5A",
+   "ProposedName": "readAddressesAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C5A",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2525,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C5B",
+   "ProposedName": "disposeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C5B",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2528,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E6D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 390,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E92",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2257,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0200056D",
+   "ProposedName": "WriteAdditionalIndividualAddressesAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200056D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2833,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C5D",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C5D",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2964,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C5E",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C5E",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2967,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C5F",
+   "ProposedName": "deviceManagement",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C5F",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2970,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C60",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C60",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2973,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C61",
+   "ProposedName": "individualAddresses",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C61",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2976,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C62",
+   "ProposedName": "existingAddressCount",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C62",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2979,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C63",
+   "ProposedName": "readAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C63",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2982,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C64",
+   "ProposedName": "writeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C64",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2985,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001C65",
+   "ProposedName": "addressOffset",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C65",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2988,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E74",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 551,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E94",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 2839,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000698",
+   "ProposedName": "SetInterfaceConfigurationAsyncState",
+   "Reason": "Async carrier tied to the reviewed wrapper assignments and complete state-machine body.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000698",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 943,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022CD",
+   "ProposedName": "state",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022CD",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1035,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022CE",
+   "ProposedName": "builder",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022CE",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1038,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022CF",
+   "ProposedName": "connector",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022CF",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1041,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022D0",
+   "ProposedName": "differencesOnly",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022D0",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1044,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022D1",
+   "ProposedName": "configuration",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022D1",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1047,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022D2",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022D2",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1050,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022D3",
+   "ProposedName": "localInterface",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022D3",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1053,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040022D4",
+   "ProposedName": "writeAwaiter",
+   "Reason": "Captured role traced through wrapper initialization, actual property/memory calls, continuation or disposal. Unused obfuscator fields remain unresolved.",
+   "Source": [
+    {
+     "Id": "m0088:0x040022D4",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 1056,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002410",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 263,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x06002434",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 949,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

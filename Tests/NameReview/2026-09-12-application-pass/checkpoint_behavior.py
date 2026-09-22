@@ -61,6 +61,13 @@ def checkpoint(root, plan_path):
                 raise ValueError('Update chain hash mismatch')
             if report['ContractReferenceSha256'] != (sha(root / step['References']) if step.get('References') else None):
                 raise ValueError('Contract-reference context mismatch')
+            old_binding = ET.parse(previous).getroot()
+            new_binding = ET.parse(root / step['Map']).getroot()
+            for attribute in ('SdkNameWhitelist', 'SdkNameWhitelistSha256'):
+                if old_binding.get(attribute) != new_binding.get(attribute):
+                    raise ValueError('Behavior update changed the SDK whitelist binding')
+            if report.get('SdkNameWhitelistSha256') != old_binding.get('SdkNameWhitelistSha256'):
+                raise ValueError('Update did not validate the bound SDK whitelist')
             reports.append({'Path': step['Report'], 'Sha256': sha(root / step['Report'])})
             previous = root / step['Map']
         before, after = map_rows(old_path), map_rows(previous)
@@ -135,7 +142,12 @@ def checkpoint(root, plan_path):
         progress['ContractReferences'].setdefault(version, {}).update(Path=str(root / ref['Manifest']),
             Sha256=sha(root / ref['Manifest']), FamilyInventory=str(root / ref['Families']))
     progress['ResumeCheckpoint'] = str(output)
-    progress['CurrentMapUpdateReports'] = {v: str(root / spec['Steps'][-1]['Report']) for v, spec in plan['Versions'].items()}
+    progress.setdefault('CurrentMapUpdateReports', {}).update({v: str(root / spec['Steps'][-1]['Report']) for v, spec in plan['Versions'].items()})
+    progress['CurrentMapUpdateReportsScope'] = 'Latest behavior updates per version; compare their base/output hashes with the current maps and subsequent SDK protection checkpoint.'
+    for version in accepted:
+        older = progress.get('CurrentMapPreflightReports', {}).pop(version, None)
+        if older:
+            progress.setdefault('HistoricalMapPreflightReports', {})[version] = older
     progress.pop('CurrentMapUpdateReport', None)
     progress['BehaviorReview'] = {'Checkpoint': str(output), 'SourceApplied': False,
                                   'Supplemental64': str(destination / 'behavior-reviewed64.json')}

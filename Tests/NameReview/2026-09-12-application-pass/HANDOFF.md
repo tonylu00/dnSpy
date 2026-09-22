@@ -25,9 +25,10 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
 - Configuration/feature reads committed as `3e57125bd`; this continuation follows
   configuration writes and cEMI initialization, including explicit selector aliases.
 - USB configuration writes committed as `ccf4afe07`. The resumed SDK protection
-  checkpoint is `checkpoint-sdk-whitelist184.json`.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v184.xml`,
-  SHA256 `1AE0CFBE13B5FDBD3241FB6ECB97888AFC336939077764AF0228F1C7EBA44924`.
+  checkpoint is `checkpoint-sdk-whitelist184.json`, committed with dnSpy
+  protection as `a2681bdde`. Current naming checkpoint: `checkpoint-wave185.json`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v185.xml`,
+  SHA256 `47AA04FF3BEB8D7F97A5B0970E8D4210658CCD78AB228B1A7F134931426721CE`.
 - Current 6.4 map: `names64-staged-v20.xml`, SHA256
   `49DEE3D73545D5C1FF64380BD1DB29F00D718CE859E080A4C5D45452199DA13F`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
@@ -36,7 +37,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   take precedence over its historical proposals. Earlier aliases and
   parameter/local decisions were checked for preservation. Six compiler-style
   source aliases now have explicit replacement review; every other earlier alias
-  was preserved by wave182. The last behavior update reports are `map-update63-wave-182.json`
+  was preserved by wave182. The last behavior update reports are `map-update63-wave-185.json`
   and `map-update64-wave-19.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
@@ -100,6 +101,29 @@ These are tooling tests, not ETS execution or full application equivalence.
 reject unrelated deletions, partial family removal, alias/scope changes, changed
 physical identity and additions. Normal behavior waves continue to use
 `checkpoint_behavior.py`, which must retain the SDK binding.
+
+## Interface configuration continuation (185)
+
+`interface_configuration.py` reviews the inner additional-address property
+reader/writer and local-address writer before naming the complete eight-member
+`SetInterfaceConfigurationAsync` contract. The shared parameters are configuration,
+differencesOnly and cancellationToken. Three property-change callbacks, seven
+async carrier types, their used fields and verified wrapper locals describe the
+same operations. This adds 80 behavior decisions / 122 map edits, with zero
+errors or new suffixes. All earlier effective aliases and SDK binding remain.
+
+The implementations differ: USB dispatches EMI1/cEMI/PL/RF operations and leaves
+its pending-write flag set after failure; IP tunneling either writes a feature or
+edits device/additional addresses; two implementations only clone/store settings;
+one always throws NotImplementedException. The additional-address writer swallows
+list-shortening failures (including cancellation) but propagates later write
+failures. Unused connection-context arguments, obfuscator fields and unsupported
+explicit MoveNext mappings remain unchanged. Event delegate temporaries are
+decompiler stack variables, not actual IL locals, and were not falsely mapped.
+
+The 6.4 USB counterpart was read for supporting terminology; no 6.4 aliases changed
+in this continuation. Its effective map remains v20. This is a naming checkpoint,
+not a behavior change, source export or runtime validation.
 
 ## Reviewed chain
 
@@ -294,16 +318,16 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
   duplicate compatibility copies are not a measure of completed readability.
 - Catalog parsing/localization, volatile saved addresses, EMI1 initialization/
   shutdown, configuration reads/writes, feature discovery/cache and cEMI
-  initialization are reviewed. Continue the complete SetInterfaceConfigurationAsync
-  contract (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`), then remaining
+  initialization and the complete SetInterfaceConfigurationAsync contract are
+  reviewed (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`). Continue
   open/dispatch callers and other application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
 - Native import proposals from wave175 are resolved. Continue from
-  `usb-write63-wave182.cumulative.json` and `usb-write64-wave19.cumulative.json`; do not
+  `interface-config63-wave185.cumulative.json` and `usb-write64-wave19.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **184/20** as the bases, even though cumulative ledger names
-  contain 182/19. Do not reintroduce SDK-excluded proposals from those ledgers.
+  Use protected maps **185/20** as the bases. Do not reintroduce SDK-excluded
+  proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
 - Do not autoaccept the old correspondence queue: its shape normalization can
