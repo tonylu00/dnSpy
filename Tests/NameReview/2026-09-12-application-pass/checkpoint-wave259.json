@@ -1,0 +1,46 @@
+{
+  "Format": 1,
+  "Status": "Wave 259 accepted (6.3): Plugin, Operations.SplitAndMerge, GroupAddressRefs and Filtertable (plus two collision fixes)",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v259.xml",
+      "Sha256": "AF236A7D357AD1EBAD0732DEA6BEBA64B25F44457D9DC3D551DC934285B91846",
+      "PreviousMap": "names63-staged-v258.xml",
+      "PreviousMapSha256": "197FEF57C4829E5CB8F46FA14275CE0CB384843B6D43858EBF066AAE31DC6031",
+      "FrozenSha256": "AF236A7D357AD1EBAD0732DEA6BEBA64B25F44457D9DC3D551DC934285B91846",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave259.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. Four namespaces in one wave: Plugin (the ETS3/ETS4 plugin hosts and the device plugin wrapper), Operations.SplitAndMerge (the merge/split operations, their validation result and the XML conflict report), Operations.GroupAddressRefs (the link/add/unlink group address ref operations) and Operations.Filtertable (the filter table calculator and its XML creators).",
+    "collisions fixed": "The first run suffixed two rows because PluginWrapper already declares HasParameterDialog/HasContextMenuItems, so they were re-issued as IsParameterDialogAvailable and IsContextMenuAvailable; the re-run reports 40 changes with 0 collision suffixes.",
+    "state machines": "MergeProjectsOperationBase's iterator is <GetValidatorsInternal>d__23 and SplitProjectOperation's is <GetValidators>d__9, so those rows carry the original names.",
+    "log strings": "Ets3Plugin warns \"ETS3 custom report entries of device '{0}' contains empty label at index {1}\" and PluginWrapper logs \"'{0}' of {1} failed: {2}\" before resetting the installation state; XmlConflictReportGenerator writes the SplitAndMergeReport document with its MasterProject/SplitProject nodes."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 40,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14566,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11372
+  },
+  "Errors": 0
+}
