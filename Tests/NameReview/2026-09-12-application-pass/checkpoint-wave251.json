@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 251 accepted (6.3): Knx.Ets.ObjectModel.Operations.RfMulti",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v251.xml",
+      "Sha256": "A94820D1863CC48202D242113B20EDBB780E1B9F063CFEF4C88CB00E3FEE90FC",
+      "PreviousMap": "names63-staged-v250.xml",
+      "PreviousMapSha256": "FF6BCF1B492FF83D467C1A413142D15A7C1D07E638592BF786B317484E3F60F3",
+      "FrozenSha256": "A94820D1863CC48202D242113B20EDBB780E1B9F063CFEF4C88CB00E3FEE90FC",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave251.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. RfMulti is the RF fast-ack-slot layer: the allocator creates and binds the RfFastAckSlot, the move handler indexes the slots per group address and compares RF capabilities (DeviceExtensions.CompareRfRxCapabilities plus the RF segment checks), the validators answer capability/domain/segment questions, and the two flag handlers collect the group addresses of the connectors that have to be re-flagged.",
+    "api names": "The bodies call the RF-aware APIs directly (RfFastAckSlots, RfDeviceMode, IsReadySlowResender, AckSlotFragmentationPreventer, SetSlowResenderOperation), which fixes the vocabulary of the names."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 25,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14376,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11182
+  },
+  "Errors": 0
+}
