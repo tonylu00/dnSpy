@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 262 accepted (6.3): UserFile, Functions and Archive",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v262.xml",
+      "Sha256": "C9C12191CF318AA14E20D2F2E7B110C70DC26ACC4187753A35DD32CBDCF9652D",
+      "PreviousMap": "names63-staged-v261.xml",
+      "PreviousMapSha256": "AE4D79639515F65B98A186A3FE487C26FB408C2A5D7402D8A584E03C8185CDE1",
+      "FrozenSha256": "C9C12191CF318AA14E20D2F2E7B110C70DC26ACC4187753A35DD32CBDCF9652D",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave262.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. Three namespaces in one wave: Operations.UserFile (the create step of AddUserFileOperation, the DCA id text and the export/import/delete helpers of ExportDcaAsUserFile), Operations.Functions (the two halves of AddFunctionOperation, its progress reporter, CopyFunctionOperation's merge and MoveFunctionOperation's move) and Archive (the <Flatten>d__10 iterator, the root folder info construction and the recursive parent-folder walk of ArchiveProjectInfoProvider).",
+    "themes": "The compiler-generated state machine name <Flatten>d__10 confirms ArchiveEnumerator's iterator. The five Operations.Devices predicates (0x06004F8F..93) stay unresolved: all five bodies are one call to ResetParameterValuesToDefaultOperation::method_3 and all five are referenced only from SpecializedExecute, which uses them in five reset loops that differ only in the module-instance filter (SubModuleId null or not) and in whether the parameter collection is the module's or the device's, so no evidence separates the predicates themselves."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 15,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14641,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11447
+  },
+  "Errors": 0
+}
