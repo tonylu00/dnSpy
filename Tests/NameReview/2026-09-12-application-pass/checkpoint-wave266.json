@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 266 accepted (6.3): DevKit dongle converters and Falcon readable-type accessors",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v266.xml",
+      "Sha256": "4C5C17CBAAFCA131E92759F4FE636766823399CFBA1D2768040DB7ABA54FE066",
+      "PreviousMap": "names63-staged-v265.xml",
+      "PreviousMapSha256": "216A05CEDD6714A45255E6AB9D1A57B92DA63B231268C6C67E60466FA82BF79D",
+      "FrozenSha256": "4C5C17CBAAFCA131E92759F4FE636766823399CFBA1D2768040DB7ABA54FE066",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave266.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. First big-three wave: two DevKit dongle converters (the static helpers that turn the dongle data holder into Knx.DevKit.SecureDongle.HardwareType and ModuleType through the vendor entry points) and ten Falcon accessors whose return types are readable Falcon types (SecureKey, IFalconLogger x3, IoTOperationStatus, IBusConnector, FeatureType, IpProtocol, KnxIpStackFailureCause, SerialNumber).",
+    "themes": "The SDK whitelist blocked the first DevKit candidates: akg::m()/l() and akr::e()/akt::i()/alv::e() return SDK signature types, so the whitelist preserves them (sdk-public-method) and the tool refused the wave until they were dropped; that is the compatibility boundary doing its job, and those rows belong to the intentionally-protected category rather than to the namable backlog. sdkprotected63.py and protection-split.py were added to plan around it: Knx.DevKit.dll has 672 of 1177 free rows protected, Knx.Falcon.dll 476 of 4001 and Knx.Ets.HawkNET.dll 1073 of 2600."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 12,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14719,
+    "VisibleRenamed": 4966,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11525
+  },
+  "Errors": 0
+}
