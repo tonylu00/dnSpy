@@ -1,0 +1,460 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.IpFrameFactory",
+   "Token": "0x06001042",
+   "Signature": "Knx.Falcon.KnxnetIp.ServiceCode Knx.Falcon.KnxnetIp.IpFrameFactory::smethod_0(System.Object)",
+   "OriginalName": "smethod_0",
+   "Reason": "Returns Undefined if fewer than six bytes, header length below six or protocol version other than 0x10; otherwise reads the big-endian service code at offset two. Does not validate total frame length.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ReadServiceCode",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.MessageFrameReceiver",
+   "Token": "0x06001057",
+   "Signature": "System.Void Knx.Falcon.KnxnetIp.MessageFrameReceiver::method_0(Knx.Falcon.KnxnetIp.Frames.KnxIpFrame)",
+   "OriginalName": "method_0",
+   "Reason": "Invokes the frame delegate when present and catches/logs subscriber exceptions.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.KnxIpFrame knxIpFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "exception"
+    }
+   ],
+   "NewName": "OnFrameReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+   "Token": "0x06003573",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0::method_1(System.Net.NetworkInformation.UnicastIPAddressInformation)",
+   "OriginalName": "method_1",
+   "Reason": "Tests whether the unicast address equals the configured local address.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Net.NetworkInformation.UnicastIPAddressInformation a"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "a",
+     "HasMetadata": true,
+     "NewName": "address"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesLocalAddress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+   "Token": "0x06003572",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0::method_0(System.Net.NetworkInformation.NetworkInterface)",
+   "OriginalName": "method_0",
+   "Reason": "Requires IPv4 support and any unicast address matching the captured local address; caches the address predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Net.NetworkInformation.NetworkInterface _"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "networkInterface"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "HasLocalIpv4Address",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003529",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_2(System.Object,Knx.Falcon.KnxnetIp.ReceivedIpFrameEventArgs)",
+   "OriginalName": "method_2",
+   "Reason": "Forwards normal multicast frames, excluding system broadcasts when a dedicated receiver exists. When discovery visibility is enabled, answers non-extended search requests with local interface/device data; uses a fixed fallback MAC if no interface matches. Route-back requests use the source endpoint. The UDP SendAsync result is not awaited and the client is disposed immediately.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object sender",
+    "2: Knx.Falcon.KnxnetIp.ReceivedIpFrameEventArgs e"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Core.SearchRequestFrame",
+     "NewName": "searchRequest"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+     "NewName": "interfaceMatcher"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Net.NetworkInformation.NetworkInterface",
+     "NewName": "networkInterface"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Net.NetworkInformation.PhysicalAddress",
+     "NewName": "physicalAddress"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Net.IPEndPoint",
+     "NewName": "responseEndpoint"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Net.Sockets.UdpClient",
+     "NewName": "udpClient"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int32",
+     "NewName": "localPort"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Core.SearchResponseFrame",
+     "NewName": "searchResponse"
+    }
+   ],
+   "NewName": "OnMulticastReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600352A",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_3(System.Object,Knx.Falcon.KnxnetIp.ReceivedIpFrameEventArgs)",
+   "OriginalName": "method_3",
+   "Reason": "Forwards only routing system-broadcast frames to the dedicated receiver.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object sender",
+    "2: Knx.Falcon.KnxnetIp.ReceivedIpFrameEventArgs e"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "OnSystemBroadcastReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003544",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_5()",
+   "OriginalName": "method_5",
+   "Reason": "Copies the configured KNX address into the connector field.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "LoadIndividualAddress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003528",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_1(System.Threading.CancellationToken)",
+   "OriginalName": "method_1",
+   "Reason": "Creates frame receivers, wires multicast callbacks and the shared dispatcher, and assigns the routing decryption key. Checks cancellation once before optional secure timer scheduling/synchronization; those waits do not receive the token. Translates aggregate/socket failures and publishes IP interface features afterward.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<InternalOpenAsync>d__56",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "InternalOpenAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003524",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_0()",
+   "OriginalName": "method_0",
+   "Reason": "Tests whether the routing key exists, controlling secure framing and confirmation status.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "HasRoutingSecurityKey",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600353C",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_4(Knx.Falcon.KnxMessages.KnxMessage,System.Byte[])",
+   "OriginalName": "method_4",
+   "Reason": "Invokes the current receive handler using Memory over the original raw array without copying.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxMessage knxMessage_0",
+    "2: System.Byte[] byte_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "OnKnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600353F",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::mdVhvXaSqYe(System.String)",
+   "OriginalName": "mdVhvXaSqYe",
+   "Reason": "Invokes the current property-change delegate when present.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_0",
+     "HasMetadata": true,
+     "NewName": "propertyName"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "OnPropertyChanged",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+   "Token": "0x020006CC",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+   "OriginalName": "<>c__DisplayClass57_0",
+   "Reason": "Captured local-address predicate used to obtain the discovery-response MAC address.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "DiscoveryInterfaceMatcher",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Fields": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+   "Token": "0x040024D6",
+   "Signature": "System.Net.IPAddress Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0::ipaddress_0",
+   "OriginalName": "ipaddress_0",
+   "Reason": "Captured matcher state from the actual receive callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "localAddress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+   "Token": "0x040024D7",
+   "Signature": "System.Func`2<System.Net.NetworkInformation.UnicastIPAddressInformation,System.Boolean> Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0::func_0",
+   "OriginalName": "func_0",
+   "Reason": "Captured matcher state from the actual receive callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "matchesLocalAddress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ]
+}

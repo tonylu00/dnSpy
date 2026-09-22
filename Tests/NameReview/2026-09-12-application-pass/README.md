@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave189.json`. Current staged maps are **6.3 v189** and **6.4 v24**.
+`checkpoint-wave191.json`. Current staged maps are **6.3 v191** and **6.4 v25**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 189/24, not by newest filename.
+Resume with 191/25, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -32,6 +32,15 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- Communication factory and multicast socket adapters → complete receive/close/send
+  contracts → routing open/receive/discovery callbacks (`routing_open.py`). HPAI
+  control endpoints and device/search block serialization connect to discovery
+  constructors and typed iterators. Captured fields, parameters and actual locals
+  explain these operations, including eight async carriers. Both versions retain
+  their observed unawaited discovery sends and reconfiguration anomalies for the
+  deferred behavior comparison. The accepted reviews are 6.3 wave191 and 6.4
+  v25-rev3; the endpoint-label candidate was withdrawn before commit. Map/reference
+  checks pass with SDK protection and previous scoped names intact.
 - IP CCM transforms and frame authentication → secure group timer transitions,
   scheduling and timestamp acceptance → routing wrap/receive/dispatch
   (`routing_timer.py`). Security-control bits and network/domain message payloads

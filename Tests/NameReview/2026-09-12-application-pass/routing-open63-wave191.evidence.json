@@ -1,0 +1,6697 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v189.xml",
+ "BaseMapSha256": "B030F3A3A2AE7685B5C2A22857454A4CA6F1C2AF8FFA80CA9722058034DDE355",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x060006F8",
+   "ProposedName": "ReadServiceCode",
+   "Reason": "Returns Undefined if fewer than six bytes, header length below six or protocol version other than 0x10; otherwise reads the big-endian service code at offset two. Does not validate total frame length.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006F8",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 177,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060006F8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600070B",
+   "ProposedName": "OnFrameReceived",
+   "Reason": "Invokes the frame delegate when present and catches/logs subscriber exceptions.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600070B",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 107,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class754_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "exception"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600070B",
+    "Slots": {
+     "0": "exception"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060006F7",
+   "ProposedName": "CreateTypedFrameObject",
+   "Reason": "Chooses a typed frame constructor by service code, supplies the key to secure wrapper/timer frames, and assigns the source endpoint. Unknown services or the existing frame-construction exception fallback produce an unknown frame; other exceptions retain propagation.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006F7",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 13,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    },
+    {
+     "Id": "m0088:0x060006F8",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 177,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ipendPoint_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "decryptionKey"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.ServiceCode",
+     "NewName": "serviceCode"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class754",
+     "NewName": "frame"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Exception0",
+     "NewName": "exception"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060006F7",
+    "Slots": {
+     "0": "serviceCode",
+     "1": "frame",
+     "2": "exception"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x0600072D",
+   "ProposedName": "",
+   "Reason": "Retains the received frame in immutable event storage.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600072D",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 8,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class754_1",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600072D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600072E",
+   "ProposedName": "get_Frame",
+   "Reason": "Returns the received frame.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600072E",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 14,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600072E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000704",
+   "ProposedName": "add_FrameReceived",
+   "Reason": "Combines/removes a frame handler using the existing CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000704",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 12,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000704",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000705",
+   "ProposedName": "remove_FrameReceived",
+   "Reason": "Combines/removes a frame handler using the existing CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000705",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 28,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000705",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D57",
+   "ProposedName": "add_UnhandledFrame",
+   "Reason": "Combines/removes a frame handler using the existing CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D57",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 646,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D57",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D58",
+   "ProposedName": "remove_UnhandledFrame",
+   "Reason": "Combines/removes a frame handler using the existing CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D58",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 662,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Action`1<Class754>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D58",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000706",
+   "ProposedName": "",
+   "Reason": "Stores the supplied receiver name.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000706",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 44,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "name"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000706",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000708",
+   "ProposedName": "get_PreFrameReceived",
+   "Reason": "Returns the optional frame transform/filter delegate.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000708",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 84,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000708",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000709",
+   "ProposedName": "set_PreFrameReceived",
+   "Reason": "Stores the optional frame transform/filter delegate; a null transform result suppresses delivery.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000709",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 92,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000707",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 50,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000709",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600070A",
+   "ProposedName": "SetDecryptionKey",
+   "Reason": "Stores the key used when reparsing received frame bytes.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600070A",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 100,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_1",
+     "HasMetadata": true,
+     "NewName": "key"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600070A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000707",
+   "ProposedName": "CommunicationEventsOnReceived",
+   "Reason": "Obtains the frame, reparses it with the configured key when present, invokes the optional transform/filter, then logs and raises non-null results. Processing exceptions are caught and logged.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000707",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 50,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x060006F7",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 13,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    },
+    {
+     "Id": "m0088:0x0600070B",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 107,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class754",
+     "NewName": "frame"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Exception",
+     "NewName": "exception"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000707",
+    "Slots": {
+     "0": "frame",
+     "1": "exception"
+    }
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001053",
+     "Path": "Knx.Falcon.2/KnxnetIp/MessageFrameReceiver.cs",
+     "Line": 55,
+     "Sha256": "B4C3BD290D7AE68237192FB1CC76F44F5D17747E397D6718ED692C80E4BF93C3"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x02000158",
+   "ProposedName": "Knx.Falcon.KnxnetIp.IpFrameFactory",
+   "Reason": "Role established by actual frame parsing and receive delivery.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000158",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 8,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    },
+    {
+     "Id": "m0088:0x060006F7",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 13,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    },
+    {
+     "Id": "m0088:0x060006F8",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 177,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0200015A",
+   "ProposedName": "Knx.Falcon.KnxnetIp.MessageFrameReceiver",
+   "Reason": "Role established by actual frame parsing and receive delivery.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200015A",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 8,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000706",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 44,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000707",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 50,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000161",
+   "ProposedName": "Knx.Falcon.KnxnetIp.ReceivedIpFrameEventArgs",
+   "Reason": "Role established by actual frame parsing and receive delivery.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000161",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 4,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    },
+    {
+     "Id": "m0088:0x0600072D",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 8,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    },
+    {
+     "Id": "m0088:0x0600072E",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 14,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400098D",
+   "ProposedName": "logger",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400098D",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 196,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    },
+    {
+     "Id": "m0088:0x060006F7",
+     "Path": "Knx.Falcon/Class714.cs",
+     "Line": 13,
+     "Sha256": "4236666784B2FF34DA315ABA44E327D13CECCB7E33A5590239C52E262B7D9C15"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400098F",
+   "ProposedName": "logger",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400098F",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 124,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000707",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 50,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000990",
+   "ProposedName": "name",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000990",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 127,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000706",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 44,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000991",
+   "ProposedName": "decryptionKey",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000991",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 130,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x0600070A",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 100,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000707",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 50,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000992",
+   "ProposedName": "frameReceived",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000992",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 133,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000704",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 12,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x0600070B",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 107,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000993",
+   "ProposedName": "preFrameReceived",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000993",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 137,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000708",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 84,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    },
+    {
+     "Id": "m0088:0x06000709",
+     "Path": "Knx.Falcon/Class715.cs",
+     "Line": 92,
+     "Sha256": "5D39FFE065DB512B125A757018C5744219D6F1863ACFD1C63D034887429E6DCE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009BA",
+   "ProposedName": "frame",
+   "Reason": "Storage traced through the reviewed constructors and consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009BA",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 21,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    },
+    {
+     "Id": "m0088:0x0600072D",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 8,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    },
+    {
+     "Id": "m0088:0x0600072E",
+     "Path": "Knx.Falcon/EventArgs4.cs",
+     "Line": 14,
+     "Sha256": "1A2CFF730205A13DF91451F4F0C16DD65DD3129D238A3D445CC5C12D70A015BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x060008AE",
+   "ProposedName": "",
+   "Reason": "Stores host protocol and endpoint.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008AE",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 10,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "hostProtocol_1",
+     "HasMetadata": true,
+     "NewName": "hostProtocol"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ipendPoint_1",
+     "HasMetadata": true,
+     "NewName": "endpoint"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008AE",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008AF",
+   "ProposedName": "",
+   "Reason": "Constructs an endpoint from address/port and delegates to the other constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008AF",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 17,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "hostProtocol_1",
+     "HasMetadata": true,
+     "NewName": "hostProtocol"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ipaddress_0",
+     "HasMetadata": true,
+     "NewName": "address"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "port"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008AF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008B1",
+   "ProposedName": "get_HostProtocol",
+   "Reason": "Returns the retained transport protocol.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008B1",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 38,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008B1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008B2",
+   "ProposedName": "get_IPEndPoint",
+   "Reason": "Returns the retained endpoint.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008B2",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 45,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008B2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008B3",
+   "ProposedName": "get_IPAddress",
+   "Reason": "Returns the endpoint address, or Any when no endpoint exists.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008B3",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 52,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008B3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008B4",
+   "ProposedName": "get_Port",
+   "Reason": "Returns the endpoint port, or zero when no endpoint exists.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008B4",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 63,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008B4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008B5",
+   "ProposedName": "get_IsRouteBack",
+   "Reason": "True for a null endpoint or Any address with port zero.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008B5",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 70,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008B5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060008B0",
+   "ProposedName": "Create",
+   "Reason": "For an eight-byte structure, reads protocol, four address bytes and a 16-bit port. Other declared lengths retain the null-address constructor path and its existing failure behavior.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008B0",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 23,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "offset"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.HostProtocol",
+     "NewName": "hostProtocol"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Net.IPAddress",
+     "NewName": "address"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.UInt16",
+     "NewName": "port"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008B0",
+    "Slots": {
+     "0": "hostProtocol",
+     "1": "address",
+     "2": "port"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060008BA",
+   "ProposedName": "ToArray",
+   "Reason": "Writes an eight-byte HPAI with length, protocol, address bytes and big-endian port.",
+   "Source": [
+    {
+     "Id": "m0088:0x060008BA",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 113,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "buffer"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060008BA",
+    "Slots": {
+     "0": "buffer"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x020001A9",
+   "ProposedName": "Knx.Falcon.KnxnetIp.Frames.Hpai",
+   "Reason": "Host protocol address information used for discovery control endpoints.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001A9",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 6,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008AE",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 10,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008B5",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 70,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x06001D38",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 93,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BA3",
+   "ProposedName": "hostProtocol",
+   "Reason": "HPAI immutable storage.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BA3",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 126,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008AE",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 10,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008B1",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 38,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008B2",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 45,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BA4",
+   "ProposedName": "endpoint",
+   "Reason": "HPAI immutable storage.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BA4",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 129,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008AE",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 10,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008B1",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 38,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    },
+    {
+     "Id": "m0088:0x060008B2",
+     "Path": "Knx.Falcon/Struct761.cs",
+     "Line": 45,
+     "Sha256": "B7706CB4DA084A1F9BF0F2F1A110B89E9024C2FF1EE5689B8A80DF8AC0287243"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0600091B",
+   "ProposedName": "",
+   "Reason": "Retains a device-information block buffer and offset.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600091B",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 10,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "offset"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x0600091B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600091C",
+   "ProposedName": "",
+   "Reason": "Allocates a block and stores its length and device-information type.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600091C",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 17,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "structureLength"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "deviceInformationType_0",
+     "HasMetadata": true,
+     "NewName": "descriptionType"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x0600091C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600091F",
+   "ProposedName": "Create",
+   "Reason": "Zero length terminates enumeration with null. Otherwise dispatches by device-information code, with an unknown-block wrapper for unrecognized codes.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600091F",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 47,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "offset"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.DeviceInformation.DeviceInformationType",
+     "NewName": "descriptionType"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x0600091F",
+    "Slots": {
+     "0": "descriptionType"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000920",
+   "ProposedName": "AsSpan",
+   "Reason": "Returns a mutable span over the retained device-information block; no copy is made.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000920",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 83,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x06000920",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000974",
+   "ProposedName": "",
+   "Reason": "Retains a search-request parameter buffer and offset.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000974",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 9,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "offset"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x06000974",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000975",
+   "ProposedName": "",
+   "Reason": "Allocates a search-request parameter and stores its length and raw type byte.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000975",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 16,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "structureLength"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_2",
+     "HasMetadata": true,
+     "NewName": "parameterType"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x06000975",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000976",
+   "ProposedName": "",
+   "Reason": "Encodes the mandatory flag in bit seven of the search-request parameter type.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000976",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 24,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "structureLength"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "searchRequestParameterCode_0",
+     "HasMetadata": true,
+     "NewName": "parameterType"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "bool_0",
+     "HasMetadata": true,
+     "NewName": "mandatory"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x06000976",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000977",
+   "ProposedName": "Create",
+   "Reason": "Masks off the mandatory bit and dispatches search-request parameter codes 1..4, preserving unknown codes in the base wrapper.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000977",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 30,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "offset"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x06000977",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600097B",
+   "ProposedName": "AsSpan",
+   "Reason": "Returns a mutable span over the retained search-request parameter; no copy is made.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600097B",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 82,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-block-inspection.json",
+    "Sha256": "FDFB20AD6D0A8B3107A7ADE8FC9B14A6DFE63A23261453D835005FDA6828AE10",
+    "Token": "0x0600097B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x020001BC",
+   "ProposedName": "Knx.Falcon.KnxnetIp.DeviceInformation.DIB",
+   "Reason": "Base device-information block with typed decoding, length and buffer view.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001BC",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 6,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    },
+    {
+     "Id": "m0088:0x0600091B",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 10,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    },
+    {
+     "Id": "m0088:0x0600091F",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 47,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    },
+    {
+     "Id": "m0088:0x06000920",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 83,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BC7",
+   "ProposedName": "offset",
+   "Reason": "Serialized block backing storage.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BC7",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 125,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    },
+    {
+     "Id": "m0088:0x0600091B",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 10,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BF6",
+   "ProposedName": "offset",
+   "Reason": "Serialized block backing storage.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BF6",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 121,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    },
+    {
+     "Id": "m0088:0x06000974",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 9,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0600098A",
+   "ProposedName": "GetStructureLength",
+   "Reason": "Selects the serialized block length for total frame allocation. Replaces the exact constructor-lambda alias with its behavior.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600098A",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 79,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class807_0",
+     "HasMetadata": true,
+     "NewName": "parameter"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Falcon.dll",
+    "Kind": "Method",
+    "Token": "0x0600098A",
+    "ExpectedName": "<.ctor>b__1_0",
+    "NewName": "GetStructureLength",
+    "Reason": "Selects the serialized block length for total frame allocation. Replaces the exact constructor-lambda alias with its behavior."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600098A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060009A2",
+   "ProposedName": "GetStructureLength",
+   "Reason": "Selects the serialized block length for total frame allocation. Replaces the exact constructor-lambda alias with its behavior.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009A2",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 117,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class798_0",
+     "HasMetadata": true,
+     "NewName": "information"
+    }
+   ],
+   "Locals": [],
+   "Replacement": {
+    "Module": "Knx.Falcon.dll",
+    "Kind": "Method",
+    "Token": "0x060009A2",
+    "ExpectedName": "<.ctor>b__1_0",
+    "NewName": "GetStructureLength",
+    "Reason": "Selects the serialized block length for total frame allocation. Replaces the exact constructor-lambda alias with its behavior."
+   },
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060009A2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600098B",
+   "ProposedName": "FormatSearchParameter",
+   "Reason": "Calls the block ToString for formatted discovery-frame output.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600098B",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 86,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class807_0",
+     "HasMetadata": true,
+     "NewName": "parameter"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600098B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060009A3",
+   "ProposedName": "FormatDeviceInformation",
+   "Reason": "Calls the block ToString for formatted discovery-frame output.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009A3",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 124,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class798_0",
+     "HasMetadata": true,
+     "NewName": "information"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060009A3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000982",
+   "ProposedName": "",
+   "Reason": "Wraps raw search request bytes through the base frame.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000982",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 14,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawFrame"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000982",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000994",
+   "ProposedName": "",
+   "Reason": "Wraps raw search response bytes through the base frame.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000994",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 15,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawFrame"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000994",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000983",
+   "ProposedName": "",
+   "Reason": "Selects normal/extended search service, allocates HPAI plus summed block lengths, and serializes each block after the control endpoint.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000983",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 20,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098A",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 79,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600097B",
+     "Path": "Knx.Falcon/Class807.cs",
+     "Line": 82,
+     "Sha256": "139DCA5E59120076ABF2E52611B34A5F01674114ED0F779FAD7C0EE3534C8DE1"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "struct761_0",
+     "HasMetadata": true,
+     "NewName": "controlEndpoint"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "isExtended"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "class807_0",
+     "HasMetadata": true,
+     "NewName": "parameters"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "writeOffset"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class807[]",
+     "NewName": "blocks"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "blockIndex"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class807",
+     "NewName": "block"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000983",
+    "Slots": {
+     "0": "writeOffset",
+     "1": "blocks",
+     "2": "blockIndex",
+     "3": "block"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000995",
+   "ProposedName": "",
+   "Reason": "Selects normal/extended search service, allocates HPAI plus summed block lengths, and serializes each block after the control endpoint.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000995",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 21,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A2",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 117,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000920",
+     "Path": "Knx.Falcon/Class798.cs",
+     "Line": 83,
+     "Sha256": "368E25B461B590855F93E2CFFC6B2C4826713A29153662807B0D133A0DDFD145"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "struct761_0",
+     "HasMetadata": true,
+     "NewName": "controlEndpoint"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "isExtended"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "class798_0",
+     "HasMetadata": true,
+     "NewName": "information"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "writeOffset"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class798[]",
+     "NewName": "blocks"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "blockIndex"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class798",
+     "NewName": "block"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000995",
+    "Slots": {
+     "0": "writeOffset",
+     "1": "blocks",
+     "2": "blockIndex",
+     "3": "block"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000984",
+   "ProposedName": "get_IsExtended",
+   "Reason": "Tests the extended search-request service code.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000984",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 33,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000984",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000985",
+   "ProposedName": "get_ControlEndPoint",
+   "Reason": "Decodes HPAI at the request body start.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000985",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 40,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000985",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000996",
+   "ProposedName": "get_IsExtended",
+   "Reason": "Tests the extended search-response service code.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000996",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 34,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000996",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000997",
+   "ProposedName": "get_ControlEndpoint",
+   "Reason": "Decodes HPAI at the response body start.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000997",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 41,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000997",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000999",
+   "ProposedName": "get_DeviceInformation",
+   "Reason": "Selects the first DeviceInfoDIB, or null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000999",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 55,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000999",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600099A",
+   "ProposedName": "get_ServiceFamilies",
+   "Reason": "Selects the first SupportedServiceFamiliesDIB, or null.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600099A",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 62,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600099A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600099B",
+   "ProposedName": "get_SecuredServiceFamiliesData",
+   "Reason": "Selects the first SecuredServiceFamiliesDIB, or null.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600099B",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 69,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600099B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600099C",
+   "ProposedName": "get_TunnelingInfoData",
+   "Reason": "Selects the first TunnelingInfoDIB, or null.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600099C",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 76,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600099C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000998",
+   "ProposedName": "GetInformation",
+   "Reason": "Returns the first enumerated device-information block assignable to T, or default.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000998",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 48,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000998",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000986",
+   "ProposedName": "get_SearchParameters",
+   "Reason": "Enumerates request blocks after the eight-byte HPAI, advancing by each parsed block length. Preserves malformed-input behavior and does not add a zero-length progress guard.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000986",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 47,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06000986",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600098C",
+   "ProposedName": "",
+   "Reason": "Initializes the iterator state; the request iterator also records the creating thread.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_3",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600098C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060009A4",
+   "ProposedName": "",
+   "Reason": "Initializes the iterator state; the request iterator also records the creating thread.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x060009A4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x020001D0",
+   "ProposedName": "Knx.Falcon.KnxnetIp.Frames.Core.SearchRequestFrame",
+   "Reason": "Role established by discovery construction, decoding and enumeration.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001D0",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 10,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000983",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 20,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000984",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 33,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000986",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 47,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020001D3",
+   "ProposedName": "Knx.Falcon.KnxnetIp.Frames.Core.SearchResponseFrame",
+   "Reason": "Role established by discovery construction, decoding and enumeration.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001D3",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 11,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000995",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 21,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000996",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 34,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000998",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 48,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020001D1",
+   "ProposedName": "SearchParameterSelectors",
+   "Reason": "Role established by discovery construction, decoding and enumeration.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001D1",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 73,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098A",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 79,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098B",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 86,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020001D4",
+   "ProposedName": "DeviceInformationSelectors",
+   "Reason": "Role established by discovery construction, decoding and enumeration.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001D4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 111,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A2",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 117,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A3",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 124,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020001D2",
+   "ProposedName": "SearchParametersEnumerator",
+   "Reason": "Role established by discovery construction, decoding and enumeration.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001D2",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 108,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020001D5",
+   "ProposedName": "DeviceInformationEnumerator",
+   "Reason": "Role established by discovery construction, decoding and enumeration.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001D5",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 146,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A6",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 164,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BFC",
+   "ProposedName": "Instance",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BFC",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 93,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000983",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 20,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000987",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 57,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BFD",
+   "ProposedName": "getStructureLength",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BFD",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 96,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000983",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 20,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000987",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 57,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000BFE",
+   "ProposedName": "formatSearchParameter",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000BFE",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 99,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000983",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 20,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000987",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 57,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C00",
+   "ProposedName": "state",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C00",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 215,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000992",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 190,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C01",
+   "ProposedName": "current",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C01",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 218,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000992",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 190,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C02",
+   "ProposedName": "initialThreadId",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C02",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 221,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000992",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 190,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C03",
+   "ProposedName": "request",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C03",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 224,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000992",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 190,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C04",
+   "ProposedName": "offset",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C04",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 227,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000992",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 190,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C05",
+   "ProposedName": "currentParameter",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C05",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 230,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098C",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 113,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x0600098E",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 127,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    },
+    {
+     "Id": "m0088:0x06000992",
+     "Path": "Knx.Falcon/Class785.cs",
+     "Line": 190,
+     "Sha256": "E03476D2843B2D6FD32CB6BF9B2FBEA4E73B47FCE9796D17536D8E06C3B98E58"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C08",
+   "ProposedName": "Instance",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C08",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 131,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000995",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 21,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x0600099F",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 99,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C09",
+   "ProposedName": "getStructureLength",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C09",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 134,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000995",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 21,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x0600099F",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 99,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C0A",
+   "ProposedName": "formatDeviceInformation",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C0A",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 137,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x06000995",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 21,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x0600099F",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 99,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C0C",
+   "ProposedName": "state",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C0C",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 231,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A6",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 164,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C0D",
+   "ProposedName": "current",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C0D",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 234,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A6",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 164,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C0E",
+   "ProposedName": "response",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C0E",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 237,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A6",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 164,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C0F",
+   "ProposedName": "offset",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C0F",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 240,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A6",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 164,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000C10",
+   "ProposedName": "currentInformation",
+   "Reason": "Used selector/iterator storage traced through the complete body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000C10",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 243,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A4",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 151,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    },
+    {
+     "Id": "m0088:0x060009A6",
+     "Path": "Knx.Falcon/Class786.cs",
+     "Line": 164,
+     "Sha256": "85C48A43F52460CE7C7430F97103428FFAAFC432D2AD46279F498C9AA2BBBF8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001D7A",
+   "ProposedName": "MatchesLocalAddress",
+   "Reason": "Tests whether the unicast address equals the configured local address.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D7A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1438,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "unicastIPAddressInformation_0",
+     "HasMetadata": true,
+     "NewName": "address"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D7A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D79",
+   "ProposedName": "HasLocalIpv4Address",
+   "Reason": "Requires IPv4 support and any unicast address matching the captured local address; caches the address predicate.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D79",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1431,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "networkInterface_0",
+     "HasMetadata": true,
+     "NewName": "networkInterface"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D79",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0200053F",
+   "ProposedName": "DiscoveryInterfaceMatcher",
+   "Reason": "Captured local-address predicate used to obtain the discovery-response MAC address.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200053F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1426,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D38",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 93,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D79",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1431,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1438,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A9F",
+   "ProposedName": "localAddress",
+   "Reason": "Captured matcher state from the actual receive callback.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A9F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1445,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D79",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1431,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1438,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA0",
+   "ProposedName": "matchesLocalAddress",
+   "Reason": "Captured matcher state from the actual receive callback.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA0",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1448,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D79",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1431,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1438,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001D38",
+   "ProposedName": "OnMulticastReceived",
+   "Reason": "Forwards normal multicast frames, excluding system broadcasts when a dedicated receiver exists. When discovery visibility is enabled, answers non-extended search requests with local interface/device data; uses a fixed fallback MAC if no interface matches. Route-back requests use the source endpoint. The UDP SendAsync result is not awaited and the client is disposed immediately.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D38",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 93,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class785",
+     "NewName": "searchRequest"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class1336/c",
+     "NewName": "interfaceMatcher"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "localPort"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Net.NetworkInformation.NetworkInterface",
+     "NewName": "networkInterface"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Net.NetworkInformation.PhysicalAddress",
+     "NewName": "physicalAddress"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Class786",
+     "NewName": "searchResponse"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Net.Sockets.UdpClient",
+     "NewName": "udpClient"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Net.IPEndPoint",
+     "NewName": "responseEndpoint"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D38",
+    "Slots": {
+     "0": "searchRequest",
+     "1": "interfaceMatcher",
+     "2": "localPort",
+     "3": "networkInterface",
+     "4": "physicalAddress",
+     "5": "searchResponse",
+     "6": "udpClient",
+     "7": "responseEndpoint"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D39",
+   "ProposedName": "OnSystemBroadcastReceived",
+   "Reason": "Forwards only routing system-broadcast frames to the dedicated receiver.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D39",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 143,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D39",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D53",
+   "ProposedName": "LoadIndividualAddress",
+   "Reason": "Copies the configured KNX address into the connector field.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D53",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 448,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D53",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D37",
+   "ProposedName": "InternalOpenAsync",
+   "Reason": "Creates frame receivers, wires multicast callbacks and the shared dispatcher, and assigns the routing decryption key. Checks cancellation once before optional secure timer scheduling/synchronization; those waits do not receive the token. Translates aggregate/socket failures and publishes IP interface features afterward.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1336/e",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D37",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x0600068C",
+   "ProposedName": "CreateUnicastClientAsync",
+   "Reason": "Cloud configuration selects WebSocket regardless of protocol; otherwise Auto/Udp selects UDP and Tcp awaits TCP. Unsupported protocol values throw.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipendPoint_0",
+     "HasMetadata": true,
+     "NewName": "controlEndpoint"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ipProtocol_0",
+     "HasMetadata": true,
+     "NewName": "protocol"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "class814_0",
+     "HasMetadata": true,
+     "NewName": "cloudInterface"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class707/b",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600068C",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06000FB7",
+     "Path": "Knx.Falcon.2/KnxnetIp/CommunicationFactory.cs",
+     "Line": 20,
+     "Sha256": "8DE54FD4CDEEF76881DFEC24E0F38665F08F74C5B83158E55D6A188FD7BE5495"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x0600068D",
+   "ProposedName": "CreateMulticastClientAsync",
+   "Reason": "Awaits multicast communication startup with the supplied endpoints, TTL and diagnostic sink, returning its interface.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipendPoint_0",
+     "HasMetadata": true,
+     "NewName": "localEndpoint"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ipendPoint_1",
+     "HasMetadata": true,
+     "NewName": "multicastEndpoint"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "multicastTtl"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class707/a",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x0600068D",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x02000144",
+   "ProposedName": "Knx.Falcon.KnxnetIp.CommunicationFactory",
+   "Reason": "Selects and creates multicast, UDP, TCP and cloud transports.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000144",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 11,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000157",
+   "ProposedName": "Knx.Falcon.KnxnetIp.IMulticastCommunication",
+   "Reason": "Multicast receive/close/send and endpoint/TTL contract.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000157",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 7,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    },
+    {
+     "Id": "m0088:0x060006EE",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 11,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    },
+    {
+     "Id": "m0088:0x060006F2",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 31,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0600070F",
+   "ProposedName": "BeginSendTo",
+   "Reason": "Starts a socket send when the socket exists, otherwise returns null. Keeps the original null behavior for the TaskFactory adapter.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600070F",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 97,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "count"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ipendPoint_1",
+     "HasMetadata": true,
+     "NewName": "endpoint"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "asyncCallback_0",
+     "HasMetadata": true,
+     "NewName": "callback"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x0600070F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000710",
+   "ProposedName": "EndSendTo",
+   "Reason": "Completes the socket send and returns the byte count.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000710",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 109,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iasyncResult_0",
+     "HasMetadata": true,
+     "NewName": "asyncResult"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x06000710",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600070D",
+   "ProposedName": "",
+   "Reason": "Creates/reuses/binds an IPv4 UDP socket, enables loopback, joins the group, sets TTL and begins receive. DontRoute is applied outside Unix. AddressNotAvailable is translated to an argument error; other bind/join failures propagate.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600070D",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 22,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipendPoint_1",
+     "HasMetadata": true,
+     "NewName": "localEndpoint"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ipendPoint_2",
+     "HasMetadata": true,
+     "NewName": "multicastEndpoint"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "multicastTtl"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Net.EndPoint",
+     "NewName": "receiveEndpoint"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Net.Sockets.SocketException",
+     "NewName": "bindException"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.String",
+     "NewName": "bindError"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Net.Sockets.MulticastOption",
+     "NewName": "membership"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Net.Sockets.SocketException",
+     "NewName": "joinException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x0600070D",
+    "Slots": {
+     "0": "receiveEndpoint",
+     "1": "bindException",
+     "2": "bindError",
+     "3": "membership",
+     "4": "joinException"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060006EE",
+   "ProposedName": "add_Received",
+   "Reason": "Complete multicast contract reviewed with its concrete implementation.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006EE",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 11,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x060006EE",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000712",
+   "ProposedName": "add_Received",
+   "Reason": "Combines/removes the handler using a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000712",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 130,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<EventArgs4>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<EventArgs4>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<EventArgs4>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x06000712",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060006EF",
+   "ProposedName": "remove_Received",
+   "Reason": "Complete multicast contract reviewed with its concrete implementation.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006EF",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 16,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x060006EF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000713",
+   "ProposedName": "remove_Received",
+   "Reason": "Combines/removes the handler using a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000713",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 146,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<EventArgs4>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<EventArgs4>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<EventArgs4>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x06000713",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060006F0",
+   "ProposedName": "add_Closed",
+   "Reason": "Complete multicast contract reviewed with its concrete implementation.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006F0",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 21,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x060006F0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000714",
+   "ProposedName": "add_Closed",
+   "Reason": "Combines/removes the handler using a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000714",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 162,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x06000714",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060006F1",
+   "ProposedName": "remove_Closed",
+   "Reason": "Complete multicast contract reviewed with its concrete implementation.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006F1",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 26,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x060006F1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000715",
+   "ProposedName": "remove_Closed",
+   "Reason": "Combines/removes the handler using a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000715",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 178,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x06000715",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060006F2",
+   "ProposedName": "SendAsync",
+   "Reason": "Complete multicast contract reviewed with its concrete implementation.",
+   "Source": [
+    {
+     "Id": "m0088:0x060006F2",
+     "Path": "Knx.Falcon/Interface31.cs",
+     "Line": 31,
+     "Sha256": "900BAA24E9FADC6FDEBB29226105C1F31EFA5EBA1C7E6C44CA1AA7C6C1171FAA"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class754_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x060006F2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000711",
+   "ProposedName": "SendAsync",
+   "Reason": "Sends raw frame bytes through the Begin/End adapter with diagnostics; requires the returned byte count to equal the buffer length, otherwise throws SocketException 10065. No cancellation argument.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class754_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class716/d",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-transport-inspection.json",
+    "Sha256": "5768232A7F6526A8BB8A610AE6A92F6F66694E8539785D8BF8C5A3F5F9DB5B71",
+    "Token": "0x06000711",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D43",
+   "ProposedName": "get_VisibleToSearchRequests",
+   "Reason": "Returns whether the multicast receive callback answers discovery requests.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D43",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 255,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D43",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D44",
+   "ProposedName": "set_VisibleToSearchRequests",
+   "Reason": "Stores whether discovery requests are answered.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D44",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 263,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D44",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D51",
+   "ProposedName": "get_State",
+   "Reason": "Returns the underlying KNX/IP connection state.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D51",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 434,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D51",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D3A",
+   "ProposedName": "",
+   "Reason": "Stores transports, mode and parameters; generates a serial; configures the secure timer when requested and initializes connection/address metadata. Preserves construction order, including passing the not-yet-assigned statistics field to the timer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipRoutingConnectorParameters_1",
+     "HasMetadata": true,
+     "NewName": "connectorParameters"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "interface31_2",
+     "HasMetadata": true,
+     "NewName": "multicastCommunication"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "interface31_3",
+     "HasMetadata": true,
+     "NewName": "systemBroadcastCommunication"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "connectorMode_1",
+     "HasMetadata": true,
+     "NewName": "mode"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D3A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D36",
+   "ProposedName": "OpenAsync",
+   "Reason": "Constructs the connector from existing transports, checks cancellation, logs and awaits internal initialization. Transport cleanup belongs to the outer overload.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipRoutingConnectorParameters_1",
+     "HasMetadata": true,
+     "NewName": "connectorParameters"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "connectorMode_1",
+     "HasMetadata": true,
+     "NewName": "mode"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "interface31_2",
+     "HasMetadata": true,
+     "NewName": "multicastCommunication"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface31_3",
+     "HasMetadata": true,
+     "NewName": "systemBroadcastCommunication"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1336/Struct925",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D36",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D35",
+   "ProposedName": "OpenAsync",
+   "Reason": "Creates the normal multicast transport and an optional system-setup transport when address or port differs. The inner-open failure path disposes the created transports and rethrows. Transport creation itself precedes that cleanup region.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipRoutingConnectorParameters_1",
+     "HasMetadata": true,
+     "NewName": "connectorParameters"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "connectorMode_1",
+     "HasMetadata": true,
+     "NewName": "mode"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1336/Struct924",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D35",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001D3E",
+   "ProposedName": "ReconfigureAsync",
+   "Reason": "Disposes current resources, creates transports using local port zero, and invokes initialization with CancellationToken.None. The observed IL does not assign those new transports to the connector before initialization; this anomaly is recorded, not repaired. Only success updates parameters; caught initialization failures dispose the newly created transports.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ipRoutingConnectorParameters_1",
+     "HasMetadata": true,
+     "NewName": "connectorParameters"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1336/Struct926",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open63-wave190-inspection.json",
+    "Sha256": "E52AFFC3B10DC044F08B7937F1C601AD324E2995A5BD508BB236BF0364D7F621",
+    "Token": "0x06001D3E",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x04001A51",
+   "ProposedName": "logger",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A51",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1054,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D38",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 93,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A52",
+   "ProposedName": "connectorParameters",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A52",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1079,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D53",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 448,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A53",
+   "ProposedName": "connectionState",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A53",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1082,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D51",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 434,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A54",
+   "ProposedName": "multicastCommunication",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A54",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1085,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A55",
+   "ProposedName": "connectorFeatures",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A55",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1057,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D45",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 272,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A56",
+   "ProposedName": "interfaceFeatures",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A56",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1088,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D46",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 283,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A57",
+   "ProposedName": "interfaceConfiguration",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A57",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1091,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D47",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 294,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A58",
+   "ProposedName": "diagEventSink",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A58",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1094,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A59",
+   "ProposedName": "mode",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A59",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1097,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A5A",
+   "ProposedName": "systemBroadcastCommunication",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A5A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1100,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A5B",
+   "ProposedName": "frameReceiver",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A5B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1103,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D38",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 93,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A5C",
+   "ProposedName": "systemBroadcastReceiver",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A5C",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1106,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D39",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 143,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A5D",
+   "ProposedName": "sendSyncRoot",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A5D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1109,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D56",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 592,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D87",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2261,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A5F",
+   "ProposedName": "individualAddress",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A5F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1119,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D53",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 448,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A62",
+   "ProposedName": "serialNumber",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A62",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1128,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A65",
+   "ProposedName": "statisticsDefinition",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A65",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1060,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 153,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A85",
+   "ProposedName": "visibleToSearchRequests",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A85",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1228,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D43",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 255,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D44",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 263,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001A87",
+   "ProposedName": "propertyChanged",
+   "Reason": "Connector storage traced through construction, callbacks and lifecycle bodies.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A87",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1236,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D4E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 398,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000145",
+   "ProposedName": "CreateMulticastClientAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000145",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 168,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400091D",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400091D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 218,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400091E",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400091E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 221,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400091F",
+   "ProposedName": "localEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400091F",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 224,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000920",
+   "ProposedName": "multicastEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000920",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 227,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000921",
+   "ProposedName": "multicastTtl",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000921",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 230,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000922",
+   "ProposedName": "diagEventSink",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000922",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 233,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000923",
+   "ProposedName": "awaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000923",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 236,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 33,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068E",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 174,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000146",
+   "ProposedName": "CreateUnicastClientAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000146",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 49,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000925",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000925",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 135,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000926",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000926",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 138,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000927",
+   "ProposedName": "cloudInterface",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000927",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 141,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000928",
+   "ProposedName": "diagEventSink",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000928",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 144,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000929",
+   "ProposedName": "cancellationToken",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000929",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 147,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400092A",
+   "ProposedName": "protocol",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400092A",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 150,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400092B",
+   "ProposedName": "controlEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400092B",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 153,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400092C",
+   "ProposedName": "cloudAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400092C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 156,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400092D",
+   "ProposedName": "tcpAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400092D",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 159,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x0600068C",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 16,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    },
+    {
+     "Id": "m0088:0x06000690",
+     "Path": "Knx.Falcon/Class707.cs",
+     "Line": 55,
+     "Sha256": "7BE1A0CCD8B8120ECC882616E6988F732C30124EF164DE910BA5DD0C6F20EE97"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0200015F",
+   "ProposedName": "SendAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200015F",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 704,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009AA",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009AA",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 766,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009AB",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009AB",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 769,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009AC",
+   "ProposedName": "communication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009AC",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 772,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009AD",
+   "ProposedName": "frame",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009AD",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 775,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009AE",
+   "ProposedName": "buffer",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009AE",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 778,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040009AF",
+   "ProposedName": "awaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x040009AF",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 781,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000711",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 116,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    },
+    {
+     "Id": "m0088:0x06000729",
+     "Path": "Knx.Falcon/Class716.cs",
+     "Line": 710,
+     "Sha256": "1E6B2F7D879897A255241E9BE3F1DF248DB024288A58CAEC2A87021F18A7B886"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000540",
+   "ProposedName": "DisposeAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000540",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1897,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 181,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA2",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA2",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1992,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 181,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA3",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA3",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1995,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 181,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA4",
+   "ProposedName": "connector",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA4",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1998,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 181,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA5",
+   "ProposedName": "awaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA5",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2001,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 181,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7B",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1903,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000541",
+   "ProposedName": "InternalOpenAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000541",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1781,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA7",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA7",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1876,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA8",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA8",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1879,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AA9",
+   "ProposedName": "connector",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AA9",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1882,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AAA",
+   "ProposedName": "cancellationToken",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AAA",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1885,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AAB",
+   "ProposedName": "awaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AAB",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1888,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D37",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 79,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7D",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1787,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000542",
+   "ProposedName": "OpenMulticastTransportsAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000542",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1457,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AAD",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AAD",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1641,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AAE",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AAE",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1644,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AAF",
+   "ProposedName": "connectorParameters",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AAF",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1647,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB0",
+   "ProposedName": "diagEventSink",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB0",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1650,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB1",
+   "ProposedName": "mode",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB1",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1653,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB2",
+   "ProposedName": "cancellationToken",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB2",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1656,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB3",
+   "ProposedName": "localEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB3",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1659,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB4",
+   "ProposedName": "multicastEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB4",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1662,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB5",
+   "ProposedName": "multicastCommunication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB5",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1665,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB6",
+   "ProposedName": "systemBroadcastCommunication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB6",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1668,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB7",
+   "ProposedName": "transportAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB7",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1671,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB8",
+   "ProposedName": "pendingException",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB8",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1674,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AB9",
+   "ProposedName": "openAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AB9",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1677,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ABA",
+   "ProposedName": "disposeAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ABA",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1680,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D35",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 45,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D7F",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1463,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000543",
+   "ProposedName": "OpenExistingTransportsAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000543",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1689,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ABC",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ABC",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1745,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ABD",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ABD",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1748,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ABE",
+   "ProposedName": "connectorParameters",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ABE",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1751,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ABF",
+   "ProposedName": "multicastCommunication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ABF",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1754,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC0",
+   "ProposedName": "systemBroadcastCommunication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC0",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1757,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC1",
+   "ProposedName": "mode",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC1",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1760,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC2",
+   "ProposedName": "diagEventSink",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC2",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1763,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC3",
+   "ProposedName": "cancellationToken",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC3",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1766,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC4",
+   "ProposedName": "connector",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC4",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1769,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC5",
+   "ProposedName": "awaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC5",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1772,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D36",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 61,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D81",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1695,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000544",
+   "ProposedName": "ReconfigureAsyncState",
+   "Reason": "Async operation carrier; explicit runtime method names remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000544",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2010,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC7",
+   "ProposedName": "state",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC7",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2210,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC8",
+   "ProposedName": "builder",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC8",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2213,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AC9",
+   "ProposedName": "connector",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AC9",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2216,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ACA",
+   "ProposedName": "connectorParameters",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ACA",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2219,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ACB",
+   "ProposedName": "localEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ACB",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2222,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ACC",
+   "ProposedName": "multicastEndpoint",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ACC",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2225,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ACD",
+   "ProposedName": "multicastCommunication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ACD",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2228,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ACE",
+   "ProposedName": "systemBroadcastCommunication",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ACE",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2231,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001ACF",
+   "ProposedName": "disposeAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001ACF",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2234,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AD0",
+   "ProposedName": "transportAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AD0",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2237,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AD1",
+   "ProposedName": "pendingException",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AD1",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2240,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AD2",
+   "ProposedName": "cleanupRequired",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AD2",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2243,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001AD3",
+   "ProposedName": "openAwaiter",
+   "Reason": "Used async storage traced through wrapper and complete MoveNext body.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001AD3",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2246,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D3E",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 209,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D83",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 2016,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

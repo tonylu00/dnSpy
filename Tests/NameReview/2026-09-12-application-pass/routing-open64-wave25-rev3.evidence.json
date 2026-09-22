@@ -1,0 +1,483 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v24.xml",
+ "BaseMapSha256": "5ECE7865144E9713487C220D71AF0413308F8D05B19913890BEF4A2F70567B74",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06001042",
+   "ProposedName": "ReadServiceCode",
+   "Reason": "Returns Undefined if fewer than six bytes, header length below six or protocol version other than 0x10; otherwise reads the big-endian service code at offset two. Does not validate total frame length.",
+   "Source": [
+    {
+     "Id": "m0153:0x06001042",
+     "Path": "Knx.Falcon.2/KnxnetIp/IpFrameFactory.cs",
+     "Line": 184,
+     "Sha256": "1BF7BEE1D1E2DAE73E3A9E8A62F34F755E9982B891CD616B8C4C8FE3DA2886DC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-transport-inspection.json",
+    "Sha256": "D3E0683BCC3F364F41530FD6E3FC92439403D76848386C7111EE42A828055C6D",
+    "Token": "0x06001042",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06001057",
+   "ProposedName": "OnFrameReceived",
+   "Reason": "Invokes the frame delegate when present and catches/logs subscriber exceptions.",
+   "Source": [
+    {
+     "Id": "m0153:0x06001057",
+     "Path": "Knx.Falcon.2/KnxnetIp/MessageFrameReceiver.cs",
+     "Line": 103,
+     "Sha256": "B4C3BD290D7AE68237192FB1CC76F44F5D17747E397D6718ED692C80E4BF93C3"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "exception"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06001057",
+    "Slots": {
+     "0": "exception"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003573",
+   "ProposedName": "MatchesLocalAddress",
+   "Reason": "Tests whether the unicast address equals the configured local address.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003573",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1431,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "a",
+     "HasMetadata": true,
+     "NewName": "address"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06003573",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003572",
+   "ProposedName": "HasLocalIpv4Address",
+   "Reason": "Requires IPv4 support and any unicast address matching the captured local address; caches the address predicate.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003572",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1424,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "networkInterface"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06003572",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x020006CC",
+   "ProposedName": "DiscoveryInterfaceMatcher",
+   "Reason": "Captured local-address predicate used to obtain the discovery-response MAC address.",
+   "Source": [
+    {
+     "Id": "m0153:0x020006CC",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1419,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003529",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 139,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003572",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1424,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003573",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1431,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040024D6",
+   "ProposedName": "localAddress",
+   "Reason": "Captured matcher state from the actual receive callback.",
+   "Source": [
+    {
+     "Id": "m0153:0x040024D6",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1452,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003572",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1424,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003573",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1431,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040024D7",
+   "ProposedName": "matchesLocalAddress",
+   "Reason": "Captured matcher state from the actual receive callback.",
+   "Source": [
+    {
+     "Id": "m0153:0x040024D7",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1455,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003572",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1424,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003573",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1431,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003529",
+   "ProposedName": "OnMulticastReceived",
+   "Reason": "Forwards normal multicast frames, excluding system broadcasts when a dedicated receiver exists. When discovery visibility is enabled, answers non-extended search requests with local interface/device data; uses a fixed fallback MAC if no interface matches. Route-back requests use the source endpoint. The UDP SendAsync result is not awaited and the client is disposed immediately.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003529",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 139,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Core.SearchRequestFrame",
+     "NewName": "searchRequest"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<>c__DisplayClass57_0",
+     "NewName": "interfaceMatcher"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Net.NetworkInformation.NetworkInterface",
+     "NewName": "networkInterface"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Net.NetworkInformation.PhysicalAddress",
+     "NewName": "physicalAddress"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Net.IPEndPoint",
+     "NewName": "responseEndpoint"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Net.Sockets.UdpClient",
+     "NewName": "udpClient"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int32",
+     "NewName": "localPort"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Core.SearchResponseFrame",
+     "NewName": "searchResponse"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06003529",
+    "Slots": {
+     "0": "searchRequest",
+     "1": "interfaceMatcher",
+     "10": "localPort",
+     "3": "networkInterface",
+     "4": "physicalAddress",
+     "11": "searchResponse",
+     "9": "udpClient",
+     "7": "responseEndpoint"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600352A",
+   "ProposedName": "OnSystemBroadcastReceived",
+   "Reason": "Forwards only routing system-broadcast frames to the dedicated receiver.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600352A",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 184,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x0600352A",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003544",
+   "ProposedName": "LoadIndividualAddress",
+   "Reason": "Copies the configured KNX address into the connector field.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003544",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 547,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06003544",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003528",
+   "ProposedName": "InternalOpenAsync",
+   "Reason": "Creates frame receivers, wires multicast callbacks and the shared dispatcher, and assigns the routing decryption key. Checks cancellation once before optional secure timer scheduling/synchronization; those waits do not receive the token. Translates aggregate/socket failures and publishes IP interface features afterward.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003528",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 105,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/<InternalOpenAsync>d__56",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06003528",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003524",
+   "ProposedName": "HasRoutingSecurityKey",
+   "Reason": "Tests whether the routing key exists, controlling secure framing and confirmation status.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003524",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 35,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x06003524",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x0600353C",
+   "ProposedName": "OnKnxMessageReceived",
+   "Reason": "Invokes the current receive handler using Memory over the original raw array without copying.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600353C",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 407,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x0600353C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x0600353F",
+   "ProposedName": "OnPropertyChanged",
+   "Reason": "Invokes the current property-change delegate when present.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600353F",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 454,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_0",
+     "HasMetadata": true,
+     "NewName": "propertyName"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-open64-wave190-inspection.json",
+    "Sha256": "05BF97CA3C6540CB63451DA1C914E6A3A307EAA353F440B1A2812D44574CC594",
+    "Token": "0x0600353F",
+    "Slots": {}
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}
