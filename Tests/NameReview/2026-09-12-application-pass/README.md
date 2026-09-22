@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave178.json`. Current staged maps are **6.3 v178** and **6.4 v15**.
+`checkpoint-wave179.json`. Current staged maps are **6.3 v179** and **6.4 v16**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -20,6 +20,11 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- USB local-interface timeout, EMI1 verification delay, PEI/mode initialization,
+  captured BCU settings, restoration and reset (`usb_shutdown.py`). The volatile
+  address is persisted before restoration; reset runs in finally for an open
+  EMI1 interface. Reviewed 6.3 async carrier types/fields and wrapper locals
+  connect these helpers; canonical 6.4 async metadata remains intact.
 - USB catalog selection/parsing, vendor/product lookup and culture fallback
   (`usb_catalog.py`) connect discovery to interface metadata. The volatile
   configuration branch continues through the HID-path saved-address store

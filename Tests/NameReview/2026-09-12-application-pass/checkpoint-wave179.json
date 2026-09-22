@@ -1,0 +1,89 @@
+{
+  "Format": 1,
+  "PreviousGoalTurn": "progress",
+  "Status": "Application-wide mapping in progress",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v179.xml",
+      "Sha256": "47A6820DB51A0AD445699BBA336780871DB8181805863019D444F10FCD07AAA1",
+      "AppliedToSource": false
+    },
+    "64": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v16.xml",
+      "Sha256": "8D3733B16874D7703A86A0C8E90A52372A56484AD48229FC5B0C04AAD160259B",
+      "AppliedToSource": false
+    }
+  },
+  "Updates": [
+    {
+      "Path": "map-update63-wave-179.json",
+      "Sha256": "852FEE9EE1E8273CBEB2E3DA0A0098FF8788A554A47571BF0014E279E8F650B2"
+    },
+    {
+      "Path": "map-update64-wave-16.json",
+      "Sha256": "2A4172988F21032021F6DD56A88190AB2F104A191A8A5F7BDD62C4115D8CCDC7"
+    }
+  ],
+  "Artifacts": {
+    "usb-shutdown63-wave179.review.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-shutdown63-wave179.review.json",
+      "Sha256": "5D046AF0563971207CB53AFE132A9D3361B79F47E1577A909737881CAD0116F2"
+    },
+    "usb-shutdown63-wave179.evidence.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-shutdown63-wave179.evidence.json",
+      "Sha256": "3D7B5ED54DDC86C376DF5154D48C70858357E3C3F36A3CDA4641371A7334F455"
+    },
+    "usb-shutdown63-wave179-inspection.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-shutdown63-wave179-inspection.json",
+      "Sha256": "F34CBD22AC52EF38A9E45B4973D2BE50BF6207465F5F2AF1E9A5E8E898C04384"
+    },
+    "usb-shutdown64-wave16.review.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-shutdown64-wave16.review.json",
+      "Sha256": "30F800EB5FD57ABFF5D864846C6AAEAF9DDC9D349E753C5B3247B7B50309DD6F"
+    },
+    "usb-shutdown64-wave16.evidence.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-shutdown64-wave16.evidence.json",
+      "Sha256": "1A993BDDC429D69EC4A43991A2BB2EDA582F2D9CD0BBAFDC40A017EFE8AC1E24"
+    },
+    "usb-shutdown64-wave179-inspection.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\usb-shutdown64-wave179-inspection.json",
+      "Sha256": "857CD70229044759E12ED794F509E9D710074AF8662A3EA0EF8DE97F1DE27252"
+    },
+    "map-update63-wave-179.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-update63-wave-179.json",
+      "Sha256": "852FEE9EE1E8273CBEB2E3DA0A0098FF8788A554A47571BF0014E279E8F650B2"
+    },
+    "map-update64-wave-16.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-update64-wave-16.json",
+      "Sha256": "2A4172988F21032021F6DD56A88190AB2F104A191A8A5F7BDD62C4115D8CCDC7"
+    }
+  },
+  "AppliedToSource": false,
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsFullAudits": 0,
+  "EtsLaunches": 0,
+  "EtsBinaryApplies": 0,
+  "PriorMapDecisionsPreserved": true,
+  "NewCollisionSuffixes": 0,
+  "ReviewedChains": [
+    "Local-interface timeout and EMI1 write verification delay lead into PEI/mode initialization, captured BCU settings, restoration and EMI1/cEMI reset helpers in both versions.",
+    "The EMI1 initializer optionally saves settings before changing them. UninitializeLocalDeviceAsync persists the volatile individual address, restores captured settings, then resets an open EMI1 interface in finally; the HID transport is not closed by that helper.",
+    "The actual 6.4 bodies and their canonical async carrier names corroborate the semantic method names. Independently reviewed 6.3 MoveNext bodies establish the matching behavior, six carrier types and their captured state/builder/owner/local interface/awaiter/exception fields.",
+    "Verified wrapper local slots carry the stateMachine alias. Unsupported explicit MoveNext local maps, 6.4 canonical carrier metadata, unused obfuscator fields and uncertain register semantics remain unchanged."
+  ],
+  "Remaining": [
+    "Application-wide naming is incomplete. Continue into USB connector feature/configuration reading, cache matchers and the remaining coupled components.",
+    "The memory-278 write helper (6.3 0x06001CB4 / MoveNext 0x06001D26; 6.4 0x0600342D) was inspected but its register-specific role is not yet independently established. Keep that semantic name and the three saved register fields unresolved until reviewed evidence supports them.",
+    "Explicit state-machine local-only contracts and hidden lambda source anchors remain unsupported by current review helpers. Improve dnSpy/de4dotEx when needed; never replace ETS source through scripts.",
+    "Review 51 inherited requested/applied suffix changes; this checkpoint adds none. Refresh historical SDK audits/frozen maps against final staged maps before consolidated application, source export/build and runtime verification."
+  ],
+  "Reviews": {
+    "reviewed63.json": {
+      "Sha256": "E25BCBFB44C234219B3CED1A31B0296D2652199B996680AB0EE0A3CB5F1B7E06"
+    },
+    "behavior-reviewed64.json": {
+      "Sha256": "9856BEE25ACFEFA73E5FCA78C1B1FEBAFB6BBD0B739CC74C66B62341A06A6996"
+    }
+  }
+}

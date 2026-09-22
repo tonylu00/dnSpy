@@ -18,18 +18,19 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   compatibility resolution followed in de4dotEx `1b062ac0`.
 - Native-import review committed as `11a17e96a`. The catalog and saved-address
   continuation uses shared constructor scope validation from de4dotEx `73bcaf9f`.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v178.xml`,
-  SHA256 `8E3DE321D18328E5933216DBD1F452531A31D468CF9503F3EAE20A0EADA60F7D`.
-- Current 6.4 map: `names64-staged-v15.xml`, SHA256
-  `AAEF6CE679C1295B5A81424230F6C95EC0F5CC21D5BD09A1A274B85B1A7CB470`.
+- Catalog/address review and the dnSpy constructor-scope parser fix committed
+  as `be2014c8d`; the next continuation names EMI1 initialization and shutdown.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v179.xml`,
+  SHA256 `47A6820DB51A0AD445699BBA336780871DB8181805863019D444F10FCD07AAA1`.
+- Current 6.4 map: `names64-staged-v16.xml`, SHA256
+  `8D3733B16874D7703A86A0C8E90A52372A56484AD48229FC5B0C04AAD160259B`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
   parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-177.json`, `map-update63-wave-178.json`,
-  `map-update64-wave-14.json` and `map-update64-wave-15.json`;
+  reports are `map-update63-wave-179.json` and `map-update64-wave-16.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave178.json` records artifact hashes, validation and limits.
+  `checkpoint-wave179.json` records artifact hashes, validation and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -156,6 +157,20 @@ NativeImportAliasRegression pass too. Fresh checks of maps 178/15 pass without
 edits or errors. `constructor-wave178-validation.json` binds this tooling
 evidence; it does not claim a consolidated ETS source export or runtime test.
 
+`usb_shutdown.py` extends the same chain through local-interface timeout,
+EMI1 write/verification delay, PEI/mode initialization, saved BCU settings,
+restoration and reset. `InitializeLocalDeviceEmi1Async` optionally saves settings
+before changing them. `UninitializeLocalDeviceAsync` persists the volatile
+individual address and restores saved EMI1 settings, then resets an open EMI1
+interface in finally. It does not close the HID transport. The reviewed 6.4
+bodies and existing canonical async carrier names corroborate the semantic
+names; 6.3 bodies were independently followed through their explicit MoveNext
+implementations. Six 6.3 carrier types and their state, builder, connector,
+owned local interface, awaiters and pending exception have named roles. The
+verified wrapper local slot is `stateMachine`; explicit MoveNext locals remain
+blocked. No canonical 6.4 carrier names were replaced. Both map updates passed,
+preserving earlier decisions without new suffixes.
+
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
@@ -165,14 +180,13 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 
 - Whole-application naming coverage is still incomplete. Alias totals and
   duplicate compatibility copies are not a measure of completed readability.
-- Catalog parsing/localization and volatile saved addresses are reviewed.
-  Continue into connector feature/configuration reading, cache matchers and
-  cleanup callers, then the remaining application components. Cleanup persists
-  the volatile address before EMI1 cleanup: 6.3 Class1329/Struct916.MoveNext
-  `0x06001D22`, 6.4 UsbBusConnector `0x06003422`. Review the inner cleanup calls
-  before naming the outer methods.
+- Catalog parsing/localization, volatile saved addresses and EMI1 initialization/
+  shutdown are reviewed. Continue into connector feature/configuration reading,
+  cache matchers and the remaining application components. Review the memory-278
+  write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
+  assigning register-specific semantics to it or the three saved register fields.
 - Native import proposals from wave175 are resolved. Continue from
-  `usb-address63-wave178.cumulative.json` and `usb-address64-wave15.cumulative.json`; do not
+  `usb-shutdown63-wave179.cumulative.json` and `usb-shutdown64-wave16.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

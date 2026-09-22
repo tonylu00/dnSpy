@@ -1,0 +1,38 @@
+{
+  "Checkpoint": "checkpoint-wave179.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v178.xml",
+      "Steps": [
+        {"Map": "names63-staged-v179.xml", "Review": "usb-shutdown63-wave179.review.json", "Report": "map-update63-wave-179.json", "References": "contract-references63-v2.json"}
+      ]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v15.xml",
+      "Steps": [
+        {"Map": "names64-staged-v16.xml", "Review": "usb-shutdown64-wave16.review.json", "Report": "map-update64-wave-16.json"}
+      ]
+    }
+  },
+  "Reviews": [
+    {"Input": "usb-shutdown63-wave179.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "usb-shutdown64-wave16.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "usb-shutdown63-wave179.review.json", "usb-shutdown63-wave179.evidence.json", "usb-shutdown63-wave179-inspection.json",
+    "usb-shutdown64-wave16.review.json", "usb-shutdown64-wave16.evidence.json", "usb-shutdown64-wave179-inspection.json",
+    "map-update63-wave-179.json", "map-update64-wave-16.json"
+  ],
+  "ReviewedChains": [
+    "Local-interface timeout and EMI1 write verification delay lead into PEI/mode initialization, captured BCU settings, restoration and EMI1/cEMI reset helpers in both versions.",
+    "The EMI1 initializer optionally saves settings before changing them. UninitializeLocalDeviceAsync persists the volatile individual address, restores captured settings, then resets an open EMI1 interface in finally; the HID transport is not closed by that helper.",
+    "The actual 6.4 bodies and their canonical async carrier names corroborate the semantic method names. Independently reviewed 6.3 MoveNext bodies establish the matching behavior, six carrier types and their captured state/builder/owner/local interface/awaiter/exception fields.",
+    "Verified wrapper local slots carry the stateMachine alias. Unsupported explicit MoveNext local maps, 6.4 canonical carrier metadata, unused obfuscator fields and uncertain register semantics remain unchanged."
+  ],
+  "Remaining": [
+    "Application-wide naming is incomplete. Continue into USB connector feature/configuration reading, cache matchers and the remaining coupled components.",
+    "The memory-278 write helper (6.3 0x06001CB4 / MoveNext 0x06001D26; 6.4 0x0600342D) was inspected but its register-specific role is not yet independently established. Keep that semantic name and the three saved register fields unresolved until reviewed evidence supports them.",
+    "Explicit state-machine local-only contracts and hidden lambda source anchors remain unsupported by current review helpers. Improve dnSpy/de4dotEx when needed; never replace ETS source through scripts.",
+    "Review 51 inherited requested/applied suffix changes; this checkpoint adds none. Refresh historical SDK audits/frozen maps against final staged maps before consolidated application, source export/build and runtime verification."
+  ]
+}
