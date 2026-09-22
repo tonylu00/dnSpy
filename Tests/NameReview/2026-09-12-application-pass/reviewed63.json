@@ -217691,9 +217691,10 @@
    "Token": "0x06000F1D",
    "Signature": "Class970 Class970::a(System.Byte[],System.Int32)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Parses the ID/length header at the offset, checks the advertised additional-info boundary and dispatches known layouts by ID and length; unsupported layouts become a generic info element and truncated headers return null. Existing physical-array exception behavior is retained.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Byte[] byte_1",
@@ -217704,40 +217705,30 @@
      "Sequence": 1,
      "OriginalName": "byte_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cemiData"
     },
     {
      "Sequence": 2,
      "OriginalName": "int_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "offset"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType",
-     "NewName": ""
+     "NewName": "infoType"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "dataLength"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Byte[]",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "data"
     }
    ],
    "NewName": "CreateFromcEmiData",
@@ -217753,9 +217744,10 @@
    "Token": "0x06000F26",
    "Signature": "System.Byte[] Class970::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Allocates ID/length header plus payload and copies the stored data into the new cEMI additional-info block.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [],
    "ParameterNames": [],
@@ -217763,12 +217755,7 @@
     {
      "Index": 0,
      "ExpectedType": "System.Byte[]",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "cemiData"
     }
    ],
    "NewName": "GetAscEmiData",
@@ -236640,9 +236627,10 @@
    "Token": "0x060009FE",
    "Signature": "Class816 Class816::a(Class970)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Replaces matching equal-length payload in place. Otherwise removes the old item, grows the buffer and prepends a serialized item before service data. Existing byte-length overflow behavior is retained.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: Class970 class970_0"
@@ -236652,29 +236640,19 @@
      "Sequence": 1,
      "OriginalName": "class970_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "additionalInfo"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "existingOffset"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Byte[]",
-     "NewName": ""
-    },
-    {
-     "Index": 2,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "serializedInfo"
     }
    ],
    "NewName": "AddOrUpdateAdditionalInfo",
@@ -236690,9 +236668,10 @@
    "Token": "0x060009FF",
    "Signature": "System.Void Class816::b(Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Finds the first item of the given ID, decreases the advertised length, shifts following bytes and shrinks the raw buffer; absent IDs do nothing.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType additionalInfoType_0"
@@ -236702,29 +236681,19 @@
      "Sequence": 1,
      "OriginalName": "additionalInfoType_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "infoType"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "offset"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Byte",
-     "NewName": ""
-    },
-    {
-     "Index": 2,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "serializedLength"
     }
    ],
    "NewName": "RemoveAdditionalInfo",
@@ -270278,9 +270247,10 @@
    "Token": "0x06000F5E",
    "Signature": "System.Byte Class976::c(System.Int32)",
    "OriginalName": "c",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Returns the first byte of the selected two-byte fast-ack slot, or zero beyond stored slots; rejects slot indexes outside 0..63.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Int32 int_2"
@@ -270290,21 +270260,10 @@
      "Sequence": 1,
      "OriginalName": "int_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "ackSlot"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "GetStatus",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -270318,9 +270277,10 @@
    "Token": "0x06000F5F",
    "Signature": "System.Byte Class976::b(System.Int32)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Returns the second byte of the selected fast-ack slot, or zero beyond stored slots; rejects indexes outside 0..63.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Int32 int_2"
@@ -270330,21 +270290,10 @@
      "Sequence": 1,
      "OriginalName": "int_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "ackSlot"
     }
    ],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "GetInfo",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -369475,6 +369424,1834 @@
    "NewName": "SetInterfaceConfigurationAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970",
+   "Token": "0x06000F25",
+   "Signature": "System.Void Class970::a(System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Resizes the stored data array through Array.Resize, retaining the common prefix and zero-initializing growth.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "newSize"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ResizeData",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/a",
+   "Token": "0x06000F2C",
+   "Signature": "System.Boolean Class970/a::b(Class970)",
+   "OriginalName": "b",
+   "Reason": "Compares the element Id with the captured requested identifier.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class970 class970_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class970_0",
+     "HasMetadata": true,
+     "NewName": "additionalInfo"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesAdditionalInfoId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970",
+   "Token": "0x06000F1E",
+   "Signature": "System.Collections.Generic.IEnumerable`1<Class970> Class970::a(System.Byte[])",
+   "OriginalName": "a",
+   "Reason": "Creates a lazy iterator from cEMI raw data. The reviewed iterator advances by header plus payload length, skips null parse results and stops when fewer than three bytes remain in the advertised section.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "GetAdditionalInfos",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970",
+   "Token": "0x06000F1F",
+   "Signature": "Class970 Class970::a(System.Byte[],Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType)",
+   "OriginalName": "a",
+   "Reason": "Returns the first parsed element whose Id matches the captured requested identifier, or null.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1",
+    "2: Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType additionalInfoType_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class970/a",
+     "NewName": "filter"
+    }
+   ],
+   "NewName": "GetAdditionalInfo",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970",
+   "Token": "0x06000F20",
+   "Signature": "T Class970::a<T>(System.Byte[])",
+   "OriginalName": "a",
+   "Reason": "Returns the first parsed element assignable to T through OfType and FirstOrDefault, or null.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "GetAdditionalInfo",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970",
+   "Token": "0x06000F21",
+   "Signature": "System.Void Class970::.ctor(System.Byte[])",
+   "OriginalName": ".ctor",
+   "Reason": "Stores the supplied data buffer after a null check; does not clone it.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970",
+   "Token": "0x06000F28",
+   "Signature": "System.Boolean Class970::a(Class970)",
+   "OriginalName": "a",
+   "Reason": "Typed equality accepts reference identity or matching ID and byte sequence; the existing object overload delegates here.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class970 class970_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class970_0",
+     "HasMetadata": true,
+     "NewName": "other"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "Equals",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x06000F2D",
+   "Signature": "System.Void Class970/b::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Initializes iterator state and captures the creating managed-thread ID.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_3",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x060009F9",
+   "Signature": "System.Void Class816::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Allocates the cEMI raw message buffer through the base constructor.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "size"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x060009FA",
+   "Signature": "System.Void Class816::.ctor(System.Byte[])",
+   "OriginalName": ".ctor",
+   "Reason": "Wraps raw data and checks the two-byte header, advertised section length and item lengths. Existing edge behavior of the item-length loop is retained.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte",
+     "NewName": "additionalInfoLength"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x060009FB",
+   "Signature": "System.Byte Class816::c()",
+   "OriginalName": "c",
+   "Reason": "Reads the cEMI additional-info byte count at raw-data index one.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_AdditionalInfoLength",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x060009FC",
+   "Signature": "System.Collections.Generic.IEnumerable`1<Class970> Class816::b()",
+   "OriginalName": "b",
+   "Reason": "Enumerates parsed additional-info elements from this raw cEMI buffer.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetAdditionalInformationElements",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x060009FD",
+   "Signature": "T Class816::a<T>()",
+   "OriginalName": "a",
+   "Reason": "Selects the first additional-info element assignable to generic type T.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetAdditionalInformation",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x06000A01",
+   "Signature": "System.Span`1<System.Byte> Class816::a()",
+   "OriginalName": "a",
+   "Reason": "Returns a writable span beginning after the two-byte cEMI header and advertised additional-info bytes.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_ServiceInformation",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F77",
+   "Signature": "Knx.Falcon.RfBandAndMode Class978::e()",
+   "OriginalName": "e",
+   "Reason": "Reads transmission band/mode from byte zero.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_Transmission",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F78",
+   "Signature": "System.Void Class978::b(Knx.Falcon.RfBandAndMode)",
+   "OriginalName": "b",
+   "Reason": "Writes transmission band/mode to byte zero.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.RfBandAndMode rfBandAndMode_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "rfBandAndMode_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "set_Transmission",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F79",
+   "Signature": "Knx.Falcon.KnxMessages.AdditionalInfo.FastCallChannel Class978::d()",
+   "OriginalName": "d",
+   "Reason": "Reads the high nibble of byte one.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_FastCallChannel",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F7A",
+   "Signature": "System.Void Class978::a(Knx.Falcon.KnxMessages.AdditionalInfo.FastCallChannel)",
+   "OriginalName": "a",
+   "Reason": "Preserves the low nibble while replacing the high nibble of byte one.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.AdditionalInfo.FastCallChannel fastCallChannel_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "fastCallChannel_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "set_FastCallChannel",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F7B",
+   "Signature": "Knx.Falcon.KnxMessages.AdditionalInfo.SlowCallChannel Class978::c()",
+   "OriginalName": "c",
+   "Reason": "Reads the low nibble of byte one.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_SlowCallChannel",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F7C",
+   "Signature": "System.Void Class978::a(Knx.Falcon.KnxMessages.AdditionalInfo.SlowCallChannel)",
+   "OriginalName": "a",
+   "Reason": "Preserves the high nibble while writing the low four channel bits.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.AdditionalInfo.SlowCallChannel slowCallChannel_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "slowCallChannel_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "set_SlowCallChannel",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F7D",
+   "Signature": "System.Byte Class978::b()",
+   "OriginalName": "b",
+   "Reason": "Reads the expected fast-ack slot count from byte two.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_ExpectedFastAcks",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F7E",
+   "Signature": "System.Void Class978::a(System.Byte)",
+   "OriginalName": "a",
+   "Reason": "Writes the expected fast-ack slot count to byte two.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "set_ExpectedFastAcks",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F7F",
+   "Signature": "Knx.Falcon.RfBandAndMode Class978::a()",
+   "OriginalName": "a",
+   "Reason": "Reads reception band/mode from byte three.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_Reception",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F80",
+   "Signature": "System.Void Class978::a(Knx.Falcon.RfBandAndMode)",
+   "OriginalName": "a",
+   "Reason": "Writes reception band/mode to byte three.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.RfBandAndMode rfBandAndMode_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "rfBandAndMode_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "set_Reception",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class976",
+   "Token": "0x06000F60",
+   "Signature": "System.Boolean Class976::a(System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Tests bit zero of the validated fast-ack status byte.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "IsAcked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x06000F8E",
+   "Signature": "System.Boolean Class980::a(System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Tests a short-ack bit for slots 0..63; valid slots beyond stored bytes return false.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "IsAcked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x06000F8F",
+   "Signature": "System.Void Class980::a(System.Int32,System.Boolean)",
+   "OriginalName": "a",
+   "Reason": "Sets/clears a validated short-ack slot. Setting grows the buffer; clearing indexes current storage before trimming and can fail if that byte is absent. Preserve this behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2",
+    "2: System.Boolean bool_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SetAcked",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x06000F90",
+   "Signature": "System.Int32 Class980::b()",
+   "OriginalName": "b",
+   "Reason": "Counts set bits in the short-ack buffer.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "ackCount"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "ackData"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "byteIndex"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Byte",
+     "NewName": "ackByte"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Byte",
+     "NewName": "bitMask"
+    }
+   ],
+   "NewName": "get_Count",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x06000F91",
+   "Signature": "System.Void Class980::a()",
+   "OriginalName": "a",
+   "Reason": "Drops trailing zero bytes while retaining at least one byte.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "trimmedLength"
+    }
+   ],
+   "NewName": "Trim",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class976",
+   "Token": "0x06000F5C",
+   "Signature": "System.Void Class976::.ctor(System.Byte[])",
+   "OriginalName": ".ctor",
+   "Reason": "Wraps 2..128 bytes of full fast-ack data. Rejects null and invalid size; retains the input buffer.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x06000F75",
+   "Signature": "System.Void Class978::.ctor(System.Byte[])",
+   "OriginalName": ".ctor",
+   "Reason": "Wraps exactly four RF Multi info bytes. Rejects null and invalid size; retains the input buffer.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x06000F8B",
+   "Signature": "System.Void Class980::.ctor(System.Byte[])",
+   "OriginalName": ".ctor",
+   "Reason": "Wraps 1..8 bytes of short-ack bits and trims trailing zeros. Rejects null and invalid size; retains the input buffer.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x06000F8C",
+   "Signature": "System.Void Class980::.ctor(System.Collections.BitArray)",
+   "OriginalName": ".ctor",
+   "Reason": "Allocates enough bytes for the supplied BitArray, sets true slots and trims trailing zero bytes; SetAcked enforces the slot bounds.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.BitArray bitArray_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bitArray_0",
+     "HasMetadata": true,
+     "NewName": "ackSlots"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "ackSlot"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1329",
+   "Token": "0x06001C90",
+   "Signature": "System.Void Class1329::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Connectors.IBusConnector",
+   "Token": "0x06001CCB",
+   "Signature": "System.Void Knx.Falcon.Connectors.IBusConnector::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Shared event subscription contract, reviewed together with all seven concrete implementations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x06001D49",
+   "Signature": "System.Void Class1336::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1342",
+   "Token": "0x06001DF2",
+   "Signature": "System.Void Class1342::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1343",
+   "Token": "0x06001E68",
+   "Signature": "System.Void Class1343::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1346",
+   "Token": "0x06001EA1",
+   "Signature": "System.Void Class1346::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1480",
+   "Token": "0x0600240B",
+   "Signature": "System.Void Class1480::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1505",
+   "Token": "0x060024DF",
+   "Signature": "System.Void Class1505::imethod_6(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_6",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "EED857189062F8AD3A4C5A4A3713EE53DDD04047FA0B922F901D8BF5AB83BBFA",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "add_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1329",
+   "Token": "0x06001C91",
+   "Signature": "System.Void Class1329::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Connectors.IBusConnector",
+   "Token": "0x06001CCC",
+   "Signature": "System.Void Knx.Falcon.Connectors.IBusConnector::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Shared event subscription contract, reviewed together with all seven concrete implementations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x06001D4A",
+   "Signature": "System.Void Class1336::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1342",
+   "Token": "0x06001DF3",
+   "Signature": "System.Void Class1342::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1343",
+   "Token": "0x06001E69",
+   "Signature": "System.Void Class1343::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1346",
+   "Token": "0x06001EA2",
+   "Signature": "System.Void Class1346::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1480",
+   "Token": "0x0600240C",
+   "Signature": "System.Void Class1480::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1505",
+   "Token": "0x060024E0",
+   "Signature": "System.Void Class1505::imethod_7(System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>)",
+   "OriginalName": "imethod_7",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "1BB6D29697281481ECEC57BEC9197971D52B9502B7344A0680233FE7DD26F9C2",
+   "Parameters": [
+    "1: System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> eventHandler_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "NewName": "remove_KnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class816",
+   "Token": "0x06000A00",
+   "Signature": "System.Int32 Class816::a(Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType)",
+   "OriginalName": "a",
+   "Reason": "Scans cEMI additional-info headers from offset two and returns the first requested ID offset, or -1. Advances by each stored payload length plus two.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType additionalInfoType_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    }
+   ],
+   "NewName": "FindAdditionalInfoOffset",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1329",
+   "Token": "0x06001C92",
+   "Signature": "System.Void Class1329::a(Class815,System.Byte[])",
+   "OriginalName": "a",
+   "Reason": "Logs the received message and, when supported and present, its RF Multi/ack info. Invokes the receive delegate with the parsed message and memory over the original raw byte array; does not copy the payload.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class815 class815_0",
+    "2: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class815_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class818",
+     "NewName": "busMessage"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class978",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Class980",
+     "NewName": "shortFastAckInfo"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class976",
+     "NewName": "fastAckInfo"
+    }
+   ],
+   "NewName": "OnKnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1329",
+   "Token": "0x06001C9F",
+   "Signature": "System.Void Class1329::a(Class818,Knx.Falcon.RfMode,System.Nullable`1<Knx.Falcon.RfMode>)",
+   "OriginalName": "a",
+   "Reason": "Adds/replaces RF Multi transmission/reception settings using the connector RF band. A non-Ready transmission to an individual destination expects one fast ack and adds short-ack slot zero; other cases expect zero. An absent reception mode uses Current.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_0",
+    "2: Knx.Falcon.RfMode rfMode_0",
+    "3: System.Nullable`1<Knx.Falcon.RfMode> nullable_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "rfMode_0",
+     "HasMetadata": true,
+     "NewName": "transmissionMode"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nullable_4",
+     "HasMetadata": true,
+     "NewName": "receptionMode"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "expectsFastAck"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "transmission"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "reception"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class978",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Class980",
+     "NewName": "shortFastAckInfo"
+    }
+   ],
+   "NewName": "AddRfMultiAdditionalInfo",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   }
  ],
  "Types": [
@@ -374745,10 +376522,16 @@
    "Token": "0x020001E4",
    "Signature": "Class816",
    "OriginalName": "Class816",
+   "Reason": "cEMI message base owning the additional-info section and service-information span; corroborated by actual 6.4 code.",
+   "NeedsReadableName": false,
    "MappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "Knx.Falcon.KnxMessages.KnxCemiMessage",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -376095,10 +377878,16 @@
    "Token": "0x02000284",
    "Signature": "Class970",
    "OriginalName": "Class970",
+   "Reason": "Common ID/data/serialization base for additional-info layouts, corroborated by the 6.4 counterpart and parser callers.",
+   "NeedsReadableName": false,
    "MappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoBase",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -381355,6 +383144,66 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "SetInterfaceConfigurationAsyncState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/a",
+   "Token": "0x02000285",
+   "Signature": "Class970/a",
+   "OriginalName": "a",
+   "Reason": "Captured requested ID consumed by the element-selection predicate.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "AdditionalInfoIdFilter",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x02000286",
+   "Signature": "Class970/b",
+   "OriginalName": "b",
+   "Reason": "Iterator over the advertised cEMI additional-info section; external iterator method contracts remain unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "AdditionalInfoEnumerator",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x02000291",
+   "Signature": "Class978",
+   "OriginalName": "Class978",
+   "Reason": "Four-byte RF Multi transmission, call channels, expected ack count and reception block, established by Id, ToString, byte layout and actual 6.4 counterpart.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.KnxMessages.AdditionalInfo.RfMultiInfo",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -403794,6 +405643,386 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "writeAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/a",
+   "Token": "0x04000D0C",
+   "Signature": "Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType Class970/a::a",
+   "OriginalName": "a",
+   "Reason": "Captured ID used by MatchesAdditionalInfoId.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "infoType",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x04000D0E",
+   "Signature": "System.Int32 Class970/b::a",
+   "OriginalName": "a",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x04000D0F",
+   "Signature": "Class970 Class970/b::b",
+   "OriginalName": "b",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "current",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x04000D10",
+   "Signature": "System.Int32 Class970/b::c",
+   "OriginalName": "c",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialThreadId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x04000D11",
+   "Signature": "System.Byte[] Class970/b::d",
+   "OriginalName": "d",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "cemiData",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x04000D12",
+   "Signature": "System.Byte[] Class970/b::e",
+   "OriginalName": "e",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "capturedCemiData",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class970/b",
+   "Token": "0x04000D13",
+   "Signature": "System.Int32 Class970/b::int_2",
+   "OriginalName": "int_2",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "offset",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class976",
+   "Token": "0x04000D1F",
+   "Signature": "System.Int32 Class976::a",
+   "OriginalName": "a",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "MinSize",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class976",
+   "Token": "0x04000D20",
+   "Signature": "System.Int32 Class976::b",
+   "OriginalName": "b",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "MaxSize",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class978",
+   "Token": "0x04000D2F",
+   "Signature": "System.Int32 Class978::a",
+   "OriginalName": "a",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "RequiredSize",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x04000D33",
+   "Signature": "System.Int32 Class980::a",
+   "OriginalName": "a",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "MinSize",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class980",
+   "Token": "0x04000D34",
+   "Signature": "System.Int32 Class980::b",
+   "OriginalName": "b",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "MaxSize",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1329",
+   "Token": "0x040018F9",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1329::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x04001A86",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1336::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1342",
+   "Token": "0x04001B39",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1342::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1343",
+   "Token": "0x04001BDF",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1343::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1346",
+   "Token": "0x04001C6C",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1346::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1480",
+   "Token": "0x04002283",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1480::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1505",
+   "Token": "0x0400231A",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Class1505::i",
+   "OriginalName": "i",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceived",
    "Unresolved": false,
    "UnresolvedReason": ""
   }

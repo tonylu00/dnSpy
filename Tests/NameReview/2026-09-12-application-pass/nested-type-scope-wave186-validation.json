@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "PreviousGoalTurn": "progress",
+  "Issue": "Existing nested aliases incorrectly required a unique name across a module in de4dotEx and across all source inputs in dnSpy. Repeated async helper names belong to separate physical enclosing types.",
+  "Fix": "Include physical module and declaring TypeDef in fixed type-alias uniqueness; retain existing same-owner and member collision checks.",
+  "SyntheticTests": {
+    "NameCandidatesReproduction": {
+      "Path": "D:\\knx_analysis\\namecandidates-nested-scope-repro.log",
+      "Sha256": "B3DA335923CAA311EF0D5DB2F14DD7B6B6192520C3CD5CF3921E7B142FDFDE2D",
+      "Result": "Expected failure reproduced"
+    },
+    "NameCandidatesFixedSuite": {
+      "Path": "D:\\knx_analysis\\namecandidates-nested-scope-fixed.log",
+      "Sha256": "96B474A7CD0D63187AE5A6EFC94516C03BEDD162F728AC846E730F14CACE8D96",
+      "Result": "Passed with exit code 0"
+    },
+    "DnSpyReproduction": {
+      "Path": "D:\\knx_analysis\\nested-scope-dnspy.log",
+      "Sha256": "1274B873A0C8A08D6CC4DA2ECE3294CF76BA997E19111A87B6B8073810909B66",
+      "Result": "Expected failure reproduced"
+    },
+    "DnSpyFixedFixture": {
+      "Path": "D:\\knx_analysis\\nested-scope-dnspy-fixed.log",
+      "Sha256": "E7DDADFB7EC3EF7491C6F9C635E285C59AB6F10E22E0CFFF1191F687E882AFD6",
+      "Result": "Passed with exit code 0"
+    }
+  },
+  "ToolSources": {
+    "D:/git/de4dotEx/tools/NameCandidates/ReviewMapUpdate.cs": "053BD5D7C271D0FAC4275C0B764A1F0B02C45CA3A71B1DFF45D01C65A6D57FD0",
+    "D:/git/de4dotEx/tests/NameCandidates/ScopedNameFixture.cs": "6A49391780CFAC6E6C26BEE61FFA54A1CE0610C303ADF86E7919F8F95EE35C06",
+    "D:/git/dnSpy/dnSpy/dnSpy.Decompiler/MSBuild/SourceNameMap.cs": "431E034583359F786C6340EAF6F9A750D4C816A29D41784CFD87498864ABF5C0",
+    "D:/git/dnSpy/Tests/SdkNameWhitelistRegression/Program.cs": "447C0A63767E737BD394FDBEC0495335F96BFBB2B27EA3B7638C1C4DA6D1F97F"
+  },
+  "RejectedMapReport": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\map-update63-wave-186.json",
+    "Sha256": "C02E625DB1B320656DA8DDC997E913BD6BE3D54D2258458D99FEEF49ADBD5750",
+    "PublishedMap": false
+  },
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsFullAudits": 0,
+  "EtsBinaryApplies": 0,
+  "EtsLaunches": 0
+}

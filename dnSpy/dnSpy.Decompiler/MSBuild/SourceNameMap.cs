@@ -122,13 +122,14 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (proposals.Any(p => !(p.Key is FieldDef))) {
 				var scope = new MemberNameScope(modules.Values, useHostResolver: true);
 				var claims = new MemberNameClaims(scope);
-				var fullAliases = new HashSet<string>(StringComparer.Ordinal);
+				var fullAliases = new HashSet<(ModuleDef Module, TypeDef? Owner, string Alias)>();
 				foreach (var proposal in proposals.Where(p => !(p.Key is FieldDef))) {
 					string? family = proposal.Key is MethodDef method && contractProposals.TryGetValue(method, out var id) ? id : null;
-					// A dotted type alias moves the type into another namespace: the
-					// declaration scope reserves its leaf, the full alias stays unique.
+					// Nested names belong to their physical enclosing type. Reusing
+					// an async helper name in another owner or compatibility module
+					// is legal; top-level aliases include their source namespace.
 					string scopeName = proposal.Key is TypeDef ? Leaf(proposal.Value) : proposal.Value;
-					bool duplicate = proposal.Key is TypeDef && !fullAliases.Add(proposal.Value);
+					bool duplicate = proposal.Key is TypeDef aliasType && !fullAliases.Add((aliasType.Module, aliasType.DeclaringType, proposal.Value));
 					if (duplicate || claims.Conflicts(proposal.Key, scopeName, family))
 						throw new InvalidDataException("Source alias collision: " + proposal.Key.FullName + " -> " + proposal.Value);
 					// The registry carries the full type alias so the source

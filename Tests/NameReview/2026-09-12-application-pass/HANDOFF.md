@@ -26,19 +26,20 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   configuration writes and cEMI initialization, including explicit selector aliases.
 - USB configuration writes committed as `ccf4afe07`. The resumed SDK protection
   checkpoint is `checkpoint-sdk-whitelist184.json`, committed with dnSpy
-  protection as `a2681bdde`. Current naming checkpoint: `checkpoint-wave185.json`.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v185.xml`,
-  SHA256 `47AA04FF3BEB8D7F97A5B0970E8D4210658CCD78AB228B1A7F134931426721CE`.
-- Current 6.4 map: `names64-staged-v20.xml`, SHA256
-  `49DEE3D73545D5C1FF64380BD1DB29F00D718CE859E080A4C5D45452199DA13F`.
+  protection as `a2681bdde`. Interface configuration committed as `d74c4de2b`.
+  Current naming checkpoint: `checkpoint-wave186.json`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v186.xml`,
+  SHA256 `159DCB9DF690A79154C33439CC5D5F6FAE9E5F7C8C72D8C218D0B4113D8B0DA8`.
+- Current 6.4 map: `names64-staged-v21.xml`, SHA256
+  `7D45F5EAF87D3EC2D9DB235AD292846B69F1CB8CC14988961F4FD8B929F4820F`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
   take precedence over its historical proposals. Earlier aliases and
   parameter/local decisions were checked for preservation. Six compiler-style
   source aliases now have explicit replacement review; every other earlier alias
-  was preserved by wave182. The last behavior update reports are `map-update63-wave-185.json`
-  and `map-update64-wave-19.json`;
+  was preserved by wave182. The last behavior update reports are `map-update63-wave-186-fixed.json`
+  and `map-update64-wave-21.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -122,8 +123,45 @@ explicit MoveNext mappings remain unchanged. Event delegate temporaries are
 decompiler stack variables, not actual IL locals, and were not falsely mapped.
 
 The 6.4 USB counterpart was read for supporting terminology; no 6.4 aliases changed
-in this continuation. Its effective map remains v20. This is a naming checkpoint,
+in wave185. That checkpoint retained its v20 map. This is a naming checkpoint,
 not a behavior change, source export or runtime validation.
+
+## RF info and receive dispatch continuation (186)
+
+`rf_dispatch.py` follows cEMI additional-info parsing, iteration and ID/type
+selection through buffer resizing, RF Multi transmission/reception and channel
+fields, full/short acknowledgement slots, receive notifications and RF metadata
+attachment. Both complete eight-member KnxMessageReceived add/remove contracts
+now have consistent names, backing-delegate roles and real IL local names.
+The iterator and predicate storage have behavioral names; their external runtime
+contracts and unused obfuscator fields remain unchanged. Actual 6.4 bodies supply
+supporting vocabulary; the three obfuscated dispatch/offset helpers and their
+different local slots were independently reviewed in 6.4.
+
+The review preserves existing behavior: clearing a short-ack slot does not grow
+the buffer and may throw for an absent byte; setting one grows first. Trimming
+retains at least one byte. Receive event data shares the original byte array.
+The additional-info iterator uses the advertised section boundary and skips null
+parser results; naming does not add validation or change exception handling.
+
+The first 6.3 preflight rejected existing identical nested async helper names
+under different connectors. Synthetic fixtures reproduced two overly broad
+uniqueness checks, in de4dotEx and dnSpy. Both now include physical module and
+enclosing TypeDef identity. Existing/new aliases survive later updates, source
+alias registration and synthetic binary application; genuine same-owner collisions
+are still rejected before mutation. de4dotEx fix: `5db0d23b`.
+`nested-type-scope-wave186-validation.json` pins the reproductions and passing
+tooling test evidence. The failed report did not publish a map. No suffix was
+used to hide the bug.
+`nested-type-scope-wave186-final-validation.json` additionally records the final
+map preflight and dnSpy acceptance of identical top-level aliases in separate
+physical files with the same assembly identity.
+
+Accepted reports contain 196 edits for 82 decisions in 6.3 and 19 edits for three
+decisions in 6.4, with no errors or new suffixes. These totals describe the reviewed
+chain, not application-wide completion. `map-check63-wave186-final.json` additionally
+revalidates the accepted map with zero edits/errors. SDK bindings, earlier effective
+aliases and scoped decisions remain unchanged. No ETS export/build/apply/launch ran.
 
 ## Reviewed chain
 
@@ -319,14 +357,22 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 - Catalog parsing/localization, volatile saved addresses, EMI1 initialization/
   shutdown, configuration reads/writes, feature discovery/cache and cEMI
   initialization and the complete SetInterfaceConfigurationAsync contract are
-  reviewed (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`). Continue
-  open/dispatch callers and other application components. Review the memory-278
+  reviewed (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`). RF receive
+  dispatch and subscription contracts are reviewed. Continue complete WriteAsync
+  and raw-write families, open callers and other application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
+- Next contract inventories are already in `usb63-layer-families-v2.json`:
+  message writes (`0x06001C9E`, interface `0x06001CCE`) use family
+  `701691AC8228FF9CA7C76F5C9D9E591A5FEABA3C13BF3958A670DEE6280EB79A`
+  with eight members; raw writes (`0x06001CBC`, interface `0x06001B08`) use
+  `FEC291B69FD84349321752C5E991C6975DA5382B309DF719ADB43F51C67598CA`
+  with five. Filter by physical module and token together. Their full bodies
+  have not yet been reviewed in this continuation.
 - Native import proposals from wave175 are resolved. Continue from
-  `interface-config63-wave185.cumulative.json` and `usb-write64-wave19.cumulative.json`; do not
+  `rf-dispatch63-wave186.cumulative.json` and `rf-dispatch64-wave21.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **185/20** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **186/21** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

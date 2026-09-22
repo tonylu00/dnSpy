@@ -1,0 +1,186 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v20.xml",
+ "BaseMapSha256": "49DEE3D73545D5C1FF64380BD1DB29F00D718CE859E080A4C5D45452199DA13F",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x0600159F",
+   "ProposedName": "FindAdditionalInfoOffset",
+   "Reason": "Scans cEMI additional-info headers from offset two and returns the first requested ID offset, or -1. Advances by each stored payload length plus two.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600159F",
+     "Path": "Knx.Falcon.2/KnxMessages/KnxCemiMessage.cs",
+     "Line": 112,
+     "Sha256": "358EDAF903DF76F03DF13488ECE32324135B7E4CC9140AF5DA000353EFD00076"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch64-wave186-inspection.json",
+    "Sha256": "CF50D1EE02D9DD7778760AB3B86374F3A394E38936BBB14F52D0ED180CA245AC",
+    "Token": "0x0600159F",
+    "Slots": {
+     "1": "offset"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600340A",
+   "ProposedName": "OnKnxMessageReceived",
+   "Reason": "Logs the received message and, when supported and present, its RF Multi/ack info. Invokes the receive delegate with the parsed message and memory over the original raw byte array; does not copy the payload.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600340A",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 1006,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfMultiInfo",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfShortFastAckInfo",
+     "NewName": "shortFastAckInfo"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfFastAckInfo",
+     "NewName": "fastAckInfo"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch64-wave186-inspection.json",
+    "Sha256": "CF50D1EE02D9DD7778760AB3B86374F3A394E38936BBB14F52D0ED180CA245AC",
+    "Token": "0x0600340A",
+    "Slots": {
+     "0": "busMessage",
+     "1": "rfMultiInfo",
+     "2": "shortFastAckInfo",
+     "4": "fastAckInfo"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003417",
+   "ProposedName": "AddRfMultiAdditionalInfo",
+   "Reason": "Adds/replaces RF Multi transmission/reception settings using the connector RF band. A non-Ready transmission to an individual destination expects one fast ack and adds short-ack slot zero; other cases expect zero. An absent reception mode uses Current.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003417",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 1568,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxBusMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "rfMode_0",
+     "HasMetadata": true,
+     "NewName": "transmissionMode"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nullable_4",
+     "HasMetadata": true,
+     "NewName": "receptionMode"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "transmission"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "reception"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfMultiInfo",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfShortFastAckInfo",
+     "NewName": "shortFastAckInfo"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Boolean",
+     "NewName": "expectsFastAck"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch64-wave186-inspection.json",
+    "Sha256": "CF50D1EE02D9DD7778760AB3B86374F3A394E38936BBB14F52D0ED180CA245AC",
+    "Token": "0x06003417",
+    "Slots": {
+     "5": "expectsFastAck",
+     "1": "transmission",
+     "2": "reception",
+     "3": "rfMultiInfo",
+     "4": "shortFastAckInfo"
+    }
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

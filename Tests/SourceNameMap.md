@@ -22,6 +22,14 @@ and inputs are rejected. Rebind the same manifest after relocating a workspace.
 `Tests/SdkNameWhitelistRegression` exercises the actual parser against the
 portable NameCandidates fixtures, including rejection before partial alias
 registration. It is a synthetic metadata check, not an ETS launch/build test.
+Its optional second argument accepts the NameCandidates fixture's
+`scoped-map.xml`, checking that nested types in different enclosing types can
+share an alias and that same-owner duplicates fail before registration.
+The same fixture checks identical top-level aliases in separate physical copies
+of a same-identity assembly.
+Type alias uniqueness includes the physical module and enclosing type; source
+export therefore preserves independent compatibility definitions and common
+async helper names without adding unrelated suffixes.
 
 This source-only format is separate from the binary `NameMap` format:
 

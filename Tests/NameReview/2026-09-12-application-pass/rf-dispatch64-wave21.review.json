@@ -1,0 +1,173 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxMessages.KnxCemiMessage",
+   "Token": "0x0600159F",
+   "Signature": "System.Int32 Knx.Falcon.KnxMessages.KnxCemiMessage::method_0(Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType)",
+   "OriginalName": "method_0",
+   "Reason": "Scans cEMI additional-info headers from offset two and returns the first requested ID offset, or -1. Advances by each stored payload length plus two.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType additionalInfoType_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    }
+   ],
+   "NewName": "FindAdditionalInfoOffset",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x0600340A",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::method_2(Knx.Falcon.KnxMessages.KnxMessage,System.Byte[])",
+   "OriginalName": "method_2",
+   "Reason": "Logs the received message and, when supported and present, its RF Multi/ack info. Invokes the receive delegate with the parsed message and memory over the original raw byte array; does not copy the payload.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxMessage knxMessage_0",
+    "2: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfMultiInfo",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfShortFastAckInfo",
+     "NewName": "shortFastAckInfo"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfFastAckInfo",
+     "NewName": "fastAckInfo"
+    }
+   ],
+   "NewName": "OnKnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003417",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::method_7(Knx.Falcon.KnxMessages.KnxBusMessage,Knx.Falcon.RfMode,System.Nullable`1<Knx.Falcon.RfMode>)",
+   "OriginalName": "method_7",
+   "Reason": "Adds/replaces RF Multi transmission/reception settings using the connector RF band. A non-Ready transmission to an individual destination expects one fast ack and adds short-ack slot zero; other cases expect zero. An absent reception mode uses Current.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxBusMessage knxBusMessage_0",
+    "2: Knx.Falcon.RfMode rfMode_0",
+    "3: System.Nullable`1<Knx.Falcon.RfMode> nullable_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxBusMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "rfMode_0",
+     "HasMetadata": true,
+     "NewName": "transmissionMode"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nullable_4",
+     "HasMetadata": true,
+     "NewName": "receptionMode"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "transmission"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "reception"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfMultiInfo",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.RfShortFastAckInfo",
+     "NewName": "shortFastAckInfo"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Boolean",
+     "NewName": "expectsFastAck"
+    }
+   ],
+   "NewName": "AddRfMultiAdditionalInfo",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

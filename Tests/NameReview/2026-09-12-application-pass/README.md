@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave185.json`. Current staged maps are **6.3 v185** and **6.4 v20**.
+`checkpoint-wave186.json`. Current staged maps are **6.3 v186** and **6.4 v21**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 185/20, not by newest filename.
+Resume with 186/21, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -32,6 +32,11 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- cEMI additional-info parsing/iteration/lookup → RF Multi fields and acknowledgement
+  helpers → receive notification, RF transmit metadata and both complete event
+  subscription contracts (`rf_dispatch.py`). The review exposed nested-type
+  collision bugs in both tools: helper names now remain scoped to their physical
+  owners, with synthetic before/after evidence and true-collision rejection.
 - Additional-address list reads/writes and local individual-address writes → the
   complete eight-member `SetInterfaceConfigurationAsync` contract, including
   USB, IP tunneling, storage-only and unsupported implementations. Parameters,

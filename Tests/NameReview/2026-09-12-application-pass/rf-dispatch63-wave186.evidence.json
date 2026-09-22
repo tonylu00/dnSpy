@@ -1,0 +1,2926 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v185.xml",
+ "BaseMapSha256": "47AA04FF3BEB8D7F97A5B0970E8D4210658CCD78AB228B1A7F134931426721CE",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x06000F25",
+   "ProposedName": "ResizeData",
+   "Reason": "Resizes the stored data array through Array.Resize, retaining the common prefix and zero-initializing growth.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F25",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 183,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F25",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 400,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "newSize"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F25",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001BFD",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/AdditionalInfoBase.cs",
+     "Line": 188,
+     "Sha256": "5F204889C2319237A08B4808BF199524C6209503E2E49BFECAD0C98435394D71"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F2C",
+   "ProposedName": "MatchesAdditionalInfoId",
+   "Reason": "Compares the element Id with the captured requested identifier.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F2C",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 251,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F1F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 127,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class970_0",
+     "HasMetadata": true,
+     "NewName": "additionalInfo"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F2C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F1D",
+   "ProposedName": "CreateFromcEmiData",
+   "Reason": "Parses the ID/length header at the offset, checks the advertised additional-info boundary and dispatches known layouts by ID and length; unsupported layouts become a generic info element and truncated headers return null. Existing physical-array exception behavior is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F1D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 23,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "offset"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoType",
+     "NewName": "infoType"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "dataLength"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "data"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F1D",
+    "Slots": {
+     "0": "infoType",
+     "1": "dataLength",
+     "2": "data"
+    }
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001BF5",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/AdditionalInfoBase.cs",
+     "Line": 25,
+     "Sha256": "5F204889C2319237A08B4808BF199524C6209503E2E49BFECAD0C98435394D71"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F1E",
+   "ProposedName": "GetAdditionalInfos",
+   "Reason": "Creates a lazy iterator from cEMI raw data. The reviewed iterator advances by header plus payload length, skips null parse results and stops when fewer than three bytes remain in the advertised section.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F1E",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 117,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F1E",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001BF6",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/AdditionalInfoBase.cs",
+     "Line": 122,
+     "Sha256": "5F204889C2319237A08B4808BF199524C6209503E2E49BFECAD0C98435394D71"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F1F",
+   "ProposedName": "GetAdditionalInfo",
+   "Reason": "Returns the first parsed element whose Id matches the captured requested identifier, or null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F1F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 127,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2C",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 251,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class970/a",
+     "NewName": "filter"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F1F",
+    "Slots": {
+     "0": "filter"
+    }
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001BF7",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/AdditionalInfoBase.cs",
+     "Line": 132,
+     "Sha256": "5F204889C2319237A08B4808BF199524C6209503E2E49BFECAD0C98435394D71"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F20",
+   "ProposedName": "GetAdditionalInfo",
+   "Reason": "Returns the first parsed element assignable to T through OfType and FirstOrDefault, or null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F20",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 136,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "cemiData"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F20",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001BF8",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/AdditionalInfoBase.cs",
+     "Line": 141,
+     "Sha256": "5F204889C2319237A08B4808BF199524C6209503E2E49BFECAD0C98435394D71"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F21",
+   "ProposedName": "",
+   "Reason": "Stores the supplied data buffer after a null check; does not clone it.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F21",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 143,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F21",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F26",
+   "ProposedName": "GetAscEmiData",
+   "Reason": "Allocates ID/length header plus payload and copies the stored data into the new cEMI additional-info block.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F26",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 190,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "cemiData"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F26",
+    "Slots": {
+     "0": "cemiData"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000F28",
+   "ProposedName": "Equals",
+   "Reason": "Typed equality accepts reference identity or matching ID and byte sequence; the existing object overload delegates here.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F28",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 217,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class970_0",
+     "HasMetadata": true,
+     "NewName": "other"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F28",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C00",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/AdditionalInfoBase.cs",
+     "Line": 222,
+     "Sha256": "5F204889C2319237A08B4808BF199524C6209503E2E49BFECAD0C98435394D71"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F2D",
+   "ProposedName": "",
+   "Reason": "Initializes iterator state and captures the creating managed-thread ID.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_3",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F2D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x02000284",
+   "ProposedName": "Knx.Falcon.KnxMessages.AdditionalInfo.AdditionalInfoBase",
+   "Reason": "Common ID/data/serialization base for additional-info layouts, corroborated by the 6.4 counterpart and parser callers.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000284",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 12,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F1D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 23,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F25",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 183,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F25",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 400,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F26",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 190,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000285",
+   "ProposedName": "AdditionalInfoIdFilter",
+   "Reason": "Captured requested ID consumed by the element-selection predicate.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000285",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 246,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F1F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 127,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2C",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 251,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000286",
+   "ProposedName": "AdditionalInfoEnumerator",
+   "Reason": "Iterator over the advertised cEMI additional-info section; external iterator method contracts remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000286",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 267,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F1E",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 117,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D0C",
+   "ProposedName": "infoType",
+   "Reason": "Captured ID used by MatchesAdditionalInfoId.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D0C",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 258,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F1F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 127,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2C",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 251,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D0E",
+   "ProposedName": "state",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D0E",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 376,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D0F",
+   "ProposedName": "current",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D0F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 379,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D10",
+   "ProposedName": "initialThreadId",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D10",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 382,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D11",
+   "ProposedName": "cemiData",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D11",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 385,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D12",
+   "ProposedName": "capturedCemiData",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D12",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 388,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D13",
+   "ProposedName": "offset",
+   "Reason": "Iterator role traced through construction, MoveNext and GetEnumerator; unused string storage excluded.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D13",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 391,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2D",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 272,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F2F",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 286,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    },
+    {
+     "Id": "m0088:0x06000F33",
+     "Path": "Knx.Falcon/Class970.cs",
+     "Line": 351,
+     "Sha256": "549F40A74BA0D3A80119500FB90BD1F252B8CC8D537CE143700960EE1FE7DAD0"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x060009F9",
+   "ProposedName": "",
+   "Reason": "Allocates the cEMI raw message buffer through the base constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009F9",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 11,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "size"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009F9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060009FA",
+   "ProposedName": "",
+   "Reason": "Wraps raw data and checks the two-byte header, advertised section length and item lengths. Existing edge behavior of the item-length loop is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009FA",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 17,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte",
+     "NewName": "additionalInfoLength"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009FA",
+    "Slots": {
+     "0": "additionalInfoLength",
+     "1": "offset"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060009FB",
+   "ProposedName": "get_AdditionalInfoLength",
+   "Reason": "Reads the cEMI additional-info byte count at raw-data index one.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009FB",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 45,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009FB",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x0600159A",
+     "Path": "Knx.Falcon.2/KnxMessages/KnxCemiMessage.cs",
+     "Line": 48,
+     "Sha256": "358EDAF903DF76F03DF13488ECE32324135B7E4CC9140AF5DA000353EFD00076"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x060009FC",
+   "ProposedName": "GetAdditionalInformationElements",
+   "Reason": "Enumerates parsed additional-info elements from this raw cEMI buffer.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009FC",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 52,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009FC",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x0600159B",
+     "Path": "Knx.Falcon.2/KnxMessages/KnxCemiMessage.cs",
+     "Line": 58,
+     "Sha256": "358EDAF903DF76F03DF13488ECE32324135B7E4CC9140AF5DA000353EFD00076"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x060009FD",
+   "ProposedName": "GetAdditionalInformation",
+   "Reason": "Selects the first additional-info element assignable to generic type T.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009FD",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 59,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009FD",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x0600159C",
+     "Path": "Knx.Falcon.2/KnxMessages/KnxCemiMessage.cs",
+     "Line": 65,
+     "Sha256": "358EDAF903DF76F03DF13488ECE32324135B7E4CC9140AF5DA000353EFD00076"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x060009FE",
+   "ProposedName": "AddOrUpdateAdditionalInfo",
+   "Reason": "Replaces matching equal-length payload in place. Otherwise removes the old item, grows the buffer and prepends a serialized item before service data. Existing byte-length overflow behavior is retained.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009FE",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 66,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class970_0",
+     "HasMetadata": true,
+     "NewName": "additionalInfo"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "existingOffset"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "serializedInfo"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009FE",
+    "Slots": {
+     "0": "existingOffset",
+     "1": "serializedInfo"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060009FF",
+   "ProposedName": "RemoveAdditionalInfo",
+   "Reason": "Finds the first item of the given ID, decreases the advertised length, shifts following bytes and shrinks the raw buffer; absent IDs do nothing.",
+   "Source": [
+    {
+     "Id": "m0088:0x060009FF",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 90,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte",
+     "NewName": "serializedLength"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060009FF",
+    "Slots": {
+     "0": "offset",
+     "1": "serializedLength"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000A01",
+   "ProposedName": "get_ServiceInformation",
+   "Reason": "Returns a writable span beginning after the two-byte cEMI header and advertised additional-info bytes.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000A01",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 123,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000A01",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x060015A0",
+     "Path": "Knx.Falcon.2/KnxMessages/KnxCemiMessage.cs",
+     "Line": 130,
+     "Sha256": "358EDAF903DF76F03DF13488ECE32324135B7E4CC9140AF5DA000353EFD00076"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x020001E4",
+   "ProposedName": "Knx.Falcon.KnxMessages.KnxCemiMessage",
+   "Reason": "cEMI message base owning the additional-info section and service-information span; corroborated by actual 6.4 code.",
+   "Source": [
+    {
+     "Id": "m0088:0x020001E4",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 7,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    },
+    {
+     "Id": "m0088:0x060009FA",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 17,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    },
+    {
+     "Id": "m0088:0x060009FE",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 66,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    },
+    {
+     "Id": "m0088:0x06000A01",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 123,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06000F77",
+   "ProposedName": "get_Transmission",
+   "Reason": "Reads transmission band/mode from byte zero.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F77",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 65,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F77",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C6E",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 67,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F78",
+   "ProposedName": "set_Transmission",
+   "Reason": "Writes transmission band/mode to byte zero.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F78",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 72,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "rfBandAndMode_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F78",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C6F",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 67,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F79",
+   "ProposedName": "get_FastCallChannel",
+   "Reason": "Reads the high nibble of byte one.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F79",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 79,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F79",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C70",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 84,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F7A",
+   "ProposedName": "set_FastCallChannel",
+   "Reason": "Preserves the low nibble while replacing the high nibble of byte one.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F7A",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 86,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "fastCallChannel_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F7A",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C71",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 84,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F7B",
+   "ProposedName": "get_SlowCallChannel",
+   "Reason": "Reads the low nibble of byte one.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F7B",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 93,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F7B",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C72",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 101,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F7C",
+   "ProposedName": "set_SlowCallChannel",
+   "Reason": "Preserves the high nibble while writing the low four channel bits.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F7C",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 100,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "slowCallChannel_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F7C",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C73",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 101,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F7D",
+   "ProposedName": "get_ExpectedFastAcks",
+   "Reason": "Reads the expected fast-ack slot count from byte two.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F7D",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 107,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F7D",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C74",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 118,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F7E",
+   "ProposedName": "set_ExpectedFastAcks",
+   "Reason": "Writes the expected fast-ack slot count to byte two.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F7E",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 114,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F7E",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C75",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 118,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F7F",
+   "ProposedName": "get_Reception",
+   "Reason": "Reads reception band/mode from byte three.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F7F",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 121,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F7F",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C76",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 135,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F80",
+   "ProposedName": "set_Reception",
+   "Reason": "Writes reception band/mode to byte three.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F80",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 128,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "rfBandAndMode_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F80",
+    "Slots": {}
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C77",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfMultiInfo.cs",
+     "Line": 135,
+     "Sha256": "93C9B458C437F8F41CAC039379EF001C32A763EA0AD24BB5248AE5DB995BC1BF"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F5E",
+   "ProposedName": "GetStatus",
+   "Reason": "Returns the first byte of the selected two-byte fast-ack slot, or zero beyond stored slots; rejects slot indexes outside 0..63.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F5E",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 48,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F5E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F5F",
+   "ProposedName": "GetInfo",
+   "Reason": "Returns the second byte of the selected fast-ack slot, or zero beyond stored slots; rejects indexes outside 0..63.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F5F",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 63,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F5F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F60",
+   "ProposedName": "IsAcked",
+   "Reason": "Tests bit zero of the validated fast-ack status byte.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F60",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 78,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F60",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F8E",
+   "ProposedName": "IsAcked",
+   "Reason": "Tests a short-ack bit for slots 0..63; valid slots beyond stored bytes return false.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F8E",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 64,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F8E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F8F",
+   "ProposedName": "SetAcked",
+   "Reason": "Sets/clears a validated short-ack slot. Setting grows the buffer; clearing indexes current storage before trimming and can fail if that byte is absent. Preserve this behavior.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F8F",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 75,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "ackSlot"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F8F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F90",
+   "ProposedName": "get_Count",
+   "Reason": "Counts set bits in the short-ack buffer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F90",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 100,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "ackCount"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "ackData"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "byteIndex"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Byte",
+     "NewName": "ackByte"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Byte",
+     "NewName": "bitMask"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F90",
+    "Slots": {
+     "0": "ackCount",
+     "1": "ackData",
+     "2": "byteIndex",
+     "3": "ackByte",
+     "4": "bitMask"
+    }
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C8D",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfShortFastAckInfo.cs",
+     "Line": 102,
+     "Sha256": "D2C4A881623CEAC324B8B8C7E4641D17AAB89A96AE14908CADCF0DAEC08C6608"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F91",
+   "ProposedName": "Trim",
+   "Reason": "Drops trailing zero bytes while retaining at least one byte.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F91",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 118,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "trimmedLength"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F91",
+    "Slots": {
+     "0": "trimmedLength"
+    }
+   },
+   "CounterpartSource": [
+    {
+     "Id": "m0153:0x06001C8E",
+     "Path": "Knx.Falcon.2/KnxMessages/AdditionalInfo/RfShortFastAckInfo.cs",
+     "Line": 123,
+     "Sha256": "D2C4A881623CEAC324B8B8C7E4641D17AAB89A96AE14908CADCF0DAEC08C6608"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06000F5C",
+   "ProposedName": "",
+   "Reason": "Wraps 2..128 bytes of full fast-ack data. Rejects null and invalid size; retains the input buffer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F5C",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 22,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F5C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F75",
+   "ProposedName": "",
+   "Reason": "Wraps exactly four RF Multi info bytes. Rejects null and invalid size; retains the input buffer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F75",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 40,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F75",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F8B",
+   "ProposedName": "",
+   "Reason": "Wraps 1..8 bytes of short-ack bits and trims trailing zeros. Rejects null and invalid size; retains the input buffer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F8B",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 23,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "data"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F8B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06000F8C",
+   "ProposedName": "",
+   "Reason": "Allocates enough bytes for the supplied BitArray, sets true slots and trims trailing zero bytes; SetAcked enforces the slot bounds.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000F8C",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 39,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bitArray_0",
+     "HasMetadata": true,
+     "NewName": "ackSlots"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "ackSlot"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000F8C",
+    "Slots": {
+     "0": "ackSlot"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x02000291",
+   "ProposedName": "Knx.Falcon.KnxMessages.AdditionalInfo.RfMultiInfo",
+   "Reason": "Four-byte RF Multi transmission, call channels, expected ack count and reception block, established by Id, ToString, byte layout and actual 6.4 counterpart.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000291",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 7,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    },
+    {
+     "Id": "m0088:0x06000F74",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 29,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    },
+    {
+     "Id": "m0088:0x06000F77",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 65,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    },
+    {
+     "Id": "m0088:0x06000F7D",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 107,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    },
+    {
+     "Id": "m0088:0x06000F7F",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 121,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D1F",
+   "ProposedName": "MinSize",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D1F",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 85,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    },
+    {
+     "Id": "m0088:0x06000F5C",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 22,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D20",
+   "ProposedName": "MaxSize",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D20",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 88,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    },
+    {
+     "Id": "m0088:0x06000F5C",
+     "Path": "Knx.Falcon/Class976.cs",
+     "Line": 22,
+     "Sha256": "B38520C75B000CD3067FB0B1047979C86781E265274462860F4EF7CA3BFC951C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D2F",
+   "ProposedName": "RequiredSize",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D2F",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 135,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    },
+    {
+     "Id": "m0088:0x06000F75",
+     "Path": "Knx.Falcon/Class978.cs",
+     "Line": 40,
+     "Sha256": "EBA842B0E98F63334F9A2A5C7E37EF1BE972564D625A4E1E9CC0ECC93ADC4C53"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D33",
+   "ProposedName": "MinSize",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D33",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 136,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    },
+    {
+     "Id": "m0088:0x06000F8B",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 23,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04000D34",
+   "ProposedName": "MaxSize",
+   "Reason": "Data-length constraint checked by this layout constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x04000D34",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 139,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    },
+    {
+     "Id": "m0088:0x06000F8B",
+     "Path": "Knx.Falcon/Class980.cs",
+     "Line": 23,
+     "Sha256": "F313560BACE40EAD8548DD8504ECC20A14512D588393C7FC269DB659C9351627"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C90",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C90",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 268,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001C90",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x040018F9",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018F9",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 1202,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    },
+    {
+     "Id": "m0088:0x06001C90",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 268,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001CCB",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Shared event subscription contract, reviewed together with all seven concrete implementations.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CCB",
+     "Path": "Knx.Falcon/Connectors/IBusConnector.cs",
+     "Line": 46,
+     "Sha256": "519FB7F645E1C7A8CFA75FC5181EA8585763AD6969531DCBF09648CB6D5A10F3"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001CCB",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D49",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D49",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 319,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001D49",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x04001A86",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001A86",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 1232,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    },
+    {
+     "Id": "m0088:0x06001D49",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 319,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001DF2",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001DF2",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 244,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001DF2",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x04001B39",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001B39",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 545,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    },
+    {
+     "Id": "m0088:0x06001DF2",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 244,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001E68",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001E68",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 311,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001E68",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x04001BDF",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001BDF",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 704,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    },
+    {
+     "Id": "m0088:0x06001E68",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 311,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001EA1",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001EA1",
+     "Path": "Knx.Falcon/Class1346.cs",
+     "Line": 131,
+     "Sha256": "013F1D3A630D93FA9AA132F111C2E6AE0A01122B6663BEB0B853C922936BEE3D"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001EA1",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x04001C6C",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001C6C",
+     "Path": "Knx.Falcon/Class1346.cs",
+     "Line": 260,
+     "Sha256": "013F1D3A630D93FA9AA132F111C2E6AE0A01122B6663BEB0B853C922936BEE3D"
+    },
+    {
+     "Id": "m0088:0x06001EA1",
+     "Path": "Knx.Falcon/Class1346.cs",
+     "Line": 131,
+     "Sha256": "013F1D3A630D93FA9AA132F111C2E6AE0A01122B6663BEB0B853C922936BEE3D"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0600240B",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600240B",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 184,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x0600240B",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x04002283",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002283",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 506,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    },
+    {
+     "Id": "m0088:0x0600240B",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 184,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x060024DF",
+   "ProposedName": "add_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Combine and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x060024DF",
+     "Path": "Knx.Falcon/Class1505.cs",
+     "Line": 154,
+     "Sha256": "0D75372879FCCF04DDAA508E719208189DAA09145477D28E0EC783174A93A6D8"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060024DF",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x0400231A",
+   "ProposedName": "knxMessageReceived",
+   "Reason": "Backing delegate used by the reviewed atomic subscription and removal operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400231A",
+     "Path": "Knx.Falcon/Class1505.cs",
+     "Line": 305,
+     "Sha256": "0D75372879FCCF04DDAA508E719208189DAA09145477D28E0EC783174A93A6D8"
+    },
+    {
+     "Id": "m0088:0x060024DF",
+     "Path": "Knx.Falcon/Class1505.cs",
+     "Line": 154,
+     "Sha256": "0D75372879FCCF04DDAA508E719208189DAA09145477D28E0EC783174A93A6D8"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C91",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C91",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 284,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001C91",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001CCC",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Shared event subscription contract, reviewed together with all seven concrete implementations.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001CCC",
+     "Path": "Knx.Falcon/Connectors/IBusConnector.cs",
+     "Line": 51,
+     "Sha256": "519FB7F645E1C7A8CFA75FC5181EA8585763AD6969531DCBF09648CB6D5A10F3"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_0",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001CCC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001D4A",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001D4A",
+     "Path": "Knx.Falcon/Class1336.cs",
+     "Line": 335,
+     "Sha256": "A2D600B87E16007AC4B575374F07F91A004FE2F9B93667CB5C115D464ECA0C8C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001D4A",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001DF3",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001DF3",
+     "Path": "Knx.Falcon/Class1342.cs",
+     "Line": 260,
+     "Sha256": "8A92ED546168153DDB40D8EF8B73F5B35B185844598E72AD37D5BB019593D6BE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001DF3",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001E69",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001E69",
+     "Path": "Knx.Falcon/Class1343.cs",
+     "Line": 327,
+     "Sha256": "6332722FA5F7D188CB584FA7464E3F52427DB26353649F34C30E00A86DCEF28A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_2",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001E69",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001EA2",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001EA2",
+     "Path": "Knx.Falcon/Class1346.cs",
+     "Line": 147,
+     "Sha256": "013F1D3A630D93FA9AA132F111C2E6AE0A01122B6663BEB0B853C922936BEE3D"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001EA2",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x0600240C",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600240C",
+     "Path": "Knx.Falcon/Class1480.cs",
+     "Line": 200,
+     "Sha256": "B01693DD52B048B8EBACFC48AB2884633F378A4C2790DDFD07B59CE365E0A6F5"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x0600240C",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x060024E0",
+   "ProposedName": "remove_KnxMessageReceived",
+   "Reason": "Atomically updates the KnxMessageReceived backing delegate using Delegate.Remove and a CompareExchange retry loop.",
+   "Source": [
+    {
+     "Id": "m0088:0x060024E0",
+     "Path": "Knx.Falcon/Class1505.cs",
+     "Line": 170,
+     "Sha256": "0D75372879FCCF04DDAA508E719208189DAA09145477D28E0EC783174A93A6D8"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "eventHandler_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs>",
+     "NewName": "updatedHandlers"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x060024E0",
+    "Slots": {
+     "0": "currentHandlers",
+     "1": "observedHandlers",
+     "2": "updatedHandlers"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06000A00",
+   "ProposedName": "FindAdditionalInfoOffset",
+   "Reason": "Scans cEMI additional-info headers from offset two and returns the first requested ID offset, or -1. Advances by each stored payload length plus two.",
+   "Source": [
+    {
+     "Id": "m0088:0x06000A00",
+     "Path": "Knx.Falcon/Class816.cs",
+     "Line": 106,
+     "Sha256": "74E9F17265714440242141B1671284DCAC7D35ECECEF6A51D9D436163CD1DB91"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "additionalInfoType_0",
+     "HasMetadata": true,
+     "NewName": "infoType"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "offset"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06000A00",
+    "Slots": {
+     "0": "offset"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001C92",
+   "ProposedName": "OnKnxMessageReceived",
+   "Reason": "Logs the received message and, when supported and present, its RF Multi/ack info. Invokes the receive delegate with the parsed message and memory over the original raw byte array; does not copy the payload.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C92",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 300,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class815_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "rawData"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class818",
+     "NewName": "busMessage"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class978",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Class980",
+     "NewName": "shortFastAckInfo"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class976",
+     "NewName": "fastAckInfo"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001C92",
+    "Slots": {
+     "0": "busMessage",
+     "1": "rfMultiInfo",
+     "2": "shortFastAckInfo",
+     "3": "fastAckInfo"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06001C9F",
+   "ProposedName": "AddRfMultiAdditionalInfo",
+   "Reason": "Adds/replaces RF Multi transmission/reception settings using the connector RF band. A non-Ready transmission to an individual destination expects one fast ack and adds short-ack slot zero; other cases expect zero. An absent reception mode uses Current.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C9F",
+     "Path": "Knx.Falcon/Class1329.cs",
+     "Line": 524,
+     "Sha256": "0A88E3973DA7F860CCCEA553EB68ED5F49AF184F4DC8922585BB5F7000F5DAAC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "rfMode_0",
+     "HasMetadata": true,
+     "NewName": "transmissionMode"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nullable_4",
+     "HasMetadata": true,
+     "NewName": "receptionMode"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "expectsFastAck"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "transmission"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.RfBandAndMode",
+     "NewName": "reception"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class978",
+     "NewName": "rfMultiInfo"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Class980",
+     "NewName": "shortFastAckInfo"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\rf-dispatch63-wave186-inspection.json",
+    "Sha256": "21ECDC92FEED58593048B794BEC57E0417A4D506306903C70E6F5C9F873506D0",
+    "Token": "0x06001C9F",
+    "Slots": {
+     "0": "expectsFastAck",
+     "1": "transmission",
+     "2": "reception",
+     "3": "rfMultiInfo",
+     "4": "shortFastAckInfo"
+    }
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}
