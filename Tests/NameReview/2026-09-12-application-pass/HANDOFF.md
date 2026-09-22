@@ -41,13 +41,14 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Collection/archive review committed as `221374f4d`.
   Clipboard/paste review committed as `4f232ad9a`.
   Move-planner review committed as `48fc15734`.
-  Current naming checkpoint: `checkpoint-wave205.json`, from accepted 204/32,
-  through add-operation dispatch, inner creators and bus-interface link helpers.
+  Add/link review committed as `646cbe231`.
+  Current naming checkpoint: `checkpoint-wave206.json`, from accepted 205/33,
+  through deletion/unlink selection and their inner callbacks.
   Candidate 6.3 v203 was rejected; corrected v204 derives directly from v202.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v205.xml`,
-  SHA256 `325E004BF4E13559DAC73CB8C133447FD9232643639C0BC185928142C49AF0F0`.
-- Current 6.4 map: `names64-staged-v33.xml`, SHA256
-  `C7A7556BBBE6A6A3A3E1EBAE336E92EE426977C5B52E6F5E425D77748CF31A14`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v206.xml`,
+  SHA256 `A04D51225871D211BE50DAC411D0226A553F7B9AB602A21469F3269C65CD428C`.
+- Current 6.4 map: `names64-staged-v34.xml`, SHA256
+  `4FCB039A67B0FA6CBFBCD9D11CFD23C46C0FABC257E0C1D0294C710E5A660F19`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -58,7 +59,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-205.json` and `map-update64-wave-33.json`.
+  The last update reports are `map-update63-wave-206.json` and `map-update64-wave-34.json`.
   `map-update63-wave-203.json` is rejected self-collision evidence, not an accepted step.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
@@ -78,10 +79,51 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
 
+## Deletion and unlink dispatch (206 / 34)
+
+Resume with maps **206/34**, `unlink63-wave206-rev2.cumulative.json` and
+`unlink64-wave34.cumulative.json`. All proposed names and used scopes match the
+maps exactly, with no suffixes or preflight errors. Prior aliases, parameter/local
+choices and SDK whitelist bindings are preserved. Existing 6.3
+`IsDeletePasswordRequired` was retained and extended with its project local;
+6.4 now uses the same verified role.
+
+`operation_unlink_scopes.py` covers both catalog/DOM deletion overloads,
+communication-object usage linking/unlinking and the object unlink dispatcher.
+Inner selectors and progress callbacks were reviewed before naming captures,
+delegate caches and caller locals. Visible DeleteOperationContext and
+DeleteSelectionContext types are named in both versions; the remaining inlined
+6.3 containers are not given fictitious source declarations. Each of the five
+public two-member interface families per version retains its names/parameters.
+
+`validate_operation_unlink.py` verifies the requested names/scopes, source and
+binary hashes, exact callback consumers, family preservation and the physical
+cross-component constructor contract. The nullable 6.4 locals are calledOutside
+because m0146 resolves the constructor to m0120:0x06005F34 in the actual 6.4
+ObjectModel, whose inspected parameter has that name. Its SHA/MVID, source hash
+and caller edges are checked. The analogous 6.3 constructor takes a security
+service in that position; no cross-version substitution is made.
+
+Behavior retained: deletion dispatches from the first selected object, filters
+other items to the branch type and asks the password service about that object's
+ObjectContext.Project. Bus interfaces/additional addresses delegate to unlinking;
+channel instances select their UsageChannel. Unlinking calls Any before ToList,
+without a new null guard, and only the group-address-reference branch applies
+Distinct and skips null group addresses. Additional addresses require a non-null
+bus interface. 6.3 concrete-type dispatch and 6.4 interface dispatch remain
+separate, as do topology/building/trade parent choices.
+
+Twelve generated static helpers and six self-typed fields remain explicitly
+unresolved in `unlink-wave206-validation.json`, with their exact IL and incoming
+reference evidence. All named progress delegates are tied to their receiving
+operation constructors in the per-version consumer reports. Continue the larger
+CreateCopy/CreateExtendedCopy/CreateMove scopes and drag/drop callers next.
+No ETS source/binary apply, export, build, full audit or launch ran.
+
 ## Add-operation dispatch and bus-interface links (205 / 33)
 
-Resume with maps **205/33**, `add63-wave205.cumulative.json` and
-`add64-wave33-rev2.cumulative.json`. All requested names match the map, both map
+Historical checkpoint 205 used maps **205/33**, `add63-wave205.cumulative.json` and
+`add64-wave33-rev2.cumulative.json`. All requested names match those maps; their
 preflights pass with zero changes/errors, and checkpoint205 preserves prior
 aliases/scopes and the exact SDK whitelist bindings. No ETS operation ran.
 
@@ -970,10 +1012,10 @@ completion measure. No ETS source/binary application, export, build, audit or la
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `add63-wave205.cumulative.json` and
-  `add64-wave33-rev2.cumulative.json`; do not
+  `unlink63-wave206-rev2.cumulative.json` and
+  `unlink64-wave34.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **205/33** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **206/34** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
   `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by

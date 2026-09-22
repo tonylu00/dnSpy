@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 23 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave205.json`. Current staged maps are **6.3 v205** and **6.4 v33**.
+`checkpoint-wave206.json`. Current staged maps are **6.3 v206** and **6.4 v34**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 205/33, not by newest filename. Rejected 6.3 v203 was never accepted.
+Resume with 206/34, not by newest filename. Rejected 6.3 v203 was never accepted.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -31,6 +31,12 @@ methods or completed work. Graphs and query databases live in
 own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
+
+- Catalog/DOM deletion and object unlinking, including usage-channel selection,
+  password context, connector collectors and operation-specific progress
+  (`operation_unlink_scopes.py`). The 6.4 calledOutside local is bound to the exact
+  ObjectModel constructor. Version-specific concrete/interface dispatch, filtering
+  and null behavior remain; all public method families keep their original names.
 
 - Add dispatch through concrete parent/type, address strategies, building levels,
   usage/function choices and six creator overloads; usage-channel indexing and
