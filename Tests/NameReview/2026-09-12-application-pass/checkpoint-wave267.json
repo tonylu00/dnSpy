@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 267 accepted (6.3): Falcon accessors over readable Knx.Falcon types",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v267.xml",
+      "Sha256": "F53F3DC3AFE6E350CCB0B92DD285C5AF6D49141E21B75D60582454E7F1076DBE",
+      "PreviousMap": "names63-staged-v266.xml",
+      "PreviousMapSha256": "4C5C17CBAAFCA131E92759F4FE636766823399CFBA1D2768040DB7ABA54FE066",
+      "FrozenSha256": "F53F3DC3AFE6E350CCB0B92DD285C5AF6D49141E21B75D60582454E7F1076DBE",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave267.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods; bodysum63.py and classify-seam.py (both new) filtered the 575 free, unprotected Falcon rows that mention a readable Knx.Falcon type down to 149 accessor-shaped bodies and this wave took the 25 plain field-reads and setters among them. Named: secure key, individual address, group ids, encrypted buffer, connection status code, message frame exception cause, selector type, the IoTAccessScope lookup and its reverse, Class992's group address get/set pair, the IoT security parameters (secure key, key derivation function, authenticated encryption algorithm and their setters), the software update command, the CoAP message code, and four more static KNX Falcon loggers.",
+    "themes": "The row names themselves flag two policy classes: vmethod_* is virtual, so Class733::vmethod_0 was refused with virtual-or-override and dropped (it needs --review-families), and sdk-public-method rows that return SDK signature types are preserved by the whitelist. GetLogger repeats across four logger-holder classes and is accepted in each; no collision suffixes."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 25,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14744,
+    "VisibleRenamed": 4981,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11550
+  },
+  "Errors": 0
+}
