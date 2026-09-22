@@ -43,13 +43,16 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Move-planner review committed as `48fc15734`.
   Add/link review committed as `646cbe231`.
   Deletion/unlink review committed as `5ef6ca8be`.
-  Current naming checkpoint: `checkpoint-wave207.json`, from accepted 206/34,
-  through copy/link dispatch and its captured callbacks, selectors and locals.
+  Copy/link review committed as `770eb8752`.
+  Current naming checkpoint: `checkpoint-wave209.json`, from accepted 207/35,
+  through extended-copy/move dispatch and routing-key/certificate wrappers.
+  Intermediate 208/36 maps were superseded by the expanded review; accepted
+  209/37 derive directly from 207/35, not from those intermediate files.
   Candidate 6.3 v203 was rejected; corrected v204 derives directly from v202.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v207.xml`,
-  SHA256 `5B329E77A1789E295E12FBA06A438BD27BADD67560F846145E8375BE0842807C`.
-- Current 6.4 map: `names64-staged-v35.xml`, SHA256
-  `9F417231FB28E03898240DDA2B02326B08139ACD52DB8CCCC746B81108957F11`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v209.xml`,
+  SHA256 `6D74383690CBADCF083029716A0275D34D4FFF51FCF53088F3ABF5D172C7322C`.
+- Current 6.4 map: `names64-staged-v37.xml`, SHA256
+  `1A30757F677A59E1936564ECCDA69BACCE7D3ACB42EDE80900E585D69134E395`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -60,7 +63,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-207.json` and `map-update64-wave-35.json`.
+  The last update reports are `map-update63-wave-209.json` and `map-update64-wave-37.json`.
   `map-update63-wave-203.json` is rejected self-collision evidence, not an accepted step.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
@@ -80,9 +83,61 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
 
-## Copy and link dispatch (207 / 35)
+## Extended-copy and move dispatch (209 / 37)
 
-Resume with maps **207/35**, `copy63-wave207.cumulative.json` and
+Resume with maps **209/37**, `dispatch63-wave209.cumulative.json` and
+`dispatch64-wave37.cumulative.json`. `operation_dispatch_scopes.py` reviews the
+extended-copy and move dispatchers in both physical ViewModel assemblies, plus
+routing-backbone-key and certificate add/delete wrappers. The six complete public
+families per version retain their original names and parameters. The prior 6.3
+IsCopyPasswordRequired name is retained; its targetProject local and the equivalent
+6.4 callback now have the same reviewed meaning.
+
+Extended-copy predicates name the actual OptionParents category and copy branch.
+The enum declaration, physical field identity and IL constant are recorded. Caller
+scopes distinguish argumentBuilder, copyOptions, sourceProductImporter and target
+fallbacks. Missing required options still throw via First; Trade uses the previously
+reviewed default helper. Line targets fall back to the installation backbone area,
+segment targets select ILine or IArea.MainLine, and free-range copies retain no
+address renaming with offset zero. Product import uses the source project's store;
+connector options compare project IDs; password callbacks use the target project.
+
+Move callback names distinguish copy, source deletion, in-project move, validation
+failure and unlink/relink phases. Project comparisons keep reference identity.
+Same-project root main-group/area moves remain invalid; devices moved to their own
+installation unlink from the line. Area import uses the source store while both
+area password callbacks use the destination. Function move-links retain their
+direct ID projection without adding the copy dispatcher's deduplication behavior.
+The 6.4 calledOutside local uses the exact physical ObjectModel constructor evidence.
+
+The review helper now follows normal IL control flow to each callback's receiving
+operation. A linear scan incorrectly selected a later line-copy constructor for an
+area-option predicate whose branch jumps backward. All 224 recorded predicate/
+callback consumers now resolve to one expected operation constructor, including
+79 backward paths across both versions. Map updates have 359/365 edits, zero errors
+and no suffixes; both final preflights have zero changes/errors. Prior map/ledger
+decisions, scoped aliases and SDK whitelist bindings are preserved.
+
+`dispatch-wave209-validation.json` records the remaining factory candidates:
+none in the 6.3 method inventory, and 86 generated static readers/null tests in
+6.4 with no resolved application callers. Their 43 fields are referenced only by
+those helpers: 37 are self-typed and six generic-container fields are System.Object.
+This corrects earlier shorthand calling all sentinel storage self-typed. Generic
+MemberRefs resolve through exact physical graph edges, never token/simple-name
+substitution. These symbols remain explicitly unresolved. This is a local factory
+inventory check, not proof of whole-application readability or runtime behavior.
+
+Next use `dispatch-wave209-caller-worklist.json`, bound to these maps and complete
+CreateMove/ExtendedCopy contract families. It identifies the extended-copy wizard
+callback (6.3 0x060055DF / 6.4 0x060074FE), DragDropOperationsFactory.CreateMoveOperation
+(0x060036BC / 0x06004961), and the still-unmapped 6.4 paste callbacks 0x06005B7D /
+0x06005B82. Their 6.3 counterparts were already reviewed. Continue through their
+inner helpers and scopes into the wider application. No ETS application, exports,
+builds, full audits or launches ran.
+
+## Copy and link dispatch (207 / 35, historical)
+
+This checkpoint used maps **207/35**, `copy63-wave207.cumulative.json` and
 `copy64-wave35.cumulative.json`. `operation_copy_scopes.py` reviews the complete
 CreateCopyOperation body in each physical ViewModel: 6.3 m0082:0x06004C7E and
 6.4 m0146:0x060067BE. It starts at selectors and callback bodies, then names
@@ -1050,10 +1105,10 @@ completion measure. No ETS source/binary application, export, build, audit or la
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `copy63-wave207.cumulative.json` and
-  `copy64-wave35.cumulative.json`; do not
+  `dispatch63-wave209.cumulative.json` and
+  `dispatch64-wave37.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **207/35** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **209/37** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
   `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by
