@@ -1,0 +1,104 @@
+{
+  "Format": 1,
+  "PreviousGoalTurn": "progress",
+  "Status": "Application-wide mapping in progress",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v196.xml",
+      "Sha256": "13B9701DB2409E9D925C8B8F681367A5FF3DF30D6EACDA831E803F2C27EA8A32",
+      "AppliedToSource": false
+    }
+  },
+  "Updates": [
+    {
+      "Path": "map-update63-wave-196.json",
+      "Sha256": "6855090EAB448AA79546401DC74E7DD4DD28F6DCF2EB23292D47D87B4E484DCF"
+    }
+  ],
+  "Artifacts": {
+    "contract-references63-v3.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json",
+      "Sha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA"
+    },
+    "http63-wave196-contract-scopes.jsonl": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\http63-wave196-contract-scopes.jsonl",
+      "Sha256": "91BFAF0DEEB0959A673B968E00E2D1D4FCA701E27329B4AED75D64A13A0448C9"
+    },
+    "http63-wave196-family-evidence.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\http63-wave196-family-evidence.json",
+      "Sha256": "78C5B63C28236979D506682DDC9703BB4D67291C1B75CCABA0F9A47FE5F72300"
+    },
+    "http63-wave196.review.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\http63-wave196.review.json",
+      "Sha256": "2ABEBF41161C46F7BC3753AC7B98AFEB249F5C75ECB15032E56380A73DAD74EB"
+    },
+    "http63-wave196.evidence.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\http63-wave196.evidence.json",
+      "Sha256": "25F8B2DBB2855B4F41E96AA864B50A742DA72867B1C373AA0EB1F56A257C05C2"
+    },
+    "http63-wave196-full-inspection.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\http63-wave196-full-inspection.json",
+      "Sha256": "B782D42CF078660441D030D1AFFACAC73AD3B8521F8800B65670C74C1C5A36C0"
+    },
+    "map-update63-wave-196.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-update63-wave-196.json",
+      "Sha256": "6855090EAB448AA79546401DC74E7DD4DD28F6DCF2EB23292D47D87B4E484DCF"
+    },
+    "map-check63-wave196.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-check63-wave196.json",
+      "Sha256": "F51A8EF8619B23C440F9BAA93EE4337145A2203897EBA9AF8D16994AC0B4D54F"
+    },
+    "map-check63-wave196-reference-context.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\map-check63-wave196-reference-context.json",
+      "Sha256": "2F31CEA1277E9D1BF320695B7BF925B9597356ADF6F7B08C7DC49CE42617EFD2"
+    },
+    "http-wave196-validation.json": {
+      "Input": "D:\\knx_analysis\\application-name-pass01\\http-wave196-validation.json",
+      "Sha256": "CC8D80AA66727640A096095A1CF1B582A9116AFB30593F1246D25FAC608492E7"
+    }
+  },
+  "AppliedToSource": false,
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsFullAudits": 0,
+  "EtsLaunches": 0,
+  "EtsBinaryApplies": 0,
+  "PriorMapDecisionsPreserved": false,
+  "UnreviewedDecisionsPreserved": true,
+  "ReviewedAliasReplacements": [
+    {
+      "Module": "Knx.Ets.Common.dll",
+      "Kind": "Method",
+      "Token": "0x0600027F",
+      "ExpectedName": "IsRedirectHeader",
+      "NewName": "ShouldIncludeHeader",
+      "Reason": "Accepts every header when includeRedirectHeader is true; otherwise rejects only the exact case-sensitive x-knx-redirect key. This is inclusion policy, not a test identifying redirect headers."
+    },
+    {
+      "Module": "Knx.Ets.Common.dll",
+      "Kind": "Method",
+      "Token": "0x0600026F",
+      "ExpectedName": "CollectRedirectHeaders",
+      "NewName": "CreateClient",
+      "Reason": "Creates a new HttpClient, adds configured headers accepted by ShouldIncludeHeader and wraps it with its factory and header policy. This creates and returns a client rather than collecting headers."
+    }
+  ],
+  "NewCollisionSuffixes": 0,
+  "ReviewedChains": [
+    "Configuration and exact KNX redirect-header inclusion through client construction, two-policy client pooling and all six HTTP contract families.",
+    "Corrected CollectRedirectHeaders to CreateClient and IsRedirectHeader to ShouldIncludeHeader using exact old/new alias review and physical IL/source evidence.",
+    "Added pinned .NET Standard facade to metadata references; its IDisposable forwarder resolves to the already pinned mscorlib. No guard bypass or ETS execution.",
+    "All prior scoped aliases, SDK protection and unrelated names preserved; map preflight passes with zero new collision suffixes."
+  ],
+  "Remaining": [
+    "Whole-application naming is incomplete. Continue Common and other application chains, including candidates omitted by name heuristics; existing maps and source declarations both need consideration.",
+    "Resume protected 196/28 maps, contract-references63-v3.json, http63-wave196.cumulative.json and exception64-wave28.cumulative.json.",
+    "Validate observed pooling lifetime, WebSocket/routing and decompiled control-flow anomalies against original IL and runtime at final consolidation.",
+    "Finish mapping before consolidated ETS export/build/full audit/launch and SDK export refresh; preserve 51 inherited suffix issues and unresolved register semantics."
+  ],
+  "Reviews": {
+    "reviewed63.json": {
+      "Sha256": "0B323561B86173C93DB61E66D12293378921DD5DDC36A81B45054A23B768859A"
+    }
+  }
+}

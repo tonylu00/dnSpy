@@ -34,9 +34,10 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Unicast and programming-mode review committed as `f43016c2a`.
   Statistics aggregation and accessor evidence committed as `fb3528fcd`.
   Explicit-interface support and snapshot providers committed as `b551440d3`.
-  Current naming checkpoint: `checkpoint-wave195.json`, from accepted 194/27.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v195.xml`,
-  SHA256 `6DD52B5156148862AC4360D1EF548CEF3644EC7A3A451B6C28F9E0FECC68CEC0`.
+  Event/exception diagnostics committed as `318443f46`.
+  Current naming checkpoint: `checkpoint-wave196.json`, from accepted 195/28.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v196.xml`,
+  SHA256 `13B9701DB2409E9D925C8B8F681367A5FF3DF30D6EACDA831E803F2C27EA8A32`.
 - Current 6.4 map: `names64-staged-v28.xml`, SHA256
   `985460A9DB308044A0484D27B50F2F57036D82735B07E303946A20251B9BF78A`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
@@ -49,7 +50,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-195.json` and `map-update64-wave-28.json`;
+  The last update reports are `map-update63-wave-196.json` and `map-update64-wave-28.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -60,11 +61,12 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
 - The NameCandidates suite passed, including two synthetic physical assemblies
   with the same identity. Constructor names, signatures, flags, IL and executed
   constructor/type-initializer behavior were preserved after scoped aliases.
-- The current contract reference manifest is `contract-references63-v2.json`,
-  SHA256 `75A9047067B893EEADA2C147E01CC573BDD25ED784A591CBA839832358FB654F`.
-  It retains the prior mscorlib reference and adds the exact .NET 4.8 reference
-  System.dll to resolve INotifyPropertyChanged. Preflight proved the existing map
-  still valid; the five internal layer families then resolved without blockers.
+- The current contract reference manifest is `contract-references63-v3.json`,
+  SHA256 `92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA`.
+  It preserves the pinned mscorlib/System entries from v2 and adds the exact .NET
+  4.8 reference `Facades/netstandard.dll`. Common binds IDisposable through this
+  facade, whose forwarder targets the pinned mscorlib. With that metadata context,
+  the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
 
 ## Statistics values and aggregation (193)
@@ -615,6 +617,35 @@ sink families, SDK bindings and prior-map preservation. Both map preflights pass
 with zero errors and zero new suffixes. `exception-wave195-validation.json`
 records scope and hashes. No ETS apply/export/build/full audit/launch occurred.
 
+## HTTP client configuration and pooling (196)
+
+`http_client_pool.py` reviews the physical root Common module m0039, separately
+from its compatibility copies. It traces header configuration and the inclusion
+predicate through client creation, acquisition from two concurrent stacks, HTTP
+forwarding and return-to-pool behavior. Six complete families now use AcquireClient,
+SendAsync, GetByteArrayAsync (string/Uri), and GetAsync (string/Uri). The factory,
+interfaces, wrapper, predicate capture and used storage/scopes have role names.
+
+Two earlier aliases were inaccurate: CollectRedirectHeaders created a client,
+and IsRedirectHeader accepted any header under the selected policy. Exact
+old/new replacement evidence corrects them to CreateClient and ShouldIncludeHeader.
+All other prior aliases and every scoped decision remain intact. Header filtering
+compares the exact case-sensitive x-knx-redirect key and does not configure HTTP
+redirect handling. The read-only dictionary wraps mutable copied storage.
+
+The missing IDisposable contract was a netstandard reference. The pinned v3
+manifest resolves its forwarder through the already pinned mscorlib; old-map
+preflight passed before any new decisions. The selected six families contain 12
+members, with graph reference uses verified in their exact physical context.
+Full inventory `http63-wave196-families.json` is provenance for the compact retained
+family evidence; use v3 for future family reviews and map checks.
+
+35 decisions produced 64 edits with no suffix changes. Input/source/IL hashes,
+SDK binding, effective names/scopes and map preflight pass. The inherited wrapper
+base marks it disposed, while acquisition does not reset that state; the forwarding
+methods do not check disposal. Keep this as a final original-IL/runtime comparison
+item, not a repaired or verified lifecycle. No ETS operation ran. 6.4 stays at v28.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -637,9 +668,9 @@ records scope and hashes. No ETS apply/export/build/full audit/launch occurred.
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `exception63-wave195.cumulative.json` and `exception64-wave28.cumulative.json`; do not
+  `http63-wave196.cumulative.json` and `exception64-wave28.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **195/28** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **196/28** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
@@ -651,9 +682,9 @@ records scope and hashes. No ETS apply/export/build/full audit/launch occurred.
   binary applies and `--verify-applied` checks do not prove source rebuilding or
   ETS runtime behavior.
 - Use `graph63-v3.sqlite` and `graph64-v3.sqlite`; keep compatibility paths,
-  SHA256, MVID and exact dependency scope. Pass `contract-references63-v2.json`
+  SHA256, MVID and exact dependency scope. Pass `contract-references63-v3.json`
   to NameCandidates map updates/checks. Do not pick a map by
-  newest filename. The current cumulative 6.3 review binds the v2 manifest hash.
+  newest filename. The current cumulative 6.3 review binds the v3 manifest hash.
 - Leave uncertain storage fields and unsupported external contracts unresolved.
   Preserve compiler-generated metadata needed for reconstruction. Existing source
   aliases can only change through exact old/new replacement evidence bound to the

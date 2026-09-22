@@ -1,0 +1,118 @@
+{
+  "Format": 1,
+  "Scope": "Selected physical source, IL, map and resolved reference checks; no ETS execution",
+  "Map": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v196.xml",
+  "Sha256": "13B9701DB2409E9D925C8B8F681367A5FF3DF30D6EACDA831E803F2C27EA8A32",
+  "BaseSha256": "6DD52B5156148862AC4360D1EF548CEF3644EC7A3A451B6C28F9E0FECC68CEC0",
+  "Decisions": 35,
+  "MapEdits": 64,
+  "PriorAliasesPreservedExceptReviewedReplacements": true,
+  "ReviewedReplacements": [
+    {
+      "Module": "Knx.Ets.Common.dll",
+      "Kind": "Method",
+      "Token": "0x0600027F",
+      "ExpectedName": "IsRedirectHeader",
+      "NewName": "ShouldIncludeHeader",
+      "Reason": "Accepts every header when includeRedirectHeader is true; otherwise rejects only the exact case-sensitive x-knx-redirect key. This is inclusion policy, not a test identifying redirect headers."
+    },
+    {
+      "Module": "Knx.Ets.Common.dll",
+      "Kind": "Method",
+      "Token": "0x0600026F",
+      "ExpectedName": "CollectRedirectHeaders",
+      "NewName": "CreateClient",
+      "Reason": "Creates a new HttpClient, adds configured headers accepted by ShouldIncludeHeader and wraps it with its factory and header policy. This creates and returns a client rather than collecting headers."
+    }
+  ],
+  "AllPriorScopedNamesPreserved": true,
+  "VerifiedSourceFiles": 6,
+  "EveryDecisionEffectiveInMap": true,
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "SdkNameWhitelistSha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
+  "NewCollisionSuffixes": 0,
+  "Families": [
+    {
+      "Id": "067B2A830F36BEB6FD438A75E15D50BBB58BFCF5CEF38C1AC171BD78A44D853F",
+      "Members": [
+        "0x06000274",
+        "0x06000279"
+      ],
+      "Name": "SendAsync",
+      "ResolvedReferenceUses": 2,
+      "ConsumerModules": [
+        "m0039",
+        "m0082"
+      ]
+    },
+    {
+      "Id": "39F20EF309D61390F0630A6C1C3010C706A2B7D8CEA095904428B4B9229B5F3D",
+      "Members": [
+        "0x06000276",
+        "0x0600027D"
+      ],
+      "Name": "GetByteArrayAsync",
+      "ResolvedReferenceUses": 0,
+      "ConsumerModules": []
+    },
+    {
+      "Id": "5877BBF6A0A4629A521C9B7E865752586FD5DC36D073AD057BB071F125F047E2",
+      "Members": [
+        "0x0600026D",
+        "0x06000270"
+      ],
+      "Name": "AcquireClient",
+      "ResolvedReferenceUses": 8,
+      "ConsumerModules": [
+        "m0039",
+        "m0082"
+      ]
+    },
+    {
+      "Id": "C04137E03C0EAB797D262F472DAE11B17338FC7B498B7B5D0D4897C0AE7D93AA",
+      "Members": [
+        "0x06000275",
+        "0x0600027C"
+      ],
+      "Name": "GetByteArrayAsync",
+      "ResolvedReferenceUses": 0,
+      "ConsumerModules": []
+    },
+    {
+      "Id": "E5687CAC85C38FFE1C89F23E086F609D9A76EFA225E288BF2D0830D1FDFF92F2",
+      "Members": [
+        "0x06000278",
+        "0x0600027B"
+      ],
+      "Name": "GetAsync",
+      "ResolvedReferenceUses": 2,
+      "ConsumerModules": [
+        "m0039",
+        "m0082"
+      ]
+    },
+    {
+      "Id": "F76ECDC6B55181D0FC69916B7C11E62AFD4AC6D3BB6308A2BB8913410A2D2812",
+      "Members": [
+        "0x06000277",
+        "0x0600027A"
+      ],
+      "Name": "GetAsync",
+      "ResolvedReferenceUses": 2,
+      "ConsumerModules": [
+        "m0039",
+        "m0082"
+      ]
+    }
+  ],
+  "BehaviorLimits": [
+    "Header exclusion is case-sensitive and affects only x-knx-redirect, not automatic HTTP redirects.",
+    "The read-only header dictionary is a view over mutable copied storage.",
+    "Ordinary wrapper Dispose returns it to its pool; underlying client disposal is separate. Base disposal marks wrappers disposed; acquisition does not reset that state. No lifecycle repair was made."
+  ],
+  "EtsExports": 0,
+  "EtsBuilds": 0,
+  "EtsBinaryApplies": 0,
+  "EtsFullAudits": 0,
+  "EtsLaunches": 0
+}
