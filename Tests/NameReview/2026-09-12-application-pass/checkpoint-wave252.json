@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 252 accepted (6.3): Knx.Ets.ObjectModel.Operations.GroupAddressImportExport",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v252.xml",
+      "Sha256": "C72AA1130AA94997ED4A2F68366ECE79B0CC183DB8122AC8FB356A574ACD3915",
+      "PreviousMap": "names63-staged-v251.xml",
+      "PreviousMapSha256": "A94820D1863CC48202D242113B20EDBB780E1B9F063CFEF4C88CB00E3FEE90FC",
+      "FrozenSha256": "C72AA1130AA94997ED4A2F68366ECE79B0CC183DB8122AC8FB356A574ACD3915",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave252.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The group address import/export layer is the CSV/XML/OPC readers and writers: the CSV column builder escapes the separator characters, the operation pairs the export selections with SetDescription, the CSV reader creates the line reader/writer by name and rejects an unsupported format with InvalidImportData, the XML reader reads the group range and group address attributes (Name, Address, RangeStart/RangeEnd, Central, Unfiltered, Description, DPTs, Security) and reports schema errors through the import validation result, and the OPC export writes its .phd streams with the '{0}/{1}' or '{0}/{1}/{2}' addresses.",
+    "skipped": "CsvLineReaderWriter.a(string) (0x0600449C) and ImportGroupAddressesOperation.a(RangeMapping, GroupRangeImportValue) (0x06004574, empty body) are left unresolved."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 21,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14397,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11203
+  },
+  "Errors": 0
+}
