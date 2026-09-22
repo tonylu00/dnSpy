@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 269 accepted (6.3): remaining Falcon accessors and HawkNET's readable-type accessors",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v269.xml",
+      "Sha256": "0F2D8D8A60135B1CC3A4B162C151A172EB532AC34FC4EAB35A277C8664E85853",
+      "PreviousMap": "names63-staged-v268.xml",
+      "PreviousMapSha256": "4B775A0A70E2E6432672F6602C69B1D2AB255E4204EFC997B490C0E9DF731A0E",
+      "FrozenSha256": "0F2D8D8A60135B1CC3A4B162C151A172EB532AC34FC4EAB35A277C8664E85853",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave269.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods, from the remaining accessor-shaped rows of the Falcon seam and the first triage of the HawkNET seam (readable-seam.py with a Knx.* pattern: 314 rows, 101 accessor-shaped). Named: three more KNX Falcon loggers, the CoAP/KNX message code accessors, the IoT message log texts, the decryption status forwarder, the IoT software update state predicate, the device information and supported service families DIB accessors, the HawkNET device access type get/set pair, the data provider, the serial number extractor get/set pairs (sync and async) and the serial number, and the bus of the HawkNET connector.",
+    "themes": "Knx.Ets.HawkNET.dll's accessible surface also mentions readable Knx.* types, so the same seam method works there. One row (0x0600132B, HawkNET) was refused with accessor-operator-or-runtime-special-name: its property row is itself obfuscated, and the tool only accepts an accessor rename when the property/event row still carries a readable name (get_X/set_X is the only thing C# can bind). That is a structural blocker, not a missing name."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 18,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14797,
+    "VisibleRenamed": 5008,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11603
+  },
+  "Errors": 0
+}
