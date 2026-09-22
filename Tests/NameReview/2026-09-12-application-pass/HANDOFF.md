@@ -35,11 +35,12 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Statistics aggregation and accessor evidence committed as `fb3528fcd`.
   Explicit-interface support and snapshot providers committed as `b551440d3`.
   Event/exception diagnostics committed as `318443f46`.
-  Current naming checkpoint: `checkpoint-wave196.json`, from accepted 195/28.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v196.xml`,
-  SHA256 `13B9701DB2409E9D925C8B8F681367A5FF3DF30D6EACDA831E803F2C27EA8A32`.
-- Current 6.4 map: `names64-staged-v28.xml`, SHA256
-  `985460A9DB308044A0484D27B50F2F57036D82735B07E303946A20251B9BF78A`.
+  HTTP pooling/contract review committed as `76c45dd30`.
+  Current naming checkpoint: `checkpoint-wave197.json`, from accepted 196/28.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v197.xml`,
+  SHA256 `08B790EB25D9A564E3E101AE027E0C7732A260F93C0F8A2F3864E76B54AE2970`.
+- Current 6.4 map: `names64-staged-v29.xml`, SHA256
+  `9B604EC844124D5A9BC652A68DE05BDB112FBB91B2DDBD44360625CD1A808CA3`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -50,7 +51,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-196.json` and `map-update64-wave-28.json`;
+  The last update reports are `map-update63-wave-197.json` and `map-update64-wave-29.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -646,6 +647,60 @@ base marks it disposed, while acquisition does not reset that state; the forward
 methods do not check disposal. Keep this as a final original-IL/runtime comparison
 item, not a repaired or verified lifecycle. No ETS operation ran. 6.4 stays at v28.
 
+## Trace comments, derivation and cipher envelopes (197)
+
+`security_envelopes.py` independently reviews root Common m0039 in 6.3 and m0102
+in 6.4 (source `Knx.Ets.Common.4/`, not its retained compatibility project).
+Native PBKDF2/open/close parameter roles, constructor inputs and provider storage
+connect to trace-comment transforms, salt/IV/cipher envelopes, salted password
+hashing and the AES-CCM reader/writer. Existing native names/imports are retained.
+
+Eight 6.3 aliases required exact replacement review: IsDefaultNamespace becomes
+HasEncryptedTracePrefix; ToBytes/ToBytes2/ToBytes3 become
+GetEnvelopeInitializationVector/GetEnvelopeCipherBytes/SerializeCipherEnvelope;
+the shape/length CanParse helpers become LooksLikeCipherEnvelope and
+HasCipherEnvelopeHeaderLength; TryParse becomes ParseCipherEnvelopeIfRecognized;
+DerivePasswordKey becomes DeriveSaltedPasswordHash because its output includes salt.
+Two inherited numeric suffix cases are thereby resolved. Original readable 6.4
+names are retained, with their actual semantics recorded rather than inferred from
+names such as TryParse.
+
+Public hash validation, ReadValue and WriteValue gain actual IL local names while
+keeping their exact method/parameter contracts. Both complete ten-member combined
+family selections retain every name, including ObjectModel implementations. SDK
+interface spellings remain protected. No external contract or inventory blocker
+was bypassed. Trace storage, reader/writer fields and 6.3 envelope constants have
+behavioral names; unused obfuscator storage is untouched.
+
+The trace marker removes length minus one, leaving its final space for Base64
+parsing. That parsing is outside the decryption catch. Envelope recognition only
+checks prefix/length and can lead to throwing Base64/split operations; it is not
+full validation. Null writer input emits an empty cipher and the reader returns
+null for it; empty string is still authenticated/encrypted. Password hash bytes
+are salt plus 32 derived bytes, distinct from the 8-byte-salt/12-byte-IV envelope.
+These observations do not establish runtime equivalence or repair behavior.
+
+Accepted reviews carry the `-rev3` suffix. Local ccmCipher avoids colliding with
+the public cipher parameter. Rev3 adds exact historical-proposal evidence; its
+map-update reviews and cumulative ledgers are byte-identical to rev2. 58/38 decisions produced 156/132 map edits; selected
+source/IL/input hashes, all effective scoped names, exact replacements, unchanged
+family contracts and SDK bindings pass checks. Map preflights have zero errors
+and zero new suffixes. No ETS apply/export/build/full audit/launch ran.
+
+The checkpoint guard reconciles the historical, SDK-excluded VerifyPassword
+proposal with the original acw runtime name only when the base has no method row
+and the new map explicitly retains that original name. The exact old proposal,
+physical identity and reason are checked and retained in the checkpoint. Applied
+ToBytes2/ToBytes3 aliases are distinct from the old ledger proposal ToBytes; exact
+replacement evidence now carries both spellings. This cannot substitute the
+proposal name for the actual base-map alias. Four guard tests and the eight
+existing source-evidence tests pass on Windows. No ETS execution is involved.
+
+`common63-wave197-prior-alias-review.json` records remaining source/map name
+differences, bound to current source hashes and map 197. They are review hints,
+not automatically better names. The initialization helper currently called
+Dispose2 is a priority; inspect its body and event callers before replacing it.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -668,12 +723,15 @@ item, not a repaired or verified lifecycle. No ETS operation ran. 6.4 stays at v
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `http63-wave196.cumulative.json` and `exception64-wave28.cumulative.json`; do not
+  `security63-wave197-rev3.cumulative.json` and
+  `security64-wave29-rev3.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **196/28** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **197/29** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
-- Review the 51 inherited requested/applied suffix adjustments listed in
-  `inherited-suffix-review.json`. This continuation added none.
+- The historical 51 suffix adjustments remain in `inherited-suffix-review.json`.
+  `inherited-suffix-resolutions-wave197.json` resolves its two envelope entries by
+  exact behavioral replacement. Review the other entries individually; SDK
+  exclusions alone are not counted as semantic resolutions. No new suffixes were added.
 - Do not autoaccept the old correspondence queue: its shape normalization can
   erase library identifiers and some scripts collapse module paths to basenames.
   Treat it as a hint and verify actual bodies/callers in physical context.

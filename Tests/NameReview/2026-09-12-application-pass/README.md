@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave196.json`. Current staged maps are **6.3 v196** and **6.4 v28**.
+`checkpoint-wave197.json`. Current staged maps are **6.3 v197** and **6.4 v29**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 196/28, not by newest filename.
+Resume with 197/29, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -31,6 +31,13 @@ methods or completed work. Graphs and query databases live in
 own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
+
+- PBKDF2 provider/input storage → trace transforms → cipher envelope components,
+  parsing/serialization → salted password hashes and AES-CCM reader/writer
+  (`security_envelopes.py`). Eight inaccurate 6.3 aliases are corrected with
+  exact replacement evidence. Both versions have independently reviewed locals
+  and storage while public method/parameter names remain unchanged. Two historical
+  ToBytes suffix cases now have distinct behavioral names.
 
 - HTTP header configuration → client creation and pooling → complete acquire,
   send, GET and byte-download contracts (`http_client_pool.py`). The exact

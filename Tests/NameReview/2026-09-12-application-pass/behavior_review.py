@@ -230,6 +230,13 @@ class BehaviorReview:
         if replace_alias is not None:
             proof['Replacement'] = {'Module': self.relative, 'Kind': kind[:-1], 'Token': key,
                                     'ExpectedName': replace_alias, 'NewName': name, 'Reason': reason}
+            previous = next((r for r in self.prior[kind] if r['Module'] == self.relative and r['Token'] == key), None)
+            if previous and previous.get('NewName') and previous['NewName'] != replace_alias:
+                # A historical proposal can differ from its applied collision
+                # suffix. Record both exact names; never infer one from the other.
+                if any(previous.get(k) != row.get(k) for k in ('Identity', 'Mvid', 'Sha256', 'Signature', 'OriginalName')):
+                    raise ValueError('Historical replacement proposal belongs to another physical symbol')
+                proof['Replacement']['ExpectedReviewName'] = previous['NewName']
         blocker = row.get('MappingBlocker')
         if kind == 'Methods' and not row['NewName']:
             blocker = row['ScopedMappingBlocker']

@@ -32,6 +32,28 @@ def validate_alias_preservation(before, after, replacements):
         raise ValueError('Replacement review contains missing or unchanged aliases')
 
 
+def validate_unapplied_proposal(previous, incoming, before, after, declaration):
+    """Retire a historical proposal only when the current map keeps its CLR name.
+
+    This is ledger reconciliation, never permission to replace an applied alias.
+    Physical identity, the exact old proposal and an explicit reason are required.
+    """
+    identity = ('Module', 'Token', 'Identity', 'Mvid', 'Sha256', 'Signature', 'OriginalName')
+    if any(not previous.get(k) or previous.get(k) != incoming.get(k) for k in identity):
+        raise ValueError('Unapplied proposal physical identity changed')
+    if any(declaration.get(k) != incoming.get(k) for k in ('Module', 'Token', 'Signature')):
+        raise ValueError('Unapplied proposal declaration selects another symbol')
+    if not declaration.get('Reason') or declaration.get('ExpectedProposal') != previous.get('NewName'):
+        raise ValueError('Missing reason or stale historical proposal')
+    retained = incoming.get('OriginalName')
+    if not retained or incoming.get('NewName') != retained or declaration.get('RetainedName') != retained or previous.get('NewName') == retained:
+        raise ValueError('Historical proposal must retire to the exact original name')
+    if before is not None:
+        raise ValueError('Historical proposal already has a map row; use alias replacement review')
+    if after is None or after.tag != 'Method' or any(after.get(k) != incoming.get(k) for k in ('Token', 'Signature')) or after.get('ExpectedName') != retained or after.get('NewName') != retained:
+        raise ValueError('Updated map must explicitly preserve the original method name')
+
+
 def checkpoint(root, plan_path):
     destination = Path(__file__).resolve().parent
     def read(path):
@@ -45,6 +67,8 @@ def checkpoint(root, plan_path):
         raise ValueError('Checkpoint exists; do not replace a recorded milestone')
     accepted = {}
     replacement_reviews = {}
+    map_contexts = {}
+    superseded_proposals = []
     reports = []
     def map_rows(path):
         return {(m.get('Path'), r.tag, r.get('Token')): r for m in ET.parse(path).getroot() for r in m}
@@ -97,6 +121,7 @@ def checkpoint(root, plan_path):
         validate_alias_preservation(before, after, replacements)
         target = str(Path(ET.parse(old_path).getroot().get('InputDirectory')).resolve())
         replacement_reviews[target] = replacements
+        map_contexts[target] = before, after
         accepted[version] = {'Path': str(previous), 'Sha256': sha(previous), 'AppliedToSource': False}
     # The application-wide 6.3 review is cumulative. The new 6.4 behavior
     # review is supplemental to its existing correspondence/property ledgers.
@@ -106,19 +131,36 @@ def checkpoint(root, plan_path):
         target = destination / entry['Output']
         if entry.get('PreserveExisting'):
             old = read(target)
-            replacements = replacement_reviews.get(str(Path(incoming['TargetRoot']).resolve()), {})
+            target_root = str(Path(incoming['TargetRoot']).resolve())
+            replacements = replacement_reviews.get(target_root, {})
+            declarations = entry.get('SupersededUnappliedProposals', [])
+            superseded = {(r['Module'], r['Kind'], r['Token']): r for r in declarations}
+            if len(superseded) != len(declarations) or any(r['Kind'] != 'Method' for r in declarations):
+                raise ValueError('Duplicate or unsupported historical proposal review')
+            used = set()
             for kind in ['Methods', 'Types', 'Fields']:
                 newer = {(r['Module'], r['Token']): r for r in incoming[kind]}
                 for row in old[kind]:
                     key = row['Module'], row['Token']
                     replacement = replacements.get((row['Module'], kind[:-1], row['Token']))
-                    replaced = replacement and row.get('NewName') == replacement['ExpectedName'] and newer.get(key, {}).get('NewName') == replacement['NewName']
+                    replaced = replacement and row.get('NewName') == replacement.get('ExpectedReviewName', replacement['ExpectedName']) and newer.get(key, {}).get('NewName') == replacement['NewName']
+                    proposal_key = (row['Module'], kind[:-1], row['Token'])
+                    if proposal_key in superseded:
+                        before, after = map_contexts[target_root]
+                        validate_unapplied_proposal(row, newer.get(key, {}), before.get(proposal_key), after.get(proposal_key), superseded[proposal_key])
+                        used.add(proposal_key)
+                        replaced = True
                     if key not in newer or row.get('NewName') and row['NewName'] != newer[key].get('NewName') and not replaced:
                         raise ValueError('Existing review decision changed: ' + str(key))
                     for collection, position in [('ParameterNames', 'Sequence'), ('LocalNames', 'Index')]:
                         scoped = {r[position]: r.get('NewName') for r in newer[key].get(collection, [])}
                         if any(r.get('NewName') and scoped.get(r[position]) != r['NewName'] for r in row.get(collection, [])):
                             raise ValueError('Existing review scoped decision changed')
+            if used != set(superseded):
+                raise ValueError('Historical proposal review was not consumed')
+            superseded_proposals.extend({'TargetRoot': target_root, **r} for r in declarations)
+        elif entry.get('SupersededUnappliedProposals'):
+            raise ValueError('Historical proposal review requires prior-ledger preservation')
         reviews[entry['Output']] = incoming
     # Validate everything before publishing any checkpoint file.
     artifacts = {name: {'Input': str(root / name), 'Sha256': sha(root / name)} for name in plan['Artifacts']}
@@ -128,6 +170,7 @@ def checkpoint(root, plan_path):
                        'EtsLaunches': 0, 'EtsBinaryApplies': 0, 'PriorMapDecisionsPreserved': not any(replacement_reviews.values()),
                        'UnreviewedDecisionsPreserved': True,
                        'ReviewedAliasReplacements': [r for group in replacement_reviews.values() for r in group.values()],
+                       'SupersededUnappliedProposals': superseded_proposals,
                        'NewCollisionSuffixes': 0, 'ReviewedChains': plan['ReviewedChains'], 'Remaining': plan['Remaining']}
     for name in artifacts:
         shutil.copyfile(root / name, destination / name)
