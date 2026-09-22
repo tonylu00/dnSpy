@@ -1,0 +1,316 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v14.xml",
+ "BaseMapSha256": "0DBE92C84C6B785398D3EF00DFE6DE24448BE3A2A2B90E7FD757A0B6CE179FDD",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06003520",
+   "ProposedName": "MatchesHidPath",
+   "Reason": "Matches the setting hidpath attribute exactly against the captured HID path; no case normalization.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003520",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 142,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x0600351B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 100,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "setting"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-address64-wave178-inspection.json",
+    "Sha256": "C3ABEF8866E62F1F5CE78E32C0555B3998A4D2865340C26F27B7DD8AB75B98F6",
+    "Token": "0x06003520",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x0600351B",
+   "ProposedName": "FindDeviceSetting",
+   "Reason": "Returns the first direct setting child whose hidpath matches; absent document root or absent match returns null.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600351B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 100,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003520",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 142,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003518",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 21,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003519",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 44,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "document"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbDeviceAddressPersister/<>c__DisplayClass5_0",
+     "NewName": "pathMatch"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-address64-wave178-inspection.json",
+    "Sha256": "C3ABEF8866E62F1F5CE78E32C0555B3998A4D2865340C26F27B7DD8AB75B98F6",
+    "Token": "0x0600351B",
+    "Slots": {
+     "0": "pathMatch"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003518",
+   "ProposedName": "",
+   "Reason": "Reads the saved ia attribute for this HID path and converts it to IndividualAddress. Missing files/settings or caught XML/read errors return null; preserve the existing readable method name.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003518",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 21,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x0600351B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 100,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x060033F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 157,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "hidPath",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 2,
+     "ExpectedType": "System.Exception",
+     "NewName": "readException"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "deviceSetting"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.IndividualAddress>",
+     "NewName": "savedAddress"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-address64-wave178-inspection.json",
+    "Sha256": "C3ABEF8866E62F1F5CE78E32C0555B3998A4D2865340C26F27B7DD8AB75B98F6",
+    "Token": "0x06003518",
+    "Slots": {
+     "5": "savedAddress",
+     "4": "deviceSetting",
+     "2": "readException"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003519",
+   "ProposedName": "",
+   "Reason": "Loads or creates devices XML, inserts/updates a setting keyed by HID path, stores the individual address and saves. XML/save failures are logged; directory creation occurs outside that catch.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003519",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 44,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x0600351B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 100,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x060033F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 157,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "hidPath",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "individualAddress",
+     "HasMetadata": true,
+     "NewName": "individualAddress"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 3,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "deviceSetting"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Xml.Linq.XDocument",
+     "NewName": "settingsDocument"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "saveException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\usb-address64-wave178-inspection.json",
+    "Sha256": "C3ABEF8866E62F1F5CE78E32C0555B3998A4D2865340C26F27B7DD8AB75B98F6",
+    "Token": "0x06003519",
+    "Slots": {
+     "4": "settingsDocument",
+     "3": "deviceSetting",
+     "5": "saveException"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x04002492",
+   "ProposedName": "logger",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002492",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 131,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003518",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 21,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003519",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 44,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x0600351B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 100,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003520",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 142,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002494",
+   "ProposedName": "requestedHidPath",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002494",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 163,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003518",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 21,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003519",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 44,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x0600351B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 100,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    },
+    {
+     "Id": "m0153:0x06003520",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbDeviceAddressPersister.cs",
+     "Line": 142,
+     "Sha256": "F67EE892AD0BA3680D12037A89F0541BF50098C9016A3FFFB9037F16D7C7C744"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

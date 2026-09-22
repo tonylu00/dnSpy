@@ -110,6 +110,14 @@ namespace SourceNameMapping {
         }
         public IEnumerable<Family> Families => families.Values.Distinct().OrderBy(f => f.Id, StringComparer.Ordinal);
         public Family Get(MethodDef method) => families.TryGetValue(method, out var family) ? family : null;
+        // Parameter/local aliases do not change the constructor's runtime name.
+        // Share this rule with the exporter so an accepted review is consumable.
+        public static string ScopedMethodBlocker(MethodDef method) {
+            if (method.IsConstructor && method.HasBody && method.IsIL && method.IsManaged &&
+                !method.IsPinvokeImpl && !method.HasImplMap && !method.IsRuntime &&
+                !method.IsVirtual && !method.HasOverrides) return null;
+            return MethodBlocker(method);
+        }
         public static string MethodBlocker(MethodDef method) {
             if (method.IsConstructor) return "constructor";
             if (method.IsRuntimeSpecialName || method.Name.String.StartsWith("op_", StringComparison.Ordinal)) return "accessor-operator-or-runtime-special-name";

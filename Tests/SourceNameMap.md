@@ -31,7 +31,7 @@ assembly name. The accepted map is saved as `dnspy-source-name-map.xml` beside
 the export manifest.
 
 Version 1 supports non-generic types, ordinary fields, ordinary nonvirtual methods and complete
-implicit interface/virtual override families. Constructors, accessors,
+implicit interface/virtual override families. Constructor renames, unsupported accessors,
 runtime methods, unsupported native imports, explicit `MethodImpl` declarations and static virtual
 contracts remain unsupported.
 Choose type/method aliases unique across their module, including original
@@ -50,6 +50,17 @@ and signature-qualified restoration instructions without executing native code:
 
 ```sh
 dotnet run --project Tests/NativeImportAliasRegression -c Release -- /path/to/fixture/native-imports/names.xml
+```
+
+Managed instance constructors and type initializers accept parameter/local-only
+rows with no `NewName` attribute on the method. The parser uses the same scoped
+eligibility rule as NameCandidates; `.ctor` and `.cctor` remain unchanged.
+Native/runtime constructors and constructor method aliases remain rejected.
+The portable fixture consumes the NameCandidates suite's scoped map and checks
+both physical compatibility copies, source aliases and invalid rename/stale rows:
+
+```sh
+dotnet run --project Tests/ConstructorScopeAliasRegression -c Release -- /path/to/fixture/constructor-scope/names.xml /path/to/new-report-directory
 ```
 
 For an interface or virtual family, generate the map with NameCandidates

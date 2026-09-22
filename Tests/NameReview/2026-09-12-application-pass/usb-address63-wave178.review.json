@@ -1,0 +1,305 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "75A9047067B893EEADA2C147E01CC573BDD25ED784A591CBA839832358FB654F",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334/a",
+   "Token": "0x06001D32",
+   "Signature": "System.Boolean Class1334/a::b(System.Xml.Linq.XElement)",
+   "OriginalName": "b",
+   "Reason": "Matches the setting hidpath attribute exactly against the captured HID path; no case normalization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XElement xelement_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xelement_0",
+     "HasMetadata": true,
+     "NewName": "setting"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesHidPath",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x06001D2F",
+   "Signature": "System.Xml.Linq.XElement Class1334::a(System.Xml.Linq.XDocument,System.String)",
+   "OriginalName": "a",
+   "Reason": "Returns the first direct setting child whose hidpath matches; absent document root or absent match returns null.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0",
+    "2: System.String string_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "document"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1334/a",
+     "NewName": "pathMatch"
+    }
+   ],
+   "NewName": "FindDeviceSetting",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x06001D2C",
+   "Signature": "System.Nullable`1<Knx.Falcon.IndividualAddress> Class1334::a(System.String)",
+   "OriginalName": "a",
+   "Reason": "Reads the saved ia attribute for this HID path and converts it to IndividualAddress. Missing files/settings or caught XML/read errors return null; preserve the existing readable method name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.IndividualAddress>",
+     "NewName": "savedAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "deviceSetting"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Exception",
+     "NewName": "readException"
+    }
+   ],
+   "NewName": "GetIndividualAddress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x06001D2D",
+   "Signature": "System.Void Class1334::a(System.String,Knx.Falcon.IndividualAddress)",
+   "OriginalName": "a",
+   "Reason": "Loads or creates devices XML, inserts/updates a setting keyed by HID path, stores the individual address and saves. XML/save failures are logged; directory creation occurs outside that catch.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_2",
+    "2: Knx.Falcon.IndividualAddress individualAddress_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "individualAddress"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Xml.Linq.XDocument",
+     "NewName": "settingsDocument"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "deviceSetting"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Exception",
+     "NewName": "saveException"
+    }
+   ],
+   "NewName": "SetIndividualAddress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x06001D2E",
+   "Signature": "System.Void Class1334::a()",
+   "OriginalName": "a",
+   "Reason": "Deletes the saved-address XML file if it exists; file deletion failures propagate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Clear",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x02000538",
+   "Signature": "Class1334",
+   "OriginalName": "Class1334",
+   "Reason": "Reads, writes and clears the HID-path keyed USB individual-address store used by volatile interface configuration.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Connectors.UsbConnector.UsbDeviceAddressPersister",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334/a",
+   "Token": "0x02000539",
+   "Signature": "Class1334/a",
+   "OriginalName": "a",
+   "Reason": "Captures the requested HID path for the XML-setting predicate.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "HidPathMatchContext",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Fields": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x04001A4C",
+   "Signature": "System.String Class1334::a",
+   "OriginalName": "a",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "XmlConfigPath",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x04001A4D",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class1334::b",
+   "OriginalName": "b",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334/a",
+   "Token": "0x04001A4F",
+   "Signature": "System.String Class1334/a::a",
+   "OriginalName": "a",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "requestedHidPath",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ]
+}

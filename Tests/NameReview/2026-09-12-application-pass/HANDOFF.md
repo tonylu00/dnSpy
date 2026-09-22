@@ -16,17 +16,20 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   its transport calls through native streams and platform discovery.
 - HID review committed as `4dc71d729`; native-import support and physical
   compatibility resolution followed in de4dotEx `1b062ac0`.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v176.xml`,
-  SHA256 `85A378CAABD85F090F4D1982BA7162B63C60BC9176AFDA788236AC58C50F3347`.
-- Current 6.4 map: `names64-staged-v13.xml`, SHA256
-  `DD1C0FCCF4F7AB4BDE418D33A7C692CA5E81B8DBD18E53B2F2A731AEA7C54489`.
+- Native-import review committed as `11a17e96a`. The catalog and saved-address
+  continuation uses shared constructor scope validation from de4dotEx `73bcaf9f`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v178.xml`,
+  SHA256 `8E3DE321D18328E5933216DBD1F452531A31D468CF9503F3EAE20A0EADA60F7D`.
+- Current 6.4 map: `names64-staged-v15.xml`, SHA256
+  `AAEF6CE679C1295B5A81424230F6C95EC0F5CC21D5BD09A1A274B85B1A7CB470`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
   parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-176.json` and `map-update64-wave-13.json`;
+  reports are `map-update63-wave-177.json`, `map-update63-wave-178.json`,
+  `map-update64-wave-14.json` and `map-update64-wave-15.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave176.json` records artifact hashes, validation and limits.
+  `checkpoint-wave178.json` records artifact hashes, validation and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -125,6 +128,34 @@ emitted; it still needs explicit dependency context. `native-wave176-validation.
 binds test evidence and fresh inventories to the tooling milestone. Both ETS
 map updates passed with zero errors, no new suffixes and prior decisions retained.
 
+`usb_catalog.py` follows discovery into candidate XML catalog selection and
+interface parsing, vendor/product lookup, translated display names and the
+complete 6.3 `IUsbInterfaceInfoProvider.IsKnxUsbDevice` contract. Both versions
+now carry reviewed catalog/record/context names, constructor parameters and
+verified parser locals. Localization tries the exact culture, one immediate
+parent, then default text; it does not recursively traverse all parents.
+Catalog candidates are ordered by version, and parsing failures can fall through
+to the next candidate. Earlier file/XML enumeration and version-sort failures
+are outside that per-catalog catch. Canonical lambda/iterator names and hidden
+automatic-property backing fields remain unchanged.
+
+`usb_addresses.py` follows the volatile configuration branch into
+`UsbDeviceAddressPersister`. Its HID-path lookup, Get/Set/Clear behavior,
+captured context and verified document/setting/error locals are reviewed in
+both versions. Get returns null for missing/caught read failures. Set logs caught
+XML/save failures, but directory creation is outside its catch; Clear's file
+deletion errors propagate. These details are preserved, not repaired.
+
+The accepted constructor scopes exposed a dnSpy source-map parser defect: it
+still applied the constructor method-rename prohibition to parameter/local-only
+rows. `ScopedMethodBlocker` is now shared by both tools. The portable
+`ConstructorScopeAliasRegression` reproduced the rejection before the fix and
+passes afterward; constructor method names stay unchanged, and stale metadata
+or constructor renames remain rejected. The full NameCandidates suite and
+NativeImportAliasRegression pass too. Fresh checks of maps 178/15 pass without
+edits or errors. `constructor-wave178-validation.json` binds this tooling
+evidence; it does not claim a consolidated ETS source export or runtime test.
+
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
@@ -134,11 +165,14 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 
 - Whole-application naming coverage is still incomplete. Alias totals and
   duplicate compatibility copies are not a measure of completed readability.
-- HID contracts, platform implementations/discovery and the remaining USB
-  path/feature-response closure helpers have been reviewed. Continue into the
-  coupled discovery/connector callers and other application components.
+- Catalog parsing/localization and volatile saved addresses are reviewed.
+  Continue into connector feature/configuration reading, cache matchers and
+  cleanup callers, then the remaining application components. Cleanup persists
+  the volatile address before EMI1 cleanup: 6.3 Class1329/Struct916.MoveNext
+  `0x06001D22`, 6.4 UsbBusConnector `0x06003422`. Review the inner cleanup calls
+  before naming the outer methods.
 - Native import proposals from wave175 are resolved. Continue from
-  `native63-wave176.cumulative.json` and `native64-wave13.cumulative.json`; do not
+  `usb-address63-wave178.cumulative.json` and `usb-address64-wave15.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
@@ -157,6 +191,10 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
   Preserve compiler-generated aliases used by dnSpy to reconstruct lambdas.
 
 The Python recipes operate on review data only; they do not rewrite ETS source.
+Renaming, reference repair and patching belong in dnSpy/de4dotEx. Improve those
+tools when a reviewed mapping cannot be consumed; never substitute direct ETS
+source replacement scripts. Tooling builds and synthetic fixtures are distinct
+from the postponed consolidated ETS export/build/runtime verification.
 `behavior_review.py` rejects implicit replacement of existing aliases (including
 restored lambda names), retains old parameter/local choices and validates source
 hashes. `checkpoint_behavior.py` uses an explicit plan to preserve prior map

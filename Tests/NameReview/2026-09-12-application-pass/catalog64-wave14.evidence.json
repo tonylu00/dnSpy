@@ -1,0 +1,1212 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v13.xml",
+ "BaseMapSha256": "DD1C0FCCF4F7AB4BDE418D33A7C692CA5E81B8DBD18E53B2F2A731AEA7C54489",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x060033E4",
+   "ProposedName": "MatchesRequestedCulture",
+   "Reason": "Compares the translation language key with the captured culture name; this predicate is passed to FirstOrDefault for the requested culture.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033E4",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 658,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C3",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 160,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "translation"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033E5",
+   "ProposedName": "MatchesParentCulture",
+   "Reason": "Compares the translation language key with the captured culture name; this predicate is passed to FirstOrDefault for the immediate parent culture.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033E5",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 665,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C3",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 160,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "translation"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033DF",
+   "ProposedName": "GetLocalizedDisplayName",
+   "Reason": "Invokes the localized display-text selector with captured default text/translations and the supplied culture.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033DF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 698,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C3",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 160,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ci",
+     "HasMetadata": true,
+     "NewName": "culture"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033C3",
+   "ProposedName": "SelectLocalizedDisplayText",
+   "Reason": "Returns the first exact-culture translation, then the first immediate-parent translation, then default text. Null translation values trigger fallback; empty values do not.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033C3",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 160,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033E4",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 658,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033E5",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 665,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "defaultDisplayText"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ireadOnlyCollection_0",
+     "HasMetadata": true,
+     "NewName": "translations"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "culture"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterfacesFromXml/<>c__DisplayClass20_0",
+     "NewName": "cultureMatch"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.KeyValuePair`2<System.String,System.String>",
+     "NewName": "matchedTranslation"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\catalog64-wave177-inspection.json",
+    "Sha256": "443952E607FDE51476699E37AD07A70146719944DE26319C9B5878E30C0E8102",
+    "Token": "0x060033C3",
+    "Slots": {
+     "0": "cultureMatch",
+     "1": "matchedTranslation"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060033BD",
+   "ProposedName": "GetDocumentVersion",
+   "Reason": "Reads the unsigned Version attribute from the document root, returning zero when it is absent. Invalid attribute text can throw.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033BD",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 94,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "document"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033D9",
+   "ProposedName": "SelectCandidateVersion",
+   "Reason": "OrderByDescending callback extracts the document version from a source/document pair. Preserve the previously restored 6.3 constructor-lambda name.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033D9",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 352,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BD",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 94,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "d",
+     "HasMetadata": true,
+     "NewName": "candidate"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033DB",
+   "ProposedName": "GetVendorProductKey",
+   "Reason": "Dictionary key selector returns the parsed USB vendor/product identifier pair. Preserve the previously restored 6.3 constructor-lambda name.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033DB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 391,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "i",
+     "HasMetadata": true,
+     "NewName": "definition"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033DA",
+   "ProposedName": "ParseInterfaceDefinition",
+   "Reason": "Parses hexadecimal USB/KNX identifiers, localized text, volatile-address/USB-fix flags, medium and optional timings. Missing persistence defaults true; missing medium uses RF in default text, otherwise TP1. Preserve the restored 6.3 constructor-lambda name.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 698,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interfaceNode",
+     "HasMetadata": true,
+     "NewName": "interfaceNode"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterfacesFromXml/<>c__DisplayClass10_0",
+     "NewName": "displayNameContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt16",
+     "NewName": "vendorId"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.UInt16",
+     "NewName": "knxManufacturerId"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "configurationIsVolatile"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Boolean",
+     "NewName": "requiresKnxUsbFix"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.String",
+     "NewName": "mediumTypeText"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "Knx.Falcon.KnxMediumType",
+     "NewName": "mediumType"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.String",
+     "NewName": "timingText"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "translationNode"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Nullable`1<System.Boolean>",
+     "NewName": "optionalBooleanAttribute"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "System.UInt16",
+     "NewName": "productId"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Xml.Linq.XElement>",
+     "NewName": "translationEnumerator"
+    },
+    {
+     "Index": 15,
+     "ExpectedType": "System.UInt32[]",
+     "NewName": "timing"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\catalog64-wave177-inspection.json",
+    "Sha256": "443952E607FDE51476699E37AD07A70146719944DE26319C9B5878E30C0E8102",
+    "Token": "0x060033DA",
+    "Slots": {
+     "0": "displayNameContext",
+     "1": "vendorId",
+     "13": "productId",
+     "3": "knxManufacturerId",
+     "4": "configurationIsVolatile",
+     "5": "requiresKnxUsbFix",
+     "6": "mediumTypeText",
+     "7": "mediumType",
+     "15": "timing",
+     "9": "timingText",
+     "14": "translationEnumerator",
+     "11": "translationNode",
+     "12": "optionalBooleanAttribute"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060033BB",
+   "ProposedName": "",
+   "Reason": "Loads candidates in descending version order, retaining the first catalog that parses into the identifier dictionary. Per-catalog construction errors are logged and tried again; document enumeration/version-sort errors are not caught here.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BD",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 94,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C0",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 128,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "candidateDirectories",
+     "HasMetadata": true,
+     "NewName": "candidateDirectories"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.String",
+     "NewName": "candidateSource"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Xml.Linq.XDocument",
+     "NewName": "candidateDocument"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.UInt32",
+     "NewName": "candidateVersion"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Exception",
+     "NewName": "loadException"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.ValueTuple`2<System.String,System.Xml.Linq.XDocument>>",
+     "NewName": "candidateEnumerator"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterfacesFromXml",
+     "NewName": "candidateCatalog"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\catalog64-wave177-inspection.json",
+    "Sha256": "443952E607FDE51476699E37AD07A70146719944DE26319C9B5878E30C0E8102",
+    "Token": "0x060033BB",
+    "Slots": {
+     "9": "candidateEnumerator",
+     "1": "candidateSource",
+     "2": "candidateDocument",
+     "3": "candidateVersion",
+     "10": "candidateCatalog",
+     "6": "loadException"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060033C7",
+   "ProposedName": "",
+   "Reason": "Assigns the parsed interface definition used to enrich USB discovery results.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "vendorId"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_4",
+     "HasMetadata": true,
+     "NewName": "productId"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_5",
+     "HasMetadata": true,
+     "NewName": "knxManufacturerId"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "configurationIsVolatile"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "requiresKnxUsbFix"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "knxMediumType_1",
+     "HasMetadata": true,
+     "NewName": "mediumType"
+    },
+    {
+     "Sequence": 7,
+     "OriginalName": "uint_1",
+     "HasMetadata": true,
+     "NewName": "timing"
+    },
+    {
+     "Sequence": 8,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "getLocalizedDisplayName"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033BF",
+   "ProposedName": "",
+   "Reason": "Replaces the lazy default catalog only when the supplied document version is strictly higher; records update as the load source.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033BF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 117,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BD",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 94,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "doc",
+     "HasMetadata": true,
+     "NewName": "document"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt32",
+     "NewName": "candidateVersion"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\catalog64-wave177-inspection.json",
+    "Sha256": "443952E607FDE51476699E37AD07A70146719944DE26319C9B5878E30C0E8102",
+    "Token": "0x060033BF",
+    "Slots": {
+     "1": "candidateVersion"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060033C0",
+   "ProposedName": "GetKnxInterfacesCandidates",
+   "Reason": "Iterator loads knx_interfaces.xml from existing candidate paths and then the embedded resource. It yields source/document pairs and disposes enumeration/stream resources; parse/I/O errors propagate.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033C0",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 128,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033EB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 479,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "candidateDirectories"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033C8",
+   "ProposedName": "get_VendorId",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033C8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 231,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033C9",
+   "ProposedName": "get_ProductId",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033C9",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 239,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033CB",
+   "ProposedName": "get_GetLocalizedDisplayName",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033CB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 255,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033CC",
+   "ProposedName": "get_ConfigurationIsVolatile",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033CC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 263,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033CD",
+   "ProposedName": "set_ConfigurationIsVolatile",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033CD",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 271,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060033CE",
+   "ProposedName": "get_RequiresKnxUsbFix",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "Source": [
+    {
+     "Id": "m0153:0x060033CE",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 281,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x02000694",
+   "ProposedName": "UsbInterfaceDefinition",
+   "Reason": "Parsed catalog record contains USB identifiers, KNX manufacturer, localized display callback and interface capabilities.",
+   "Source": [
+    {
+     "Id": "m0153:0x02000694",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 214,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022EE",
+   "ProposedName": "defaultCandidateDirectories",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022EE",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 189,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 81,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BE",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 107,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022EF",
+   "ProposedName": "definitionsByVendorAndProduct",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022EF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 199,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 81,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BE",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 107,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022F2",
+   "ProposedName": "defaultCatalog",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022F2",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 208,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 81,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BE",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 107,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022F3",
+   "ProposedName": "logger",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022F3",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 196,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 81,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BE",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 107,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022F5",
+   "ProposedName": "_vendorId",
+   "Reason": "Visible backing storage receives the corresponding parsed constructor value and feeds the discovery result.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022F5",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 326,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022F6",
+   "ProposedName": "_productId",
+   "Reason": "Visible backing storage receives the corresponding parsed constructor value and feeds the discovery result.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022F6",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 330,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022F8",
+   "ProposedName": "_getLocalizedDisplayName",
+   "Reason": "Visible backing storage receives the corresponding parsed constructor value and feeds the discovery result.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022F8",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 334,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022F9",
+   "ProposedName": "_configurationIsVolatile",
+   "Reason": "Visible backing storage receives the corresponding parsed constructor value and feeds the discovery result.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022F9",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 338,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C7",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 218,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 22,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002303",
+   "ProposedName": "defaultDisplayText",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002303",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 719,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 698,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002304",
+   "ProposedName": "translations",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002304",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 722,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DA",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 360,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033DF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 698,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002306",
+   "ProposedName": "cultureName",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002306",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 686,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033C3",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 160,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033E4",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 658,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033E5",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 665,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040022FF",
+   "ProposedName": "candidateVersionSelector",
+   "Reason": "Caches the selector delegate assigned at the catalog construction call site.",
+   "Source": [
+    {
+     "Id": "m0153:0x040022FF",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 415,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BB",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 40,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002300",
+   "ProposedName": "interfaceDefinitionParser",
+   "Reason": "Caches the selector delegate assigned at the catalog construction call site.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002300",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 418,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 81,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002301",
+   "ProposedName": "vendorProductKeySelector",
+   "Reason": "Caches the selector delegate assigned at the catalog construction call site.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002301",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 421,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    },
+    {
+     "Id": "m0153:0x060033BC",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterfacesFromXml.cs",
+     "Line": 81,
+     "Sha256": "99CAFC722001E1C19A39AFC79909A7D232DFC188DF339668CDD56CF63EA33667"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

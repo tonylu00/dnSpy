@@ -223696,9 +223696,10 @@
    "Token": "0x06001D2C",
    "Signature": "System.Nullable`1<Knx.Falcon.IndividualAddress> Class1334::a(System.String)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Reads the saved ia attribute for this HID path and converts it to IndividualAddress. Missing files/settings or caught XML/read errors return null; preserve the existing readable method name.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.String string_2"
@@ -223708,39 +223709,24 @@
      "Sequence": 1,
      "OriginalName": "string_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "hidPath"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Nullable`1<Knx.Falcon.IndividualAddress>",
-     "NewName": ""
+     "NewName": "savedAddress"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Xml.Linq.XElement",
-     "NewName": ""
+     "NewName": "deviceSetting"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Exception",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Nullable`1<Knx.Falcon.IndividualAddress>",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 5,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "readException"
     }
    ],
    "NewName": "GetIndividualAddress",
@@ -223756,9 +223742,10 @@
    "Token": "0x06001D2D",
    "Signature": "System.Void Class1334::a(System.String,Knx.Falcon.IndividualAddress)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Loads or creates devices XML, inserts/updates a setting keyed by HID path, stores the individual address and saves. XML/save failures are logged; directory creation occurs outside that catch.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.String string_2",
@@ -223769,40 +223756,30 @@
      "Sequence": 1,
      "OriginalName": "string_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "hidPath"
     },
     {
      "Sequence": 2,
      "OriginalName": "individualAddress_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "individualAddress"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Xml.Linq.XDocument",
-     "NewName": ""
+     "NewName": "settingsDocument"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Xml.Linq.XElement",
-     "NewName": ""
+     "NewName": "deviceSetting"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Exception",
-     "NewName": ""
-    },
-    {
-     "Index": 3,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 4,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "saveException"
     }
    ],
    "NewName": "SetIndividualAddress",
@@ -245880,9 +245857,10 @@
    "Token": "0x06001C57",
    "Signature": "System.Void Class1324::a(System.Xml.Linq.XDocument)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Replaces the lazy default catalog only when the supplied document version is strictly higher; records update as the load source.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [
     "1: System.Xml.Linq.XDocument xdocument_0"
@@ -245892,24 +245870,14 @@
      "Sequence": 1,
      "OriginalName": "xdocument_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "document"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.UInt32",
-     "NewName": ""
-    },
-    {
-     "Index": 1,
-     "ExpectedType": "System.Int32",
-     "NewName": ""
-    },
-    {
-     "Index": 2,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
+     "NewName": "candidateVersion"
     }
    ],
    "NewName": "UpdateDefaultFromHigherVersion",
@@ -341002,10 +340970,17 @@
    "Token": "0x06001C61",
    "Signature": "System.Func`2<System.Globalization.CultureInfo,System.String> Class1324/a::e()",
    "OriginalName": "e",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "get_GetLocalizedDisplayName",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341016,10 +340991,17 @@
    "Token": "0x06001C62",
    "Signature": "System.Boolean Class1324/a::d()",
    "OriginalName": "d",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "get_ConfigurationIsVolatile",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341030,10 +341012,26 @@
    "Token": "0x06001C63",
    "Signature": "System.Void Class1324/a::b(System.Boolean)",
    "OriginalName": "b",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean value"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "value",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
    "NewName": "set_ConfigurationIsVolatile",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341044,10 +341042,17 @@
    "Token": "0x06001C64",
    "Signature": "System.Boolean Class1324/a::c()",
    "OriginalName": "c",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "get_RequiresKnxUsbFix",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341058,10 +341063,26 @@
    "Token": "0x06001C65",
    "Signature": "System.Void Class1324/a::a(System.Boolean)",
    "OriginalName": "a",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean value"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "value",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
    "NewName": "set_RequiresKnxUsbFix",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341072,10 +341093,17 @@
    "Token": "0x06001C66",
    "Signature": "Knx.Falcon.KnxMediumType Class1324/a::b()",
    "OriginalName": "b",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "get_MediumType",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341086,10 +341114,26 @@
    "Token": "0x06001C67",
    "Signature": "System.Void Class1324/a::a(Knx.Falcon.KnxMediumType)",
    "OriginalName": "a",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMediumType value"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "value",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
    "NewName": "set_MediumType",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341100,10 +341144,17 @@
    "Token": "0x06001C68",
    "Signature": "System.UInt32[] Class1324/a::a()",
    "OriginalName": "a",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
    "NewName": "get_Timing",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -341114,10 +341165,26 @@
    "Token": "0x06001C69",
    "Signature": "System.Void Class1324/a::a(System.UInt32[])",
    "OriginalName": "a",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt32[] value"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "value",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
    "NewName": "set_Timing",
-   "ParameterNames": []
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -356710,11 +356777,26 @@
    "Token": "0x06001C6C",
    "Signature": "System.UInt32 Class1324/<>c::a(System.ValueTuple`2<System.String,System.Xml.Linq.XDocument>)",
    "OriginalName": "a",
+   "Reason": "OrderByDescending callback extracts the document version from a source/document pair. Preserve the previously restored 6.3 constructor-lambda name.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: System.ValueTuple`2<System.String,System.Xml.Linq.XDocument> valueTuple_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "valueTuple_0",
+     "HasMetadata": true,
+     "NewName": "candidate"
+    }
+   ],
+   "LocalNames": [],
    "NewName": "<.ctor>b__9_0",
-   "ParameterNames": [],
-   "Reason": "cached into the canonical <>9__9_0 field, constructor declaring name"
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -356725,11 +356807,92 @@
    "Token": "0x06001C6D",
    "Signature": "Class1324/a Class1324/<>c::a(System.Xml.Linq.XElement)",
    "OriginalName": "a",
+   "Reason": "Parses hexadecimal USB/KNX identifiers, localized text, volatile-address/USB-fix flags, medium and optional timings. Missing persistence defaults true; missing medium uses RF in default text, otherwise TP1. Preserve the restored 6.3 constructor-lambda name.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XElement xelement_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xelement_0",
+     "HasMetadata": true,
+     "NewName": "interfaceNode"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1324/b",
+     "NewName": "displayNameContext"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt16",
+     "NewName": "vendorId"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.UInt16",
+     "NewName": "productId"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.UInt16",
+     "NewName": "knxManufacturerId"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "configurationIsVolatile"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Boolean",
+     "NewName": "requiresKnxUsbFix"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.String",
+     "NewName": "mediumTypeText"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "Knx.Falcon.KnxMediumType",
+     "NewName": "mediumType"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.UInt32[]",
+     "NewName": "timing"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.String",
+     "NewName": "timingText"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Xml.Linq.XElement>",
+     "NewName": "translationEnumerator"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "translationNode"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Nullable`1<System.Boolean>",
+     "NewName": "optionalBooleanAttribute"
+    }
+   ],
    "NewName": "<.ctor>b__10_0",
-   "ParameterNames": [],
-   "Reason": "cached into the canonical <>9__10_0 field, constructor declaring name"
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -356740,11 +356903,26 @@
    "Token": "0x06001C6E",
    "Signature": "System.ValueTuple`2<System.UInt16,System.UInt16> Class1324/<>c::a(Class1324/a)",
    "OriginalName": "a",
+   "Reason": "Dictionary key selector returns the parsed USB vendor/product identifier pair. Preserve the previously restored 6.3 constructor-lambda name.",
+   "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
+   "Parameters": [
+    "1: Class1324/a a_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "a_0",
+     "HasMetadata": true,
+     "NewName": "definition"
+    }
+   ],
+   "LocalNames": [],
    "NewName": "<.ctor>b__10_1",
-   "ParameterNames": [],
-   "Reason": "cached into the canonical <>9__10_1 field, constructor declaring name"
+   "Unresolved": false,
+   "UnresolvedReason": ""
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -365767,6 +365945,684 @@
    ],
    "LocalNames": [],
    "NewName": "Poll",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/c",
+   "Token": "0x06001C72",
+   "Signature": "System.Boolean Class1324/c::c(System.Collections.Generic.KeyValuePair`2<System.String,System.String>)",
+   "OriginalName": "c",
+   "Reason": "Compares the translation language key with the captured culture name; this predicate is passed to FirstOrDefault for the requested culture.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.KeyValuePair`2<System.String,System.String> keyValuePair_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "keyValuePair_0",
+     "HasMetadata": true,
+     "NewName": "translation"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesRequestedCulture",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/c",
+   "Token": "0x06001C73",
+   "Signature": "System.Boolean Class1324/c::b(System.Collections.Generic.KeyValuePair`2<System.String,System.String>)",
+   "OriginalName": "b",
+   "Reason": "Compares the translation language key with the captured culture name; this predicate is passed to FirstOrDefault for the immediate parent culture.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.KeyValuePair`2<System.String,System.String> keyValuePair_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "keyValuePair_0",
+     "HasMetadata": true,
+     "NewName": "translation"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesParentCulture",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/b",
+   "Token": "0x06001C70",
+   "Signature": "System.String Class1324/b::c(System.Globalization.CultureInfo)",
+   "OriginalName": "c",
+   "Reason": "Invokes the localized display-text selector with captured default text/translations and the supplied culture.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Globalization.CultureInfo cultureInfo_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cultureInfo_0",
+     "HasMetadata": true,
+     "NewName": "culture"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "GetLocalizedDisplayName",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C5B",
+   "Signature": "System.String Class1324::a(System.String,System.Collections.Generic.IReadOnlyCollection`1<System.Collections.Generic.KeyValuePair`2<System.String,System.String>>,System.Globalization.CultureInfo)",
+   "OriginalName": "a",
+   "Reason": "Returns the first exact-culture translation, then the first immediate-parent translation, then default text. Null translation values trigger fallback; empty values do not.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_4",
+    "2: System.Collections.Generic.IReadOnlyCollection`1<System.Collections.Generic.KeyValuePair`2<System.String,System.String>> ireadOnlyCollection_0",
+    "3: System.Globalization.CultureInfo cultureInfo_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_4",
+     "HasMetadata": true,
+     "NewName": "defaultDisplayText"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ireadOnlyCollection_0",
+     "HasMetadata": true,
+     "NewName": "translations"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cultureInfo_0",
+     "HasMetadata": true,
+     "NewName": "culture"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1324/c",
+     "NewName": "cultureMatch"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.KeyValuePair`2<System.String,System.String>",
+     "NewName": "matchedTranslation"
+    }
+   ],
+   "NewName": "SelectLocalizedDisplayText",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C55",
+   "Signature": "System.UInt32 Class1324::b(System.Xml.Linq.XDocument)",
+   "OriginalName": "b",
+   "Reason": "Reads the unsigned Version attribute from the document root, returning zero when it is absent. Invalid attribute text can throw.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "document"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "GetDocumentVersion",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C53",
+   "Signature": "System.Void Class1324::.ctor(System.Collections.Generic.IEnumerable`1<System.String>)",
+   "OriginalName": ".ctor",
+   "Reason": "Loads candidates in descending version order, retaining the first catalog that parses into the identifier dictionary. Per-catalog construction errors are logged and tried again; document enumeration/version-sort errors are not caught here.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<System.String> ienumerable_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "candidateDirectories"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.ValueTuple`2<System.String,System.Xml.Linq.XDocument>>",
+     "NewName": "candidateEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.String",
+     "NewName": "candidateSource"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Xml.Linq.XDocument",
+     "NewName": "candidateDocument"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.UInt32",
+     "NewName": "candidateVersion"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Class1324",
+     "NewName": "candidateCatalog"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "loadException"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/a",
+   "Token": "0x06001C5D",
+   "Signature": "System.Void Class1324/a::.ctor(System.UInt16,System.UInt16,System.UInt16,System.Boolean,System.Boolean,Knx.Falcon.KnxMediumType,System.UInt32[],System.Func`2<System.Globalization.CultureInfo,System.String>)",
+   "OriginalName": ".ctor",
+   "Reason": "Assigns the parsed interface definition used to enrich USB discovery results.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt16 ushort_3",
+    "2: System.UInt16 ushort_4",
+    "3: System.UInt16 ushort_5",
+    "4: System.Boolean bool_2",
+    "5: System.Boolean bool_3",
+    "6: Knx.Falcon.KnxMediumType knxMediumType_1",
+    "7: System.UInt32[] uint_1",
+    "8: System.Func`2<System.Globalization.CultureInfo,System.String> func_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "vendorId"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_4",
+     "HasMetadata": true,
+     "NewName": "productId"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_5",
+     "HasMetadata": true,
+     "NewName": "knxManufacturerId"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "bool_2",
+     "HasMetadata": true,
+     "NewName": "configurationIsVolatile"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "requiresKnxUsbFix"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "knxMediumType_1",
+     "HasMetadata": true,
+     "NewName": "mediumType"
+    },
+    {
+     "Sequence": 7,
+     "OriginalName": "uint_1",
+     "HasMetadata": true,
+     "NewName": "timing"
+    },
+    {
+     "Sequence": 8,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "getLocalizedDisplayName"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C58",
+   "Signature": "System.Collections.Generic.IEnumerable`1<System.ValueTuple`2<System.String,System.Xml.Linq.XDocument>> Class1324::a(System.Collections.Generic.IEnumerable`1<System.String>)",
+   "OriginalName": "a",
+   "Reason": "Iterator loads knx_interfaces.xml from existing candidate paths and then the embedded resource. It yields source/document pairs and disposes enumeration/stream resources; parse/I/O errors propagate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<System.String> ienumerable_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "candidateDirectories"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "GetKnxInterfacesCandidates",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C56",
+   "Signature": "Class1324 Class1324::c()",
+   "OriginalName": "c",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_Default",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C59",
+   "Signature": "System.UInt32 Class1324::b()",
+   "OriginalName": "b",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_Version",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C5A",
+   "Signature": "System.String Class1324::a()",
+   "OriginalName": "a",
+   "Reason": "Accessor role is established by its direct backing field, parsed constructor value and catalog/discovery use.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_LoadedFrom",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C54",
+   "Signature": "System.Void Class1324::.ctor(System.Xml.Linq.XDocument,System.UInt32,System.String)",
+   "OriginalName": ".ctor",
+   "Reason": "Builds the vendor/product dictionary from Interface descendants and records document version/source.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0",
+    "2: System.UInt32 uint_1",
+    "3: System.String string_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "document"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "uint_1",
+     "HasMetadata": true,
+     "NewName": "version"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "string_4",
+     "HasMetadata": true,
+     "NewName": "loadedFrom"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface71",
+   "Token": "0x06001BAD",
+   "Signature": "System.Boolean Interface71::imethod_0(Knx.Falcon.Discovery.UsbDeviceDiscoveryResult)",
+   "OriginalName": "imethod_0",
+   "Reason": "Looks up vendor/product IDs; on a match enriches manufacturer, display-name callback, volatility, fix, medium and timing fields before returning true. The complete internal provider contract is named together.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "194DA3CDE76DED0BD9BA802DB40AC4C4901A0B37B46A15DDEB4B69AA4DAA4378",
+   "Parameters": [
+    "1: Knx.Falcon.Discovery.UsbDeviceDiscoveryResult usbDeviceDiscoveryResult_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "usbDeviceDiscoveryResult_0",
+     "HasMetadata": true,
+     "NewName": "info"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "IsKnxUsbDevice",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x06001C52",
+   "Signature": "System.Boolean Class1324::imethod_0(Knx.Falcon.Discovery.UsbDeviceDiscoveryResult)",
+   "OriginalName": "imethod_0",
+   "Reason": "Looks up vendor/product IDs; on a match enriches manufacturer, display-name callback, volatility, fix, medium and timing fields before returning true. The complete internal provider contract is named together.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "194DA3CDE76DED0BD9BA802DB40AC4C4901A0B37B46A15DDEB4B69AA4DAA4378",
+   "Parameters": [
+    "1: Knx.Falcon.Discovery.UsbDeviceDiscoveryResult usbDeviceDiscoveryResult_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "usbDeviceDiscoveryResult_0",
+     "HasMetadata": true,
+     "NewName": "info"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "IsKnxUsbDevice",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x06001C74",
+   "Signature": "System.Void Class1324/d::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Stores the iterator initial state and current managed thread ID.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "initialState"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x06001C77",
+   "Signature": "System.Void Class1324/d::b()",
+   "OriginalName": "b",
+   "Reason": "Resets iterator state and disposes the active directory enumerator.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "DisposeCandidateDirectoryEnumerator",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x06001C78",
+   "Signature": "System.Void Class1324/d::a()",
+   "OriginalName": "a",
+   "Reason": "Resets iterator state and disposes the embedded resource stream.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "DisposeEmbeddedCatalogStream",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334/a",
+   "Token": "0x06001D32",
+   "Signature": "System.Boolean Class1334/a::b(System.Xml.Linq.XElement)",
+   "OriginalName": "b",
+   "Reason": "Matches the setting hidpath attribute exactly against the captured HID path; no case normalization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XElement xelement_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xelement_0",
+     "HasMetadata": true,
+     "NewName": "setting"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesHidPath",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x06001D2F",
+   "Signature": "System.Xml.Linq.XElement Class1334::a(System.Xml.Linq.XDocument,System.String)",
+   "OriginalName": "a",
+   "Reason": "Returns the first direct setting child whose hidpath matches; absent document root or absent match returns null.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0",
+    "2: System.String string_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "document"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "hidPath"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1334/a",
+     "NewName": "pathMatch"
+    }
+   ],
+   "NewName": "FindDeviceSetting",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x06001D2E",
+   "Signature": "System.Void Class1334::a()",
+   "OriginalName": "a",
+   "Reason": "Deletes the saved-address XML file if it exists; file deletion failures propagate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Clear",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -376697,6 +377553,166 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "OpenDeviceByPathStateMachine",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface71",
+   "Token": "0x020004E6",
+   "Signature": "Interface71",
+   "OriginalName": "Interface71",
+   "Reason": "Internal provider contract enriches known KNX USB discovery results.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Connectors.UsbConnector.IUsbInterfaceInfoProvider",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x02000509",
+   "Signature": "Class1324",
+   "OriginalName": "Class1324",
+   "Reason": "XML-backed interface catalog selected by document version and used during KNX USB discovery.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterfacesFromXml",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/a",
+   "Token": "0x0200050A",
+   "Signature": "Class1324/a",
+   "OriginalName": "a",
+   "Reason": "Parsed catalog record contains USB identifiers, KNX manufacturer, localized display callback and interface capabilities.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "UsbInterfaceDefinition",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/b",
+   "Token": "0x0200050C",
+   "Signature": "Class1324/b",
+   "OriginalName": "b",
+   "Reason": "Captures default display text and translations for the culture-aware callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "LocalizedDisplayNameContext",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/c",
+   "Token": "0x0200050D",
+   "Signature": "Class1324/c",
+   "OriginalName": "c",
+   "Reason": "Captures the requested/parent culture name for translation predicates.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "TranslationCultureMatchContext",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x0200050E",
+   "Signature": "Class1324/d",
+   "OriginalName": "d",
+   "Reason": "Enumerates external then embedded catalog documents with resource cleanup.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "KnxInterfaceCandidatesIterator",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x02000538",
+   "Signature": "Class1334",
+   "OriginalName": "Class1334",
+   "Reason": "Reads, writes and clears the HID-path keyed USB individual-address store used by volatile interface configuration.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Connectors.UsbConnector.UsbDeviceAddressPersister",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334/a",
+   "Token": "0x02000539",
+   "Signature": "Class1334/a",
+   "OriginalName": "a",
+   "Reason": "Captures the requested HID path for the XML-setting predicate.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "HidPathMatchContext",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -393296,6 +394312,406 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "openAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018BE",
+   "Signature": "System.String Class1324::a",
+   "OriginalName": "a",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "InterfaceCatalogFileName",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018BF",
+   "Signature": "System.String[] Class1324::b",
+   "OriginalName": "b",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultCandidateDirectories",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018C0",
+   "Signature": "System.Collections.Generic.Dictionary`2<System.ValueTuple`2<System.UInt16,System.UInt16>,Class1324/a> Class1324::c",
+   "OriginalName": "c",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "definitionsByVendorAndProduct",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018C1",
+   "Signature": "System.String Class1324::d",
+   "OriginalName": "d",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_loadedFrom",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018C2",
+   "Signature": "System.UInt32 Class1324::e",
+   "OriginalName": "e",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_version",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018C3",
+   "Signature": "Class1324 Class1324::class1324_0",
+   "OriginalName": "class1324_0",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultCatalog",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324",
+   "Token": "0x040018C4",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class1324::ifalconLogger_0",
+   "OriginalName": "ifalconLogger_0",
+   "Reason": "Catalog storage role follows lookup, version/source assignment and default catalog initialization.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/b",
+   "Token": "0x040018D4",
+   "Signature": "System.String Class1324/b::a",
+   "OriginalName": "a",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultDisplayText",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/b",
+   "Token": "0x040018D5",
+   "Signature": "System.Collections.Generic.List`1<System.Collections.Generic.KeyValuePair`2<System.String,System.String>> Class1324/b::b",
+   "OriginalName": "b",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "translations",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/c",
+   "Token": "0x040018D7",
+   "Signature": "System.String Class1324/c::a",
+   "OriginalName": "a",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "cultureName",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018D9",
+   "Signature": "System.Int32 Class1324/d::a",
+   "OriginalName": "a",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "iteratorState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018DA",
+   "Signature": "System.ValueTuple`2<System.String,System.Xml.Linq.XDocument> Class1324/d::b",
+   "OriginalName": "b",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "currentCandidate",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018DB",
+   "Signature": "System.Int32 Class1324/d::c",
+   "OriginalName": "c",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialThreadId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018DC",
+   "Signature": "System.Collections.Generic.IEnumerable`1<System.String> Class1324/d::d",
+   "OriginalName": "d",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "candidateDirectories",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018DD",
+   "Signature": "System.Collections.Generic.IEnumerable`1<System.String> Class1324/d::e",
+   "OriginalName": "e",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialCandidateDirectories",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018DE",
+   "Signature": "System.Collections.Generic.IEnumerator`1<System.String> Class1324/d::ienumerator_0",
+   "OriginalName": "ienumerator_0",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "directoryEnumerator",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1324/d",
+   "Token": "0x040018DF",
+   "Signature": "System.IO.Stream Class1324/d::stream_0",
+   "OriginalName": "stream_0",
+   "Reason": "Captured value or iterator storage role is established by assignments and reads in the supplied source bodies.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "embeddedCatalogStream",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x04001A4C",
+   "Signature": "System.String Class1334::a",
+   "OriginalName": "a",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "XmlConfigPath",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334",
+   "Token": "0x04001A4D",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class1334::b",
+   "OriginalName": "b",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1334/a",
+   "Token": "0x04001A4F",
+   "Signature": "System.String Class1334/a::a",
+   "OriginalName": "a",
+   "Reason": "Storage role follows the persisted-address file path, error logging, or exact HID-path predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "requestedHidPath",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
