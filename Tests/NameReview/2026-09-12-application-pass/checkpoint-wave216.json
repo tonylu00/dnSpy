@@ -1,0 +1,39 @@
+{
+  "Format": 1,
+  "Status": "Wave 216: wave 214 reverted - the shape matcher's accepted type pairs are SDK-protected, and the rows it did emit came from ambiguous pairs",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v216.xml",
+      "Sha256": "4EBEF79F14C89AEFF41FA0DEA38160C34B29B347B5F28110446F23F343175848",
+      "PreviousMap": "names63-staged-v212.xml",
+      "PreviousMapSha256": "4EBEF79F14C89AEFF41FA0DEA38160C34B29B347B5F28110446F23F343175848",
+      "FrozenSha256": "4EBEF79F14C89AEFF41FA0DEA38160C34B29B347B5F28110446F23F343175848",
+      "AppliedToSource": false,
+      "ContentEquals": "names63-staged-v212.xml"
+    }
+  },
+  "Superseded": {
+    "Wave": 214,
+    "Rows": 207,
+    "Map": "names63-staged-v214.xml"
+  },
+  "Reason": [
+    "Wave 214 paired each obfuscated 6.3 type with the best-scoring 6.4 type independently, so several 6.3 types could claim one 6.4 counterpart.",
+    "117 of its 207 rows came from such multi-claimant targets; Knx.Falcon.Connectors.EiblibConnector.Frames.ReadResponseFrame was claimed by ten different 6.3 types.",
+    "Spot check: Class854 was paired with Knx.Falcon.KnxMessages.ApplicationLayer.ActivateFileRequestMessage, but Class854 carries FileControlSubService/ResultCode/PollCycleState while ActivateFileRequestMessage carries FirmwarePartId/Version/FileType - only trivial get_/set_ shapes matched.",
+    "With pair conflicts resolved (one 6.3 type per 6.4 counterpart, runner-up below 60% of the winner) only ten pairs survive and every member of them is sdk-public-method protected, so the matcher is left with nothing safe to name on this tree."
+  ],
+  "Audit": {
+    "Renamed": 13344,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 567,
+    "Methods": 10156
+  },
+  "Errors": 0
+}
