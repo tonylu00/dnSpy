@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 244 accepted (6.3): Knx.Ets.ObjectModel.Operations.SplitAndMerge.MergeRules",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v244.xml",
+      "Sha256": "11DF71AE8E4D7972A57BAC2B31DF06706F4E8FBF939EDAC2623878CECFEBA75B",
+      "PreviousMap": "names63-staged-v243.xml",
+      "PreviousMapSha256": "D41169462F08999714F21AD9841DF9C89F493D1132AA9B044499C09361FBFA02",
+      "FrozenSha256": "11DF71AE8E4D7972A57BAC2B31DF06706F4E8FBF939EDAC2623878CECFEBA75B",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave244.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The merge rules are one family per DOM object: each has an Apply* entry that walks the new objects through its mapping type (AreaMapping/LineMapping/SegmentMapping/FunctionMapping/TradeMapping/GroupRangeMapping), a Split*ByConflictState that produces the conflicting and the mapped buckets, an Add*ToBucket helper and a Report* that adds the conflict report's warning.",
+    "resource strings": "The reports carry the ETS resource names: CopyGroupRangeValidationFailed, LineWithDifferentMediumType, SegmentWithDifferentMediumType, DeviceMovedToUnassignedDevices and LinkGroupAddressNoTargetGroupAddress.",
+    "predicates": "HaveDifferentMediumType (LineConflictRule) compares the main segments' medium type names, HaveSameLength (UserFileConflictRule) compares the user files' lengths, and DeviceConflictRule.CopyCertificateIfSecureEnabled transfers the certificate of a secure device."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 36,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14198,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11004
+  },
+  "Errors": 0
+}
