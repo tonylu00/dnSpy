@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 261 accepted (6.3): PasteSpecial, BuildingParts, Flags and Area",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v261.xml",
+      "Sha256": "AE4D79639515F65B98A186A3FE487C26FB408C2A5D7402D8A584E03C8185CDE1",
+      "PreviousMap": "names63-staged-v260.xml",
+      "PreviousMapSha256": "846A7DD930B3EE514CC38008B70518EF1690B60F04030F0A0F07CBB60CC7C9C4",
+      "FrozenSha256": "AE4D79639515F65B98A186A3FE487C26FB408C2A5D7402D8A584E03C8185CDE1",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave261.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. Four namespaces in one wave: PasteSpecial (the connector, group address ref and group assignment creators and the free group range conflict resolver), BuildingParts (the add, copy, delete and move building part operations), Flags (the six single-flag change operations) and Area (the add, change-address, delete and move-across-project area operations).",
+    "themes": "The six flag operations are the same body with one property swapped (RawCommunicationFlag, RawReadFlag, RawReadOnInitFlag, RawTransmitFlag, RawUpdateFlag, RawWriteFlag), so they read Apply<Flag>; the area and building part operations repeat the earlier conventions (CreateValidators with MaxCountValidator over Constants.MaxAllowedAreas / AddAreaValidator / LockedBySplitAndMergeValidator, AfterUndo/AfterRedo, IsAffectedBusInterfaceConnector); MoveBuildingPartOperation logs 'Move building parts to {0}'."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 26,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14626,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11432
+  },
+  "Errors": 0
+}
