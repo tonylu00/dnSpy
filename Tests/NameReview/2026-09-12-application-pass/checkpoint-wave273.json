@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 273 accepted (6.3): the HawkNET byte/value utility Class431",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v273.xml",
+      "Sha256": "91D54D9377898B73D615D82571EBB70A9A2D3E7C1DB83392128154A33BE95AA6",
+      "PreviousMap": "names63-staged-v272.xml",
+      "PreviousMapSha256": "3B9F7FFCE96EE35CD41EA3981F87F6061755A0363E0E031AF376CC1FE6B0AF3E",
+      "FrozenSha256": "91D54D9377898B73D615D82571EBB70A9A2D3E7C1DB83392128154A33BE95AA6",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave273.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. One coherent block: the HawkNET byte/value utility Class431, whose named siblings already fix the convention (IntegerValueToByteArray, SerialNumberByteArrayToValue, FormatObjectSize, FormatHex, CompareAsValues, Dump). The free members are the bit extraction helpers (GetHighByte/GetLowByte, GetHighUInt16/GetLowUInt16, GetHighUInt32/GetLowUInt32), their combiners (MakeUInt16/UInt32/UInt64), the four endian-explicit readers (ReadBigEndianUInt16/UInt32, ReadLittleEndianUInt16/UInt32 - the byte order verified from the ldelem order against the combiner), the byte-range extractor, the priority formatter and the second Dump overload.",
+    "themes": "A type whose named siblings show the convention settles its free members from their own bodies alone: shift/mask pairs become GetHigh/GetLow, the combiners become MakeX, and the endian readers are told apart by which byte lands in the high half. This is the coherent-block method of the previous wave applied to a utility class, and it names 16 rows in one pass."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 16,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14862,
+    "VisibleRenamed": 5041,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11668
+  },
+  "Errors": 0
+}
