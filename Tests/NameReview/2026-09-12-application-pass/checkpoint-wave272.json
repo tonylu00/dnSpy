@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 272 accepted (6.3): the HawkNET device-info formatter block and three DevKit rows",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v272.xml",
+      "Sha256": "3B9F7FFCE96EE35CD41EA3981F87F6061755A0363E0E031AF376CC1FE6B0AF3E",
+      "PreviousMap": "names63-staged-v271.xml",
+      "PreviousMapSha256": "A7C151313D489E97116E8217AE97B2F1E52A2DF3F6318FF66E2D31B7E22DA3F6",
+      "FrozenSha256": "3B9F7FFCE96EE35CD41EA3981F87F6061755A0363E0E031AF376CC1FE6B0AF3E",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave272.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. A coherent HawkNET block - the device-info formatter (en): three static factories distinguished by their ctor arguments (with address, with address and serial, without address) and four formatters whose literal formats name them ({0:X4}:{1:X8}, {0} {1} V{2}.{3}, one {0}: {1} line per field, and the byte-to-string helper with its separator) - plus the task-result guard of eh ('Task not yet completed'). Three DevKit rows from their literals: the vendor/name validator ('No vendor', 'No name', 'Wrong length of vendor'), the time server configuration (pool.ntp.org, europe.pool.ntp.org, %SystemRoot%), and the hard-coded library version 2.0.29.4051.",
+    "themes": "For a type whose named siblings are already known (get_Logger, get_Output, PerformTaskAsync, EvaluateOrderNumberFormattingScript, FormatEnum, ParseApplicationId), the free members sort into factories and formatters by their arguments and literal formats, so the whole block can be named in one wave. DevKit's literal yield is low (four rows with literals among 500 open), which confirms that its remaining work needs the per-type pass rather than the literal pass."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 11,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14846,
+    "VisibleRenamed": 5026,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11652
+  },
+  "Errors": 0
+}
