@@ -1,0 +1,49 @@
+{
+  "Format": 1,
+  "Status": "Wave 237 accepted (6.3): the rest of Knx.Ets.ObjectModel.Import - catalog, translation, audit, baggage and store helpers",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v237.xml",
+      "Sha256": "0EBE15158EBD60EE41F9D0E83ED854A32152D5B8871B696B92BB2284A03DCFD8",
+      "PreviousMap": "names63-staged-v236.xml",
+      "PreviousMapSha256": "8D55437D9D5EC2E09D216419CB14FBADD239E9E5034CF1CC7675283EB83E8B65",
+      "FrozenSha256": "0EBE15158EBD60EE41F9D0E83ED854A32152D5B8871B696B92BB2284A03DCFD8",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave237.review.json"
+  ],
+  "Method": {
+    "body evidence": "Every row was read from its own IL (perf-now/ilinspect.py drives NameCandidates --inspect-methods) plus the sibling names the earlier waves established in the same types: CatalogMerger/InternalCatalogMerger now read MergeCatalogSection -> MergeCatalogItems -> MergeCatalogItem, MergeMovedCatalogItems -> RemoveMovedCatalogItemFromSource, and the FilterDecorator pair ReserveAncestorKeys/IsKeyReserved that get_Filter returns.",
+    "store and merge helpers": "ProjectDataProcessor's MergeProject/MergeInstallations build their mergers and return Merger.Merge's language filter; the two device binary-data accessors read the source store and the injected target resolver, exactly the two delegates WithBinaryDataStore receives.",
+    "translations": "Translations/ShapeTranslations keep one reader method per XML level (ReadTranslationUnits -> ReadTranslationElements -> ReadTranslationTexts) and the TranslationMerger/ShapeTranslationMerger factories CreateFromStream / CreateShapeTranslationsFromStream."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 62,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 13865,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10671
+  },
+  "SpotChecks": [
+    "CatalogMerger/FilterDecorator.a(XElement, Predicate<XElement>, Func<XElement,string>) -> ReserveAncestorKeys: adds the parent chain's keys to the filter dictionary and stops at a key that is already there.",
+    "InternalCatalogMerger.d(XElement, XElement) -> RemoveMovedCatalogItemFromSource: removes the item at the old location, prunes the emptied ancestors and audits 'CatalogItem moved from {0} to {1}'."
+  ],
+  "Errors": 0
+}
