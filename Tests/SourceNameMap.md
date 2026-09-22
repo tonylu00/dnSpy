@@ -32,12 +32,25 @@ the export manifest.
 
 Version 1 supports non-generic types, ordinary fields, ordinary nonvirtual methods and complete
 implicit interface/virtual override families. Constructors, accessors,
-runtime/PInvoke methods, explicit `MethodImpl` declarations and static virtual
+runtime methods, unsupported native imports, explicit `MethodImpl` declarations and static virtual
 contracts remain unsupported.
 Choose type/method aliases unique across their module, including original
 type/member names, namespace segments, parameters and generic parameters.
 Alias swaps and invisible Unicode format characters are rejected. These
 conservative limits avoid ambiguous compiler binding and metadata restoration.
+
+Static nongeneric P/Invoke declarations with a complete `ImplMap` and no body
+support reviewed managed method/parameter aliases. The emitter keeps the native
+library, entry point, calling convention, flags and marshaling. If the managed
+name changes, even an originally implicit entry point is emitted explicitly.
+Runtime restoration changes managed definitions/references only.
+`NativeImportAliasRegression` consumes `native-imports/names.xml` from the
+portable NameCandidates suite and checks the actual parser, attribute emitter
+and signature-qualified restoration instructions without executing native code:
+
+```sh
+dotnet run --project Tests/NativeImportAliasRegression -c Release -- /path/to/fixture/native-imports/names.xml
+```
 
 For an interface or virtual family, generate the map with NameCandidates
 `--review-families` and `--update-map`. Select a descriptive `NewName` on one

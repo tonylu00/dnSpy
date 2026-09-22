@@ -3,8 +3,8 @@
 Application-wide mapping remains active. Finish the mapping pass before a
 consolidated ETS source export, build and runtime verification. During mapping,
 use inexpensive identity, map and reference checks. No ETS operations ran in
-this continuation. The prior constructor-tooling milestone ran synthetic
-NameCandidates fixtures; the current lifecycle review used map/reference checks.
+this continuation. Constructor/native-import tooling used synthetic portable
+fixtures; accepted ETS naming changes used metadata and map/reference checks.
 
 ## Accepted state
 
@@ -14,17 +14,19 @@ NameCandidates fixtures; the current lifecycle review used map/reference checks.
   into transport lifecycle behavior. Unrelated untracked `ILSpy/` was preserved.
 - Lifecycle review committed as `510108d6c`; the subsequent HID review follows
   its transport calls through native streams and platform discovery.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v175.xml`,
-  SHA256 `E7E3DE3EA6AA3D3E5748A529C765B566D22D133D475350A8F26DB31D9A285A86`.
-- Current 6.4 map: `names64-staged-v12.xml`, SHA256
-  `FB3CBC8259F8596F1EF87D695D7FDC0E55805462286FF26E736C9BEE12301469`.
+- HID review committed as `4dc71d729`; native-import support and physical
+  compatibility resolution followed in de4dotEx `1b062ac0`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v176.xml`,
+  SHA256 `85A378CAABD85F090F4D1982BA7162B63C60BC9176AFDA788236AC58C50F3347`.
+- Current 6.4 map: `names64-staged-v13.xml`, SHA256
+  `DD1C0FCCF4F7AB4BDE418D33A7C692CA5E81B8DBD18E53B2F2A731AEA7C54489`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
   parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-175.json` and `map-update64-wave-12.json`;
+  reports are `map-update63-wave-176.json` and `map-update64-wave-13.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave175.json` records artifact hashes, validation and limits.
+  `checkpoint-wave176.json` records artifact hashes, validation and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -101,12 +103,27 @@ closing; Unix polled reads log and return null. Naming preserves these details.
 Native structure roles and 6.3 iterator storage are named with layout/marshaling
 intact; external iterator method contracts remain unchanged.
 
-The four libc imports RealPath/Open/Close/Poll have explicit EntryPoint evidence
-but remain pending in `hid63-wave175.evidence.json`: NameCandidates currently
-blocks native-or-runtime-method mappings. Their proposed names/parameters did
-not enter either map. This is a tooling limitation to address before accepting
-those rows, not uncertainty about the imported operations. Both maps passed
-preflight and preservation checks with no new collision suffixes.
+The four libc imports RealPath/Open/Close/Poll were pending in wave175. They are
+now accepted through `native_imports.py`, using fresh inventories and exact
+native-import metadata. 6.4 keeps its existing method names while receiving the
+same readable parameter terminology. The 6.3 errno exception helper keeps its
+accepted method alias and gains the `errno` parameter. Native entry points,
+libraries, flags and marshaling are preserved; malformed imports/runtime methods
+remain blocked. The shared guard files are identical in de4dotEx and dnSpy.
+
+The portable NameCandidates suite and NativeImportAliasRegression passed.
+The latter exercises the actual source-map parser, pseudo-attribute emitter and
+signature-qualified restoration instruction writer, including originally implicit
+native entry points. These are synthetic metadata/binary-map checks, without
+native calls or consolidated source/runtime verification.
+
+The new duplicate-identity fixture exposed caller misbinding in ApplyMap's
+in-memory resolver. It now retains physical paths and binds a caller to the
+unique same-directory copy. The assembly-name cache cannot replace that binding.
+A caller with no unique physical binding fails before rewritten images are
+emitted; it still needs explicit dependency context. `native-wave176-validation.json`
+binds test evidence and fresh inventories to the tooling milestone. Both ETS
+map updates passed with zero errors, no new suffixes and prior decisions retained.
 
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
@@ -120,9 +137,9 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 - HID contracts, platform implementations/discovery and the remaining USB
   path/feature-response closure helpers have been reviewed. Continue into the
   coupled discovery/connector callers and other application components.
-- Resolve the four native-import mapping proposals in `hid63-wave175.evidence.json`
-  by extending the tool's supported contract, preserving explicit EntryPoint,
-  marshaling and reference restoration. Do not simply remove the native guard.
+- Native import proposals from wave175 are resolved. Continue from
+  `native63-wave176.cumulative.json` and `native64-wave13.cumulative.json`; do not
+  reuse inventories that still report the old blanket native-method blocker.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
 - Do not autoaccept the old correspondence queue: its shape normalization can

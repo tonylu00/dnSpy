@@ -122,7 +122,22 @@ namespace SourceNameMapping {
             // Obfuscators may remove the property/event row while leaving its
             // method's SpecialName bit. With no syntax contract, this is emitted
             // as an ordinary method; the build task restores the original flag.
-            if (method.IsPinvokeImpl || method.IsRuntime) return "native-or-runtime-method";
+            if (method.IsRuntime) return "native-or-runtime-method";
+            if (method.IsPinvokeImpl || method.HasImplMap) {
+                // A managed alias never names the native export. dnSpy emits
+                // ImplMap.Name explicitly when an alias differs, and binary
+                // mapping/restoration only changes MethodDef/MemberRef names.
+                // Reject shapes that cannot be represented as a C# extern
+                // declaration instead of relaxing the guard for all native code.
+                if (!method.IsPinvokeImpl || !method.IsStatic || !method.IsIL || !method.IsManaged ||
+                    method.HasBody || (uint)method.RVA != 0 || method.IsVirtual || method.HasOverrides ||
+                    method.HasGenericParameters || method.MethodSig == null || method.MethodSig.HasThis ||
+                    method.MethodSig.ExplicitThis || method.MethodSig.IsVarArg ||
+                    UTF8String.IsNullOrEmpty(method.ImplMap?.Name) ||
+                    UTF8String.IsNullOrEmpty(method.ImplMap?.Module?.Name)) return "unsupported-native-import";
+                for (var owner = method.DeclaringType; owner != null; owner = owner.DeclaringType)
+                    if (owner.HasGenericParameters) return "unsupported-native-import";
+            }
             if (method.HasOverrides) return "explicit-method-implementation requires qualified source-name restoration";
             if (method.IsStatic && method.IsVirtual) return "static virtual contract";
             return null;
