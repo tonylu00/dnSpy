@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 249 accepted (6.3): Knx.Ets.ObjectModel.Operations.Segment",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v249.xml",
+      "Sha256": "FCB803413D0B85CC348A4711B93F0066782343BF36BE5B7923226D9F1E777D5B",
+      "PreviousMap": "names63-staged-v248.xml",
+      "PreviousMapSha256": "D9CC03C8C61DE9466DC2DEDABE9F026ABBCE2398DA94DAD16ED256060FE69355",
+      "FrozenSha256": "FCB803413D0B85CC348A4711B93F0066782343BF36BE5B7923226D9F1E777D5B",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave249.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The segment operations repeat their conventions: CreateValidators (MaxCountValidator over Constants.MaxAllowedSegments, DomainAddressValidator, or the change-medium-type triple), the CreateCouplerValidator factory that all four move/copy operations share, and the undo/redo pair that runs the move and then SecurityValidatorBase.Undo/Redo.",
+    "state machine": "CopySegmentOperation's iterator is <GetDevicesWithAddresses>d__38, so that row carries the original name.",
+    "addresses": "SegmentValidation.GetCouplingDirection uses CouplerCheck.IsCoupler with the allowed medium types; ClearDeviceAddresses clears the individual address and every additional address; ChangeDomainAddressOperation.SetDomainAddress remembers the old value before applying the new one and ResetMediumConfigLoadedFlags clears the flag on every device."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 26,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14326,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11132
+  },
+  "Errors": 0
+}
