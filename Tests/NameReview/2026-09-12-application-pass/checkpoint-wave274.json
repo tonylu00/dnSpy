@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 274 accepted (6.3): three DevKit blocks (al2 clock, ak4 certificate events, ak9 device monitor)",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v274.xml",
+      "Sha256": "E6A1D73805A7F88E0B57C709DA4A4A7FAC0D8D8AC95C74A599C202456FCB51AF",
+      "PreviousMap": "names63-staged-v273.xml",
+      "PreviousMapSha256": "91D54D9377898B73D615D82571EBB70A9A2D3E7C1DB83392128154A33BE95AA6",
+      "FrozenSha256": "E6A1D73805A7F88E0B57C709DA4A4A7FAC0D8D8AC95C74A599C202456FCB51AF",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave274.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods, in three DevKit blocks whose named siblings fix the vocabulary. al2 (the clock): GetDirectories and GetTimeServers are the keys of the two dictionaries AddDirectory/AddTimeServer fill, HasTimeServer/HasDirectory mirror those Add/Remove pairs, and ReadTimeDefinitions is the multi-definition sibling of ReadTimeDefinition. ak4 (the certificate store): the six free accessor pairs are named after the sibling that raises them - SubscribeResultDispatched/UnsubscribeResultDispatched (DispatchResult), SubscribeProgressChanged/UnsubscribeProgressChanged (RaiseProgressChanged) and SubscribeProgressReport/UnsubscribeProgressReport (RaiseProgressReport) - the field/raiser mapping coming from events63.py plus the graph field edges. ak9 (the USB device monitor): IsKeepAliveEnabled reads the keep-alive flag and GetKeepAliveInterval, SetKeepAliveEnabled drives it, RestartKeepAliveTimer exchanges the interval and restarts the timer, and SetUpdated writes the flag IsUpdated reads.",
+    "themes": "The event-accessor rule generalises: when a pair's raiser is a named sibling, the pair takes that sibling's event name with the Subscribe/Unsubscribe prefix, so no separate evidence is needed. ak4's seventh row (a(akg)) was left out because two different named raisers share the same backing field, so the field alone does not identify its event."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 15,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14877,
+    "VisibleRenamed": 5053,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11683
+  },
+  "Errors": 0
+}
