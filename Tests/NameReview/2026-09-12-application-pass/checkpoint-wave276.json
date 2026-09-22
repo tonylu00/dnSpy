@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 276 accepted (6.3): ft device-loadability and serial-number operations",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v276.xml",
+      "Sha256": "554EACC014685191AE87809A5B2A6AF2A3947BF1451C4B2455C2B906FA39C3C0",
+      "PreviousMap": "names63-staged-v275.xml",
+      "PreviousMapSha256": "B77B8B577D71840BB48FAA97175270A0DA8FDADA35816F4270E94B4DF1D69AF7",
+      "FrozenSha256": "554EACC014685191AE87809A5B2A6AF2A3947BF1451C4B2455C2B906FA39C3C0",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave276.review.json"
+  ],
+  "Method": {
+    "evidence": "Two HawkNET rows in type ft, both read from their own IL. ft::e (0x060004C6) is the device-loadability check: it formats the literal \"Not loadable {0}\" and the ErrorMessage_DeviceNotLoadable resource (resource-rows.py) before throwing a DeviceManagementException, so it is CheckDeviceLoadable. ft::b (0x060004D5) returns Task<Knx.Falcon.SerialNumber> from the class's asynchronous serial-number extractor, which the byte-identical wrappers 0x060004D3/D4/D6/D7 all call; only the wrapper that carries the async signature is named (ReadSerialNumberAsync) and the four twins stay unresolved as byte-identical siblings.",
+    "themes": "The resource-name pattern (a row that formats a Resources property is named by that property) plus the literal stream carries another HawkNET type. Negative result confirmed: the DevKit event block akj has all 48 event accessors SDK-protected, so the delegate-typed subscription surface cannot be renamed; only its non-protected event handlers remain, and they need the SubscribeAllEvents wiring (handler-suggest.py does not parse the ldftn/call pairing yet)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14887,
+    "VisibleRenamed": 5053,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11693
+  },
+  "Errors": 0
+}
