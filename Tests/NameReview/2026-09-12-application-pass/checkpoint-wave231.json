@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 221 accepted (6.3): canonical names for the cached lambdas the accepted waves unlocked",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v231.xml",
+      "Sha256": "0514F1D395DBFF16B9EE0ECCBDBA25EDE27C1AD8373EDEFEC4044C5E4836DA02",
+      "PreviousMap": "names63-staged-v230.xml",
+      "PreviousMapSha256": "637BE3FD65C01A877C804BD69CD54789C0908869E142F18E33F1C39A3167E232",
+      "FrozenSha256": "0514F1D395DBFF16B9EE0ECCBDBA25EDE27C1AD8373EDEFEC4044C5E4836DA02",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave219.review.json"
+  ],
+  "Method": {
+    "base-anchored": "A 6.3 type pairs with a 6.4 type of the same assembly only when the 6.3 base type (resolved through the accepted map) or one of its interfaces equals the 6.4 type's base or interface - System.Object/ValueType/Enum/Attribute/Delegate/Array do not count as anchors - the runner-up scores below 60% of the winner, and each 6.4 type backs at most one 6.3 type. Members are then matched by shape, unique on both sides.",
+    "literal-anchored": "Members whose literal of 16+ characters has exactly one holder in each build, reviewed row by row: 20 accepted, 16 rejected (qualified interface-implementation names, Dotfuscator placeholders, NetReactor random names, names whose literal does not describe them, and two members that would share one name)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 152,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 26,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 13711,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 567,
+    "Methods": 10373
+  },
+  "SpotChecks": [
+    "Class412 <-> Knx.Ets.Hawk.Impl.NetworkFacade: same fields (provider, dispose flag, ILog, self), same ctors, a(ConnectorMode) -> ConnectIfNecessaryAsync, b(Bus, IDataProvider, object, bool) -> FixConnection, a(...) -> FixConnectionAsync.",
+    "Class818 <-> Knx.Falcon.KnxMessages.KnxBusMessage: same fields (Nullable<byte>, CommunicationOptions, int, self), same ctors (int)/(byte[]), vmethod_2() -> Clone()."
+  ],
+  "Errors": 0
+}
