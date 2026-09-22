@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 279 accepted (6.3): the Falcon message-transport state machine Class738",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v279.xml",
+      "Sha256": "A3811DE429AB7D6BB275B091539D2E6837835E0458C3DC1D2761EB8D90E17ECC",
+      "PreviousMap": "names63-staged-v278.xml",
+      "PreviousMapSha256": "E1401CD19C179922B1865F15956ADA27813C76560B3FDB37C6DBFAEF6902F10D",
+      "FrozenSha256": "A3811DE429AB7D6BB275B091539D2E6837835E0458C3DC1D2761EB8D90E17ECC",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave279.review.json"
+  ],
+  "Method": {
+    "evidence": "Class738 is the message-transport state machine that sends one application-layer message at a time and waits for its confirmation (states IDLE, WAIT_CON). Its static constructor builds an 8-entry transition table, and the handlers name themselves: d logs HandleRequest and sends through b(Class818); c logs QueueRequest {1} and enforces get_QueueLimit (with the Queue overflow and Max queue length messages); e logs Received {1}, records the frame with the receiving-sequence service and publishes the Class750/Class822 event; smethod_0 is a single Task.CompletedTask for the entries that leave IDLE unchanged; b(Class738,Class818) logs Conf after {1} ms; a(Class738,Class818) logs ConfTimeout after {1} ms; a(Class738) logs Send next message from queue (age={1}ms). The send path b(Class818) logs Send {1} / Sending {1} succeeded/failed and defers with Defer send by {1} ms because of MinTimeBetweenSend, which named the method_17 getter and its setter outright; a(Class818) is the per-frame wait time computed from BusInterfaceConfiguration.IsRfMulti, the TPCI bits and the frame length (65535/14850/5850/2850 ms); a(Class818,bool) is the confirmation publisher both confirmation handlers call.",
+    "themes": "The state-machine pattern now covers two Falcon machines (Class733 in wave 278, Class738 here): the transition table plus each handler own log names every row, and the send path log named a setting the protected Bus facade had left opaque. Remaining rows of Class738 are left unresolved with reasons: the bool settings method_19 and e are only consumed by the SDK-protected Bus accessors w() and v(), and the Task<State> accessors a(Class738)/b(Class738,Class818) belong to the same table entries whose trigger enum is obfuscated (Class738/a a..d). Class737 is the same pattern with 25 free handlers and an obfuscated trigger enum E00..E27, so its handlers need the same table-plus-log reading next."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 13,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14942,
+    "VisibleRenamed": 5082,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11748
+  },
+  "Errors": 0
+}
