@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 255 accepted (6.3): Knx.Ets.ObjectModel.GroupTree and Operations.Line",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v255.xml",
+      "Sha256": "D963C7C9AA92DA5C53112F52F002AEA2DA05E6250AC8498B85750E1676548ADE",
+      "PreviousMap": "names63-staged-v254.xml",
+      "PreviousMapSha256": "38F24609D448C8DE3E6AFC14D2C9F49E3EA3A1025757122B3B710FD8B3BC70A7",
+      "FrozenSha256": "D963C7C9AA92DA5C53112F52F002AEA2DA05E6250AC8498B85750E1676548ADE",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave255.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. This wave pair covers two namespaces at once: GroupTree (the group-tree folder, builder and writer around the Nodes/Node, Type, RefId, Text and GroupObjectInstances attributes) and Operations.Line (the line operations and the domain address synchronizer).",
+    "line operations": "AddLineOperation.CreateLine, ChangeLineAddressOperation.CreateValidators, DeleteAdditionalGroupAddressesOperation's ResetCouplerFlags and RemoveAdditionalGroupAddresses, DeleteLineOperation's AfterUndo / BeforeRedo (the b__9_1 and b__10_1 closures), MoveLineAcrossProjectOperation.MoveSegments (it runs MoveSegmentAcrossProjectOperation) and IsAffectedBusInterfaceConnector.",
+    "domain addresses": "DomainAddressSynchronizer.SetDomainAddress remembers the old address before applying the new one, KeepDomainAddress keeps the existing one, AssignNewDomainAddress invents one through RandomDomainAddressGenerator.InventUniqueDomainAddress, and SynchronizeSegments / AssignUniqueDomainAddresses drive the per-segment work."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 28,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14467,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11273
+  },
+  "Errors": 0
+}
