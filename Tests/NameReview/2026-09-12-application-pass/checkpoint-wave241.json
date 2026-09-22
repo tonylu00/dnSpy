@@ -1,0 +1,46 @@
+{
+  "Format": 1,
+  "Status": "Wave 241 accepted (6.3): Knx.Ets.ObjectModel.Operations.Projects",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v241.xml",
+      "Sha256": "B16FB483722583CC18018D4B11FAD5FE9BDDC76176068A8B30EC6426E36E9303",
+      "PreviousMap": "names63-staged-v240.xml",
+      "PreviousMapSha256": "033A72C3A934AA894DE311FF144C179112838FD0A391407F7E80DF3986329306",
+      "FrozenSha256": "B16FB483722583CC18018D4B11FAD5FE9BDDC76176068A8B30EC6426E36E9303",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave241.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods (perf-now/ilinspect.py). The project operations repeat their own conventions: CreateValidators (one per operation, from the CreateValidators/GetValidators state machines), SpecializedExecute, and the conversion converters.",
+    "topology": "The two topology builders in CreateNewProjectOperation are told apart by their IL: the three-level one also creates the medium type 5 segment, the two-level one stops at the line.",
+    "duplicates": "The byte-identical private duplicate 0x06003445 (CreateToFreeConverter) and the unclassifiable display-class lambda 0x06003476 are left unresolved rather than named twice.",
+    "no-op predicate": "StorePatcher.b(string,string) returns false unconditionally, so it is named MatchesNoAttribute with that reason."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 35,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14100,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10906
+  },
+  "Errors": 0
+}
