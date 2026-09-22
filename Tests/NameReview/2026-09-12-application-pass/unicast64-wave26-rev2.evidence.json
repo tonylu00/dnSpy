@@ -1,0 +1,353 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v25.xml",
+ "BaseMapSha256": "DD01C5CA25E2337D12A924C5F48B1D119FB9319F1B3960E63F56676A08ACD13E",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x060011D2",
+   "ProposedName": "OnClosed",
+   "Reason": "Invokes the current Closed delegate with this sender and EventArgs.Empty; subscriber failures propagate.",
+   "Source": [
+    {
+     "Id": "m0153:0x060011D2",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 405,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "Token": "0x060011D2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060011D0",
+   "ProposedName": "OnReceived",
+   "Reason": "Parses the received bytes with the transport LocalEndPoint and no decryption key, logs/diagnoses the inbound frame, then invokes Received. Does not catch parse or subscriber failures.",
+   "Source": [
+    {
+     "Id": "m0153:0x060011D0",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 284,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.KnxIpFrame",
+     "NewName": "frame"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "Token": "0x060011D0",
+    "Slots": {
+     "0": "frame"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060011D4",
+   "ProposedName": "SendRawBytesAsync",
+   "Reason": "Sends one binary WebSocket message only when the client is open. Missing/non-open clients complete without a send. Catches most transport errors, records selected exceptions and raises Closed unless disposing; socket-backed IO errors attempt disposal and raise Closed unconditionally. Exceptions from handlers/diagnostics may still fault the task. Existing misleading ReceiveAsync log text is unchanged.",
+   "Source": [
+    {
+     "Id": "m0153:0x060011D4",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 428,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D2",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 405,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.WebSocketCommunication/<SendToWebSocketAsync>d__33",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "Token": "0x060011D4",
+    "Slots": {
+     "1": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060011D1",
+   "ProposedName": "ReceiveLoopAsync",
+   "Reason": "Receives into a 4096-byte buffer with no cancellation token while the socket is open. On EndOfMessage, delivers only the current receive Count bytes; earlier fragments are not accumulated. CloseStatus ends the inner loop. Handles cancellation/transport errors and may dispose before Closed; the disposal path awaits the retained receive task, so its potential self-await is preserved for final behavior verification.",
+   "Source": [
+    {
+     "Id": "m0153:0x060011D1",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 303,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D0",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 284,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011CE",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 245,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.WebSocketCommunication/<StartReadTask>d__30",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "Token": "0x060011D1",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x04001049",
+   "ProposedName": "logger",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001049",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 529,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D0",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 284,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "SupportingTokens": [
+     "0x060011D0"
+    ]
+   }
+  },
+  {
+   "Id": "m0153:0x0400104C",
+   "ProposedName": "lastException",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400104C",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 538,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D4",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 428,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D1",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 303,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "SupportingTokens": [
+     "0x060011E7",
+     "0x060011EC"
+    ]
+   }
+  },
+  {
+   "Id": "m0153:0x0400104D",
+   "ProposedName": "isDisposing",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400104D",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 541,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011CE",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 245,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D1",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 303,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "SupportingTokens": [
+     "0x060011DD",
+     "0x060011EC"
+    ]
+   }
+  },
+  {
+   "Id": "m0153:0x0400104E",
+   "ProposedName": "received",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400104E",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 544,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D0",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 284,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "SupportingTokens": [
+     "0x060011D0"
+    ]
+   }
+  },
+  {
+   "Id": "m0153:0x0400104F",
+   "ProposedName": "closed",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400104F",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 548,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011D2",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 405,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "SupportingTokens": [
+     "0x060011D2"
+    ]
+   }
+  },
+  {
+   "Id": "m0153:0x04001050",
+   "ProposedName": "receiveTask",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001050",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 552,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011C7",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 105,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    },
+    {
+     "Id": "m0153:0x060011CE",
+     "Path": "Knx.Falcon.2/KnxnetIp/WebSocketCommunication.cs",
+     "Line": 245,
+     "Sha256": "DCECE33549F3A1CA4DE815397A7FDAE2AEF6D650FF491FEA24A0DCFF8BA7F797"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\unicast64-wave192-inspection.json",
+    "Sha256": "B88EBA6D9868B37188BC0E9CD417E6594E9B620CB4B7FAE236AB322D85FBF7BD",
+    "SupportingTokens": [
+     "0x060011C7",
+     "0x060011DD"
+    ]
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

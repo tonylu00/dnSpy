@@ -1,0 +1,263 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x060011D2",
+   "Signature": "System.Void Knx.Falcon.KnxnetIp.WebSocketCommunication::method_2()",
+   "OriginalName": "method_2",
+   "Reason": "Invokes the current Closed delegate with this sender and EventArgs.Empty; subscriber failures propagate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "OnClosed",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x060011D0",
+   "Signature": "System.Void Knx.Falcon.KnxnetIp.WebSocketCommunication::method_0(System.Byte[])",
+   "OriginalName": "method_0",
+   "Reason": "Parses the received bytes with the transport LocalEndPoint and no decryption key, logs/diagnoses the inbound frame, then invokes Received. Does not catch parse or subscriber failures.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.KnxIpFrame",
+     "NewName": "frame"
+    }
+   ],
+   "NewName": "OnReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x060011D4",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.KnxnetIp.WebSocketCommunication::method_3(System.Byte[],System.Threading.CancellationToken)",
+   "OriginalName": "method_3",
+   "Reason": "Sends one binary WebSocket message only when the client is open. Missing/non-open clients complete without a send. Catches most transport errors, records selected exceptions and raises Closed unless disposing; socket-backed IO errors attempt disposal and raise Closed unconditionally. Exceptions from handlers/diagnostics may still fault the task. Existing misleading ReceiveAsync log text is unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0",
+    "2: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "buffer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.WebSocketCommunication/<SendToWebSocketAsync>d__33",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "SendRawBytesAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x060011D1",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.KnxnetIp.WebSocketCommunication::method_1()",
+   "OriginalName": "method_1",
+   "Reason": "Receives into a 4096-byte buffer with no cancellation token while the socket is open. On EndOfMessage, delivers only the current receive Count bytes; earlier fragments are not accumulated. CloseStatus ends the inner loop. Handles cancellation/transport errors and may dispose before Closed; the disposal path awaits the retained receive task, so its potential self-await is preserved for final behavior verification.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.WebSocketCommunication/<StartReadTask>d__30",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "ReceiveLoopAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [],
+ "Fields": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x04001049",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.KnxnetIp.WebSocketCommunication::ifalconLogger_0",
+   "OriginalName": "ifalconLogger_0",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x0400104C",
+   "Signature": "System.Exception Knx.Falcon.KnxnetIp.WebSocketCommunication::exception_0",
+   "OriginalName": "exception_0",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "lastException",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x0400104D",
+   "Signature": "System.Boolean Knx.Falcon.KnxnetIp.WebSocketCommunication::bool_0",
+   "OriginalName": "bool_0",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isDisposing",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x0400104E",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxnetIp.ReceivedIpFrameEventArgs> Knx.Falcon.KnxnetIp.WebSocketCommunication::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "received",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x0400104F",
+   "Signature": "System.EventHandler Knx.Falcon.KnxnetIp.WebSocketCommunication::eventHandler_1",
+   "OriginalName": "eventHandler_1",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "closed",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.WebSocketCommunication",
+   "Token": "0x04001050",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.KnxnetIp.WebSocketCommunication::task_0",
+   "OriginalName": "task_0",
+   "Reason": "Transport state traced through the reviewed receive/send/dispose operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "receiveTask",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ]
+}

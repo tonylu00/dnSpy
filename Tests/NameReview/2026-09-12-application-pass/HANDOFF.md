@@ -30,11 +30,12 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   RF dispatch and the nested-type scope fix committed as `5e4f854b1`, with
   de4dotEx `5db0d23b`. Connector writes committed as `2c2290feb`.
   Secure receive/timer policy committed as `2fc81dccb`.
-  Current naming checkpoint: `checkpoint-wave191.json`, from accepted 189/24.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v191.xml`,
-  SHA256 `260B22DFAE2660C76B5263E236A423C3B38BBD3D283D87D576980227DDDFAEF8`.
-- Current 6.4 map: `names64-staged-v25.xml`, SHA256
-  `DD01C5CA25E2337D12A924C5F48B1D119FB9319F1B3960E63F56676A08ACD13E`.
+  Routing startup/discovery committed as `c8a5bb743`.
+  Current naming checkpoint: `checkpoint-wave192.json`, from accepted 191/25.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v192.xml`,
+  SHA256 `38AA6512FFDD9D5DE6C040E3054E24C266408ADEB1C585CE4136A6B503DCAB89`.
+- Current 6.4 map: `names64-staged-v26.xml`, SHA256
+  `2391F3F8B622D493BEC89CD6AA4E3E8E5BD6FF8093C998734E6621B4E25F2505`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -45,7 +46,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-191.json` and `map-update64-wave-25.json`;
+  The last update reports are `map-update63-wave-192.json` and `map-update64-wave-26.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -62,6 +63,48 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   System.dll to resolve INotifyPropertyChanged. Preflight proved the existing map
   still valid; the five internal layer families then resolved without blockers.
   Framework references supply metadata only and are not renamed or executed.
+
+## Unicast and programming-mode continuation (192)
+
+`unicast_transport.py` starts with WebSocket frame parsing, close notification,
+raw-byte sending and the receive loop, then names all ten complete unicast
+interface families: Received/Closed add/remove, SendAsync and five endpoint/
+transport-policy getters. TCP connection cancellation and initialization, UDP
+initialization, and cloud WebSocket connection setup have scoped names and used
+backing fields. Eleven async carrier types and their actual captured state have
+behavioral names; explicit runtime methods and unused obfuscator storage remain.
+
+The complete eight-member `ReadLocalProgrammingModeAsync` family follows USB
+local property/memory reads. USB reads cEMI object 0/property 54 or EMI1 memory 96
+bit zero after a capability check. Five unsupported implementations return a
+completed nullable result; one returns a null Task itself. These differences,
+unchecked result-byte access and cancellation behavior are preserved.
+
+The independently reviewed WebSocket helpers in 6.4 use the same operation names.
+Source evidence binds reconstructed async wrappers while IL evidence binds the
+actual MoveNext bodies. The 6.4 raw-send wrapper uses local slot 1, while its
+receive wrapper uses slot 0; no unused obfuscator locals were named.
+
+Observed behavior remains explicit: TCP uses a 5000ms send timeout; disconnected
+UDP/WebSocket disconnect frames can complete without sending; the inner WebSocket
+sender catches many errors. WebSocket receive delivers only the current fragment
+when EndOfMessage is set, and its socket-error disposal branch may await its own
+retained receive task. Compare these with original untransformed IL and runtime
+behavior in the final consolidated verification; this naming pass changes neither.
+
+Accepted cumulative artifacts are `unicast63-wave192-rev2.cumulative.json` and
+`unicast64-wave26-rev2.cumulative.json`. Initial unicast review artifacts were
+unpublished candidates; use the rev2 reviews. The 6.3 cloud connection explanation
+uses verified ConnectorId/Target roles, not speculative client/server labels.
+Reports contain 259/16 edits from 164/10 decisions, zero errors/new suffixes,
+complete physical families and preservation of prior aliases/scopes and SDK
+bindings. `unicast-wave192-validation.json` records selected reference evidence
+and deferred behavior checks. No ETS apply/export/build/full audit/launch ran.
+
+Next: statistics item factories/value aggregation, then remaining application
+components. Application-wide naming is still incomplete. Keep the previously
+recorded routing reconfiguration/construction-order anomalies and other pending
+items for consolidated verification.
 
 ## Persistent SDK name protection
 
@@ -468,19 +511,19 @@ are no new suffixes. No ETS operations or full audit ran.
   reviewed (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`). RF receive
   dispatch, subscription and complete write/raw-write contracts are reviewed.
   Secure-wrapper/receive handling and system-broadcast policy are now reviewed.
-  Routing open/receive/discovery wiring is now reviewed. Continue local programming
-  mode, unicast transport contracts and other application components. Review the memory-278
+  Routing open/receive/discovery wiring, local programming mode and unicast
+  transport contracts are now reviewed. Continue statistics value/factory chains
+  and other application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
 - Remaining related contracts include statistics item factories/values.
   Use `usb63-layer-families-v2.json`, filtering by physical module and token together.
-  Multicast receive/close/send families are complete; unicast contracts remain.
-  The programming-mode contract includes 6.3 routing `0x06001D3D`, which returns
-  nullable null; review all physical family members before naming it.
+  Multicast receive/close/send, all ten unicast families and the programming-mode
+  read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `routing-open63-wave191.cumulative.json` and `routing-open64-wave25-rev3.cumulative.json`; do not
+  `unicast63-wave192-rev2.cumulative.json` and `unicast64-wave26-rev2.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **191/25** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **192/26** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

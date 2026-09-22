@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave191.json`. Current staged maps are **6.3 v191** and **6.4 v25**.
+`checkpoint-wave192.json`. Current staged maps are **6.3 v192** and **6.4 v26**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 191/25, not by newest filename.
+Resume with 192/26, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -32,6 +32,15 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- TCP connection cancellation, UDP initialization and WebSocket receive/send/close
+  helpers → all ten unicast communication interface families
+  (`unicast_transport.py`). Local interface property/memory reads → the complete
+  eight-member programming-mode read contract. Eleven async carrier types and
+  their used fields connect these operations. WebSocket helper bodies were also
+  reviewed independently in 6.4. The review records actual disconnected-send,
+  exception, fragment and disposal behavior; it does not repair those behaviors.
+  Selected checks preserve previous names/scopes and SDK bindings with no new
+  collision suffixes. Accepted reviews use the `-rev2` suffix, maps 192/26.
 - Communication factory and multicast socket adapters → complete receive/close/send
   contracts → routing open/receive/discovery callbacks (`routing_open.py`). HPAI
   control endpoints and device/search block serialization connect to discovery
