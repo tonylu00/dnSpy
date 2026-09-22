@@ -5,8 +5,8 @@ The source trees have **not** been renamed or rebuilt by this pass. Decisions ar
 being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
-The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave200.json`. Current staged maps are **6.3 v200** and **6.4 v31**.
+The September 23 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
+`checkpoint-wave202.json`. Current staged maps are **6.3 v202** and **6.4 v31**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 200/31, not by newest filename.
+Resume with 202/31, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -31,6 +31,15 @@ methods or completed work. Graphs and query databases live in
 own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
+
+- Clipboard membership/project predicates → group-address parsing and lookup →
+  paste target validation, move/copy creation and password retry callbacks
+  (`clipboard_scopes.py`, `paste_scopes.py`). The public Cut name is restored;
+  hidden predicates, captured state, command fields, used locals and the selected
+  device iterator have behavioral roles. Readable APIs and contract names remain.
+  de4dot now preserves Cut/Do overloads and supplies exact accessor ownership for
+  reviewing property-contained lambdas. Portable tool fixtures and map preflight
+  pass; this is staged naming, not ETS behavior verification.
 
 - Collection mutation/predicates → partition and generator iterator storage →
   indexed selectors and observable mirroring → archive publishing and recent

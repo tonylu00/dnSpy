@@ -1,4 +1,4 @@
-# ETS naming handoff — September 22, 2026
+# ETS naming handoff — September 23, 2026
 
 Application-wide mapping remains active. Finish the mapping pass before a
 consolidated ETS source export, build and runtime verification. During mapping,
@@ -38,10 +38,11 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   HTTP pooling/contract review committed as `76c45dd30`.
   Security/envelope review committed as `f3688bc53`.
   Request/dongle lifecycle review committed as `db16dfab4`.
-  Current naming checkpoint: `checkpoint-wave200.json`, from accepted 198/30,
-  through collection wave199 and its archive-publishing caller wave200.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v200.xml`,
-  SHA256 `D85691B5D04B54405253B79431DB3809E3311E15248AA29C2C602A5D0DE2BCB5`.
+  Collection/archive review committed as `221374f4d`.
+  Current naming checkpoint: `checkpoint-wave202.json`, from accepted 200/31,
+  through clipboard predicates (201) and their paste-command callers (202).
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v202.xml`,
+  SHA256 `3F8F82B19978726E3C1CC3049B0DEB77F8C71102319E2650CE208FD7DE60A915`.
 - Current 6.4 map: `names64-staged-v31.xml`, SHA256
   `0D60AAAAB6E9A2291B9D46A009A27587DE9A0EE116840EEC3E784A6B7CB51460`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
@@ -54,8 +55,8 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-200.json` and `map-update64-wave-31.json`;
-  `map-update63-wave-199.json` is the preceding step of the current checkpoint.
+  The last update reports are `map-update63-wave-202.json` and `map-update64-wave-31.json`;
+  `map-update63-wave-201.json` is the preceding step of the current checkpoint.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -73,6 +74,64 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   facade, whose forwarder targets the pinned mscorlib. With that metadata context,
   the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
+
+## Clipboard and paste call chains (201–202)
+
+Resume with maps **202/31**, `paste63-wave202.cumulative.json` and
+`collections64-wave31.cumulative.json`. Preflight for v202 passes with zero
+errors/changes. The checkpoint preserves previous aliases and scopes, apart
+from the explicit correction of public `ClipboardOperations.CutObjects` back
+to its original `Cut` name. Both maps remain `AppliedToSource: false`.
+
+de4dotEx `46920b13` adds Cut/Do to shared meaningful-word recognition; overloaded
+Cut/Do stay readable while a/b/c_1/d_12 remain review candidates. A fresh physical
+ViewModel inventory changes exactly three classifications: Cut and the private
+SwitchOn/SwitchOff Do methods. The latter retain their previously reviewed
+ExecuteSwitchOnAsync/ExecuteSwitchOffAsync aliases: discovery classification
+does not invalidate an explicit behavioral name.
+
+de4dotEx `63e8ec47` adds exact `AccessorOwners` metadata to `--inspect-methods`,
+including unchanged accessors. Property/event associations come from metadata,
+not naming conventions; ambiguity remains visible. The portable NameCandidates
+suite passed after each tool change on Windows. Linux/macOS were not run locally.
+`behavior_review.py` can bind those inspected owners and property-contained
+lambda usages, preserving physical identity, IL offsets, source kind/hash and
+the existing mapping guards. All 13 source-evidence tests pass, including missing,
+ambiguous, stale and wrong-physical-input rejection. No source graph was modified.
+
+`clipboard_scopes.py` covers installation/project membership predicates, captured
+clipboard state and parsed group-address matching. The complete two-member
+GetMatchingGroupAddressesInClipboardText contract retains its original name and
+project parameter; actual regex/capture/result/enumerator locals are named.
+`paste_scopes.py` follows into target validation, normal/configured move creation,
+copy-operation creation and the required-password retry callback. Command fields,
+delegate caches and captured state now have roles. `Type_2625` is represented by
+the `SelectedItemDeviceIterator` map, with state/current/thread/captured-source/
+enumerator fields and DisposeSelectedItemsEnumerator. Runtime iterator contracts
+are unchanged; unsupported explicit MoveNext local edits were not attempted.
+
+Behavior retained for later original-IL/runtime comparison:
+
+- DeleteFromClipboard clears the entire item list if any selected deletion matches.
+- ClearWhenInProjects checks the first project-bearing clipboard item only.
+- Parsed-address lookup stops on the first missing address; success returns a
+  distinct read-only snapshot through physical Common m0039:060002C8.
+- Move callbacks notify the selected items before operations execute. A null
+  factory result becomes an empty operation array.
+- Normal DoPaste clears clipboard after move progress; DoPasteSpecial does not.
+- Copy returns a one-element operation array even for a null factory result.
+  Retry still depends on IsRequiredPasswordSet; all password/license checks remain.
+- The selected-device iterator may yield a null ParentDevice. The paste lock
+  predicate has no added null check. Null selection yields no devices, and source
+  enumeration remains deferred, with disposal on exhaustion or fault.
+
+The two map updates have 37 and 84 edits, with no generated collision suffixes.
+These describe reviewed scope, not whole-application completion. Validation is
+recorded in `clipboard-paste-wave202-validation.json`; exact caller edges connect
+CutCommandHandler to Cut, clipboard lookup to Common snapshot creation, and
+TryHandleClipboardPaste to the lookup interface. Continue through operation
+factories/drag-drop callers and the remaining application components before
+consolidated application, SDK refresh, builds or ETS launch.
 
 ## Statistics values and aggregation (193)
 

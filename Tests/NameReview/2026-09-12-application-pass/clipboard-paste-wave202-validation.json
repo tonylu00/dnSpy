@@ -1,0 +1,116 @@
+{
+  "Checks": [
+    {
+      "Review": "clipboard63-wave201",
+      "Kind": "Methods",
+      "Decisions": 11
+    },
+    {
+      "Review": "clipboard63-wave201",
+      "Kind": "Types",
+      "Decisions": 0
+    },
+    {
+      "Review": "clipboard63-wave201",
+      "Kind": "Fields",
+      "Decisions": 7
+    },
+    {
+      "Review": "paste63-wave202",
+      "Kind": "Methods",
+      "Decisions": 25
+    },
+    {
+      "Review": "paste63-wave202",
+      "Kind": "Types",
+      "Decisions": 1
+    },
+    {
+      "Review": "paste63-wave202",
+      "Kind": "Fields",
+      "Decisions": 21
+    }
+  ],
+  "ClassificationCorrections": [
+    {
+      "Token": "0x06003B6F",
+      "Signature": "System.Threading.Tasks.Task Knx.Ets.ViewModel.Dialogs.ProjectDetails.ArchiveProjectDetailsDialog.BusyViewModel/SwitchOn::Do()",
+      "Before": true,
+      "After": false
+    },
+    {
+      "Token": "0x06003B75",
+      "Signature": "System.Threading.Tasks.Task Knx.Ets.ViewModel.Dialogs.ProjectDetails.ArchiveProjectDetailsDialog.BusyViewModel/SwitchOff::Do()",
+      "Before": true,
+      "After": false
+    },
+    {
+      "Token": "0x06004529",
+      "Signature": "System.Void Knx.Ets.ViewModel.Clipboard.ClipboardOperations::Cut(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IInstallationDomObject>)",
+      "Before": true,
+      "After": false
+    }
+  ],
+  "PhysicalCallerEdges": [
+    {
+      "From": "m0082:0x06002ECD",
+      "Kind": "method",
+      "Offset": 18,
+      "Operation": "call",
+      "Target": {
+        "Id": "m0082:0x06004529",
+        "Signature": "System.Void Knx.Ets.ViewModel.Clipboard.ClipboardOperations::Cut(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IInstallationDomObject>)",
+        "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+        "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+        "Status": "input",
+        "Error": null
+      }
+    },
+    {
+      "From": "m0082:0x06004537",
+      "Kind": "method",
+      "Offset": 361,
+      "Operation": "call",
+      "Target": {
+        "Id": "m0039:0x060002C8",
+        "Signature": "System.Collections.ObjectModel.ReadOnlyCollection`1<Knx.Ets.ObjectModel.Project.IGroupAddress> asz::a<Knx.Ets.ObjectModel.Project.IGroupAddress>(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress>)",
+        "Assembly": "Knx.Ets.Common, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+        "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.Common.dll",
+        "Status": "input",
+        "Error": null
+      }
+    },
+    {
+      "From": "m0082:0x06004353",
+      "Kind": "method",
+      "Offset": 28,
+      "Operation": "callvirt",
+      "Target": {
+        "Id": "m0082:0x0600453A",
+        "Signature": "FluentResults.Result`1<System.Collections.Generic.ICollection`1<Knx.Ets.ObjectModel.Project.IGroupAddress>> Knx.Ets.ViewModel.Clipboard.IClipboardToMatchingDomObjectProvider::GetMatchingGroupAddressesInClipboardText(Knx.Ets.ObjectModel.Project.IProject)",
+        "Assembly": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+        "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Ets.ViewModel.dll",
+        "Status": "input",
+        "Error": null
+      }
+    }
+  ],
+  "ToolCommits": [
+    "46920b13",
+    "63e8ec47"
+  ],
+  "PortableFixtureValidation": "NameCandidates suite passed twice on this Windows host; Linux/macOS not run locally. Source evidence helper: 13 passing tests.",
+  "AppliedToSource": false,
+  "EtsRuntimeExecuted": false,
+  "BehaviorNotes": [
+    "DeleteFromClipboard clears all items if any deletion matches.",
+    "ClearWhenInProjects considers the first project-bearing item only.",
+    "Group-address lookup fails on the first missing address and otherwise returns a distinct read-only snapshot.",
+    "Move callbacks emit selected items before operations are executed; null factory results become empty arrays.",
+    "Normal DoPaste clears ETS clipboard after move progress; DoPasteSpecial does not.",
+    "Copy callback returns a one-element array even if the factory returns null.",
+    "Copy retry still depends on IsRequiredPasswordSet.",
+    "SelectedItemDeviceIterator can yield null ParentDevice; the paste lock predicate does not add a null check.",
+    "BusyViewModel private Do aliases remain ExecuteSwitchOnAsync/ExecuteSwitchOffAsync based on previously reviewed behavior; detector preservation does not undo explicit private aliases."
+  ]
+}

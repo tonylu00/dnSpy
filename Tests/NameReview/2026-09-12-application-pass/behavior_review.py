@@ -98,6 +98,32 @@ class BehaviorReview:
             staged[key] = {'Path': str(path), 'Sha256': report_hash, **proof}
         self.accessor_sources.update(staged)
 
+    def bind_inspected_accessor_sources(self, report_path, tokens):
+        """Bind unchanged accessors too, using --inspect-methods owner metadata."""
+        path = Path(report_path)
+        report = json.loads(path.read_text(encoding='utf-8-sig'))
+        if Path(report['Input']).resolve() != Path(self.module['Input']).resolve() or any(
+                report[k] != self.module[k] for k in ('Mvid', 'Sha256')):
+            raise ValueError('Accessor inspection selects a different physical module')
+        staged = {}
+        for token in tokens:
+            key = f'0x{token:08X}'
+            rows = [r for r in report['Methods'] if r['Token'] == key]
+            if key in self.accessor_sources or len(rows) != 1 or len(rows[0].get('AccessorOwners', [])) != 1:
+                raise ValueError('Missing, duplicate or ambiguous inspected accessor: ' + key)
+            row, entry = rows[0], self.entries['Methods'][key]
+            if row['Signature'] != entry['Signature'] or any(report[k] != entry[k] for k in ('Identity', 'Mvid', 'Sha256')):
+                raise ValueError('Inspected accessor identity/signature mismatch')
+            owner = row['AccessorOwners'][0]
+            table = {'Property': 0x17000000, 'Event': 0x14000000}.get(owner['OwnerKind'])
+            if table is None or int(owner['OwnerToken'], 16) & 0xFF000000 != table:
+                raise ValueError('Inspected accessor owner kind mismatch')
+            if owner['AccessorRole'] not in ({'get', 'set'} if owner['OwnerKind'] == 'Property' else {'add', 'remove', 'raise'}):
+                raise ValueError('Unsupported inspected accessor role')
+            staged[key] = {'Path': str(path), 'Sha256': sha(path), 'MethodToken': key,
+                           'MethodSignature': row['Signature'], 'MethodName': entry['OriginalName'], **owner}
+        self.accessor_sources.update(staged)
+
     def bind_usage_sources(self, inspection_path, bindings):
         """Bind an inlined method/field to an exact, inspected caller location.
 
@@ -143,10 +169,13 @@ class BehaviorReview:
                 if not instruction or instruction['OpCode'] != edge['Operation'] or instruction.get('Operand', {}).get('Text') != target['Signature']:
                     raise ValueError('Usage graph and inspected IL disagree')
             rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (caller_id,))]
-            if not rows or any(r['Kind'] not in ('MethodDeclaration', 'ConstructorDeclaration') for r in rows):
+            direct = rows and all(r['Kind'] in ('MethodDeclaration', 'ConstructorDeclaration') for r in rows)
+            accessor = self.accessor_sources.get(caller_key) if not direct else None
+            if not direct and accessor is None:
                 raise ValueError('Usage caller has no direct source declaration')
             self.source(caller_token)  # Apply the normal source root/hash checks.
-            staged[key] = {'Inspection': str(path), 'Sha256': sha(path), 'SourceId': caller_id, 'Edges': edges}
+            staged[key] = {'Inspection': str(path), 'Sha256': sha(path), 'SourceId': caller_id, 'Edges': edges,
+                           **({'CallerAccessor': copy.deepcopy(accessor)} if accessor else {})}
         self.usage_sources.update(staged)
 
     def source(self, token):
@@ -154,7 +183,7 @@ class BehaviorReview:
         sid = self.module_id + ':' + key
         rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (sid,))]
         accessor = usage = None
-        if not rows and key in self.accessor_sources:
+        if key in self.accessor_sources:
             accessor = self.accessor_sources[key]
             owner = self.module_id + ':' + accessor['OwnerToken']
             rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (owner,))]
@@ -163,7 +192,15 @@ class BehaviorReview:
                 raise ValueError('Accessor source declaration kind mismatch: ' + sid)
         if not rows and key in self.usage_sources:
             usage = self.usage_sources[key]
-            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (usage['SourceId'],))]
+            source_id = usage['SourceId']
+            if usage.get('CallerAccessor'):
+                accessor = usage['CallerAccessor']
+                source_id = self.module_id + ':' + accessor['OwnerToken']
+            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (source_id,))]
+            if accessor:
+                allowed = {'PropertyDeclaration', 'IndexerDeclaration'} if accessor['OwnerKind'] == 'Property' else {'EventDeclaration', 'EventFieldDeclaration'}
+                if any(row['Kind'] not in allowed for row in rows):
+                    raise ValueError('Usage accessor declaration kind mismatch: ' + sid)
         if not rows:
             raise ValueError('No source declaration: ' + sid)
         for row in rows:

@@ -77,6 +77,31 @@ class AccessorSourceTests(unittest.TestCase):
     def test_no_binding_does_not_guess_from_name(self):
         with self.assertRaisesRegex(ValueError, 'No source declaration'): self.review.source(0x06000001)
 
+    def inspection(self):
+        b = self.review
+        b.module = {'Input': str(b.target / b.relative), 'Mvid': self.method['Mvid'], 'Sha256': self.method['Sha256']}
+        return {**b.module, 'Identity': self.method['Identity'], 'Methods': [{
+            'Token': self.method['Token'], 'Signature': self.method['Signature'],
+            'AccessorOwners': [{k: v for k, v in self.report['AccessorEvidence'][0].items() if k.startswith('Owner') or k == 'AccessorRole'}]}]}
+
+    def test_inspected_owner_binds_unchanged_accessor(self):
+        self.path.write_text(json.dumps(self.inspection()), encoding='utf-8')
+        self.review.bind_inspected_accessor_sources(self.path, [0x06000001])
+        self.assertEqual(self.review.source(0x06000001)[0]['DeclarationId'], 'm0002:0x17000001')
+
+    def test_inspected_owner_rejects_missing_ambiguous_and_stale_identity(self):
+        for failure in ('missing', 'ambiguous', 'physical', 'signature', 'other'):
+            report = self.inspection()
+            if failure == 'missing': report['Methods'][0]['AccessorOwners'] = []
+            if failure == 'ambiguous': report['Methods'][0]['AccessorOwners'] *= 2
+            if failure == 'physical': report['Mvid'] = 'other'
+            if failure == 'signature': report['Methods'][0]['Signature'] = 'other overload'
+            if failure == 'other': report['Methods'][0]['AccessorOwners'][0]['AccessorRole'] = 'other'
+            self.path.write_text(json.dumps(report), encoding='utf-8')
+            with self.subTest(failure=failure), self.assertRaises(ValueError):
+                self.review.bind_inspected_accessor_sources(self.path, [0x06000001])
+            self.assertFalse(self.review.accessor_sources)
+
 
 class UsageSourceTests(unittest.TestCase):
     def setUp(self):
@@ -143,6 +168,48 @@ class UsageSourceTests(unittest.TestCase):
     def test_stale_caller_source_is_rejected(self):
         self.source.write_text('changed', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'Stale source'): self.bind()
+
+    def bind_accessor_caller(self):
+        b = self.review
+        b.target = self.source.parent / 'input'
+        self.caller.update(Module=b.relative, Identity=self.method['Identity'], Mvid=b.module['Mvid'],
+                           Sha256=b.module['Sha256'], OriginalName='get_Value')
+        b.db.execute('UPDATE source SET id=?, data=?', ('m0002:0x17000001', json.dumps({
+            'Source': self.source.name, 'Sha256': sha(self.source), 'Line': 1, 'Kind': 'PropertyDeclaration'})))
+        path = self.source.parent / 'accessors.json'
+        path.write_text(json.dumps({'Kind': 'AccessorReview', 'TargetRoot': str(b.target), 'Methods': [self.caller],
+            'AccessorEvidence': [{'Module': b.relative, 'MethodToken': self.caller['Token'],
+                'MethodSignature': self.caller['Signature'], 'MethodName': 'get_Value', 'OwnerKind': 'Property',
+                'OwnerToken': '0x17000001', 'AccessorRole': 'get'}]}), encoding='utf-8')
+        b.bind_accessor_sources(path, [0x06000002])
+
+    def test_verified_accessor_caller_supplies_inlined_lambda_and_field_source(self):
+        self.bind_accessor_caller()
+        self.bind()
+        for token in (0x06000001, 0x04000001):
+            source = self.review.source(token)[0]
+            self.assertEqual(source['SourceId'], self.caller_id)
+            self.assertEqual(source['DeclarationId'], 'm0002:0x17000001')
+            self.assertEqual(source['UsageEvidence']['CallerAccessor']['MethodToken'], self.caller['Token'])
+        self.assertEqual(self.review.db.execute('SELECT COUNT(*) FROM source').fetchone()[0], 1)
+
+    def test_accessor_caller_still_requires_verified_binding_and_source_hash(self):
+        self.bind_accessor_caller()
+        saved = self.review.accessor_sources.pop(self.caller['Token'])
+        with self.assertRaisesRegex(ValueError, 'no direct source'): self.bind()
+        self.review.accessor_sources[self.caller['Token']] = saved
+        self.source.write_text('changed', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'Stale source'): self.bind()
+        self.assertFalse(self.review.usage_sources)
+
+    def test_property_indexed_under_accessor_still_uses_verified_owner(self):
+        self.bind_accessor_caller()
+        row = self.review.db.execute('SELECT data FROM source').fetchone()[0]
+        self.review.db.execute('INSERT INTO source VALUES (?,?)', (self.caller_id, row))
+        self.bind()
+        result = self.review.source(0x06000001)[0]
+        self.assertEqual(result['DeclarationId'], 'm0002:0x17000001')
+        self.assertEqual(result['SourceId'], self.caller_id)
 
 
 if __name__ == '__main__':
