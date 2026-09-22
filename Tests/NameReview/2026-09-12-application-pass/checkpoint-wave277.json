@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 277 accepted (6.3): HawkNET exception factories, XML->Hawk converter, property-type cache",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v277.xml",
+      "Sha256": "FF685DFF7A8EF2DA631E4210282ABD4D277C6B6E618F13EAFA06F9DAF2FD26F9",
+      "PreviousMap": "names63-staged-v276.xml",
+      "PreviousMapSha256": "554EACC014685191AE87809A5B2A6AF2A3947BF1451C4B2455C2B906FA39C3C0",
+      "FrozenSha256": "FF685DFF7A8EF2DA631E4210282ABD4D277C6B6E618F13EAFA06F9DAF2FD26F9",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave277.review.json"
+  ],
+  "Method": {
+    "evidence": "Three HawkNET blocks, every row read from its own IL. (1) Class488 is the exception-factory class: all 15 free rows format exactly one Knx.Ets.Hawk.Properties.Resources ErrorMessage_*/DeviceInfoItem_* value (resource-rows.py), and the three named siblings (IncompatibleManufacturerId, DeviceNotFound, UnloadDifferentDevice) fix the convention - the factory is named after what its message says, with no Create prefix. The bodies also settle the pairs: 0x06000E76 and 0x06000E77 both build ErrorMessage_DeviceControlFailed, the second one appending the underlying exception text, so they are the C# overload pair DeviceControlFailed()/DeviceControlFailed(Exception); 0x06000E78 appends a cause to ErrorMessage_Timeout, 0x06000E7A/0x06000E7C return InvalidOperationException instead of the class exception, and 0x06000E71 formats the elapsed TimeSpan as whole minutes. (2) Class299 is the XML-object-model -> Hawk converter: the named siblings ResourceLocationFromXml and PropTypeFromXml fix <Target>FromXml for an XML-enum-to-Hawk conversion (DeviceAccessTypeToXml fixes the inverse), and the free rows are the same shape - 11 are identity enum mappings (ldarg.0/ret) and 0x06000619 is a switch over LdCtrlMemAddrSpace, so each is named after the Hawk type it produces. (3) 0x06000188 carries its own literal, CachePropTypeByObjectIndex({0},{1},{2}), and stores list_0[objectIndex].c[propertyId] = type, which names it exactly.",
+    "themes": "New helper perf-now/typerows.py <module> <type> [--named-only|--free-only|--tokens] prints every row of a block with the accepted name beside each one (or free/PROTECTED/BLOCKED) and can emit just the free tokens for bodysum63.py, so the named siblings convention is visible before anything is classified. Overload rule validated end to end: two rows of the same review request the same name with different parameter lists (DeviceControlFailed, AddressSpaceFromXml) and the wave applied both with 0 collision suffixes. Negative results recorded for the remaining HawkNET blocks: fa/eh/Class470/Class474 are device state-machine steps and property accessors whose names need their call chains and the fields they read (not literal or resource evidence), so they are left unresolved rather than guessed."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 28,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14915,
+    "VisibleRenamed": 5080,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11721
+  },
+  "Errors": 0
+}
