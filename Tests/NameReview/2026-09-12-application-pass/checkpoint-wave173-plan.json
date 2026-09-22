@@ -1,0 +1,49 @@
+{
+  "Checkpoint": "checkpoint-wave173.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v171.xml",
+      "Steps": [
+        {"Map": "names63-staged-v172.xml", "Review": "usb63-wave172.review.json", "Report": "map-update63-wave-172.json", "References": "contract-references63.json"},
+        {"Map": "names63-staged-v173.xml", "Review": "layer63-wave173.review.json", "Report": "map-update63-wave-173.json", "References": "contract-references63-v2.json"}
+      ]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v7.xml",
+      "Steps": [
+        {"Map": "names64-staged-v9.xml", "Review": "usb64-wave9.review.json", "Report": "map-update64-wave-9.json"},
+        {"Map": "names64-staged-v10.xml", "Review": "layer64-wave10.review.json", "Report": "map-update64-wave-10.json"}
+      ]
+    }
+  },
+  "Reviews": [
+    {"Input": "layer63-wave173.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "layer64-wave10.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": false}
+  ],
+  "ContractReferences": {
+    "63": {"Manifest": "contract-references63-v2.json", "Families": "usb63-layer-selected-families-v2.json"}
+  },
+  "Artifacts": [
+    "usb63-wave172.review.json", "usb63-wave172.evidence.json", "usb63-wave172-il.json",
+    "usb64-wave9.review.json", "usb64-wave9.evidence.json",
+    "layer63-wave173.review.json", "layer63-wave173.evidence.json",
+    "layer64-wave10.review.json", "layer64-wave10.evidence.json",
+    "map-update63-wave-172.json", "map-update63-wave-173.json",
+    "map-update64-wave-9.json", "map-update64-wave-10.json",
+    "contract-references63-v2.json", "contract-reference-v2-base-preflight.json",
+    "usb63-layer-selected-families-v2.json"
+  ],
+  "ReviewedChains": [
+    "Task timeout/cancellation completion callbacks and captured state, retaining the different 6.3/6.4 registration lifetimes.",
+    "HID input validation, received-telegram event dispatch, USB stack-message send completion, feature reads/writes and cached descriptor/manufacturer reads.",
+    "LayerListener message matching, unexpected-message errors, queued cancellation, callback dispatch and disposal ownership in both versions.",
+    "Five full 6.3 ILayer/Layer contract families: Enqueue, Complete, get_IsTerminated, add_QuickReport and remove_QuickReport."
+  ],
+  "Remaining": [
+    "Continue through USB connection, reconnect and receive-worker lifecycle; whole-application coverage remains incomplete.",
+    "Inspect the 51 inherited requested/applied suffix adjustments; this checkpoint adds none.",
+    "Keep unsupported external contracts and uncertain storage explicitly unresolved; the expanded reference manifest is metadata-only.",
+    "The old correspondence queue erases some library identifiers and physical paths; do not autoaccept its matches.",
+    "Refresh both SDK audits/frozen maps against the eventual final map, then perform consolidated source export, build and reference/runtime verification."
+  ]
+}

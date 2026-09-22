@@ -1,0 +1,505 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v7.xml",
+ "BaseMapSha256": "605F70D72849603EDA6051D7848AFF8C5DB24D89C62AFA5F4AE9417E9DC68E01",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06002B66",
+   "ProposedName": "CancelCompletion",
+   "Reason": "Cancellation registration callback attempts TrySetCanceled on the captured completion source.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002B66",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 175,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    },
+    {
+     "Id": "m0153:0x06002B61",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 115,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002B67",
+   "ProposedName": "TimeoutCompletion",
+   "Reason": "Timed token callback attempts TrySetException(new TimeoutException()).",
+   "Source": [
+    {
+     "Id": "m0153:0x06002B67",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 182,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    },
+    {
+     "Id": "m0153:0x06002B61",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 115,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C56",
+   "ProposedName": "completionSource",
+   "Reason": "Captured completion source. The 6.4 caller retains registrations and the timer in a disposables list; its different lifetime is preserved.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C56",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 203,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    },
+    {
+     "Id": "m0153:0x06002B61",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 115,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    },
+    {
+     "Id": "m0153:0x06002B66",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 175,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    },
+    {
+     "Id": "m0153:0x06002B67",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 182,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002B61",
+   "ProposedName": "",
+   "Reason": "Existing WithTimeout overload preserved; name the tcs parameter by its completion-source role. This version disposes registrations and timer in finally.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002B61",
+     "Path": "Knx.Falcon.2/Impl/Utilities/TaskExtensions.cs",
+     "Line": 115,
+     "Sha256": "C80AC7E3CD23F6CEC7FBA655A66E72BB3589CFE35F4A049A6E8DC922FCDA6CD9"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "tcs",
+     "HasMetadata": true,
+     "NewName": "completionSource"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timeout",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0200067B",
+   "ProposedName": "UsbStackMessage",
+   "Reason": "Nested USB stack message carries direction, ProtocolId, HID body and send completion; outgoing constructors pass true, receive reassembly passes false.",
+   "Source": [
+    {
+     "Id": "m0153:0x0200067B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1468,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003334",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1472,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x0600333B",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1523,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x0600333D",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1537,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003334",
+   "ProposedName": "",
+   "Reason": "Captures direction/protocol/HID body and creates a completion source with asynchronous continuations.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003334",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1472,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_1",
+     "HasMetadata": true,
+     "NewName": "isOutbound"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "protocolId_1",
+     "HasMetadata": true,
+     "NewName": "protocolId"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "hidBody"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003335",
+   "ProposedName": "get_IsOutbound",
+   "Reason": "Returns the outgoing/incoming direction flag rendered as > or < in ToString.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003335",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1481,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003336",
+   "ProposedName": "get_HidBody",
+   "Reason": "Casts the stored object payload back to byte[].",
+   "Source": [
+    {
+     "Id": "m0153:0x06003336",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1488,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003337",
+   "ProposedName": "get_SendCompletion",
+   "Reason": "Returns the send completion source, not its Task.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003337",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1495,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003338",
+   "ProposedName": "get_ProtocolID",
+   "Reason": "Returns the captured ProtocolId.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003338",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1502,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003339",
+   "ProposedName": "CompleteSend",
+   "Reason": "Attempts TrySetResult(default(VoidType)) on send completion after writing report fragments.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003339",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1509,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0600333A",
+   "ProposedName": "FailSend",
+   "Reason": "Attempts TrySetException on the send completion source.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600333A",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1516,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "exception_0",
+     "HasMetadata": true,
+     "NewName": "exception"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06003344",
+   "ProposedName": "AccumulateHidBodyHash",
+   "Reason": "Callback used by GetHashCode Aggregate over payload bytes with seed zero; computes 297 * runningHash + nextByte. No existing canonical lambda alias is replaced.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003344",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1586,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x0600333E",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1544,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "i",
+     "HasMetadata": true,
+     "NewName": "runningHash"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "b",
+     "HasMetadata": true,
+     "NewName": "nextByte"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002251",
+   "ProposedName": "isOutbound",
+   "Reason": "Constructor and reviewed getters establish this stack-message role; payload remains object-typed as in the input.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002251",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1565,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003334",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1472,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003335",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1481,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003336",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1488,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003337",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1495,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003338",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1502,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002252",
+   "ProposedName": "protocolId",
+   "Reason": "Constructor and reviewed getters establish this stack-message role; payload remains object-typed as in the input.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002252",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1568,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003334",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1472,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003335",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1481,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003336",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1488,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003337",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1495,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003338",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1502,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002253",
+   "ProposedName": "hidBody",
+   "Reason": "Constructor and reviewed getters establish this stack-message role; payload remains object-typed as in the input.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002253",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1571,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003334",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1472,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003335",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1481,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003336",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1488,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003337",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1495,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003338",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1502,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002254",
+   "ProposedName": "sendCompletion",
+   "Reason": "Constructor and reviewed getters establish this stack-message role; payload remains object-typed as in the input.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002254",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1574,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003334",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1472,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003335",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1481,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003336",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1488,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003337",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1495,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    },
+    {
+     "Id": "m0153:0x06003338",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/KnxUsbInterface.cs",
+     "Line": 1502,
+     "Sha256": "9D160636D7938A78295C151CE943F6601AE19FA5E5874604F58AD3583F98BFFE"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

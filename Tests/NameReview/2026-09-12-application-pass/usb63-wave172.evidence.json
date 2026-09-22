@@ -1,0 +1,1735 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v171.xml",
+ "BaseMapSha256": "C4A82487927C1C5226C5223F408ACE24CC57DB54D88119B71A3824974C720EDD",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x06001874",
+   "ProposedName": "CancelCompletion",
+   "Reason": "Registered with the caller cancellation token; attempts TrySetCanceled on the captured completion source.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001874",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 66,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001875",
+   "ProposedName": "TimeoutCompletion",
+   "Reason": "Registered with the timeout source token; attempts TrySetException(new TimeoutException()) on the captured completion source.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001875",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 73,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E2",
+   "ProposedName": "completionSource",
+   "Reason": "Captured TaskCompletionSource<T> awaited and completed/canceled by the reviewed callbacks.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E2",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 80,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001874",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 66,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001875",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 73,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000445",
+   "ProposedName": "CompletionTimeoutCallbacks",
+   "Reason": "Compiler-generated but obfuscated generic closure; owns the completion source used by the two reviewed callbacks.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000445",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 61,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001874",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 66,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001875",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 73,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001870",
+   "ProposedName": "WithTimeout",
+   "Reason": "Preserves WithTimeout. Races task with a linked cancellation/timeout delay; abortTask is invoked only when the delay wins while task is unfinished, then task exceptions are observed before reporting timeout/cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001870",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 14,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "task"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "A_3",
+     "HasMetadata": true,
+     "NewName": "abortTask"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001871",
+   "ProposedName": "WithTimeout",
+   "Reason": "Preserves WithTimeout. Races task with a linked cancellation/timeout delay; abortTask is invoked only when the delay wins while task is unfinished, then task exceptions are observed before reporting timeout/cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001871",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 30,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "task"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "A_3",
+     "HasMetadata": true,
+     "NewName": "abortTask"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001872",
+   "ProposedName": "WithTimeout",
+   "Reason": "Preserves WithTimeout. Registers cancellation and timeout callbacks directly against a completion source, awaits its Task, and disposes the timer source. Unlike 6.4, this body does not retain/dispose registrations.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001872",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 46,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "A_0",
+     "HasMetadata": true,
+     "NewName": "completionSource"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "A_1",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "A_2",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000446",
+   "ProposedName": "TaskTimeoutStateMachine",
+   "Reason": "Obfuscated async state type identified by its kickoff AsyncStateMachine attribute and reviewed MoveNext body; runtime contracts remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000446",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 89,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000447",
+   "ProposedName": "ResultTaskTimeoutStateMachine",
+   "Reason": "Obfuscated async state type identified by its kickoff AsyncStateMachine attribute and reviewed MoveNext body; runtime contracts remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000447",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 330,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000448",
+   "ProposedName": "CompletionTimeoutStateMachine",
+   "Reason": "Obfuscated async state type identified by its kickoff AsyncStateMachine attribute and reviewed MoveNext body; runtime contracts remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000448",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 574,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E4",
+   "ProposedName": "state",
+   "Reason": "Async state discriminator: -1 running and -2 finished.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E4",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 291,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E5",
+   "ProposedName": "builder",
+   "Reason": "AsyncTaskMethodBuilder completing or faulting the wrapper task.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E5",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 294,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E6",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured caller cancellation token linked to the timeout delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E6",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 297,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E7",
+   "ProposedName": "timeout",
+   "Reason": "Captured duration passed to Task.Delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E7",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 300,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E8",
+   "ProposedName": "task",
+   "Reason": "Captured task raced and subsequently awaited.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E8",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 303,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013E9",
+   "ProposedName": "abortTask",
+   "Reason": "Optional callback invoked when delay wins and the task remains incomplete.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013E9",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 306,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013EA",
+   "ProposedName": "cancelTimeout",
+   "Reason": "Cancellation source used to cancel the delay when the task wins.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013EA",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 309,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013EB",
+   "ProposedName": "linkedCancellation",
+   "Reason": "Source linking caller cancellation with cancelTimeout.Token.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013EB",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 312,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013EC",
+   "ProposedName": "timeoutTask",
+   "Reason": "Task.Delay result raced against the task; awaited to distinguish timeout from cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013EC",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 315,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013ED",
+   "ProposedName": "raceAwaiter",
+   "Reason": "Suspended Task.WhenAny awaiter.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013ED",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 318,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013EE",
+   "ProposedName": "taskAwaiter",
+   "Reason": "Suspended task awaiter; the nongeneric wrapper also reuses it for the delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013EE",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 321,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001876",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 95,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F0",
+   "ProposedName": "state",
+   "Reason": "Async state discriminator: -1 running and -2 finished.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F0",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 532,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F1",
+   "ProposedName": "builder",
+   "Reason": "AsyncTaskMethodBuilder completing or faulting the wrapper task.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F1",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 535,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F2",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured caller cancellation token linked to the timeout delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F2",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 538,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F3",
+   "ProposedName": "timeout",
+   "Reason": "Captured duration passed to Task.Delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F3",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 541,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F4",
+   "ProposedName": "task",
+   "Reason": "Captured task raced and subsequently awaited.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F4",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 544,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F5",
+   "ProposedName": "abortTask",
+   "Reason": "Optional callback invoked when delay wins and the task remains incomplete.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F5",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 547,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F6",
+   "ProposedName": "cancelTimeout",
+   "Reason": "Cancellation source used to cancel the delay when the task wins.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F6",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 550,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F7",
+   "ProposedName": "linkedCancellation",
+   "Reason": "Source linking caller cancellation with cancelTimeout.Token.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F7",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 553,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F8",
+   "ProposedName": "timeoutTask",
+   "Reason": "Task.Delay result raced against the task; awaited to distinguish timeout from cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F8",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 556,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013F9",
+   "ProposedName": "raceAwaiter",
+   "Reason": "Suspended Task.WhenAny awaiter.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013F9",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 559,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013FA",
+   "ProposedName": "taskAwaiter",
+   "Reason": "Suspended task awaiter; the nongeneric wrapper also reuses it for the delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013FA",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 562,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013FB",
+   "ProposedName": "timeoutAwaiter",
+   "Reason": "Generic wrapper stores its non-generic delay awaiter separately from the Task<T> awaiter.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013FB",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 565,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001878",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 336,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013FD",
+   "ProposedName": "state",
+   "Reason": "Async state discriminator for the completion-source wrapper.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013FD",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 661,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013FE",
+   "ProposedName": "builder",
+   "Reason": "Completes or faults the wrapper Task<T>.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013FE",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 664,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040013FF",
+   "ProposedName": "completionSource",
+   "Reason": "Kickoff captures the input completion source; MoveNext copies it into the callback closure.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013FF",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 667,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001400",
+   "ProposedName": "cancellationToken",
+   "Reason": "Caller token that registers CancelCompletion when cancelable.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001400",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 670,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001401",
+   "ProposedName": "timeout",
+   "Reason": "Duration compared with Timeout.InfiniteTimeSpan before constructing the timeout source.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001401",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 673,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001402",
+   "ProposedName": "timeoutCancellation",
+   "Reason": "Optional timed CancellationTokenSource disposed after the await.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001402",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 676,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001403",
+   "ProposedName": "completionAwaiter",
+   "Reason": "Awaiter of the captured completion source Task<T>.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001403",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 679,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BEB",
+   "ProposedName": "get_IsOpen",
+   "Reason": "Returns whether the captured USB device exists and its IsOpen property is true.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BEB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 100,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BEC",
+   "ProposedName": "get_InterfaceConnectionState",
+   "Reason": "Returns busConnectionState, notified under InterfaceConnectionState by the feature handler.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BEC",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 107,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BED",
+   "ProposedName": "get_SupportedEmiTypes",
+   "Reason": "Returns the supported EMI flags used when setting active EMI mode.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BED",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 114,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BEE",
+   "ProposedName": "get_ActiveEmiType",
+   "Reason": "Returns the currently selected/learned EMI type.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BEE",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 121,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C03",
+   "ProposedName": "CheckHidInputReport",
+   "Reason": "Log strings and branches identify report validation: ID=1, payload at most 61, valid start/partial/end flags and sequence, full nonfinal fragments. Sequence zero is accepted only for a single start+end report.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C03",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 416,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class1317_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C06",
+   "ProposedName": "RaiseMessageReceived",
+   "Reason": "Invokes messageReceivedHandlers with telegram bytes; catches and logs subscriber exceptions instead of propagating them.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C06",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 522,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "telegram"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "subscriberException"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06001C04",
+   "ProposedName": "ProcessTelegramReport",
+   "Reason": "Drops an unexpected EMI type unless the current type is None; learns the type in that case, then raises MessageReceived with the report message.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C04",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 476,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C06",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 522,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class1321_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BEF",
+   "ProposedName": "add_MessageReceived",
+   "Reason": "Orphan event accessor uses Delegate.Combine with an Interlocked.CompareExchange retry loop on the message-received delegate.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BEF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Action`1<System.Byte[]>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Action`1<System.Byte[]>",
+     "NewName": "expectedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Action`1<System.Byte[]>",
+     "NewName": "updatedHandlers"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06001BF0",
+   "ProposedName": "remove_MessageReceived",
+   "Reason": "Orphan event accessor uses Delegate.Remove with an Interlocked.CompareExchange retry loop on the message-received delegate.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BF0",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 144,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Action`1<System.Byte[]>",
+     "NewName": "observedHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Action`1<System.Byte[]>",
+     "NewName": "expectedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Action`1<System.Byte[]>",
+     "NewName": "updatedHandlers"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x0400180F",
+   "ProposedName": "messageReceivedHandlers",
+   "Reason": "Action<byte[]> backing delegate used by add/remove and RaiseMessageReceived.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400180F",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 808,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 128,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BF0",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 144,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C06",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 522,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001810",
+   "ProposedName": "propertyChangedHandlers",
+   "Reason": "Backing delegate of INotifyPropertyChanged; RaisePropertyChanged takes a local copy before invocation.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001810",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 812,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BF3",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 195,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BFB",
+   "ProposedName": "SendAndWaitForCompletionAsync",
+   "Reason": "Queues the USB stack message through the layer channel, then awaits its completion source with a 1000 ms timeout and caller cancellation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BFB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 301,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06000828",
+     "Path": "Knx.Falcon/Class731.cs",
+     "Line": 36,
+     "Sha256": "02A8791F5DEFD4E25935D520C27115E7CCE9A2EA6B8B871DADB6C5DFF91ED73F"
+    },
+    {
+     "Id": "m0088:0x06001872",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 46,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x0600187A",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 580,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    },
+    {
+     "Id": "m0088:0x06001C17",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 901,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C18",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 908,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "a_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BF8",
+   "ProposedName": "WriteAsync",
+   "Reason": "Existing WriteAsync name preserved. Rejects closed/broken bus state, wraps telegram bytes with active EMI type and KnxTunnel protocol, then sends the stack message.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BF8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 262,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 301,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "telegram"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "hidBody"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class741/a",
+     "NewName": "outgoingMessage"
+    }
+   ]
+  },
+  {
+   "Id": "m0088:0x06001BFC",
+   "ProposedName": "WriteRawHidReportAsync",
+   "Reason": "When the USB device is open, writes report.RawBytes with timeout/cancellation, records success or timeout/error statistics, annotates and rethrows exceptions.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BFC",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 309,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C50",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1930,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001870",
+     "Path": "Knx.Falcon/ac3.cs",
+     "Line": 14,
+     "Sha256": "82C3CF03A7F3C24F84F7DD95E02175300A5E75FD31A801D30F7FBF251BE3E01C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class1317_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BFD",
+   "ProposedName": "ReadFeatureInfoAsync",
+   "Reason": "Builds DeviceFeatureGet, installs a matching response listener before sending, then waits with the supplied timeout/cancellation. Returns feature bytes and annotates errors.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BFD",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 325,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2054,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1068,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 301,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "featureType_0",
+     "HasMetadata": true,
+     "NewName": "featureType"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BF4",
+   "ProposedName": "ReadMediumConnectionStateAsync",
+   "Reason": "Existing ReadMediumConnectionStateAsync name preserved. Reads BusConnectionState feature and returns whether its first byte is one.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BF4",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 207,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C42",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1446,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFD",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 325,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BF5",
+   "ProposedName": "SetActiveEmiTypeAsync",
+   "Reason": "Writes ActiveEmiType, updates the cached mode after successful send, then delays 400 ms when supported flags include EMI1 or EMI2.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BF5",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 220,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C48",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1515,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFE",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 341,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxUsbEmiType_1",
+     "HasMetadata": true,
+     "NewName": "emiType"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BF6",
+   "ProposedName": "ReadKnxManufacturerAsync",
+   "Reason": "Returns cached manufacturer code if available; otherwise reads KnxManufacturerCode and decodes a big-endian UInt16.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BF6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 234,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C40",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1615,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001840",
+     "Path": "Knx.Falcon/Class1248.cs",
+     "Line": 15,
+     "Sha256": "48C4125D133D203BA7503F38E57A704B65B5E5A9E94AA2755BDCF84029B6DCAA"
+    },
+    {
+     "Id": "m0088:0x06001BFD",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 325,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BF7",
+   "ProposedName": "ReadDeviceDescriptorByFeatureServiceAsync",
+   "Reason": "Returns cached host descriptor; without a cache returns zero for None/CEmi, otherwise reads HostDeviceDeviceDescriptorType0 and decodes big-endian UInt16.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BF7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 248,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1694,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001840",
+     "Path": "Knx.Falcon/Class1248.cs",
+     "Line": 15,
+     "Sha256": "48C4125D133D203BA7503F38E57A704B65B5E5A9E94AA2755BDCF84029B6DCAA"
+    },
+    {
+     "Id": "m0088:0x06001BFD",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 325,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017EB",
+   "ProposedName": "usbDevice",
+   "Reason": "Captured USB device checked for IsOpen and used for HID writes.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017EB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 667,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 76,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 100,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C50",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1930,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017EE",
+   "ProposedName": "supportedEmiTypes",
+   "Reason": "Device-supported EMI flags; setting active mode uses these to select its post-write delay.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017EE",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 676,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BED",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 114,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C48",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1515,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017EF",
+   "ProposedName": "knxManufacturerCode",
+   "Reason": "Nullable manufacturer-code cache populated by the feature read.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017EF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 679,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C40",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1615,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F0",
+   "ProposedName": "hostDeviceDescriptor",
+   "Reason": "Nullable host-device descriptor cache populated by the feature read.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F0",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 682,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1694,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017FA",
+   "ProposedName": "activeEmiType",
+   "Reason": "Currently selected EMI type used to encode telegram reports, accept received reports, and select descriptor-read behavior.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017FA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 751,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BF8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 262,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C04",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 476,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C48",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1515,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1694,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F8",
+   "ProposedName": "featureReadTimeout",
+   "Reason": "Timeout supplied to feature reads for bus state, manufacturer code and descriptor.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 694,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C42",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1446,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C40",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1615,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1694,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

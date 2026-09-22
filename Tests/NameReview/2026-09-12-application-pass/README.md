@@ -6,9 +6,9 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`resume-wave171.json`. The current staged map is **6.3 v171**; **6.4 remains v7**.
-The current SDK audit/frozen export map still describes wave166 and must be
-refreshed against the final map before export. Historical binary apply checks
+`checkpoint-wave173.json`. Current staged maps are **6.3 v173** and **6.4 v10**.
+The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
+refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
@@ -2352,3 +2352,19 @@ Standing rules for this pass:
   The 51 inherited adjustments remain in `inherited-suffix-review.json` for
   review. No ETS binary apply, source export, build, full audit, or launch ran
   during this continuation. The application-wide pass remains incomplete.
+
+- **Timeout and layer-listener chains (6.3 waves172–173; 6.4 v9–v10).**
+  Reviewed framework task/cancellation operations through completion callbacks,
+  captured state, HID transport, feature reads and cached manufacturer/descriptor
+  queries. Named the shared listener's match/error/cancellation paths in both
+  versions, retaining the different disposal behavior. The 6.3 layer now carries
+  consistent `Enqueue`, `Complete`, `get_IsTerminated`, `add_QuickReport` and
+  `remove_QuickReport` names across all five interface/implementation families.
+  Resolving those families required the explicit, hash-checked .NET 4.8 reference
+  `System.dll`; `contract-references63-v2.json` is the current metadata-only
+  manifest. Existing-map preflight passed under the expanded reference context.
+  `behavior_review.py` stages decisions with exact physical/source evidence and
+  rejects implicit replacement of existing aliases. `checkpoint_behavior.py`
+  checks the explicit update chain and preserves every previous map and scoped
+  decision. All four map updates passed, with no new collision suffixes. ETS
+  source/binary application, builds, full audits and launches remain deferred.

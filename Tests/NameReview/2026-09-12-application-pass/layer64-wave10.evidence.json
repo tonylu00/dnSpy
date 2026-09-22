@@ -1,0 +1,543 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v9.xml",
+ "BaseMapSha256": "6E53378EB3C0D2C1E2DEFE67BF869380EEEE04859C86C6616E21F8F2B583A0A4",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06002BB9",
+   "ProposedName": "TryCancelCompletion",
+   "Reason": "Returns completionSource.TrySetCanceled(); queued asynchronously by the cancellation callback.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BB8",
+   "ProposedName": "QueueCancellation",
+   "Reason": "Logs cancellation and queues TryCancelCompletion with Task.Run using a cached Func<bool>; does not wait for that task.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BB7",
+   "ProposedName": "ProcessWaitMessage",
+   "Reason": "Evaluates expected matcher first. On match attempts result completion; otherwise asks the optional unexpected-message selector for an exception or logs an ignored message.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "m",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C99",
+   "ProposedName": "expected",
+   "Reason": "Matcher returns the tuple (Completed, Result).",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C99",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 188,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C9A",
+   "ProposedName": "completionSource",
+   "Reason": "TaskCompletionSource<T> completed by matching, unexpected-message error or cancellation.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C9A",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 191,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C9B",
+   "ProposedName": "unexpected",
+   "Reason": "Optional unmatched-message function returning an exception or null.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C9B",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 194,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C9C",
+   "ProposedName": "listener",
+   "Reason": "Owning listener used to identify the layer in log messages.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C9C",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 197,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C9D",
+   "ProposedName": "cancelCompletion",
+   "Reason": "Cached Func<bool> pointing at TryCancelCompletion, queued by Task.Run.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C9D",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 200,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BAD",
+   "ProposedName": "",
+   "Reason": "Adds a stack-message callback to the listener list; it is invoked on each quick report.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BAD",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 23,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "callback",
+     "HasMetadata": true,
+     "NewName": "callback"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BAF",
+   "ProposedName": "",
+   "Reason": "Existing WaitFor name preserved. Creates completion and callback context, adds message processing, and registers cancellation. Registration ownership differs by version and is not changed.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB9",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 167,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAD",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 23,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "expected",
+     "HasMetadata": true,
+     "NewName": "expected"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "unexpected",
+     "HasMetadata": true,
+     "NewName": "unexpected"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BAE",
+   "ProposedName": "",
+   "Reason": "Existing WaitFor name preserved; delegates to the three-argument overload with a null unexpected-message selector.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BAE",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 30,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "expected",
+     "HasMetadata": true,
+     "NewName": "expected"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BB0",
+   "ProposedName": "DispatchQuickReport",
+   "Reason": "Snapshots callbacks with ToList before invoking each with the reported message; callback exceptions are not swallowed here.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BB0",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 60,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": "sender"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "e"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x06002BAC",
+   "ProposedName": "",
+   "Reason": "Stores the observed layer and subscribes DispatchQuickReport to its quick-report event.",
+   "Source": [
+    {
+     "Id": "m0153:0x06002BAC",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 16,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB0",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 60,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "layer",
+     "HasMetadata": true,
+     "NewName": "layer"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C94",
+   "ProposedName": "log",
+   "Reason": "Logger created with category Falcon.LayerListener.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C94",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 107,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB7",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 127,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB8",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 159,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C95",
+   "ProposedName": "",
+   "Reason": "Observed layer subscribed by the constructor and detached by Dispose.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C95",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 110,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAC",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 16,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C96",
+   "ProposedName": "callbacks",
+   "Reason": "List appended by Callback and snapshotted during DispatchQuickReport.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C96",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 113,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAD",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 23,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB0",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 60,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04001C97",
+   "ProposedName": "cancellationRegistrations",
+   "Reason": "6.4 WaitFor retains cancellation registrations as IDisposable and Dispose releases them; 6.3 has no corresponding list.",
+   "Source": [
+    {
+     "Id": "m0153:0x04001C97",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 116,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BAF",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 38,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    },
+    {
+     "Id": "m0153:0x06002BB1",
+     "Path": "Knx.Falcon.2/Impl/ProtocolStack/LayerListener.cs",
+     "Line": 70,
+     "Sha256": "3ED604CD0ED3D16E6A33A2C2B4B1422361D9564960A57E7BAC2E4618A7C96B66"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}
