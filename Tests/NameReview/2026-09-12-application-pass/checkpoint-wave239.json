@@ -1,0 +1,49 @@
+{
+  "Format": 1,
+  "Status": "Wave 239 accepted (6.3): Knx.Ets.ObjectModel.Operations.ExtendedCopy and ExtendedCopy.Patcher - the XML copy/merge helpers",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v239.xml",
+      "Sha256": "25FA46391B3EC1A3405F0FD0C5835F1BCC03B9E5FE5549B178411B293CB08593",
+      "PreviousMap": "names63-staged-v238.xml",
+      "PreviousMapSha256": "7A46C827D3CD015D34A1C9592B8525C4FF42583430BC08C0D33A0733B9F490C5",
+      "FrozenSha256": "25FA46391B3EC1A3405F0FD0C5835F1BCC03B9E5FE5549B178411B293CB08593",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave239.review.json"
+  ],
+  "Method": {
+    "evidence": "Each row read from its own IL (NameCandidates --inspect-methods via perf-now/ilinspect.py). The copy operations repeat one shape - find the target node by //{0}:X[@Id='{1}'], write the Behavior/Target/NumberOfCopy attributes, remove the collected nodes - so the same names are used in each operation: FindTargetSpaceNode/FindTargetGroupRangeNode/FindTargetTradeNode, MarkAsCopyTarget, CollectNodesToRemove, RemoveNodes, GetDescription.",
+    "state machines": "ExtendedCopyExporter's three iterators are backed by state machines whose metadata names survived obfuscation: <GetDeviceInstanceCallbacks>d__3, <GetProjectSources>d__4 and <GetInstallationSources>d__5, so those rows carry the original names.",
+    "segment and security helpers": "ExtendedCopySegmentValidation's three CouplingDirection overloads are named for their inputs (mask version, medium-type list, coupler); SecureTableLimitsValidator resolves the keep-existing ranges and their Security attribute; ExtendedCopyAddressStrategy carries the literal bounds (0/1, 65534, 255, 2047 and the Project.Constants maxima)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 84,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14017,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10823
+  },
+  "SpotChecks": [
+    "CopyBuildingPartExtendedOperation.a(IBuildingPart, XmlElement, XmlDocument, XmlNamespaceManager, ref List<XmlNode>) -> FindTargetSpaceNode: selects //{0}:Space[@Id='{1}'] of the target building part.",
+    "CreateMissingTopologyElementsPatcher: CreateSegmentNode writes '{0}_S-{1}' with Segment/MediumTypeRefId/Number, CreateLineNode writes '{0}_L-{1}' with Address/Behavior/NumberOfCopy."
+  ],
+  "Errors": 0
+}
