@@ -15,6 +15,29 @@ namespace dnSpy.Contracts.Decompiler {
 		/// overloads of one type may share a readable alias, which is ordinary C#.
 		/// </summary>
 		public const string PrefixV2 = "dnSpy.metadata.method-name.v2|";
+		/// <summary>Source type identities and generic slots, independent of parameter names/resolution.</summary>
+		public const string PrefixV3 = "dnSpy.metadata.method-name.v3|";
+		public static string SignatureKeyV3(IMethod method) => method?.MethodSig == null ? "" :
+			string.Join(",", method.MethodSig.Params.Select(SignatureTypeKey)) + "/" + method.MethodSig.GenParamCount.ToString(CultureInfo.InvariantCulture);
+		static string SignatureTypeKey(TypeSig type) {
+			if (type == null) return "";
+			if (type is GenericVar variable) return "!" + variable.Number.ToString(CultureInfo.InvariantCulture);
+			if (type is GenericMVar methodVariable) return "!!" + methodVariable.Number.ToString(CultureInfo.InvariantCulture);
+			if (type is GenericInstSig generic) return SignatureTypeKey(generic.GenericType) + "<" + string.Join(",", generic.GenericArguments.Select(SignatureTypeKey)) + ">";
+			if (type is TypeDefOrRefSig named) {
+				var definition = named.TypeDefOrRef.ResolveTypeDef();
+				return definition == null ? named.TypeDefOrRef.FullName : MetadataTypeNames.SourceFullName(definition);
+			}
+			if (type is SZArraySig) return SignatureTypeKey(type.Next) + "[]";
+			if (type is ArraySig array) return SignatureTypeKey(type.Next) + "[rank=" + array.Rank.ToString(CultureInfo.InvariantCulture) + "]";
+			if (type is ByRefSig) return SignatureTypeKey(type.Next) + "&";
+			if (type is PtrSig) return SignatureTypeKey(type.Next) + "*";
+			if (type is ModifierSig modifier) return SignatureTypeKey(type.Next) + "{" + type.ElementType + ":" + modifier.Modifier.FullName + "}";
+			if (type is PinnedSig) return SignatureTypeKey(type.Next) + "{pinned}";
+			if (type is FnPtrSig pointer && pointer.Signature is MethodSig signature)
+				return "fn(" + (uint)signature.CallingConvention + "/" + signature.GenParamCount + ":" + SignatureTypeKey(signature.RetType) + ":" + string.Join(",", signature.Params.Select(SignatureTypeKey)) + ")";
+			return type.FullName;
+		}
 		/// <summary>Parameter list and generic arity that separate same-name overloads.</summary>
 		public static string SignatureKey(IMethod method) {
 			MethodSig signature = method?.MethodSig;
@@ -67,13 +90,17 @@ namespace dnSpy.Contracts.Decompiler {
 				var visited = new HashSet<TypeDef>();
 				for (var owner = type; owner != null && visited.Add(owner); owner = owner.BaseType?.ResolveTypeDef()) {
 					foreach (var method in owner.Methods.Where(usedMethods.Contains)) {
+						// C# chooses a qualified metadata name for explicit
+						// implementations (including constructed interfaces).
+						// Their declaration marker restores the body directly.
+						if (method.IsPrivate && method.HasOverrides) continue;
 						var alias = GetName(method);
 						if (alias == method.Name.String) continue;
 						// C# may encode a method reference through an inheriting receiver.
 						// Record that source owner too, preserving the original target body.
 						var assembly = type.DefinitionAssembly;
-						result.Add(PrefixV2 + string.Join("|", new[] { MetadataTypeNames.SourceFullName(type), assembly.Name.String,
-							assembly.Version.ToString(), assembly.Culture.String ?? "", alias, SignatureKey(method) }.Select(encode)) + "|" + Convert.ToBase64String(method.Name.Data));
+						result.Add(PrefixV3 + string.Join("|", new[] { MetadataTypeNames.SourceFullName(type), assembly.Name.String,
+							assembly.Version.ToString(), assembly.Culture.String ?? "", alias, SignatureKeyV3(method) }.Select(encode)) + "|" + Convert.ToBase64String(method.Name.Data));
 					}
 				}
 			}

@@ -32,9 +32,10 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Secure receive/timer policy committed as `2fc81dccb`.
   Routing startup/discovery committed as `c8a5bb743`.
   Unicast and programming-mode review committed as `f43016c2a`.
-  Current naming checkpoint: `checkpoint-wave193.json`, from accepted 192/26.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v193.xml`,
-  SHA256 `8565D5EBFA7299C8FDB696983F0C45E73E369A9038DAF201FA8A07EAD4C75381`.
+  Statistics aggregation and accessor evidence committed as `fb3528fcd`.
+  Current naming checkpoint: `checkpoint-wave194.json`, from accepted 193/27.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v194.xml`,
+  SHA256 `A2A979769DD54B1369802AC1F61CF029ECF51A91AEA64EF7895EE307FC5147E4`.
 - Current 6.4 map: `names64-staged-v27.xml`, SHA256
   `9D086C0AC8482D45B39B5C39BC6B7B15F45BAF2777A4C82B4344B8AA6149E129`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
@@ -47,7 +48,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-193.json` and `map-update64-wave-27.json`;
+  The last update reports are `map-update63-wave-194-rev2.json` and `map-update64-wave-27.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -551,6 +552,40 @@ two-member multicast contract families, physical reference uses and SDK bindings
 Both final map preflights pass, all other prior aliases/scopes remain, and there
 are no new suffixes. No ETS operations or full audit ran.
 
+## Explicit diagnostic snapshot contracts — checkpoint 194
+
+`diagnostic_sources.py` stages the complete thirteen-member 6.3 snapshot family
+as `GetStatisticsSnapshot`, `Interface30` as `Knx.Falcon.Diagnostics.IDiagSource`,
+and ten additional collector fields as `statistics`. Every implementing body
+passes its own `IDiagSource.Instance` to the previously reviewed `GetSnapshot`.
+`diagnostic-wave194-validation.json` records 24 new names, exact physical family
+evidence, preserved prior aliases/scopes and SDK binding, and zero new suffixes.
+The 6.4 v27 map remains unchanged and passes preflight with the updated tool.
+
+de4dotEx/dnSpy now accept representable, single-target private explicit interface
+families. Multi-target bodies, class slots and external/unresolved contracts remain
+blocked. Binary apply and metadata restoration visit live MethodImpl references.
+The de4dotEx milestone is `304d7a7c`; the ILSpy source projection is `49c38da82`.
+dnSpy emits the reviewed interface method/type names and carries the original
+body name in a declaration marker, avoiding guesses about C# qualified names.
+Two failures found by the new fixture were fixed: stale imports after a namespace
+move, and resolver-dependent generic parameter names in restoration keys. New
+v3 keys use generic slots and source type identities; v1/v2 remain readable.
+
+The portable NameCandidates suite executes distinct host/compatibility behavior
+for same-identity assemblies and confirms untouched compatibility bytes. The
+synthetic ContractFamilyRegression exports with one/four workers, rebuilds, runs
+rebuilt and original callers, verifies explicit/generic/nested-interface and
+renamed generic array signatures, restores reflection names, and checks input
+and incremental hashes. Native import alias regression also passes. These are
+tool fixtures, not ETS application verification. No ETS export, build, binary
+apply, full audit or launch ran.
+
+Resume from `diagnostic63-wave194.cumulative.json` and
+`statistics64-wave27.cumulative.json`, with protected maps **194/27**.
+The initial map-update report without `-rev2` only records a missing input path;
+it published no map. The accepted report is `map-update63-wave-194-rev2.json`.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -562,20 +597,20 @@ are no new suffixes. No ETS operations or full audit ran.
   dispatch, subscription and complete write/raw-write contracts are reviewed.
   Secure-wrapper/receive handling and system-broadcast policy are now reviewed.
   Routing open/receive/discovery wiring, local programming mode and unicast
-  transport contracts and statistics value/factory chains are now reviewed.
-  Continue diagnostic snapshot-provider/exception chains and other application
+  transport contracts, statistics value/factory and snapshot-provider chains are now reviewed.
+  Continue diagnostic exception attachment/enumeration and other application
   components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
-- Remaining related contracts include IDiagSource snapshot providers, whose
-  explicit implementation names need shared qualified-interface mapping support.
-  Use `usb63-layer-families-v2.json`, filtering by physical module and token together.
+- IDiagSource snapshot providers now use the complete reviewed family. The fresh
+  `explicit63-wave194-families.json` supersedes blanket explicit-method blockers
+  in older inventories. Filter by physical module and token together.
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `statistics63-wave193.cumulative.json` and `statistics64-wave27.cumulative.json`; do not
+  `diagnostic63-wave194.cumulative.json` and `statistics64-wave27.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **193/27** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **194/27** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

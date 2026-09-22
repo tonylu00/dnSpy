@@ -15,8 +15,8 @@ try {
     SourceNameMap.Apply(args[0], modules);
     foreach (var module in modules) {
         var row = map.Root.Elements("Module").Single(r => Guid.Parse((string)r.Attribute("Mvid")) == module.Mvid);
-        var instructions = MetadataMethodNames.GetMappings(module).Where(s => s.StartsWith(MetadataMethodNames.PrefixV2))
-            .Select(s => s[MetadataMethodNames.PrefixV2.Length..].Split('|').Select(v => Encoding.UTF8.GetString(Convert.FromBase64String(v))).ToArray()).ToArray();
+        var instructions = MetadataMethodNames.GetMappings(module).Where(s => s.StartsWith(MetadataMethodNames.PrefixV3))
+            .Select(s => s[MetadataMethodNames.PrefixV3.Length..].Split('|').Select(v => Encoding.UTF8.GetString(Convert.FromBase64String(v))).ToArray()).ToArray();
         foreach (var methodRow in row.Elements("Method")) {
             var method = (MethodDef)module.ResolveToken(Convert.ToUInt32(((string)methodRow.Attribute("Token"))[2..], 16));
             string alias = (string)methodRow.Attribute("NewName");
@@ -33,7 +33,7 @@ try {
             }
             var argument = method.Parameters.Single(p => p.IsNormalMethodParameter);
             Require(SourceNameAliases.GetParameter(argument) == "path" && argument.Name == "x", "source-only parameter alias");
-            Require(instructions.Any(p => p[0] == "Native" && p[4] == alias && p[5] == MetadataMethodNames.SignatureKey(method) && p[6] == method.Name), "signature-qualified runtime restoration missing");
+            Require(instructions.Any(p => p[0] == "Native" && p[4] == alias && p[5] == MetadataMethodNames.SignatureKeyV3(method) && p[6] == method.Name), "signature-qualified runtime restoration missing");
         }
     }
     Console.WriteLine("PASS native source aliases: exact explicit/implicit entry points, DllImport flags, return/parameter marshaling and signature-qualified restoration instructions; input metadata unchanged.");

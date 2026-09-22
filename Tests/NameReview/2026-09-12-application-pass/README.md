@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave193.json`. Current staged maps are **6.3 v193** and **6.4 v27**.
+`checkpoint-wave194.json`. Current staged maps are **6.3 v194** and **6.4 v27**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 193/27, not by newest filename.
+Resume with 194/27, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -32,6 +32,13 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- Diagnostic-source snapshot contract → all twelve implementing bodies → the
+  previously reviewed statistics collector (`diagnostic_sources.py`). The full
+  thirteen-member family is `GetStatisticsSnapshot`; `Interface30` is
+  `Knx.Falcon.Diagnostics.IDiagSource`, and ten additional collector fields are
+  `statistics`. Shared explicit-interface support now preserves original body
+  names and MethodImpl references. Synthetic exports/rebuilds with one/four
+  workers, unchanged callers and same-identity compatibility fixtures pass.
 - Counter/histogram construction → complete clone/merge/clear and factory
   contracts → definition name lookup → snapshot aggregation
   (`statistics_values.py`). The 6.4 interval helpers, selector contexts and used
@@ -39,8 +46,8 @@ Current reviewed chains include:
   accessor ownership from de4dot evidence when a cached source graph lacks the
   getter declaration. Five portable regressions cover that evidence binding;
   no source or graph is rewritten. Map checks preserve prior names/scopes and
-  SDK protection. The outward diagnostic-source snapshot contract still needs
-  qualified explicit-interface mapping support before it can be renamed.
+  SDK protection. The outward diagnostic-source contract is now covered by the
+  complete explicit-interface family review above.
 - TCP connection cancellation, UDP initialization and WebSocket receive/send/close
   helpers → all ten unicast communication interface families
   (`unicast_transport.py`). Local interface property/memory reads → the complete

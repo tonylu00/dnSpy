@@ -146,7 +146,27 @@ namespace SourceNameMapping {
                 for (var owner = method.DeclaringType; owner != null; owner = owner.DeclaringType)
                     if (owner.HasGenericParameters) return "unsupported-native-import";
             }
-            if (method.HasOverrides) return "explicit-method-implementation requires qualified source-name restoration";
+            if (method.HasOverrides) {
+                // One private instance body can be expressed by one C# explicit
+                // interface declaration. The exporter carries its original name
+                // on that declaration, independent of C#'s qualified spelling.
+                // Class slots and multi-target MethodImpl bodies need bridges.
+                if (method.Overrides.Count != 1 || !method.IsPrivate || !method.IsVirtual ||
+                    !method.IsFinal || !method.IsNewSlot || method.IsStatic || !method.HasBody ||
+                    !method.IsIL || !method.IsManaged || method.DeclaringType.IsInterface ||
+                    method.MethodSig == null || !method.MethodSig.HasThis ||
+                    method.MethodSig.ExplicitThis || method.MethodSig.IsVarArg)
+                    return "unsupported explicit method implementation";
+                var implementation = method.Overrides[0];
+                var declaration = implementation.MethodDeclaration;
+                if (implementation.MethodBody != method || declaration?.DeclaringType == null ||
+                    declaration.MethodSig == null || !declaration.MethodSig.HasThis ||
+                    declaration.MethodSig.ExplicitThis || declaration.MethodSig.IsVarArg)
+                    return "unsupported or unresolved explicit interface declaration";
+                var arguments = ((declaration.DeclaringType as TypeSpec)?.TypeSig as GenericInstSig)?.GenericArguments;
+                if (!new SigComparer().Equals(method.MethodSig, Substitute(declaration.MethodSig, arguments)))
+                    return "explicit interface body signature mismatch";
+            }
             if (method.IsStatic && method.IsVirtual) return "static virtual contract";
             return null;
         }
@@ -204,6 +224,8 @@ namespace SourceNameMapping {
                     var declaration = implementation.MethodDeclaration;
                     var use = Resolve(declaration.DeclaringType, type.Module);
                     if (use == null) { Block(method, "unresolved explicit contract"); continue; }
+                    if (!use.Type.IsInterface && method.SemanticsAttributes == 0 && !PropertyAccessorNames.IsAccessor(method))
+                        Block(method, "explicit class slot requires a source bridge");
                     var matches = Named(use.Type, declaration.Name).Where(m =>
                         Comparer.Equals(SubstituteCached(m.MethodSig, use.Arguments), SubstituteCached(declaration.MethodSig, use.Arguments))).ToArray();
                     if (matches.Length == 1) Join(method, matches[0]); else Block(method, "ambiguous explicit contract");

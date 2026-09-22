@@ -25,7 +25,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 module.LoadEverything();
                 changed |= RestoreTupleNames(module);
                 if (!TupleNamesOnly) {
-                changed |= RestoreAccessorContracts(module);
+                changed |= RestoreProjectedMethodContracts(module);
                 changed |= RestorePropertyNames(module);
                 changed |= RestoreDelegateMethods(module);
                 changed |= RestoreMemberNames(module, true);
@@ -596,8 +596,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         return changed;
     }
 
-    bool RestoreAccessorContracts(ModuleDef module) {
+    bool RestoreProjectedMethodContracts(ModuleDef module) {
         const string prefix = "dnSpy.metadata.accessor-contract.v1|";
+        const string explicitPrefix = "dnSpy.metadata.explicit-method.v1|";
         var loaded = new List<ModuleDefMD>();
         var modules = new List<ModuleDef> { module };
         try {
@@ -614,8 +615,13 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 foreach (var attribute in method.CustomAttributes) {
                     if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
                     string feature = attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
-                    if (feature == null || !feature.StartsWith(prefix, StringComparison.Ordinal)) continue;
-                    var parts = feature.Substring(prefix.Length).Split('|');
+                    if (feature == null) continue;
+                    string selectedPrefix = feature.StartsWith(prefix, StringComparison.Ordinal) ? prefix :
+                        feature.StartsWith(explicitPrefix, StringComparison.Ordinal) ? explicitPrefix : null;
+                    if (selectedPrefix == null) continue;
+                    if (selectedPrefix == explicitPrefix && (!method.IsPrivate || !method.IsVirtual || method.Overrides.Count != 1))
+                        throw new InvalidDataException("Invalid explicit method projection.");
+                    var parts = feature.Substring(selectedPrefix.Length).Split('|');
                     if (parts.Length != 2 || contracts.ContainsKey(method)) throw new InvalidDataException("Invalid or duplicate accessor contract.");
                     contracts.Add(method, Tuple.Create(new UTF8String(Convert.FromBase64String(parts[0])),
                         (MethodAttributes)uint.Parse(parts[1], CultureInfo.InvariantCulture), attribute));
@@ -707,8 +713,10 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         string kind = methods ? "method" : "field";
         string prefix = "dnSpy.metadata." + kind + "-name.v1|";
         string qualifiedPrefix = "dnSpy.metadata." + kind + "-name.v2|";
+        string slotPrefix = "dnSpy.metadata." + kind + "-name.v3|";
         var maps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
         var qualifiedMaps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
+        var slotMaps = new Dictionary<string, UTF8String>(StringComparer.Ordinal);
         var markers = new List<CustomAttribute>();
         foreach (var attribute in module.Assembly.CustomAttributes) {
             if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
@@ -716,15 +724,16 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
             if (text == null) continue;
             bool qualified = text.StartsWith(qualifiedPrefix, StringComparison.Ordinal);
-            if (!qualified && !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
-            if (qualified && !methods) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
-            var parts = text.Substring((qualified ? qualifiedPrefix : prefix).Length).Split('|');
-            int expected = qualified ? 7 : 6;
+            bool slots = text.StartsWith(slotPrefix, StringComparison.Ordinal);
+            if (!qualified && !slots && !text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+            if ((qualified || slots) && !methods) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
+            var parts = text.Substring((slots ? slotPrefix : qualified ? qualifiedPrefix : prefix).Length).Split('|');
+            int expected = qualified || slots ? 7 : 6;
             if (parts.Length != expected) throw new InvalidDataException("Invalid dnSpy " + kind + " name instruction.");
             string key = string.Join("|", parts.Take(expected - 1));
             var name = new UTF8String(Convert.FromBase64String(parts[expected - 1]));
             UTF8String previous;
-            var target = qualified ? qualifiedMaps : maps;
+            var target = slots ? slotMaps : qualified ? qualifiedMaps : maps;
             if (target.TryGetValue(key, out previous) && previous != name)
                 throw new InvalidDataException("Conflicting " + kind + " name instructions for one assembly context.");
             target[key] = name;
@@ -757,10 +766,19 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (unqualified != null && maps.TryGetValue(unqualified, out found)) return found;
             var qualified = keyFor(owner, new[] { name, signatureOf(method) });
             if (qualified != null && qualifiedMaps.TryGetValue(qualified, out found)) return found;
+            var slotKey = keyFor(owner, new[] { name, method?.MethodSig == null ? "" :
+                string.Join(",", method.MethodSig.Params.Select(SignatureTypeKey)) + "/" + method.MethodSig.GenParamCount.ToString(CultureInfo.InvariantCulture) });
+            if (slotKey != null && slotMaps.TryGetValue(slotKey, out found)) return found;
             return null;
         };
         Func<MemberRef, bool> matches = reference => methods ? reference.IsMethodRef : reference.IsFieldRef;
         var references = new HashSet<MemberRef>(module.GetMemberRefs().Where(matches));
+        if (methods)
+            foreach (var method in module.GetTypes().SelectMany(t => t.Methods))
+                foreach (var implementation in method.Overrides) {
+                    if (implementation.MethodDeclaration is MemberRef declaration) references.Add(declaration);
+                    if (implementation.MethodBody is MemberRef body) references.Add(body);
+                }
         foreach (var method in module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody))
             foreach (var instruction in method.Body.Instructions) {
                 var reference = instruction.Operand as MemberRef;
@@ -795,6 +813,26 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         }
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
+    }
+
+    // Match MetadataMethodNames.SignatureTypeKey on the compiled source shape.
+    // Generic variable FullName depends on its owner/resolver (T versus !0),
+    // so it cannot serve as a stable key across definitions and MemberRefs.
+    static string SignatureTypeKey(TypeSig type) {
+        if (type == null) return "";
+        if (type is GenericVar variable) return "!" + variable.Number.ToString(CultureInfo.InvariantCulture);
+        if (type is GenericMVar methodVariable) return "!!" + methodVariable.Number.ToString(CultureInfo.InvariantCulture);
+        if (type is GenericInstSig generic) return SignatureTypeKey(generic.GenericType) + "<" + string.Join(",", generic.GenericArguments.Select(SignatureTypeKey)) + ">";
+        if (type is TypeDefOrRefSig named) return named.TypeDefOrRef.FullName;
+        if (type is SZArraySig) return SignatureTypeKey(type.Next) + "[]";
+        if (type is ArraySig array) return SignatureTypeKey(type.Next) + "[rank=" + array.Rank.ToString(CultureInfo.InvariantCulture) + "]";
+        if (type is ByRefSig) return SignatureTypeKey(type.Next) + "&";
+        if (type is PtrSig) return SignatureTypeKey(type.Next) + "*";
+        if (type is ModifierSig modifier) return SignatureTypeKey(type.Next) + "{" + type.ElementType + ":" + modifier.Modifier.FullName + "}";
+        if (type is PinnedSig) return SignatureTypeKey(type.Next) + "{pinned}";
+        if (type is FnPtrSig pointer && pointer.Signature is MethodSig signature)
+            return "fn(" + (uint)signature.CallingConvention + "/" + signature.GenParamCount + ":" + SignatureTypeKey(signature.RetType) + ":" + string.Join(",", signature.Params.Select(SignatureTypeKey)) + ")";
+        return type.FullName;
     }
 
     static void RestoreGeneratedClosureMethodNames(ModuleDef module, Dictionary<IMemberDef, UTF8String> names,
