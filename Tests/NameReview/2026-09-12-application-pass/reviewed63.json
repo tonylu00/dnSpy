@@ -220530,19 +220530,14 @@
    "Token": "0x0600183F",
    "Signature": "T[] Class1247`1::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "Returns the underlying ConcurrentQueue.ToArray snapshot.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
    "ContractFamily": null,
    "Parameters": [],
    "ParameterNames": [],
-   "LocalNames": [
-    {
-     "Index": 0,
-     "ExpectedType": "System.Int16",
-     "NewName": ""
-    }
-   ],
+   "LocalNames": [],
    "NewName": "ToArray",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -383411,6 +383406,843 @@
    "NewName": "GetStatisticsSnapshot",
    "Unresolved": false,
    "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1247`1",
+   "Token": "0x0600183D",
+   "Signature": "System.Void Class1247`1::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Stores the capacity without validation and initializes a concurrent queue.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "capacity"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1247`1",
+   "Token": "0x0600183E",
+   "Signature": "System.Void Class1247`1::a(T)",
+   "OriginalName": "a",
+   "Reason": "While Count is at least capacity, attempts to dequeue and disposes a removed IDisposable item, then enqueues the new message. TryDequeue success is not tested; eviction and enqueue are not one atomic capacity check. Nonpositive capacity is not guarded.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: T gparam_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "gparam_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "T",
+     "NewName": "removedItem"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.IDisposable",
+     "NewName": "disposableItem"
+    }
+   ],
+   "NewName": "Enqueue",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1271",
+   "Token": "0x06001A0C",
+   "Signature": "System.Void Class1271::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Creates the event collector buffer with the supplied capacity; the default is 100.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "capacity"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/a",
+   "Token": "0x06001A13",
+   "Signature": "System.Void Class1272/a::.ctor(Interface64,System.String)",
+   "OriginalName": ".ctor",
+   "Reason": "Retains the inner event sink and the instance prefix or source override.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Interface64 interface64_1",
+    "2: System.String string_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "innerSink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "instancePrefix"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/b",
+   "Token": "0x06001A16",
+   "Signature": "System.Void Class1272/b::.ctor(Interface64,Knx.Falcon.Diagnostics.DiagSourceType)",
+   "OriginalName": ".ctor",
+   "Reason": "Retains the inner event sink and the instance prefix or source override.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Interface64 interface64_1",
+    "2: Knx.Falcon.Diagnostics.DiagSourceType diagSourceType_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "innerSink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagSourceType_1",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1271",
+   "Token": "0x06001A0D",
+   "Signature": "System.Void Class1271::imethod_0(Knx.Falcon.Diagnostics.DiagEvent)",
+   "OriginalName": "imethod_0",
+   "Reason": "Enqueues the diagnostic event in the collector buffer.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "74DEC6F9A9474EDFE3D9E1443D7AB7F5537D8DD07BE624972621165952335C1D",
+   "Parameters": [
+    "1: Knx.Falcon.Diagnostics.DiagEvent diagEvent_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "Add",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface64",
+   "Token": "0x06001A0F",
+   "Signature": "System.Void Interface64::imethod_0(Knx.Falcon.Diagnostics.DiagEvent)",
+   "OriginalName": "imethod_0",
+   "Reason": "Event-sink contract for receiving a diagnostic event.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "74DEC6F9A9474EDFE3D9E1443D7AB7F5537D8DD07BE624972621165952335C1D",
+   "Parameters": [
+    "1: Knx.Falcon.Diagnostics.DiagEvent diagEvent_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "Add",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/a",
+   "Token": "0x06001A14",
+   "Signature": "System.Void Class1272/a::imethod_0(Knx.Falcon.Diagnostics.DiagEvent)",
+   "OriginalName": "imethod_0",
+   "Reason": "Mutates the same event by prepending instancePrefix to Instance, then forwards it to innerSink.Add. Does not clone or filter a null event.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "74DEC6F9A9474EDFE3D9E1443D7AB7F5537D8DD07BE624972621165952335C1D",
+   "Parameters": [
+    "1: Knx.Falcon.Diagnostics.DiagEvent diagEvent_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "Add",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/b",
+   "Token": "0x06001A17",
+   "Signature": "System.Void Class1272/b::imethod_0(Knx.Falcon.Diagnostics.DiagEvent)",
+   "OriginalName": "imethod_0",
+   "Reason": "Mutates the same event by replacing Source, then forwards it to innerSink.Add. Does not clone or filter a null event.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "74DEC6F9A9474EDFE3D9E1443D7AB7F5537D8DD07BE624972621165952335C1D",
+   "Parameters": [
+    "1: Knx.Falcon.Diagnostics.DiagEvent diagEvent_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "Add",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1271",
+   "Token": "0x06001A0E",
+   "Signature": "Knx.Falcon.Diagnostics.DiagEvent[] Class1271::imethod_1()",
+   "OriginalName": "imethod_1",
+   "Reason": "Returns the collector buffer snapshot.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "5EDE8D76CF965580FDCB511E8321CA7500CA3C95EFA62E911B2F6447314A17C2",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ToArray",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface64",
+   "Token": "0x06001A10",
+   "Signature": "Knx.Falcon.Diagnostics.DiagEvent[] Interface64::imethod_1()",
+   "OriginalName": "imethod_1",
+   "Reason": "Event-sink contract for retrieving its recorded event array.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "5EDE8D76CF965580FDCB511E8321CA7500CA3C95EFA62E911B2F6447314A17C2",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ToArray",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/a",
+   "Token": "0x06001A15",
+   "Signature": "Knx.Falcon.Diagnostics.DiagEvent[] Class1272/a::imethod_1()",
+   "OriginalName": "imethod_1",
+   "Reason": "Returns innerSink.ToArray without another prefix transformation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "5EDE8D76CF965580FDCB511E8321CA7500CA3C95EFA62E911B2F6447314A17C2",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ToArray",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/b",
+   "Token": "0x06001A18",
+   "Signature": "Knx.Falcon.Diagnostics.DiagEvent[] Class1272/b::imethod_1()",
+   "OriginalName": "imethod_1",
+   "Reason": "Returns innerSink.ToArray without another source transformation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": "5EDE8D76CF965580FDCB511E8321CA7500CA3C95EFA62E911B2F6447314A17C2",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ToArray",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272",
+   "Token": "0x06001A11",
+   "Signature": "Interface64 Class1272::a(Interface64,System.String)",
+   "OriginalName": "a",
+   "Reason": "Returns a prefixing sink only for a nonnull sink and nonempty prefix; otherwise returns the input sink.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Interface64 interface64_0",
+    "2: System.String string_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "sink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_1",
+     "HasMetadata": true,
+     "NewName": "instancePrefix"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "WithInstancePrefix",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272",
+   "Token": "0x06001A12",
+   "Signature": "Interface64 Class1272::a(Interface64,Knx.Falcon.Diagnostics.DiagSourceType)",
+   "OriginalName": "a",
+   "Reason": "Wraps a nonnull sink with a source-overriding decorator; null stays null.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Interface64 interface64_0",
+    "2: Knx.Falcon.Diagnostics.DiagSourceType diagSourceType_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "sink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagSourceType_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "WithSource",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1267",
+   "Token": "0x060019F3",
+   "Signature": "Interface30[] Class1267::a(Interface30)",
+   "OriginalName": "a",
+   "Reason": "Breadth-first source traversal including the root. List.Contains prevents processing a source twice. Null root returns an empty array; null AdditionalSources is skipped, but null entries within it are not filtered. Pending duplicates may be enqueued more than once.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Interface30 interface30_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface30_0",
+     "HasMetadata": true,
+     "NewName": "rootSource"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Interface30>",
+     "NewName": "sources"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.Queue`1<Interface30>",
+     "NewName": "pendingSources"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Interface30",
+     "NewName": "currentSource"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Interface30>",
+     "NewName": "additionalSources"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Interface30>",
+     "NewName": "sourceEnumerator"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Interface30",
+     "NewName": "additionalSource"
+    }
+   ],
+   "NewName": "GetClosure",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1",
+   "Token": "0x06002A23",
+   "Signature": "Knx.Falcon.Diagnostics.StatisticsSnapshot Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1::<With>b__3_0(Interface30)",
+   "OriginalName": "<With>b__3_0",
+   "Reason": "Calls the source GetStatisticsSnapshot contract; no null check or transformation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Interface30 interface30_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface30_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "GetSourceSnapshot",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1",
+   "Token": "0x06002A25",
+   "Signature": "System.Boolean Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1::<With>b__1(Knx.Falcon.Diagnostics.StatisticsSnapshot)",
+   "OriginalName": "<With>b__1",
+   "Reason": "Tests reference identity of Definition and string equality of Instance against the captured snapshot. Does not compare values or time range.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Diagnostics.StatisticsSnapshot _"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "candidate"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "MatchesSnapshotIdentity",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions",
+   "Token": "0x06002A1B",
+   "Signature": "Knx.Falcon.Diagnostics.DiagEvent[] Knx.Falcon.Diagnostics.ExceptionExtensions::GetDiagEvents(System.Exception)",
+   "OriginalName": "GetDiagEvents",
+   "Reason": "Walks the exception then InnerException chain and returns the first DiagEvent array stored under typeof(DiagEvent); no match returns null.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Exception this"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "currentException"
+    }
+   ],
+   "NewName": "GetDiagEvents",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions",
+   "Token": "0x06002A1D",
+   "Signature": "T Knx.Falcon.Diagnostics.ExceptionExtensions::With<T>(T,Interface64)",
+   "OriginalName": "With",
+   "Reason": "For a nonnull diagnostic event sink, stores its ToArray result in Exception.Data under typeof(DiagEvent), replacing any prior entry; returns the same exception.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: T this",
+    "2: Interface64 diagEventSink"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagEventSink",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "With",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions",
+   "Token": "0x06002A1E",
+   "Signature": "T Knx.Falcon.Diagnostics.ExceptionExtensions::With<T>(T,Interface30)",
+   "OriginalName": "With",
+   "Reason": "For a nonnull diagnostic source, creates/reuses the exception snapshot list, walks its source closure and appends nonnull snapshots not already matching Definition reference plus Instance. Existing matching snapshots retain their older values; a new empty list may remain attached.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: T this",
+    "2: Interface30 diagSource"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagSource",
+     "HasMetadata": true,
+     "NewName": "diagSource"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>",
+     "NewName": "snapshots"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>",
+     "NewName": "snapshotEnumerator"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>",
+     "NewName": "snapshotMatch"
+    }
+   ],
+   "NewName": "With",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions",
+   "Token": "0x06002A1F",
+   "Signature": "T Knx.Falcon.Diagnostics.ExceptionExtensions::With<T>(T,System.Collections.Generic.IEnumerable`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>)",
+   "OriginalName": "With",
+   "Reason": "If no statistics key exists, materializes the supplied sequence and stores it only when nonempty. It neither merges nor enumerates the supplied sequence when the key already exists.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: T this",
+    "2: System.Collections.Generic.IEnumerable`1<Knx.Falcon.Diagnostics.StatisticsSnapshot> snapshots"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "snapshots",
+     "HasMetadata": true,
+     "NewName": "snapshots"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>",
+     "NewName": "snapshotList"
+    }
+   ],
+   "NewName": "With",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions",
+   "Token": "0x06002A20",
+   "Signature": "T Knx.Falcon.Diagnostics.ExceptionExtensions::WithLocalizedHelpLink<T>(T,System.UInt64)",
+   "OriginalName": "WithLocalizedHelpLink",
+   "Reason": "For nonzero articleId, uses CurrentUICulture.Name, takes one Parent for a hyphenated locale, maps en to en-us and assigns the KNX support article URL. Zero leaves HelpLink untouched.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: T this",
+    "2: System.UInt64 ulong_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ulong_0",
+     "HasMetadata": true,
+     "NewName": "articleId"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.String",
+     "NewName": "helpLanguage"
+    }
+   ],
+   "NewName": "WithLocalizedHelpLink",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x06002A26",
+   "Signature": "System.Void Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Captures the iterator state and the creating managed thread id.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 <>1__state"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "<>1__state",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x06002A29",
+   "Signature": "System.Void Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<>m__Finally1()",
+   "OriginalName": "<>m__Finally1",
+   "Reason": "Resets iterator state to -1 and disposes the active List<StatisticsSnapshot>.Enumerator.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "DisposeSnapshotEnumerator",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   }
  ],
  "Types": [
@@ -396723,6 +397555,166 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "Knx.Falcon.Diagnostics.IDiagSource",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1271",
+   "Token": "0x02000499",
+   "Signature": "Class1271",
+   "OriginalName": "Class1271",
+   "Reason": "Role established by the complete event storage/decorator contract and its consumers.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Diagnostics.Events.DiagEventCollector",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface64",
+   "Token": "0x0200049A",
+   "Signature": "Interface64",
+   "OriginalName": "Interface64",
+   "Reason": "Role established by the complete event storage/decorator contract and its consumers.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Diagnostics.Events.IDiagEventSink",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272",
+   "Token": "0x0200049B",
+   "Signature": "Class1272",
+   "OriginalName": "Class1272",
+   "Reason": "Role established by the complete event storage/decorator contract and its consumers.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Diagnostics.Events.DiagEventSinkExtensions",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/a",
+   "Token": "0x0200049C",
+   "Signature": "Class1272/a",
+   "OriginalName": "a",
+   "Reason": "Event-sink decorator whose Add mutates this event property before forwarding.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "InstancePrefixSink",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/b",
+   "Token": "0x0200049D",
+   "Signature": "Class1272/b",
+   "OriginalName": "b",
+   "Reason": "Event-sink decorator whose Add mutates this event property before forwarding.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "SourceOverrideSink",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1267",
+   "Token": "0x02000492",
+   "Signature": "Class1267",
+   "OriginalName": "Class1267",
+   "Reason": "Diagnostic source closure traversal helper.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Diagnostics.DiagSourceExtensions",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1",
+   "Token": "0x020007D8",
+   "Signature": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1",
+   "OriginalName": "<>c__3`1",
+   "Reason": "Stateless source-to-snapshot projection context and shared delegate cache.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "SnapshotSelector",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x020007DA",
+   "Signature": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "OriginalName": "<GetStatistics>d__1",
+   "Reason": "Traverses exception Data snapshot lists from outer to inner, yielding each Definition/Instance key at most once and suppressing definitions with zero items. The key is recorded before the zero-item check; exception/dispose paths release the active enumerator.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ExceptionStatisticsEnumerator",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -427102,6 +428094,366 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "statistics",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1247`1",
+   "Token": "0x040013C2",
+   "Signature": "System.Collections.Concurrent.ConcurrentQueue`1<T> Class1247`1::a",
+   "OriginalName": "a",
+   "Reason": "Queue storage or configured eviction threshold used by Enqueue.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "queue",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1247`1",
+   "Token": "0x040013C3",
+   "Signature": "System.Int32 Class1247`1::b",
+   "OriginalName": "b",
+   "Reason": "Queue storage or configured eviction threshold used by Enqueue.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "capacity",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1271",
+   "Token": "0x040015F4",
+   "Signature": "Class1247`1<Knx.Falcon.Diagnostics.DiagEvent> Class1271::a",
+   "OriginalName": "a",
+   "Reason": "Bounded concurrent buffer holding the diagnostic events.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "events",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/a",
+   "Token": "0x040015F7",
+   "Signature": "Interface64 Class1272/a::a",
+   "OriginalName": "a",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "innerSink",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/a",
+   "Token": "0x040015F8",
+   "Signature": "System.String Class1272/a::b",
+   "OriginalName": "b",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "instancePrefix",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/b",
+   "Token": "0x040015FA",
+   "Signature": "Interface64 Class1272/b::a",
+   "OriginalName": "a",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "innerSink",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1272/b",
+   "Token": "0x040015FB",
+   "Signature": "Knx.Falcon.Diagnostics.DiagSourceType Class1272/b::b",
+   "OriginalName": "b",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "source",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1",
+   "Token": "0x04002B91",
+   "Signature": "Knx.Falcon.Diagnostics.StatisticsSnapshot Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1::s",
+   "OriginalName": "s",
+   "Reason": "Snapshot captured by the definition-reference/instance equality predicate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "snapshot",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1",
+   "Token": "0x04002B8E",
+   "Signature": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1<T> Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1::<>9",
+   "OriginalName": "<>9",
+   "Reason": "Shared projection context or cached source-to-snapshot delegate used during attachment.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Instance",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1",
+   "Token": "0x04002B8F",
+   "Signature": "System.Func`2<Interface30,Knx.Falcon.Diagnostics.StatisticsSnapshot> Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__3`1::<>9__3_0",
+   "OriginalName": "<>9__3_0",
+   "Reason": "Shared projection context or cached source-to-snapshot delegate used during attachment.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "getSnapshot",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B93",
+   "Signature": "System.Int32 Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<>1__state",
+   "OriginalName": "<>1__state",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B94",
+   "Signature": "Knx.Falcon.Diagnostics.StatisticsSnapshot Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<>2__current",
+   "OriginalName": "<>2__current",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "currentSnapshot",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B95",
+   "Signature": "System.Int32 Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<>l__initialThreadId",
+   "OriginalName": "<>l__initialThreadId",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialThreadId",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B96",
+   "Signature": "System.Exception Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::this",
+   "OriginalName": "this",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "exception",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B97",
+   "Signature": "System.Exception Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<>3__this",
+   "OriginalName": "<>3__this",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialException",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B98",
+   "Signature": "System.Collections.Generic.HashSet`1<System.ValueTuple`2<Knx.Falcon.Diagnostics.Statistics.StatisticsDefinition,System.String>> Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<reported>5__2",
+   "OriginalName": "<reported>5__2",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "reportedSnapshotIdentities",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B99",
+   "Signature": "System.Exception Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<e>5__3",
+   "OriginalName": "<e>5__3",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "currentException",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1",
+   "Token": "0x04002B9A",
+   "Signature": "System.Collections.Generic.List`1/Enumerator<Knx.Falcon.Diagnostics.StatisticsSnapshot> Knx.Falcon.Diagnostics.ExceptionExtensions/<GetStatistics>d__1::<>7__wrap3",
+   "OriginalName": "<>7__wrap3",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "snapshotEnumerator",
    "Unresolved": false,
    "UnresolvedReason": ""
   }

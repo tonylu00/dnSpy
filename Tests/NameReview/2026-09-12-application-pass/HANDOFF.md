@@ -33,11 +33,12 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Routing startup/discovery committed as `c8a5bb743`.
   Unicast and programming-mode review committed as `f43016c2a`.
   Statistics aggregation and accessor evidence committed as `fb3528fcd`.
-  Current naming checkpoint: `checkpoint-wave194.json`, from accepted 193/27.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v194.xml`,
-  SHA256 `A2A979769DD54B1369802AC1F61CF029ECF51A91AEA64EF7895EE307FC5147E4`.
-- Current 6.4 map: `names64-staged-v27.xml`, SHA256
-  `9D086C0AC8482D45B39B5C39BC6B7B15F45BAF2777A4C82B4344B8AA6149E129`.
+  Explicit-interface support and snapshot providers committed as `b551440d3`.
+  Current naming checkpoint: `checkpoint-wave195.json`, from accepted 194/27.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v195.xml`,
+  SHA256 `6DD52B5156148862AC4360D1EF548CEF3644EC7A3A451B6C28F9E0FECC68CEC0`.
+- Current 6.4 map: `names64-staged-v28.xml`, SHA256
+  `985460A9DB308044A0484D27B50F2F57036D82735B07E303946A20251B9BF78A`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -48,7 +49,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-194-rev2.json` and `map-update64-wave-27.json`;
+  The last update reports are `map-update63-wave-195.json` and `map-update64-wave-28.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -586,6 +587,34 @@ Resume from `diagnostic63-wave194.cumulative.json` and
 The initial map-update report without `-rev2` only records a missing input path;
 it published no map. The accepted report is `map-update63-wave-194-rev2.json`.
 
+## Event buffering and exception diagnostics (195)
+
+`exception_diagnostics.py` follows the bounded queue through the complete 6.3
+Add/ToArray sink families, prefix/source decorators, source closure traversal,
+snapshot selection and identity matching, exception attachment, and the
+outer-to-inner statistics iterator. Both physical Falcon versions were inspected;
+the 6.4 source is `Knx.Falcon.2/`, while its retained `Knx.Falcon/` source is 6.3.
+Constructors, captured values and used local slots carry the same behavioral roles.
+
+The queue does not enforce capacity atomically across threads. Decorators mutate
+the supplied event. Matching uses definition reference identity and instance
+string equality, retaining older matching snapshots. The iterator records an
+identity before skipping empty definitions. These are observed behaviors, not
+repairs. The 6.4 decompiled iterator's unreachable unassigned return remains a
+final source/runtime verification concern; no compile success is claimed here.
+
+`bind_usage_sources` validates physical identity, inspected signature, IL offset,
+opcode and resolved graph target before binding an inlined delegate or captured
+field to its caller's current source. It never changes a mapping blocker or the
+graph/source. Eight portable tests passed in the preceding continuation, including
+wrong physical input, missing/mismatched edges and stale caller-source rejection.
+
+The accepted 52/39 decisions produced 88/71 map edits. The selected validation
+rechecked physical input and source hashes, effective aliases/scopes, complete
+sink families, SDK bindings and prior-map preservation. Both map preflights pass
+with zero errors and zero new suffixes. `exception-wave195-validation.json`
+records scope and hashes. No ETS apply/export/build/full audit/launch occurred.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -598,8 +627,8 @@ it published no map. The accepted report is `map-update63-wave-194-rev2.json`.
   Secure-wrapper/receive handling and system-broadcast policy are now reviewed.
   Routing open/receive/discovery wiring, local programming mode and unicast
   transport contracts, statistics value/factory and snapshot-provider chains are now reviewed.
-  Continue diagnostic exception attachment/enumeration and other application
-  components. Review the memory-278
+  Diagnostic exception attachment/enumeration is now reviewed. Continue the ETS
+  executable and other application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
 - IDiagSource snapshot providers now use the complete reviewed family. The fresh
@@ -608,9 +637,9 @@ it published no map. The accepted report is `map-update63-wave-194-rev2.json`.
   Multicast receive/close/send, all ten unicast families and the programming-mode
   read family are complete. Their implementations retain their behavioral differences.
 - Native import proposals from wave175 are resolved. Continue from
-  `diagnostic63-wave194.cumulative.json` and `statistics64-wave27.cumulative.json`; do not
+  `exception63-wave195.cumulative.json` and `exception64-wave28.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **194/27** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **195/28** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

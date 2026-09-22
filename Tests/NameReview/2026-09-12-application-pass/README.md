@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave194.json`. Current staged maps are **6.3 v194** and **6.4 v27**.
+`checkpoint-wave195.json`. Current staged maps are **6.3 v195** and **6.4 v28**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 194/27, not by newest filename.
+Resume with 195/28, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -31,6 +31,12 @@ methods or completed work. Graphs and query databases live in
 own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
+
+- Bounded event storage → complete sink contracts and prefix/source decorators →
+  source closure → exception snapshot attachment and enumeration
+  (`exception_diagnostics.py`). Both physical versions have independently reviewed
+  helper, storage and scoped names. Inlined delegate/capture evidence is bound to
+  exact inspected usage, without rewriting source or changing mapping eligibility.
 
 - Diagnostic-source snapshot contract → all twelve implementing bodies → the
   previously reviewed statistics collector (`diagnostic_sources.py`). The full

@@ -1,0 +1,1857 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v194.xml",
+ "BaseMapSha256": "A2A979769DD54B1369802AC1F61CF029ECF51A91AEA64EF7895EE307FC5147E4",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x0600183D",
+   "ProposedName": "",
+   "Reason": "Stores the capacity without validation and initializes a concurrent queue.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600183D",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 9,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "capacity"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x0600183D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x0600183E",
+   "ProposedName": "Enqueue",
+   "Reason": "While Count is at least capacity, attempts to dequeue and disposes a removed IDisposable item, then enqueues the new message. TryDequeue success is not tested; eviction and enqueue are not one atomic capacity check. Nonpositive capacity is not guarded.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600183E",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 15,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "gparam_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "T",
+     "NewName": "removedItem"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.IDisposable",
+     "NewName": "disposableItem"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x0600183E",
+    "Slots": {
+     "0": "removedItem",
+     "1": "disposableItem"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x0600183F",
+   "ProposedName": "ToArray",
+   "Reason": "Returns the underlying ConcurrentQueue.ToArray snapshot.",
+   "Source": [
+    {
+     "Id": "m0088:0x0600183F",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 32,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x0600183F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x040013C2",
+   "ProposedName": "queue",
+   "Reason": "Queue storage or configured eviction threshold used by Enqueue.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013C2",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 39,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    },
+    {
+     "Id": "m0088:0x0600183D",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 9,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    },
+    {
+     "Id": "m0088:0x0600183E",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 15,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    },
+    {
+     "Id": "m0088:0x0600183F",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 32,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x0600183D",
+     "0x0600183E",
+     "0x0600183F"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x040013C3",
+   "ProposedName": "capacity",
+   "Reason": "Queue storage or configured eviction threshold used by Enqueue.",
+   "Source": [
+    {
+     "Id": "m0088:0x040013C3",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 42,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    },
+    {
+     "Id": "m0088:0x0600183D",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 9,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    },
+    {
+     "Id": "m0088:0x0600183E",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 15,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    },
+    {
+     "Id": "m0088:0x0600183F",
+     "Path": "Knx.Falcon/Class1247.cs",
+     "Line": 32,
+     "Sha256": "E424669D7FAE43E9FFDCAC62932AF99CD5F69891526D93C6F56DA6C27625ADBC"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x0600183D",
+     "0x0600183E",
+     "0x0600183F"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x06001A0C",
+   "ProposedName": "",
+   "Reason": "Creates the event collector buffer with the supplied capacity; the default is 100.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A0C",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 9,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "capacity"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A0C",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x040015F4",
+   "ProposedName": "events",
+   "Reason": "Bounded concurrent buffer holding the diagnostic events.",
+   "Source": [
+    {
+     "Id": "m0088:0x040015F4",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 29,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    },
+    {
+     "Id": "m0088:0x06001A0C",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 9,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    },
+    {
+     "Id": "m0088:0x06001A0D",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 15,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    },
+    {
+     "Id": "m0088:0x06001A0E",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 22,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A0C",
+     "0x06001A0D",
+     "0x06001A0E"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x06001A13",
+   "ProposedName": "",
+   "Reason": "Retains the inner event sink and the instance prefix or source override.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A13",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 36,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "innerSink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_2",
+     "HasMetadata": true,
+     "NewName": "instancePrefix"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A13",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A16",
+   "ProposedName": "",
+   "Reason": "Retains the inner event sink and the instance prefix or source override.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A16",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 74,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "innerSink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagSourceType_1",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A16",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A0D",
+   "ProposedName": "Add",
+   "Reason": "Enqueues the diagnostic event in the collector buffer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A0D",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 15,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A0D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A0F",
+   "ProposedName": "Add",
+   "Reason": "Event-sink contract for receiving a diagnostic event.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A0F",
+     "Path": "Knx.Falcon/Interface64.cs",
+     "Line": 9,
+     "Sha256": "E3CFED5629F5D6821406E9B00F9AEFBC47827D9624D8321E5F86B88F26765ED8"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A0F",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A14",
+   "ProposedName": "Add",
+   "Reason": "Mutates the same event by prepending instancePrefix to Instance, then forwards it to innerSink.Add. Does not clone or filter a null event.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A14",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 43,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A14",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A17",
+   "ProposedName": "Add",
+   "Reason": "Mutates the same event by replacing Source, then forwards it to innerSink.Add. Does not clone or filter a null event.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A17",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 81,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "diagEvent_0",
+     "HasMetadata": true,
+     "NewName": "diagEvent"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A17",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A0E",
+   "ProposedName": "ToArray",
+   "Reason": "Returns the collector buffer snapshot.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A0E",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 22,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A0E",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A10",
+   "ProposedName": "ToArray",
+   "Reason": "Event-sink contract for retrieving its recorded event array.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A10",
+     "Path": "Knx.Falcon/Interface64.cs",
+     "Line": 13,
+     "Sha256": "E3CFED5629F5D6821406E9B00F9AEFBC47827D9624D8321E5F86B88F26765ED8"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A10",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A15",
+   "ProposedName": "ToArray",
+   "Reason": "Returns innerSink.ToArray without another prefix transformation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A15",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 51,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A15",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A18",
+   "ProposedName": "ToArray",
+   "Reason": "Returns innerSink.ToArray without another source transformation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A18",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 89,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A18",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x02000499",
+   "ProposedName": "Knx.Falcon.Diagnostics.Events.DiagEventCollector",
+   "Reason": "Role established by the complete event storage/decorator contract and its consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000499",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 5,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    },
+    {
+     "Id": "m0088:0x06001A0C",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 9,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    },
+    {
+     "Id": "m0088:0x06001A0D",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 15,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    },
+    {
+     "Id": "m0088:0x06001A0E",
+     "Path": "Knx.Falcon/Class1271.cs",
+     "Line": 22,
+     "Sha256": "04BB6DF1FA74412D6C2B49264AE3E7C39A89279EC9C6670D88559D98D2CA765C"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A0C",
+     "0x06001A0D",
+     "0x06001A0E"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x0200049A",
+   "ProposedName": "Knx.Falcon.Diagnostics.Events.IDiagEventSink",
+   "Reason": "Role established by the complete event storage/decorator contract and its consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200049A",
+     "Path": "Knx.Falcon/Interface64.cs",
+     "Line": 5,
+     "Sha256": "E3CFED5629F5D6821406E9B00F9AEFBC47827D9624D8321E5F86B88F26765ED8"
+    },
+    {
+     "Id": "m0088:0x06001A0F",
+     "Path": "Knx.Falcon/Interface64.cs",
+     "Line": 9,
+     "Sha256": "E3CFED5629F5D6821406E9B00F9AEFBC47827D9624D8321E5F86B88F26765ED8"
+    },
+    {
+     "Id": "m0088:0x06001A10",
+     "Path": "Knx.Falcon/Interface64.cs",
+     "Line": 13,
+     "Sha256": "E3CFED5629F5D6821406E9B00F9AEFBC47827D9624D8321E5F86B88F26765ED8"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A0F",
+     "0x06001A10"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x0200049B",
+   "ProposedName": "Knx.Falcon.Diagnostics.Events.DiagEventSinkExtensions",
+   "Reason": "Role established by the complete event storage/decorator contract and its consumers.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200049B",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 5,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A11",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 10,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A12",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 21,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A11",
+     "0x06001A12"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x0200049C",
+   "ProposedName": "InstancePrefixSink",
+   "Reason": "Event-sink decorator whose Add mutates this event property before forwarding.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200049C",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 32,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A13",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 36,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A14",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 43,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A13",
+     "0x06001A14"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x0200049D",
+   "ProposedName": "SourceOverrideSink",
+   "Reason": "Event-sink decorator whose Add mutates this event property before forwarding.",
+   "Source": [
+    {
+     "Id": "m0088:0x0200049D",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 70,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A16",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 74,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A17",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 81,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A16",
+     "0x06001A17"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x040015F7",
+   "ProposedName": "innerSink",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "Source": [
+    {
+     "Id": "m0088:0x040015F7",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 58,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A14",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 43,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A14"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x040015F8",
+   "ProposedName": "instancePrefix",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "Source": [
+    {
+     "Id": "m0088:0x040015F8",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 61,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A14",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 43,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A14"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x040015FA",
+   "ProposedName": "innerSink",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "Source": [
+    {
+     "Id": "m0088:0x040015FA",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 96,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A17",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 81,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A17"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x040015FB",
+   "ProposedName": "source",
+   "Reason": "Value used by the reviewed prefix/source event forwarding path.",
+   "Source": [
+    {
+     "Id": "m0088:0x040015FB",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 99,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    },
+    {
+     "Id": "m0088:0x06001A17",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 81,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06001A17"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x06001A11",
+   "ProposedName": "WithInstancePrefix",
+   "Reason": "Returns a prefixing sink only for a nonnull sink and nonempty prefix; otherwise returns the input sink.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A11",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 10,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "sink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_1",
+     "HasMetadata": true,
+     "NewName": "instancePrefix"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A11",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06001A12",
+   "ProposedName": "WithSource",
+   "Reason": "Wraps a nonnull sink with a source-overriding decorator; null stays null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001A12",
+     "Path": "Knx.Falcon/Class1272.cs",
+     "Line": 21,
+     "Sha256": "258050FC79CC7BAD1DA22FF7AA9C2A6A354AB88DB49FDFA477D0AE9A7B86E115"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface64_0",
+     "HasMetadata": true,
+     "NewName": "sink"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagSourceType_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06001A12",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x060019F3",
+   "ProposedName": "GetClosure",
+   "Reason": "Breadth-first source traversal including the root. List.Contains prevents processing a source twice. Null root returns an empty array; null AdditionalSources is skipped, but null entries within it are not filtered. Pending duplicates may be enqueued more than once.",
+   "Source": [
+    {
+     "Id": "m0088:0x060019F3",
+     "Path": "Knx.Falcon/Class1267.cs",
+     "Line": 11,
+     "Sha256": "4B6B9AA57C515555F066BE79A1C26658C38E7E2CD7B002DA62513975C7B493B7"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface30_0",
+     "HasMetadata": true,
+     "NewName": "rootSource"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Interface30>",
+     "NewName": "sources"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.Queue`1<Interface30>",
+     "NewName": "pendingSources"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Interface30",
+     "NewName": "currentSource"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Interface30>",
+     "NewName": "additionalSources"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Interface30>",
+     "NewName": "sourceEnumerator"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Interface30",
+     "NewName": "additionalSource"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x060019F3",
+    "Slots": {
+     "0": "sources",
+     "1": "pendingSources",
+     "2": "currentSource",
+     "3": "additionalSources",
+     "4": "sourceEnumerator",
+     "5": "additionalSource"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x02000492",
+   "ProposedName": "Knx.Falcon.Diagnostics.DiagSourceExtensions",
+   "Reason": "Diagnostic source closure traversal helper.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000492",
+     "Path": "Knx.Falcon/Class1267.cs",
+     "Line": 6,
+     "Sha256": "4B6B9AA57C515555F066BE79A1C26658C38E7E2CD7B002DA62513975C7B493B7"
+    },
+    {
+     "Id": "m0088:0x060019F3",
+     "Path": "Knx.Falcon/Class1267.cs",
+     "Line": 11,
+     "Sha256": "4B6B9AA57C515555F066BE79A1C26658C38E7E2CD7B002DA62513975C7B493B7"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x060019F3"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x06002A23",
+   "ProposedName": "GetSourceSnapshot",
+   "Reason": "Calls the source GetStatisticsSnapshot contract; no null check or transformation.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A23",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 330,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface30_0",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A23",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06002A25",
+   "ProposedName": "MatchesSnapshotIdentity",
+   "Reason": "Tests reference identity of Definition and string equality of Instance against the captured snapshot. Does not compare values or time range.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A25",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B",
+     "SourceId": "m0088:0x06002A1E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+      "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+      "SourceId": "m0088:0x06002A1E",
+      "Edges": [
+       {
+        "From": "m0088:0x06002A1E",
+        "Kind": "method",
+        "Offset": 126,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0088:0x06002A25",
+         "Signature": "System.Boolean Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>::<With>b__1(Knx.Falcon.Diagnostics.StatisticsSnapshot)",
+         "Assembly": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "_",
+     "HasMetadata": true,
+     "NewName": "candidate"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A25",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x04002B91",
+   "ProposedName": "snapshot",
+   "Reason": "Snapshot captured by the definition-reference/instance equality predicate.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B91",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B",
+     "SourceId": "m0088:0x06002A1E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+      "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+      "SourceId": "m0088:0x06002A1E",
+      "Edges": [
+       {
+        "From": "m0088:0x06002A1E",
+        "Kind": "field",
+        "Offset": 111,
+        "Operation": "stfld",
+        "Target": {
+         "Id": "m0088:0x04002B91",
+         "Signature": "Knx.Falcon.Diagnostics.StatisticsSnapshot Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>::s",
+         "Assembly": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0088:0x06002A1E",
+        "Kind": "field",
+        "Offset": 117,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0088:0x04002B91",
+         "Signature": "Knx.Falcon.Diagnostics.StatisticsSnapshot Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>::s",
+         "Assembly": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+         "Status": "input",
+         "Error": null
+        }
+       },
+       {
+        "From": "m0088:0x06002A1E",
+        "Kind": "field",
+        "Offset": 146,
+        "Operation": "ldfld",
+        "Target": {
+         "Id": "m0088:0x04002B91",
+         "Signature": "Knx.Falcon.Diagnostics.StatisticsSnapshot Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>::s",
+         "Assembly": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0088:0x06002A1E",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A25",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B",
+     "SourceId": "m0088:0x06002A1E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+      "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+      "SourceId": "m0088:0x06002A1E",
+      "Edges": [
+       {
+        "From": "m0088:0x06002A1E",
+        "Kind": "method",
+        "Offset": 126,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0088:0x06002A25",
+         "Signature": "System.Boolean Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>::<With>b__1(Knx.Falcon.Diagnostics.StatisticsSnapshot)",
+         "Assembly": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A1E",
+     "0x06002A25"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B8E",
+   "ProposedName": "Instance",
+   "Reason": "Shared projection context or cached source-to-snapshot delegate used during attachment.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B8E",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 337,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A1E",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A1E"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B8F",
+   "ProposedName": "getSnapshot",
+   "Reason": "Shared projection context or cached source-to-snapshot delegate used during attachment.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B8F",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 340,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A1E",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A1E"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x020007D8",
+   "ProposedName": "SnapshotSelector",
+   "Reason": "Stateless source-to-snapshot projection context and shared delegate cache.",
+   "Source": [
+    {
+     "Id": "m0088:0x020007D8",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 324,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A23",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 330,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A1E",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A23",
+     "0x06002A1E"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x06002A1B",
+   "ProposedName": "GetDiagEvents",
+   "Reason": "Walks the exception then InnerException chain and returns the first DiagEvent array stored under typeof(DiagEvent); no match returns null.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A1B",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 18,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "currentException"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A1B",
+    "Slots": {
+     "0": "currentException"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06002A1D",
+   "ProposedName": "With",
+   "Reason": "For a nonnull diagnostic event sink, stores its ToArray result in Exception.Data under typeof(DiagEvent), replacing any prior entry; returns the same exception.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A1D",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 42,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagEventSink",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A1D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06002A1E",
+   "ProposedName": "With",
+   "Reason": "For a nonnull diagnostic source, creates/reuses the exception snapshot list, walks its source closure and appends nonnull snapshots not already matching Definition reference plus Instance. Existing matching snapshots retain their older values; a new empty list may remain attached.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A1E",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A23",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 330,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A25",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 53,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B",
+     "SourceId": "m0088:0x06002A1E",
+     "UsageEvidence": {
+      "Inspection": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+      "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+      "SourceId": "m0088:0x06002A1E",
+      "Edges": [
+       {
+        "From": "m0088:0x06002A1E",
+        "Kind": "method",
+        "Offset": 126,
+        "Operation": "ldftn",
+        "Target": {
+         "Id": "m0088:0x06002A25",
+         "Signature": "System.Boolean Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>::<With>b__1(Knx.Falcon.Diagnostics.StatisticsSnapshot)",
+         "Assembly": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+         "PhysicalModule": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+         "Status": "input",
+         "Error": null
+        }
+       }
+      ]
+     }
+    },
+    {
+     "Id": "m0088:0x060019F3",
+     "Path": "Knx.Falcon/Class1267.cs",
+     "Line": 11,
+     "Sha256": "4B6B9AA57C515555F066BE79A1C26658C38E7E2CD7B002DA62513975C7B493B7"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "diagSource",
+     "HasMetadata": true,
+     "NewName": "diagSource"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>",
+     "NewName": "snapshots"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>",
+     "NewName": "snapshotEnumerator"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.Diagnostics.ExceptionExtensions/<>c__DisplayClass3_0`1<T>",
+     "NewName": "snapshotMatch"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A1E",
+    "Slots": {
+     "0": "snapshots",
+     "1": "snapshotEnumerator",
+     "2": "snapshotMatch"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06002A1F",
+   "ProposedName": "With",
+   "Reason": "If no statistics key exists, materializes the supplied sequence and stores it only when nonempty. It neither merges nor enumerates the supplied sequence when the key already exists.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A1F",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 94,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "snapshots",
+     "HasMetadata": true,
+     "NewName": "snapshots"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Falcon.Diagnostics.StatisticsSnapshot>",
+     "NewName": "snapshotList"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A1F",
+    "Slots": {
+     "0": "snapshotList"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06002A20",
+   "ProposedName": "WithLocalizedHelpLink",
+   "Reason": "For nonzero articleId, uses CurrentUICulture.Name, takes one Parent for a hyphenated locale, maps en to en-us and assigns the KNX support article URL. Zero leaves HelpLink untouched.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A20",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 109,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ulong_0",
+     "HasMetadata": true,
+     "NewName": "articleId"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.String",
+     "NewName": "helpLanguage"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A20",
+    "Slots": {
+     "0": "helpLanguage"
+    }
+   }
+  },
+  {
+   "Id": "m0088:0x06002A26",
+   "ProposedName": "",
+   "Reason": "Captures the iterator state and the creating managed thread id.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A26",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 134,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "<>1__state",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A26",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x06002A29",
+   "ProposedName": "DisposeSnapshotEnumerator",
+   "Reason": "Resets iterator state to -1 and disposes the active List<StatisticsSnapshot>.Enumerator.",
+   "Source": [
+    {
+     "Id": "m0088:0x06002A29",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 227,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "Token": "0x06002A29",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0088:0x020007DA",
+   "ProposedName": "ExceptionStatisticsEnumerator",
+   "Reason": "Traverses exception Data snapshot lists from outer to inner, yielding each Definition/Instance key at most once and suppressing definitions with zero items. The key is recorded before the zero-item check; exception/dispose paths release the active enumerator.",
+   "Source": [
+    {
+     "Id": "m0088:0x020007DA",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 129,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A29",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 227,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A2D",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 268,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A28",
+     "0x06002A29",
+     "0x06002A2D"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B93",
+   "ProposedName": "state",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B93",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 293,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A26",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 134,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A2D",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 268,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A26",
+     "0x06002A28",
+     "0x06002A2D"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B94",
+   "ProposedName": "currentSnapshot",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B94",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 296,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A28"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B95",
+   "ProposedName": "initialThreadId",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B95",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 299,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A26",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 134,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A2D",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 268,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A26",
+     "0x06002A2D"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B96",
+   "ProposedName": "exception",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B96",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 302,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A2D",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 268,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A28",
+     "0x06002A2D"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B97",
+   "ProposedName": "initialException",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B97",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 305,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A2D",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 268,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A2D"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B98",
+   "ProposedName": "reportedSnapshotIdentities",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B98",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 308,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A28"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B99",
+   "ProposedName": "currentException",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B99",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 312,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A28"
+    ]
+   }
+  },
+  {
+   "Id": "m0088:0x04002B9A",
+   "ProposedName": "snapshotEnumerator",
+   "Reason": "Iterator storage whose role is proven by the outer-to-inner snapshot enumeration and disposal paths.",
+   "Source": [
+    {
+     "Id": "m0088:0x04002B9A",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 315,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A28",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 167,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    },
+    {
+     "Id": "m0088:0x06002A29",
+     "Path": "Knx.Falcon/Diagnostics/ExceptionExtensions.cs",
+     "Line": 227,
+     "Sha256": "EBD8B4F5A1443617C2C85B1C47967ED7015D731FE8284373FD3091404092C31B"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\exception63-wave195-inspection.json",
+    "Sha256": "DC2BD321540E83532BB731EA39BD64B74B368C3CA45133B9B5040AB4BE533B8E",
+    "SupportingTokens": [
+     "0x06002A28",
+     "0x06002A29"
+    ]
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

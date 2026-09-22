@@ -58,6 +58,7 @@ class BehaviorReview:
         self.decisions, self.pending = [], []
         self.selected = set()
         self.accessor_sources = {}
+        self.usage_sources = {}
 
     def read(self, name):
         return json.loads((self.root / name).read_text(encoding='utf-8-sig'))
@@ -97,11 +98,62 @@ class BehaviorReview:
             staged[key] = {'Path': str(path), 'Sha256': report_hash, **proof}
         self.accessor_sources.update(staged)
 
+    def bind_usage_sources(self, inspection_path, bindings):
+        """Bind an inlined method/field to an exact, inspected caller location.
+
+        Decompilation can hide a lambda implementation or captured field. Its
+        physical graph edge and current IL must agree before caller source is
+        accepted as evidence. This never changes naming eligibility or metadata.
+        """
+        path = Path(inspection_path)
+        report = json.loads(path.read_text(encoding='utf-8-sig'))
+        if Path(report['Input']).resolve() != Path(self.module['Input']).resolve() or any(
+                report[k] != self.module[k] for k in ('Mvid', 'Sha256')):
+            raise ValueError('Usage inspection selects a different physical module')
+        methods = {r['Token']: r for r in report['Methods']}
+        if len(methods) != len(report['Methods']):
+            raise ValueError('Duplicate inspected method')
+        staged = {}
+        for token, caller_token in bindings.items():
+            key, caller_key = f'0x{token:08X}', f'0x{caller_token:08X}'
+            kind = {0x06000000: 'Methods', 0x04000000: 'Fields'}.get(token & 0xFF000000)
+            if kind is None or key in self.usage_sources:
+                raise ValueError('Unsupported or duplicate usage binding')
+            entry = self.entries[kind][key]
+            caller = self.entries['Methods'][caller_key]
+            if report['Identity'] != entry['Identity'] or methods[caller_key]['Signature'] != caller['Signature']:
+                raise ValueError('Usage inspection signature mismatch')
+            if kind == 'Methods' and methods[key]['Signature'] != entry['Signature']:
+                raise ValueError('Implementation inspection signature mismatch')
+            sid, caller_id = self.module_id + ':' + key, self.module_id + ':' + caller_key
+            symbols = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM symbols WHERE id=?', (sid,))]
+            if len(symbols) != 1 or symbols[0]['Signature'] != entry['Signature']:
+                raise ValueError('Usage graph selects a different definition')
+            allowed = {'ldftn', 'ldvirtftn', 'newobj'} if kind == 'Methods' else {'ldfld', 'ldflda', 'stfld', 'ldsfld', 'ldsflda', 'stsfld'}
+            edges = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM edges WHERE source=? AND target=?', (caller_id, sid))]
+            edges = [e for e in edges if e['Operation'] in allowed]
+            if not edges:
+                raise ValueError('No exact implementation usage edge')
+            instructions = {i['Offset']: i for i in methods[caller_key]['Instructions']}
+            for edge in edges:
+                target = edge['Target']
+                if target['Id'] != sid or target['Status'] != 'input' or target.get('Error') or target['Assembly'] != entry['Identity'] or Path(target['PhysicalModule']).resolve() != Path(report['Input']).resolve():
+                    raise ValueError('Usage edge leaves the selected physical module')
+                instruction = instructions.get(edge['Offset'])
+                if not instruction or instruction['OpCode'] != edge['Operation'] or instruction.get('Operand', {}).get('Text') != target['Signature']:
+                    raise ValueError('Usage graph and inspected IL disagree')
+            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (caller_id,))]
+            if not rows or any(r['Kind'] not in ('MethodDeclaration', 'ConstructorDeclaration') for r in rows):
+                raise ValueError('Usage caller has no direct source declaration')
+            self.source(caller_token)  # Apply the normal source root/hash checks.
+            staged[key] = {'Inspection': str(path), 'Sha256': sha(path), 'SourceId': caller_id, 'Edges': edges}
+        self.usage_sources.update(staged)
+
     def source(self, token):
         key = f'0x{token:08X}'
         sid = self.module_id + ':' + key
         rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (sid,))]
-        accessor = None
+        accessor = usage = None
         if not rows and key in self.accessor_sources:
             accessor = self.accessor_sources[key]
             owner = self.module_id + ':' + accessor['OwnerToken']
@@ -109,6 +161,9 @@ class BehaviorReview:
             allowed = {'PropertyDeclaration', 'IndexerDeclaration'} if accessor['OwnerKind'] == 'Property' else {'EventDeclaration', 'EventFieldDeclaration'}
             if any(row['Kind'] not in allowed for row in rows):
                 raise ValueError('Accessor source declaration kind mismatch: ' + sid)
+        if not rows and key in self.usage_sources:
+            usage = self.usage_sources[key]
+            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (usage['SourceId'],))]
         if not rows:
             raise ValueError('No source declaration: ' + sid)
         for row in rows:
@@ -120,7 +175,8 @@ class BehaviorReview:
             if self.verified_sources[path] != row['Sha256']:
                 raise ValueError('Stale source: ' + str(path))
         return [{'Id': sid, 'Path': r['Source'], 'Line': r['Line'], 'Sha256': r['Sha256'],
-                 **({'DeclarationId': self.module_id + ':' + accessor['OwnerToken'], 'AccessorEvidence': accessor} if accessor else {})} for r in rows]
+                 **({'DeclarationId': self.module_id + ':' + accessor['OwnerToken'], 'AccessorEvidence': accessor} if accessor else {}),
+                 **({'SourceId': usage['SourceId'], 'UsageEvidence': usage} if usage else {})} for r in rows]
 
     def add(self, kind, token, name, reason, parameters=None, locals_=None, evidence=(), contract=None, replace_alias=None):
         key = f'0x{token:08X}'
