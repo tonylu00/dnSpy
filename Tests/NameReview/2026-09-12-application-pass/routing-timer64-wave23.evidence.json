@@ -1,0 +1,1662 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v22.xml",
+ "BaseMapSha256": "A11177DD4230A84B098FE73A98926441177E531C5AB1DE84BD3B6F3C2A76E107",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06003155",
+   "ProposedName": "BuildIpCcmMacBlock",
+   "Reason": "Builds a 16-byte block from a big-endian 48-bit sequence, 48-bit serial number, 16-bit message tag and 16-bit payload length. High sequence bits are discarded.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003155",
+     "Path": "Knx.Falcon.2/Cryptography/SecureCryptoEngineAes128.cs",
+     "Line": 280,
+     "Sha256": "A4E60D562138CC0C06E5E7E80E02D7D3FA136AA0817FCEEBED57FFF7E6C38E09"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_0",
+     "HasMetadata": true,
+     "NewName": "sequenceNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "messageTag"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "payloadLength"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003155",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003156",
+   "ProposedName": "BuildIpCcmCounterBlock",
+   "Reason": "Builds the sequence/serial/tag counter block with byte 14 set to 0xFF and byte 15 initially zero.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003156",
+     "Path": "Knx.Falcon.2/Cryptography/SecureCryptoEngineAes128.cs",
+     "Line": 305,
+     "Sha256": "A4E60D562138CC0C06E5E7E80E02D7D3FA136AA0817FCEEBED57FFF7E6C38E09"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_0",
+     "HasMetadata": true,
+     "NewName": "sequenceNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "messageTag"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003156",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003154",
+   "ProposedName": "GenerateCounterKeyStream",
+   "Reason": "Clones the initial counter block, encrypts successive blocks with AES-128 ECB and increments only byte 15. Requests over 4096 bytes are rejected. Retains the original stream/padding and disposal behavior.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003154",
+     "Path": "Knx.Falcon.2/Cryptography/SecureCryptoEngineAes128.cs",
+     "Line": 244,
+     "Sha256": "A4E60D562138CC0C06E5E7E80E02D7D3FA136AA0817FCEEBED57FFF7E6C38E09"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "key"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "length"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "counterBlock"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "currentCounter"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.SecureBuffer",
+     "NewName": "keyBuffer"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Security.Cryptography.Aes",
+     "NewName": "aes"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.IO.MemoryStream",
+     "NewName": "output"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "System.Security.Cryptography.CryptoStream",
+     "NewName": "encryptingStream"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003154",
+    "Slots": {
+     "0": "currentCounter",
+     "2": "keyBuffer",
+     "12": "aes",
+     "14": "output",
+     "16": "encryptingStream"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003153",
+   "ProposedName": "CcmDecryptInternal",
+   "Reason": "XORs the encrypted MAC with the start of the counter key stream and the encrypted payload with bytes after the reserved MAC block. Returns payload and outputs the plain MAC separately; this helper does not authenticate either result.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003153",
+     "Path": "Knx.Falcon.2/Cryptography/SecureCryptoEngineAes128.cs",
+     "Line": 218,
+     "Sha256": "A4E60D562138CC0C06E5E7E80E02D7D3FA136AA0817FCEEBED57FFF7E6C38E09"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "key"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "encryptedPayload"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "byte_2",
+     "HasMetadata": true,
+     "NewName": "encryptedMac"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "byte_3",
+     "HasMetadata": true,
+     "NewName": "counterBlock"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "byte_4",
+     "HasMetadata": true,
+     "NewName": "plainMac"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "reservedMacBytes"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "keyStream"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "plainPayload"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003153",
+    "Slots": {
+     "0": "keyStream",
+     "1": "plainPayload"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06001398",
+   "ProposedName": "CalculateEncryptedNotificationMac",
+   "Reason": "Calculates the plain IP CCM MAC over the frame header with no payload, then encrypts that MAC using the notification timestamp, serial and message tag.",
+   "Source": [
+    {
+     "Id": "m0153:0x06001398",
+     "Path": "Knx.Falcon.2/KnxnetIp/Frames/Routing/TimerNotifyFrame.cs",
+     "Line": 40,
+     "Sha256": "5E0F7330C8EFEE012DA04B61FCB538BDAFC8C6A41CDDDCBE25D054B1F923E60D"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "key"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "header"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "plainMac"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06001398",
+    "Slots": {
+     "0": "header",
+     "1": "plainMac"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060035E5",
+   "ProposedName": "get_Timestamp",
+   "Reason": "Returns the event timestamp.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E5",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 930,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035E6",
+   "ProposedName": "get_SerialNumber",
+   "Reason": "Returns the event serial number used to identify synchronization replies.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E6",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 938,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035E7",
+   "ProposedName": "get_MessageTag",
+   "Reason": "Returns the event message tag used to correlate synchronization replies.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E7",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 946,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E7",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035E8",
+   "ProposedName": "get_IsAccepted",
+   "Reason": "Returns the acceptance decision set by the transition action.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E8",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 954,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035E9",
+   "ProposedName": "set_IsAccepted",
+   "Reason": "Stores the acceptance decision returned by ReceivedSecureWrapper.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 962,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_1",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035E4",
+   "ProposedName": "",
+   "Reason": "Captures timestamp, serial number and message tag for timer/secure-wrapper transition processing.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 922,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_1",
+     "HasMetadata": true,
+     "NewName": "timestamp"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_1",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "messageTag"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x020006D8",
+   "ProposedName": "TimerEventContext",
+   "Reason": "Timestamp, serial/tag correlation and mutable secure-wrapper acceptance result passed through timer transitions.",
+   "Source": [
+    {
+     "Id": "m0153:0x020006D8",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 918,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 922,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035D6",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 585,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035D7",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 613,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0400254E",
+   "ProposedName": "timestamp",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400254E",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 984,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 922,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 962,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x0400254F",
+   "ProposedName": "serialNumber",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "Source": [
+    {
+     "Id": "m0153:0x0400254F",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 988,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 922,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 962,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002550",
+   "ProposedName": "messageTag",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002550",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 992,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 922,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 962,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x04002551",
+   "ProposedName": "isAccepted",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "Source": [
+    {
+     "Id": "m0153:0x04002551",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 996,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 922,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035E9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 962,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060035DD",
+   "ProposedName": "GetUtcMilliseconds",
+   "Reason": "Converts the timing abstraction UTC time to unsigned Unix milliseconds.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035DD",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 699,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.DateTimeOffset",
+     "NewName": "utcTime"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035DD",
+    "Slots": {
+     "0": "utcTime"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060035DF",
+   "ProposedName": "ChooseNotifyDelay",
+   "Reason": "Chooses an inclusive random delay between the bounds; when maximum is no greater than minimum returns maximum. Retains the int range conversion.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035DF",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 731,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_3",
+     "HasMetadata": true,
+     "NewName": "minimum"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ulong_4",
+     "HasMetadata": true,
+     "NewName": "maximum"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035DF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035E0",
+   "ProposedName": "SetupNotifyTimer",
+   "Reason": "Promotes zero delay to one, stops the timer, divides the interval by the timing speed factor, records update/periodic purpose and restarts the one-shot timer.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035E0",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 742,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_3",
+     "HasMetadata": true,
+     "NewName": "delayMilliseconds"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "isUpdateNotify"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035E0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035D5",
+   "ProposedName": "SendTimerNotifyAsync",
+   "Reason": "Clears the update-scheduled flag and invokes the send callback. Replies reuse the captured request serial/tag; ordinary notifications generate a new random tag and use the local serial. Callback exceptions fault the task.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035D5",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 561,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_3",
+     "HasMetadata": true,
+     "NewName": "timestamp"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class679_1",
+     "HasMetadata": true,
+     "NewName": "replyContext"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<SendTimerNotifyAsync>d__103",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035D5",
+    "Slots": {
+     "1": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x060035EF",
+   "ProposedName": "ReadCurrentState",
+   "Reason": "State-machine accessor reads the stored state directly.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035EF",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 1010,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "t",
+     "HasMetadata": true,
+     "NewName": "timer"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035EF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035F0",
+   "ProposedName": "WriteCurrentState",
+   "Reason": "State-machine mutator writes the stored state directly; logging belongs to the generic transition executor.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035F0",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 1017,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "t",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "s",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035F0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x020006D9",
+   "ProposedName": "TimerStateAccessors",
+   "Reason": "Cached state-access delegates supplied to the generic transition executor.",
+   "Source": [
+    {
+     "Id": "m0153:0x020006D9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 1004,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035EF",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 1010,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    },
+    {
+     "Id": "m0153:0x060035F0",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 1017,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x060035C4",
+   "ProposedName": "LogIgnoredTransition",
+   "Reason": "Only writes the existing A0 diagnostic; leaves timer/context unchanged.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035C4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 406,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035C4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035C5",
+   "ProposedName": "UpdateTimerAndCheckSyncResponse",
+   "Reason": "Advances to the context timestamp. Completes synchronization only for a matching local serial/tag or trust-first-response mode.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035C5",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 413,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035C5",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035C6",
+   "ProposedName": "AcceptSecureWrapper",
+   "Reason": "Marks the context accepted; ReceivedSecureWrapper returns this result.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035C6",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 435,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035C6",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035C7",
+   "ProposedName": "SchedulePeriodicNotify",
+   "Reason": "Chooses a periodic delay for the current keeper/follower role and arms a non-update notification.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035C7",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 443,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035C7",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035C8",
+   "ProposedName": "ScheduleUpdateReply",
+   "Reason": "Retains the triggering context and arms an update reply with a randomized role-dependent delay.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035C8",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 451,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035C8",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035C9",
+   "ProposedName": "SendPeriodicNotify",
+   "Reason": "Starts a notification with the context timestamp and no reply identity. The returned task is deliberately not awaited here.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035C9",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 460,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035C9",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035CA",
+   "ProposedName": "SendPendingUpdateReply",
+   "Reason": "Starts a notification using the retained request identity, then clears it. The task is not awaited here.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035CA",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 468,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035CA",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035CB",
+   "ProposedName": "ScheduleInitialNotify",
+   "Reason": "Arms a non-update notification using the configured initial-delay range.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035CB",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 477,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035CB",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035CC",
+   "ProposedName": "BecomeTimeKeeper",
+   "Reason": "Sets the time-keeper role flag.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035CC",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 485,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035CC",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035CD",
+   "ProposedName": "BecomeTimeFollower",
+   "Reason": "Clears the time-keeper role flag.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035CD",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 493,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035CD",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035CE",
+   "ProposedName": "SynchronizeAndScheduleFollowerNotify",
+   "Reason": "Updates/checks synchronization, becomes a follower, then schedules a periodic notification.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035CE",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 501,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035CE",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035CF",
+   "ProposedName": "BecomeFollowerAndSchedulePeriodicNotify",
+   "Reason": "Becomes a follower and schedules the next periodic notification.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035CF",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 510,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035CF",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035D0",
+   "ProposedName": "UpdateTimerAcceptWrapperAndSchedulePeriodicNotify",
+   "Reason": "Updates/checks synchronization, accepts the wrapper, then schedules a periodic notification.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035D0",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 518,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035D0",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035D1",
+   "ProposedName": "UpdateTimerAndAcceptWrapper",
+   "Reason": "Updates/checks synchronization and accepts the wrapper, retaining the current notification schedule.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035D1",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 527,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035D1",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035D2",
+   "ProposedName": "AcceptWrapperAndSchedulePeriodicNotify",
+   "Reason": "Accepts the wrapper and schedules a periodic notification.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035D2",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 535,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035D2",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035D3",
+   "ProposedName": "SendNotifyAndScheduleTimeKeeper",
+   "Reason": "Starts an ordinary notification, becomes time keeper and schedules a periodic notification without awaiting the send.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035D3",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 543,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035D3",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x060035D4",
+   "ProposedName": "ReplyAndScheduleTimeKeeper",
+   "Reason": "Starts the pending update reply, becomes time keeper and schedules a periodic notification without awaiting the send.",
+   "Source": [
+    {
+     "Id": "m0153:0x060035D4",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/SecureGroupTimer.cs",
+     "Line": 552,
+     "Sha256": "E586290BC7A919BB95C1B718C8BD8A9EC3B8B30004DFD353D7246405DFE2F43A"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x060035D4",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003550",
+   "ProposedName": "NextMessageTag",
+   "Reason": "Returns the current 16-bit tag and increments it with wraparound; does not add synchronization.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003550",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 873,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "messageTag"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003550",
+    "Slots": {
+     "0": "messageTag"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600354C",
+   "ProposedName": "WrapOutgoingRoutingFrame",
+   "Reason": "With a routing key, records secure-send statistics, allocates a message tag, captures group time, constructs an authenticated wrapper and notifies the timer of that send. Otherwise records a plain send and returns the original frame.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600354C",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 799,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "messageTag"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.UInt64",
+     "NewName": "timestamp"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x0600354C",
+    "Slots": {
+     "0": "messageTag",
+     "7": "timestamp"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600354D",
+   "ProposedName": "HandleTimerNotify",
+   "Reason": "When a routing key exists, records notification statistics and forwards timestamp/serial/tag to the group timer. The caller has already checked authenticity.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600354D",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 822,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timerNotifyFrame_0",
+     "HasMetadata": true,
+     "NewName": "notification"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x0600354D",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003547",
+   "ProposedName": "HandleRoutingPayloadFrame",
+   "Reason": "Returns messages carried by routing indication/system-broadcast frames. Busy frames update send pacing under the connector lock; lost/unknown frames update diagnostics and return null. Unknown frames invoke the unhandled-frame delegate.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003547",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 680,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingSystemBroadcastFrame",
+     "NewName": "systemBroadcast"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Object",
+     "NewName": "syncRoot"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingIndicationFrame",
+     "NewName": "indication"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingLostMessageFrame",
+     "NewName": "lostMessage"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingBusyFrame",
+     "NewName": "busyFrame"
+    },
+    {
+     "Index": 17,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003547",
+    "Slots": {
+     "11": "indication",
+     "1": "systemBroadcast",
+     "13": "lostMessage",
+     "16": "busyFrame",
+     "6": "syncRoot",
+     "17": "lockTaken"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003546",
+   "ProposedName": "HandleReceivedDataFrame",
+   "Reason": "Applies system-broadcast policy, enforces configured secure/plain frame mode, validates wrapper/notification authentication and group-timer acceptance, then dispatches the inner/plain payload. Records each rejection and retains existing unhandled-frame callback behavior.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003546",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 580,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isSecureFrame"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.TimerNotifyFrame",
+     "NewName": "timerNotify"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.KnxIpFrame",
+     "NewName": "innerFrame"
+    },
+    {
+     "Index": 21,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.SecureWrapperFrame",
+     "NewName": "secureWrapper"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003546",
+    "Slots": {
+     "0": "isSecureFrame",
+     "21": "secureWrapper",
+     "2": "timerNotify",
+     "14": "innerFrame"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003545",
+   "ProposedName": "DispatchReceivedRoutingFrame",
+   "Reason": "Processes a frame, suppresses one echo matching the pending confirmation by source/destination/length/APCI, then emits raw data and bus-message events outside Info mode. The comparison does not compare payload bytes.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003545",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 554,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxMessage",
+     "NewName": "message"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "pendingConfirmation"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "shouldDeliver"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003545",
+    "Slots": {
+     "0": "message",
+     "4": "shouldDeliver",
+     "2": "pendingConfirmation",
+     "3": "busMessage"
+    }
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

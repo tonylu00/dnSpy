@@ -1,0 +1,132 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v23.xml",
+ "BaseMapSha256": "58E428464584DC8F12916ADFD3413478B2269F27F7C79940B31AC2E3AC1FB549",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06003556",
+   "ProposedName": "ClassifySystemBroadcastMessage",
+   "Reason": "FilterOff accepts immediately. IP-router filtering requires APCI and accepts network-parameter read/response with object type 0, PID 11 and first test byte 1; serial-number domain writes with a four-byte domain; or system-broadcast secure sync/data-with-confidentiality services. Other inputs are invalid. Retains the unchecked first test-byte access.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003556",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 925,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "systemBroadcastFilterMode_2",
+     "HasMetadata": true,
+     "NewName": "filterMode"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.APCI",
+     "NewName": "apci"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.SystemNetworkParameterReadMessage",
+     "NewName": "networkParameterRead"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.DomainAddressSerialNumberWriteMessage",
+     "NewName": "domainAddressWrite"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.SecureMessageBase",
+     "NewName": "secureMessage"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.SystemNetworkParameterResponseMessage",
+     "NewName": "networkParameterResponse"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003556",
+    "Slots": {
+     "0": "apci",
+     "1": "networkParameterRead",
+     "2": "domainAddressWrite",
+     "4": "secureMessage",
+     "6": "networkParameterResponse"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003555",
+   "ProposedName": "ClassifyReceivedSystemBroadcast",
+   "Reason": "Requires a routing system-broadcast frame containing a flagged bus message; otherwise returns NonSystemBroadcast. Disabled system broadcasts are Invalid, and enabled messages pass through the configured receive filter.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003555",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 904,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003556",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 925,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingSystemBroadcastFrame",
+     "NewName": "systemBroadcastFrame"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\routing-timer64-wave188-inspection.json",
+    "Sha256": "90561CAB74A1751BC9BFCB3103A9130D0CB20438A7AEDFF126D13FBA4B40DBFD",
+    "Token": "0x06003555",
+    "Slots": {
+     "0": "systemBroadcastFrame",
+     "1": "busMessage"
+    }
+   }
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

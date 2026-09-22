@@ -28,11 +28,13 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   checkpoint is `checkpoint-sdk-whitelist184.json`, committed with dnSpy
   protection as `a2681bdde`. Interface configuration committed as `d74c4de2b`.
   RF dispatch and the nested-type scope fix committed as `5e4f854b1`, with
-  de4dotEx `5db0d23b`. Current naming checkpoint: `checkpoint-wave187.json`.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v187.xml`,
-  SHA256 `816CD02C92187B3320C4EFDD73902C141165E3451770CBDEE3A214F1955033DB`.
-- Current 6.4 map: `names64-staged-v22.xml`, SHA256
-  `A11177DD4230A84B098FE73A98926441177E531C5AB1DE84BD3B6F3C2A76E107`.
+  de4dotEx `5db0d23b`. Connector writes committed as `2c2290feb`.
+  Current naming checkpoint: `checkpoint-wave189.json`, including timer/policy
+  updates 188/189 and 23/24 from the accepted 187/22 base.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v189.xml`,
+  SHA256 `B030F3A3A2AE7685B5C2A22857454A4CA6F1C2AF8FFA80CA9722058034DDE355`.
+- Current 6.4 map: `names64-staged-v24.xml`, SHA256
+  `5ECE7865144E9713487C220D71AF0413308F8D05B19913890BEF4A2F70567B74`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -40,8 +42,9 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   parameter/local decisions were checked for preservation. Six compiler-style
   source aliases now have explicit replacement review; every other earlier alias
   was preserved by wave182. Wave187 explicitly replaces one further constructor
-  lambda alias with `CreateItemValue`. The last behavior update reports are
-  `map-update63-wave-187.json` and `map-update64-wave-22.json`;
+  lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
+  constructor selector with `SelectTransitionKey`. The last update reports are
+  `map-update63-wave-189.json` and `map-update64-wave-24.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -385,6 +388,38 @@ with SDK bindings intact and no new suffixes. `connector-write-wave187-validatio
 checks every proposed decision in the maps and complete membership of both write
 families. No ETS source export, binary apply, build or launch ran.
 
+## Secure routing and receive policy (6.3 wave189 / 6.4 v24)
+
+`routing_timer.py` names the IP CCM block/counter transformations, wrapper and
+timer-notification authentication helpers, and secure routing receive/dispatch.
+It follows the generic state machine through event contexts, every reviewed
+transition action, one-shot scheduling, timer acceptance and synchronization waits.
+6.3 carrier types/used fields and parameters/actual IL locals are included;
+canonical 6.4 async metadata remains intact. The constructor-lambda alias at
+6.3 `0x06001867` has exact replacement evidence for `SelectTransitionKey`.
+
+The evidence records behavior without changing it: successful wrapper decryption
+is cached and a later different key only logs; the counter increments only its
+last byte; synchronization waits can complete after swallowed timeouts without a
+valid response; transition actions do not await their sends. Receive echo
+suppression compares source/destination/length/APCI, not the full payload. The
+6.3 timer trigger `E11` (`0x04001B16`) remains unresolved because no firing caller
+establishes its meaning. Trigger E01..E10 have actual dispatch/action evidence.
+
+`routing_policy.py` completes the inner system-broadcast message fields before
+their classifier callers. It includes security-control bit access, domain/serial
+payloads, network-parameter payloads and their typed construction. Filtering
+retains the unchecked first test-byte access. The raw-message add/remove and
+reset-suppression contracts include all five physical members of each family,
+their backing fields and all four raw notification raisers.
+
+Both final map preflights passed with no new collision suffixes and unchanged SDK
+bindings. `routing-receive-wave189-validation.json` verifies each proposed name
+and scope, all four contract families, physical identities and the unresolved
+trigger. The only omitted no-op parameter row retains its original `sender` name.
+All unreviewed aliases/scopes are preserved. No ETS apply, export, build, full audit
+or launch ran. These checks do not establish ETS runtime equivalence.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -394,19 +429,18 @@ families. No ETS source export, binary apply, build or launch ran.
   initialization and the complete SetInterfaceConfigurationAsync contract are
   reviewed (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`). RF receive
   dispatch, subscription and complete write/raw-write contracts are reviewed.
-  Continue routing secure-wrapper/receive handling, open callers and other
-  application components. Review the memory-278
+  Secure-wrapper/receive handling and system-broadcast policy are now reviewed.
+  Continue open/lifecycle callers and other application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
-- Remaining related contracts include raw receive subscriptions/reset suppression
-  and statistics item factories/values. Use `usb63-layer-families-v2.json`, filtering
-  by physical module and token together. Routing send's optional secure wrapper is
-  6.3 `0x06001D5B` / 6.4 `0x0600354C`; incoming frame dispatch is 6.3 `0x06001D56`
-  / 6.4 `0x06003547`. Their full caller chains need review before naming them.
+- Remaining related contracts include statistics item factories/values.
+  Use `usb63-layer-families-v2.json`, filtering by physical module and token together.
+  Reviewed receive helpers include 6.3 `0x06001D55`/`0x06001D56` and policy
+  `0x06001D64`/`0x06001D65`; follow their open/communication callback wiring next.
 - Native import proposals from wave175 are resolved. Continue from
-  `connector-write63-wave187.cumulative.json` and `connector-write64-wave22.cumulative.json`; do not
+  `routing-policy63-wave189.cumulative.json` and `routing-policy64-wave24.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **187/22** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **189/24** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

@@ -1,0 +1,1678 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Cryptography.SecureCryptoEngineAes128",
+   "Token": "0x06003155",
+   "Signature": "System.Byte[] Knx.Falcon.Cryptography.SecureCryptoEngineAes128::NqahtLaDsgg(System.UInt64,Knx.Falcon.SerialNumber,System.UInt16,System.UInt16)",
+   "OriginalName": "NqahtLaDsgg",
+   "Reason": "Builds a 16-byte block from a big-endian 48-bit sequence, 48-bit serial number, 16-bit message tag and 16-bit payload length. High sequence bits are discarded.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt64 ulong_0",
+    "2: Knx.Falcon.SerialNumber serialNumber_0",
+    "3: System.UInt16 ushort_0",
+    "4: System.UInt16 ushort_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_0",
+     "HasMetadata": true,
+     "NewName": "sequenceNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "messageTag"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "payloadLength"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "BuildIpCcmMacBlock",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Cryptography.SecureCryptoEngineAes128",
+   "Token": "0x06003156",
+   "Signature": "System.Byte[] Knx.Falcon.Cryptography.SecureCryptoEngineAes128::method_2(System.UInt64,Knx.Falcon.SerialNumber,System.UInt16)",
+   "OriginalName": "method_2",
+   "Reason": "Builds the sequence/serial/tag counter block with byte 14 set to 0xFF and byte 15 initially zero.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt64 ulong_0",
+    "2: Knx.Falcon.SerialNumber serialNumber_0",
+    "3: System.UInt16 ushort_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_0",
+     "HasMetadata": true,
+     "NewName": "sequenceNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "messageTag"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "BuildIpCcmCounterBlock",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Cryptography.SecureCryptoEngineAes128",
+   "Token": "0x06003154",
+   "Signature": "System.Byte[] Knx.Falcon.Cryptography.SecureCryptoEngineAes128::method_1(Knx.Falcon.EncryptedBuffer,System.Int32,System.Byte[])",
+   "OriginalName": "method_1",
+   "Reason": "Clones the initial counter block, encrypts successive blocks with AES-128 ECB and increments only byte 15. Requests over 4096 bytes are rejected. Retains the original stream/padding and disposal behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.EncryptedBuffer encryptedBuffer_0",
+    "2: System.Int32 int_0",
+    "3: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "key"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "length"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "counterBlock"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "currentCounter"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.SecureBuffer",
+     "NewName": "keyBuffer"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Security.Cryptography.Aes",
+     "NewName": "aes"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.IO.MemoryStream",
+     "NewName": "output"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "System.Security.Cryptography.CryptoStream",
+     "NewName": "encryptingStream"
+    }
+   ],
+   "NewName": "GenerateCounterKeyStream",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Cryptography.SecureCryptoEngineAes128",
+   "Token": "0x06003153",
+   "Signature": "System.Byte[] Knx.Falcon.Cryptography.SecureCryptoEngineAes128::method_0(Knx.Falcon.EncryptedBuffer,System.Byte[],System.Byte[],System.Byte[],System.Byte[]&,System.Int32)",
+   "OriginalName": "method_0",
+   "Reason": "XORs the encrypted MAC with the start of the counter key stream and the encrypted payload with bytes after the reserved MAC block. Returns payload and outputs the plain MAC separately; this helper does not authenticate either result.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.EncryptedBuffer encryptedBuffer_0",
+    "2: System.Byte[] byte_1",
+    "3: System.Byte[] byte_2",
+    "4: System.Byte[] byte_3",
+    "5: System.Byte[]& byte_4",
+    "6: System.Int32 int_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "key"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "encryptedPayload"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "byte_2",
+     "HasMetadata": true,
+     "NewName": "encryptedMac"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "byte_3",
+     "HasMetadata": true,
+     "NewName": "counterBlock"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "byte_4",
+     "HasMetadata": true,
+     "NewName": "plainMac"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "reservedMacBytes"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "keyStream"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "plainPayload"
+    }
+   ],
+   "NewName": "CcmDecryptInternal",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.KnxnetIp.Frames.Routing.TimerNotifyFrame",
+   "Token": "0x06001398",
+   "Signature": "System.Byte[] Knx.Falcon.KnxnetIp.Frames.Routing.TimerNotifyFrame::method_0(Knx.Falcon.EncryptedBuffer)",
+   "OriginalName": "method_0",
+   "Reason": "Calculates the plain IP CCM MAC over the frame header with no payload, then encrypts that MAC using the notification timestamp, serial and message tag.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.EncryptedBuffer encryptedBuffer_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "encryptedBuffer_0",
+     "HasMetadata": true,
+     "NewName": "key"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "header"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "plainMac"
+    }
+   ],
+   "NewName": "CalculateEncryptedNotificationMac",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x060035E5",
+   "Signature": "System.UInt64 Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::method_0()",
+   "OriginalName": "method_0",
+   "Reason": "Returns the event timestamp.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_Timestamp",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x060035E6",
+   "Signature": "Knx.Falcon.SerialNumber Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::method_1()",
+   "OriginalName": "method_1",
+   "Reason": "Returns the event serial number used to identify synchronization replies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_SerialNumber",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x060035E7",
+   "Signature": "System.UInt16 Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::method_2()",
+   "OriginalName": "method_2",
+   "Reason": "Returns the event message tag used to correlate synchronization replies.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_MessageTag",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x060035E8",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::method_3()",
+   "OriginalName": "method_3",
+   "Reason": "Returns the acceptance decision set by the transition action.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_IsAccepted",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x060035E9",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::method_4(System.Boolean)",
+   "OriginalName": "method_4",
+   "Reason": "Stores the acceptance decision returned by ReceivedSecureWrapper.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean bool_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_1",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "set_IsAccepted",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x060035E4",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::.ctor(System.UInt64,Knx.Falcon.SerialNumber,System.UInt16)",
+   "OriginalName": ".ctor",
+   "Reason": "Captures timestamp, serial number and message tag for timer/secure-wrapper transition processing.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt64 ulong_1",
+    "2: Knx.Falcon.SerialNumber serialNumber_1",
+    "3: System.UInt16 ushort_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_1",
+     "HasMetadata": true,
+     "NewName": "timestamp"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_1",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "messageTag"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035DD",
+   "Signature": "System.UInt64 Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::method_1()",
+   "OriginalName": "method_1",
+   "Reason": "Converts the timing abstraction UTC time to unsigned Unix milliseconds.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.DateTimeOffset",
+     "NewName": "utcTime"
+    }
+   ],
+   "NewName": "GetUtcMilliseconds",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035DF",
+   "Signature": "System.UInt64 Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::method_2(System.UInt64,System.UInt64)",
+   "OriginalName": "method_2",
+   "Reason": "Chooses an inclusive random delay between the bounds; when maximum is no greater than minimum returns maximum. Retains the int range conversion.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt64 ulong_3",
+    "2: System.UInt64 ulong_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_3",
+     "HasMetadata": true,
+     "NewName": "minimum"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ulong_4",
+     "HasMetadata": true,
+     "NewName": "maximum"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ChooseNotifyDelay",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035E0",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::method_3(System.UInt64,System.Boolean)",
+   "OriginalName": "method_3",
+   "Reason": "Promotes zero delay to one, stops the timer, divides the interval by the timing speed factor, records update/periodic purpose and restarts the one-shot timer.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt64 ulong_3",
+    "2: System.Boolean bool_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_3",
+     "HasMetadata": true,
+     "NewName": "delayMilliseconds"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "isUpdateNotify"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SetupNotifyTimer",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035D5",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::method_0(System.UInt64,Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679)",
+   "OriginalName": "method_0",
+   "Reason": "Clears the update-scheduled flag and invokes the send callback. Replies reuse the captured request serial/tag; ordinary notifications generate a new random tag and use the local serial. Callback exceptions fault the task.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt64 ulong_3",
+    "2: Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679 class679_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ulong_3",
+     "HasMetadata": true,
+     "NewName": "timestamp"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class679_1",
+     "HasMetadata": true,
+     "NewName": "replyContext"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<SendTimerNotifyAsync>d__103",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "SendTimerNotifyAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<>c",
+   "Token": "0x060035EF",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/State Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<>c::method_0(Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer)",
+   "OriginalName": "method_0",
+   "Reason": "State-machine accessor reads the stored state directly.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer t"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "t",
+     "HasMetadata": true,
+     "NewName": "timer"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ReadCurrentState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<>c",
+   "Token": "0x060035F0",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<>c::method_1(Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer,Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/State)",
+   "OriginalName": "method_1",
+   "Reason": "State-machine mutator writes the stored state directly; logging belongs to the generic transition executor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer t",
+    "2: Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/State s"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "t",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "s",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "WriteCurrentState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035C4",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A0(System.Object,System.Object)",
+   "OriginalName": "A0",
+   "Reason": "Only writes the existing A0 diagnostic; leaves timer/context unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "LogIgnoredTransition",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035C5",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A1(System.Object,System.Object)",
+   "OriginalName": "A1",
+   "Reason": "Advances to the context timestamp. Completes synchronization only for a matching local serial/tag or trust-first-response mode.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "UpdateTimerAndCheckSyncResponse",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035C6",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A2(System.Object,System.Object)",
+   "OriginalName": "A2",
+   "Reason": "Marks the context accepted; ReceivedSecureWrapper returns this result.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "AcceptSecureWrapper",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035C7",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A3(System.Object,System.Object)",
+   "OriginalName": "A3",
+   "Reason": "Chooses a periodic delay for the current keeper/follower role and arms a non-update notification.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SchedulePeriodicNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035C8",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A4(System.Object,System.Object)",
+   "OriginalName": "A4",
+   "Reason": "Retains the triggering context and arms an update reply with a randomized role-dependent delay.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ScheduleUpdateReply",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035C9",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A5(System.Object,System.Object)",
+   "OriginalName": "A5",
+   "Reason": "Starts a notification with the context timestamp and no reply identity. The returned task is deliberately not awaited here.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SendPeriodicNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035CA",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A6(System.Object,System.Object)",
+   "OriginalName": "A6",
+   "Reason": "Starts a notification using the retained request identity, then clears it. The task is not awaited here.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SendPendingUpdateReply",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035CB",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A7(System.Object,System.Object)",
+   "OriginalName": "A7",
+   "Reason": "Arms a non-update notification using the configured initial-delay range.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ScheduleInitialNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035CC",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A8(System.Object,System.Object)",
+   "OriginalName": "A8",
+   "Reason": "Sets the time-keeper role flag.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "BecomeTimeKeeper",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035CD",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::A9(System.Object,System.Object)",
+   "OriginalName": "A9",
+   "Reason": "Clears the time-keeper role flag.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object this",
+    "2: System.Object timerInfo"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "this",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "timerInfo",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "BecomeTimeFollower",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035CE",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_0(System.Object,System.Object)",
+   "OriginalName": "smethod_0",
+   "Reason": "Updates/checks synchronization, becomes a follower, then schedules a periodic notification.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SynchronizeAndScheduleFollowerNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035CF",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_1(System.Object,System.Object)",
+   "OriginalName": "smethod_1",
+   "Reason": "Becomes a follower and schedules the next periodic notification.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "BecomeFollowerAndSchedulePeriodicNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035D0",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_2(System.Object,System.Object)",
+   "OriginalName": "smethod_2",
+   "Reason": "Updates/checks synchronization, accepts the wrapper, then schedules a periodic notification.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "UpdateTimerAcceptWrapperAndSchedulePeriodicNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035D1",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_3(System.Object,System.Object)",
+   "OriginalName": "smethod_3",
+   "Reason": "Updates/checks synchronization and accepts the wrapper, retaining the current notification schedule.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "UpdateTimerAndAcceptWrapper",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035D2",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_4(System.Object,System.Object)",
+   "OriginalName": "smethod_4",
+   "Reason": "Accepts the wrapper and schedules a periodic notification.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "AcceptWrapperAndSchedulePeriodicNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035D3",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_5(System.Object,System.Object)",
+   "OriginalName": "smethod_5",
+   "Reason": "Starts an ordinary notification, becomes time keeper and schedules a periodic notification without awaiting the send.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SendNotifyAndScheduleTimeKeeper",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer",
+   "Token": "0x060035D4",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer::smethod_6(System.Object,System.Object)",
+   "OriginalName": "smethod_6",
+   "Reason": "Starts the pending update reply, becomes time keeper and schedules a periodic notification without awaiting the send.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "timer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ReplyAndScheduleTimeKeeper",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003550",
+   "Signature": "System.UInt16 Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_13()",
+   "OriginalName": "method_13",
+   "Reason": "Returns the current 16-bit tag and increments it with wraparound; does not add synchronization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "messageTag"
+    }
+   ],
+   "NewName": "NextMessageTag",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600354C",
+   "Signature": "Knx.Falcon.KnxnetIp.Frames.KnxIpFrame Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_11(Knx.Falcon.KnxnetIp.Frames.KnxIpFrame)",
+   "OriginalName": "method_11",
+   "Reason": "With a routing key, records secure-send statistics, allocates a message tag, captures group time, constructs an authenticated wrapper and notifies the timer of that send. Otherwise records a plain send and returns the original frame.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.KnxIpFrame knxIpFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "messageTag"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.UInt64",
+     "NewName": "timestamp"
+    }
+   ],
+   "NewName": "WrapOutgoingRoutingFrame",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600354D",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_12(Knx.Falcon.KnxnetIp.Frames.Routing.TimerNotifyFrame)",
+   "OriginalName": "method_12",
+   "Reason": "When a routing key exists, records notification statistics and forwards timestamp/serial/tag to the group timer. The caller has already checked authenticity.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.Routing.TimerNotifyFrame timerNotifyFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timerNotifyFrame_0",
+     "HasMetadata": true,
+     "NewName": "notification"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "HandleTimerNotify",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003547",
+   "Signature": "Knx.Falcon.KnxMessages.KnxMessage Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_8(Knx.Falcon.KnxnetIp.Frames.KnxIpFrame)",
+   "OriginalName": "method_8",
+   "Reason": "Returns messages carried by routing indication/system-broadcast frames. Busy frames update send pacing under the connector lock; lost/unknown frames update diagnostics and return null. Unknown frames invoke the unhandled-frame delegate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.KnxIpFrame knxIpFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingSystemBroadcastFrame",
+     "NewName": "systemBroadcast"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Object",
+     "NewName": "syncRoot"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingIndicationFrame",
+     "NewName": "indication"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingLostMessageFrame",
+     "NewName": "lostMessage"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingBusyFrame",
+     "NewName": "busyFrame"
+    },
+    {
+     "Index": 17,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    }
+   ],
+   "NewName": "HandleRoutingPayloadFrame",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003546",
+   "Signature": "Knx.Falcon.KnxMessages.KnxMessage Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_7(Knx.Falcon.KnxnetIp.Frames.KnxIpFrame)",
+   "OriginalName": "method_7",
+   "Reason": "Applies system-broadcast policy, enforces configured secure/plain frame mode, validates wrapper/notification authentication and group-timer acceptance, then dispatches the inner/plain payload. Records each rejection and retains existing unhandled-frame callback behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.KnxIpFrame knxIpFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isSecureFrame"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.TimerNotifyFrame",
+     "NewName": "timerNotify"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.KnxIpFrame",
+     "NewName": "innerFrame"
+    },
+    {
+     "Index": 21,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.SecureWrapperFrame",
+     "NewName": "secureWrapper"
+    }
+   ],
+   "NewName": "HandleReceivedDataFrame",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003545",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_6(Knx.Falcon.KnxnetIp.Frames.KnxIpFrame)",
+   "OriginalName": "method_6",
+   "Reason": "Processes a frame, suppresses one echo matching the pending confirmation by source/destination/length/APCI, then emits raw data and bus-message events outside Info mode. The comparison does not compare payload bytes.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.KnxIpFrame knxIpFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxMessage",
+     "NewName": "message"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "pendingConfirmation"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Boolean",
+     "NewName": "shouldDeliver"
+    }
+   ],
+   "NewName": "DispatchReceivedRoutingFrame",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x020006D8",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "OriginalName": "Class679",
+   "Reason": "Timestamp, serial/tag correlation and mutable secure-wrapper acceptance result passed through timer transitions.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "TimerEventContext",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<>c",
+   "Token": "0x020006D9",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/<>c",
+   "OriginalName": "<>c",
+   "Reason": "Cached state-access delegates supplied to the generic transition executor.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "TimerStateAccessors",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Fields": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x0400254E",
+   "Signature": "System.UInt64 Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::ulong_0",
+   "OriginalName": "ulong_0",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "timestamp",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x0400254F",
+   "Signature": "Knx.Falcon.SerialNumber Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::serialNumber_0",
+   "OriginalName": "serialNumber_0",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "serialNumber",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x04002550",
+   "Signature": "System.UInt16 Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::ushort_0",
+   "OriginalName": "ushort_0",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "messageTag",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679",
+   "Token": "0x04002551",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.RoutingConnector.SecureGroupTimer/Class679::bool_0",
+   "OriginalName": "bool_0",
+   "Reason": "Event context storage traced through its constructor and accessors.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isAccepted",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ]
+}

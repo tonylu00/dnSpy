@@ -1,0 +1,113 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003556",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/SystemBroadcastClass Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::smethod_0(System.Object,Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/SystemBroadcastFilterMode)",
+   "OriginalName": "smethod_0",
+   "Reason": "FilterOff accepts immediately. IP-router filtering requires APCI and accepts network-parameter read/response with object type 0, PID 11 and first test byte 1; serial-number domain writes with a four-byte domain; or system-broadcast secure sync/data-with-confidentiality services. Other inputs are invalid. Retains the unchecked first test-byte access.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/SystemBroadcastFilterMode systemBroadcastFilterMode_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "systemBroadcastFilterMode_2",
+     "HasMetadata": true,
+     "NewName": "filterMode"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.APCI",
+     "NewName": "apci"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.SystemNetworkParameterReadMessage",
+     "NewName": "networkParameterRead"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.DomainAddressSerialNumberWriteMessage",
+     "NewName": "domainAddressWrite"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.SecureMessageBase",
+     "NewName": "secureMessage"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "Knx.Falcon.KnxMessages.ApplicationLayer.SystemNetworkParameterResponseMessage",
+     "NewName": "networkParameterResponse"
+    }
+   ],
+   "NewName": "ClassifySystemBroadcastMessage",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003555",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/SystemBroadcastClass Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_14(Knx.Falcon.KnxnetIp.Frames.KnxIpFrame)",
+   "OriginalName": "method_14",
+   "Reason": "Requires a routing system-broadcast frame containing a flagged bus message; otherwise returns NonSystemBroadcast. Disabled system broadcasts are Invalid, and enabled messages pass through the configured receive filter.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxnetIp.Frames.KnxIpFrame knxIpFrame_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxIpFrame_0",
+     "HasMetadata": true,
+     "NewName": "frame"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingSystemBroadcastFrame",
+     "NewName": "systemBroadcastFrame"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    }
+   ],
+   "NewName": "ClassifyReceivedSystemBroadcast",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

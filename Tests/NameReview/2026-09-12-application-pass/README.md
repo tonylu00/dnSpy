@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave187.json`. Current staged maps are **6.3 v187** and **6.4 v22**.
+`checkpoint-wave189.json`. Current staged maps are **6.3 v189** and **6.4 v24**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 187/22, not by newest filename.
+Resume with 189/24, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -32,6 +32,15 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- IP CCM transforms and frame authentication → secure group timer transitions,
+  scheduling and timestamp acceptance → routing wrap/receive/dispatch
+  (`routing_timer.py`). Security-control bits and network/domain message payloads
+  → system-broadcast classifiers → complete raw receive and reset-suppression
+  contracts (`routing_policy.py`). Parameters, used fields, nested types and real
+  IL locals connect these operations. Existing caching, timeout, filtering and
+  event behavior is recorded; the unobserved timer trigger remains unresolved.
+  6.4 helpers were independently reviewed. Both maps pass inexpensive metadata/
+  reference checks with SDK bindings intact and no new collision suffixes.
 - USB reset recovery, routing-busy pacing, message preparation and successful-send
   statistics → complete eight-member `WriteAsync` and five-member `WriteRawAsync`
   contracts (`connector_write.py`). Types, captured state, parameters and real IL
