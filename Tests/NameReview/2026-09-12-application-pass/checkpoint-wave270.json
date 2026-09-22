@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 270 accepted (6.3): the first contract-family row (Falcon loggers) and more HawkNET accessors",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v270.xml",
+      "Sha256": "B47ED9AB82FA711A03FC86A2AAF8D05C19A37A3451FEF16E73F6A77B46DBCAB6",
+      "PreviousMap": "names63-staged-v269.xml",
+      "PreviousMapSha256": "0F2D8D8A60135B1CC3A4B162C151A172EB532AC34FC4EAB35A277C8664E85853",
+      "FrozenSha256": "B47ED9AB82FA711A03FC86A2AAF8D05C19A37A3451FEF16E73F6A77B46DBCAB6",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave270.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The family row is the first use of the --review-families path in this pass: one row carrying the logger family id (170DB9FB...) expanded to its nine members (Class731's abstract declaration plus the logger getters of Class733-741), which the plain wave refuses as virtual-or-override. The thirteen HawkNET rows are single-field accessors: the result code array get/set pair, four loggers, the unload and load device options, the serial number provider get/set pairs (sync and async), and the bus.",
+    "themes": "Family rows bypass the virtual-or-override refusal because MethodContractFamilies evaluates the family as a whole; the family index built from --review-families (family-index63.py) makes that usable in bulk, and 723 still-free rows across the three modules sit in editable families (Falcon 270, HawkNET 348, DevKit 105). Four HawkConfigurationDataInterfaceObject getters were refused with accessor-operator-or-runtime-special-name (their property rows are obfuscated) and one logger row needed GetFalconLogger because GetLogger is taken on Class460's contract."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 22,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14819,
+    "VisibleRenamed": 5022,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11625
+  },
+  "Errors": 0
+}
