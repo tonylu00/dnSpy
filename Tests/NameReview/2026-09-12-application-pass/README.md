@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 23 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave209.json`. Current staged maps are **6.3 v209** and **6.4 v37**.
+`checkpoint-wave210.json`. Current staged maps are **6.3 v210** and **6.4 v39**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,8 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 209/37, not by newest filename. Rejected 6.3 v203 was never accepted;
+Resume with 210/39, not by newest filename. The 6.4 v38 wizard map is an accepted
+intermediate before the v39 paste review. Rejected 6.3 v203 was never accepted;
 intermediate 208/36 maps were superseded by the expanded dispatch review.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
@@ -33,13 +34,22 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- Extended-copy wizard readiness, page dependencies, preview/validation, command
+  predicates and event lifecycle in both versions (`extended_copy_scopes.py`),
+  plus the 6.4 paste selection/target/progress chain (`paste64_scopes.py`). Exact
+  async/iterator metadata owners and physical usage edges now provide evidence
+  for hidden callbacks. Runtime contracts and blocked body-local scopes remain
+  guarded. Resume with `extended63-wave210.cumulative.json` and
+  `paste64-wave39.cumulative.json`; next review drag/drop using
+  `wizard-paste-wave210-caller-worklist.json`.
+
 - Extended-copy option selection and source-store import through target-project
   password callbacks, plus move/copy-delete and connector unlink/relink dispatch
   (`operation_dispatch_scopes.py`). Routing-key/certificate wrappers are included.
   IL control-flow traversal verifies consumers across backward branches. Public
   families and version-specific behavior stay intact; generated sentinel methods
-  remain unresolved. Next review the wizard, drag/drop and 6.4 paste callers in
-  `dispatch-wave209-caller-worklist.json`.
+  remain unresolved. Wizard and 6.4 paste callers are covered above; drag/drop
+  remains in the current worklist.
 
 - Copy/link dispatch from exact source/target types through address selectors,
   ordered ID collection, send-first connector ordering and branch-specific

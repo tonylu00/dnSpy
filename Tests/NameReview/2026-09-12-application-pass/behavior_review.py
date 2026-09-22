@@ -59,6 +59,7 @@ class BehaviorReview:
         self.selected = set()
         self.accessor_sources = {}
         self.usage_sources = {}
+        self.state_machine_sources = {}
 
     def read(self, name):
         return json.loads((self.root / name).read_text(encoding='utf-8-sig'))
@@ -124,6 +125,44 @@ class BehaviorReview:
                            'MethodSignature': row['Signature'], 'MethodName': entry['OriginalName'], **owner}
         self.accessor_sources.update(staged)
 
+    def bind_inspected_state_machine_sources(self, inspection_path, tokens):
+        """Recover hidden caller source from exact state-machine attribute metadata.
+
+        Supplies evidence only. Runtime method contracts and local-map blockers
+        remain unchanged; names and nesting are never used to infer ownership.
+        """
+        path = Path(inspection_path)
+        report = json.loads(path.read_text(encoding='utf-8-sig'))
+        if Path(report['Input']).resolve() != Path(self.module['Input']).resolve() or any(
+                report[k] != self.module[k] for k in ('Mvid', 'Sha256')):
+            raise ValueError('State-machine inspection selects a different physical module')
+        bodies = {r['Token']: r for r in report['Methods']}
+        staged = {}
+        for token in tokens:
+            key = f'0x{token:08X}'
+            row, entry = bodies[key], self.entries['Methods'][key]
+            owners = row.get('StateMachineOwners', [])
+            if key in getattr(self, 'state_machine_sources', {}) or len(owners) != 1:
+                raise ValueError('Missing, duplicate or ambiguous state-machine owner')
+            owner = owners[0]
+            definition = self.entries['Methods'][owner['OwnerToken']]
+            state_type = self.entries['Types'][owner['StateMachineTypeToken']]
+            if row['Signature'] != entry['Signature'] or any(report[k] != entry[k] for k in ('Identity', 'Mvid', 'Sha256')):
+                raise ValueError('State-machine inspection identity/signature mismatch')
+            if (owner['OwnerSignature'] != definition['Signature'] or bodies[owner['OwnerToken']]['Signature'] != definition['Signature'] or
+                    owner['StateMachineTypeSignature'] != entry['Type'] or state_type['Signature'] != entry['Type'] or
+                    owner['Attribute'] not in ['System.Runtime.CompilerServices.' + n for n in
+                        ('AsyncStateMachineAttribute', 'IteratorStateMachineAttribute', 'AsyncIteratorStateMachineAttribute')]):
+                raise ValueError('State-machine metadata owner mismatch')
+            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (self.module_id + ':' + owner['OwnerToken'],))]
+            if not rows or any(r['Kind'] != 'MethodDeclaration' for r in rows):
+                raise ValueError('State-machine owner has no direct method declaration')
+            self.source(int(owner['OwnerToken'], 16))
+            staged[key] = {'Path': str(path), 'Sha256': sha(path), 'MethodToken': key, **owner}
+        if not hasattr(self, 'state_machine_sources'):
+            self.state_machine_sources = {}
+        self.state_machine_sources.update(staged)
+
     def bind_usage_sources(self, inspection_path, bindings):
         """Bind an inlined method/field to an exact, inspected caller location.
 
@@ -171,10 +210,14 @@ class BehaviorReview:
             rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (caller_id,))]
             direct = rows and all(r['Kind'] in ('MethodDeclaration', 'ConstructorDeclaration') for r in rows)
             accessor = self.accessor_sources.get(caller_key) if not direct else None
-            if not direct and accessor is None:
+            state_machine = getattr(self, 'state_machine_sources', {}).get(caller_key) if not direct else None
+            caller_usage = self.usage_sources.get(caller_key) if not direct else None
+            if not direct and accessor is None and state_machine is None and caller_usage is None:
                 raise ValueError('Usage caller has no direct source declaration')
             self.source(caller_token)  # Apply the normal source root/hash checks.
             staged[key] = {'Inspection': str(path), 'Sha256': sha(path), 'SourceId': caller_id, 'Edges': edges,
+                           **({'CallerStateMachine': copy.deepcopy(state_machine)} if state_machine else {}),
+                           **({'CallerUsage': copy.deepcopy(caller_usage)} if caller_usage else {}),
                            **({'CallerAccessor': copy.deepcopy(accessor)} if accessor else {})}
         self.usage_sources.update(staged)
 
@@ -182,7 +225,11 @@ class BehaviorReview:
         key = f'0x{token:08X}'
         sid = self.module_id + ':' + key
         rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (sid,))]
-        accessor = usage = None
+        accessor = usage = state_machine = None
+        if key in getattr(self, 'state_machine_sources', {}):
+            state_machine = self.state_machine_sources[key]
+            rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?',
+                (self.module_id + ':' + state_machine['OwnerToken'],))]
         if key in self.accessor_sources:
             accessor = self.accessor_sources[key]
             owner = self.module_id + ':' + accessor['OwnerToken']
@@ -193,9 +240,18 @@ class BehaviorReview:
         if not rows and key in self.usage_sources:
             usage = self.usage_sources[key]
             source_id = usage['SourceId']
+            if usage.get('CallerUsage'):
+                # Only previously verified usage chains can reach this branch.
+                # Revalidate the owning declaration instead of fabricating a row.
+                locations = self.source(int(source_id.split(':')[1], 16))
+                return [{**location, 'Id': sid, 'SourceId': source_id, 'UsageEvidence': usage}
+                        for location in locations]
             if usage.get('CallerAccessor'):
                 accessor = usage['CallerAccessor']
                 source_id = self.module_id + ':' + accessor['OwnerToken']
+            if usage.get('CallerStateMachine'):
+                state_machine = usage['CallerStateMachine']
+                source_id = self.module_id + ':' + state_machine['OwnerToken']
             rows = [json.loads(r[0]) for r in self.db.execute('SELECT data FROM source WHERE id=?', (source_id,))]
             if accessor:
                 allowed = {'PropertyDeclaration', 'IndexerDeclaration'} if accessor['OwnerKind'] == 'Property' else {'EventDeclaration', 'EventFieldDeclaration'}
@@ -203,6 +259,8 @@ class BehaviorReview:
                     raise ValueError('Usage accessor declaration kind mismatch: ' + sid)
         if not rows:
             raise ValueError('No source declaration: ' + sid)
+        if state_machine and any(row['Kind'] != 'MethodDeclaration' for row in rows):
+            raise ValueError('State-machine source declaration kind mismatch: ' + sid)
         for row in rows:
             path = (self.source_root / row['Source']).resolve()
             if not path.is_relative_to(self.source_root.resolve()):
@@ -212,6 +270,7 @@ class BehaviorReview:
             if self.verified_sources[path] != row['Sha256']:
                 raise ValueError('Stale source: ' + str(path))
         return [{'Id': sid, 'Path': r['Source'], 'Line': r['Line'], 'Sha256': r['Sha256'],
+                 **({'DeclarationId': self.module_id + ':' + state_machine['OwnerToken'], 'StateMachineEvidence': state_machine} if state_machine else {}),
                  **({'DeclarationId': self.module_id + ':' + accessor['OwnerToken'], 'AccessorEvidence': accessor} if accessor else {}),
                  **({'SourceId': usage['SourceId'], 'UsageEvidence': usage} if usage else {})} for r in rows]
 

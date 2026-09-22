@@ -1,0 +1,1728 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v38.xml",
+ "BaseMapSha256": "282E7A3E8E86D63371FA6E400F00C866B688EC42725FAC5BC7E6D79047602A50",
+ "PhysicalModule": {
+  "Id": "m0146",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Ets.ViewModel.dll",
+  "Sha256": "470B7A655A0A667C5DB7EA3F05890BA628F8611A92A5A14B65651AFA1AD11268",
+  "Mvid": "b557be5c-0e7f-4bc3-aa94-958fba394aba",
+  "AssemblyName": "Knx.Ets.ViewModel",
+  "Project": "Knx.Ets.ViewModel.2\\Knx.Ets.ViewModel.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0146:0x06005B75",
+   "ProposedName": "GetClipboardItemDisplayName",
+   "Reason": "Reads IDisplayName.DisplayName for the extended-copy incompatibility message.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B75",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 564,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "i",
+     "HasMetadata": true,
+     "NewName": "item"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B75"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B76",
+   "ProposedName": "IsInitialPasteTargetCandidate",
+   "Reason": "Selects a NamedCollection or concrete InstallationDomObject as the first eligible target.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B76",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 571,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "item",
+     "HasMetadata": true,
+     "NewName": "item"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isTargetCandidate"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B76"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B77",
+   "ProposedName": "IsTargetCandidateForUniquenessCheck",
+   "Reason": "Filters the same concrete target kinds for reference-identity uniqueness checking.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B77",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 578,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "item",
+     "HasMetadata": true,
+     "NewName": "item"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isTargetCandidate"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B77"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B78",
+   "ProposedName": "IsBrokenDevice",
+   "Reason": "Reads Broken after OfType<Device> filters the selected objects.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B78",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 585,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "d",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B78"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B79",
+   "ProposedName": "IsDeviceLockedForEditing",
+   "Reason": "Reads IsLockedForEditing on the devices returned by GetSelfOrParentalDevices; retains the existing lack of a null guard.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B79",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 592,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "d",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B79"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B7D",
+   "ProposedName": "CreateMoveOperationsAndNotify",
+   "Reason": "Creates a move with null options; null becomes Array.Empty<Operation>, otherwise notifies the source selection and returns operations.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B7D",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 518,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action",
+     "HasMetadata": true,
+     "NewName": "reportProgress"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Operations.IOperation>",
+     "NewName": "moveOperations"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B7D"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B82",
+   "ProposedName": "CreateConfiguredMoveOperationsAndNotify",
+   "Reason": "Creates a move with captured paste options; null becomes a newly allocated empty array, otherwise notifies the source selection.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B82",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 640,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action",
+     "HasMetadata": true,
+     "NewName": "reportProgress"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Operations.IOperation>",
+     "NewName": "moveOperations"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B82"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B87",
+   "ProposedName": "CreateCopyOperationBatch",
+   "Reason": "Returns a one-element factory copy result without filtering null.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B87",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 688,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action",
+     "HasMetadata": true,
+     "NewName": "reportProgress"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B87"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B88",
+   "ProposedName": "RetryCopyWhenRequiredPasswordIsSet",
+   "Reason": "Retries the captured copy only when the security service confirms the required password for the target parent project.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B88",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 695,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "result",
+     "HasMetadata": true,
+     "NewName": "validationResult"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B88"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B8D",
+   "ProposedName": "IsDifferentFromFirstTarget",
+   "Reason": "Tests reference inequality against the captured first eligible target.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B8D",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 740,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "o",
+     "HasMetadata": true,
+     "NewName": "item"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B8D"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B59",
+   "ProposedName": "IsExtendedCopyLicensed",
+   "Reason": "Retains the ExtendedCopy feature lookup, chain-license equality and catch-to-false checks.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B59",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 100,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Licensing.License>",
+     "NewName": "featureLicenses"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.Common.Licensing.License>",
+     "NewName": "licenseEnumerator"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Boolean",
+     "NewName": "licenseCheckResult"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "Knx.Ets.Common.Licensing.License",
+     "NewName": "license"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B59"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B5A",
+   "ProposedName": "CanDoPaste",
+   "Reason": "Requires a nonempty selection and either valid group-address clipboard text or a permitted ETS clipboard operation.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B5A",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 128,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B5A"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B5B",
+   "ProposedName": "PasteClipboardCanExecute",
+   "Reason": "Requires one target, permitted group-address link type and provider-reported valid group-address content; does not duplicate the provider parser.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B5B",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 135,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Object",
+     "NewName": "singleTarget"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B5B"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B5C",
+   "ProposedName": "PasteClipboardOperationsCanExecute",
+   "Reason": "Uses the validated first target to check paste or link compatibility.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B5C",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 143,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Object",
+     "NewName": "firstValidTarget"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B5C"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B5D",
+   "ProposedName": "DoPaste",
+   "Reason": "Tries group-address text first, then ETS copy/move; clears clipboard after the normal move dialog returns.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B5D",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 151,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.ContextMenu.PasteCommandHandler/<>c__DisplayClass27_0",
+     "NewName": "moveContext"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B5D"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B5E",
+   "ProposedName": "TryHandleClipboardPaste",
+   "Reason": "Resolves text group addresses in the target project; failed or empty results return false, otherwise opens copy progress.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B5E",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 176,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iinstallationDomObject_0",
+     "HasMetadata": true,
+     "NewName": "target"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "FluentResults.Result`1<System.Collections.Generic.ICollection`1<Knx.Ets.ObjectModel.Project.IGroupAddress>>",
+     "NewName": "matchingAddressesResult"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B5E"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B5F",
+   "ProposedName": "CanDoPasteExtended",
+   "Reason": "Keeps license, valid target, copy-data and extended-paste compatibility checks.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B5F",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 201,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "System.Object",
+     "NewName": "firstValidTarget"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B5F"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B60",
+   "ProposedName": "DoPasteExtended",
+   "Reason": "Requires compatible group-address styles, opens the extended-copy dialog, then shows its wizard on OK.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B60",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 209,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Clipboard.ClipboardData",
+     "NewName": "clipboardData"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.ExtendedCopy.ExtendedCopyViewModel",
+     "NewName": "extendedCopyDialog"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IInstallationDomObject",
+     "NewName": "desiredTarget"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B60"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B61",
+   "ProposedName": "CanDoPasteSpecial",
+   "Reason": "Requires a valid target, copy data and special-paste compatibility.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B61",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 233,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Object",
+     "NewName": "firstValidTarget"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B61"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B62",
+   "ProposedName": "GetFirstValidObject",
+   "Reason": "Returns FirstOrDefault from the original selection only when IsValid succeeds.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B62",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 241,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B62"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B63",
+   "ProposedName": "DoPasteSpecial",
+   "Reason": "Uses accepted dialog options for copy or move; preserves the absence of clipboard clearing in this path.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B63",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 252,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ViewModel.ViewModel.PasteSpecialViewModel",
+     "NewName": "pasteSpecialDialog"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ViewModel.ContextMenu.PasteCommandHandler/<>c__DisplayClass33_0",
+     "NewName": "configuredMoveContext"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B63"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B64",
+   "ProposedName": "ShowPasteCopyProgress",
+   "Reason": "Forwards the clipboard item sequence and the chosen options to the copy progress overload.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B64",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 274,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "clipboardData_0",
+     "HasMetadata": true,
+     "NewName": "data"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "iinstallationDomObject_0",
+     "HasMetadata": true,
+     "NewName": "target"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "pasteOptions_0",
+     "HasMetadata": true,
+     "NewName": "pasteOptions"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B64"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B65",
+   "ProposedName": "ShowPasteCopyProgress",
+   "Reason": "Captures copy input for factory construction and the required-password retry callback.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B65",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 281,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "items"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "iinstallationDomObject_0",
+     "HasMetadata": true,
+     "NewName": "target"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "pasteOptions_0",
+     "HasMetadata": true,
+     "NewName": "pasteOptions"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.ContextMenu.PasteCommandHandler/<>c__DisplayClass35_0",
+     "NewName": "copyContext"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B65"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B66",
+   "ProposedName": "GetTargetInstallationDomObject",
+   "Reason": "Uses an installation object directly or resolves a named collection target from clipboard item type.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B66",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 293,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "first"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Clipboard.ClipboardData",
+     "NewName": "clipboardData"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.NamedCollection.NamedCollection",
+     "NewName": "namedCollection"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IInstallationDomObject",
+     "NewName": "dropTarget"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B66"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B67",
+   "ProposedName": "IsValid",
+   "Reason": "Rejects identical source/target sequences, differing eligible target references, broken devices and locked self/parental devices. Keeps the public-readable original name.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B67",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 310,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "objects",
+     "HasMetadata": true,
+     "NewName": "objects"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ViewModel.ContextMenu.PasteCommandHandler/<>c__DisplayClass37_0",
+     "NewName": "targetValidation"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B67"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B68",
+   "ProposedName": "TryGetDesiredTarget",
+   "Reason": "Resolves named collections through the default installation, then adapts devices/lines/segments to the backbone area or main line as required.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B68",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 319,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "type_0",
+     "HasMetadata": true,
+     "NewName": "sourceType"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_0",
+     "HasMetadata": true,
+     "NewName": "targetItem"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "iinstallationDomObject_0",
+     "HasMetadata": true,
+     "NewName": "target"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ViewModel.Application.Workspace.NamedCollection.NamedCollection",
+     "NewName": "namedCollection"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IInstallationDomObject",
+     "NewName": "resolvedTarget"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IArea",
+     "NewName": "targetArea"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B68"
+   }
+  },
+  {
+   "Id": "m0146:0x06005B6D",
+   "ProposedName": "",
+   "Reason": "Stores nonnull execution and eligibility delegates; constructor name is unchanged.",
+   "Source": [
+    {
+     "Id": "m0146:0x06005B6D",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 467,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "action_1",
+     "HasMetadata": true,
+     "NewName": "execute"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "canExecute"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "Token": "0x06005B6D"
+   }
+  },
+  {
+   "Id": "m0146:0x04002BDC",
+   "ProposedName": "messageBoxService",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BDC",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 421,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BDD",
+   "ProposedName": "progressService",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BDD",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 424,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BDE",
+   "ProposedName": "securityService",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BDE",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 427,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BDF",
+   "ProposedName": "dialogService",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BDF",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 430,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE0",
+   "ProposedName": "operationFactory",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE0",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 433,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE1",
+   "ProposedName": "licenseAndAppManager",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE1",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 436,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE2",
+   "ProposedName": "extendedCopyViewModelFactory",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE2",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 439,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE3",
+   "ProposedName": "clipboardToMatchingDomObjectProvider",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE3",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 442,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE4",
+   "ProposedName": "notificationChain",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE4",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 445,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B7D"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE5",
+   "ProposedName": "pasteCommand",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE5",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 448,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE6",
+   "ProposedName": "pasteExtendedCommand",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE6",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 452,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE7",
+   "ProposedName": "pasteSpecialCommand",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE7",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 456,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B54"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BE9",
+   "ProposedName": "canExecute",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BE9",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 503,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B6D"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BEA",
+   "ProposedName": "execute",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BEA",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 506,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B6D"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BEC",
+   "ProposedName": "Instance",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BEC",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 613,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B60"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BED",
+   "ProposedName": "ClipboardItemDisplayNameSelector",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BED",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 616,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B60"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BEE",
+   "ProposedName": "InitialPasteTargetPredicate",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BEE",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 619,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B67"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BEF",
+   "ProposedName": "UniquenessTargetPredicate",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BEF",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 622,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B67"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF0",
+   "ProposedName": "BrokenDevicePredicate",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF0",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 625,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B67"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF1",
+   "ProposedName": "LockedDevicePredicate",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF1",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 628,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B67"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF3",
+   "ProposedName": "handler",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF3",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 545,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B5D"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF4",
+   "ProposedName": "clipboardData",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF4",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 548,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B5D"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF5",
+   "ProposedName": "target",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF5",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 551,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B5D"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF7",
+   "ProposedName": "handler",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF7",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 667,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B63"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF8",
+   "ProposedName": "clipboardData",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF8",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 670,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B63"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BF9",
+   "ProposedName": "target",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BF9",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 673,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B63"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BFA",
+   "ProposedName": "pasteOptions",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BFA",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 676,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B63"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BFC",
+   "ProposedName": "handler",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BFC",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 719,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B65"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BFD",
+   "ProposedName": "sourceItems",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BFD",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 722,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B65"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BFE",
+   "ProposedName": "target",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BFE",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 725,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B65"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002BFF",
+   "ProposedName": "pasteOptions",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002BFF",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 728,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B65"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x04002C01",
+   "ProposedName": "firstTarget",
+   "Reason": "Constructor assignment or exact captured/cached usage establishes the field role.",
+   "Source": [
+    {
+     "Id": "m0146:0x04002C01",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 761,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\paste64-wave39-inspection.json",
+    "Sha256": "05D39802127CC0A735E842F116F62BE9EC2547B5A07B573FDD4EFB6C67668B92",
+    "SupportingTokens": [
+     "0x06005B67"
+    ]
+   }
+  },
+  {
+   "Id": "m0146:0x02000A53",
+   "ProposedName": "PasteSelectionCommand",
+   "Reason": "Delegates command eligibility/execution and returns Continue; ICommandHandler method names are retained.",
+   "Source": [
+    {
+     "Id": "m0146:0x02000A53",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 463,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0146:0x02000A54",
+   "ProposedName": "PasteSelectionPredicates",
+   "Reason": "Shared display-name and target/device validation predicates.",
+   "Source": [
+    {
+     "Id": "m0146:0x02000A54",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 558,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0146:0x02000A55",
+   "ProposedName": "PasteMoveContext",
+   "Reason": "Captures normal move target and clipboard items for the factory/notification callback.",
+   "Source": [
+    {
+     "Id": "m0146:0x02000A55",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 513,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0146:0x02000A56",
+   "ProposedName": "ConfiguredPasteMoveContext",
+   "Reason": "Captures special-paste move target, clipboard items and selected options.",
+   "Source": [
+    {
+     "Id": "m0146:0x02000A56",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 635,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0146:0x02000A57",
+   "ProposedName": "PasteCopyContext",
+   "Reason": "Captures source, target and options for copy construction and password retry.",
+   "Source": [
+    {
+     "Id": "m0146:0x02000A57",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 683,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0146:0x02000A58",
+   "ProposedName": "PasteTargetValidationContext",
+   "Reason": "Captures first eligible target for the reference-identity uniqueness predicate.",
+   "Source": [
+    {
+     "Id": "m0146:0x02000A58",
+     "Path": "Knx.Ets.ViewModel.2/ContextMenu/PasteCommandHandler.cs",
+     "Line": 735,
+     "Sha256": "9811FF54817FB2528E3BEE57B2A9E164D08E5671188A588BB66439C13188AA03"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

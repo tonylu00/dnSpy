@@ -211,6 +211,72 @@ class UsageSourceTests(unittest.TestCase):
         self.assertEqual(result['DeclarationId'], 'm0002:0x17000001')
         self.assertEqual(result['SourceId'], self.caller_id)
 
+    def state_machine_report(self):
+        b = self.review
+        identity = {'Identity': self.method['Identity'], 'Mvid': b.module['Mvid'], 'Sha256': b.module['Sha256']}
+        self.caller.update(**identity, Type='C/State')
+        owner = {**identity, 'Token': '0x06000003', 'Signature': 'System.Void C::Start()'}
+        b.entries['Methods'][owner['Token']] = owner
+        b.entries['Types'] = {'0x02000002': {**identity, 'Signature': 'C/State'}}
+        b.db.execute('UPDATE source SET id=?', ('m0002:0x06000003',))
+        self.report['Methods'].append(owner)
+        self.report['Methods'][1].update(self.caller, StateMachineOwners=[{
+            'OwnerToken': owner['Token'], 'OwnerSignature': owner['Signature'],
+            'StateMachineTypeToken': '0x02000002', 'StateMachineTypeSignature': 'C/State',
+            'Attribute': 'System.Runtime.CompilerServices.AsyncStateMachineAttribute'}])
+        return self.report
+
+    def test_state_machine_metadata_links_hidden_callbacks_without_changing_contracts(self):
+        self.state_machine_report()
+        self.path.write_text(json.dumps(self.report), encoding='utf-8')
+        self.review.bind_inspected_state_machine_sources(self.path, [0x06000002])
+        self.bind()
+        result = self.review.source(0x06000001)[0]
+        self.assertEqual(result['SourceId'], self.caller_id)
+        self.assertEqual(result['DeclarationId'], 'm0002:0x06000003')
+        self.assertEqual(result['StateMachineEvidence']['MethodToken'], '0x06000002')
+        self.assertEqual(self.review.db.execute('SELECT COUNT(*) FROM source').fetchone()[0], 1)
+
+    def test_state_machine_owner_rejects_ambiguity_namesake_and_stale_source(self):
+        report = copy.deepcopy(self.state_machine_report())
+        for failure in ('missing', 'ambiguous', 'physical', 'signature', 'type', 'attribute', 'source'):
+            changed = copy.deepcopy(report)
+            owners = changed['Methods'][1]['StateMachineOwners']
+            if failure == 'missing': owners.clear()
+            if failure == 'ambiguous': owners *= 2
+            if failure == 'physical': changed['Sha256'] = 'other physical file'
+            if failure == 'signature': owners[0]['OwnerSignature'] = 'other overload'
+            if failure == 'type': owners[0]['StateMachineTypeSignature'] = 'Namesake/State'
+            if failure == 'attribute': owners[0]['Attribute'] = 'Other.AsyncStateMachineAttribute'
+            if failure == 'source': self.source.write_text('stale', encoding='utf-8')
+            self.path.write_text(json.dumps(changed), encoding='utf-8')
+            with self.subTest(failure=failure), self.assertRaises(ValueError):
+                self.review.bind_inspected_state_machine_sources(self.path, [0x06000002])
+            self.assertFalse(getattr(self.review, 'state_machine_sources', {}))
+
+    def test_nested_hidden_usage_keeps_both_physical_edges(self):
+        self.state_machine_report()
+        self.path.write_text(json.dumps(self.report), encoding='utf-8')
+        b=self.review
+        b.bind_inspected_state_machine_sources(self.path, [0x06000002])
+        self.bind()
+        nested={**self.method, 'Token':'0x06000004', 'Signature':'System.Int32 C::Nested(System.Int32)'}
+        b.entries['Methods'][nested['Token']]=nested
+        b.db.execute('INSERT INTO symbols VALUES (?,?)',('m0002:'+nested['Token'],json.dumps(nested)))
+        edge=copy.deepcopy(self.edges[0])
+        edge.update(From='m0002:0x06000001',Offset=8)
+        edge['Target'].update(Id='m0002:'+nested['Token'],Signature=nested['Signature'])
+        b.db.execute('INSERT INTO edges VALUES (?,?,?)',(edge['From'],edge['Target']['Id'],json.dumps(edge)))
+        self.report['Methods'][0]['Instructions']=[{'Offset':8,'OpCode':'ldftn','Operand':{'Token':nested['Token'],'Text':nested['Signature']}}]
+        self.report['Methods'].append({**nested,'Instructions':[]})
+        path=self.path.with_name('nested.json')
+        path.write_text(json.dumps(self.report),encoding='utf-8')
+        b.bind_usage_sources(path,{0x06000004:0x06000001})
+        result=b.source(0x06000004)[0]
+        self.assertEqual(result['DeclarationId'],'m0002:0x06000003')
+        self.assertEqual(result['SourceId'],'m0002:0x06000001')
+        self.assertEqual(result['UsageEvidence']['CallerUsage']['SourceId'],'m0002:0x06000002')
+
 
 if __name__ == '__main__':
     unittest.main()

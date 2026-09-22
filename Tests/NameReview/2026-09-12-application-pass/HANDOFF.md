@@ -44,15 +44,17 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   Add/link review committed as `646cbe231`.
   Deletion/unlink review committed as `5ef6ca8be`.
   Copy/link review committed as `770eb8752`.
-  Current naming checkpoint: `checkpoint-wave209.json`, from accepted 207/35,
-  through extended-copy/move dispatch and routing-key/certificate wrappers.
+  Extended-copy/move dispatch committed as `9fe65d18c`.
+  Current naming checkpoint: `checkpoint-wave210.json`, from accepted 209/37,
+  through extended-copy wizard scopes in both versions and the 6.4 paste chain.
+  The 6.4 chain is 37 -> 38 -> 39; resume with 39.
   Intermediate 208/36 maps were superseded by the expanded review; accepted
   209/37 derive directly from 207/35, not from those intermediate files.
   Candidate 6.3 v203 was rejected; corrected v204 derives directly from v202.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v209.xml`,
-  SHA256 `6D74383690CBADCF083029716A0275D34D4FFF51FCF53088F3ABF5D172C7322C`.
-- Current 6.4 map: `names64-staged-v37.xml`, SHA256
-  `1A30757F677A59E1936564ECCDA69BACCE7D3ACB42EDE80900E585D69134E395`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v210.xml`,
+  SHA256 `74BAD35BA96E3FD74AF193DFF0FD1FFEB2438B9F9040F8A4858B2F1F988D42A0`.
+- Current 6.4 map: `names64-staged-v39.xml`, SHA256
+  `6062873DF692078B89BE14D5A7C24BA0363D9C88FBE1E4CBB4498E98E419536B`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
@@ -63,7 +65,7 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   lambda alias with `CreateItemValue`. Wave188 explicitly replaces the state-machine
   constructor selector with `SelectTransitionKey`. Wave191 explicitly replaces
   two discovery-frame length selectors with `GetStructureLength`.
-  The last update reports are `map-update63-wave-209.json` and `map-update64-wave-37.json`.
+  The last update reports are `map-update63-wave-210.json` and `map-update64-wave-39.json`.
   `map-update63-wave-203.json` is rejected self-collision evidence, not an accepted step.
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
@@ -83,9 +85,57 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   the existing map and six HTTP families pass preflight without weakening guards.
   Framework references supply metadata only and are not renamed or executed.
 
-## Extended-copy and move dispatch (209 / 37)
+## Extended-copy wizard and paste (210 / 39)
 
-Resume with maps **209/37**, `dispatch63-wave209.cumulative.json` and
+Resume with maps **210/39**, `extended63-wave210.cumulative.json` and
+`paste64-wave39.cumulative.json`. The 6.4 intermediate 38 is part of the accepted
+chain; its extended-copy review is retained alongside the subsequent paste review.
+`extended_copy_scopes.py` covers wizard construction/readiness, page-option
+selection, show/collapse decisions, controller/dependent locking, validation,
+preview invalidation, event cleanup, captured storage and actual used IL locals.
+Existing meaningful 6.3 names stay meaningful; hidden predicates and callbacks
+now describe their behavior. Examples include CreateExtendedCopyOperationAndSignalReady,
+IsDependentPageToCollapse and CanPreviewExtendedCopy. The semaphore is released
+after creating/storing the operation, and missing dependent pages still follow
+the original First behavior. Create propagates to dependents; Keep enables their
+general options while Lose/Create disable them. No branches or conditions changed.
+
+`paste64_scopes.py` independently reviews the 6.4 selection/target/progress chain.
+It includes normal and configured move contexts, copy/password retry callbacks,
+command delegates, cached predicates and private helpers. Normal move clears the
+clipboard after its dialog; special paste does not. Null factory moves return an
+empty sequence without notification. Text addresses use the 6.4 provider and
+device lock checks use GetSelfOrParentalDevices, unlike the 6.3 local iterator.
+License, security, validation and cancellation gates remain intact.
+
+de4dotEx **1de232c4** adds exact async/iterator owner metadata to --inspect-methods.
+The Python evidence binder follows those attribute-defined owners and verified
+nested callback edges when decompilation hides declarations. It does not infer
+ownership from MoveNext or generated names and does not bypass runtime contract
+or body-local mapping guards. The NameCandidates suite and 16 evidence tests
+passed on Windows with portable synthetic fixtures; macOS/Linux execution was
+not performed. No ETS export, rebuild, full audit, apply or launch occurred.
+
+The reviews contain 69 decisions for the 6.3 wizard, 99 for the 6.4 wizard and
+65 for the 6.4 paste chain. Updates have 131/163/124 edits respectively, zero
+errors and no collision suffixes. Final map preflights have zero changes/errors.
+All prior map/scoped decisions, cumulative reviews and SDK whitelist bindings
+are preserved. These counts are local review scope, not application completion.
+`wizard-paste-wave210-validation.json` records source/IL/usage evidence and the
+remaining inventory candidates: ten unreferenced 6.3 fields named a, twenty
+generated 6.4 wizard helpers and fourteen generated 6.4 paste helpers, all with
+no resolved incoming callers/uses. Generated storage and async implementation
+locals remain explicitly unresolved where a domain meaning is not established.
+
+Next use `wizard-paste-wave210-caller-worklist.json` and continue
+DragDropOperationsFactory.CreateMoveOperation: 6.3 **0x060036BC** and 6.4
+**0x06004961**. The prior wizard and 6.4 paste callback worklist entries are now
+mapped. Review drag/drop inner helpers and the wider application before the
+consolidated source/binary application and SDK/runtime validation phase.
+
+## Extended-copy and move dispatch (209 / 37, historical)
+
+This checkpoint used maps **209/37**, `dispatch63-wave209.cumulative.json` and
 `dispatch64-wave37.cumulative.json`. `operation_dispatch_scopes.py` reviews the
 extended-copy and move dispatchers in both physical ViewModel assemblies, plus
 routing-backbone-key and certificate add/delete wrappers. The six complete public

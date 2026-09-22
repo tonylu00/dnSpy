@@ -1,0 +1,54 @@
+{
+  "Checkpoint": "checkpoint-wave210.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v209.xml",
+      "Steps": [{
+        "Map": "names63-staged-v210.xml",
+        "Report": "map-update63-wave-210.json",
+        "Review": "extended63-wave210.review.json",
+        "References": "contract-references63-v3.json"
+      }]
+    },
+    "64": {
+      "BaseMap": "names64-staged-v37.xml",
+      "Steps": [{
+        "Map": "names64-staged-v38.xml",
+        "Report": "map-update64-wave-38.json",
+        "Review": "extended64-wave38.review.json"
+      }, {
+        "Map": "names64-staged-v39.xml",
+        "Report": "map-update64-wave-39.json",
+        "Review": "paste64-wave39.review.json"
+      }]
+    }
+  },
+  "Reviews": [
+    {"Input": "extended63-wave210.cumulative.json", "Output": "reviewed63.json", "PreserveExisting": true},
+    {"Input": "paste64-wave39.cumulative.json", "Output": "behavior-reviewed64.json", "PreserveExisting": true}
+  ],
+  "Artifacts": [
+    "extended63-wave210-body-inspection.json", "extended64-wave38-body-inspection.json", "paste64-wave39-inspection.json",
+    "extended63-wave210.review.json", "extended63-wave210.evidence.json", "extended63-wave210.remaining.json",
+    "extended64-wave38.review.json", "extended64-wave38.evidence.json", "extended64-wave38.remaining.json",
+    "paste64-wave39.review.json", "paste64-wave39.evidence.json", "paste64-wave39.remaining.json",
+    "wizard-paste-wave210-validation.json", "wizard-paste-wave210-caller-worklist.json",
+    "map-update63-wave-210.json", "map-update64-wave-38.json", "map-update64-wave-39.json",
+    "map-check63-wave210.json", "map-check64-wave39.json"
+  ],
+  "ReviewedChains": [
+    "Extended-copy wizard readiness callback through page-option selectors, visibility/locking dependencies, validation, preview, event lifecycle and used locals in both physical versions.",
+    "ETS 6.4 paste eligibility, target resolution, normal/configured move, copy construction/password retry, command delegate storage and captured contexts.",
+    "Metadata-derived async/iterator ownership and exact nested usage edges recover hidden 6.3 callback source evidence without changing runtime contract guards."
+  ],
+  "Remaining": [
+    "Application-wide naming remains incomplete. Maps 6.3 v210 and 6.4 v39 remain unapplied to ETS source and binaries.",
+    "Resume cumulative ledgers extended63-wave210.cumulative.json and paste64-wave39.cumulative.json with contract-references63-v3.json.",
+    "ETS 6.4 v38 is an accepted intermediate in the v37 -> v38 -> v39 checkpoint chain, not the resume map.",
+    "Continue DragDropOperationsFactory.CreateMoveOperation (6.3 0x060036BC, 6.4 0x06004961), its inner helpers and wider application callers using wizard-paste-wave210-caller-worklist.json.",
+    "The selected class inventories leave 10 unused 6.3 fields, 20 generated 6.4 wizard helpers and 14 generated 6.4 paste helpers unresolved. Helpers have no resolved incoming calls; their storage is not assigned a fabricated domain meaning.",
+    "Async ownership provides source evidence only. Runtime MoveNext/SetStateMachine contracts and the body-local mapping limitation remain; no guard was bypassed.",
+    "Tool tests passed on Windows with portable fixtures. This is not Linux/macOS execution or ETS runtime validation.",
+    "Finish application-wide maps before consolidated source/binary application, SDK export/audit refresh, builds or runtime launch."
+  ]
+}
