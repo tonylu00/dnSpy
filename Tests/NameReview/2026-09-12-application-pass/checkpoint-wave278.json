@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 278 accepted (6.3): the Falcon connection state machine Class733",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v278.xml",
+      "Sha256": "E1401CD19C179922B1865F15956ADA27813C76560B3FDB37C6DBFAEF6902F10D",
+      "PreviousMap": "names63-staged-v277.xml",
+      "PreviousMapSha256": "FF685DFF7A8EF2DA631E4210282ABD4D277C6B6E618F13EAFA06F9DAF2FD26F9",
+      "FrozenSha256": "E1401CD19C179922B1865F15956ADA27813C76560B3FDB37C6DBFAEF6902F10D",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave278.review.json"
+  ],
+  "Method": {
+    "evidence": "Class733 is the KNXnet/IP connection state machine (states CLOSED, OPEN_IDLE, OPEN_WAIT, CONNECTING, DISCONNECTING; triggers ICON, IDIS, RES, RES1, RESX, ACK, ACKX, NAKX, NAK, NAKR, REQ, CTO, ATO, ATOR, CONR, CONE, DISR, CON, DIS). Its static constructor builds a 95-entry transition table of (from state, trigger, next state, handler), and every handler body logs its operation, so the name of each row is the table row plus its own log line: RES logs Ack, RES1 logs ReAck, IDIS logs DisRes, the ACKX/CTO/NAK/NAKR/RESX failure row logs Disconnect, REQ in OPEN_IDLE logs Send, ACK in OPEN_WAIT logs Acked, ATO/NAK log Repeat (and warn Repeat without _lastSentFrame), REQ while connecting/waiting logs Deferred request, CON logs SendCon, CONR logs Connected, DIS logs SendDis, ATOR/DISR in DISCONNECTING log Disconnected, ATOR in CONNECTING logs ConnectTimeout and ATOR in OPEN_WAIT logs AckTimeout. The named siblings (HandleNoop, HandleGiveUp, HandleRefuseConnection) fix the Handle<Event> convention.",
+    "themes": "New evidence pattern for state machines: the transition table itself names a handler. perf-now/sm-table.py <ilinspect-dump> <states...> -- <triggers...> reads the (state, trigger, next state, handler) tuples out of a static constructor, perf-now/method-users.py <module> <token...> shows which method installs a handler (the ldftn/call site), and perf-now/async-body.py <module> <stub-token...> resolves an async stub to the MoveNext body that holds its logs and calls, so an obfuscated handler can be read without searching for its state machine by hand. Class737 and Class738 are the same pattern (their handlers are registered the same way) and are the next block."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 14,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14929,
+    "VisibleRenamed": 5080,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11735
+  },
+  "Errors": 0
+}
