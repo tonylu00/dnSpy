@@ -1,0 +1,42 @@
+{
+  "Checkpoint": "checkpoint-sdk-whitelist184.json",
+  "Versions": {
+    "63": {
+      "BaseMap": "names63-staged-v182.xml",
+      "Map": "names63-staged-v184.xml",
+      "Whitelist": "sdk-name-whitelist63-v2.xml",
+      "Preflight": "map-check63-sdk184-final.json"
+    },
+    "64": {
+      "BaseMap": "names64-staged-v19.xml",
+      "Map": "names64-staged-v20.xml",
+      "Whitelist": "sdk-name-whitelist64-v1.xml",
+      "Preflight": "map-check64-sdk20-final.json"
+    }
+  },
+  "SyntheticTests": [
+    {
+      "Command": "dotnet run --project tests/NameCandidates/NameCandidates.Tests.csproj -c Release -- D:/knx_analysis/namecandidates-sdk-whitelist-v6",
+      "Repository": "D:/git/de4dotEx",
+      "Log": "D:/knx_analysis/namecandidates-sdk-whitelist-v6.log",
+      "ExpectedPass": "PASS persistent SDK whitelist, transitive signatures/constraints"
+    },
+    {
+      "Command": "dotnet run --project Tests/SdkNameWhitelistRegression/SdkNameWhitelistRegression.csproj -c Release --no-build -- D:/knx_analysis/namecandidates-sdk-whitelist-v6/sdk-whitelist",
+      "Repository": "D:/git/dnSpy",
+      "Log": "D:/knx_analysis/sdk-whitelist-dnspy-resume.log",
+      "ExpectedPass": "PASS dnSpy SDK whitelist"
+    }
+  ],
+  "SharedGuardFiles": [
+    "D:/git/de4dotEx/tools/NameCandidates/SdkNameWhitelist.cs",
+    "D:/git/dnSpy/dnSpy/dnSpy.Decompiler/MSBuild/SdkNameWhitelist.cs"
+  ],
+  "Remaining": [
+    "Finish application-wide behavior naming; SDK-protected definitions retain their original identifiers.",
+    "Continue from protected maps 184/20 with historical cumulative reviews usb-write63-wave182.cumulative.json and usb-write64-wave19.cumulative.json.",
+    "Review all eight SetInterfaceConfigurationAsync contract members, then open/dispatch callers and remaining application components.",
+    "Review 51 inherited suffix adjustments; this transition adds none.",
+    "Refresh full SDK audits and perform consolidated ETS export/build/runtime verification only after mapping is complete."
+  ]
+}

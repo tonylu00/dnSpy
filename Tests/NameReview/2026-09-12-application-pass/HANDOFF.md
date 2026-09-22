@@ -24,16 +24,19 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   follows local-memory response matching through configuration and feature reads.
 - Configuration/feature reads committed as `3e57125bd`; this continuation follows
   configuration writes and cEMI initialization, including explicit selector aliases.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v182.xml`,
-  SHA256 `A1B72930DEAFC5F1488F0C9ECE92E1A5BA21DAD1A47D3773A3A48904F6F4EB77`.
-- Current 6.4 map: `names64-staged-v19.xml`, SHA256
-  `98876DD21ADA8DA2BF92AB8273F5D17EF59997D01394B877F458B767949444BE`.
+- USB configuration writes committed as `ccf4afe07`. The resumed SDK protection
+  checkpoint is `checkpoint-sdk-whitelist184.json`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v184.xml`,
+  SHA256 `1AE0CFBE13B5FDBD3241FB6ECB97888AFC336939077764AF0228F1C7EBA44924`.
+- Current 6.4 map: `names64-staged-v20.xml`, SHA256
+  `49DEE3D73545D5C1FF64380BD1DB29F00D718CE859E080A4C5D45452199DA13F`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
-- `reviewed63.json` is the cumulative accepted review. Earlier aliases and
+- `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
+  take precedence over its historical proposals. Earlier aliases and
   parameter/local decisions were checked for preservation. Six compiler-style
   source aliases now have explicit replacement review; every other earlier alias
-  is preserved. The current update reports are `map-update63-wave-182.json`
+  was preserved by wave182. The last behavior update reports are `map-update63-wave-182.json`
   and `map-update64-wave-19.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
@@ -51,6 +54,52 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
   System.dll to resolve INotifyPropertyChanged. Preflight proved the existing map
   still valid; the five internal layer families then resolved without blockers.
   Framework references supply metadata only and are not renamed or executed.
+
+## Persistent SDK name protection
+
+NameCandidates now creates a reusable whitelist from explicit SDK module paths
+and binds it to the map with a SHA256. The same guard runs in review updates,
+binary application and dnSpy source alias registration, before publication or
+mutation. One reviewed definition still propagates to resolved references;
+one contract-family seed expands to all implementations/overrides. References
+do not need separate naming decisions.
+The de4dotEx tooling milestone is `9f61fc6c`.
+
+The four SDK roots are Knx.Ets.Sdk, Knx.Ets.Sdk.AddIns.AddInViews,
+Knx.Ets.Common.Types and Knx.Ets.Common.Resources DLLs. Whitelists protect their
+public/protected definitions and parameters, transitive signature/base/interface/
+constraint/forwarded types and their public surface, plus SDK private storage
+types retained by the older audit policy. Private helper names remain editable.
+Custom reflection/plugin loading still requires the deferred final runtime check.
+
+- `sdk-name-whitelist63-v2.xml`: 21,935 symbols in 27 physical modules, SHA256
+  `D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459`.
+- `sdk-name-whitelist64-v1.xml`: 24,209 symbols in 31 physical modules, SHA256
+  `E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34`.
+- Binding excludes 1,974 rows from 6.3 v182 and 167 from 6.4 v19. Protected
+  contract families are removed together. The checkpoint records every excluded
+  alias and verifies all retained rows, scoped aliases and physical identities
+  unchanged. Cumulative review ledgers remain historical behavior evidence;
+  **only the protected maps are authoritative for effective aliases**.
+- Both `map-check63-sdk184-final.json` and `map-check64-sdk20-final.json` passed
+  without errors or edits. All six older SDK freeze entries remain protected.
+- 6.3 v183 and whitelist63-v1 were candidates only, never accepted. They omit
+  the conservative SDK storage-type closure. Do not resume from them.
+
+Same-directory compatibility files remain independent. If multiple copies have
+the same assembly identity, the resolver accepts a unique local filename matching
+the requested assembly simple name (`Name.dll`/`Name.exe`). This resolves 6.4's
+Xml.ObjectModel.dll versus Xml.ObjectModel_orig.dll; other ambiguities still fail
+with physical paths. Synthetic fixtures verify independent renaming of both
+copies, automatic call references, SDK parameter preservation, whole-family
+freezing, stale input/manifest rejection and protected edits rejected before
+output. The dnSpy fixture also verifies rejection before any aliases register.
+These are tooling tests, not ETS execution or full application equivalence.
+
+`checkpoint_sdk_whitelist.py` checks this policy transition; six portable tests
+reject unrelated deletions, partial family removal, alias/scope changes, changed
+physical identity and additions. Normal behavior waves continue to use
+`checkpoint_behavior.py`, which must retain the SDK binding.
 
 ## Reviewed chain
 
@@ -253,6 +302,8 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 - Native import proposals from wave175 are resolved. Continue from
   `usb-write63-wave182.cumulative.json` and `usb-write64-wave19.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
+  Use protected maps **184/20** as the bases, even though cumulative ledger names
+  contain 182/19. Do not reintroduce SDK-excluded proposals from those ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
 - Do not autoaccept the old correspondence queue: its shape normalization can

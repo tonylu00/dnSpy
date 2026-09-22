@@ -8,6 +8,21 @@ existing SDK callers do not need a corresponding binary rename. Combine with
 `--public-sign` when the host requires original public-key identities; see
 `PublicSigning.md` for its signing limits.
 
+A map can also carry an SDK name whitelist. NameCandidates' portable
+`--create-sdk-whitelist` inventories explicit SDK module paths and their public,
+transitive signature and SDK storage-type surfaces; `--bind-sdk-whitelist`
+pins that manifest to a map and removes protected rename rows, including entire
+affected contract families. The resulting `SdkNameWhitelist` and
+`SdkNameWhitelistSha256` root attributes are enforced by this source parser before
+registering any aliases. No per-run freeze flag is necessary. SDK public names
+and parameter names remain unchanged, while private helpers and independent
+physical compatibility copies can still receive aliases. Missing/stale manifests
+and inputs are rejected. Rebind the same manifest after relocating a workspace.
+
+`Tests/SdkNameWhitelistRegression` exercises the actual parser against the
+portable NameCandidates fixtures, including rejection before partial alias
+registration. It is a synthetic metadata check, not an ETS launch/build test.
+
 This source-only format is separate from the binary `NameMap` format:
 
 ```xml

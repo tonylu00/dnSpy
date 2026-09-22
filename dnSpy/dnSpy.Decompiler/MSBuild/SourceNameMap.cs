@@ -18,6 +18,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			using var reader = XmlReader.Create(path, settings);
 			var root = XDocument.Load(reader).Root;
 			if (root?.Name != "SourceNameMap" || (string?)root.Attribute("Version") != "1") throw new InvalidDataException("Expected SourceNameMap Version=1.");
+			SdkNameWhitelist.Load(root, path)?.Validate(root);
 			var directory = Path.GetFullPath(Required(root, "InputDirectory")).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
 			var modules = inputs.ToDictionary(m => Path.GetFullPath(m.Location), StringComparer.OrdinalIgnoreCase);
 			var proposals = new Dictionary<IMemberDef, string>();

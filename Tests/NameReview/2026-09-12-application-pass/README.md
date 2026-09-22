@@ -6,10 +6,20 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave182.json`. Current staged maps are **6.3 v182** and **6.4 v19**.
+`checkpoint-sdk-whitelist184.json`. Current staged maps are **6.3 v184** and **6.4 v20**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
+
+Both maps now bind an exact physical SDK-name whitelist, enforced by de4dotEx
+updates/application and dnSpy source aliases. One definition decision follows
+resolved references automatically; one contract seed expands to its whole family.
+The SDK transition excludes 1,974/167 protected or related contract rows from
+6.3/6.4 respectively, preserving every other alias and scoped decision. Historical
+review ledgers retain the behavioral evidence; the bound maps determine which
+aliases may be applied. See the handoff for pinned hashes, scope and remaining
+limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
+The 6.3 v183 candidate was never accepted. Resume with 184/20, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
