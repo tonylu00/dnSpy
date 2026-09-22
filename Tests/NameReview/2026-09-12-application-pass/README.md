@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave173.json`. Current staged maps are **6.3 v173** and **6.4 v10**.
+`checkpoint-wave174.json`. Current staged maps are **6.3 v174** and **6.4 v11**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -20,6 +20,13 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- USB HID validation and fragment reassembly, timestamped read-failure messages,
+  feature negotiation, connection/reconnection, receive-task ownership and state
+  transitions (`usb_lifecycle.py`). Ordered outbound fragments complete or fault
+  their send task and determine the next connection state. Both versions were
+  reviewed independently; 6.4 additionally invokes Reconnected subscribers.
+  Obfuscated 6.3 captured fields have behavioral roles; canonical 6.4 async
+  metadata and unsupported explicit-contract local rows remain unchanged.
 - ETS product/template checks → manufacturer cache language/version checks →
   cache rebuild creation, live reference selection and weak/strong retention.
 - Template classification → CvNext namespace helpers and XML attribute names →

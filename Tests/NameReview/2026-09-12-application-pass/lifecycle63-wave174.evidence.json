@@ -1,0 +1,3204 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v173.xml",
+ "BaseMapSha256": "8D2CD0CC081BF80427205108A4E4D0E1D90A4C6C897294B6004A77FDD379259C",
+ "PhysicalModule": {
+  "Id": "m0088",
+  "Input": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+  "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+  "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon\\Knx.Falcon.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0088:0x020004F3",
+   "ProposedName": "UsbReadFailedMessage",
+   "Reason": "Queued only after a non-cancellation USB read failure; ToString says ReadFailed. ProcessAsync compares its timestamp with the latest communication start before firing Broken. Equality deliberately ignores the timestamp.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004F3",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 986,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C20",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 990,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3600,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C21",
+   "ProposedName": "get_Timestamp",
+   "Reason": "Returns the construction-time UTC timestamp used to discard read errors from an older communication session.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C21",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 996,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C20",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 990,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3600,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001829",
+   "ProposedName": "timestamp",
+   "Reason": "Readonly UTC failure-message timestamp; equality and hash semantics remain unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001829",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1032,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C20",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 990,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C21",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 996,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3600,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BFA",
+   "ProposedName": "CloseCommunicationAsync",
+   "Reason": "Closes the HID device under the connection lock, clears cached features, optionally notifies connection state, cancels and awaits the receive task, and schedules reconnect when broken and enabled.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "isBroken"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C02",
+   "ProposedName": "ReceiveHidReportsAsync",
+   "Reason": "Reads while the HID device is open/readable, validates reports, assembles sequential fragments, and enqueues an inbound USB message on the end flag. Sequence failure suppresses delivery; cancellation exits quietly; read failure queues UsbReadFailedMessage. It does not add a received-byte-count check.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C01",
+   "ProposedName": "StartCommunicationAsync",
+   "Reason": "Opens the HID device, honors discovery timing, queries SupportedEmiType with one retry, restores a still-supported active EMI type, records the open time, and starts the receive task. Failure closes communication before rethrowing.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BFF",
+   "ProposedName": "RestartCommunicationAsync",
+   "Reason": "Guards against overlapping restart, stops the reconnect timer, closes as broken, delays 100 ms and starts communication again. Rearms reconnect on error and clears the guard in finally. Only 6.4 additionally invokes Reconnected subscribers after startup.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C00",
+   "ProposedName": "TryRestartCommunicationAsync",
+   "Reason": "Returns false when already restarting or when RestartCommunicationAsync throws; returns true after it succeeds.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C07",
+   "ProposedName": "FireEventAsync",
+   "Reason": "Awaits the state-machine trigger, then updates/notifies InterfaceConnectionState from CLOSED/OPEN/BROKEN. OPEN preserves an existing MediumFailure state.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "trigger_0",
+     "HasMetadata": true,
+     "NewName": "trigger"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C0D",
+   "ProposedName": "TryReconnectAsync",
+   "Reason": "Attempts TryRestartCommunicationAsync with events; fires Reconnected on success, otherwise rearms the reconnect timer when enabled.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C0B",
+   "ProposedName": "WriteMessageAndSelectStateAsync",
+   "Reason": "State-machine write action: reconnects a broken interface unless restart is already in progress, validates payload length 1..907, writes generated HID fragments in order, and completes the send. Failure faults the send, schedules reconnect when enabled and returns BROKEN.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class741_0",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C08",
+   "ProposedName": "IgnoreTrigger",
+   "Reason": "CompletedTask no-op callback used by transition-table entries that keep the current state; it performs no write or close.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C08",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 558,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class741_0",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C09",
+   "ProposedName": "ScheduleReconnectAfterReadFailure",
+   "Reason": "Broken-trigger callback starts the reconnect timer only for a nonnegative reconnect interval, then returns CompletedTask.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C09",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 565,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class741_0",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C0A",
+   "ProposedName": "CompleteTransitionWithoutAction",
+   "Reason": "CompletedTask no-op callback used on opened/closed/reconnected state changes; the state-machine executor performs the state update.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C0A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 576,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class741_0",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C28",
+   "ProposedName": "ReadConnectionState",
+   "Reason": "State-machine getter callback reads the target interface state without changing it.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C28",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1099,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class741_0",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001C29",
+   "ProposedName": "AssignConnectionState",
+   "Reason": "State-machine setter callback assigns the requested state; connection notifications are handled by FireEventAsync.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001C29",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1106,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class741_0",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "state_0",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F2",
+   "ProposedName": "connectionLock",
+   "Reason": "Monitor protects close and cached connection-state reset.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F2",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 688,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F3",
+   "ProposedName": "layerRunTask",
+   "Reason": "Stores the channel-processing RunAsync task at factory startup.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F3",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 700,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F4",
+   "ProposedName": "receiveTask",
+   "Reason": "ReceiveHidReportsAsync task started after initialization and awaited during close.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F4",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 703,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F5",
+   "ProposedName": "receiveCancellation",
+   "Reason": "Owned cancellation source for the receive worker; cancelled and disposed during close/dispose.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F5",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 706,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C32",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1361,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F7",
+   "ProposedName": "hidWriteTimeout",
+   "Reason": "1500 ms timeout passed to raw report writes during initialization and normal sends.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 691,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017FB",
+   "ProposedName": "restartInProgress",
+   "Reason": "Restart reentrancy guard set before close/open and cleared in finally; write actions reject concurrent recovery.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017FB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 754,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017FC",
+   "ProposedName": "communicationStartedAt",
+   "Reason": "UTC time recorded before starting receive; older queued read failures are ignored.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017FC",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 697,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C3A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3600,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017FE",
+   "ProposedName": "statistics",
+   "Reason": "Collector for open, close, write and receive counters, created by the constructor.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017FE",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 757,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 76,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F9",
+   "ProposedName": "log",
+   "Reason": "Logger for Falcon.KnxUsbInterface used by transport and lifecycle operations.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 712,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE5",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 27,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001811",
+   "ProposedName": "connectionStateMachine",
+   "Reason": "State/trigger executor initialized with getter, setter and transition table; awaited by FireEventAsync.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001811",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001812",
+   "ProposedName": "connectionState",
+   "Reason": "CLOSED/OPEN/BROKEN state used by transition callbacks and message processing.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001812",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 816,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C28",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1099,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C29",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1106,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001813",
+   "ProposedName": "connectionTransitions",
+   "Reason": "Explicit transition table binds current state, trigger, destination and action callback.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001813",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 715,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 34,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017EC",
+   "ProposedName": "friendlyName",
+   "Reason": "Human-readable device name used in open failure messages, defaulting to HID path.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017EC",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 670,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 76,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017ED",
+   "ProposedName": "discoveryResult",
+   "Reason": "Discovery metadata supplies startup delays and the Windows USB-fix requirement.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017ED",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 673,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 76,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040017F6",
+   "ProposedName": "reconnectInterval",
+   "Reason": "Constructor-supplied reconnect delay; negative disables scheduling.",
+   "Source": [
+    {
+     "Id": "m0088:0x040017F6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 709,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 76,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C09",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 565,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BE9",
+   "ProposedName": "",
+   "Reason": "Constructor stores the HID device, friendly name, discovery timings and reconnect interval, passing diagnostic sink to Layer.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BE9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 76,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface69_1",
+     "HasMetadata": true,
+     "NewName": "hidDevice"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_11",
+     "HasMetadata": true,
+     "NewName": "friendlyName"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "usbDeviceDiscoveryResult_1",
+     "HasMetadata": true,
+     "NewName": "discoveryResult"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "reconnectInterval"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x06001BE8",
+   "ProposedName": "OpenAsync",
+   "Reason": "Preserves OpenAsync. Creates the interface, starts the layer and waits for startup before StartCommunicationAsync; completes the channel on failure.",
+   "Source": [
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "interface69_1",
+     "HasMetadata": true,
+     "NewName": "hidDevice"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_11",
+     "HasMetadata": true,
+     "NewName": "friendlyName"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "usbDeviceDiscoveryResult_1",
+     "HasMetadata": true,
+     "NewName": "discoveryResult"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "reconnectInterval"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004F8",
+   "ProposedName": "CloseCommunicationStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004F8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1778,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400183A",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400183A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1900,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400183B",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400183B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1903,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400183C",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400183C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1906,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400183D",
+   "ProposedName": "isBroken",
+   "Reason": "Captured isBroken role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400183D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1909,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400183E",
+   "ProposedName": "withEvents",
+   "Reason": "Captured withEvents role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400183E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1912,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400183F",
+   "ProposedName": "receiveTaskAwaiter",
+   "Reason": "Captured receiveTaskAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400183F",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1915,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C30",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1784,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000502",
+   "ProposedName": "ReceiveHidReportsStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000502",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3097,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001887",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001887",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3286,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001888",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001888",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3289,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001889",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001889",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3292,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400188A",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured cancellationToken role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400188A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3295,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400188B",
+   "ProposedName": "reassemblyBuffer",
+   "Reason": "Captured reassemblyBuffer role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400188B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3298,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400188C",
+   "ProposedName": "receivedByteCount",
+   "Reason": "Captured receivedByteCount role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400188C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3301,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400188D",
+   "ProposedName": "lastSequenceNumber",
+   "Reason": "Captured lastSequenceNumber role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400188D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3304,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400188E",
+   "ProposedName": "receptionValid",
+   "Reason": "Captured receptionValid role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400188E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3307,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400188F",
+   "ProposedName": "currentProtocolId",
+   "Reason": "Captured currentProtocolId role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400188F",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3310,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001890",
+   "ProposedName": "readAwaiter",
+   "Reason": "Captured readAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001890",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3313,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C02",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C44",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3103,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000503",
+   "ProposedName": "RestartCommunicationStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000503",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2275,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001892",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001892",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2408,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001893",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001893",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2411,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001894",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001894",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2414,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001895",
+   "ProposedName": "withEvents",
+   "Reason": "Captured withEvents role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001895",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2417,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001896",
+   "ProposedName": "operationAwaiter",
+   "Reason": "Captured operationAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001896",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2420,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BFF",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 359,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C46",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2281,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000505",
+   "ProposedName": "StartCommunicationStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000505",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2523,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400189E",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400189E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3061,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400189F",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400189F",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3064,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A0",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A0",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3067,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A1",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured cancellationToken role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A1",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3070,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A2",
+   "ProposedName": "withEvents",
+   "Reason": "Captured withEvents role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A2",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3073,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A3",
+   "ProposedName": "operationAwaiter",
+   "Reason": "Captured operationAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A3",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3076,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A4",
+   "ProposedName": "retry",
+   "Reason": "Captured retry role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A4",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3079,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A5",
+   "ProposedName": "pendingException",
+   "Reason": "Captured pendingException role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A5",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3082,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A6",
+   "ProposedName": "supportedEmiResponse",
+   "Reason": "Captured supportedEmiResponse role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A6",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3085,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A7",
+   "ProposedName": "readAwaiter",
+   "Reason": "Captured readAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3088,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C01",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 387,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2529,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000507",
+   "ProposedName": "TryRestartCommunicationStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000507",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2429,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018B0",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018B0",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2502,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018B1",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018B1",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2505,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018B2",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018B2",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2508,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018B3",
+   "ProposedName": "withEvents",
+   "Reason": "Captured withEvents role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018B3",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2511,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018B4",
+   "ProposedName": "restartAwaiter",
+   "Reason": "Captured restartAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018B4",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2514,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C00",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 373,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 2435,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004FA",
+   "ProposedName": "FireEventStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004FA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3322,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001846",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001846",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3396,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001847",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001847",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3399,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001848",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001848",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3402,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001849",
+   "ProposedName": "trigger",
+   "Reason": "Captured trigger role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001849",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3405,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400184A",
+   "ProposedName": "message",
+   "Reason": "Captured message role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400184A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3408,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400184B",
+   "ProposedName": "transitionAwaiter",
+   "Reason": "Captured transitionAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400184B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3411,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C07",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 543,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C34",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x02000506",
+   "ProposedName": "TryReconnectStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x02000506",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3742,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018A9",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018A9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3822,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018AA",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018AA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3825,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018AB",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018AB",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3828,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018AC",
+   "ProposedName": "message",
+   "Reason": "Captured message role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018AC",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3831,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018AD",
+   "ProposedName": "restartResultAwaiter",
+   "Reason": "Captured restartResultAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018AD",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3834,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x040018AE",
+   "ProposedName": "transitionAwaiter",
+   "Reason": "Captured transitionAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x040018AE",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3837,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 611,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C4C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3748,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004F7",
+   "ProposedName": "WriteMessageStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004F7",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3420,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001831",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001831",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3564,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001832",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001832",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3567,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001833",
+   "ProposedName": "message",
+   "Reason": "Captured message role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001833",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3570,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001834",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001834",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3573,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001835",
+   "ProposedName": "dataMessage",
+   "Reason": "Captured dataMessage role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001835",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3576,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001836",
+   "ProposedName": "newConnectionState",
+   "Reason": "Captured newConnectionState role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001836",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3579,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001837",
+   "ProposedName": "operationAwaiter",
+   "Reason": "Captured operationAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001837",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3582,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001838",
+   "ProposedName": "reportEnumerator",
+   "Reason": "Captured reportEnumerator role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001838",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3585,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C0B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 583,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C2E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 3426,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004FC",
+   "ProposedName": "OpenDeviceStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004FC",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1215,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001858",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001858",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1319,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001859",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001859",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1322,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400185A",
+   "ProposedName": "friendlyName",
+   "Reason": "Captured friendlyName role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400185A",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1325,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400185B",
+   "ProposedName": "hidDevice",
+   "Reason": "Captured hidDevice role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400185B",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1328,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400185C",
+   "ProposedName": "discoveryResult",
+   "Reason": "Captured discoveryResult role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400185C",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1331,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400185D",
+   "ProposedName": "reconnectInterval",
+   "Reason": "Captured reconnectInterval role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400185D",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1334,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400185E",
+   "ProposedName": "diagEventSink",
+   "Reason": "Captured diagEventSink role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400185E",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1337,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x0400185F",
+   "ProposedName": "cancellationToken",
+   "Reason": "Captured cancellationToken role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x0400185F",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1340,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001860",
+   "ProposedName": "result",
+   "Reason": "Captured result role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001860",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1343,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001861",
+   "ProposedName": "startupAwaiter",
+   "Reason": "Captured startupAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001861",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1346,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BE8",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 58,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C38",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1221,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x020004F9",
+   "ProposedName": "DisposeInterfaceStateMachine",
+   "Reason": "Obfuscated async carrier for the reviewed USB lifecycle method; its wrapper and MoveNext body establish the role.",
+   "Source": [
+    {
+     "Id": "m0088:0x020004F9",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1355,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 87,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C32",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1361,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001841",
+   "ProposedName": "state",
+   "Reason": "Captured state role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001841",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1422,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 87,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C32",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1361,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001842",
+   "ProposedName": "builder",
+   "Reason": "Captured builder role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001842",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1425,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 87,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C32",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1361,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001843",
+   "ProposedName": "usbInterface",
+   "Reason": "Captured usbInterface role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001843",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1428,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 87,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C32",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1361,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0088:0x04001844",
+   "ProposedName": "closeAwaiter",
+   "Reason": "Captured closeAwaiter role verified in wrapper assignments and the state-machine body; storage type and control flow are unchanged.",
+   "Source": [
+    {
+     "Id": "m0088:0x04001844",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1431,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001BEA",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 87,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    },
+    {
+     "Id": "m0088:0x06001C32",
+     "Path": "Knx.Falcon/Class741.cs",
+     "Line": 1361,
+     "Sha256": "8A423EA25EB7D576CBDBBD6944F557886EEBD052115B0570B19FCBC5A1859389"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}

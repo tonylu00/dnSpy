@@ -3,23 +3,26 @@
 Application-wide mapping remains active. Finish the mapping pass before a
 consolidated ETS source export, build and runtime verification. During mapping,
 use inexpensive identity, map and reference checks. No ETS operations ran in
-this continuation; only synthetic NameCandidates fixtures were executed.
+this continuation. The prior constructor-tooling milestone ran synthetic
+NameCandidates fixtures; the current lifecycle review used map/reference checks.
 
 ## Accepted state
 
 - dnSpy resumed from `7801a5f43` (wave166). The uncheckpointed wave167 artifacts
   were recovered and its current binary identities passed map preflight.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v173.xml`,
-  SHA256 `8D2CD0CC081BF80427205108A4E4D0E1D90A4C6C897294B6004A77FDD379259C`.
-- Current 6.4 map: `names64-staged-v10.xml`, SHA256
-  `0D9638F298AB1CAD1AB5D912358BDBFB0BC578839DC722E39E0B614E309A1926`.
+- Recovered timeout/listener milestone committed as `d8d47f14f` before continuing
+  into transport lifecycle behavior. Unrelated untracked `ILSpy/` was preserved.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v174.xml`,
+  SHA256 `A5989C13DB8549E422034FF072B108B0D5C0E10C524F5C317798FEC35C0AC23F`.
+- Current 6.4 map: `names64-staged-v11.xml`, SHA256
+  `67E7FD3567C9F05BC26600A0E40482AAD1A00C75AC8B7274D0EB03B80645114D`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative accepted review. Earlier aliases and
   parameter/local decisions were checked for preservation. The current update
-  reports are `map-update63-wave-173.json` and `map-update64-wave-10.json`;
+  reports are `map-update63-wave-174.json` and `map-update64-wave-11.json`;
   `map-update63.json` remains historical wave166 evidence.
-  `checkpoint-wave173.json` records artifact hashes, validation and limits.
+  `checkpoint-wave174.json` records artifact hashes, validation and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
   ledgers; it is not claimed to inventory all 6.4 decisions.
 - de4dotEx `f1a4eda8` adds constructor parameter/local-only maps. `NewName` stays
@@ -63,6 +66,24 @@ message equality compares direction and payload but does not compare protocol.
 6.4 does. The 6.4 listener also clears callbacks on Dispose. These implementation
 differences are recorded and preserved, not edited to match one another.
 
+`usb_lifecycle.py` continues that chain through timestamped
+`UsbReadFailedMessage` delivery, `ReceiveHidReportsAsync`,
+`StartCommunicationAsync`, `CloseCommunicationAsync`, restart attempts and
+state-machine dispatch. `WriteMessageAndSelectStateAsync` describes the action
+that writes ordered HID fragments and returns the next connection state. The
+connection lock, receive task/cancellation ownership, timestamps, statistics,
+state callbacks and ten obfuscated 6.3 async carriers have corresponding names.
+The 6.4 inner transport helpers were independently reviewed and named too.
+
+Both update reports passed with zero errors and no new suffixes; the checkpoint
+compared the entire before/after maps and cumulative reviews for preservation.
+The receive loop delivers on the end flag and valid sequence, without an extra
+byte-count equality check. Only 6.4 invokes Reconnected subscribers after restart.
+These are existing behaviors, not runtime fixes or equivalence-test results.
+Canonical 6.4 async metadata names remain intact. Explicit MoveNext contract
+blockers still prevent local-only decisions inside those bodies; 6.3 captured
+fields establish the logical local roles without bypassing those guards.
+
 Wave170 was a candidate, not an accepted checkpoint: it replaced a restored
 lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
@@ -72,9 +93,10 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 
 - Whole-application naming coverage is still incomplete. Alias totals and
   duplicate compatibility copies are not a measure of completed readability.
-- Timeout helpers, send completion and layer listener have been reviewed.
-  Continue into USB connection/reconnection, raw receive reassembly and lifecycle
-  workers, carrying their captured fields/parameters/locals together.
+- USB connection/reconnection, receive reassembly and lifecycle workers have been
+  reviewed. Continue into HID device contracts and their platform implementations,
+  plus remaining USB discovery and feature-response closure helpers. Keep their
+  captured fields/parameters/locals connected to the reviewed caller terminology.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.
 - Do not autoaccept the old correspondence queue: its shape normalization can

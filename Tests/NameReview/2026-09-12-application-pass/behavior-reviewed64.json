@@ -554,6 +554,792 @@
    "NewName": "",
    "Unresolved": false,
    "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class671",
+   "Token": "0x06003348",
+   "Signature": "System.DateTime Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class671::method_0()",
+   "OriginalName": "method_0",
+   "Reason": "Returns the construction-time UTC timestamp used to discard read errors from an older communication session.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "get_Timestamp",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600331A",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_1(System.Boolean,System.Boolean)",
+   "OriginalName": "method_1",
+   "Reason": "Closes the HID device under the connection lock, clears cached features, optionally notifies connection state, cancels and awaits the receive task, and schedules reconnect when broken and enabled.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean bool_3",
+    "2: System.Boolean bool_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "isBroken"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "CloseCommunicationAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003322",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_8(System.Threading.CancellationToken)",
+   "OriginalName": "method_8",
+   "Reason": "Reads while the HID device is open/readable, validates reports, assembles sequential fragments, and enqueues an inbound USB message on the end flag. Sequence failure suppresses delivery; cancellation exits quietly; read failure queues UsbReadFailedMessage. It does not add a received-byte-count check.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ReceiveHidReportsAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003321",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_7(System.Threading.CancellationToken,System.Boolean)",
+   "OriginalName": "method_7",
+   "Reason": "Opens the HID device, honors discovery timing, queries SupportedEmiType with one retry, restores a still-supported active EMI type, records the open time, and starts the receive task. Failure closes communication before rethrowing.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken_0",
+    "2: System.Boolean bool_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "StartCommunicationAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600331F",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_6(System.Boolean)",
+   "OriginalName": "method_6",
+   "Reason": "Guards against overlapping restart, stops the reconnect timer, closes as broken, delays 100 ms and starts communication again. Rearms reconnect on error and clears the guard in finally. Only 6.4 additionally invokes Reconnected subscribers after startup.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean bool_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "RestartCommunicationAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003320",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::HxkhdxuPpPm(System.Boolean)",
+   "OriginalName": "HxkhdxuPpPm",
+   "Reason": "Returns false when already restarting or when RestartCommunicationAsync throws; returns true after it succeeds.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean bool_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "withEvents"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "TryRestartCommunicationAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003327",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_13(Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Trigger,Knx.Falcon.Impl.ProtocolStack.StackMessageBase)",
+   "OriginalName": "method_13",
+   "Reason": "Awaits the state-machine trigger, then updates/notifies InterfaceConnectionState from CLOSED/OPEN/BROKEN. OPEN preserves an existing MediumFailure state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Trigger trigger_0",
+    "2: Knx.Falcon.Impl.ProtocolStack.StackMessageBase stackMessageBase_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "trigger_0",
+     "HasMetadata": true,
+     "NewName": "trigger"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "stackMessageBase_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "FireEventAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600332D",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::uaNhdQktiZX(Knx.Falcon.Impl.ProtocolStack.StackMessageBase)",
+   "OriginalName": "uaNhdQktiZX",
+   "Reason": "Attempts TryRestartCommunicationAsync with events; fires Reconnected on success, otherwise rearms the reconnect timer when enabled.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Impl.ProtocolStack.StackMessageBase stackMessageBase_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "stackMessageBase_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "TryReconnectAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600332B",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::smethod_5(System.Object,System.Object)",
+   "OriginalName": "smethod_5",
+   "Reason": "State-machine write action: reconnects a broken interface unless restart is already in progress, validates payload length 1..907, writes generated HID fragments in order, and completes the send. Failure faults the send, schedules reconnect when enabled and returns BROKEN.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "WriteMessageAndSelectStateAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003328",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::smethod_2(System.Object,System.Object)",
+   "OriginalName": "smethod_2",
+   "Reason": "CompletedTask no-op callback used by transition-table entries that keep the current state; it performs no write or close.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "IgnoreTrigger",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003329",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::smethod_3(System.Object,System.Object)",
+   "OriginalName": "smethod_3",
+   "Reason": "Broken-trigger callback starts the reconnect timer only for a nonnegative reconnect interval, then returns CompletedTask.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ScheduleReconnectAfterReadFailure",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600332A",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::smethod_4(System.Object,System.Object)",
+   "OriginalName": "smethod_4",
+   "Reason": "CompletedTask no-op callback used on opened/closed/reconnected state changes; the state-machine executor performs the state update.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object object_1",
+    "2: System.Object object_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "object_1",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "object_2",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "CompleteTransitionWithoutAction",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/<>c",
+   "Token": "0x06003352",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/<>c::method_0(Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface)",
+   "OriginalName": "method_0",
+   "Reason": "State-machine getter callback reads the target interface state without changing it.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface t"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "t",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ReadConnectionState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/<>c",
+   "Token": "0x06003353",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/<>c::method_1(Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface,Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State)",
+   "OriginalName": "method_1",
+   "Reason": "State-machine setter callback assigns the requested state; connection notifications are handled by FireEventAsync.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface t",
+    "2: Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State s"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "t",
+     "HasMetadata": true,
+     "NewName": "usbInterface"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "s",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "AssignConnectionState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003313",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_0(System.String)",
+   "OriginalName": "method_0",
+   "Reason": "Invokes PropertyChanged with this instance and a new PropertyChangedEventArgs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.String string_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "string_0",
+     "HasMetadata": true,
+     "NewName": "propertyName"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "RaisePropertyChanged",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600331B",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_2(Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class670,System.Threading.CancellationToken)",
+   "OriginalName": "method_2",
+   "Reason": "Enqueues the USB stack message, then waits on its send-completion source with a 1000 ms timeout.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class670 class670_0",
+    "2: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class670_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SendAndWaitForCompletionAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600331C",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_3(Knx.Falcon.Connectors.UsbConnector.KnxHidReportBase,System.Threading.CancellationToken,System.TimeSpan)",
+   "OriginalName": "method_3",
+   "Reason": "Writes RawBytes through the HID device only while open; timeout and write errors update statistics, receive diagnostic context, and are rethrown.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxHidReportBase knxHidReportBase_0",
+    "2: System.Threading.CancellationToken cancellationToken_0",
+    "3: System.TimeSpan timeSpan_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxHidReportBase_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "timeSpan_2",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "WriteRawHidReportAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600331D",
+   "Signature": "System.Threading.Tasks.Task`1<System.Byte[]> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_4(Knx.Falcon.KnxMessages.Local.FeatureType,System.Threading.CancellationToken,System.TimeSpan)",
+   "OriginalName": "method_4",
+   "Reason": "Creates a DeviceFeatureGet message and installs its matching LayerListener before sending, then waits for the response with timeout and diagnostic error handling.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.Local.FeatureType featureType_0",
+    "2: System.Threading.CancellationToken cancellationToken_0",
+    "3: System.TimeSpan timeSpan_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "featureType_0",
+     "HasMetadata": true,
+     "NewName": "featureType"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "timeSpan_2",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ReadFeatureInfoAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0600331E",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_5(Knx.Falcon.KnxMessages.Local.FeatureType,System.Byte[],System.Threading.CancellationToken)",
+   "OriginalName": "method_5",
+   "Reason": "Builds DeviceFeatureSet HID body and queues an outbound FeatureService message with send completion.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.Local.FeatureType featureType_0",
+    "2: System.Byte[] byte_0",
+    "3: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "featureType_0",
+     "HasMetadata": true,
+     "NewName": "featureType"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "featureValue"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "WriteFeatureInfoAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003323",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_9(Knx.Falcon.Connectors.UsbConnector.KnxHidReportBase)",
+   "OriginalName": "method_9",
+   "Reason": "Checks report ID 1, at most 61 data bytes, fragmentation/sequence constraints and full nonfinal fragments; sequence zero is accepted only for a single start/end report.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxHidReportBase knxHidReportBase_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxHidReportBase_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "CheckHidInputReport",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003324",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_10(Knx.Falcon.Connectors.UsbConnector.KnxHidTelegramReport)",
+   "OriginalName": "method_10",
+   "Reason": "Rejects a mismatching EMI type unless none is known, then learns it and dispatches the telegram message.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxHidTelegramReport knxHidTelegramReport_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxHidTelegramReport_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "ProcessTelegramReport",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003325",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_11(Knx.Falcon.Connectors.UsbConnector.KnxHidFeatureReport)",
+   "OriginalName": "method_11",
+   "Reason": "Accepts BusConnectionState response/info reports, interprets byte 1 as Connected and other values as MediumFailure, and notifies only on change.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.UsbConnector.KnxHidFeatureReport knxHidFeatureReport_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxHidFeatureReport_0",
+     "HasMetadata": true,
+     "NewName": "report"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "UpdateBusConnectionStateFromFeatureReport",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x06003326",
+   "Signature": "System.Void Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::method_12(System.Byte[])",
+   "OriginalName": "method_12",
+   "Reason": "Invokes MessageReceived subscribers and logs subscriber exceptions without rethrowing.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "telegram"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "RaiseMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   }
  ],
  "Types": [
@@ -575,6 +1361,27 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "UsbStackMessage",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class671",
+   "Token": "0x0200067D",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class671",
+   "OriginalName": "Class671",
+   "Reason": "Queued only after a non-cancellation USB read failure; ToString says ReadFailed. ProcessAsync compares its timestamp with the latest communication start before firing Broken. Equality deliberately ignores the timestamp.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "UsbReadFailedMessage",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -871,6 +1678,489 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "cancellationRegistrations",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class671",
+   "Token": "0x04002259",
+   "Signature": "System.DateTime Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Class671::dateTime_0",
+   "OriginalName": "dateTime_0",
+   "Reason": "Readonly UTC failure-message timestamp; equality and hash semantics remain unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "timestamp",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002229",
+   "Signature": "System.Object Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::object_0",
+   "OriginalName": "object_0",
+   "Reason": "Monitor protects close and cached connection-state reset.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionLock",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400222A",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::task_0",
+   "OriginalName": "task_0",
+   "Reason": "Stores the channel-processing RunAsync task at factory startup.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "layerRunTask",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400222B",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::task_1",
+   "OriginalName": "task_1",
+   "Reason": "ReceiveHidReportsAsync task started after initialization and awaited during close.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "receiveTask",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400222C",
+   "Signature": "System.Threading.CancellationTokenSource Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::cancellationTokenSource_0",
+   "OriginalName": "cancellationTokenSource_0",
+   "Reason": "Owned cancellation source for the receive worker; cancelled and disposed during close/dispose.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "receiveCancellation",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400222E",
+   "Signature": "System.TimeSpan Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::timeSpan_0",
+   "OriginalName": "timeSpan_0",
+   "Reason": "1500 ms timeout passed to raw report writes during initialization and normal sends.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "hidWriteTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002232",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::bool_2",
+   "OriginalName": "bool_2",
+   "Reason": "Restart reentrancy guard set before close/open and cleared in finally; write actions reject concurrent recovery.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "restartInProgress",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002233",
+   "Signature": "System.DateTime Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::dateTime_0",
+   "OriginalName": "dateTime_0",
+   "Reason": "UTC time recorded before starting receive; older queued read failures are ignored.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "communicationStartedAt",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002235",
+   "Signature": "Knx.Falcon.Diagnostics.Statistics.StatisticsCollector Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::tXihdNriuML",
+   "OriginalName": "tXihdNriuML",
+   "Reason": "Collector for open, close, write and receive counters, created by the constructor.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "statistics",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002230",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::ifalconLogger_0",
+   "OriginalName": "ifalconLogger_0",
+   "Reason": "Logger for Falcon.KnxUsbInterface used by transport and lifecycle operations.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "log",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002241",
+   "Signature": "Knx.Falcon.Impl.Utilities.AsyncStateMachine`4<Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface,Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State,Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Trigger,Knx.Falcon.Impl.ProtocolStack.StackMessageBase> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::asyncStateMachine_0",
+   "OriginalName": "asyncStateMachine_0",
+   "Reason": "State/trigger executor initialized with getter, setter and transition table; awaited by FireEventAsync.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionStateMachine",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002242",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::state_0",
+   "OriginalName": "state_0",
+   "Reason": "CLOSED/OPEN/BROKEN state used by transition callbacks and message processing.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002243",
+   "Signature": "Knx.Falcon.Impl.Utilities.AsyncStateTransition`4<Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface,Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/State,Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface/Trigger,Knx.Falcon.Impl.ProtocolStack.StackMessageBase>[] Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::asyncStateTransition_0",
+   "OriginalName": "asyncStateTransition_0",
+   "Reason": "Explicit transition table binds current state, trigger, destination and action callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionTransitions",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002222",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.IHidDevice Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::jyihdhufBwk",
+   "OriginalName": "jyihdhufBwk",
+   "Reason": "Owned HID device opened, read, written, closed and disposed by this interface.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "usbDevice",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002225",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.KnxUsbSupportedEmiTypes Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::knxUsbSupportedEmiTypes_0",
+   "OriginalName": "knxUsbSupportedEmiTypes_0",
+   "Reason": "Feature mask read during startup and cleared on close.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "supportedEmiTypes",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002226",
+   "Signature": "System.Nullable`1<System.UInt16> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::nullable_0",
+   "OriginalName": "nullable_0",
+   "Reason": "Cached manufacturer feature value, cleared on close.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxManufacturerCode",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002227",
+   "Signature": "System.Nullable`1<System.UInt16> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::aYfhdKxWwge",
+   "OriginalName": "aYfhdKxWwge",
+   "Reason": "Cached host descriptor feature value, cleared on close.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "hostDeviceDescriptor",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002228",
+   "Signature": "Knx.Falcon.BusConnectionState Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::busConnectionState_0",
+   "OriginalName": "busConnectionState_0",
+   "Reason": "Public connection state updated by startup, close and bus feature reports.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "busConnectionState",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400222F",
+   "Signature": "System.TimeSpan Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::timeSpan_1",
+   "OriginalName": "timeSpan_1",
+   "Reason": "1000 ms base feature-read timeout, extended for the second startup attempt.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "featureReadTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002231",
+   "Signature": "Knx.Falcon.Connectors.UsbConnector.KnxUsbEmiType Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::knxUsbEmiType_0",
+   "OriginalName": "knxUsbEmiType_0",
+   "Reason": "Selected EMI framing, preserved on broken close and restored if still supported.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "activeEmiType",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400223E",
+   "Signature": "System.Action`1<System.Byte[]> Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::action_0",
+   "OriginalName": "action_0",
+   "Reason": "MessageReceived delegate invoked with incoming telegram bytes.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "messageReceivedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x0400223F",
+   "Signature": "System.ComponentModel.PropertyChangedEventHandler Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::propertyChangedEventHandler_0",
+   "OriginalName": "propertyChangedEventHandler_0",
+   "Reason": "PropertyChanged delegate invoked by RaisePropertyChanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "propertyChangedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface",
+   "Token": "0x04002240",
+   "Signature": "System.Action Knx.Falcon.Connectors.UsbConnector.KnxUsbInterface::action_1",
+   "OriginalName": "action_1",
+   "Reason": "6.4-only Reconnected delegate invoked after restarting communication.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "reconnectedHandlers",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
