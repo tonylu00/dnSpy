@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 275 accepted (6.3): resource-backed formatters and the Class431 remainder",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v275.xml",
+      "Sha256": "B77B8B577D71840BB48FAA97175270A0DA8FDADA35816F4270E94B4DF1D69AF7",
+      "PreviousMap": "names63-staged-v274.xml",
+      "PreviousMapSha256": "E6A1D73805A7F88E0B57C709DA4A4A7FAC0D8D8AC95C74A599C202456FCB51AF",
+      "FrozenSha256": "B77B8B577D71840BB48FAA97175270A0DA8FDADA35816F4270E94B4DF1D69AF7",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave275.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods, selected by two new evidence helpers. resource-rows.py found the rows that format Knx.Ets.Hawk.Properties.Resources values, whose resource names name them: FormatSecurityFailureFlags and FormatSecurityFailures (SecurityFailures_Access/Crytographic/Seq/Other), FormatLcConfig (LCConfig_*), FormatLcGroupConfig (LCGrpConfig_*), FormatCouplerServiceControl (CouplServControl_*). The Class431 remainder: GetPriorityValues and GetObjectFlagValues are the two resource value lists it splits, and RemoveRunsWithSelector is the sibling of RemoveRunsOfByte/RemoveRunsOfBytes with a Func<uint,byte> selector. In Falcon, CreateConnectionFailedException builds the KnxIpUnicastConnectorException from the failure cause and connection type using the Exception_IpUnicast/IpTunneling connect-failed resources.",
+    "themes": "The resource-name pattern is the third reliable evidence source after literals and named siblings: an accessor that returns or formats a Resources property is named by that property. Negative result recorded for the native bridge: Class23's 68 free rows carry no literals, and their semantics live in the vendor dongle library, so they cannot be named from the managed metadata (field-users.py shows only free readers, and the entry points are resolved at runtime) - they need the vendor API or runtime tracing."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 9,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14885,
+    "VisibleRenamed": 5053,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11691
+  },
+  "Errors": 0
+}
