@@ -1,0 +1,45 @@
+{
+  "Format": 1,
+  "Status": "Wave 243 accepted (6.3): the root namespace Knx.Ets.ObjectModel.Operations",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v243.xml",
+      "Sha256": "D41169462F08999714F21AD9841DF9C89F493D1132AA9B044499C09361FBFA02",
+      "PreviousMap": "names63-staged-v242.xml",
+      "PreviousMapSha256": "535A8BAFFFD7ACD4D5840099522B3E68B01A56FD9DC27DA22B94F63E413B561E",
+      "FrozenSha256": "D41169462F08999714F21AD9841DF9C89F493D1132AA9B044499C09361FBFA02",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave243.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The root Operations namespace holds the framework the operations are built on, so the framework conventions (ReportProgress/AddProgressStep, GetWriteSuppressor, ExecuteCore, CreateValidators, CreateProgressManager) sit beside the security-flag services.",
+    "log strings": "DeviceFlagService.b logs 'Resetting flags of coupler {0}' / 'Flag of coupler in segment {0} could not be reset as it does not exist' and DeviceFlagService.a logs 'Resetting flags of device {0}'; ResetSecurityProxyFlag.a logs 'Check security coupler flags took {0}ms'; CopyOperation.a logs 'It is not possible to create a group address {0} for the bus interface connector in {1}'.",
+    "skipped": "0x060027DB (MoveGroupAddressStrategy.a(ushort)) has an empty body in the evidence and is left unresolved."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 36,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14162,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 10968
+  },
+  "Errors": 0
+}
