@@ -1,0 +1,52 @@
+{
+  "Format": 1,
+  "Status": "Wave 256 accepted (6.3): Knx.Ets.ObjectModel.Templates and Operations.Devices",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v256.xml",
+      "Sha256": "95BB040F4CB5E5E0A4AC74261465CEF3655A5EBEFEF88745E7D53EC9CC0085B3",
+      "PreviousMap": "names63-staged-v255.xml",
+      "PreviousMapSha256": "D963C7C9AA92DA5C53112F52F002AEA2DA05E6250AC8498B85750E1676548ADE",
+      "FrozenSha256": "95BB040F4CB5E5E0A4AC74261465CEF3655A5EBEFEF88745E7D53EC9CC0085B3",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave256.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. Templates is the template manager layer (the info XML with its info/common elements, the category chain, the file-watcher guard and cache, the factory and the TripleDES zip protection), and Operations.Devices holds the device operations (security, product import, parameter transfer, application program update, device unlink and the weighted entropy calculator).",
+    "strings": "TemplateDataStoreGuard logs \"Template data store has been modified outside the template manager: '{0}' ({1})\" and TemplateCache logs \"Cache has been modified ('{0}', {1})\"; TransferParametersAndFlagsOperation.SetDescription uses the TransferParametersToOneDevice resource; ZipProtection.Decrypt derives its key with Rfc2898DeriveBytes and TripleDES.",
+    "skipped": "ResetParameterValuesToDefaultOperation's five predicates 0x06004F8F..0x06004F93 all forward to the same method_3, so the evidence does not say which of the five is which; they are left unresolved."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 22,
+  "NewCollisionSuffixes": [
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x0600504F",
+      "Requested": "GetValidators",
+      "Applied": "GetValidators2"
+    }
+  ],
+  "Audit": {
+    "Renamed": 14489,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11295
+  },
+  "Errors": 0
+}
