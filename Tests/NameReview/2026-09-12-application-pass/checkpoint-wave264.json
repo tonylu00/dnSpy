@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 264 accepted (6.3): the remaining small ObjectModel types",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v264.xml",
+      "Sha256": "708208908EFF3758832D5263F478D2F11B93EFFAA7F2B073098900C163AD9740",
+      "PreviousMap": "names63-staged-v263.xml",
+      "PreviousMapSha256": "3AEADCC3E4E6FD3FCD8B3BABB7470A21EB288365541A7768AF09A592E422A395",
+      "FrozenSha256": "708208908EFF3758832D5263F478D2F11B93EFFAA7F2B073098900C163AD9740",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave264.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. The remaining small ObjectModel types in one wave: the keyring import helpers (validator list, the certificate import SpecializedExecute calls, the SecureString copy), the SetSendingOperation exclusivity helper and its two connector predicates, the device binary data write scope, execute body and name predicate, the manufacturer-icon timestamp load/save pair, the WeakDelegate delegate materialisation and error-logging invoke, the SignedInteger default inclusive bounds ChildInit uses, the CRC-4 bit array and folding step, the product-store cache provider and its online catalog filter, and the typed-weak-reference wrapper.",
+    "themes": "Names come from the caller that uses the result where the body alone is ambiguous: SetSendingOperation::a is EnsureExclusiveSending because SpecializedExecute assigns its result to Connector.Send, and SignedInteger b/c are ToMinInclusive/ToMaxInclusive because ChildInit passes them to IReader::AsInt64 as the MinInclusive/MaxInclusive defaults. ImportKeyringOperation::a was first named SpecializedExecute and the writer suffixed it SpecializedExecute2 because the type already declares a readable SpecializedExecute that calls it; it is ImportCertificates instead. The byte-identical twins SplitFreeGroupRangeOperation 0x0600429E/9F stay unnamed (their bodies equal the already-named 0x0600429C/9D), as do the two Pin interface implementations (virtual rows need --review-families) and the DotfuscatorAttribute accessors (third-party metadata whose property meanings the available evidence does not establish)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 20,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14689,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11495
+  },
+  "Errors": 0
+}
