@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 268 accepted (6.3): more Falcon accessors over readable Knx.Falcon types",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v268.xml",
+      "Sha256": "4B775A0A70E2E6432672F6602C69B1D2AB255E4204EFC997B490C0E9DF731A0E",
+      "PreviousMap": "names63-staged-v267.xml",
+      "PreviousMapSha256": "F53F3DC3AFE6E350CCB0B92DD285C5AF6D49141E21B75D60582454E7F1076DBE",
+      "FrozenSha256": "4B775A0A70E2E6432672F6602C69B1D2AB255E4204EFC997B490C0E9DF731A0E",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave268.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods, selected from the accessor-shaped half of the Falcon readable-type seam with bodysum63.py/classify-seam.py. Thirty-five accessors: eleven static or instance KNX Falcon logger holders, the CoAP header state (message type/code, transmission state, incoming request state, decoding failure position/cause), the KNX identity accessors (installation id, individual address, serial number) in five classes with one matching setter, the IoT object representation data and sequence number type, the IoT log level, the secure service accessors (secure key service, receiving sequence number service, group communication security) and the KNX message code.",
+    "themes": "All are single-field reads or their direct counterpart setter, so the return/parameter type names them; the virtual rows (vmethod_*) and compiler-generated lambdas (<>c) in the same seam were skipped, the first because --wave refuses virtual rows without --review-families and the second because the pass leaves compiler internals alone. No collision suffixes."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 35,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14779,
+    "VisibleRenamed": 4999,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11585
+  },
+  "Errors": 0
+}
