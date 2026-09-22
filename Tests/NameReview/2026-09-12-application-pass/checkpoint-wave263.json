@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 263 accepted (6.3): the small ObjectModel namespaces (Xml, SmartLinking, Product, ConsistencyRules, EditValidator, ProjectSync, CatalogItems, Project)",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v263.xml",
+      "Sha256": "3AEADCC3E4E6FD3FCD8B3BABB7470A21EB288365541A7768AF09A592E422A395",
+      "PreviousMap": "names63-staged-v262.xml",
+      "PreviousMapSha256": "C9C12191CF318AA14E20D2F2E7B110C70DC26ACC4187753A35DD32CBDCF9652D",
+      "FrozenSha256": "3AEADCC3E4E6FD3FCD8B3BABB7470A21EB288365541A7768AF09A592E422A395",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave263.review.json"
+  ],
+  "Method": {
+    "evidence": "Every row read from its own IL through NameCandidates --inspect-methods. Eight small ObjectModel namespaces in one wave: Xml (the multi-stream reader/writer handoff, the shape attribute merge and the root element), SmartLinking (the suggestion collector, the com object role map and its usages), Product (the dynamic module-defs callback and the hardware/product/medium-type application into ProductAndApplicationInfo), ConsistencyRules (the multicast address range check, its uint conversion, the IPv4 test and the password length validation), Operations.SplitAndMerge.EditValidator (the device rule predicate and the two topology position calculators), Operations.ProjectSync (the report appender, the directory move, the project name and the store root path), Operations.CatalogItems (the baggage/hardware/translation-unit collectors and the application program delete) and Project (the segment inequality).",
+    "themes": "Duplicate-body twins are named once and the twin left unnamed: EditValidator DeviceRule::c (0x06003113) is IsRuleDevice while its byte-identical b (0x06003114) stays free, and the two position calculators differ only in whether they compare ILine or IArea fields, which the field types settle. ValidatePassword collided with an inherited contract member and is ValidatePasswordLength. IModuleArgument::Pin (0x06001D19) stays out of the map: its name is already readable, but a virtual row cannot be confirmed through --wave (the tool demands --review-families for a whole contract review)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 28,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14669,
+    "VisibleRenamed": 4961,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11475
+  },
+  "Errors": 0
+}
