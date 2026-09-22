@@ -4393,6 +4393,219 @@
    "NewName": "AddRfMultiAdditionalInfo",
    "Unresolved": false,
    "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector",
+   "Token": "0x06003424",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.UsbConnector.UsbBusConnector::method_17()",
+   "OriginalName": "method_17",
+   "Reason": "If a reset timestamp is pending, waits the elapsed milliseconds when elapsed is below one second (not the remaining interval), clears the timestamp, then unless initialization is suppressed reselects cEMI and writes/verifies PID_COMM_MODE 8/52. Uses CancellationToken.None. This records the existing delay behavior without correcting it.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<WaitAfterRestartAsync>d__79",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "RestoreSettingsAfterLocalResetAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x06003568",
+   "Signature": "System.TimeSpan Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::method_2()",
+   "OriginalName": "method_2",
+   "Reason": "Atomically reads pending routing-busy count. If nonzero, adds randomized 0..count*50ms jitter to the last advertised busy wait and subtracts the observed count; otherwise returns the default 20ms spacing. Concurrent newer notifications remain pending.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64",
+     "NewName": "pendingBusyCount"
+    }
+   ],
+   "NewName": "GetNextSendInterval",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x06003566",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::method_0(System.Int32)",
+   "OriginalName": "method_0",
+   "Reason": "Records a routing-busy notification by incrementing its pending count and replacing the advertised wait duration in milliseconds. The incoming routing-busy handler supplies that duration.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "waitMilliseconds"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "RecordRoutingBusy",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x06003567",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::method_1()",
+   "OriginalName": "method_1",
+   "Reason": "Computes the next spacing, delays only its remainder since the previous release time and records the current time after the wait. Does not accept cancellation or serialize concurrent callers itself.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678/<WaitAsync>d__6",
+     "NewName": "stateMachine"
+    }
+   ],
+   "NewName": "WaitBeforeSendAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600354A",
+   "Signature": "System.Void Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_9(Knx.Falcon.KnxMessages.KnxMessage)",
+   "OriginalName": "method_9",
+   "Reason": "For a bus message, replaces its source with the connector individual address, clears repeated status, changes L_Data_req to L_Data_ind at its caller, and clears system-broadcast status unless enabled and allowed by the send filter. Other message types are unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxMessage knxMessage_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    }
+   ],
+   "NewName": "PrepareRoutingIndication",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x06003557",
+   "Signature": "System.Boolean Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_15(Knx.Falcon.KnxMessages.KnxMessage)",
+   "OriginalName": "method_15",
+   "Reason": "Uses the bus message directly or reparses its raw data, then tests its system-broadcast flag. Parse failures retain their original propagation behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxMessage knxMessage_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    }
+   ],
+   "NewName": "IsSystemBroadcast",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector",
+   "Token": "0x0600354B",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector::method_10(Knx.Falcon.KnxMessages.KnxMessage)",
+   "OriginalName": "method_10",
+   "Reason": "Sends system broadcasts as RoutingSystemBroadcastFrame using the dedicated multicast communication when available. Other messages become RoutingIndicationFrame and pass through the existing optional secure wrapper before the normal multicast send.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.KnxMessages.KnxMessage knxMessage_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "SendRoutingMessageAsync",
+   "Unresolved": false,
+   "UnresolvedReason": ""
   }
  ],
  "Types": [
@@ -4456,6 +4669,27 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "UsbInterfaceDefinition",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x020006C8",
+   "Signature": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "OriginalName": "Class678",
+   "Reason": "Tracks normal inter-send spacing and randomized backoff from routing-busy notifications; write and timer-notify paths await it.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "RoutingSendRateLimiter",
    "Unresolved": false,
    "UnresolvedReason": ""
   }
@@ -5970,6 +6204,90 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "firstAcknowledgementSelector",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x040024C5",
+   "Signature": "System.TimeSpan Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::timeSpan_0",
+   "OriginalName": "timeSpan_0",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultSendInterval",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x040024C6",
+   "Signature": "System.DateTime Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::dateTime_0",
+   "OriginalName": "dateTime_0",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "lastReleaseTime",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x040024C7",
+   "Signature": "System.Int64 Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::long_0",
+   "OriginalName": "long_0",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "pendingBusyCount",
+   "Unresolved": false,
+   "UnresolvedReason": ""
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.4.8718.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+   "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+   "Type": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678",
+   "Token": "0x040024C8",
+   "Signature": "System.Int64 Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678::long_1",
+   "OriginalName": "long_1",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "busyWaitMilliseconds",
    "Unresolved": false,
    "UnresolvedReason": ""
   }

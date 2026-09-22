@@ -27,19 +27,21 @@ fixtures; accepted ETS naming changes used metadata and map/reference checks.
 - USB configuration writes committed as `ccf4afe07`. The resumed SDK protection
   checkpoint is `checkpoint-sdk-whitelist184.json`, committed with dnSpy
   protection as `a2681bdde`. Interface configuration committed as `d74c4de2b`.
-  Current naming checkpoint: `checkpoint-wave186.json`.
-- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v186.xml`,
-  SHA256 `159DCB9DF690A79154C33439CC5D5F6FAE9E5F7C8C72D8C218D0B4113D8B0DA8`.
-- Current 6.4 map: `names64-staged-v21.xml`, SHA256
-  `7D45F5EAF87D3EC2D9DB235AD292846B69F1CB8CC14988961F4FD8B929F4820F`.
+  RF dispatch and the nested-type scope fix committed as `5e4f854b1`, with
+  de4dotEx `5db0d23b`. Current naming checkpoint: `checkpoint-wave187.json`.
+- Current 6.3 map: `D:/knx_analysis/application-name-pass01/names63-staged-v187.xml`,
+  SHA256 `816CD02C92187B3320C4EFDD73902C141165E3451770CBDEE3A214F1955033DB`.
+- Current 6.4 map: `names64-staged-v22.xml`, SHA256
+  `A11177DD4230A84B098FE73A98926441177E531C5AB1DE84BD3B6F3C2A76E107`.
   The interrupted v8 file was byte-identical to v7. v9/v10 add independently
   reviewed timeout, USB stack-message and listener names.
 - `reviewed63.json` is the cumulative behavioral review. SDK exclusions below
   take precedence over its historical proposals. Earlier aliases and
   parameter/local decisions were checked for preservation. Six compiler-style
   source aliases now have explicit replacement review; every other earlier alias
-  was preserved by wave182. The last behavior update reports are `map-update63-wave-186-fixed.json`
-  and `map-update64-wave-21.json`;
+  was preserved by wave182. Wave187 explicitly replaces one further constructor
+  lambda alias with `CreateItemValue`. The last behavior update reports are
+  `map-update63-wave-187.json` and `map-update64-wave-22.json`;
   `map-update63.json` remains historical wave166 evidence.
   `checkpoint-wave182.json` records artifact hashes, exact replacements and limits.
   `behavior-reviewed64.json` supplements the earlier 6.4 correspondence/property
@@ -350,6 +352,39 @@ lambda method name with a helper name. The preservation check caught that;
 wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
 `nextByte` parameter names. Wave170 was never applied to ETS.
 
+## Connector writes (6.3 wave187 / 6.4 v22)
+
+`connector_write.py` follows local-reset restoration, routing-busy pacing, raw
+message wrapping, routing indication preparation and successful-send statistics
+through both complete write contracts. All eight `WriteAsync` implementations/
+interface definitions and all five `WriteRawAsync` members were reviewed, including
+the unsupported implementation. Shared definitions retain physical identity and
+their reference targets; aliases are consumed through the tools' normal reference
+propagation, not source replacement. Seven 6.3 async carriers and their used fields
+have descriptive names. Explicit MoveNext methods and unused fields remain intact.
+
+The USB reset helper waits the **elapsed** time when it is below a second, clears
+the timestamp, and conditionally restores cEMI/PID_COMM_MODE settings. This is the
+observed behavior, not a repaired delay calculation. USB writes ignore their
+cancellation token. Routing writes pace sends and clone the normal message, may
+emit a synthetic confirmation, and swallow/log InvalidKnxMessageException; raw
+routing writes do not swallow it. EIBlib writes use timeout/cancellation and update
+statistics after a response. These differences are explicit in the evidence.
+
+Counter/histogram helpers now lead through `StatisticsInterval`, `UpdateStatistics`,
+`StatisticsCollector.Update` and `GetSnapshot`. The monitor scope, one-minute
+interval rotation and ten-interval retention are preserved. The previous
+`<.ctor>b__0_0` alias at 6.3 `0x06001A02` has exact replacement evidence for
+`CreateItemValue`; all other existing aliases and parameter/local decisions remain.
+
+6.4 reset and routing helpers were reviewed independently. The review also records
+the existing 6.4 raw-write differences as background: it permits Busmonitor and
+examines outgoing property-write data; no change to that readable method was made.
+Both map updates and `map-check63-wave187.json` / `map-check64-wave22.json` passed,
+with SDK bindings intact and no new suffixes. `connector-write-wave187-validation.json`
+checks every proposed decision in the maps and complete membership of both write
+families. No ETS source export, binary apply, build or launch ran.
+
 ## Remaining work
 
 - Whole-application naming coverage is still incomplete. Alias totals and
@@ -358,21 +393,20 @@ wave171 restores `<GetHashCode>b__18_0` and retains the readable `runningHash` /
   shutdown, configuration reads/writes, feature discovery/cache and cEMI
   initialization and the complete SetInterfaceConfigurationAsync contract are
   reviewed (USB 6.3 `0x06001C96`, body `0x06001D0E`; 6.4 `0x0600340E`). RF receive
-  dispatch and subscription contracts are reviewed. Continue complete WriteAsync
-  and raw-write families, open callers and other application components. Review the memory-278
+  dispatch, subscription and complete write/raw-write contracts are reviewed.
+  Continue routing secure-wrapper/receive handling, open callers and other
+  application components. Review the memory-278
   write helper (6.3 `0x06001CB4`, body `0x06001D26`; 6.4 `0x0600342D`) before
   assigning register-specific semantics to it or the three saved register fields.
-- Next contract inventories are already in `usb63-layer-families-v2.json`:
-  message writes (`0x06001C9E`, interface `0x06001CCE`) use family
-  `701691AC8228FF9CA7C76F5C9D9E591A5FEABA3C13BF3958A670DEE6280EB79A`
-  with eight members; raw writes (`0x06001CBC`, interface `0x06001B08`) use
-  `FEC291B69FD84349321752C5E991C6975DA5382B309DF719ADB43F51C67598CA`
-  with five. Filter by physical module and token together. Their full bodies
-  have not yet been reviewed in this continuation.
+- Remaining related contracts include raw receive subscriptions/reset suppression
+  and statistics item factories/values. Use `usb63-layer-families-v2.json`, filtering
+  by physical module and token together. Routing send's optional secure wrapper is
+  6.3 `0x06001D5B` / 6.4 `0x0600354C`; incoming frame dispatch is 6.3 `0x06001D56`
+  / 6.4 `0x06003547`. Their full caller chains need review before naming them.
 - Native import proposals from wave175 are resolved. Continue from
-  `rf-dispatch63-wave186.cumulative.json` and `rf-dispatch64-wave21.cumulative.json`; do not
+  `connector-write63-wave187.cumulative.json` and `connector-write64-wave22.cumulative.json`; do not
   reuse inventories that still report the old blanket native-method blocker.
-  Use protected maps **186/21** as the bases. Do not reintroduce SDK-excluded
+  Use protected maps **187/22** as the bases. Do not reintroduce SDK-excluded
   proposals from those historical ledgers.
 - Review the 51 inherited requested/applied suffix adjustments listed in
   `inherited-suffix-review.json`. This continuation added none.

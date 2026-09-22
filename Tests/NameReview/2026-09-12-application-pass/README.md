@@ -6,7 +6,7 @@ being accumulated before one consolidated application/verification phase. The
 prior `CheckProjectData` fix is already in the 6.3 baseline.
 
 The September 22 handoff is recorded in [HANDOFF.md](HANDOFF.md) and
-`checkpoint-wave186.json`. Current staged maps are **6.3 v186** and **6.4 v21**.
+`checkpoint-wave187.json`. Current staged maps are **6.3 v187** and **6.4 v22**.
 The SDK audit/frozen export maps still describe 6.3 wave166 and 6.4 v7 and must be
 refreshed against the final maps before export. Historical binary apply checks
 below do not establish source application or ETS runtime behavior.
@@ -21,7 +21,7 @@ aliases may be applied. See the handoff for pinned hashes, scope and remaining
 limitations, and [the tool workflow](../../../../de4dotEx/tools/NameCandidates/README.md).
 The SDK transition is recorded in `checkpoint-sdk-whitelist184.json`; the next
 behavior wave retains that binding. The 6.3 v183 candidate was never accepted.
-Resume with 186/21, not by newest filename.
+Resume with 187/22, not by newest filename.
 
 The graph covers 111 managed source projects plus four retained binary dependencies
 in 6.3, and 178 plus four in 6.4. Those are physical coverage counts, not readable
@@ -32,6 +32,15 @@ own manifest; same-name compatibility assemblies stay distinct.
 
 Current reviewed chains include:
 
+- USB reset recovery, routing-busy pacing, message preparation and successful-send
+  statistics → complete eight-member `WriteAsync` and five-member `WriteRawAsync`
+  contracts (`connector_write.py`). Types, captured state, parameters and real IL
+  locals carry their behavior-derived roles. The review preserves implementation
+  differences in mode checks, cancellation, cloning, synthetic confirmations and
+  exception handling. The statistics collector's constructor-lambda alias now has
+  an explicitly reviewed `CreateItemValue` name. Both versions pass map preflight;
+  SDK bindings and all other prior aliases/scopes remain unchanged. ETS operations
+  are still deferred and whole-application mapping is incomplete.
 - cEMI additional-info parsing/iteration/lookup → RF Multi fields and acknowledgement
   helpers → receive notification, RF transmit metadata and both complete event
   subscription contracts (`rf_dispatch.py`). The review exposed nested-type

@@ -1,0 +1,446 @@
+{
+ "Format": 1,
+ "BaseMap": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v21.xml",
+ "BaseMapSha256": "7D45F5EAF87D3EC2D9DB235AD292846B69F1CB8CC14988961F4FD8B929F4820F",
+ "PhysicalModule": {
+  "Id": "m0153",
+  "Input": "D:\\knx_analysis\\ETS6.4_api_preserved5\\Knx.Falcon.dll",
+  "Sha256": "17957CA1A23C56D90B6431B079118E3E96D3A52F5B578801208F9EC184B1BAD2",
+  "Mvid": "607a0ac5-6f4a-4242-8ce5-fa42fbae3919",
+  "AssemblyName": "Knx.Falcon",
+  "Project": "Knx.Falcon.2\\Knx.Falcon.2.csproj",
+  "IsILOnly": true
+ },
+ "Decisions": [
+  {
+   "Id": "m0153:0x06003424",
+   "ProposedName": "RestoreSettingsAfterLocalResetAsync",
+   "Reason": "If a reset timestamp is pending, waits the elapsed milliseconds when elapsed is below one second (not the remaining interval), clears the timestamp, then unless initialization is suppressed reselects cEMI and writes/verifies PID_COMM_MODE 8/52. Uses CancellationToken.None. This records the existing delay behavior without correcting it.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003424",
+     "Path": "Knx.Falcon.2/Connectors/UsbConnector/UsbBusConnector.cs",
+     "Line": 1995,
+     "Sha256": "51459D735ABDA629437D1E9B6CA674F5EC89B17B5E5809099BBC670ABDE0144A"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Connectors.UsbConnector.UsbBusConnector/<WaitAfterRestartAsync>d__79",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x06003424",
+    "Slots": {
+     "1": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003568",
+   "ProposedName": "GetNextSendInterval",
+   "Reason": "Atomically reads pending routing-busy count. If nonzero, adds randomized 0..count*50ms jitter to the last advertised busy wait and subtracts the observed count; otherwise returns the default 20ms spacing. Concurrent newer notifications remain pending.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003568",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1353,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64",
+     "NewName": "pendingBusyCount"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x06003568",
+    "Slots": {
+     "0": "pendingBusyCount"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003566",
+   "ProposedName": "RecordRoutingBusy",
+   "Reason": "Records a routing-busy notification by incrementing its pending count and replacing the advertised wait duration in milliseconds. The incoming routing-busy handler supplies that duration.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003566",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1332,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003547",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 680,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "waitMilliseconds"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x06003566",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x06003567",
+   "ProposedName": "WaitBeforeSendAsync",
+   "Reason": "Computes the next spacing, delays only its remainder since the previous release time and records the current time after the wait. Does not accept cancellation or serialize concurrent callers itself.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003567",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1340,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Connectors.RoutingConnector.RoutingBusConnector/Class678/<WaitAsync>d__6",
+     "NewName": "stateMachine"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x06003567",
+    "Slots": {
+     "0": "stateMachine"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600354A",
+   "ProposedName": "PrepareRoutingIndication",
+   "Reason": "For a bus message, replaces its source with the connector individual address, clears repeated status, changes L_Data_req to L_Data_ind at its caller, and clears system-broadcast status unless enabled and allowed by the send filter. Other message types are unchanged.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600354A",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 771,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x0600354A",
+    "Slots": {
+     "1": "busMessage"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x06003557",
+   "ProposedName": "IsSystemBroadcast",
+   "Reason": "Uses the bus message directly or reparses its raw data, then tests its system-broadcast flag. Parse failures retain their original propagation behavior.",
+   "Source": [
+    {
+     "Id": "m0153:0x06003557",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1006,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": [
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.KnxMessages.KnxBusMessage",
+     "NewName": "busMessage"
+    }
+   ],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x06003557",
+    "Slots": {
+     "3": "busMessage"
+    }
+   }
+  },
+  {
+   "Id": "m0153:0x0600354B",
+   "ProposedName": "SendRoutingMessageAsync",
+   "Reason": "Sends system broadcasts as RoutingSystemBroadcastFrame using the dedicated multicast communication when available. Other messages become RoutingIndicationFrame and pass through the existing optional secure wrapper before the normal multicast send.",
+   "Source": [
+    {
+     "Id": "m0153:0x0600354B",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 788,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003557",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1006,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x0600354C",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 799,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [
+    {
+     "Sequence": 1,
+     "OriginalName": "knxMessage_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "Locals": [],
+   "IL": {
+    "Path": "D:\\knx_analysis\\application-name-pass01\\connector-write64-wave187-inspection.json",
+    "Sha256": "AED93D014CFAFE446380856A22681240E2AB3CE24FD6D710CE69F7993543E1A3",
+    "Token": "0x0600354B",
+    "Slots": {}
+   }
+  },
+  {
+   "Id": "m0153:0x020006C8",
+   "ProposedName": "RoutingSendRateLimiter",
+   "Reason": "Tracks normal inter-send spacing and randomized backoff from routing-busy notifications; write and timer-notify paths await it.",
+   "Source": [
+    {
+     "Id": "m0153:0x020006C8",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1322,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003565",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1326,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003566",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1332,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003567",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1340,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003568",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1353,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040024C5",
+   "ProposedName": "defaultSendInterval",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "Source": [
+    {
+     "Id": "m0153:0x040024C5",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1381,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003565",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1326,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003566",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1332,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003567",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1340,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003568",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1353,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040024C6",
+   "ProposedName": "lastReleaseTime",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "Source": [
+    {
+     "Id": "m0153:0x040024C6",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1384,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003565",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1326,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003566",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1332,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003567",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1340,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003568",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1353,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040024C7",
+   "ProposedName": "pendingBusyCount",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "Source": [
+    {
+     "Id": "m0153:0x040024C7",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1387,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003565",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1326,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003566",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1332,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003567",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1340,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003568",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1353,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  },
+  {
+   "Id": "m0153:0x040024C8",
+   "ProposedName": "busyWaitMilliseconds",
+   "Reason": "Limiter storage traced through initialization, busy notifications and the wait calculation.",
+   "Source": [
+    {
+     "Id": "m0153:0x040024C8",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1390,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003565",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1326,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003566",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1332,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003567",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1340,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    },
+    {
+     "Id": "m0153:0x06003568",
+     "Path": "Knx.Falcon.2/Connectors/RoutingConnector/RoutingBusConnector.cs",
+     "Line": 1353,
+     "Sha256": "E4D72791BF8D9E7486A1D1A8D1A4CBB241070D67DCDDAFF721ABF85C290923C4"
+    }
+   ],
+   "Parameters": [],
+   "Locals": []
+  }
+ ],
+ "Pending": [],
+ "Status": "Reviewed and staged; no ETS source/binary application or runtime validation"
+}
