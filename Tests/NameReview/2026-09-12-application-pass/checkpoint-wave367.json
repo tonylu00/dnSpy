@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 367: HawkNET stubs named from the 6.4 build readable state machines",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v367.xml",
+      "Sha256": "B6E55A6C798105825BA633D6F2ED2093BF673997804588DDFB2A5F69E32D2F37",
+      "PreviousMap": "names63-staged-v366.xml",
+      "PreviousMapSha256": "A7082ADEF83807B067889A0DABCDC118AA8C4D892F03FC060E7725630AE5576A",
+      "FrozenSha256": "B6E55A6C798105825BA633D6F2ED2093BF673997804588DDFB2A5F69E32D2F37",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave367.review.json"
+  ],
+  "Method": {
+    "evidence": "The 6.4 tree keeps its compiler-generated state machines named after their owner (<PerformTaskAsync>d__8), while 6.3 obfuscated them (ft/Struct307). Matching a 6.3 stub to its 6.4 counterpart by the framework-visible parameter shape inside the same mapped type gave 51 matches, of which 7 are still legal candidates; two are virtual members and were reviewed through their families, which expanded them (ClearProgrammingModeAsync x2, RunOnlineAsync x4) for 10 names. Gate: 10 added, 0 removed, 0 renamed.",
+    "themes": "The state-machine-name oracle is the strongest cross-version route found so far: 51 HawkNET and 59 Falcon stubs matched. Guards applied: only legal candidates are proposed, the framework shape must be unique, and a name repeated inside one 6.3 type is dropped as ambiguous."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 10,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15852,
+    "VisibleRenamed": 5424,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12424
+  },
+  "Errors": 0
+}
