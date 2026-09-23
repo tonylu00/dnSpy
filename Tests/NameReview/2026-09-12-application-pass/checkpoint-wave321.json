@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 321 accepted (6.3): the CoAP client/server collaborators",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v321.xml",
+      "Sha256": "9475CB4694E47BBCD4099714090837A66BBDDA590698E703CF0B479F071E16EC",
+      "PreviousMap": "names63-staged-v320.xml",
+      "PreviousMapSha256": "45CCF96B09863737A28D620068A4D878BE102E765533B8852FC7E923309FC45E",
+      "FrozenSha256": "9475CB4694E47BBCD4099714090837A66BBDDA590698E703CF0B479F071E16EC",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave321.review.json"
+  ],
+  "Method": {
+    "evidence": "Class1069 (CoapClient) and Class1070 (CoapServer) were named in wave 319 from their own logger literals; this wave takes their collaborator contracts and accessors from 6.4. Interface44 is ICoapReceiver (6.4 CoapServer's icoapReceiver_0 auto-property holds it and its accessor pair takes and returns it), Interface37 is IOscoreSecurityContextProvider (6.4's securityContextProvider field) and Class1147 is CoapConfiguration (6.4's configuration field and a constructor parameter of both classes). The eleven accessors follow 6.4's readable field names (transmissionManager, messageCreator, securityContextProvider, configuration, coapReplayProtectionModule_0) and its auto-property pattern, and one is an exact method match: Task<Class1034> a(ushort) is ReserveUnicastEndpointsAsync(ushort preferredPort) -> Task<IoTTransportLayerConnection>.",
+    "themes": "The CoAP stack's own types were already named, so this wave names its collaborator surface. Class1070's remaining free rows are the obfuscated 6.4 members (method_8/11/12/13, the display-class callbacks) and compiler-generated list/CTS accessors with no vendor name; Class1079 (CoapTransmissionManager) has the same shape and needs its own pass."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 14,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15308,
+    "VisibleRenamed": 5287,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 954,
+    "Methods": 12060
+  },
+  "Errors": 0
+}
