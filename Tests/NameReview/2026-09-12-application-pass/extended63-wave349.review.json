@@ -1,0 +1,49 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005D2",
+   "Signature": "System.Collections.Generic.List`1<e0> Class287::method_8()",
+   "OriginalName": "method_8",
+   "NewName": "GetSendingAssociations",
+   "NeedsReadableName": false,
+   "Reason": "Its signature is List<e0> and the already-named MoveSendingAssociationsToReservedSlots (0x060005E6) consumes exactly it: it calls method_8(), enumerates the result, constructs new e0 entries with e0::a(int), e0::b(int) and e0::a(bool) and adds them back with List<e0>::Add. Evidence: --inspect-type of Class287 and --inspect-methods of 0x060005E6."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005D3",
+   "Signature": "System.Void Class287::a(System.Collections.Generic.List`1<e0>)",
+   "OriginalName": "a",
+   "NewName": "SetSendingAssociations",
+   "NeedsReadableName": false,
+   "Reason": "The setter of the same List<e0>: it takes the collection that MoveSendingAssociationsToReservedSlots (0x060005E6) reads through method_8() (0x060005D2) and stores it. Evidence: --inspect-type of Class287 and --inspect-methods of 0x060005E6."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005E5",
+   "Signature": "System.Void Class287::d()",
+   "OriginalName": "d",
+   "NewName": "SortSendingAssociations",
+   "NeedsReadableName": false,
+   "Reason": "Its body calls method_8(), get_Count and Sort, and method_8() is the List<e0> collection the named MoveSendingAssociationsToReservedSlots (0x060005E6) works on, so this sorts that collection. Evidence: --inspect-type of Class287 and --inspect-methods of 0x060005E6."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
