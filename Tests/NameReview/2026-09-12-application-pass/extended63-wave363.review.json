@@ -1,0 +1,62 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000147",
+   "Signature": "System.Threading.Tasks.Task eo::method_23(System.IProgress`1<e8>,System.Threading.CancellationToken)",
+   "OriginalName": "method_23",
+   "NewName": "EnsureConnectedAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine's only literal is 'Not connected', the failure it raises when the device session is not open, so it ensures the device is connected before continuing. Candidate from perf-now/candidates.py with its state machine's literals."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000183",
+   "Signature": "System.Threading.Tasks.Task eo::e(System.IProgress`1<e8>,System.Threading.CancellationToken)",
+   "OriginalName": "e",
+   "NewName": "ReadSystemB300AssociationTableAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'SystemB/300: unknown association table format (prop type={0})' and 'SystemB/300: failed to read association ...', so it reads the association table of a SystemB/300 device. Candidate from perf-now/candidates.py with its state machine's literals."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000195",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> eo::a(kc,System.Func`9<System.UInt16,System.UInt16,System.UInt16,System.Nullable`1<System.Byte>,System.UInt16,System.UInt16,System.IProgress`1<e8>,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<System.Byte[]>>)",
+   "OriginalName": "a",
+   "NewName": "EvaluateAdditionalConditionAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'AdditionalCondition {0}[{1}].{2} {3} {4} matched, device value is {5}' while calling a value-provider function, so it evaluates an additional condition against the device's value. Candidate from perf-now/candidates.py with its state machine's literals."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000196",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> eo::a(ki,System.Byte,System.Func`9<System.UInt16,System.UInt16,System.UInt16,System.Nullable`1<System.Byte>,System.UInt16,System.UInt16,System.IProgress`1<e8>,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<System.Byte[]>>)",
+   "OriginalName": "a",
+   "NewName": "IsFirmwarePartDowngradeAllowedAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'Downgrade firmware part {0} (instance={1}) from {2} to {3} allowed.' and 'Failed to read PID_FIRMWARE_PART_I...', so it decides whether a firmware part may be downgraded. Candidate from perf-now/candidates.py with its state machine's literals."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
