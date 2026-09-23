@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 337: three HawkNET ft task steps named from their state machines' log literals",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v337.xml",
+      "Sha256": "662EB0EB4AAE14210FAFD734EE630096D5434F9624E0B9054D4506945B678490",
+      "PreviousMap": "names63-staged-v336.xml",
+      "PreviousMapSha256": "9976771D756A7ABD91EB399EE7784FD18C3A0ED628C0B33D2BF823670293E07F",
+      "FrozenSha256": "662EB0EB4AAE14210FAFD734EE630096D5434F9624E0B9054D4506945B678490",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave337.review.json"
+  ],
+  "Method": {
+    "evidence": "Each stub was traced to its state machine through the AsyncTaskMethodBuilder.Start<StructN> call in its own IL, then the MoveNext body was read (ft/Struct307 0x0600051B, Struct294 0x06000501, Struct305 0x06000517). The log tags decide the step: VerifySecurityMode, Begin/End LoadNetworkConfiguration, and the Differential Image Stamp fallbacks.",
+    "themes": "Per-row IL naming at a workable rate: one inspect call for the stubs, one for the MoveNext bodies, evidence read from literals. Two of the five stubs (0x060004BD, 0x060004BF) stay open because their literals mix several steps (IP-connection wait plus DiscoverAsync/PingIndividualAddress; ToolKey writing plus LoadOptions changes) and need their callees read first."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 3,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15716,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12288
+  },
+  "Errors": 0
+}
