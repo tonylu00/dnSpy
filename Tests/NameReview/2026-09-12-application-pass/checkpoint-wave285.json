@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 285 accepted (6.3): the Falcon block-data and file-control frames",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v285.xml",
+      "Sha256": "F95005EC1840898DE2252E882E308D9FB8DFB729112FE33218FFD19F9A6D3D56",
+      "PreviousMap": "names63-staged-v284.xml",
+      "PreviousMapSha256": "B9B28FC3FE299B186E221C8F83811AB57F52FB175F9F4EC23E9A962A535DD101",
+      "FrozenSha256": "F95005EC1840898DE2252E882E308D9FB8DFB729112FE33218FFD19F9A6D3D56",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave285.review.json"
+  ],
+  "Method": {
+    "evidence": "Class867 (block data) and Class841 (file control) each print their own fields in GetFormattedData: Class867 as Block={0} Chunk={1} Data.Len={2} from b(), e() and a(), Class841 as Srv={0} CtrlCnt={1} F+M={2} Wait={3} from d(), c(), the formatted b() and a(). Each accessor also lands on the frame offset its sibling uses - Class867 offsets 0 chunk, 1 filter mode, 3 block, 4+ data; Class841 offsets 0 file-control sub-service, 1 control count, 2 filter mode, 3 wait - and Class841::IsResponse reads the control count to match a response to its control telegram. The label Wait has no time unit anywhere in the code (its only caller is the formatter), so the accessors keep the class own label instead of inventing one.",
+    "themes": "GetFormattedData is now the third reliable evidence source after literals and resources: a frame wrapper that formats itself names its own accessors, and the offsets confirm the pairing. Two Class867 rows stay unresolved: c()/b(byte) at offset 2, which the format string does not print and no named sibling explains."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 16,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15012,
+    "VisibleRenamed": 5121,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11818
+  },
+  "Errors": 0
+}
