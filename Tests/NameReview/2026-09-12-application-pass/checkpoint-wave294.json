@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 294 accepted (6.3): the Falcon domain address range frames",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v294.xml",
+      "Sha256": "52F5A2525A882092AD7068AFE31F01D311D127D62AC48B6D9A5B23FB6997D854",
+      "PreviousMap": "names63-staged-v293.xml",
+      "PreviousMapSha256": "8754CDF2081E8BCE97B96174B3D488BD73EEF2730058E7444D367D65C6E2F5C4",
+      "FrozenSha256": "52F5A2525A882092AD7068AFE31F01D311D127D62AC48B6D9A5B23FB6997D854",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave294.review.json"
+  ],
+  "Method": {
+    "evidence": "Class835 prints Type=1 Start={0} End={1} from b(), a() and each getter shares its offset with a DomainAddress setter - Start at offset 1 (b()/b(DomainAddress)) and End at offset 7 (a()/a(DomainAddress)) - both setters guarded by their own DoA must be 6 octets but is {0} check, which is what a domain address argument needs. Class840 prints Type={0} DoA={1} from b(), a(): b() is Type, and a() reads offset 1 where a(DomainAddress) writes it, guarded by DoA must be {0} octets but is {1}.",
+    "themes": "Reading the getters unfiltered closed both blocks, exactly as the previous turn s handoff predicted. Still open: Class904/Class905 (two byte setters through the base helper with no offset), Class829 (Error={0} ProcessTime={1}, getters not yet read), Class834, Class938 and Class871."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 8,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15132,
+    "VisibleRenamed": 5211,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11938
+  },
+  "Errors": 0
+}
