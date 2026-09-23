@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 286 accepted (6.3): the Falcon property-value frame Class920",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v286.xml",
+      "Sha256": "F12081A4B85A601A5CE043DAE13BB27DB0AA2575C64451DEF517ED29EAC46CD9",
+      "PreviousMap": "names63-staged-v285.xml",
+      "PreviousMapSha256": "F95005EC1840898DE2252E882E308D9FB8DFB729112FE33218FFD19F9A6D3D56",
+      "FrozenSha256": "F12081A4B85A601A5CE043DAE13BB27DB0AA2575C64451DEF517ED29EAC46CD9",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave286.review.json"
+  ],
+  "Method": {
+    "evidence": "Class920 is the property-value frame. It formats itself as ObjectIndex={0} PID={1} PropertyIndex={2} DataType={3} MaxSize={4}, and both PropertyDescription conversions name the rest: a() feeds the eight-argument constructor in order (objectIndex, propertyId, propertyIndex, propertyDataType, writeEnabled, maxSize, readRights, writeRights - parameter names read from the metadata) and a(PropertyDescription) writes the same fields back. The frame offsets confirm every pair: byte 0 object index, byte 1 property id, byte 2 property index, byte 3 the six-bit data type plus the write-enabled high bit, 16-bit max size at offset 4, and the read/write rights nibbles of byte 6 (the getter of the high nibble is the constructor seventh argument readRights, its setter preserves the low nibble).",
+    "themes": "New helper perf-now/formatter-blocks.py lists the free rows of every type whose GetFormattedData is already named, so the self-formatting family can be worked block by block; Falcon still has Class871 (11 free), Class890 (10), Class836/854/847/843/848/852/875/889/906 (7-8 each) waiting, all with the same evidence source."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 19,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15031,
+    "VisibleRenamed": 5139,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11837
+  },
+  "Errors": 0
+}
