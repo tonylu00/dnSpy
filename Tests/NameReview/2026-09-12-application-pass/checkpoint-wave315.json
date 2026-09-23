@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 315 accepted (6.3): the Unload/Reset twins and the task contracts",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v315.xml",
+      "Sha256": "85504631AFA72D2477B904584D598655C4799609B9EA9A2F602FBE70CF50D913",
+      "PreviousMap": "names63-staged-v314.xml",
+      "PreviousMapSha256": "F3A3D8B2D54845FFAEEB1E1F0EE5738653325E1C52A1E19A909DF3C96CD6FBE3",
+      "FrozenSha256": "85504631AFA72D2477B904584D598655C4799609B9EA9A2F602FBE70CF50D913",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave315.review.json"
+  ],
+  "Method": {
+    "evidence": "Seven type rows for the remaining IoT task twins. Class464 matches 6.4 Unload.IoTDeviceUnloader field for field, constructor for constructor (UnloadDeviceOptions, project data, data facade, async network provider, IIoTTaskState<IoTDeviceUnloadStage,...>) and Class467 matches Reset.IoTDeviceResetter the same way; Class464 : Interface13 and Class467 : Interface14, whose members are 6.4's obfuscated Unload.Interface7 (manager getter + UnloadDeviceAsync) and Reset.Interface8 (RestartDeviceAsync). Interface12, Interface15 and Interface22 are the contracts of the already-named IoTHawkTask`2, IoTLoadDeviceTaskController and IoTDeviceInfoGenerator, taken from the 6.4 interface names IIoTHawkTask (PerformTask), IIoTLoadDeviceTaskController (LoadDevice(IProgress<HawkProgressIndication>, token)) and IIoTDeviceInfoGenerator (GenerateDeviceInfoAsync -> XDocument).",
+    "themes": "The Unload/Reset/DeviceInfo/LoadDevice contracts are now named; two of them (IIoTDeviceUnloader, IIoTDeviceResetter) are convention-derived because 6.4 keeps those interfaces obfuscated as Interface7/Interface8, and their Reason records that. Still open in the task family: Class485 (6.4 Tasks.CompareDevice.IoTDeviceComparer by stage and members, but one task method returns Task<object> and needs a second look), Class481/Class486 (device-info section and overwrite-address helpers), Class456's own contract row, and the SoftwareUpdate twin."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 7,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15232,
+    "VisibleRenamed": 5244,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 923,
+    "Methods": 12015
+  },
+  "Errors": 0
+}
