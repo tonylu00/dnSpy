@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 343: the en table's reader lambdas named Read<Property>, correcting two wave-341 mislabels",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v343.xml",
+      "Sha256": "59EE841430C702A53C2C25A2B502216E87F6C39BA265A098DF50087751F09A43",
+      "PreviousMap": "names63-staged-v342.xml",
+      "PreviousMapSha256": "C00D8840E588D9375093C568AABF74A43937FCF46ACFF26B9DE4C842C0751D0A",
+      "FrozenSha256": "59EE841430C702A53C2C25A2B502216E87F6C39BA265A098DF50087751F09A43",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave343.review.json"
+  ],
+  "Method": {
+    "evidence": "A table entry can reference two <>c lambdas: the raw reader (Func<byte[],Class430,object>) and the display formatter (Func<object,Class430,IDataProvider,IDictionary<ResourceName,byte[]>,string>). Wave 341 classified by property uniqueness, which mislabelled the two properties whose only lambda is a reader: 0x060000F4 was FormatFriendlyName and is now ReadFriendlyName, 0x0600010C was FormatSecurityMode and is now ReadSecurityMode. All 16 readers are named Read<Property> from their property entry in en::.cctor.",
+    "themes": "Lesson recorded: classify a <>c reference by its signature shape before naming it - reader vs formatter - which is what perf-now/en-classify.py does (16 readers, 36 formatters, 0 other across the en table). Then corrects are cheap and provable by map diff."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 16,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15770,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12342
+  },
+  "Errors": 0
+}
