@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T10:26:00Z",
+  "UpdatedUtc": "2026-09-23T12:05:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,20 +17,20 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v370.xml",
-      "Sha256": "C979FFCBAB78F32D821FBF21F10CD17AFC2F91ADFFA64FE95D64F2A750454A25",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave370.json",
-      "NextWave": 371,
-      "CumulativeRenamedRows": 15994,
-      "RowsInMap": { "Methods": 12566, "Types": 956, "Fields": 2472, "Parameters": 2316, "Locals": 837 },
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v372.xml",
+      "Sha256": "2114AC9A0F169553A9DC5B6A49849000B82020E91BBB6DC7EFC75C6A9053A49B",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave372.json",
+      "NextWave": 373,
+      "CumulativeRenamedRows": 16070,
+      "RowsInMap": { "Methods": 12636, "Types": 962, "Fields": 2472, "Parameters": 2316, "Locals": 837 },
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v168.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v170.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v168.json",
-      "NextVersion": 169,
-      "RestagedFrom": "names63-staged-v370.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v170.json",
+      "NextVersion": 171,
+      "RestagedFrom": "names63-staged-v372.xml",
       "AppliedToSource": false
     }
   },
@@ -60,32 +60,32 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T10:26:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v370.json",
-    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v370.json",
+    "MeasuredUtc": "2026-09-23T12:05:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v372.json",
+    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v372.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 29652,
-    "ByKind": { "Methods": 5603, "Types": 2338, "Fields": 21711 },
+    "NotYetNamedRows": 29576,
+    "ByKind": { "Methods": 5533, "Types": 2332, "Fields": 21711 },
     "ByModule": {
-      "Knx.Falcon.dll": 10077,
-      "Knx.Ets.HawkNET.dll": 5461,
+      "Knx.Falcon.dll": 10052,
+      "Knx.Ets.HawkNET.dll": 5416,
       "Knx.Ets.ObjectModel.dll": 3526,
       "Knx.Ets.ViewModel.dll": 2153,
-      "Knx.Ets.Ui.UserControls.dll": 1285,
-      "Knx.DevKit.dll": 1275,
-      "Knx.Ets.Xml.ObjectModel.dll": 1036,
-      "Knx.Ets.Sdk.dll": 975,
-      "Knx.Ets.Common.dll": 937,
-      "Knx.Ets.DynamicData.dll": 587,
+      "Knx.DevKit.dll": 1269,
+      "Knx.Ets.Ui.UserControls.dll": 904,
+      "Knx.Ets.Common.dll": 871,
+      "Knx.Ets.Sdk.dll": 642,
+      "Knx.Ets.DynamicData.dll": 554,
+      "Knx.Ets.Xml.ObjectModel.dll": 542,
       "Knx.CloudKit.dll": 457,
       "Knx.Ets.CvNext.dll": 454,
-      "all remaining modules": 6982
+      "all remaining modules": 6736
     },
-    "Note": "Measured from the tool's own inventories at v370. The previous 536 counted only part of the method worklist and no types or fields; 12,019 of the 15,742 named rows are SDK-protected coverage the whitelist already covers.",
+    "Note": "Measured from the tool's own inventories at v372. Waves 371 and 372 named 76 definitions: the 6.4 state-machine oracle rows that were neither SDK-protected nor already named, and six DevKit types taken from the Manufacturer Tool's readable twin. Most candidate rows in the oracle worklists turned out to be SDK-protected (48 of 116 method rows, 45 of 63 type rows), which is why those blocks are small.",
     "ExcludedBuckets": {
       "compiler-generated rows (never renamed)": 57977,
       "already readable names (no rename needed)": 99033,
@@ -117,10 +117,9 @@
     "Worklists": [
       { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Falcon.dll.json", "Rows": 368, "Route": "literal / self-naming" },
       { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Ets.HawkNET.dll.json", "Rows": 116, "Route": "literal / self-naming" },
-      { "Path": "D:\\knx_analysis\\perf-now\\sm-oracle-falcon.json", "Rows": 59, "Route": "6.4 state-machine oracle" },
-      { "Path": "D:\\knx_analysis\\perf-now\\sm-oracle-hawk.json", "Rows": 51, "Route": "6.4 state-machine oracle" },
       { "Path": "D:\\knx_analysis\\perf-now\\anchor-scan.json", "Rows": 21, "Route": "domain-callee anchor" },
-      { "Path": "D:\\knx_analysis\\perf-now\\backlog-v370.json", "Rows": 29652, "Route": "the remainder itself, per module and per kind" }
+      { "Path": "D:\\knx_analysis\\perf-now\\proposals-devkit.json", "Rows": 72, "Route": "DevKit twin method names - NOT USABLE (4.2% agreement on known rows)" },
+      { "Path": "D:\\knx_analysis\\perf-now\\backlog-v372.json", "Rows": 29576, "Route": "the remainder itself, per module and per kind" }
     ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
@@ -133,20 +132,22 @@
       "per-module literal sweep",
       "compiler-generated lambda shortcut",
       "Falcon operation-name literals: 55 rows, 54 named in wave 370, 0 multi-literal rows left, 16 logger-call rows carry no identifier literal"
+      ,"6.4 state-machine oracle worklists: 59 Falcon + 51 HawkNET matches, 48 SDK-protected, 2 refused as external contracts (DevKit CollectionChanged), 25 already named, 66 legal rows landed in wave 371"
+      ,"Manufacturer Tool engine twins (Knx.Falcon, Knx.Ets.HawkNET, Knx.CloudKit, Knx.Ets.CvNext, Knx.Ets.Common, Knx.Ets.DynamicData, Knx.Ets.ActiveTree at MT-6.3/MT-6.4): the same obfuscation as the ETS builds, no readable names"
+      ,"Manufacturer Tool Knx.DevKit_orig.dll: type names transfer (8 of 9 already-named types agree under the strict readability filter), method names do not (4.2% agreement with the pass's own names, 114 of 119 matched rows disagree) - method transfer rejected"
+      ,"compare/*/src decompiled trees and sig/*.sig.txt dumps: projections of the pass's own map (0 of 446 ETS6N token names agree with the map), not an independent oracle"
+      ,"DevKit type names: 63 strict-readability proposals, 45 SDK-protected, 9 already named, 6 landed in wave 372, 3 dropped by review"
     ]
   },
   "NextItems": [
-    { "Module": "Knx.DevKit.dll", "Type": "akj", "Rows": 291, "Route": "literal / anchor worklist; largest single type in the pass" },
-    { "Module": "Knx.DevKit.dll", "Type": "amh", "Rows": 185, "Route": "literal / anchor worklist" },
     { "Module": "Knx.Falcon.dll", "Type": "nc", "Rows": 151, "Route": "literal worklist: MaS return-code validators and the SendWithRetryAsync tail" },
-    { "Module": "Knx.DevKit.dll", "Type": "akg", "Rows": 143, "Route": "literal / anchor worklist" },
     { "Module": "Knx.Ets.HawkNET.dll", "Type": "eo", "Rows": 117, "Route": "literal worklist" },
     { "Module": "Knx.CloudKit.dll", "Type": "ajg", "Rows": 115, "Route": "literal worklist" },
-    { "Module": "Knx.DevKit.dll", "Type": "Class23", "Rows": 115, "Route": "literal / anchor worklist" },
     { "Module": "Knx.Ets.HawkNET.dll", "Type": "et", "Rows": 84, "Route": "literal worklist" },
     { "Module": "Knx.Falcon.dll", "Type": "Class1348", "Rows": 67, "Route": "log-message literals name the operation ManagedIoTStack forwards" },
     { "Module": "Knx.Falcon.dll", "Type": "Class1222", "Rows": 31, "Route": "log-message literals name the IoTLogger dispatch methods" },
-    { "Module": "Knx.Ets.ViewModel.dll", "Kind": "Fields", "Rows": 2118, "Route": "field remainder has no route yet: --suggest-property-fields only proposes fields behind already-named properties" }
+    { "Module": "Knx.Ets.ViewModel.dll", "Kind": "Fields", "Rows": 2118, "Route": "field remainder has no route yet: --suggest-property-fields only proposes fields behind already-named properties" },
+    { "Module": "Knx.DevKit.dll", "Type": "akg/akj/amh/akg", "Rows": 788, "Route": "blocked for methods: the only readable twin fails method-level validation; fields remain unrouted" }
   ],
   "NextItemRules": [
     "Oracle rows are the strongest route: the 6.4 released surface names them, and a literal in the 6.3 body must corroborate the row before it is accepted.",
