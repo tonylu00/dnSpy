@@ -40,8 +40,10 @@ renamed. In priority order:
    Write it into `STATE.Readability` (per module + totals).
 2. **Close the Falcon 8:** instrument or diff `MicrosoftAsyncDecompiler.MatchTaskCreationPattern`
    for the two cases listed in STATE; fix the matcher or record why it cannot be fixed.
-3. **Run the open naming route** (6.4 readable-surface anchor fixpoint) and record the
-   measured yield per module before accepting or rejecting it.
+3. **Anchor route: closed by measurement (2026-09-23).** Type-anchor pairing (6.3 type → 6.4
+   type through ≥2 already-named method anchors) can pair only 27 of 2,478 unnamed types, and
+   only 129 types tree-wide have ≥2 anchors. Do not spend tool work on it; treat the naming
+   remainder as per-row work only.
 4. **Settle the evidence-free remainder** per `POLICY.md`: record those rows as unresolved
    with the `no-evidence-in-scope` reason so `--coverage` counts them as decided.
 5. **Phase 4:** freeze the map, export the source with `dnSpy.Console --source-name-map <map>
