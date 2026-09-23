@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 304 accepted (6.3): Class938 sync result",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v304.xml",
+      "Sha256": "BA4F13B1D1EA06FDAC003B81F3D76379FEDCB6C6A2DED10BE595F14C48AB203D",
+      "PreviousMap": "names63-staged-v303.xml",
+      "PreviousMapSha256": "4B89A3675F95E2F1FF7E4149D6ECA6F765C86D91D7EBC407CE1D930146F8AF1F",
+      "FrozenSha256": "BA4F13B1D1EA06FDAC003B81F3D76379FEDCB6C6A2DED10BE595F14C48AB203D",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave304.review.json"
+  ],
+  "Method": {
+    "evidence": "Class938::e() returns Class969<Class938>, whose two constructors take a Knx.Falcon.KnxMessages.ApplicationLayer.DecryptionStatus (one with an extra UInt64 counter and one with the payload), so the object is the frame s decryption/sync result; Class938::GetFormattedData prints it under the literal SyncRes ... and classifies the frame from its status. a(Class969<Class938>) is its setter. Class1289, the other lead, turned out to be the material provider (Random, byte[] a/b(int), ushort/uint/ulong a/b/c()), which is why Class1285 derives the value it stores in d(ulong) from it.",
+    "themes": "Class938 now has Challenge and SyncResult named; d()/d(ulong) remains, and its source is Class1289 - the material provider - rather than a stored secret. Remaining: Class871 s four packed fields, the two dispatchers, and the call-chain-only blocks."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15168,
+    "VisibleRenamed": 5231,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11974
+  },
+  "Errors": 0
+}
