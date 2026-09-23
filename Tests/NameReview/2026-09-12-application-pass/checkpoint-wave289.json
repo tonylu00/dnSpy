@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 289 accepted (6.3): three more Falcon frames from their formatters",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v289.xml",
+      "Sha256": "13EC6EEC5DE30B2E741FABA7A5BB7C1626F79A2C435DCA98CCF3A464EF96694A",
+      "PreviousMap": "names63-staged-v288.xml",
+      "PreviousMapSha256": "C4174B5B84FC4D77A0B45012556DEF2B6A27D5404164B85625E80F019EDD936D",
+      "FrozenSha256": "13EC6EEC5DE30B2E741FABA7A5BB7C1626F79A2C435DCA98CCF3A464EF96694A",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave289.review.json"
+  ],
+  "Method": {
+    "evidence": "Three more frames from their own formatters. Class889 prints ObjectIndex={0} PropertyId={1} Data={2} from c(), b(), a() (property id byte at offset 1, data at offset 2) - the same shape as Class875. Class906 prints GroupObjectNumber={0} Flags=${1:X2} GroupAddress=... from c(), b(), a(); the third accessor is typed Knx.Falcon.GroupAddress. Class854 (the file-control response) prints Srv={0} CtrlCnt={1} RetCode={2}: its first accessor is the FileControlSubService the sibling Class841 formats as Srv, and the ResultCode pair sits at offset 2, which is the RetCode the format prints.",
+    "themes": "The formatter worklist keeps producing; Class854 s control count is not among its own getters, so only Srv and RetCode were named and the control count plus the three (Interface64) action methods stay unresolved pending the result-code read. Remaining queue: Class871 and Class890 (shared base offset with an indexing helper)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 17,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15091,
+    "VisibleRenamed": 5179,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11897
+  },
+  "Errors": 0
+}
