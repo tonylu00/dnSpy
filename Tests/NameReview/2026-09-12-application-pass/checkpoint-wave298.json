@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 298 accepted (6.3): the Class824/Class825 channel and read-count accessors",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v298.xml",
+      "Sha256": "E5BB224CDC09558F5914A4755532432F4F035359447C33A8643B9C796B05974E",
+      "PreviousMap": "names63-staged-v297.xml",
+      "PreviousMapSha256": "6A2B3845EBC195D31A64ED1934A94E801E57A697229DAFE16425EF72FE869DD2",
+      "FrozenSha256": "E5BB224CDC09558F5914A4755532432F4F035359447C33A8643B9C796B05974E",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave298.review.json"
+  ],
+  "Method": {
+    "evidence": "Class824 prints Channel={0} ReadCount={1} from a(), b() and Class825 prints Channel={0} ReadCount={1} Value={2} from b(), c(), a(); in both types the channel setter carries its own channel must be <= 7 check and the read count getter and setter share the byte at Class816::c() + 11, while Class825 s Value getter is followed by a setter taking a UInt16.",
+    "themes": "The Class816::c() offset base closed the Class824/Class825 block the same way it closed 904/905. Remaining: Class834 (Type=0 DoA/Start/Range - getter types needed), Class938 (formatter prints only a constant), Class871 (four packed 16-bit fields)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 10,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15155,
+    "VisibleRenamed": 5222,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11961
+  },
+  "Errors": 0
+}
