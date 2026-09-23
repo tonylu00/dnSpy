@@ -1,0 +1,36 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "nc",
+   "Token": "0x060000C5",
+   "Signature": "System.Threading.Tasks.Task`1<System.Byte[]> nc::a(System.Func`3<System.UInt32,System.Byte,Class823>,System.Func`2<Class823,System.Byte[]>,System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.IProgress`1<System.Int32>,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "NewName": "ReadMemoryAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine builds the request through the caller's read function and logs the operation as '_Read' - '{0}({1:X04}h, {2})' with 'Empty response' and 'MemoryExtended({0:X04}h, {1})' - so it is the memory-read path. Candidate from perf-now/candidates.py with its state machine's literals."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "nc",
+   "Token": "0x060000D2",
+   "Signature": "System.Threading.Tasks.Task nc::a(System.Func`3<System.UInt32,System.Byte[],Class823>,System.Func`2<Class823,System.Byte[]>,System.Func`3<System.UInt32,System.Byte,Class823>,System.UInt32,System.UInt32,System.UInt32,System.ReadOnlyMemory`1<System.Byte>,System.Nullable`1<System.Boolean>,System.Boolean,System.IProgress`1<System.Int32>,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "NewName": "WriteExtendedMemoryAsync",
+   "NeedsReadableName": false,
+   "Reason": "The mirror path: its state machine logs '_Write', 'MemoryExtended({0:X04}h, {1})' and 'Different CRC ({0:X04} instead of {1:X04})', so it writes extended memory and verifies the CRC of what was written. Candidate from perf-now/candidates.py with its state machine's literals."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

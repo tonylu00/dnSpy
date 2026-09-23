@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 358: the nc memory read and extended-memory write",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v358.xml",
+      "Sha256": "D9A1C10CECFA95F3B98EA8CD8A16DA5B5B44A2517FF02B7CB5C7FD5ECFE8D277",
+      "PreviousMap": "names63-staged-v357.xml",
+      "PreviousMapSha256": "1661EB28B01112FA8B53D5E9455ADE0818B5F92C2D4A8F2B2192E19986B0A6AF",
+      "FrozenSha256": "D9A1C10CECFA95F3B98EA8CD8A16DA5B5B44A2517FF02B7CB5C7FD5ECFE8D277",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave358.review.json"
+  ],
+  "Method": {
+    "evidence": "Both rows come from their own state machines: ReadMemoryAsync (0x060000C5) logs the operation as _Read with the request envelope {0}({1:X04}h, {2}), Empty response and MemoryExtended({0:X04}h, {1}); WriteExtendedMemoryAsync (0x060000D2) is the mirror with _Write, MemoryExtended({0:X04}h, {1}) and Different CRC ({0:X04} instead of {1:X04}), i.e. it verifies what it wrote. Gate: 2 added, 0 removed, 0 renamed.",
+    "themes": "nc now has 10 rows named across waves 356-358. Remaining in nc: the two small request helpers 0x06000118/0x06000119 (cancellationToken / chunkBlockNumber plus unresolvable MaS error) and the second retry overload 0x0600011F, whose identical literals make a distinct name a judgement call."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15801,
+    "VisibleRenamed": 5398,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12373
+  },
+  "Errors": 0
+}
