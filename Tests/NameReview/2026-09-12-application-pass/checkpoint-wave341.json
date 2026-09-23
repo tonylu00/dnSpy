@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 341: 19 HawkNET en/<>c formatters named from the property table in en::.cctor",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v341.xml",
+      "Sha256": "347D438D388A34904B5A9A40537A5B5BDA079A1C856152EEF13CC6586EC74B58",
+      "PreviousMap": "names63-staged-v340.xml",
+      "PreviousMapSha256": "5ED8721C7C3CAD6742F4D9711D96536321E3AE04E78A2CCF73D1CD9E4F0CBC9D",
+      "FrozenSha256": "347D438D388A34904B5A9A40537A5B5BDA079A1C856152EEF13CC6586EC74B58",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave341.review.json"
+  ],
+  "Method": {
+    "evidence": "en::.cctor builds the device-info property table; each entry calls Resources::get_DeviceInfoItem_<Property> immediately before ldftn of its display formatter and stores the delegate in a Class332 property description. 35 properties appear in the table; 19 have exactly one formatter, and those are named Format<Property>. The remaining 16 properties have two formatters each and need a per-pair body comparison. One row (0x060000E9) previously carried the weaker wave-340 name FormatManufacturerDataName and is now FormatDeviceManufacturerId, the property the table registers it for.",
+    "themes": "The table IS the owner map for en/<>c: no per-lambda guessing. perf-now/en-table.py recovers it from one --inspect-methods of en::.cctor."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 19,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15746,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12318
+  },
+  "Errors": 0
+}
