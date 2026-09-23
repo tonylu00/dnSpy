@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 324 accepted (6.3): the CoAP stack's Shared singletons",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v324.xml",
+      "Sha256": "A5FC84950EB9E76337C8DE0FBF3D4D527D756820D53A978DFF1D46F98529ED84",
+      "PreviousMap": "names63-staged-v323.xml",
+      "PreviousMapSha256": "D26642EAA444AAD90550369CA3914D777784596463154506F51E7FF6514B3A94",
+      "FrozenSha256": "A5FC84950EB9E76337C8DE0FBF3D4D527D756820D53A978DFF1D46F98529ED84",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave324.review.json"
+  ],
+  "Method": {
+    "evidence": "The CoAP stack's shared singletons. 6.4 declares `public static CoapClient Shared` and `public static CoapTransmissionManager Shared`, and builds its transmission manager from `CoapTransmitter.Shared` and `CoapReceiver.Shared`; each 6.3 class has exactly one free no-argument accessor returning its own type (Class1069::e, Class1079::smethod_0, Class1094::m, Class1100::smethod_0), so all four take get_Shared.",
+    "themes": "Small but exact. The CoAP classes' remaining free rows are the obfuscated-in-6.4 members and compiler-generated accessors (BufferBlocks, CancellationTokenSources, TimeSpans), which still need behaviour evidence."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 4,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15329,
+    "VisibleRenamed": 5303,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12079
+  },
+  "Errors": 0
+}
