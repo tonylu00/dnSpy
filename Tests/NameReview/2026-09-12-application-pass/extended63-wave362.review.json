@@ -1,0 +1,49 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000186",
+   "Signature": "System.Threading.Tasks.Task eo::c(System.IProgress`1<e8>,System.Threading.CancellationToken)",
+   "OriginalName": "c",
+   "NewName": "ClearLcFilterTableOldStyleAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'ClearLCFilterTableOldStyle not allowed for router operating as repeater' (with the MV-091A mask and an extended retry period), naming the operation itself: clearing the old-style load-control filter table. Candidate from perf-now/candidates.py (all four filters) with its state machine's literals as evidence."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000187",
+   "Signature": "System.Threading.Tasks.Task eo::b(System.IProgress`1<e8>,System.Threading.CancellationToken)",
+   "OriginalName": "b",
+   "NewName": "LoadLcConfigAppAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'LoadLCConfigApp not supported by mask version ${0:X4}' and 'LoadLCConfigApp', so it loads the LcConfig application program into the device. Candidate from perf-now/candidates.py (all four filters) with its state machine's literals as evidence."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "eo",
+   "Token": "0x06000194",
+   "Signature": "System.Threading.Tasks.Task`1<kd> eo::a(System.UInt16,System.Collections.Generic.IReadOnlyCollection`1<kd>,System.Func`9<System.UInt16,System.UInt16,System.UInt16,System.Nullable`1<System.Byte>,System.UInt16,System.UInt16,System.IProgress`1<e8>,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<System.Byte[]>>)",
+   "OriginalName": "a",
+   "NewName": "ValidateFirmwarePackageAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine fails with 'Firmware package does not match device information.' and lists 'Found: ManufacturerID={0}, HardwareReference={1}...', so it validates a firmware package against the device it was selected for. Candidate from perf-now/candidates.py (all four filters) with its state machine's literals as evidence."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
