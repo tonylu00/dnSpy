@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 292 accepted (6.3): the Falcon property-index request Class919",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v292.xml",
+      "Sha256": "3FBDCDAF5215E9A62E6ADBCDDE10B9E4EBF7A08E7491E12A5EAEDAA9E4D3F9C2",
+      "PreviousMap": "names63-staged-v291.xml",
+      "PreviousMapSha256": "A192F7661FD9402ADA38EEB5FF576F3662E2962EA7B5AF8EF787F40AD9B9E415",
+      "FrozenSha256": "3FBDCDAF5215E9A62E6ADBCDDE10B9E4EBF7A08E7491E12A5EAEDAA9E4D3F9C2",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave292.review.json"
+  ],
+  "Method": {
+    "evidence": "Class919 formats itself as ObjectIndex={0} PID={1} PropertyIndex={2} from c(), b(), a() in that order, and each byte accessor sits at the offset its name implies (object index 0, property id 1, property index 2), so the three getter/setter pairs and the byte[] factory are all decidable. Class938 prints only the constant SBC (its other parts come from its base formatter) and Class824/Class825 format Channel={0} ReadCount={1} [Value={2}] but their two byte setters both write through the base helper with no offset constant, so which one is Channel and which is ReadCount still needs their bodies read; both are left unresolved for now.",
+    "themes": "The formatter worklist keeps producing small decisive blocks (Class919 here). Queued with reasons: Class824/Class825 (byte setters share the base helper), Class938 (formatter prints only a constant), Class871 s four packed 16-bit fields, and the remaining five-row types Class834/838/851/900/904/905/829/835/840."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 7,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15109,
+    "VisibleRenamed": 5194,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11915
+  },
+  "Errors": 0
+}
