@@ -14,7 +14,7 @@
     "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
     "Policy": "D:\\knx_analysis\\POLICY.md",
     "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
-    "DecompilerFix": "dnSpy submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits 00db96bac - async state machine MoveNext is now found through its MethodImpl override, not only by the literal name"
+    "DecompilerFix": "dnSpy submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits fd5b322cc - (1) async state machine MoveNext is found through its MethodImpl override as well as by name, (2) renamed closures/lambdas are recognised structurally (delegate target inside a compiler-generated type) instead of by the '<>c'/'<Foo>b__' name pattern"
   },
   "Maps": {
     "63": {
@@ -164,9 +164,10 @@
       "Outcome": "async/await bodies and inline lambdas in the decompiled view - readability, not rename coverage. Runtime binding is by interface/MethodImpl and is preserved by the applier.",
       "Scale": "Measured on 2026-09-23: Falcon 515 async + 54 iterator state machines, HawkNET 383 + 15, ObjectModel 8 + 64; HawkNET alone has 525 renamed closures and 580 compiler-generated types. About 1,000 async/iterator methods across the sampled modules would render as async/yield instead of raw builder stubs.",
       "Status": {
-        "AsyncHalf": "FIXED for the obfuscated 6.3 tree (dnSpy 00db96bac). Verified: Knx.Ets.HawkNET.dll 6.3 type eh decompiles as 'protected override async Task cp(...)' with 31 awaits, and the whole module goes from raw builder stubs to 388 async methods / 1188 await expressions / 0 AsyncTaskMethodBuilder stubs. Regression: .NET 9 System.Net.Http.HttpClient unchanged (4 async / 10 await).",
-        "SixFourOpen": "ETS 6.4 still renders raw stubs (Knx.Ets.HawkNET 6.4: 786 AsyncTaskMethodBuilder, 0 await) even though its state machine methods are already named 'MoveNext' (424 rows). The name is not the blocker there - next diagnostic is the kickoff stub shape against AsyncDecompiler.MatchTaskCreationPattern.",
-        "ClosureHalfOpen": "Lambda/closure inlining still needs AstBuilder.IsClosureType (name-based: '<>c', '<>c__', 'DisplayClass', 'AnonStorey') extended to compiler-generated delegate-target types."
+        "AsyncHalf": "FIXED (dnSpy 00db96bac). Knx.Ets.HawkNET 6.3: 389 async / 1190 await / 0 AsyncTaskMethodBuilder, type eh renders 'protected override async Task cp(...)'. Falcon 556 async / 1125 await (8 raw stubs left, a different kickoff shape - open), ObjectModel 12, DevKit/CloudKit none.",
+        "ClosureHalf": "FIXED (dnSpy fd5b322cc). IsAnonymousMethod and IsClosureType now use the delegate-target structure instead of the compiler name pattern. Knx.Ets.HawkNET 6.3: 326 inline lambdas and 0 display-class declarations (was 0 lambdas with the classes visible); ObjectModel 3340, Falcon 461, CloudKit 29, DevKit 16.",
+        "SixFourClarified": "The earlier '6.4 renders raw stubs' reading was a wrong-tree measurement: ETS6.4_orig still has Dotfuscator control flow inside the kickoff stub, which defeats the IL pattern match. The pass's own 6.4 tree (ETS6.4_api_preserved5) and ETS6.4_de4dot_batch5 render async correctly with the same decompiler (CompareDeviceTask: 8 async / 29 await / 0 raw stubs). No 6.4 work item remains here.",
+        "Regression": "Unchanged on normal assemblies: .NET 9 System.Net.Http.HttpClient 4 async / 10 await / 0 raw stubs, System.Linq.Enumerable renders lambdas."
       }
     },
     "ReadableSurface64": {
