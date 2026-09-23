@@ -13,6 +13,10 @@ using SourceNameMapping;
 
 namespace dnSpy.Decompiler.MSBuild {
 	static class SourceNameMap {
+		// Collect every map problem instead of stopping at the first one, so a single export run
+		// produces the complete fix list (set DNSPY_SOURCEMAP_REPORT_ALL=1).
+		static readonly bool reportAll = Environment.GetEnvironmentVariable("DNSPY_SOURCEMAP_REPORT_ALL") == "1";
+
 		public static string Apply(string path, IEnumerable<ModuleDef> inputs) {
 			var settings = new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null };
 			using var reader = XmlReader.Create(path, settings);
@@ -26,6 +30,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			var localProposals = new Dictionary<Local, string>();
 			var localOwners = new Dictionary<Local, MethodDef>();
 			var contractProposals = new Dictionary<MethodDef, string>();
+			var problems = new List<string>();
 			foreach (var entry in root.Elements()) {
 				if (entry.Name != "Module") throw new InvalidDataException("Unsupported source-map entry: " + entry.Name);
 				var location = Path.GetFullPath(Path.Combine(directory, Required(entry, "Path")));
@@ -35,6 +40,7 @@ namespace dnSpy.Decompiler.MSBuild {
 					if (!string.Equals(BitConverter.ToString(hash.ComputeHash(stream)).Replace("-", ""), Required(entry, "Sha256"), StringComparison.OrdinalIgnoreCase))
 						throw new InvalidDataException("Source map input hash mismatch: " + location);
 				foreach (var row in entry.Elements()) {
+					try {
 					if ((row.Name != "Type" && row.Name != "Method" && row.Name != "Field") || row.Name != "Method" && row.HasElements) throw new InvalidDataException("Source maps accept types, ordinary fields and methods with parameter or local aliases.");
 					var member = ResolveRow(module, row);
 					string? name = (string?)row.Attribute("NewName");
@@ -84,6 +90,11 @@ namespace dnSpy.Decompiler.MSBuild {
 						}
 						else throw new InvalidDataException("Expected a parameter or local alias.");
 					}
+					}
+					catch (InvalidDataException ex) when (reportAll) {
+						problems.Add(Required(entry, "Path") + " " + row.Name + " " +
+							((string?)row.Attribute("Token") ?? (string?)row.Attribute("Signature") ?? "?") + ": " + ex.Message);
+					}
 				}
 			}
 			if (contractProposals.Count != 0) {
@@ -130,8 +141,13 @@ namespace dnSpy.Decompiler.MSBuild {
 					// is legal; top-level aliases include their source namespace.
 					string scopeName = proposal.Key is TypeDef ? Leaf(proposal.Value) : proposal.Value;
 					bool duplicate = proposal.Key is TypeDef aliasType && !fullAliases.Add((aliasType.Module, aliasType.DeclaringType, proposal.Value));
-					if (duplicate || claims.Conflicts(proposal.Key, scopeName, family))
+					if (duplicate || claims.Conflicts(proposal.Key, scopeName, family)) {
+						if (reportAll) {
+							problems.Add(proposal.Key.FullName + " -> " + proposal.Value + ": alias collision in declaration scope");
+							continue;
+						}
 						throw new InvalidDataException("Source alias collision: " + proposal.Key.FullName + " -> " + proposal.Value);
+					}
 					// The registry carries the full type alias so the source
 					// namespace of a claimed type stays known; the scope check
 					// itself compares leaves.
@@ -164,6 +180,8 @@ namespace dnSpy.Decompiler.MSBuild {
 			}
 			foreach (var proposal in parameterProposals) SourceNameAliases.RegisterParameter(proposal.Key, proposal.Value);
 			foreach (var proposal in localProposals) SourceNameAliases.RegisterLocal(proposal.Key, proposal.Value);
+			if (problems.Count != 0)
+				throw new InvalidDataException("Source map problems (" + problems.Count + "):" + Environment.NewLine + string.Join(Environment.NewLine, problems));
 			return root.ToString(SaveOptions.DisableFormatting);
 		}
 
@@ -187,6 +205,11 @@ namespace dnSpy.Decompiler.MSBuild {
 			return matches[0];
 		}
 		static void ValidateName(string name) {
+			// Compiler-generated members keep the compiler's own name ('<.ctor>b__37_0',
+			// '<>m__Finally1', '<Foo>d__3'). Those are what the decompiler emits for them and
+			// what the metadata must keep, so an alias in that form is accepted as-is.
+			if (name.Length != 0 && (name.IndexOf('<') >= 0 || name.IndexOf('>') >= 0))
+				return;
 			if (!MetadataTypeNames.IsIdentifier(name) || name.Any(c => char.GetUnicodeCategory(c) == UnicodeCategory.Format)) throw new InvalidDataException("Invalid source alias: " + name);
 		}
 		static void ValidateTypeName(string name) {

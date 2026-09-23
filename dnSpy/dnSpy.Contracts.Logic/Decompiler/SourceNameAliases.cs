@@ -24,8 +24,14 @@ namespace dnSpy.Contracts.Decompiler {
 			if (!Valid(member, name)) throw new ArgumentException("Invalid source identifier.", nameof(name));
 			names.Add(member, new Holder(name));
 		}
+		/// <summary>
+		/// Compiler-generated names ('<Foo>b__0_0', '&lt;&gt;c', '&lt;Foo&gt;d__3') are the compiler's own
+		/// identifiers: the renderer escapes them like it does for an unaliased metadata name, so they
+		/// are accepted instead of being rejected as invalid source identifiers.
+		/// </summary>
+		internal static bool IsCompilerGeneratedName(string name) => name.Length != 0 && (name.IndexOf('<') >= 0 || name.IndexOf('>') >= 0);
 		static bool Valid(IMemberDef member, string name) =>
-			member is TypeDef ? name.Split('.').All(MetadataTypeNames.IsIdentifier) : MetadataTypeNames.IsIdentifier(name);
+			IsCompilerGeneratedName(name) || (member is TypeDef ? name.Split('.').All(MetadataTypeNames.IsIdentifier) : MetadataTypeNames.IsIdentifier(name));
 		/// <summary>
 		/// Registers a qualified type alias. The obfuscator may have flattened a type
 		/// into the global namespace, so the alias carries the original namespace and
