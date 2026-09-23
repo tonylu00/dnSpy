@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 354: the eh write-to-read access transformation",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v354.xml",
+      "Sha256": "8159DF4C10D64EEFB2CC4D3DC987D5562FB5D3C65AE027D74EBF1030BA5C4F61",
+      "PreviousMap": "names63-staged-v353.xml",
+      "PreviousMapSha256": "D79B6852004B528AC41E2AC36E455E4DBEBD572FA0250BA9497E4D5DA123C15E",
+      "FrozenSha256": "8159DF4C10D64EEFB2CC4D3DC987D5562FB5D3C65AE027D74EBF1030BA5C4F61",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave354.review.json"
+  ],
+  "Method": {
+    "evidence": "Its state machine logs Transformed WriteRelMem to ReadRelMem(${0}...${1:X4}) and Transformed AbsSegment to ReadMem(${0:X4}...${1:X4}), so it turns a write access into the corresponding read access. Candidate from perf-now/candidates.py, which applies all three gates: unnamed, unprotected token, and a contract family with no protected member.",
+    "themes": "Wave 353 produced the eo families and was refused three times because every one of them is SDK-protected; candidates.py now filters protected families, and HawkNET has 682 family-safe candidates with evidence (595 excluding constructors and state-machine machinery). names63-staged-v353.xml is a documented no-op copy of v352 (wave 353 was never accepted), which the checkpoint chain needs as the previous map."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 1,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15787,
+    "VisibleRenamed": 5398,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12359
+  },
+  "Errors": 0
+}
