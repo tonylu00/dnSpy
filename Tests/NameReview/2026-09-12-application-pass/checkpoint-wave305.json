@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 305 accepted (6.3): Class474 logger getter",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v305.xml",
+      "Sha256": "EDEB4256D9166712F694A9334E47F8E2659A61BF78D9A9F07AAB5314C460DC94",
+      "PreviousMap": "names63-staged-v304.xml",
+      "PreviousMapSha256": "BA4F13B1D1EA06FDAC003B81F3D76379FEDCB6C6A2DED10BE595F14C48AB203D",
+      "FrozenSha256": "EDEB4256D9166712F694A9334E47F8E2659A61BF78D9A9F07AAB5314C460DC94",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave305.review.json"
+  ],
+  "Method": {
+    "evidence": "Class474 s e() is a three-instruction accessor returning Knx.Falcon.Logging.IFalconLogger from its own field, the same logger accessor the sibling classes carry as GetLogger (Class733, Class738 and Class470 vmethod_0/smethod_0 are already named so).",
+    "themes": "Class474 and Class470 turn out to be interface-accessor clusters: apart from the four Task steps, their free rows are three-instruction getters of interface-typed fields (Interface20/21/24/25/26, Class319, l6, fb, id, Struct761) and the named-callee sweep finds no named method they call. That is a dependency worth recording: those rows need their *types* named first, since the accessor name would be derived from an obfuscated interface name. Class470 s static GetLogger was already named; Class474 s instance one is named here."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 1,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15169,
+    "VisibleRenamed": 5231,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11975
+  },
+  "Errors": 0
+}
