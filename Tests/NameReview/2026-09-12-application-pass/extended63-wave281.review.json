@@ -1,0 +1,101 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x0600192F",
+   "Signature": "System.Void Class737::smethod_1(Class737,Class818)",
+   "OriginalName": "smethod_1",
+   "NewName": "HandleConnectRequest",
+   "Reason": "Transition table: E00/E01 in CLOSED, to OPEN_IDLE. The body takes the frame's source address as the connection partner, arms the timers and publishes Class750 with MessageCode T_Connect_ind (133): the peer asked for a connection, so the transport layer opens it.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x0600193A",
+   "Signature": "System.Void Class737::d(Class737,Class818)",
+   "OriginalName": "d",
+   "NewName": "HandleSendDataRequest",
+   "Reason": "Transition table: E25 in CLOSED, to CONNECTING. The body records the destination address and publishes Class750 with MessageCode L_Data_req (17): the upper layer wants to send data, so the machine delivers the request and - still CLOSED - starts connecting first.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x0600193B",
+   "Signature": "System.Void Class737::c(Class737,Class818)",
+   "OriginalName": "c",
+   "NewName": "HandleConnectConfirmed",
+   "Reason": "Transition table: E19 in CONNECTING, to OPEN_IDLE. E19 is raised when Class818::get_IsConfirmed() is true, and the body publishes Class750 with MessageCode T_Connect_con (134): the connect request was confirmed, so the connection is open.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001934",
+   "Signature": "System.Void Class737::smethod_6(Class737,Class818)",
+   "OriginalName": "smethod_6",
+   "NewName": "HandleDisconnectRequest",
+   "Reason": "Transition table: the entries from CONNECTING/OPEN_IDLE/OPEN_WAIT to CLOSED. The body publishes Class750 with MessageCode T_Disconnect_ind (135), the peer's disconnect request, which closes the transport-layer connection.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x0600193C",
+   "Signature": "System.Void Class737::b(Class737,Class818)",
+   "OriginalName": "b",
+   "NewName": "HandleDisconnectConfirmed",
+   "Reason": "Transition table: E26 from CONNECTING/OPEN_IDLE/OPEN_WAIT to CLOSED. The body publishes L_Data_req (17) for the outstanding frame and then Class750 with MessageCode T_Disconnect_con (136): our disconnect request was confirmed and the connection closes.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001930",
+   "Signature": "System.Void Class737::smethod_2(Class737,Class818)",
+   "OriginalName": "smethod_2",
+   "NewName": "SendAck",
+   "Reason": "Transition table: E04 in OPEN_IDLE/OPEN_WAIT. The body stamps the frame with TPCI Ack (14) and MessageCode L_Data_req (17) and publishes it, so the bus receives the acknowledgement; it also publishes T_Data_Connected_ind (137) for the delivered frame.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001932",
+   "Signature": "System.Void Class737::smethod_4(Class737,Class818)",
+   "OriginalName": "smethod_4",
+   "NewName": "SendNak",
+   "Reason": "Transition table: E06 in OPEN_IDLE/OPEN_WAIT. The body stamps the frame with TPCI Nak (15) and MessageCode L_Data_req (17) and publishes it, so the bus receives the negative acknowledgement.",
+   "NeedsReadableName": false
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

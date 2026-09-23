@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 281 accepted (6.3): Class737 connect, disconnect and ack/nak paths",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v281.xml",
+      "Sha256": "2A457FE73AD2A2CB22C40FAFD07DE392B9774B3472F2A93F759DAEA6F9BD44D4",
+      "PreviousMap": "names63-staged-v280.xml",
+      "PreviousMapSha256": "80B8770CE965A390057AB266A666770AE72A58C9A84CCF8787A388FFAC8BD3ED",
+      "FrozenSha256": "2A457FE73AD2A2CB22C40FAFD07DE392B9774B3472F2A93F759DAEA6F9BD44D4",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave281.review.json"
+  ],
+  "Method": {
+    "evidence": "The remaining Class737 handlers publish a message whose code is a readable MessageCode member, and the new --dump-constants command turns those numbers into the member names: T_Connect_ind = 133, T_Connect_con = 134, T_Disconnect_ind = 135, T_Disconnect_con = 136, T_Data_Connected_ind = 137, L_Data_req = 17, L_Data_ind = 41, and TPCI UnnumberedData/NumberedData/Connect/Disconnect/Ack/Nak/Invalid = 0/4/8/9/14/15/255 (which is exactly what ProcessAsync compares). So: smethod_1 publishes T_Connect_ind in CLOSED and opens to OPEN_IDLE (HandleConnectRequest); d publishes L_Data_req in CLOSED and moves to CONNECTING (HandleSendDataRequest); c publishes T_Connect_con when E19 is raised under IsConfirmed (HandleConnectConfirmed); smethod_6 publishes T_Disconnect_ind and closes (HandleDisconnectRequest); b publishes T_Disconnect_con and closes (HandleDisconnectConfirmed); smethod_2 stamps TPCI Ack 14 with L_Data_req (SendAck, plus T_Data_Connected_ind 137) and smethod_4 stamps TPCI Nak 15 with L_Data_req (SendNak).",
+    "themes": "New tool: NameCandidates --dump-constants <assembly-or-tree> [type-filter] prints every literal field with its value from the cached module bytes (de4dotEx f7e446a3), which is what made this wave decidable - the graph and the field review carry enum member names but not their constants, and the dispatcher compares numbers. Three Class737 rows stay unresolved with reasons: m publishes the same Ack frame as smethod_2 without the T_Data_Connected_ind step, a publishes T_Disconnect_con in the CLOSED state (the twin of b, which also closes), and smethod_10 publishes L_Data_req across four addressed-to-us triggers without a state change; telling each from its sibling needs the per-trigger decode rather than a placeholder name."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 7,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14956,
+    "VisibleRenamed": 5082,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11762
+  },
+  "Errors": 0
+}
