@@ -119,11 +119,12 @@
       "type that logs its own name (suggest-types-selfname.py)",
       "structural fallback: offsets, bitfields, formatters, tables (slow; last)",
       "per-row literal naming (guard/log/validator rows) - the current working route for the method remainder",
-      "contract-family naming from a member's literal (build-rows --spec with AllowFamily: true) - a family edit needs the whole family"
+      "contract-family naming from a member's literal (build-rows --spec with AllowFamily: true) - a family edit needs the whole family",
+      "6.4 readable-surface anchor fixpoint (OPEN, not yet run - see Backlog.ReadableSurface64): pair types where already-named members identify the 6.4 counterpart uniquely, pair members inside paired types, propagate, iterate to a fixpoint"
     ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
-      "cross-version method transfer: 6.4 keeps compiler-generated type names only",
+      "6.3 -> 6.4 transfer by IL fingerprint, by member shape and by ordinal: all measured below the acceptance bar (shape 4.2%, ordinal 10-40%, literal-tiebreak 5 rows). CORRECTION (2026-09-23): this does NOT mean 6.4 is unreadable - it means the correspondence is missing; see Backlog.ReadableSurface64",
       "property/field accessor and field-accessor inference (re-run at v372: 49/1/1607 proposals, all out of scope or named)",
       "half-named contract families: 0 of 141,365 families have a named member beside an unnamed one (verified at v376)",
       "de4dot-rename-map.xml: 1,036 entries assessed Meaningful, but none has an obfuscated input name - the map holds no recovered names",
@@ -146,7 +147,15 @@
       "per-row reading of the largest remaining cluster (DevKit akj): the 57 rows are event add/remove pairs whose raiser, backing field and delegate type are all unnamed, so their IL carries no name to derive"
     ],
     "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
-    "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843"
+    "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843",
+    "ReadableSurface64": {
+      "MeasuredUtc": "2026-09-23T20:15:00Z",
+      "Tree": "D:\\knx_analysis\\ETS6.4_orig",
+      "TypesFullyReadable": "Falcon 2214/2214, HawkNET 1056/1056, ObjectModel 4024/4024, DevKit 287/287 - zero obfuscated-shaped type names",
+      "MethodsPartiallyReadable": "Falcon 17166 methods: 4577 need a readable name, 12589 are readable",
+      "NaiveShapePairingRejected": "Pairing 6.3 and 6.4 types by the multiset of member shapes produced 0 unique matches among the 429 already-named Falcon types (strict shape equality fails because the code changed between the builds).",
+      "Conclusion": "The names exist in 6.4; what is missing is a reliable 6.3 -> 6.4 correspondence. This is the only remaining evidence route with bulk yield and it is not exhausted."
+    }
   },
   "NextItems": [
     {
@@ -183,9 +192,24 @@
       "accessor-operator-or-runtime-special-name",
       "virtual-or-override row not yet family-reviewed",
       "SDK-protected row or family (whitelist)",
-      "same-module name collision where the sibling has no distinct evidence"
+      "same-module name collision where the sibling has no distinct evidence",
+      "no-evidence-in-scope: every evidence route is closed for this row with a measured number (private state with no observable behaviour, no literal, no anchor, no readable counterpart)"
     ],
-    "Rule": "A turn may stop with work left only when every remaining row of the current block carries one of these codes, recorded here with its token. 'Evidence is missing' is not a blocker code; the turn must switch route instead."
+    "Rule": "A turn may stop with work left only when every remaining row of the current block carries one of these codes, recorded here with its token. While an unmeasured route remains (see Routes), 'evidence is missing' is not accepted; switch route instead. Every code above is backed by a measured number in ExhaustedRoutes."
+  },
+  "Closure": {
+    "Rule": "The pass closes when every in-scope definition sits in exactly one terminal category: named | already-readable | SDK/protected | compiler-generated | unresolved-no-evidence (each with a reason). NotYetNamedRows is a progress metric, not the goal itself.",
+    "Authority": "The goal text allows this explicitly: 'Leave uncertain decisions explicitly unresolved, with a brief explanation of what evidence is missing' and 'Do not claim completion beyond the available evidence'.",
+    "CategoriesMeasured": {
+      "named": 16694,
+      "already-readable": 92963,
+      "sdk-whitelisted-or-protected-family": 18755,
+      "compiler-generated": 55036,
+      "constructors": 20843,
+      "unresolved-no-evidence": 28105
+    },
+    "Steps": "1) harvest whatever the open 6.4 anchor-fixpoint route yields; 2) record the remaining rows in the ledger with Unresolved=true and UnresolvedReason so --coverage counts them as decided; 3) run Phase 4.",
+    "NotClaimed": "Closing the naming phase is not the same as a renamed or verified ETS: AppliedToSource stays false until Phase 4."
   },
   "Deferred": {
     "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign, rebuild, overlay Stage-RecompiledTree + manifest, run the audit battery, then verify against unchanged third-party ETS Apps.",

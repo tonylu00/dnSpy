@@ -49,6 +49,10 @@ the whitelist; `--update-map` drops or blocks excluded rows rather than trusting
   "Method12", no suffix to make the gate pass.
 - Uncertain rows stay explicitly unresolved with the missing evidence recorded in the row's
   `UnresolvedReason`. That is a first-class outcome, not a failure.
+- A row whose every evidence route is closed *with a measured number* is recorded unresolved
+  with the reason code `no-evidence-in-scope`. Bulk private state — a field that is only read
+  and written by unnamed code, with no literal, anchor, accessor or readable counterpart — is
+  the normal case for that code, and it does not block the pass from closing.
 - Keep genuinely different definitions distinct: overloads, same-named types across
   assemblies, and 6.3/6.4 compatibility twins are different rows even when the displayed
   name matches. Always key by physical module + metadata token/identity.
