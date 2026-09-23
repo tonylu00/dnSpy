@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 345: revert wave 344s three resource-derived renames",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v345.xml",
+      "Sha256": "59EE841430C702A53C2C25A2B502216E87F6C39BA265A098DF50087751F09A43",
+      "PreviousMap": "names63-staged-v344.xml",
+      "PreviousMapSha256": "151C4839BF85B1037B21C3F87F816AC01C19BD8ED629D9884AEBE47DE23C7A82",
+      "FrozenSha256": "59EE841430C702A53C2C25A2B502216E87F6C39BA265A098DF50087751F09A43",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave345.review.json"
+  ],
+  "Method": {
+    "evidence": "Wave 344 replaced three names that the map already carried from behavioural evidence: EvaluateOrderNumberFormattingScript, FormatDeviceVersion and FormatCouplerServiceControl. The property table identifies which property an entry formats; it does not overrule an established behavioural name, and the resource abbreviation CouplServControl is worse than CouplerServiceControl. This wave restores all three; the resulting map is byte-identical to v343 (59EE8414...).",
+    "themes": "Process fix: the builders for waves 330-343 all skipped tokens the current map already names; build-wave344.py lacked that guard and therefore re-proposed already-named rows from a weaker source. The guard is now in the builder, and the general rule is recorded: never re-name an existing map row unless the new evidence is strictly better than what produced the current name."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 3,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15770,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12342
+  },
+  "Errors": 0
+}
