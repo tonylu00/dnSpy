@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 284 accepted (6.3): the Falcon property-description model",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v284.xml",
+      "Sha256": "B9B28FC3FE299B186E221C8F83811AB57F52FB175F9F4EC23E9A962A535DD101",
+      "PreviousMap": "names63-staged-v283.xml",
+      "PreviousMapSha256": "2B53626CEE21222E8E0BD65D00B7A13DADDA640E6584A246E4D74F61CA9AB85D",
+      "FrozenSha256": "B9B28FC3FE299B186E221C8F83811AB57F52FB175F9F4EC23E9A962A535DD101",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave284.review.json"
+  ],
+  "Method": {
+    "evidence": "Class881 is the property-description frame wrapper and Class876 its property-request base. Both directions of the model conversion are explicit in the IL: Class881::a() (ToPropertyDescription) builds a Knx.Falcon.PropertyDescription from eleven getters, and Class881::a(PropertyDescription) (FromPropertyDescription) writes all eleven fields from that description, so the two bodies are a complete field-to-property table. The 11-argument constructor names its parameters in that exact order - objectType, instance, propertyId, propertyIndex, propertyDataType, writeEnabled, maxSize, readRights, writeRights, mainDpt, subDpt - and the already accepted get_WriteEnabled sits at position six, which validates the positional pairing. Each accessor also lands on the frame offset its sibling uses (offset 5/6 property index, 11 property data type, 12 max size, 14 s two nibbles read/write rights, 7 main DPT, 9 sub DPT), and GetFormattedData prints the same frame as PropertyIndex={0} DataType={1} MaxSize={2}. Class876::c/b/a are the objectType/instance/propertyId getters and their ushort setters the matching writers. The byte[] factory only wraps the caller buffer, the same shape as the family s UnsafeFromBuffer.",
+    "themes": "A model-conversion pair is a naming table: two methods that convert between a frame wrapper and its DTO name every field in one read, and the DTO constructor parameter names confirm each position. Two Class881 rows stay unresolved - method_25 and c(byte) touch the high nibble of the property-index byte pair but are used by neither conversion, so their packing is not evidenced yet."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 23,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14996,
+    "VisibleRenamed": 5108,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11802
+  },
+  "Errors": 0
+}
