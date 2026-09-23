@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 328: nc::method_117() is the released Knx.Falcon.Device::get_LastReceivedMessage",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v328.xml",
+      "Sha256": "03B19A56E449C10DEFA3BBFD34671F49459669129213A81B145F1C2131BD8AC2",
+      "PreviousMap": "names63-staged-v327.xml",
+      "PreviousMapSha256": "73CB9B41CF549193E5A401B8153E47520724C90CA1CA1178729B4B71BC3C9A74",
+      "FrozenSha256": "03B19A56E449C10DEFA3BBFD34671F49459669129213A81B145F1C2131BD8AC2",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave328.review.json"
+  ],
+  "Method": {
+    "evidence": "nc is the released Knx.Falcon.Device. Its free row 0x06000102 is a SpecialName no-argument getter returning Class818, which the 6.3 map already names Knx.Falcon.KnxMessages.KnxBusMessage. The current (not the stale graph) 6.4 tree carries Knx.Falcon.Device::get_LastReceivedMessage() at 0x06000376 returning exactly Knx.Falcon.KnxMessages.KnxBusMessage; the 6.4 map has no row for that token, so the name is released, not one this pass assigned. The normalized signature-shape join (perf-now/nc64-join.py, oracle-join.py) matches the two rows uniquely, and the matched tokens advance monotonically across the two builds.",
+    "themes": "Falcon: the 6.4 tree is a released-name oracle where 6.3 is obfuscated; graph64-v3.sqlite is stale (built 2026-09-12 from the pre-rename tree) and must not be used for this. Join by normalized signature shape, and require the 6.4 row to be absent from the 6.4 map so an echo of our own names cannot be mistaken for evidence."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 1,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15331,
+    "VisibleRenamed": 5303,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12081
+  },
+  "Errors": 0
+}
