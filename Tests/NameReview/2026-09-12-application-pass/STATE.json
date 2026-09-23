@@ -94,7 +94,7 @@
       "Knx.Ets.CalculatedParameters.dll": 290,
       "all remaining modules": 2100
     },
-    "Note": "Measured at v380. Wave 380 named only 3 definitions: the mapped-signature oracle proposed 29 Falcon rows but 26 were already named by earlier waves, so the oracle route is now effectively exhausted. Every bulk route has been consumed or rejected with a measured precision; the remainder needs per-row reading.",
+    "Note": "Measured at v380. The last three turns named 32, 68 and 3 definitions; this turn found no new evidence at all. All routes listed above are closed with a measured number, so the remainder cannot move without an external evidence source or a scope decision.",
     "BiggestMethodTypes": [
       "Knx.DevKit.dll akj 291",
       "Knx.DevKit.dll amh 185",
@@ -141,7 +141,9 @@
       "DevKit twin, literal-keyed join: 13 matches, every one landing on a random oracle name; the twin's readable names belong to rows that are already named or whitelisted",
       "resource-path literals: 52 rows tree-wide, 20 named in wave 379; the rest are multi-resource validators or nested serialisers without a unique path",
       "6.4 state-machine oracle with the mapped-signature key: 92.9% precision but only 3 unnamed Falcon rows left (26 of 29 already named); the literal-tiebreak variant left 5 HawkNET rows",
-      "field value-source dataflow: the value stored into a field comes from a conversion helper or an obfuscated parameter, so the rule proposes 'toUInt32'/'.ctor'/'ushort_2' - rejected, 0 of 540 DevKit writers validated"
+      "field value-source dataflow: the value stored into a field comes from a conversion helper or an obfuscated parameter, so the rule proposes 'toUInt32'/'.ctor'/'ushort_2' - rejected, 0 of 540 DevKit writers validated",
+      "event accessors named from a named backing field: 0 rows tree-wide (no unnamed accessor's delegate field is named)",
+      "per-row reading of the largest remaining cluster (DevKit akj): the 57 rows are event add/remove pairs whose raiser, backing field and delegate type are all unnamed, so their IL carries no name to derive"
     ],
     "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
     "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843"
@@ -151,23 +153,23 @@
       "Module": "all modules",
       "Rows": 20497,
       "Kind": "Fields",
-      "Needs": "an evidence source: 20,497 fields have no route (accessor route saturated, value-source rule rejected)"
+      "Needs": "evidence source or a scope decision (no route: accessor route saturated, value-source rejected, event-field variant empty)"
     },
     {
       "Module": "all modules",
       "Rows": 2344,
       "Kind": "Types",
-      "Needs": "an evidence source: self-name literals and the readable twin are consumed"
+      "Needs": "evidence source or a scope decision (self-name literals and the readable twin consumed)"
     },
     {
       "Module": "Knx.Falcon.dll",
       "Rows": 9733,
-      "Route": "per-row body reading only"
+      "Route": "per-row reading, but the largest clusters (MaS validators, event pairs) carry no distinguishing evidence"
     },
     {
       "Module": "Knx.Ets.HawkNET.dll",
       "Rows": 5332,
-      "Route": "per-row body reading only"
+      "Route": "per-row reading with the same limitation"
     }
   ],
   "NextItemRules": [
