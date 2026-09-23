@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 342: 11 en/<>c display formatters for the properties the table registers twice",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v342.xml",
+      "Sha256": "C00D8840E588D9375093C568AABF74A43937FCF46ACFF26B9DE4C842C0751D0A",
+      "PreviousMap": "names63-staged-v341.xml",
+      "PreviousMapSha256": "347D438D388A34904B5A9A40537A5B5BDA079A1C856152EEF13CC6586EC74B58",
+      "FrozenSha256": "C00D8840E588D9375093C568AABF74A43937FCF46ACFF26B9DE4C842C0751D0A",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave342.review.json"
+  ],
+  "Method": {
+    "evidence": "For a property the en table registers twice, one entry renders the value by name - its body calls DeviceInfoValues_<Property> - and the other is the value variant (raw bytes, rounded value, units). Only the former is named, and only when exactly one of the pair calls it, so the body decides. The DeviceBusVoltage pair is named from the literal instead: {0:F1}V (\u00b10.5V) identifies FormatDeviceBusVoltageWithTolerance, and FormatDeviceBusVoltageWithTolerance replaces wave 340s generic FormatSingleValue for that token.",
+    "themes": "Still open in this table: the value variants (raw/rounded) of each duplicated property, plus RfDeviceMode (three entries: two renderers and one raw), RfMultiPhysicalFeatures and RfMultiLastTransmissionMode (both entries render, so a body comparison of the two mappings is needed), LoadState/RunState and the SecPrx raw entries."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 11,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15756,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12328
+  },
+  "Errors": 0
+}
