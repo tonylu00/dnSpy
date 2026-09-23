@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 287 accepted (6.3): three Falcon device and file frames",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v287.xml",
+      "Sha256": "839236793E7A07E5808507C12976CC2BC4DA7FF23C12D94A6493FB2206187CD8",
+      "PreviousMap": "names63-staged-v286.xml",
+      "PreviousMapSha256": "F12081A4B85A601A5CE043DAE13BB27DB0AA2575C64451DEF517ED29EAC46CD9",
+      "FrozenSha256": "839236793E7A07E5808507C12976CC2BC4DA7FF23C12D94A6493FB2206187CD8",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave287.review.json"
+  ],
+  "Method": {
+    "evidence": "Three Falcon frames whose GetFormattedData names their own fields: Class836 prints Type=FE ManufacturerId={0} ObjectType={1} PID={2} Parameters={3} from d(), c(), b(), a() (16-bit manufacturer id at offset 1, 16-bit object type at 3, property id byte at 5, 16-bit parameters at 6); Class847 prints Name={0} Version={1} Size={2} Type={3} from d(), c(), b(), a() and each accessor s type matches its label (the file-name wrapper, System.Version, the 32-bit size, FileType); Class843 prints Name={0} Version={1} Type={2} from c(), b(), a() with the same type match, plus its byte[] factory. New helper perf-now/frame-report.py prints one line per method with the format string, the order in which the method calls other methods of its own type and the frame offsets it reads, so a wrapper is named from one read.",
+    "themes": "The self-formatting family is now a worklist with a one-command evidence report (frame-report.py). Class871, Class890, Class854/Class848/Class852/Class875/Class889/Class906 still queue with 7-11 free rows each; Class871 and Class890 need one closer look because their accessors share a base offset and index through a helper."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 23,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15054,
+    "VisibleRenamed": 5154,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11860
+  },
+  "Errors": 0
+}
