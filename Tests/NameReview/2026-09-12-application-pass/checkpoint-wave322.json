@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 322 accepted (6.3): the CoAP transmission manager and the managed stacks' CoapClient",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v322.xml",
+      "Sha256": "3C7A5EF3E3E30BB1F3E389CAEAEDCA882490CEE898FF5084848DEC7D0F908C4A",
+      "PreviousMap": "names63-staged-v321.xml",
+      "PreviousMapSha256": "9475CB4694E47BBCD4099714090837A66BBDDA590698E703CF0B479F071E16EC",
+      "FrozenSha256": "3C7A5EF3E3E30BB1F3E389CAEAEDCA882490CEE898FF5084848DEC7D0F908C4A",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave322.review.json"
+  ],
+  "Method": {
+    "evidence": "Class1079 (CoapTransmissionManager, named in wave 319) has 6.4 CoapTransmissionManager's field list in order (receiver, transmitter, coapProcessor_0, coapTransmissionQueue_0, two TimeSpans, bools, a task list, the BufferBlocks and the singleton), so its four free accessors take 6.4's names: get_Receiver and get_Transmitter from plain readonly fields, get_CoapProcessor and get_CoapTransmissionQueue from the auto-property backing fields. Interface45 is the transmitter contract (6.4 ICoapTransmitter) and Class1084 is the queue (6.4 State.CoapTransmissionQueue). The five managed-stack helpers (Class1348 ManagedIoTStack, Class1349, Class1351 IoTGroupCommunicationManagedStackHelper, Class1353 IoTRestManagedStackHelper, Class1360 IoTSecurityManagedStackHelper) each expose the CoapClient through the property 6.4 declares as `public CoapClient CoapClient`.",
+    "themes": "Closes the CoAP stack's collaborator surface for the transmission manager and the managed stacks. What remains in these classes is either obfuscated in 6.4 too (method_8/11/12/13, method_16/17/18) or compiler-generated accessors (the BufferBlock/CancellationTokenSource/TimeSpan getters, the singleton smethod_0), which need behaviour evidence rather than a counterpart name."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 11,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15319,
+    "VisibleRenamed": 5294,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12069
+  },
+  "Errors": 0
+}
