@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 297 accepted (6.3): Class904 and Class905 setters",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v297.xml",
+      "Sha256": "6A2B3845EBC195D31A64ED1934A94E801E57A697229DAFE16425EF72FE869DD2",
+      "PreviousMap": "names63-staged-v296.xml",
+      "PreviousMapSha256": "ABCF29F3F6C96D9702B18205AC6B8E5C4BBF9ACE0C98E48D020F48F727916399",
+      "FrozenSha256": "6A2B3845EBC195D31A64ED1934A94E801E57A697229DAFE16425EF72FE869DD2",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave297.review.json"
+  ],
+  "Method": {
+    "evidence": "The setters of Class904 and Class905 write through Class816::c(), a byte-array provider rather than OffsetToData, which is why the formatter report showed no offsets. Read directly, each setter lands on the offset its getter reads and its own guard text names the field: Class904 b(byte) writes +11 (getter b() reads +11, check GroupObjectNumber must be > 0) and a(byte) writes +12 with mask 0xF0 (getter a() reads +12 with mask 0x0F, check startIndex must be > 0 and <= 15); Class905 c(byte) writes +11 and a(byte) writes +12 with the same checks.",
+    "themes": "The offset base is not always OffsetToData: record for the tooling that frame-report.py only tracks Class818::get_OffsetToData, so an accessor whose base is Class816::c() shows an empty offset column and needs ilinspect. The same hidden base explains Class824/Class825, whose setters can now be read the same way; Class834, Class938 and Class871 remain open."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 4,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15145,
+    "VisibleRenamed": 5217,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11951
+  },
+  "Errors": 0
+}
