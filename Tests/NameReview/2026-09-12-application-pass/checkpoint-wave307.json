@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 307 accepted (6.3): the free IFalconLogger getters",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v307.xml",
+      "Sha256": "D2091E6C7115B07D219A7F6FAB7DBAFFB7073C8C7A55A28FADC010D310611B73",
+      "PreviousMap": "names63-staged-v306.xml",
+      "PreviousMapSha256": "BF976AEA8DF09FAC727592843A4AD87A3085C3A9BEDE79888A10F6BCA194B737",
+      "FrozenSha256": "D2091E6C7115B07D219A7F6FAB7DBAFFB7073C8C7A55A28FADC010D310611B73",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave307.review.json"
+  ],
+  "Method": {
+    "evidence": "Every free no-argument accessor returning Knx.Falcon.Logging.IFalconLogger takes the family name GetLogger: HawkNET Class492::b(), Class497::b(), Class498::d(), and Falcon Class1346::c(), Class1348::smethod_0(), Class1351::smethod_0(), Class1353::b(), Class1360::d(), Class1364::a(), Class1376::b(), Class1383::d(), Class1388::c(). The family already names this shape GetLogger (Class470, Class733, Class738, Class457`2 and Class474), each row is free and no class holds a second logger accessor. New helper perf-now/returning-free.py lists every free row whose signature returns a given named type, which is how the set was found; its query variant inside the wave builder needs the protection/map filter fixed (a static build was used here).",
+    "themes": "Whole-class families of accessors are nameable in one wave when the return type is readable and the convention is fixed by named siblings - the same move that named get_Stage (wave 306) and the property accessors (wave 284). Remaining: the Interface20/21/25/26 contracts (need their implementers named; the inventory has no Type rows), Class938 s d(ulong), the two result-code dispatchers, Class871 s four packed fields, and the call-chain-only blocks."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 12,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15189,
+    "VisibleRenamed": 5234,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11995
+  },
+  "Errors": 0
+}
