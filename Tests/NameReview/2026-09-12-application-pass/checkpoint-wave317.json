@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 317 accepted (6.3): the IoT software updater",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v317.xml",
+      "Sha256": "4A89AFA5ABDFECF44FAB4C03CBB7313D0E105A2075A6451811B501BBA8D52295",
+      "PreviousMap": "names63-staged-v316.xml",
+      "PreviousMapSha256": "706DD266329332C8C21B5F93C56C2AD727DE0CE22B9993C4A8705E23F1C83F52",
+      "FrozenSha256": "4A89AFA5ABDFECF44FAB4C03CBB7313D0E105A2075A6451811B501BBA8D52295",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave317.review.json"
+  ],
+  "Method": {
+    "evidence": "Class465 is the 6.3 IoTSoftwareUpdater: 6.4's SoftwareUpdate.Class184 writes its own logger category as \"Knx.Ets.Hawk.Impl.IoT.Tasks.SoftwareUpdate.IoTSoftwareUpdater\", keeps the same project-data and async-network-access-provider fields, and declares ApplyFirmwareUpdateAsync(ReadOnlyMemory<byte> packageData, Version firmwareVersion, int maxBytesPerTransfer, IProgress<HawkProgressIndication> progressReport, ...) -> Task<IoTSoftwareUpdateResult>. Class465's single apply method has the same parameter order (its last parameter is a CancellationToken in this build) and its body reports HawkProgressIndication with the same Resources.FirmwareUpdate_Transferring string. The 6.3 class is the thinner version of that class, so the Reason records the literal plus the responsibility rather than a one-to-one member set.",
+    "themes": "Starts the SoftwareUpdate twin. The class's own return enum (wb) has no readable 6.4 counterpart in HawkNET and stays free; the two collaborator getters return whitelist-protected types (l6, fb) and stay free with them."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15267,
+    "VisibleRenamed": 5275,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 927,
+    "Methods": 12046
+  },
+  "Errors": 0
+}
