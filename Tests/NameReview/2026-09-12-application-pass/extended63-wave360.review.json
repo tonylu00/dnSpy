@@ -1,0 +1,49 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "oc",
+   "Token": "0x060004F8",
+   "Signature": "System.Collections.Generic.IAsyncEnumerable`1<Knx.Falcon.NetworkDeviceInfo> oc::b(Knx.Falcon.IndividualAddress,Knx.Falcon.IndividualAddress,Knx.Falcon.DomainAddress,System.Boolean,System.IProgress`1<System.Int32>,System.Threading.CancellationToken)",
+   "OriginalName": "b",
+   "NewName": "SetPlDomainAddressAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine fails with 'No PL domain address' over its 'domainAddress' argument, so it writes the device's power-line (PL) domain address. Candidate from perf-now/candidates.py (per-type state-machine and readability filters applied) with its own literals as evidence."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "oc",
+   "Token": "0x060004F9",
+   "Signature": "System.Collections.Generic.IAsyncEnumerable`1<Knx.Falcon.NetworkDeviceInfo> oc::a(Knx.Falcon.IndividualAddress,Knx.Falcon.IndividualAddress,Knx.Falcon.DomainAddress,System.Boolean,System.IProgress`1<System.Int32>,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "NewName": "SetRfDomainAddressAsync",
+   "NeedsReadableName": false,
+   "Reason": "The RF counterpart: 'No RF domain address' over 'domainAddress'. Candidate from perf-now/candidates.py (per-type state-machine and readability filters applied) with its own literals as evidence."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "oc",
+   "Token": "0x060004FA",
+   "Signature": "System.Collections.Generic.IAsyncEnumerable`1<Knx.Falcon.NetworkDeviceInfo> oc::a(Knx.Falcon.IndividualAddress,Knx.Falcon.IndividualAddress,Knx.Falcon.DomainAddress,System.IProgress`1<System.Int32>,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "NewName": "SetIpDomainAddress",
+   "NeedsReadableName": false,
+   "Reason": "The IP counterpart: 'No IP domain address' over 'domainAddress'; the row is a plain body rather than a state machine, so it sets the value without an await. Candidate from perf-now/candidates.py (per-type state-machine and readability filters applied) with its own literals as evidence."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
