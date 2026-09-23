@@ -1,0 +1,36 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class938",
+   "Token": "0x06000EE3",
+   "Signature": "System.UInt64 Class938::a()",
+   "OriginalName": "a",
+   "NewName": "get_Challenge",
+   "Reason": "Class938::GetFormattedData prints 'SyncRes {0}SourceSeqNr={1:x12} TargetSeqNr={2:x12} Challenge={3:x12}' from c(), b() and a(), so this getter - the UInt64 at the data offset - is the Challenge; Class1285::b(Class938, EncryptedBuffer, UInt64) sets it from the secure-sync key material and validates the decrypted frame against it.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class938",
+   "Token": "0x06000EE4",
+   "Signature": "System.Void Class938::a(System.UInt64)",
+   "OriginalName": "a",
+   "NewName": "set_Challenge",
+   "Reason": "The setter of the UInt64 the format string prints as Challenge; Class1285 writes it back after the crypto call.",
+   "NeedsReadableName": false
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
