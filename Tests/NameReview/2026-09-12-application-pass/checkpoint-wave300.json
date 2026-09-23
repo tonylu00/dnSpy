@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 300 accepted (6.3): the two file-control response rejections",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v300.xml",
+      "Sha256": "8D767AC568083F0D0280DA0D1EBAB09A61122E9D95815029ECF2AC46F024439C",
+      "PreviousMap": "names63-staged-v299.xml",
+      "PreviousMapSha256": "149A2B0B06FCEB38671933AF2610E8E1BD6A7AF67CE523365F55B79A1BF55DB9",
+      "FrozenSha256": "8D767AC568083F0D0280DA0D1EBAB09A61122E9D95815029ECF2AC46F024439C",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave300.review.json"
+  ],
+  "Method": {
+    "evidence": "New helper perf-now/switch-map.py attributes every switch case to the calls inside its block, which is the read waves 282/283 did by hand. On Class854 s response dispatcher (0x06000BAC) it shows the poll-cycle switch at offset 64 routes case 0 (Idle) to the call at 108 and case 1 (Polling) to the call at 163, so c(Interface64) is only the Idle-state action and a(Interface64) only the Polling-state one; both bodies throw the same ApplicationLayerException with the text return code {0} : unresolvable error, cannot process the state/return code.",
+    "themes": "switch-map.py is the missing half of the result-code read and now covers Class854 and the still-free Class868 dispatcher actions. b(Interface64) is reached from two different entries (the E_SESSION_REFUSED case and the timer-expired cycle state), so it stays unresolved until those two paths are told apart."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15162,
+    "VisibleRenamed": 5227,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11968
+  },
+  "Errors": 0
+}
