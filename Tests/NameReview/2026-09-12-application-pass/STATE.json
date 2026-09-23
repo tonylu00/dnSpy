@@ -64,7 +64,7 @@
       "Where": "Class1353::a(Class989, CoapMessageCode, string, string, string, byte[], [opt] bool, [opt] bool, [opt] List<Class1112>) -> state machine Class1353/Struct958; and Class1360 x7 (Task<ValueTuple<...>>, state machines under Class1360/Type_1424).",
       "Verified": "Class1353::a kickoff IL is canonical end to end (ldloca/initobj, Create, stfld builder, this, params, state=-1, ldflda builder + ldloca state + Start<T>(!!0&), get_Task, ret) and Struct958 has [CompilerGenerated] + IAsyncStateMachine.",
       "Hypotheses": ["one Class1360 state machine 'a' under Type_1424 lacks [CompilerGenerated]", "both stubs carry an unused extra local ([1] int16) - partially cleaned control flow", "Task<ValueTuple<...>> return shape adds an instruction the middle loop rejects"],
-      "Next": "Instrument MicrosoftAsyncDecompiler.MatchTaskCreationPattern for those tokens, or diff the ILAst statement list against a working Falcon stub."
+      "Next": "Narrowed 2026-09-23 with the new ILSPY_ASYNC_TRACE diagnostic (dnSpy 55e15459a): Class1353 prints 33 matcher reasons but the raw stub 06001F69 (Class1353::a) prints none, so it is never handed to MicrosoftAsyncDecompiler.MatchTaskCreationPattern at all. The blocker is upstream - the factory that decides to try the async decompiler skips the method. Next: trace that call site (MicrosoftAsyncDecompiler.Create / YieldReturnDecompiler.TryCreate) for this token."
     },
     "BaselineTask": "Sweep the patched decompiler over all 528 6.3 assemblies and the 6.4 tree; store per-module numbers here."
   },
@@ -91,7 +91,8 @@
         "resource-path literals: 52 rows, 20 named (wave 379)",
         "6.4 state-machine oracle: 92.9% precision, 3 unnamed rows left",
         "largest cluster akj (DevKit): raiser, backing field and delegate type all unnamed; nothing to derive",
-        "readable bucket verified by a tree-wide random scan: 3 rows, all real names"
+        "readable bucket verified by a tree-wide random scan: 3 rows, all real names",
+        "type-anchor pairing (6.3 type -> 6.4 type through >=2 already-named method anchors): 21 Falcon + 6 HawkNET = 27 uniquely pairable types out of 2,478 unnamed, and only 129 types tree-wide have >=2 anchors - measured 2026-09-23, route closed, not worth a tool investment"
       ]
     },
     "NextItems": [
