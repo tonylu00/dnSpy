@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T16:55:00Z",
+  "UpdatedUtc": "2026-09-23T17:40:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,11 +17,11 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v378.xml",
-      "Sha256": "5A0FF1D9B79DD6DC099116EB47EFEBC736295E1E6F36FC76D67363E3021EC869",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave378.json",
-      "NextWave": 379,
-      "CumulativeRenamedRows": 16759,
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v379.xml",
+      "Sha256": "FF99F46DE197997ED2A159694332319EE311FDCA9C9A9FE7730078A5ED70EA7B",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave379.json",
+      "NextWave": 380,
+      "CumulativeRenamedRows": 16691,
       "RowsInMap": {
         "Methods": 12870,
         "Types": 965,
@@ -32,11 +32,11 @@
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v176.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v177.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v176.json",
-      "NextVersion": 177,
-      "RestagedFrom": "names63-staged-v378.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v177.json",
+      "NextVersion": 178,
+      "RestagedFrom": "names63-staged-v379.xml",
       "AppliedToSource": false
     }
   },
@@ -66,16 +66,16 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T16:55:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v378.json",
+    "MeasuredUtc": "2026-09-23T17:40:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v379.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 28140,
+    "NotYetNamedRows": 28108,
     "ByKind": {
-      "Methods": 5299,
+      "Methods": 5267,
       "Types": 2344,
       "Fields": 20497
     },
@@ -94,7 +94,7 @@
       "Knx.Ets.CalculatedParameters.dll": 290,
       "all remaining modules": 2100
     },
-    "Note": "Measured at v378. Wave 378 named 68 definitions: 28 literal-carrying rows whose contract families the updater expanded (40 further members), which also cleared the 21 rows wave 377 had to skip because a family edit needs the whole family.",
+    "Note": "Measured at v379. Wave 379 named 32 definitions: 20 IoT resource handlers whose bodies carry the CoAP resource path they use (plus 12 family declarations). Every bulk route is now closed by measurement; the remainder is per-row body reading at roughly 20-120 rows per turn.",
     "BiggestMethodTypes": [
       "Knx.DevKit.dll akj 291",
       "Knx.DevKit.dll amh 185",
@@ -136,34 +136,37 @@
       "readable bucket verified: a tree-wide random-name scan found 3 rows, all real names",
       "operation-name literals: 54 Falcon rows (wave 370) and the 20 managed-stack log literals (wave 376) are consumed",
       "field backing stores: 0 new proposals after wave 377 - the route is saturated at this map state and suggest-fields.py now also skips fields the map already names",
-      "devkit twin method transfer: shape matching 4.2% and ordinal matching 10-40% agreement with the pass's own names - rejected in both forms"
+      "devkit twin method transfer: shape matching 4.2% and ordinal matching 10-40% agreement with the pass's own names - rejected in both forms",
+      "DevKit twin, trusted type pairs: 0 of 268 aligned pairs have all their already-named rows agreeing position by position - no pair is trustworthy",
+      "DevKit twin, literal-keyed join: 13 matches, every one landing on a random oracle name; the twin's readable names belong to rows that are already named or whitelisted",
+      "resource-path literals: 52 rows tree-wide, 20 named in wave 379; the rest are multi-resource validators or nested serialisers without a unique path"
     ],
     "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
     "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843"
   },
   "NextItems": [
     {
-      "Module": "Knx.Ets.HawkNET.dll",
-      "Rows": 2,
-      "Kind": "Methods",
-      "Tokens": "0x0600112E, 0x06001138",
-      "Route": "the 18-member device-check family (B371D36F) logs a different reason per member, so it needs one generic name for the whole family before either can be renamed"
-    },
-    {
       "Module": "Knx.Falcon.dll",
-      "Rows": 9768,
-      "Route": "per-row literal/structural reading (the remaining nc MaS validators, Class1000+, Class1364 mDNS)"
+      "Rows": 9736,
+      "Route": "per-row reading (remaining resource handlers, nc MaS validators, Class1000+/Class1364 mDNS)"
     },
     {
       "Module": "Knx.Ets.HawkNET.dll",
       "Rows": 5332,
-      "Route": "per-row literal/structural reading"
+      "Route": "per-row reading"
     },
     {
       "Module": "all modules",
       "Rows": 20497,
       "Kind": "Fields",
-      "Route": "bootstrap-blocked: the named-accessor route is saturated, so fields need a new evidence source"
+      "Route": "bootstrap-blocked and saturated: the named-accessor route yields 0, so fields need a new evidence source"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Rows": 2,
+      "Kind": "Methods",
+      "Tokens": "0x0600112E, 0x06001138",
+      "Route": "the 18-member device-check family B371D36F needs one generic name covering every member's reason"
     }
   ],
   "NextItemRules": [
