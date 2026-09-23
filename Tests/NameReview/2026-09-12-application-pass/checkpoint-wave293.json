@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 293 accepted (6.3): three Falcon domain and session frames",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v293.xml",
+      "Sha256": "8754CDF2081E8BCE97B96174B3D488BD73EEF2730058E7444D367D65C6E2F5C4",
+      "PreviousMap": "names63-staged-v292.xml",
+      "PreviousMapSha256": "3FBDCDAF5215E9A62E6ADBCDDE10B9E4EBF7A08E7491E12A5EAEDAA9E4D3F9C2",
+      "FrozenSha256": "8754CDF2081E8BCE97B96174B3D488BD73EEF2730058E7444D367D65C6E2F5C4",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave293.review.json"
+  ],
+  "Method": {
+    "evidence": "Three frames read from their formatters and accessor types. Class838 prints SNo={0} DoA={1} from b(), a(): the first getter pairs with a setter taking Knx.Falcon.SerialNumber and the second (offset 6) with a Knx.Falcon.DomainAddress setter guarded by its own DoA must be {0} octets but is {1} check. Class900 prints SNo={0} IA={1} with the same serial number pair and an IndividualAddress pair at offset 6. Class851 prints Session Timeout={0} from a(), a 16-bit value at offset 4, and the sibling getter at the same base drives the setter that takes a SessionType. Each type also has a byte[] factory that only wraps the caller buffer. Class834 (Type=0 DoA={0} Start={1} Range={2}) needs its getters types before Start and Range can be told apart, so it stays unresolved.",
+    "themes": "Accessor types are the pairing key when the offsets are identical (the DoA/IA/SNo setters are told apart by their parameter types). Remaining worklist: Class834 (getter types), Class824/Class825 (byte setters through the base helper), Class938 (formatter prints only a constant), Class871 (four packed 16-bit fields), and the five-row types Class904/Class905/Class829/Class835/Class840."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 15,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15124,
+    "VisibleRenamed": 5204,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11930
+  },
+  "Errors": 0
+}
