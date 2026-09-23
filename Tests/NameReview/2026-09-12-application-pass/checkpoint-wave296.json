@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 296 accepted (6.3): the GroupObjectNumber and StartIndex getters",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v296.xml",
+      "Sha256": "ABCF29F3F6C96D9702B18205AC6B8E5C4BBF9ACE0C98E48D020F48F727916399",
+      "PreviousMap": "names63-staged-v295.xml",
+      "PreviousMapSha256": "5EECF7C74DFAD6389BA9AB16DFD0B1B125C6171CA20CDFEDB0DA82DFA01CD3CB",
+      "FrozenSha256": "ABCF29F3F6C96D9702B18205AC6B8E5C4BBF9ACE0C98E48D020F48F727916399",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave296.review.json"
+  ],
+  "Method": {
+    "evidence": "Class904 and Class905 both format themselves as GroupObjectNumber={0} StartIndex={1}: Class904 from b(), a() and Class905 from d(), b(), so the formatter call order names each getter without needing the setters - Class904 b() is the group object number and a() the start index, Class905 d() the group object number and b() the start index. Class904 also has the family byte[] factory. The four byte setters stay unresolved because they write through the base helper and their IL carries no offset constant for the reader to pair them with; that needs their helper call read directly.",
+    "themes": "Formatter call order names a getter even when every offset is hidden behind a base helper. Remaining: Class904/Class905 setters (helper call read), Class834 (getter types), Class938 (formatter prints only a constant), Class871 (four packed 16-bit fields)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 5,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15141,
+    "VisibleRenamed": 5217,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11947
+  },
+  "Errors": 0
+}
