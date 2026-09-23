@@ -1,0 +1,101 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x0600193E",
+   "Signature": "System.Void Class737::a(Class737/Trigger,Class818)",
+   "OriginalName": "a",
+   "NewName": "ProcessEvent",
+   "Reason": "The state machine's dispatcher: its body looks the (state, trigger) pair up in class1250_0 and runs that transition, and the named ProcessAsync calls it 28 times, once per decoded event.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x0600192E",
+   "Signature": "System.Void Class737::smethod_0(Class737,Class818)",
+   "OriginalName": "smethod_0",
+   "NewName": "HandleNoop",
+   "Reason": "Transition table: the 63 entries that leave the state unchanged, for triggers the machine ignores in that state. The body is empty, exactly like Class733's and Class738's noop handler.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001933",
+   "Signature": "System.Void Class737::smethod_5(Class737,Class818)",
+   "OriginalName": "smethod_5",
+   "NewName": "HandleConnectionClosed",
+   "Reason": "Transition table: the close triggers E02 and E20, from CONNECTING/OPEN_IDLE/OPEN_WAIT to CLOSED. The body checks the peer address and the connection DateTime, calls the named Class738::ConnectionClosed(address) and publishes the Class750 event.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001935",
+   "Signature": "System.Void Class737::i(Class737,Class818)",
+   "OriginalName": "i",
+   "NewName": "HandleTlSequenceNumberReEncryption",
+   "Reason": "Transition table: trigger E15 in CONNECTING/OPEN_WAIT. The body takes a Class935 secure message: when its TransportLayerSequenceNumber already equals the required one it forwards it, otherwise it logs 'Secure message was encrypted with TL SeqNo {0} but {1} is required; re-encrypting' and invokes the security context's re-encryption action, throwing 'No TL seqno re-encryption available' when that action is missing; the non-secure path stamps the frame's TL sequence number and re-arms the timers.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001936",
+   "Signature": "System.Void Class737::smethod_8(Class737,Class818)",
+   "OriginalName": "smethod_8",
+   "NewName": "HandleConfirmation",
+   "Reason": "Transition table: trigger E08 in OPEN_WAIT back to OPEN_IDLE. The body takes a sequence number from the tracking service, compares the frame against the outstanding one through Class815::a, releases the handle and raises the state-changed event, which is the transaction-complete path.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001937",
+   "Signature": "System.Void Class737::smethod_9(Class737,Class818)",
+   "OriginalName": "smethod_9",
+   "NewName": "HandleAcknowledged",
+   "Reason": "Transition table: triggers E12 and E17 in OPEN_WAIT (state unchanged). The body reads the last sent frame, warns 'A9 without _lastSentFrame' when there is none, publishes the Class750 event for it, advances the retry counter (the byte that the send path resets to zero) and re-arms the timers.",
+   "NeedsReadableName": false
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class737",
+   "Token": "0x06001939",
+   "Signature": "System.Void Class737::e(Class737,Class818)",
+   "OriginalName": "e",
+   "NewName": "DeferRequest",
+   "Reason": "Transition table: trigger E15 while CONNECTING or OPEN_WAIT. The body logs '[{0}] Deferred request because we are in ...' and queues the frame in list_0, the same operation as Class733's and Class738's DeferRequest.",
+   "NeedsReadableName": false
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

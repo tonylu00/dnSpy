@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 280 accepted (6.3): the Falcon transport-layer state machine Class737, first block",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v280.xml",
+      "Sha256": "80B8770CE965A390057AB266A666770AE72A58C9A84CCF8787A388FFAC8BD3ED",
+      "PreviousMap": "names63-staged-v279.xml",
+      "PreviousMapSha256": "A3811DE429AB7D6BB275B091539D2E6837835E0458C3DC1D2761EB8D90E17ECC",
+      "FrozenSha256": "80B8770CE965A390057AB266A666770AE72A58C9A84CCF8787A388FFAC8BD3ED",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave280.review.json"
+  ],
+  "Method": {
+    "evidence": "Class737 is the connection-oriented transport layer (Falcon.KnxStack.coTL): its static constructor builds a 112-entry (28 triggers x 4 states) transition table, exactly the Class733/Class738 pattern, and the parser verifies the array index equals trigger*4+state for every entry. This wave names the seven rows whose own body or log states the operation: the dispatcher a(Trigger,Class818) looks the (state,trigger) pair up in class1250_0 and is called 28 times by the named ProcessAsync; smethod_0 is an empty body installed for the 63 entries that leave the state unchanged; smethod_5 closes the connection and calls the named Class738::ConnectionClosed; smethod_8 is the confirmation path (OPEN_WAIT to OPEN_IDLE, sequence-number service, compares the outstanding frame); smethod_9 reads the last sent frame, warns A9 without _lastSentFrame when there is none, advances the retry counter byte that the send path resets and re-arms the timers; i re-encrypts a Class935 secure message whose TransportLayerSequenceNumber differs from the required one, logging Secure message was encrypted with TL SeqNo {0} but {1} is required; re-encrypting and throwing No TL seqno re-encryption available when the security context has no action; e logs Deferred request because we are in ... and queues the frame.",
+    "themes": "The trigger vocabulary of Class737 is still E00..E27, and enum-field references do not exist (the table is built from integer constants), so the remaining handlers need the trigger decode instead of their names: ProcessAsync (0x0600192D) dispatches 28 times, switching on the event type and the frame TPCI (Class818::i(), a readable enum), and each call site carries the trigger index as a constant right before the dispatch call, with dump at perfprobe/class737-process.txt. That decode plus each handler own log/calls is the next step for the remaining 9 free handlers of this machine. New helper fix: sm-table.py now detects the transition-entry constructor by its (State,Trigger,State,handler) parameters instead of the obfuscated entry type name (Class737 uses Class1251 where Class733 used Class1246), accepts E00..E27 range specs and verifies the index invariant before printing."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 7,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14949,
+    "VisibleRenamed": 5082,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11755
+  },
+  "Errors": 0
+}
