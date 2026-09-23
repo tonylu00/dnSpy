@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 310 accepted (6.3): the SerialNumber and IndividualAddress getters",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v310.xml",
+      "Sha256": "EFE7085B03336170EECB6868BC7A63FA7799F3DAD36FC8015377F98F2C7349B5",
+      "PreviousMap": "names63-staged-v309.xml",
+      "PreviousMapSha256": "D8FD3594241D9E622C9DAE50C5CE5BF22F9925471B0F0F84B12132C699359DDF",
+      "FrozenSha256": "EFE7085B03336170EECB6868BC7A63FA7799F3DAD36FC8015377F98F2C7349B5",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave310.review.json"
+  ],
+  "Method": {
+    "evidence": "Five free no-argument accessors found with returning-free.py: four return Knx.Falcon.SerialNumber (Class814::b(), Class837::a(), Class898::a(), Class899::a()) and one returns Knx.Falcon.IndividualAddress (Class801::b()). The family names these shapes get_/set_SerialNumber (Class838, Class900) and get_/set_IndividualAddress (Class900), each row sits in a distinct class and no class holds a second accessor of the same type, so no name collided.",
+    "themes": "Third wave from the returning-free.py family read. It also showed the shapes it cannot use: Class801::a() returns IEnumerable<IndividualAddress> and Class801::a(int) takes an index, both different members, and the Task<SerialNumber>/Task<IndividualAddress> helpers (Class601, Class604) are async steps rather than accessors. Remaining blockers unchanged: Interface20/21/25/26, Class938 d(ulong), the two dispatchers, Class871 s four packed fields, the Class319-returning accessors, and the call-chain-only blocks."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 5,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15198,
+    "VisibleRenamed": 5240,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 12004
+  },
+  "Errors": 0
+}
