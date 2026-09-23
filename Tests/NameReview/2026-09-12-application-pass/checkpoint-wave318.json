@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 318 accepted (6.3): the classes that name themselves in their logger literal",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v318.xml",
+      "Sha256": "288E21A44DC680D99B994130C232FC9FF2DE89B8DCB84EF293D37D64C1F679D6",
+      "PreviousMap": "names63-staged-v317.xml",
+      "PreviousMapSha256": "4A89AFA5ABDFECF44FAB4C03CBB7313D0E105A2075A6451811B501BBA8D52295",
+      "FrozenSha256": "288E21A44DC680D99B994130C232FC9FF2DE89B8DCB84EF293D37D64C1F679D6",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave318.review.json"
+  ],
+  "Method": {
+    "evidence": "Seventeen classes name themselves: each static constructor passes a hard-coded fully-qualified name to the logger factory, and for this wave every literal either equals a 6.4 type name exactly (Knx.Ets.Hawk.FirmwareUpdateTask, Impl.ParameterFormatter, Impl.IoT.DeviceImage.Helpers.IoTDeviceImageExtensions, Impl.DeviceInfoItems.DeviceInfoItemGroupCommunication) or differs only by a namespace the 6.3 build predates (Knx.Ets.Hawk.DeviceImage/CommunicationTables/LoadStateWriteBase/LoadImageBase/WriteBase and the Impl.CreateImageTasks and Impl.CommunicationTableFormatters families). The sweep that found them inspected every unnamed HawkNET .cctor (276) and classified each ldstr by the logger call that consumes it, which independently reconfirmed the names earlier waves had already applied (eh=CompareDeviceTask, ft=LoadDeviceTask, Class302-312=AddCodeSegmentsTask..., Class470=IoTIndividualAddressDownloadTask literal).",
+    "themes": "A systematic literal sweep is now a repeatable evidence source, not a one-off: 62 unnamed classes carry such a name, 17 had no vendor name yet and are applied here, the rest were already named (a cross-check that the earlier waves were right) or are whitelist-protected (eo DeviceManagement, Class319 DataFacade, Class345 DeviceProfileInformation, gi Image, go LoadProcedure, Class408 LoadProcedureBuilder, Class412 NetworkFacade, kh FirmwarePackageManifest) or carry a namespace literal rather than a class name (Class457`2, Class477)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 17,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15283,
+    "VisibleRenamed": 5277,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 943,
+    "Methods": 12046
+  },
+  "Errors": 0
+}
