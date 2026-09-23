@@ -120,7 +120,8 @@
       "structural fallback: offsets, bitfields, formatters, tables (slow; last)",
       "per-row literal naming (guard/log/validator rows) - the current working route for the method remainder",
       "contract-family naming from a member's literal (build-rows --spec with AllowFamily: true) - a family edit needs the whole family",
-      "6.4 readable-surface anchor fixpoint (OPEN, not yet run - see Backlog.ReadableSurface64): pair types where already-named members identify the 6.4 counterpart uniquely, pair members inside paired types, propagate, iterate to a fixpoint"
+      "6.4 readable-surface anchor fixpoint (OPEN, not yet run - see Backlog.ReadableSurface64): pair types where already-named members identify the 6.4 counterpart uniquely, pair members inside paired types, propagate, iterate to a fixpoint",
+      "compiler-generated merge (OPEN, unblocked - see Backlog.CompilerGeneratedMerge): restore the compiler's own entry points (MoveNext, display-class and state-machine names) so the decompiler merges those methods into their owners"
     ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
@@ -147,7 +148,21 @@
       "per-row reading of the largest remaining cluster (DevKit akj): the 57 rows are event add/remove pairs whose raiser, backing field and delegate type are all unnamed, so their IL carries no name to derive"
     ],
     "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
-    "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843",
+    "Excluded": "compiler-generated rows 55036 (not a semantic rename target, but a MERGE target - see CompilerGeneratedMerge); already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843",
+    "CompilerGeneratedMerge": {
+      "FoundUtc": "2026-09-23T21:20:00Z",
+      "Why": "The decompiler merges compiler-generated members only when their compiler-defined entry points keep their names. ICSharpCode.Decompiler/ILAst/AsyncDecompiler.cs:297 looks up the state machine's 'MoveNext' BY NAME; Ast/AstBuilder.cs:310 recognises a display class only when its name is '<>c', starts with '<>c__', or contains 'DisplayClass'/'AnonStorey'. Dotfuscator renamed both, so the 6.3 C# view shows raw 'AsyncTaskMethodBuilder.Start<T>(ref struct)' stubs and un-inlinable lambdas - the reader has to open MoveNext by hand.",
+      "EvidenceThatSurvives": "HawkNET 6.3: CompilerGenerated on 580 of 787 types; AsyncStateMachineAttribute on 383 methods and IteratorStateMachineAttribute on 15 (each attribute argument IS the state machine type, e.g. eh::cp -> eh/l, eh::b -> eh/m); 67 display classes kept '<>c', 525 nested display classes lost it. Verified by --dump-attributes and by dnSpy IL/C# dumps.",
+      "ToolSupport": "No tool change needed: NameCandidates accepts compiler-style names. Probe row 0x0600000D (Class234/<>c::a) -> '<ef>b__0_0' applied unchanged, Success=True, 0 errors.",
+      "Block": [
+        "state machine type -> <OwnerMethod>d__N, and its MoveNext/SetStateMachine renamed back to the interface names (evidence: the *StateMachineAttribute on the named owner method)",
+        "display class type -> <>c or <>c__DisplayClassN_M (evidence: [CompilerGenerated] plus an ldftn site inside a named owner)",
+        "lambda method -> <Owner>b__N_M (evidence: the ldftn site in the owner)",
+        "optional, for any remaining raw view: state machine fields -> <>1__state / <>t__builder / <>4__this / <>u__N, identified by type shape (int state, Async*MethodBuilder, owner type)"
+      ],
+      "Outcome": "async/await bodies and inline lambdas in the decompiled view - readability, not rename coverage. Runtime binding is by interface/MethodImpl and is preserved by the applier.",
+      "Scale": "Measured on 2026-09-23: Falcon 515 async + 54 iterator state machines, HawkNET 383 + 15, ObjectModel 8 + 64; HawkNET alone has 525 renamed closures and 580 compiler-generated types. About 1,000 async/iterator methods across the sampled modules would render as async/yield instead of raw builder stubs."
+    },
     "ReadableSurface64": {
       "MeasuredUtc": "2026-09-23T20:15:00Z",
       "Tree": "D:\\knx_analysis\\ETS6.4_orig",

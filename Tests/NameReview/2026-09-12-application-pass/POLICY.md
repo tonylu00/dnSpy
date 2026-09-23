@@ -16,8 +16,11 @@ here, treat it as *unresolved* and record the missing evidence; do not invent a 
    member identities, signatures, interface and inheritance contracts, and names reached
    through reflection, serialization, or a string contract that is not statically
    resolvable.
-4. **Compiler-generated metadata needed for reconstruction** (`.ctor`, `.cctor`, state-machine
-   and lambda metadata that the runtime binds by name).
+4. **Constructors and type initializers** (`.ctor`, `.cctor`). Compiler-generated *members* are the
+   deliberate exception: `MoveNext`, `SetStateMachine`, display classes and lambda methods are
+   restored to the compiler's own names so the decompiler merges them into their owners
+   (`STATE.Backlog.CompilerGeneratedMerge`). The runtime binds those by interface/MethodImpl, which
+   the applier preserves; no invented semantic name is ever applied to them.
 
 ## What may be renamed
 

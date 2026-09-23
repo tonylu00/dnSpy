@@ -12,6 +12,13 @@ third-party ETS App keeps working. Names must describe real behaviour and be con
 across related components. Tool work in dnSpy/de4dotEx happens only when a specific row
 cannot be consumed by the tool, and the next action after a tool fix is always more naming.
 
+Readability, not rename counts, is the measure. In particular the compiler-generated members
+are **merged** into their owners in the reader's view by restoring the compiler's own entry
+points — state machine `MoveNext`, `<Owner>d__N` state machine types, `<>c`/`<>c__DisplayClass`
+closures and `<Owner>b__N` lambdas (`STATE.Backlog.CompilerGeneratedMerge`). Without that, async
+methods render as raw `AsyncTaskMethodBuilder.Start<T>(ref struct)` stubs and lambdas never
+inline, which is exactly the barrier this pass exists to remove.
+
 ## Turn contract
 
 This is the part that keeps being missed. A committed checkpoint does **not** end a turn.
