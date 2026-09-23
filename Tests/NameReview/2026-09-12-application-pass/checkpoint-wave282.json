@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 282 accepted (6.3): the Falcon application-layer reply wrapper Class868",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v282.xml",
+      "Sha256": "37C2C874AD9DF70463A1CE0066A533A4707F19D189716C2B9E995A5801A0B8E9",
+      "PreviousMap": "names63-staged-v281.xml",
+      "PreviousMapSha256": "2A457FE73AD2A2CB22C40FAFD07DE392B9774B3472F2A93F759DAEA6F9BD44D4",
+      "FrozenSha256": "37C2C874AD9DF70463A1CE0066A533A4707F19D189716C2B9E995A5801A0B8E9",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave282.review.json"
+  ],
+  "Method": {
+    "evidence": "Class868 is the application-layer reply wrapper: it reads a reply frame at fixed offsets, and its own GetFormattedData names the fields in two format strings - Chunk={0} RetCode={1} TimeOut={2} for the normal reply and Chunk={0} RetCode={1} Block={2} for return code E_DATA_VOID - while two guarded accessors state the property they protect (Access to Chunk Block Number is only allowed for return code Data Void, Access to TimeOut is only allowed for return code Busy Timeout). So the byte at the data offset is get/set_Chunk, offset 1 is get/set_ResultCode (what the reply dispatcher switches on), the E_DATA_VOID byte is get/set_ChunkBlockNumber and the TimeOut pair completes around the already named get_TimeOut. The ninth row is Class1341s connection handler, which logs Connection Broken and publishes the state through vmethod_5(BusConnectionState).",
+    "themes": "A format string is as strong as a literal: GetFormattedData named three accessors plus the block field, and the guard texts named the rest, so an entire result-code wrapper was named without touching the dispatcher. Class868s result-code dispatcher (0x06000C7D) and its nine action methods remain free: they are called from switches over ResultCode (E_SESSION_REFUSED 225 / E_NO_SUBSERVICE_NOT_SUPPORTED 227 / E_DATA_VOID 248 / E_ERROR 255, all values from --dump-constants) and PollCycleState, and each needs the offset-to-branch mapping rather than a guess - the dump is at perfprobe/class868-dispatch.txt."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 8,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14964,
+    "VisibleRenamed": 5086,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11770
+  },
+  "Errors": 0
+}
