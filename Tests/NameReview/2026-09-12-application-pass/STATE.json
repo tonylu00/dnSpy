@@ -1,0 +1,171 @@
+{
+  "Format": 1,
+  "Kind": "EtsNamePassState",
+  "UpdatedUtc": "2026-09-23T10:26:00Z",
+  "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
+  "Pass": {
+    "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
+    "CheckpointDir": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
+    "SourceTree63": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+    "SourceTree64": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+    "ToolCli": "dotnet D:\\git\\de4dotEx\\tools\\NameCandidates\\bin\\Release\\net8.0\\NameCandidates.dll",
+    "ToolRepo": "D:\\git\\de4dotEx",
+    "DnspyRepo": "D:\\git\\dnSpy",
+    "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
+    "Policy": "D:\\knx_analysis\\POLICY.md",
+    "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>"
+  },
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v370.xml",
+      "Sha256": "C979FFCBAB78F32D821FBF21F10CD17AFC2F91ADFFA64FE95D64F2A750454A25",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave370.json",
+      "NextWave": 371,
+      "CumulativeRenamedRows": 15994,
+      "RowsInMap": { "Methods": 12566, "Types": 956, "Fields": 2472, "Parameters": 2316, "Locals": 837 },
+      "AppliedToSource": false
+    },
+    "64": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v168.xml",
+      "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v168.json",
+      "NextVersion": 169,
+      "RestagedFrom": "names63-staged-v370.xml",
+      "AppliedToSource": false
+    }
+  },
+  "Compatibility": {
+    "ContractReferences63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json",
+      "Sha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA"
+    },
+    "SdkWhitelist63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml",
+      "Sha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
+      "Symbols": 21935,
+      "ExcludedMapRows": 1974
+    },
+    "SdkWhitelist64": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist64-v1.xml",
+      "Sha256": "E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34",
+      "Symbols": 24209,
+      "ExcludedMapRows": 167
+    },
+    "SdkModules": [
+      "Knx.Ets.Sdk.dll",
+      "Knx.Ets.Sdk.AddIns.AddInViews.dll",
+      "Knx.Ets.Common.Types.dll",
+      "Knx.Ets.Common.Resources.dll"
+    ],
+    "Rules": "D:\\knx_analysis\\POLICY.md"
+  },
+  "Backlog": {
+    "MeasuredUtc": "2026-09-23T10:26:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v370.json",
+    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v370.json",
+    "Inventories": {
+      "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
+      "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
+      "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
+    },
+    "NotYetNamedRows": 29652,
+    "ByKind": { "Methods": 5603, "Types": 2338, "Fields": 21711 },
+    "ByModule": {
+      "Knx.Falcon.dll": 10077,
+      "Knx.Ets.HawkNET.dll": 5461,
+      "Knx.Ets.ObjectModel.dll": 3526,
+      "Knx.Ets.ViewModel.dll": 2153,
+      "Knx.Ets.Ui.UserControls.dll": 1285,
+      "Knx.DevKit.dll": 1275,
+      "Knx.Ets.Xml.ObjectModel.dll": 1036,
+      "Knx.Ets.Sdk.dll": 975,
+      "Knx.Ets.Common.dll": 937,
+      "Knx.Ets.DynamicData.dll": 587,
+      "Knx.CloudKit.dll": 457,
+      "Knx.Ets.CvNext.dll": 454,
+      "all remaining modules": 6982
+    },
+    "Note": "Measured from the tool's own inventories at v370. The previous 536 counted only part of the method worklist and no types or fields; 12,019 of the 15,742 named rows are SDK-protected coverage the whitelist already covers.",
+    "ExcludedBuckets": {
+      "compiler-generated rows (never renamed)": 57977,
+      "already readable names (no rename needed)": 99033,
+      "sdk-whitelisted": 17267,
+      "protected contract family": 3657,
+      "constructors": 20825
+    },
+    "BiggestMethodTypes": [
+      "Knx.DevKit.dll akj 291",
+      "Knx.DevKit.dll amh 185",
+      "Knx.Falcon.dll nc 151",
+      "Knx.DevKit.dll akg 143",
+      "Knx.Ets.HawkNET.dll eo 117",
+      "Knx.CloudKit.dll ajg 115",
+      "Knx.DevKit.dll Class23 115",
+      "ETS6C.exe and ETS6N.exe ETS.ApplicationCommandHandler 112 each",
+      "Knx.DevKit.dll al6 108",
+      "Knx.Falcon.dll Knx.Falcon.Bus 106",
+      "Knx.Ets.HawkNET.dll et 84"
+    ],
+    "Routes": [
+      "6.4 compiler-generated state-machine name oracle (perf-now/sm-oracle.py)",
+      "operation-name literal (perf-now/propose-from-literals.py): a row passes its own name to the logger",
+      "contract family: one virtual/interface row names its whole family; the wave expands it",
+      "domain-callee anchor (perf-now/anchor-scan.py)",
+      "literal / self-naming worklist (perf-now/candidates.py)",
+      "structural fallback: offsets, bitfields, formatters, tables (slow; last)"
+    ],
+    "Worklists": [
+      { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Falcon.dll.json", "Rows": 368, "Route": "literal / self-naming" },
+      { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Ets.HawkNET.dll.json", "Rows": 116, "Route": "literal / self-naming" },
+      { "Path": "D:\\knx_analysis\\perf-now\\sm-oracle-falcon.json", "Rows": 59, "Route": "6.4 state-machine oracle" },
+      { "Path": "D:\\knx_analysis\\perf-now\\sm-oracle-hawk.json", "Rows": 51, "Route": "6.4 state-machine oracle" },
+      { "Path": "D:\\knx_analysis\\perf-now\\anchor-scan.json", "Rows": 21, "Route": "domain-callee anchor" },
+      { "Path": "D:\\knx_analysis\\perf-now\\backlog-v370.json", "Rows": 29652, "Route": "the remainder itself, per module and per kind" }
+    ],
+    "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
+    "ExhaustedRoutes": [
+      "cross-version method transfer: 6.4 keeps compiler-generated type names only (1 readable method name in 6.4 Knx.Falcon)",
+      "property/field accessor inference re-run at v369: 1607 proposals -> 1099 already named, 447 whitelisted, 60 protected family, 1 net new",
+      "field-accessor inference re-run at v369: 1 proposal",
+      "property-backed field inference re-run at v369: 49 proposals, all in third-party assemblies",
+      "contract-family gaps",
+      "shape matching inside one version",
+      "per-module literal sweep",
+      "compiler-generated lambda shortcut",
+      "Falcon operation-name literals: 55 rows, 54 named in wave 370, 0 multi-literal rows left, 16 logger-call rows carry no identifier literal"
+    ]
+  },
+  "NextItems": [
+    { "Module": "Knx.DevKit.dll", "Type": "akj", "Rows": 291, "Route": "literal / anchor worklist; largest single type in the pass" },
+    { "Module": "Knx.DevKit.dll", "Type": "amh", "Rows": 185, "Route": "literal / anchor worklist" },
+    { "Module": "Knx.Falcon.dll", "Type": "nc", "Rows": 151, "Route": "literal worklist: MaS return-code validators and the SendWithRetryAsync tail" },
+    { "Module": "Knx.DevKit.dll", "Type": "akg", "Rows": 143, "Route": "literal / anchor worklist" },
+    { "Module": "Knx.Ets.HawkNET.dll", "Type": "eo", "Rows": 117, "Route": "literal worklist" },
+    { "Module": "Knx.CloudKit.dll", "Type": "ajg", "Rows": 115, "Route": "literal worklist" },
+    { "Module": "Knx.DevKit.dll", "Type": "Class23", "Rows": 115, "Route": "literal / anchor worklist" },
+    { "Module": "Knx.Ets.HawkNET.dll", "Type": "et", "Rows": 84, "Route": "literal worklist" },
+    { "Module": "Knx.Falcon.dll", "Type": "Class1348", "Rows": 67, "Route": "log-message literals name the operation ManagedIoTStack forwards" },
+    { "Module": "Knx.Falcon.dll", "Type": "Class1222", "Rows": 31, "Route": "log-message literals name the IoTLogger dispatch methods" },
+    { "Module": "Knx.Ets.ViewModel.dll", "Kind": "Fields", "Rows": 2118, "Route": "field remainder has no route yet: --suggest-property-fields only proposes fields behind already-named properties" }
+  ],
+  "NextItemRules": [
+    "Oracle rows are the strongest route: the 6.4 released surface names them, and a literal in the 6.3 body must corroborate the row before it is accepted.",
+    "A NewName may not repeat inside one type; the sibling stays open rather than taking a numeric suffix.",
+    "Virtual rows, interface implementations and contract-family members are renamed as a family (build-rows.py fills ContractFamily; the updater expands it), so a block can grow the map by more rows than the review file holds.",
+    "One block is one review file, one --wave run, one checkpoint, one commit."
+  ],
+  "HardBlockers": {
+    "Codes": [
+      "accessor-operator-or-runtime-special-name",
+      "virtual-or-override row not yet family-reviewed",
+      "SDK-protected row or family (whitelist)",
+      "same-module name collision where the sibling has no distinct evidence"
+    ],
+    "Rule": "A turn may stop with work left only when every remaining row of the current block carries one of these codes, recorded here with its token. 'Evidence is missing' is not a blocker code; the turn must switch route instead."
+  },
+  "Deferred": {
+    "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign, rebuild, overlay Stage-RecompiledTree + manifest, run the audit battery, then verify against unchanged third-party ETS Apps.",
+    "LiveEts": "user-coordinated; ask before running",
+    "NotProven": "Mapping is not source application. AppliedToSource=false means the ETS binaries and sources are still unchanged."
+  }
+}
