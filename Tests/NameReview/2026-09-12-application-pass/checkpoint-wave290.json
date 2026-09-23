@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 290 accepted (6.3): the Falcon property-value response Class890",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v290.xml",
+      "Sha256": "BE893F2E51AED3000F1FAD34DB165AF8621A598A74B7087DF47081FA1214F3EA",
+      "PreviousMap": "names63-staged-v289.xml",
+      "PreviousMapSha256": "13EC6EEC5DE30B2E741FABA7A5BB7C1626F79A2C435DCA98CCF3A464EF96694A",
+      "FrozenSha256": "BE893F2E51AED3000F1FAD34DB165AF8621A598A74B7087DF47081FA1214F3EA",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave290.review.json"
+  ],
+  "Method": {
+    "evidence": "Class890 is the property-value response and prints ObjectIndex={0} PropertyId={1} ReturnCode={2:X02} Data={3} from e(), d(), b(), a() in that order; the setters pair by offset (c(byte) offset 0 object index, b(byte) offset 1 property id, a(byte) offset 2 return code, a(byte[]) offset 3+ data), and a(APCI) throws with the message unknown APCI, the family s Verify* shape.",
+    "themes": "Class871 s formatter prints only DestinationAddress={0:X4}, so the other ten of its rows have no formatter evidence and stay unresolved: their accessors all read through a shared base offset plus an index helper, which needs a closer read of the helper s call sites rather than the offset column. Class890 s own c() (which builds something from get_ReturnCode and get_Data) also stays unresolved pending its return type s role."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 9,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15100,
+    "VisibleRenamed": 5187,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11906
+  },
+  "Errors": 0
+}
