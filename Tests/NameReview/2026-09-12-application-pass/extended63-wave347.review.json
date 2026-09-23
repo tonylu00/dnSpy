@@ -1,0 +1,36 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005CC",
+   "Signature": "System.Collections.Generic.List`1<ey> Class287::q()",
+   "OriginalName": "q",
+   "NewName": "GetGroupAddressTable",
+   "NeedsReadableName": false,
+   "Reason": "Class287 is Knx.Ets.Hawk.Impl.CommunicationTables (its own constructor logs that name). The *named* method 0x060005E3 FindOrAddGroupAddress(ushort, bool) searches exactly this method's result - it calls q(), then FindIndex(Predicate<ey>) over the returned List<ey>, then adds a new ey - so q() is the group-address table. Evidence: one --inspect-type dossier of Class287."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005E4",
+   "Signature": "System.Void Class287::e()",
+   "OriginalName": "e",
+   "NewName": "SortGroupAddressTable",
+   "NeedsReadableName": false,
+   "Reason": "Its body calls q(), get_Count and Sort, and the only List<ey> in the class is the group-address table q() that FindOrAddGroupAddress (0x060005E3) searches, so this sorts that table. Evidence: one --inspect-type dossier of Class287."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

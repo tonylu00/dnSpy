@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 347: the Class287 group-address table getter and sorter, anchored by FindOrAddGroupAddress",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v347.xml",
+      "Sha256": "9001825FB7481A162895C9AEF500C46F4B90A00DCB55DCC3B3BC07AEFBAE1C2E",
+      "PreviousMap": "names63-staged-v346.xml",
+      "PreviousMapSha256": "183BF722E394F1F1694BEF4F94C95F8617889E5997E160585E3BA07ADFF99495",
+      "FrozenSha256": "9001825FB7481A162895C9AEF500C46F4B90A00DCB55DCC3B3BC07AEFBAE1C2E",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave347.review.json"
+  ],
+  "Method": {
+    "evidence": "Class287 is Knx.Ets.Hawk.Impl.CommunicationTables (its constructor logs that name). The already-named FindOrAddGroupAddress(ushort,bool) searches the collection returned by q() with FindIndex(Predicate<ey>) and adds a new ey, so q() is the group-address table; the sorter that calls q() + get_Count + Sort sorts that same table. Name-diff gate: 2 added, 0 removed, 0 renamed.",
+    "themes": "Method used for the rest of this class: name a collection from the named method that consumes it, then its sorter/setter follows. Class287s other 28 rows stay open because their collections element types (ey, ez, e0-e3) are unnamed, so the anchor has to come from the code that builds or consumes each table (LoadProjectData 0x060005CA is the entry point for that)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15776,
+    "VisibleRenamed": 5391,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12348
+  },
+  "Errors": 0
+}
