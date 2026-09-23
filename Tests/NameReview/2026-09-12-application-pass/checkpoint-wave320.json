@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 320 accepted (6.3): the compare-device manager",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v320.xml",
+      "Sha256": "45CCF96B09863737A28D620068A4D878BE102E765533B8852FC7E923309FC45E",
+      "PreviousMap": "names63-staged-v319.xml",
+      "PreviousMapSha256": "367D9AFBBAC20F53664161CBE25298F016CF5563C007A9FBC344E56830B3CB80",
+      "FrozenSha256": "45CCF96B09863737A28D620068A4D878BE102E765533B8852FC7E923309FC45E",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave320.review.json"
+  ],
+  "Method": {
+    "evidence": "Class484's two fields, its constructor and its single task method are 6.4 IoTDeviceCompareManager's: the CompareDeviceTask collaborator (the class whose own logger literal is Knx.Ets.Hawk.CompareDeviceTask), an IProgress<HawkProgressIndication>, the (task, progress) constructor, and Task<XDocument> a(IoTOperationToken) which is PerformDeviceComparisons with the same single token parameter and return type. Its two getters take the 6.4 field names compareDeviceTask and progressCallback.",
+    "themes": "A manual counterpart match after both automated sweeps came back empty (handoff 128). Class486 stays unresolved: it holds a CompareDeviceTask and exposes Nullable<InstallationId>, and no 6.4 class in that area has that shape (CompareDeviceContext carries DataFacade/DeviceManagement/XElement, IoTDeviceCompareDocument carries XElements and CompareDeviceTask.Result)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 4,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15294,
+    "VisibleRenamed": 5280,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 951,
+    "Methods": 12049
+  },
+  "Errors": 0
+}
