@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 325 accepted (6.3): ProcessQueueAsync and its cached predicate",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v325.xml",
+      "Sha256": "756AA2AACC80A382EAC14E5A8545FE658806C1C11DD37441B82C055F593AB153",
+      "PreviousMap": "names63-staged-v324.xml",
+      "PreviousMapSha256": "A5FC84950EB9E76337C8DE0FBF3D4D527D756820D53A978DFF1D46F98529ED84",
+      "FrozenSha256": "756AA2AACC80A382EAC14E5A8545FE658806C1C11DD37441B82C055F593AB153",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave325.review.json"
+  ],
+  "Method": {
+    "evidence": "The first fully verified link of the lambda chain: Class1079/<>c caches a Predicate<Task> in <>9__31_0, the lambda with that signature (Class1079/<>c::a(Task) -> bool) has exactly one ldftn caller - the state machine Class1079/b::d() - and that state machine's AsyncTaskMethodBuilder.Start<> call comes from Class1079::method_10. 6.4's CoapTransmissionManager names that same ordinal (+<ProcessQueueAsync>d__31), so method_10 is ProcessQueueAsync and the lambda is <ProcessQueueAsync>b__31_0.",
+    "themes": "Validates the recipe for the whole lambda population: the field name supplies the ordinal, the call edge supplies the class, and the 6.4 state-machine name supplies the owner's readable name. 8,218 such fields survive across the tree, so the remaining lambda blocks can be emitted the same way."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15330,
+    "VisibleRenamed": 5303,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12080
+  },
+  "Errors": 0
+}
