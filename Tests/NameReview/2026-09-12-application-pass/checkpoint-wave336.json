@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 336: ft::a(string) is NormalizeSerialNumber",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v336.xml",
+      "Sha256": "9976771D756A7ABD91EB399EE7784FD18C3A0ED628C0B33D2BF823670293E07F",
+      "PreviousMap": "names63-staged-v335.xml",
+      "PreviousMapSha256": "60D742933FB5D63CFF93086B4A4C35C8410F4A665C3365AADC8BF30AB896EB43",
+      "FrozenSha256": "9976771D756A7ABD91EB399EE7784FD18C3A0ED628C0B33D2BF823670293E07F",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave336.review.json"
+  ],
+  "Method": {
+    "evidence": "The body is a serial-number normalizer: it strips a repeated MV- prefix (StartsWith(MV-) / Substring(3) in a loop) and cuts the value at the first hyphen (Contains(45) / Split(45)[0]) before returning it - literal evidence from --inspect-methods 0x060004C9 in Knx.Ets.HawkNET.dll.",
+    "themes": "Falcon/HawkNET IL work has begun: this row was named from its own literals, not from a cross-version oracle. The same inspection identified ft four byte-identical null-guarded wrappers around GetSerialNumberExtractor (0x060004D3/D4/D6/D7), which need their explicit interface owners before they can be named distinctly."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 1,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15713,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12285
+  },
+  "Errors": 0
+}
