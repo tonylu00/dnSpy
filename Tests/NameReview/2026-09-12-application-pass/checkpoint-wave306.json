@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 306 accepted (6.3): the IoT task stage accessors",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v306.xml",
+      "Sha256": "BF976AEA8DF09FAC727592843A4AD87A3085C3A9BEDE79888A10F6BCA194B737",
+      "PreviousMap": "names63-staged-v305.xml",
+      "PreviousMapSha256": "EDEB4256D9166712F694A9334E47F8E2659A61BF78D9A9F07AAB5314C460DC94",
+      "FrozenSha256": "BF976AEA8DF09FAC727592843A4AD87A3085C3A9BEDE79888A10F6BCA194B737",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave306.review.json"
+  ],
+  "Method": {
+    "evidence": "Eight accessors across the IoT task classes (Class457`2, Class464, Class467, Class470, Class474, Class477, Class485, Class497) return Interface24`2<TStage, TEnum> - the stage interface of the IoT task family - and every instantiation names its stage with a readable IoT task type (IoTDeviceUnloadStage, IoTDeviceResetStage, IoTIndividualAddressDownloadStage, IoTApplicationProgramDownloadStage, IoTDeviceInfoGenerationStages, IoTCompareDeviceStage). The base class uses the same vocabulary in its already named members (GetInfoTextForStage(T), PerformTaskInternal, get_TaskInfo), so each accessor is the task current-stage getter; all eight sit in distinct classes, so the name does not collide.",
+    "themes": "This is the type-level unlock of the Class454 cluster applied at the member level: the accessors of the stage interface are nameable from the interface role and the readable stage type arguments even though the interface type itself has no inventory row. The wider point is recorded for the next pass: IoT task stage accessors across the family take get_Stage, and the remaining accessors of that cluster are still blocked on their interface/Class319 types."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 8,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15177,
+    "VisibleRenamed": 5234,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11983
+  },
+  "Errors": 0
+}
