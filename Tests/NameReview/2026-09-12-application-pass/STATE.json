@@ -68,7 +68,6 @@
   "Backlog": {
     "MeasuredUtc": "2026-09-23T14:10:00Z",
     "Report": "D:\\knx_analysis\\perf-now\\backlog-v375.json",
-    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v375.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
@@ -96,13 +95,6 @@
       "all remaining modules": 5663
     },
     "Note": "Measured at v375 with full-path identity. Wave 375 named 13 definitions (9 fields that are a named property's backing store, 4 CloudKit event accessors). Every mechanical route is now saturated or evidence-free; the remaining 28,363 rows need per-row reading or a new evidence source.",
-    "ExcludedBuckets": {
-      "compiler-generated rows (never renamed)": 55036,
-      "already readable names (no rename needed)": 92963,
-      "sdk-whitelisted": 15098,
-      "protected contract family": 3657,
-      "constructors": 20843
-    },
     "BiggestMethodTypes": [
       "Knx.DevKit.dll akj 291",
       "Knx.DevKit.dll amh 185",
@@ -127,33 +119,6 @@
       "type that logs its own name (suggest-types-selfname.py)",
       "structural fallback: offsets, bitfields, formatters, tables (slow; last)"
     ],
-    "Worklists": [
-      {
-        "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Falcon.dll.json",
-        "Rows": 368,
-        "Route": "literal / self-naming"
-      },
-      {
-        "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Ets.HawkNET.dll.json",
-        "Rows": 116,
-        "Route": "literal / self-naming"
-      },
-      {
-        "Path": "D:\\knx_analysis\\perf-now\\anchor-scan.json",
-        "Rows": 21,
-        "Route": "domain-callee anchor"
-      },
-      {
-        "Path": "D:\\knx_analysis\\perf-now\\proposals-devkit.json",
-        "Rows": 72,
-        "Route": "DevKit twin method names - NOT USABLE (4.2% agreement on known rows)"
-      },
-      {
-        "Path": "D:\\knx_analysis\\perf-now\\backlog-v372.json",
-        "Rows": 29576,
-        "Route": "the remainder itself, per module and per kind"
-      }
-    ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
       "cross-version method transfer: 6.4 keeps compiler-generated type names only",
@@ -172,7 +137,8 @@
       "field backing stores saturated at this method map: 350 landed (wave 373), 16 left (wave 375), 98.5% agreement",
       "readable bucket verified: a tree-wide random-name scan found 3 rows, all real names"
     ],
-    "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them."
+    "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
+    "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843"
   },
   "NextItems": [
     {
