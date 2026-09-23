@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 351: three Class481 IoT formatters named by their own literals",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v351.xml",
+      "Sha256": "9F1244483EC959B667C919614D24B3FC010271477D4BD1AF1B18FFC8A082FD59",
+      "PreviousMap": "names63-staged-v350.xml",
+      "PreviousMapSha256": "00A983A4222FE6EEEC311C1CAA372A65CD9D856A11AC044A631BEB67546B7487",
+      "FrozenSha256": "9F1244483EC959B667C919614D24B3FC010271477D4BD1AF1B18FFC8A082FD59",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave351.review.json"
+  ],
+  "Method": {
+    "evidence": "Found through perf-now/literal-worklist.py and read with --inspect-methods: Class481::a(ConfigurationFlags) emits only R/W/C for the individual flag values, Class481::a(n2) formats Recipient#{0} (<addr>, <type>,max rt={1}), and Class481::a(n1) formats Publisher#{0} (...). Gate: 3 added, 0 removed, 0 renamed.",
+    "themes": "Corrected the worklist guard this turn: it keyed already-named rows on absolute input paths while the map stores relative ones, so it listed 0x0600133C which v348 already named - that is why wave 350 was a no-op (the name-diff gate caught it). Filtering out ctor/cctor/MoveNext/SetStateMachine and compiler-generated declaring types leaves 345 unnamed HawkNET methods that carry their own literals: the worklist for the rest of this module, and the same query runs for Falcon."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 3,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15784,
+    "VisibleRenamed": 5396,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12356
+  },
+  "Errors": 0
+}
