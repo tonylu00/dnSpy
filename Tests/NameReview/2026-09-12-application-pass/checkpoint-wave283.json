@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 283 accepted (6.3): Class868 result-code actions",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v283.xml",
+      "Sha256": "2B53626CEE21222E8E0BD65D00B7A13DADDA640E6584A246E4D74F61CA9AB85D",
+      "PreviousMap": "names63-staged-v282.xml",
+      "PreviousMapSha256": "37C2C874AD9DF70463A1CE0066A533A4707F19D189716C2B9E995A5801A0B8E9",
+      "FrozenSha256": "2B53626CEE21222E8E0BD65D00B7A13DADDA640E6584A246E4D74F61CA9AB85D",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave283.review.json"
+  ],
+  "Method": {
+    "evidence": "Class868s reply dispatcher 0x06000C7D switches on the ResultCode (values now read with --dump-constants: E_SUCCESS 0, E_SUCCESS_WITH_CRC 1, E_BUSY_TIMEOUT 2, E_BUSY 3, E_SESSION_REFUSED 225, E_NO_SESSION_ACTIVE 226, E_SUBSERVICE_NOT_SUPPORTED 227, E_DATA_VOID 248, E_ERROR 255) and on PollCycleState (Idle 0, Polling 1, TimerExpiredPerformLastTry 2), and reading it with instruction offsets (new perf-now/iloff.py) attributes every call to its case. Four actions are length checks through the already named Class823::VerifyLengthEqualTo - exactly 3 bytes for a success reply, 4 for Data Void in Idle without a retry, 3 for Busy in Polling, 5 for Busy Timeout in Polling - and five throw an ApplicationLayerException: e for E_ERROR, d for E_SESSION_REFUSED, c for E_NO_SESSION_ACTIVE, b for E_SUBSERVICE_NOT_SUPPORTED (all with the unresolvable error, cannot process the state/return code text) and a for a busy/timeout reply that arrives while the cycle is not Polling with the retry flag set, whose own text is return code {0} : unresolvable MaC error, cannot process the return code.",
+    "themes": "New helper perf-now/iloff.py prints offset-annotated IL (from --inspect-methods) so a switch table maps to the calls it selects - the missing half of dispatch-map.py, which prints branch targets without the offsets of the instructions that carry them. This closed the last Class868 block: with the constants, the offsets and the already named VerifyLengthEqualTo, all nine actions were decidable."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 9,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 14973,
+    "VisibleRenamed": 5086,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11779
+  },
+  "Errors": 0
+}
