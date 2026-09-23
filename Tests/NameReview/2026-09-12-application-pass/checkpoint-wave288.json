@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 288 accepted (6.3): three more Falcon frames from their formatters",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v288.xml",
+      "Sha256": "C4174B5B84FC4D77A0B45012556DEF2B6A27D5404164B85625E80F019EDD936D",
+      "PreviousMap": "names63-staged-v287.xml",
+      "PreviousMapSha256": "839236793E7A07E5808507C12976CC2BC4DA7FF23C12D94A6493FB2206187CD8",
+      "FrozenSha256": "C4174B5B84FC4D77A0B45012556DEF2B6A27D5404164B85625E80F019EDD936D",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave288.review.json"
+  ],
+  "Method": {
+    "evidence": "Three more frames read from their own formatters. Class848 prints Name={0} Version={1} Type={2} from c(), b(), a() and each accessor s type matches its label (file-name wrapper sh, System.Version, FileType). Class852 prints Block={0} Chunks={1} ChunkSize={2} from c(), b(), a(). Class875 prints ObjectIndex={0} PropertyId={1} Data={2} from c(), b(), a() with the property id byte at offset 1 and the data at offset 2. Each of the three also has a byte[] factory that only wraps the caller buffer (UnsafeFromBuffer).",
+    "themes": "frame-report.py keeps paying: three blocks in one read. Still queued: Class854 (file-control response, 8 free - its 3 accessors interleave with result-code action methods that need the Class868 treatment), Class871 and Class890 (shared base offset with an indexing helper), Class889 and Class906 (7 each)."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 20,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15074,
+    "VisibleRenamed": 5166,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11880
+  },
+  "Errors": 0
+}
