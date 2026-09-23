@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T12:05:00Z",
+  "UpdatedUtc": "2026-09-23T12:55:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,20 +17,20 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v372.xml",
-      "Sha256": "2114AC9A0F169553A9DC5B6A49849000B82020E91BBB6DC7EFC75C6A9053A49B",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave372.json",
-      "NextWave": 373,
-      "CumulativeRenamedRows": 16070,
-      "RowsInMap": { "Methods": 12636, "Types": 962, "Fields": 2472, "Parameters": 2316, "Locals": 837 },
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v373.xml",
+      "Sha256": "3ADC94E6945B2AE753BE99BA3D9ABD24FC2A7DE7197FFD6D07DD04E038521BEF",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave373.json",
+      "NextWave": 374,
+      "CumulativeRenamedRows": 16416,
+      "RowsInMap": { "Methods": 12636, "Types": 965, "Fields": 2815, "Parameters": 2316, "Locals": 837 },
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v170.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v171.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v170.json",
-      "NextVersion": 171,
-      "RestagedFrom": "names63-staged-v372.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v171.json",
+      "NextVersion": 172,
+      "RestagedFrom": "names63-staged-v373.xml",
       "AppliedToSource": false
     }
   },
@@ -60,16 +60,16 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T12:05:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v372.json",
-    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v372.json",
+    "MeasuredUtc": "2026-09-23T12:55:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v373.json",
+    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v373.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 29576,
-    "ByKind": { "Methods": 5533, "Types": 2332, "Fields": 21711 },
+    "NotYetNamedRows": 29230,
+    "ByKind": { "Methods": 5533, "Types": 2329, "Fields": 21368 },
     "ByModule": {
       "Knx.Falcon.dll": 10052,
       "Knx.Ets.HawkNET.dll": 5416,
@@ -85,7 +85,7 @@
       "Knx.Ets.CvNext.dll": 454,
       "all remaining modules": 6736
     },
-    "Note": "Measured from the tool's own inventories at v372. Waves 371 and 372 named 76 definitions: the 6.4 state-machine oracle rows that were neither SDK-protected nor already named, and six DevKit types taken from the Manufacturer Tool's readable twin. Most candidate rows in the oracle worklists turned out to be SDK-protected (48 of 116 method rows, 45 of 63 type rows), which is why those blocks are small.",
+    "Note": "Measured from the tool's own inventories at v373. Wave 373 named 346 definitions - 343 fields whose named accessors prove them to be the property's backing store, and 3 types that log their own name. The field route is bootstrap-limited: it can only name fields whose accessors are already named, so it must be re-run after every method block.",
     "ExcludedBuckets": {
       "compiler-generated rows (never renamed)": 57977,
       "already readable names (no rename needed)": 99033,
@@ -113,6 +113,9 @@
       "domain-callee anchor (perf-now/anchor-scan.py)",
       "literal / self-naming worklist (perf-now/candidates.py)",
       "structural fallback: offsets, bitfields, formatters, tables (slow; last)"
+      ,"field backing store (perf-now/suggest-fields.py): a field whose only named users are one property's accessors of the same type takes the camelCase property name; 95.6% agreement on already-named fields, 350 proposals at v373"
+      ,"accessor from a named field (perf-now/suggest-accessors-from-fields.py): a method that touches exactly one named field is its get_/set_/add_/remove_ accessor; 91.6% agreement on already-named methods"
+      ,"type self-name literal (perf-now/suggest-types-selfname.py): a type that logs its own fully qualified name; 94.3% agreement on already-named types"
     ],
     "Worklists": [
       { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Falcon.dll.json", "Rows": 368, "Route": "literal / self-naming" },
@@ -137,6 +140,7 @@
       ,"Manufacturer Tool Knx.DevKit_orig.dll: type names transfer (8 of 9 already-named types agree under the strict readability filter), method names do not (4.2% agreement with the pass's own names, 114 of 119 matched rows disagree) - method transfer rejected"
       ,"compare/*/src decompiled trees and sig/*.sig.txt dumps: projections of the pass's own map (0 of 446 ETS6N token names agree with the map), not an independent oracle"
       ,"DevKit type names: 63 strict-readability proposals, 45 SDK-protected, 9 already named, 6 landed in wave 372, 3 dropped by review"
+      ,"--suggest-property-fields / --suggest-field-accessors / --suggest-accessors re-run at v372: identical to v369 (49 / 1 / 1607 proposals), still all out of scope or already named"
     ]
   },
   "NextItems": [
