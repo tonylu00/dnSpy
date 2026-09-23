@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T15:05:00Z",
+  "UpdatedUtc": "2026-09-23T16:00:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,13 +17,13 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v376.xml",
-      "Sha256": "83427722BC41C54FEB54EF3DD24689BCA47BB40D8E417CB5C9FE8B4008370884",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave376.json",
-      "NextWave": 377,
-      "CumulativeRenamedRows": 16476,
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v377.xml",
+      "Sha256": "A14C27D6E45E92885376F37096418657E87A695FD9B92E8B141D7370CE730581",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave377.json",
+      "NextWave": 378,
+      "CumulativeRenamedRows": 16691,
       "RowsInMap": {
-        "Methods": 12687,
+        "Methods": 12802,
         "Types": 965,
         "Fields": 2824,
         "Parameters": 2316,
@@ -32,11 +32,11 @@
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v174.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v175.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v174.json",
-      "NextVersion": 175,
-      "RestagedFrom": "names63-staged-v376.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v175.json",
+      "NextVersion": 176,
+      "RestagedFrom": "names63-staged-v377.xml",
       "AppliedToSource": false
     }
   },
@@ -66,22 +66,22 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T15:05:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v376.json",
+    "MeasuredUtc": "2026-09-23T16:00:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v377.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 28323,
+    "NotYetNamedRows": 28208,
     "ByKind": {
-      "Methods": 5482,
+      "Methods": 5367,
       "Types": 2344,
       "Fields": 20497
     },
     "ByModule": {
-      "Knx.Falcon.dll": 9928,
-      "Knx.Ets.HawkNET.dll": 5373,
+      "Knx.Falcon.dll": 9773,
+      "Knx.Ets.HawkNET.dll": 5333,
       "Knx.Ets.ObjectModel.dll": 3405,
       "Knx.Ets.ViewModel.dll": 2153,
       "Knx.DevKit.dll": 1264,
@@ -92,9 +92,9 @@
       "Knx.CloudKit.dll": 446,
       "Knx.Ets.CvNext.dll": 388,
       "Knx.Ets.CalculatedParameters.dll": 290,
-      "all remaining modules": 5663
+      "all remaining modules": 2302
     },
-    "Note": "Measured at v376 with full-path identity. Wave 376 named the 20 operation decorators of the managed IoT stack plus their 20 interface-family declarations. All mechanical routes are now closed by measurement (see ExhaustedRoutes); the remainder is per-row reading.",
+    "Note": "Measured at v377 with full-path identity. Wave 377 named 115 guard/log methods from the single descriptive literal each row carries (unique inside its type). 21 further rows were dropped: their contract family has siblings, so naming one member would either conflict with a sibling or spread one member's literal over the others.",
     "BiggestMethodTypes": [
       "Knx.DevKit.dll akj 291",
       "Knx.DevKit.dll amh 185",
@@ -117,7 +117,8 @@
       "field backing store from a named accessor (suggest-fields.py) - re-run after every method block",
       "accessor of a named field (suggest-accessors-from-fields.py)",
       "type that logs its own name (suggest-types-selfname.py)",
-      "structural fallback: offsets, bitfields, formatters, tables (slow; last)"
+      "structural fallback: offsets, bitfields, formatters, tables (slow; last)",
+      "per-row literal naming (guard/log/validator rows) - the current working route for the method remainder"
     ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
@@ -139,29 +140,27 @@
   },
   "NextItems": [
     {
+      "Module": "Knx.Falcon.dll + Knx.Ets.HawkNET.dll",
+      "Rows": 21,
+      "Kind": "Methods",
+      "Tokens": "0x06000C21, 0x060010BC, 0x060010C2, 0x06001127, 0x0600117F, 0x0600118D, 0x060011D4, 0x060017F9, 0x06001A19, 0x06001A23, 0x06001F4A, 0x06001F99, 0x060020E9, 0x0600216C, 0x06002317, 0x0600238B, 0x0600243B, 0x06000C73, 0x06000CE7, 0x0600112E, 0x06001138",
+      "Route": "literal rows inside multi-member contract families: the whole family needs one generic name before any of them can be renamed"
+    },
+    {
       "Module": "Knx.Falcon.dll",
-      "Rows": 9888,
-      "Route": "per-row reading: nc's MaS return-code validators, Class1222 IoTLogger dispatch, remaining stubs"
+      "Rows": 9773,
+      "Route": "per-row literal/structural reading (the nc MaS validator clusters, Class1000+, Class1364 mDNS)"
     },
     {
       "Module": "Knx.Ets.HawkNET.dll",
-      "Rows": 5373,
-      "Route": "per-row reading"
-    },
-    {
-      "Module": "Knx.Ets.ObjectModel.dll",
-      "Rows": 3405,
-      "Route": "per-row reading; most are fields whose accessors are unnamed"
+      "Rows": 5333,
+      "Route": "per-row literal/structural reading"
     },
     {
       "Module": "all modules",
       "Rows": 20497,
       "Kind": "Fields",
-      "Route": "bootstrap-blocked: a field needs a named accessor, so name methods first, then re-run perf-now/suggest-fields.py"
-    },
-    {
-      "Module": "all modules",
-      "Needed": "an external evidence source (PDBs, an unobfuscated build of a coupled assembly, or original sources) - none exists on this machine today"
+      "Route": "bootstrap-blocked: name accessors first, then re-run perf-now/suggest-fields.py"
     }
   ],
   "NextItemRules": [
