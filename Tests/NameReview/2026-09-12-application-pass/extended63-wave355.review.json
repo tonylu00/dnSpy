@@ -1,0 +1,62 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "nb",
+   "Token": "0x06000041",
+   "Signature": "System.Threading.Tasks.Task nb::c(nc,System.Boolean,System.Threading.CancellationToken)",
+   "OriginalName": "c",
+   "NewName": "SetRfMediaCouplerStateAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'Failed to {0} RF MediaCoupler {2} for {1}: Error Code {3:X2}' with {0} being 'Enable' or 'Disable', so it switches the RF media coupler's state. Candidate from perf-now/candidates.py (unnamed, unprotected, family-safe) with its state machine's literals as evidence."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "nb",
+   "Token": "0x06000042",
+   "Signature": "System.Threading.Tasks.Task nb::b(nc,System.Boolean,System.Threading.CancellationToken)",
+   "OriginalName": "b",
+   "NewName": "SetIpRouterStateAsync",
+   "NeedsReadableName": false,
+   "Reason": "The mirror of SetRfMediaCouplerStateAsync for the IP router: 'Failed to {0} IP Router {2} for {1}: Error Code {3:X2}' with 'Enable' / 'SystemBroadcast'. Candidate from perf-now/candidates.py (unnamed, unprotected, family-safe) with its state machine's literals as evidence."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "nb",
+   "Token": "0x06000043",
+   "Signature": "System.Threading.Tasks.Task nb::a(Knx.Falcon.IndividualAddress,nc,System.Boolean,System.Boolean)",
+   "OriginalName": "a",
+   "NewName": "SetWhiteListEntryStateAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'Failed to {0} white list {1} in coupler {2}: Error Code {3}' and 'Retrigger | {0} white list {1} in coupler ...', so it enables or disables one white-list entry (an IndividualAddress) in a coupler. Candidate from perf-now/candidates.py (unnamed, unprotected, family-safe) with its state machine's literals as evidence."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "nb",
+   "Token": "0x06000046",
+   "Signature": "System.Threading.Tasks.Task nb::a(nc,System.Boolean,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "NewName": "SetTemporaryBroadcastRoutingAsync",
+   "NeedsReadableName": false,
+   "Reason": "Its state machine logs 'Failed to set {0} PID_BC_ROUTING_TEMP {1} for {2}: Error Code {3:X2}' with 'primary' and 'Temp Broadcast Routing...', so it writes the temporary broadcast-routing property. Candidate from perf-now/candidates.py (unnamed, unprotected, family-safe) with its state machine's literals as evidence."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
