@@ -191,6 +191,9 @@ namespace SourceNameMapping {
             int index = name.LastIndexOf('`');
             return index >= 0 && index + 1 < name.Length && name.Skip(index + 1).All(char.IsDigit) ? name.Substring(0, index) : name;
         }
+        /// <summary>The type's own generic arity, excluding the enclosing type's.</summary>
+        internal static int TypeArity(TypeDef type) =>
+            Math.Max(0, type.GenericParameters.Count - (type.DeclaringType?.GenericParameters.Count ?? 0));
     }
     /// <summary>Scoped source alias claims; one contract family may share a name.</summary>
     public sealed class MemberNameClaims {
@@ -211,6 +214,15 @@ namespace SourceNameMapping {
             // the signature so each overload still restores independently.
             var occupants = scope.Occupants(member, alias, Alias).Where(other => !IsFamily(other, family)).ToArray();
             if (occupants.Length == 0) return true;   // namespace, generic parameter or unmodified declaration
+            // C# also distinguishes types by generic arity, so one declaration
+            // space may hold IIoTTaskState and IIoTTaskState<T> at once - the
+            // pair the ETS 6.4 build declares. Only that shape is exempt: a
+            // nested type still cannot repeat its enclosing type's leaf, and a
+            // same-arity sibling still collides.
+            if (member is TypeDef candidate && candidate.DeclaringType == null &&
+                occupants.All(other => other is TypeDef occupant && occupant.DeclaringType == null &&
+                    MemberNameScope.TypeArity(occupant) != MemberNameScope.TypeArity(candidate)))
+                return false;
             if (!(member is MethodDef method)) return true;
             foreach (var other in occupants)
                 if (!(other is MethodDef otherMethod) || MemberNameScope.SameSignature(method, otherMethod)) return true;

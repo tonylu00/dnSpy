@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 312 accepted (6.3): the LoadDevice step cluster and its contracts",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v312.xml",
+      "Sha256": "B6801B773C866D3B12ABA3F79337AAE85F08C5AD9157EB50951103A0F1BA5CB8",
+      "PreviousMap": "names63-staged-v311.xml",
+      "PreviousMapSha256": "10F7CEE8AC29C9E0473E2C10F57DCCF8E842BF66DC31822AD85ECDA1FAA07EAC",
+      "FrozenSha256": "B6801B773C866D3B12ABA3F79337AAE85F08C5AD9157EB50951103A0F1BA5CB8",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave312.review.json"
+  ],
+  "Method": {
+    "evidence": "Eleven type names, every one anchored on the readable 6.4 counterpart or on a literal inside the 6.3 binary. Two classes name themselves in their own logger-category strings: Class474 = Knx.Ets.Hawk.Impl.IoT.Tasks.LoadDevice.ApplicationProgramDownload.IoTApplicationProgramDownloader and Class497 = Knx.Ets.Hawk.Impl.IoT.DeviceImage.DeviceImageWriting.IoTDeviceImageWriter (Class498 already carried the same evidence as IoTDeviceImageCreator). The two remaining classes match the 6.4 classes field for field: Class475 (ApplicationProgramData + data facade, checks manufacturer id and hardware type, throws IncompatibleTargetDeviceException) = ...HardwareTypeCheck.IoTHardwareTypeChecker, Class476 (project data, stores the fingerprint derived from the programming state) = ...FingerprintManagement.IoTFingerprintManager. Their contracts are the interfaces they implement: Interface20/21, while Class497/Class498 implement Interface25/26. Interface10 is Interface10 of the already-named IoTProgrammingModeManager and matches 6.4 IIoTProgrammingModeManager member for member; Interface23 (three Indicate* members) and Interface24`2 (stage, set stage, stage list, goals, NextStage) are 6.4 IIoTTaskState and IIoTTaskState`2, which the 6.3 fields instantiate with the same IoTApplicationProgramDownloadStage/IoTApplicationProgramDownloadGoals arguments. The IIoTTaskState pair is why the pass needed the arity rule fixed (de4dotEx 35cff436).",
+    "themes": "One wave settles the whole LoadDevice/ApplicationProgramDownload step cluster and its DeviceImage collaborators: the downloader, the hardware-type checker, the fingerprint manager, the device-image writer and the four contracts plus the state pair. Class474's four interface accessors (method_0/2/3/4) return exactly these interfaces and are now nameable, which is the next wave's work; the untyped collaborators the cluster still shares (ne, nz, Class489/Class319, fb, id, l6) live outside HawkNET and need their own module's evidence first."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 11,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15209,
+    "VisibleRenamed": 5241,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 910,
+    "Methods": 12005
+  },
+  "Errors": 0
+}
