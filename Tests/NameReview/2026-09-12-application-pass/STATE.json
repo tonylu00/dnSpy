@@ -13,7 +13,8 @@
     "DnspyRepo": "D:\\git\\dnSpy",
     "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
     "Policy": "D:\\knx_analysis\\POLICY.md",
-    "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>"
+    "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
+    "DecompilerFix": "dnSpy submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits 00db96bac - async state machine MoveNext is now found through its MethodImpl override, not only by the literal name"
   },
   "Maps": {
     "63": {
@@ -161,7 +162,12 @@
         "optional, for any remaining raw view: state machine fields -> <>1__state / <>t__builder / <>4__this / <>u__N, identified by type shape (int state, Async*MethodBuilder, owner type)"
       ],
       "Outcome": "async/await bodies and inline lambdas in the decompiled view - readability, not rename coverage. Runtime binding is by interface/MethodImpl and is preserved by the applier.",
-      "Scale": "Measured on 2026-09-23: Falcon 515 async + 54 iterator state machines, HawkNET 383 + 15, ObjectModel 8 + 64; HawkNET alone has 525 renamed closures and 580 compiler-generated types. About 1,000 async/iterator methods across the sampled modules would render as async/yield instead of raw builder stubs."
+      "Scale": "Measured on 2026-09-23: Falcon 515 async + 54 iterator state machines, HawkNET 383 + 15, ObjectModel 8 + 64; HawkNET alone has 525 renamed closures and 580 compiler-generated types. About 1,000 async/iterator methods across the sampled modules would render as async/yield instead of raw builder stubs.",
+      "Status": {
+        "AsyncHalf": "FIXED for the obfuscated 6.3 tree (dnSpy 00db96bac). Verified: Knx.Ets.HawkNET.dll 6.3 type eh decompiles as 'protected override async Task cp(...)' with 31 awaits, and the whole module goes from raw builder stubs to 388 async methods / 1188 await expressions / 0 AsyncTaskMethodBuilder stubs. Regression: .NET 9 System.Net.Http.HttpClient unchanged (4 async / 10 await).",
+        "SixFourOpen": "ETS 6.4 still renders raw stubs (Knx.Ets.HawkNET 6.4: 786 AsyncTaskMethodBuilder, 0 await) even though its state machine methods are already named 'MoveNext' (424 rows). The name is not the blocker there - next diagnostic is the kickoff stub shape against AsyncDecompiler.MatchTaskCreationPattern.",
+        "ClosureHalfOpen": "Lambda/closure inlining still needs AstBuilder.IsClosureType (name-based: '<>c', '<>c__', 'DisplayClass', 'AnonStorey') extended to compiler-generated delegate-target types."
+      }
     },
     "ReadableSurface64": {
       "MeasuredUtc": "2026-09-23T20:15:00Z",
