@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 309 accepted (6.3): Class885 result code getter",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v309.xml",
+      "Sha256": "D8FD3594241D9E622C9DAE50C5CE5BF22F9925471B0F0F84B12132C699359DDF",
+      "PreviousMap": "names63-staged-v308.xml",
+      "PreviousMapSha256": "FEE29C78D6FC3D4E16A67D9C7F50E08340DBD9F25D37AB5BF291EB606F9742A7",
+      "FrozenSha256": "D8FD3594241D9E622C9DAE50C5CE5BF22F9925471B0F0F84B12132C699359DDF",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave309.review.json"
+  ],
+  "Method": {
+    "evidence": "Class885::a() is a no-argument accessor returning Knx.Falcon.ResultCode, found by perf-now/returning-free.py. The family already names this pair get_/set_ResultCode in Class854 and Class890, and the row is the only ResultCode accessor in its class, so it takes get_ResultCode.",
+    "themes": "Another one-command family read. The ResultCode sweep also showed that most ResultCode-returning free rows are Task/dispatcher shapes (nc::a(...), Class854/Class868 dispatchers, the ValueTuple-returning IoT helpers) rather than simple accessors, so only the plain getter qualified. Remaining blockers unchanged: Interface20/21/25/26 (implementer classes need naming; no Type rows), Class938 d(ulong), the two dispatchers, Class871 s four packed fields, the Class319-returning accessors (blocked on Class319), and the call-chain-only blocks."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 1,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15193,
+    "VisibleRenamed": 5235,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11999
+  },
+  "Errors": 0
+}
