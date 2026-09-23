@@ -167,7 +167,17 @@
         "AsyncHalf": "FIXED (dnSpy 00db96bac). Knx.Ets.HawkNET 6.3: 389 async / 1190 await / 0 AsyncTaskMethodBuilder, type eh renders 'protected override async Task cp(...)'. Falcon 556 async / 1125 await (8 raw stubs left, a different kickoff shape - open), ObjectModel 12, DevKit/CloudKit none.",
         "ClosureHalf": "FIXED (dnSpy fd5b322cc). IsAnonymousMethod and IsClosureType now use the delegate-target structure instead of the compiler name pattern. Knx.Ets.HawkNET 6.3: 326 inline lambdas and 0 display-class declarations (was 0 lambdas with the classes visible); ObjectModel 3340, Falcon 461, CloudKit 29, DevKit 16.",
         "SixFourClarified": "The earlier '6.4 renders raw stubs' reading was a wrong-tree measurement: ETS6.4_orig still has Dotfuscator control flow inside the kickoff stub, which defeats the IL pattern match. The pass's own 6.4 tree (ETS6.4_api_preserved5) and ETS6.4_de4dot_batch5 render async correctly with the same decompiler (CompareDeviceTask: 8 async / 29 await / 0 raw stubs). No 6.4 work item remains here.",
-        "Regression": "Unchanged on normal assemblies: .NET 9 System.Net.Http.HttpClient 4 async / 10 await / 0 raw stubs, System.Linq.Enumerable renders lambdas."
+        "Regression": "Unchanged on normal assemblies: .NET 9 System.Net.Http.HttpClient 4 async / 10 await / 0 raw stubs, System.Linq.Enumerable renders lambdas.",
+        "FalconLeftover8": {
+          "Where": "Knx.Falcon.dll 6.3: Class1353::a(Class989, CoapMessageCode, string, string, string, byte[], [opt] bool, [opt] bool, [opt] List<Class1112>) (1 stub, state machine Class1353/Struct958) and Class1360 (7 stubs, Task<ValueTuple<...>> returns, state machines nested under Class1360/Type_1424).",
+          "Examined": "The kickoff IL of Class1353::a is instruction-for-instruction the canonical shape (ldloca/initobj -> call Create -> stfld builder -> this -> params -> stfld state = -1 -> ldflda builder + ldloca state + call Start<T>(!!0&) -> ldflda builder -> call get_Task -> ret), and its state machine has [CompilerGenerated] + implements IAsyncStateMachine.",
+          "Hypotheses": [
+            "At least one of the Class1360 state machine types (nested 'a' under Type_1424) is missing the [CompilerGenerated] attribute, unlike Struct958.",
+            "Both stubs carry an unused extra local ([1] int16 in Class1353::a) - the signature of a partially cleaned Dotfuscator control-flow body.",
+            "A newer compiler shape for Task<ValueTuple<...>> returns may add an instruction the matcher rejects in the middle loop."
+          ],
+          "Next": "Instrument MicrosoftAsyncDecompiler.MatchTaskCreationPattern for these two tokens, or diff the ILAst statement list against a working Falcon stub; then extend the matcher accordingly. 8 rows only - low priority against Phase 4."
+        }
       }
     },
     "ReadableSurface64": {
