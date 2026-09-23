@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 295 accepted (6.3): the Falcon confirmed-restart response Class829",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v295.xml",
+      "Sha256": "5EECF7C74DFAD6389BA9AB16DFD0B1B125C6171CA20CDFEDB0DA82DFA01CD3CB",
+      "PreviousMap": "names63-staged-v294.xml",
+      "PreviousMapSha256": "52F5A2525A882092AD7068AFE31F01D311D127D62AC48B6D9A5B23FB6997D854",
+      "FrozenSha256": "5EECF7C74DFAD6389BA9AB16DFD0B1B125C6171CA20CDFEDB0DA82DFA01CD3CB",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave295.review.json"
+  ],
+  "Method": {
+    "evidence": "Class829 formats itself as Error={0} ProcessTime={1} from a(), b(): a() is the error (its own setter takes the ConfirmedRestartEraseCode error enum) and b() reads a TimeSpan at offset 1, exactly its own setter s parameter type, which is the ProcessTime the format prints second.",
+    "themes": "The parameter type keeps doing the pairing work when the format string gives the field name. Still open: Class904/Class905 (two byte setters through the base helper, no offset), Class834 (Type=0 DoA/Start/Range, getter types needed), Class938 (formatter prints only a constant), Class871 (four packed 16-bit fields), and the remaining five-row types."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 4,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15136,
+    "VisibleRenamed": 5213,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11942
+  },
+  "Errors": 0
+}
