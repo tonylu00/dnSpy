@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 329: 104 Falcon rows named from the released 6.4 surface by normalized signature shape",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v329.xml",
+      "Sha256": "9410224B02F23BACD71A1CA8DDB2CEC55FC25B36E54902A8EF82F633A7029984",
+      "PreviousMap": "names63-staged-v328.xml",
+      "PreviousMapSha256": "03B19A56E449C10DEFA3BBFD34671F49459669129213A81B145F1C2131BD8AC2",
+      "FrozenSha256": "9410224B02F23BACD71A1CA8DDB2CEC55FC25B36E54902A8EF82F633A7029984",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave329.review.json"
+  ],
+  "Method": {
+    "evidence": "The 6.4 tree carries released names where 6.3 is obfuscated, so each row was joined to the 6.4 build by normalized signature shape: every 6.3 type name is replaced by the alias the 6.3 map already gives it, namespaces and generic arity are dropped, and the join must be unique on both sides. A 6.4 row counts as released only when the 6.4 map has no row for its token, so a name this pass assigned earlier cannot be mistaken for evidence. 105 Falcon rows were proposed; the tool suffixed one accessor (0x06002357 get_Item -> get_Item2, a real pre-existing indexer in that scope) and that row was dropped, leaving 104.",
+    "themes": "Falcon. The 6.4 tree (ETS6.4_api_preserved5) is the oracle for the released surface; graph64-v3.sqlite is stale (built 2026-09-12 from the pre-rename tree). The same join applies to every module once a fresh --review inventory of the 6.4 tree exists; accessor-shaped candidates (get_/set_) can collide with property rows that ro63 does not carry, so a two-pass check (run, drop the suffixed rows, re-run) keeps the wave's suffix gate at 0."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 104,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15435,
+    "VisibleRenamed": 5375,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12185
+  },
+  "Errors": 0
+}
