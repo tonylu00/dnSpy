@@ -1,0 +1,36 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005DC",
+   "Signature": "System.Collections.Generic.List`1<e1> Class287::i()",
+   "OriginalName": "i",
+   "NewName": "GetSequenceNumberTable",
+   "NeedsReadableName": false,
+   "Reason": "Its signature is List<e1> Class287::i() and the already-named UpdateLastValidSeqNr(IndividualAddress, ulong) (0x060005E9) consumes exactly it: it calls i(), uses FirstOrDefault<e1> over the result and sets the entry's ulong (e1::a(ulong)), so i() is the table of per-address sequence numbers. Evidence: one --inspect-type dossier of Class287."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class287",
+   "Token": "0x060005E7",
+   "Signature": "System.Void Class287::b()",
+   "OriginalName": "b",
+   "NewName": "SortSequenceNumberTable",
+   "NeedsReadableName": false,
+   "Reason": "Its body is i(); get_Count; Sort over the same List<e1> that UpdateLastValidSeqNr (0x060005E9) searches through GetSequenceNumberTable (0x060005DC). Evidence: one --inspect-type dossier of Class287."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

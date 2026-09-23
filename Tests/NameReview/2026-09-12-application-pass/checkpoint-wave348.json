@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 348: Class287 sequence-number table getter and sorter",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v348.xml",
+      "Sha256": "212A7E6F567C6E583F5475E29764251558550A14E552CECBD3224882F830BF11",
+      "PreviousMap": "names63-staged-v347.xml",
+      "PreviousMapSha256": "9001825FB7481A162895C9AEF500C46F4B90A00DCB55DCC3B3BC07AEFBAE1C2E",
+      "FrozenSha256": "212A7E6F567C6E583F5475E29764251558550A14E552CECBD3224882F830BF11",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave348.review.json"
+  ],
+  "Method": {
+    "evidence": "Class287s getters carry their element type in the signature: q() and method_4() are List<ey>, method_6() List<ez>, method_8() List<e0>, method_12() List<e3>, i() List<e1>, method_20() List<mb>, method_21() List<e2>. The named UpdateLastValidSeqNr(IndividualAddress, ulong) calls i(), searches it with FirstOrDefault<e1> and sets e1::a(ulong), so i() is the sequence-number table; the sorter that calls i() + get_Count + Sort sorts it. Gate: 2 added, 0 removed, 0 renamed.",
+    "themes": "The collection-to-element-type map is now explicit, so the remaining Class287 accessors can be named as soon as each element type is anchored: ey and e1 are anchored (group address, sequence number), ez/e0/e2/e3/mb are not. MoveSendingAssociationsToReservedSlots uses method_8() (List<e0>) and its e0 int setters, which anchors e0 as the sending-association entry - the next one to name."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15778,
+    "VisibleRenamed": 5393,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12350
+  },
+  "Errors": 0
+}
