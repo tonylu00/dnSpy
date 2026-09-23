@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T12:55:00Z",
+  "UpdatedUtc": "2026-09-23T13:20:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,20 +17,20 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v373.xml",
-      "Sha256": "3ADC94E6945B2AE753BE99BA3D9ABD24FC2A7DE7197FFD6D07DD04E038521BEF",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave373.json",
-      "NextWave": 374,
-      "CumulativeRenamedRows": 16416,
-      "RowsInMap": { "Methods": 12636, "Types": 965, "Fields": 2815, "Parameters": 2316, "Locals": 837 },
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v374.xml",
+      "Sha256": "FF587DFBA74F6566411CF00F786577CE1A1F4337FAB6F6B9A7C61EE2279849C9",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave374.json",
+      "NextWave": 375,
+      "CumulativeRenamedRows": 16423,
+      "RowsInMap": { "Methods": 12643, "Types": 965, "Fields": 2815, "Parameters": 2316, "Locals": 837 },
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v171.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v172.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v171.json",
-      "NextVersion": 172,
-      "RestagedFrom": "names63-staged-v373.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v172.json",
+      "NextVersion": 173,
+      "RestagedFrom": "names63-staged-v374.xml",
       "AppliedToSource": false
     }
   },
@@ -60,16 +60,16 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T12:55:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v373.json",
-    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v373.json",
+    "MeasuredUtc": "2026-09-23T13:20:00Z",
+      "Report": "D:\\knx_analysis\\perf-now\\backlog-v374.json",
+    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v374.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 29230,
-    "ByKind": { "Methods": 5533, "Types": 2329, "Fields": 21368 },
+    "NotYetNamedRows": 29223,
+    "ByKind": { "Methods": 5526, "Types": 2329, "Fields": 21368 },
     "ByModule": {
       "Knx.Falcon.dll": 10052,
       "Knx.Ets.HawkNET.dll": 5416,
@@ -85,7 +85,7 @@
       "Knx.Ets.CvNext.dll": 454,
       "all remaining modules": 6736
     },
-    "Note": "Measured from the tool's own inventories at v373. Wave 373 named 346 definitions - 343 fields whose named accessors prove them to be the property's backing store, and 3 types that log their own name. The field route is bootstrap-limited: it can only name fields whose accessors are already named, so it must be re-run after every method block.",
+    "Note": "Measured from the tool's own inventories at v374. Waves 373 and 374 named 353 definitions: 343 fields whose named accessors prove them to be the property's backing store, 3 types that log their own name, and 7 accessors of fields the map already named. The field route is bootstrap-limited - it can only name fields whose accessors are already named, so re-run perf-now/suggest-fields.py after every method block.",
     "ExcludedBuckets": {
       "compiler-generated rows (never renamed)": 57977,
       "already readable names (no rename needed)": 99033,
