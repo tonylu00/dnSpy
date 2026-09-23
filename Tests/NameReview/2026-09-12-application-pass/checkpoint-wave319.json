@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 319 accepted (6.3): the Falcon IoT stack classes that name themselves",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v319.xml",
+      "Sha256": "367D9AFBBAC20F53664161CBE25298F016CF5563C007A9FBC344E56830B3CB80",
+      "PreviousMap": "names63-staged-v318.xml",
+      "PreviousMapSha256": "288E21A44DC680D99B994130C232FC9FF2DE89B8DCB84EF293D37D64C1F679D6",
+      "FrozenSha256": "367D9AFBBAC20F53664161CBE25298F016CF5563C007A9FBC344E56830B3CB80",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave319.review.json"
+  ],
+  "Method": {
+    "evidence": "The same literal sweep as wave 318, run over Knx.Falcon.dll: of 33 unnamed, unprotected classes with a .cctor, ten name themselves and seven have a clear 6.4 counterpart - six exactly (Knx.Falcon.IoTSoftwareUpdate, IoT.Stack.Coap.Transmission.Processing.CoapProcessor, IoT.Logging.IoTLog, the IoTSecurityManagedStackHelper and the IoTPointResourceAction/Read helpers) and one by leaf after a namespace move (StackMulticastDnsResolver, Reference vs Managed.Managed in 6.4). The whitelist keeps the other IoTopn ones like n0 (Knx.Falcon.IoTParameter), Class1070 (CoapServer), Class1069 (CoapClient) and the ManagedIoTStack family, which is the correct outcome for SDK-visible IoT types.",
+    "themes": "The literal sweep is now proven on a second assembly. What remains in Falcon is the SDK-protected IoT stack (whitelist), the behaviour-only dispatchers (Class854/Class868) and the untyped blocks (nc, Class1070's remaining members, Class1341). Next: run the sweep over Knx.Ets.ObjectModel.dll and Knx.Ets.ViewModel.dll before returning to those."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 7,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15290,
+    "VisibleRenamed": 5277,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 950,
+    "Methods": 12046
+  },
+  "Errors": 0
+}
