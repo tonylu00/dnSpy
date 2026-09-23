@@ -1,8 +1,8 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T18:30:00Z",
-  "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
+  "UpdatedUtc": "2026-09-23T21:40:00Z",
+  "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
     "CheckpointDir": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
@@ -13,8 +13,9 @@
     "DnspyRepo": "D:\\git\\dnSpy",
     "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
     "Policy": "D:\\knx_analysis\\POLICY.md",
+    "Goal": "D:\\knx_analysis\\GOAL.md",
     "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
-    "DecompilerFix": "dnSpy submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits fd5b322cc - (1) async state machine MoveNext is found through its MethodImpl override as well as by name, (2) renamed closures/lambdas are recognised structurally (delegate target inside a compiler-generated type) instead of by the '<>c'/'<Foo>b__' name pattern"
+    "DecompilerFix": "submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits: 00db96bac (async MoveNext via MethodImpl override), fd5b322cc (renamed closures/lambdas via delegate-target structure)"
   },
   "Maps": {
     "63": {
@@ -23,13 +24,7 @@
       "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave380.json",
       "NextWave": 381,
       "CumulativeRenamedRows": 16694,
-      "RowsInMap": {
-        "Methods": 12905,
-        "Types": 965,
-        "Fields": 2824,
-        "Parameters": 2316,
-        "Locals": 837
-      },
+      "RowsInMap": { "Methods": 12905, "Types": 965, "Fields": 2824, "Parameters": 2316, "Locals": 837 },
       "AppliedToSource": false
     },
     "64": {
@@ -42,210 +37,96 @@
     }
   },
   "Compatibility": {
-    "ContractReferences63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json",
-      "Sha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA"
-    },
-    "SdkWhitelist63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml",
-      "Sha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
-      "Symbols": 21935,
-      "ExcludedMapRows": 1974
-    },
-    "SdkWhitelist64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist64-v1.xml",
-      "Sha256": "E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34",
-      "Symbols": 24209,
-      "ExcludedMapRows": 167
-    },
-    "SdkModules": [
-      "Knx.Ets.Sdk.dll",
-      "Knx.Ets.Sdk.AddIns.AddInViews.dll",
-      "Knx.Ets.Common.Types.dll",
-      "Knx.Ets.Common.Resources.dll"
-    ],
-    "Rules": "D:\\knx_analysis\\POLICY.md"
+    "ContractReferences63": { "Path": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json", "Sha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA" },
+    "SdkWhitelist63": { "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml", "Sha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459", "Symbols": 21935, "ExcludedMapRows": 1974 },
+    "SdkWhitelist64": { "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist64-v1.xml", "Sha256": "E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34", "Symbols": 24209, "ExcludedMapRows": 167 },
+    "SdkModules": ["Knx.Ets.Sdk.dll", "Knx.Ets.Sdk.AddIns.AddInViews.dll", "Knx.Ets.Common.Types.dll", "Knx.Ets.Common.Resources.dll"],
+    "Rules": "POLICY.md"
   },
-  "Backlog": {
-    "MeasuredUtc": "2026-09-23T18:30:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v380.json",
-    "Inventories": {
-      "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
-      "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
-      "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
+  "Readability": {
+    "WhatMakesItReadable": "Compiler-generated members merge into their owners only when the decompiler can recognise them; Dotfuscator renamed the entry points and the compiler name patterns, so the decompiler had to be taught the structural evidence (MethodImpl override rows, ldftn delegate targets).",
+    "DecompilerFixes": {
+      "Async": "AsyncDecompiler matched the literal name 'MoveNext'; ETS names it 'System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext' with an override row. Now MethodUtils.IsMethod is used (00db96bac).",
+      "Closures": "DelegateConstruction.IsAnonymousMethod and AstBuilder.IsClosureType required the compiler name patterns (angle-bracket names, dollar names, the static-cache and DisplayClass names). Now a compiler-generated container whose method is reached through ldftn/ldvirtftn counts as a closure/lambda (fd5b322cc)."
     },
-    "NotYetNamedRows": 28105,
-    "ByKind": {
-      "Methods": 5264,
-      "Types": 2344,
-      "Fields": 20497
+    "Measured": {
+      "Note": "6.3 tree, decompiler export; format = files | inline lambdas | async | await | raw builder stubs | display-class declarations",
+      "Knx.Ets.HawkNET.dll": "361 | 326 | 389 | 1190 | 0 | 0",
+      "Knx.Falcon.dll": "1049 | 461 | 556 | 1125 | 8 | 0",
+      "Knx.Ets.ObjectModel.dll": "1741 | 3340 | 12 | 9 | 0 | 0",
+      "Knx.CloudKit.dll": "53 | 29 | 0 | 0 | 0 | 0",
+      "Knx.DevKit.dll": "93 | 16 | 0 | 0 | 0 | 0",
+      "Before": "0 inline lambdas, raw AsyncTaskMethodBuilder stubs, display classes listed as types.",
+      "Regression": ".NET 9 System.Net.Http.HttpClient 4 async / 10 await / 0 stubs; System.Linq.Enumerable renders lambdas - unchanged.",
+      "6.4": "The pass 6.4 tree already renders async with the same decompiler (CompareDeviceTask 8 async / 29 await / 0 stubs). Earlier '6.4 raw' reading came from ETS6.4_orig, whose kickoff stubs still carry Dotfuscator control flow; not a work item."
     },
-    "ByModule": {
-      "Knx.Falcon.dll": 9768,
-      "Knx.Ets.HawkNET.dll": 5332,
-      "Knx.Ets.ObjectModel.dll": 3403,
-      "Knx.Ets.ViewModel.dll": 2146,
-      "Knx.DevKit.dll": 1264,
-      "Knx.Ets.Ui.UserControls.dll": 904,
-      "Knx.Ets.Common.dll": 852,
-      "Knx.Ets.Sdk.dll": 630,
-      "Knx.Ets.DynamicData.dll": 456,
-      "Knx.CloudKit.dll": 446,
-      "Knx.Ets.CvNext.dll": 388,
-      "Knx.Ets.CalculatedParameters.dll": 290,
-      "all remaining modules": 2100
+    "FalconLeftover8": {
+      "Where": "Class1353::a(Class989, CoapMessageCode, string, string, string, byte[], [opt] bool, [opt] bool, [opt] List<Class1112>) -> state machine Class1353/Struct958; and Class1360 x7 (Task<ValueTuple<...>>, state machines under Class1360/Type_1424).",
+      "Verified": "Class1353::a kickoff IL is canonical end to end (ldloca/initobj, Create, stfld builder, this, params, state=-1, ldflda builder + ldloca state + Start<T>(!!0&), get_Task, ret) and Struct958 has [CompilerGenerated] + IAsyncStateMachine.",
+      "Hypotheses": ["one Class1360 state machine 'a' under Type_1424 lacks [CompilerGenerated]", "both stubs carry an unused extra local ([1] int16) - partially cleaned control flow", "Task<ValueTuple<...>> return shape adds an instruction the middle loop rejects"],
+      "Next": "Instrument MicrosoftAsyncDecompiler.MatchTaskCreationPattern for those tokens, or diff the ILAst statement list against a working Falcon stub."
     },
-    "Note": "Measured at v380. The last three turns named 32, 68 and 3 definitions; this turn found no new evidence at all. All routes listed above are closed with a measured number, so the remainder cannot move without an external evidence source or a scope decision.",
-    "BiggestMethodTypes": [
-      "Knx.DevKit.dll akj 291",
-      "Knx.DevKit.dll amh 185",
-      "Knx.Falcon.dll nc 151",
-      "Knx.DevKit.dll akg 143",
-      "Knx.Ets.HawkNET.dll eo 117",
-      "Knx.CloudKit.dll ajg 115",
-      "Knx.DevKit.dll Class23 115",
-      "ETS6C.exe and ETS6N.exe ETS.ApplicationCommandHandler 112 each",
-      "Knx.DevKit.dll al6 108",
-      "Knx.Falcon.dll Knx.Falcon.Bus 106",
-      "Knx.Ets.HawkNET.dll et 84"
-    ],
-    "Routes": [
-      "6.4 compiler-generated state-machine oracle (sm-oracle.py)",
-      "operation-name literal passed to the logger (propose-from-literals.py)",
-      "contract family: one virtual/interface row names its family",
-      "domain-callee anchor (anchor-scan.py)",
-      "literal / self-naming worklist (candidates.py)",
-      "field backing store from a named accessor (suggest-fields.py) - re-run after every method block",
-      "accessor of a named field (suggest-accessors-from-fields.py)",
-      "type that logs its own name (suggest-types-selfname.py)",
-      "structural fallback: offsets, bitfields, formatters, tables (slow; last)",
-      "per-row literal naming (guard/log/validator rows) - the current working route for the method remainder",
-      "contract-family naming from a member's literal (build-rows --spec with AllowFamily: true) - a family edit needs the whole family",
-      "6.4 readable-surface anchor fixpoint (OPEN, not yet run - see Backlog.ReadableSurface64): pair types where already-named members identify the 6.4 counterpart uniquely, pair members inside paired types, propagate, iterate to a fixpoint",
-      "compiler-generated merge (OPEN, unblocked - see Backlog.CompilerGeneratedMerge): restore the compiler's own entry points (MoveNext, display-class and state-machine names) so the decompiler merges those methods into their owners"
-    ],
-    "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
-    "ExhaustedRoutes": [
-      "6.3 -> 6.4 transfer by IL fingerprint, by member shape and by ordinal: all measured below the acceptance bar (shape 4.2%, ordinal 10-40%, literal-tiebreak 5 rows). CORRECTION (2026-09-23): this does NOT mean 6.4 is unreadable - it means the correspondence is missing; see Backlog.ReadableSurface64",
-      "property/field accessor and field-accessor inference (re-run at v372: 49/1/1607 proposals, all out of scope or named)",
-      "half-named contract families: 0 of 141,365 families have a named member beside an unnamed one (verified at v376)",
-      "de4dot-rename-map.xml: 1,036 entries assessed Meaningful, but none has an obfuscated input name - the map holds no recovered names",
-      "attribute evidence (--dump-attributes, de4dotEx de764d82): XmlRoot/XmlType/JsonTypeName or XmlEnum only, none usable",
-      "parameter-family inheritance: 3,864 placeholder parameters, no named sibling at that position",
-      "event accessors: 903 unnamed, 16 with a named raiser on the same field (waves 371+375)",
-      "single-callee forwarders (1.3% agreement) and the bare self-name literal (0%) - both rejected",
-      "MoveNext-only literal rule: 22.9% agreement with the pass's own names - rejected",
-      "field backing stores saturated at this method map (350 in wave 373, 16 in wave 375, 98.5% agreement)",
-      "readable bucket verified: a tree-wide random-name scan found 3 rows, all real names",
-      "operation-name literals: 54 Falcon rows (wave 370) and the 20 managed-stack log literals (wave 376) are consumed",
-      "field backing stores: 0 new proposals after wave 377 - the route is saturated at this map state and suggest-fields.py now also skips fields the map already names",
-      "devkit twin method transfer: shape matching 4.2% and ordinal matching 10-40% agreement with the pass's own names - rejected in both forms",
-      "DevKit twin, trusted type pairs: 0 of 268 aligned pairs have all their already-named rows agreeing position by position - no pair is trustworthy",
-      "DevKit twin, literal-keyed join: 13 matches, every one landing on a random oracle name; the twin's readable names belong to rows that are already named or whitelisted",
-      "resource-path literals: 52 rows tree-wide, 20 named in wave 379; the rest are multi-resource validators or nested serialisers without a unique path",
-      "6.4 state-machine oracle with the mapped-signature key: 92.9% precision but only 3 unnamed Falcon rows left (26 of 29 already named); the literal-tiebreak variant left 5 HawkNET rows",
-      "field value-source dataflow: the value stored into a field comes from a conversion helper or an obfuscated parameter, so the rule proposes 'toUInt32'/'.ctor'/'ushort_2' - rejected, 0 of 540 DevKit writers validated",
-      "event accessors named from a named backing field: 0 rows tree-wide (no unnamed accessor's delegate field is named)",
-      "per-row reading of the largest remaining cluster (DevKit akj): the 57 rows are event add/remove pairs whose raiser, backing field and delegate type are all unnamed, so their IL carries no name to derive"
-    ],
-    "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
-    "Excluded": "compiler-generated rows 55036 (not a semantic rename target, but a MERGE target - see CompilerGeneratedMerge); already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843",
-    "CompilerGeneratedMerge": {
-      "FoundUtc": "2026-09-23T21:20:00Z",
-      "Why": "The decompiler merges compiler-generated members only when their compiler-defined entry points keep their names. ICSharpCode.Decompiler/ILAst/AsyncDecompiler.cs:297 looks up the state machine's 'MoveNext' BY NAME; Ast/AstBuilder.cs:310 recognises a display class only when its name is '<>c', starts with '<>c__', or contains 'DisplayClass'/'AnonStorey'. Dotfuscator renamed both, so the 6.3 C# view shows raw 'AsyncTaskMethodBuilder.Start<T>(ref struct)' stubs and un-inlinable lambdas - the reader has to open MoveNext by hand.",
-      "EvidenceThatSurvives": "HawkNET 6.3: CompilerGenerated on 580 of 787 types; AsyncStateMachineAttribute on 383 methods and IteratorStateMachineAttribute on 15 (each attribute argument IS the state machine type, e.g. eh::cp -> eh/l, eh::b -> eh/m); 67 display classes kept '<>c', 525 nested display classes lost it. Verified by --dump-attributes and by dnSpy IL/C# dumps.",
-      "ToolSupport": "No tool change needed: NameCandidates accepts compiler-style names. Probe row 0x0600000D (Class234/<>c::a) -> '<ef>b__0_0' applied unchanged, Success=True, 0 errors.",
-      "Block": [
-        "state machine type -> <OwnerMethod>d__N, and its MoveNext/SetStateMachine renamed back to the interface names (evidence: the *StateMachineAttribute on the named owner method)",
-        "display class type -> <>c or <>c__DisplayClassN_M (evidence: [CompilerGenerated] plus an ldftn site inside a named owner)",
-        "lambda method -> <Owner>b__N_M (evidence: the ldftn site in the owner)",
-        "optional, for any remaining raw view: state machine fields -> <>1__state / <>t__builder / <>4__this / <>u__N, identified by type shape (int state, Async*MethodBuilder, owner type)"
-      ],
-      "Outcome": "async/await bodies and inline lambdas in the decompiled view - readability, not rename coverage. Runtime binding is by interface/MethodImpl and is preserved by the applier.",
-      "Scale": "Measured on 2026-09-23: Falcon 515 async + 54 iterator state machines, HawkNET 383 + 15, ObjectModel 8 + 64; HawkNET alone has 525 renamed closures and 580 compiler-generated types. About 1,000 async/iterator methods across the sampled modules would render as async/yield instead of raw builder stubs.",
-      "Status": {
-        "AsyncHalf": "FIXED (dnSpy 00db96bac). Knx.Ets.HawkNET 6.3: 389 async / 1190 await / 0 AsyncTaskMethodBuilder, type eh renders 'protected override async Task cp(...)'. Falcon 556 async / 1125 await (8 raw stubs left, a different kickoff shape - open), ObjectModel 12, DevKit/CloudKit none.",
-        "ClosureHalf": "FIXED (dnSpy fd5b322cc). IsAnonymousMethod and IsClosureType now use the delegate-target structure instead of the compiler name pattern. Knx.Ets.HawkNET 6.3: 326 inline lambdas and 0 display-class declarations (was 0 lambdas with the classes visible); ObjectModel 3340, Falcon 461, CloudKit 29, DevKit 16.",
-        "SixFourClarified": "The earlier '6.4 renders raw stubs' reading was a wrong-tree measurement: ETS6.4_orig still has Dotfuscator control flow inside the kickoff stub, which defeats the IL pattern match. The pass's own 6.4 tree (ETS6.4_api_preserved5) and ETS6.4_de4dot_batch5 render async correctly with the same decompiler (CompareDeviceTask: 8 async / 29 await / 0 raw stubs). No 6.4 work item remains here.",
-        "Regression": "Unchanged on normal assemblies: .NET 9 System.Net.Http.HttpClient 4 async / 10 await / 0 raw stubs, System.Linq.Enumerable renders lambdas.",
-        "FalconLeftover8": {
-          "Where": "Knx.Falcon.dll 6.3: Class1353::a(Class989, CoapMessageCode, string, string, string, byte[], [opt] bool, [opt] bool, [opt] List<Class1112>) (1 stub, state machine Class1353/Struct958) and Class1360 (7 stubs, Task<ValueTuple<...>> returns, state machines nested under Class1360/Type_1424).",
-          "Examined": "The kickoff IL of Class1353::a is instruction-for-instruction the canonical shape (ldloca/initobj -> call Create -> stfld builder -> this -> params -> stfld state = -1 -> ldflda builder + ldloca state + call Start<T>(!!0&) -> ldflda builder -> call get_Task -> ret), and its state machine has [CompilerGenerated] + implements IAsyncStateMachine.",
-          "Hypotheses": [
-            "At least one of the Class1360 state machine types (nested 'a' under Type_1424) is missing the [CompilerGenerated] attribute, unlike Struct958.",
-            "Both stubs carry an unused extra local ([1] int16 in Class1353::a) - the signature of a partially cleaned Dotfuscator control-flow body.",
-            "A newer compiler shape for Task<ValueTuple<...>> returns may add an instruction the matcher rejects in the middle loop."
-          ],
-          "Next": "Instrument MicrosoftAsyncDecompiler.MatchTaskCreationPattern for these two tokens, or diff the ILAst statement list against a working Falcon stub; then extend the matcher accordingly. 8 rows only - low priority against Phase 4."
-        }
-      }
-    },
-    "ReadableSurface64": {
-      "MeasuredUtc": "2026-09-23T20:15:00Z",
-      "Tree": "D:\\knx_analysis\\ETS6.4_orig",
-      "TypesFullyReadable": "Falcon 2214/2214, HawkNET 1056/1056, ObjectModel 4024/4024, DevKit 287/287 - zero obfuscated-shaped type names",
-      "MethodsPartiallyReadable": "Falcon 17166 methods: 4577 need a readable name, 12589 are readable",
-      "NaiveShapePairingRejected": "Pairing 6.3 and 6.4 types by the multiset of member shapes produced 0 unique matches among the 429 already-named Falcon types (strict shape equality fails because the code changed between the builds).",
-      "Conclusion": "The names exist in 6.4; what is missing is a reliable 6.3 -> 6.4 correspondence. This is the only remaining evidence route with bulk yield and it is not exhausted."
-    }
+    "BaselineTask": "Sweep the patched decompiler over all 528 6.3 assemblies and the 6.4 tree; store per-module numbers here."
   },
-  "NextItems": [
-    {
-      "Module": "all modules",
-      "Rows": 20497,
-      "Kind": "Fields",
-      "Needs": "evidence source or a scope decision (no route: accessor route saturated, value-source rejected, event-field variant empty)"
+  "Naming": {
+    "Backlog": {
+      "NotYetNamedRows": 28105,
+      "ByKind": { "Fields": 20497, "Methods": 5264, "Types": 2344 },
+      "TopModules": { "Knx.Falcon.dll": 9768, "Knx.Ets.HawkNET.dll": 5332, "Knx.Ets.ObjectModel.dll": 3403, "Knx.Ets.ViewModel.dll": 2146, "all others": 7456 },
+      "Shape": "field remainder is 19,596 one-character private names (a 8017, b 3371, c 2678, d 2118, e 1797); method remainder is 4,040 one-character plus ~1,063 tool placeholders",
+      "Report": "D:\\knx_analysis\\perf-now\\backlog-v380.json",
+      "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
+      "OpenRoute": "6.4 readable-surface anchor fixpoint: 6.4 types are fully readable (Falcon 2214/2214, HawkNET 1056, ObjectModel 4024, DevKit 287) and Falcon has 12,589 readable methods; naive shape pairing gave 0 unique matches, so pair by already-named-member anchors and iterate.",
+      "ExhaustedRoutes": [
+        "cross-version transfer by fingerprint/shape/ordinal: shape 4.2%, ordinal 10-40%, literal tiebreak 5 rows - rejected",
+        "property/field accessor and field-backing inference: 49+4 proposals at v380, 5,280+1,966 skips - saturated",
+        "half-named contract families: 0 of 141,365 (v376)",
+        "de4dot-rename-map.xml: 1,036 meaningful entries, none with an obfuscated input name",
+        "attribute evidence: only XmlRoot/XmlType/JsonTypeName/XmlEnum - unusable",
+        "parameter-family inheritance: 3,864 placeholder parameters, no named sibling",
+        "event accessors: 903 unnamed, 16 with a named raiser (waves 371/375); 0 from a named backing field",
+        "single-callee forwarders 1.3%, bare self-name literal 0%, MoveNext-only literal rule 22.9% - rejected",
+        "field value-source dataflow: 0 of 540 DevKit writers validated",
+        "DevKit twin: 0 of 268 aligned type pairs trustworthy; literal-keyed join 13 matches, all random",
+        "resource-path literals: 52 rows, 20 named (wave 379)",
+        "6.4 state-machine oracle: 92.9% precision, 3 unnamed rows left",
+        "largest cluster akj (DevKit): raiser, backing field and delegate type all unnamed; nothing to derive",
+        "readable bucket verified by a tree-wide random scan: 3 rows, all real names"
+      ]
     },
-    {
-      "Module": "all modules",
-      "Rows": 2344,
-      "Kind": "Types",
-      "Needs": "evidence source or a scope decision (self-name literals and the readable twin consumed)"
-    },
-    {
-      "Module": "Knx.Falcon.dll",
-      "Rows": 9733,
-      "Route": "per-row reading, but the largest clusters (MaS validators, event pairs) carry no distinguishing evidence"
-    },
-    {
-      "Module": "Knx.Ets.HawkNET.dll",
-      "Rows": 5332,
-      "Route": "per-row reading with the same limitation"
-    }
-  ],
-  "NextItemRules": [
-    "Oracle rows are the strongest route: the 6.4 released surface names them, and a literal in the 6.3 body must corroborate the row before it is accepted.",
-    "A NewName may not repeat inside one type; the sibling stays open rather than taking a numeric suffix.",
-    "Virtual rows, interface implementations and contract-family members are renamed as a family (build-rows.py fills ContractFamily; the updater expands it), so a block can grow the map by more rows than the review file holds.",
-    "One block is one review file, one --wave run, one checkpoint, one commit."
-  ],
+    "NextItems": [
+      { "Task": "readability baseline sweep", "Detail": "patched decompiler over the whole 6.3 tree + 6.4; per-module lambdas/async/await/raw stubs/display classes into Readability.Baseline" },
+      { "Task": "Falcon 8 raw stubs", "Detail": "see Readability.FalconLeftover8" },
+      { "Task": "6.4 anchor fixpoint", "Detail": "the only open naming route with bulk potential; record the measured yield per module before accepting" },
+      { "Task": "record the evidence-free remainder", "Detail": "28105 rows unresolved with the no-evidence-in-scope reason so --coverage counts them; never invent names or suffixes" },
+      { "Task": "Phase 4", "Detail": "freeze map, dnSpy.Console --source-name-map <map> --public-sign export, rebuild, Stage-RecompiledTree overlay, audit battery, third-party App compatibility" }
+    ],
+    "NextItemRules": [
+      "Oracle rows are the strongest naming route: the 6.4 released surface names them and a literal in the 6.3 body must corroborate the row.",
+      "A NewName may not repeat inside one type; the sibling stays open rather than taking a numeric suffix.",
+      "Virtual rows, interface implementations and contract-family members are renamed as a family.",
+      "One block is one review file, one --wave run, one checkpoint, one commit."
+    ]
+  },
   "HardBlockers": {
     "Codes": [
       "accessor-operator-or-runtime-special-name",
       "virtual-or-override row not yet family-reviewed",
       "SDK-protected row or family (whitelist)",
       "same-module name collision where the sibling has no distinct evidence",
-      "no-evidence-in-scope: every evidence route is closed for this row with a measured number (private state with no observable behaviour, no literal, no anchor, no readable counterpart)"
+      "no-evidence-in-scope: every evidence route closed with a measured number (private state with no observable behaviour, no literal, no anchor, no readable counterpart)"
     ],
-    "Rule": "A turn may stop with work left only when every remaining row of the current block carries one of these codes, recorded here with its token. While an unmeasured route remains (see Routes), 'evidence is missing' is not accepted; switch route instead. Every code above is backed by a measured number in ExhaustedRoutes."
+    "Rule": "A turn may stop with work left only when every remaining row of the current block carries one of these codes, recorded with its token. While an unmeasured route remains, switch route instead."
   },
   "Closure": {
-    "Rule": "The pass closes when every in-scope definition sits in exactly one terminal category: named | already-readable | SDK/protected | compiler-generated | unresolved-no-evidence (each with a reason). NotYetNamedRows is a progress metric, not the goal itself.",
-    "Authority": "The goal text allows this explicitly: 'Leave uncertain decisions explicitly unresolved, with a brief explanation of what evidence is missing' and 'Do not claim completion beyond the available evidence'.",
-    "CategoriesMeasured": {
-      "named": 16694,
-      "already-readable": 92963,
-      "sdk-whitelisted-or-protected-family": 18755,
-      "compiler-generated": 55036,
-      "constructors": 20843,
-      "unresolved-no-evidence": 28105
-    },
-    "Steps": "1) harvest whatever the open 6.4 anchor-fixpoint route yields; 2) record the remaining rows in the ledger with Unresolved=true and UnresolvedReason so --coverage counts them as decided; 3) run Phase 4.",
-    "NotClaimed": "Closing the naming phase is not the same as a renamed or verified ETS: AppliedToSource stays false until Phase 4."
+    "Rule": "The pass closes when every in-scope definition is exactly one of named | already-readable | SDK/protected | compiler-generated (merged) | unresolved-no-evidence with a reason, and Phase 4 has run.",
+    "Authority": "GOAL.md task 5 and POLICY.md; the mission text allows unresolved rows explicitly and forbids claiming more than the evidence shows.",
+    "CategoriesMeasured": { "named": 16694, "already-readable": 92963, "sdk-whitelisted-or-protected-family": 18755, "compiler-generated": 55036, "constructors": 20843, "unresolved-no-evidence": 28105 },
+    "NotClaimed": "Closing the naming phase is not a renamed or verified ETS; AppliedToSource stays false until Phase 4."
   },
   "Deferred": {
-    "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign, rebuild, overlay Stage-RecompiledTree + manifest, run the audit battery, then verify against unchanged third-party ETS Apps.",
+    "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign (inherits the merge fixes), rebuild, overlay Stage-RecompiledTree + manifest, audit battery, verify against unchanged third-party ETS Apps.",
     "LiveEts": "user-coordinated; ask before running",
-    "NotProven": "Mapping is not source application. AppliedToSource=false means the ETS binaries and sources are still unchanged."
+    "NotProven": "Mapping is not source application. AppliedToSource=false means the ETS binaries and sources are unchanged."
   }
 }
