@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "Wave 291 accepted (6.3): Class871 OperatorCtrl field",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v291.xml",
+      "Sha256": "A192F7661FD9402ADA38EEB5FF576F3662E2962EA7B5AF8EF787F40AD9B9E415",
+      "PreviousMap": "names63-staged-v290.xml",
+      "PreviousMapSha256": "BE893F2E51AED3000F1FAD34DB165AF8621A598A74B7087DF47081FA1214F3EA",
+      "FrozenSha256": "A192F7661FD9402ADA38EEB5FF576F3662E2962EA7B5AF8EF787F40AD9B9E415",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave291.review.json"
+  ],
+  "Method": {
+    "evidence": "Class871 extends the response base Class869, so its own data starts at OffsetToData + 2 and its formatter names only the base destination address. One field of it is decisive by type alone: method_23() returns Knx.Falcon.KnxMessages.ApplicationLayer.OperatorCtrl and its sibling a(OperatorCtrl) takes one, the only OperatorCtrl accessor pair in the frame. The map carries no type alias for that enum yet, so the accessors keep the metadata spelling.",
+    "themes": "Class871 bitfield layout, recorded for the next read: five fields plus the factory. The OperatorCtrl pair (0x06000C96/0x06000C97) is named; the four 16-bit fields are packed - e() reads a 16-bit at +2+3 and shifts right four, b(ushort) writes a 12-bit value across +2+4 (low nibble preserved, value & 0x0F merged into the existing high nibble) and +2+5 (value >> 8), method_25()/d(ushort), d()/c(ushort) and b()/a(ushort) each read or write a 16-bit at their own +2+n, some with a mask - and none of them has a name source yet, so they stay unresolved rather than guessed."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 2,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15102,
+    "VisibleRenamed": 5188,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 900,
+    "Methods": 11908
+  },
+  "Errors": 0
+}
