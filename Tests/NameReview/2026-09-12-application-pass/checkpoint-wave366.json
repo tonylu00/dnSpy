@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 366: the Oscore transmission-parameter setters and the sequence-number advance",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v366.xml",
+      "Sha256": "A7082ADEF83807B067889A0DABCDC118AA8C4D892F03FC060E7725630AE5576A",
+      "PreviousMap": "names63-staged-v365.xml",
+      "PreviousMapSha256": "3A3A420E28CE6D9490174E17C88F36726B394F0003BEE482CD1140F0A3D1D2FC",
+      "FrozenSha256": "A7082ADEF83807B067889A0DABCDC118AA8C4D892F03FC060E7725630AE5576A",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave366.review.json"
+  ],
+  "Method": {
+    "evidence": "Each Class1150 setter validates its argument and names the property in its own message: AcknowledgementTimeout, AcknowledgementTimeoutRandomnessFactor, MaximumNumberOfRetransmissions, NumberOfSimultaneousOutstandingInteractions and DefaultLeisure, so the accessor convention gives set_<Name>. Class1151s a(long) advances and range-checks the sender sequence number (SenderSequenceNumber exceeded maximal value of 0x{0:X}) and is GetNextSenderSequenceNumber. Gate: 6 added, 0 removed, 0 renamed.",
+    "themes": "Literal-carried property names are a third evidence class alongside self-naming operation literals and state-machine logs: the method validates value and prints the property it belongs to, which fixes the set_ name without inference."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 6,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15844,
+    "VisibleRenamed": 5418,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12416
+  },
+  "Errors": 0
+}
