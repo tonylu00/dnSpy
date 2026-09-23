@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T16:00:00Z",
+  "UpdatedUtc": "2026-09-23T16:55:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,26 +17,26 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v377.xml",
-      "Sha256": "A14C27D6E45E92885376F37096418657E87A695FD9B92E8B141D7370CE730581",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave377.json",
-      "NextWave": 378,
-      "CumulativeRenamedRows": 16691,
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v378.xml",
+      "Sha256": "5A0FF1D9B79DD6DC099116EB47EFEBC736295E1E6F36FC76D67363E3021EC869",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave378.json",
+      "NextWave": 379,
+      "CumulativeRenamedRows": 16759,
       "RowsInMap": {
-        "Methods": 12802,
+        "Methods": 12830,
         "Types": 965,
-        "Fields": 2824,
+        "Fields": 2864,
         "Parameters": 2316,
         "Locals": 837
       },
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v175.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v176.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v175.json",
-      "NextVersion": 176,
-      "RestagedFrom": "names63-staged-v377.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v176.json",
+      "NextVersion": 177,
+      "RestagedFrom": "names63-staged-v378.xml",
       "AppliedToSource": false
     }
   },
@@ -66,35 +66,35 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T16:00:00Z",
-    "Report": "D:\\knx_analysis\\perf-now\\backlog-v377.json",
+    "MeasuredUtc": "2026-09-23T16:55:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v378.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 28208,
+    "NotYetNamedRows": 28140,
     "ByKind": {
-      "Methods": 5367,
+      "Methods": 5299,
       "Types": 2344,
       "Fields": 20497
     },
     "ByModule": {
-      "Knx.Falcon.dll": 9773,
-      "Knx.Ets.HawkNET.dll": 5333,
-      "Knx.Ets.ObjectModel.dll": 3405,
-      "Knx.Ets.ViewModel.dll": 2153,
+      "Knx.Falcon.dll": 9768,
+      "Knx.Ets.HawkNET.dll": 5332,
+      "Knx.Ets.ObjectModel.dll": 3403,
+      "Knx.Ets.ViewModel.dll": 2146,
       "Knx.DevKit.dll": 1264,
       "Knx.Ets.Ui.UserControls.dll": 904,
-      "Knx.Ets.Common.dll": 864,
+      "Knx.Ets.Common.dll": 852,
       "Knx.Ets.Sdk.dll": 630,
       "Knx.Ets.DynamicData.dll": 456,
       "Knx.CloudKit.dll": 446,
       "Knx.Ets.CvNext.dll": 388,
       "Knx.Ets.CalculatedParameters.dll": 290,
-      "all remaining modules": 2302
+      "all remaining modules": 2100
     },
-    "Note": "Measured at v377 with full-path identity. Wave 377 named 115 guard/log methods from the single descriptive literal each row carries (unique inside its type). 21 further rows were dropped: their contract family has siblings, so naming one member would either conflict with a sibling or spread one member's literal over the others.",
+    "Note": "Measured at v378. Wave 378 named 68 definitions: 28 literal-carrying rows whose contract families the updater expanded (40 further members), which also cleared the 21 rows wave 377 had to skip because a family edit needs the whole family.",
     "BiggestMethodTypes": [
       "Knx.DevKit.dll akj 291",
       "Knx.DevKit.dll amh 185",
@@ -118,7 +118,8 @@
       "accessor of a named field (suggest-accessors-from-fields.py)",
       "type that logs its own name (suggest-types-selfname.py)",
       "structural fallback: offsets, bitfields, formatters, tables (slow; last)",
-      "per-row literal naming (guard/log/validator rows) - the current working route for the method remainder"
+      "per-row literal naming (guard/log/validator rows) - the current working route for the method remainder",
+      "contract-family naming from a member's literal (build-rows --spec with AllowFamily: true) - a family edit needs the whole family"
     ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
@@ -133,34 +134,36 @@
       "MoveNext-only literal rule: 22.9% agreement with the pass's own names - rejected",
       "field backing stores saturated at this method map (350 in wave 373, 16 in wave 375, 98.5% agreement)",
       "readable bucket verified: a tree-wide random-name scan found 3 rows, all real names",
-      "operation-name literals: 54 Falcon rows (wave 370) and the 20 managed-stack log literals (wave 376) are consumed"
+      "operation-name literals: 54 Falcon rows (wave 370) and the 20 managed-stack log literals (wave 376) are consumed",
+      "field backing stores: 0 new proposals after wave 377 - the route is saturated at this map state and suggest-fields.py now also skips fields the map already names",
+      "devkit twin method transfer: shape matching 4.2% and ordinal matching 10-40% agreement with the pass's own names - rejected in both forms"
     ],
     "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them.",
     "Excluded": "compiler-generated rows (never renamed) 55036; already readable names (no rename needed) 92963; sdk-whitelisted 15098; protected contract family 3657; constructors 20843"
   },
   "NextItems": [
     {
-      "Module": "Knx.Falcon.dll + Knx.Ets.HawkNET.dll",
-      "Rows": 21,
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Rows": 2,
       "Kind": "Methods",
-      "Tokens": "0x06000C21, 0x060010BC, 0x060010C2, 0x06001127, 0x0600117F, 0x0600118D, 0x060011D4, 0x060017F9, 0x06001A19, 0x06001A23, 0x06001F4A, 0x06001F99, 0x060020E9, 0x0600216C, 0x06002317, 0x0600238B, 0x0600243B, 0x06000C73, 0x06000CE7, 0x0600112E, 0x06001138",
-      "Route": "literal rows inside multi-member contract families: the whole family needs one generic name before any of them can be renamed"
+      "Tokens": "0x0600112E, 0x06001138",
+      "Route": "the 18-member device-check family (B371D36F) logs a different reason per member, so it needs one generic name for the whole family before either can be renamed"
     },
     {
       "Module": "Knx.Falcon.dll",
-      "Rows": 9773,
-      "Route": "per-row literal/structural reading (the nc MaS validator clusters, Class1000+, Class1364 mDNS)"
+      "Rows": 9768,
+      "Route": "per-row literal/structural reading (the remaining nc MaS validators, Class1000+, Class1364 mDNS)"
     },
     {
       "Module": "Knx.Ets.HawkNET.dll",
-      "Rows": 5333,
+      "Rows": 5332,
       "Route": "per-row literal/structural reading"
     },
     {
       "Module": "all modules",
       "Rows": 20497,
       "Kind": "Fields",
-      "Route": "bootstrap-blocked: name accessors first, then re-run perf-now/suggest-fields.py"
+      "Route": "bootstrap-blocked: the named-accessor route is saturated, so fields need a new evidence source"
     }
   ],
   "NextItemRules": [
