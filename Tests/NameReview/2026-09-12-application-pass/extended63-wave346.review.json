@@ -1,0 +1,62 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "en",
+   "Token": "0x060000D5",
+   "Signature": "System.Object en::c(System.Byte[],Class430)",
+   "OriginalName": "c",
+   "NewName": "ReadRawBytes",
+   "NeedsReadableName": false,
+   "Reason": "Two instructions - `ldarg.0; ret` - so it returns the raw byte[] as the property value: the identity reader the table uses for byte-array properties. Evidence from --inspect-methods on this token."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "en",
+   "Token": "0x060000D6",
+   "Signature": "System.Object en::b(System.Byte[],Class430)",
+   "OriginalName": "b",
+   "NewName": "ReadValue",
+   "NeedsReadableName": false,
+   "Reason": "`ldarg.0; call en::c(byte[]); ret` - the two-argument wrapper over the length dispatcher, used by entries whose value is a fixed-width read. Evidence from --inspect-methods on this token."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "en",
+   "Token": "0x060000D7",
+   "Signature": "System.Object en::c(System.Byte[])",
+   "OriginalName": "c",
+   "NewName": "DecodeValueByLength",
+   "NeedsReadableName": false,
+   "Reason": "Switches on the array length (`ldlen; conv.i4; stloc; ldc.i4.1; sub; switch`) and reads the value with Class431's integer readers (case 4 boxes a UInt32 from Class431::c(byte[], 0)), so it decodes a fixed-width value from its bytes. Evidence from --inspect-methods on this token."
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "en",
+   "Token": "0x060000D8",
+   "Signature": "System.Object en::a(System.Byte[],Class430)",
+   "OriginalName": "a",
+   "NewName": "ReadUInt16",
+   "NeedsReadableName": false,
+   "Reason": "Calls the two-argument reader, then `Convert.ToUInt16` and Class274::a(ushort) before boxing the result, so it yields the property's UInt16 value. Evidence from --inspect-methods on this token."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}

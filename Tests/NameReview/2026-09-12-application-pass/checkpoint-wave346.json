@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 346: the four shared reader methods of the en property table",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v346.xml",
+      "Sha256": "183BF722E394F1F1694BEF4F94C95F8617889E5997E160585E3BA07ADFF99495",
+      "PreviousMap": "names63-staged-v345.xml",
+      "PreviousMapSha256": "59EE841430C702A53C2C25A2B502216E87F6C39BA265A098DF50087751F09A43",
+      "FrozenSha256": "183BF722E394F1F1694BEF4F94C95F8617889E5997E160585E3BA07ADFF99495",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave346.review.json"
+  ],
+  "Method": {
+    "evidence": "The four reader methods in en were read directly: ReadRawBytes is ldarg.0/ret (identity over the byte[]), ReadValue is the two-argument wrapper over the length dispatcher, DecodeValueByLength switches on the array length and reads the value with Class431s integer readers, and ReadUInt16 converts through Convert.ToUInt16 and Class274::a(ushort). Name-diff gate: 4 added, 0 removed, 0 renamed.",
+    "themes": "New gate in use from this wave on: perf-now/wave-gate.py compares the previous and new maps BY NAME per token and fails on removals or unexpected renames, because the token-set diff that reported net-new 0 for wave 344 could not see three names being replaced. en is now fully named."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 4,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15774,
+    "VisibleRenamed": 5389,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12346
+  },
+  "Errors": 0
+}
