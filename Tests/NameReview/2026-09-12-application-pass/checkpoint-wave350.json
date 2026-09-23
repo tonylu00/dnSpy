@@ -1,0 +1,44 @@
+{
+  "Format": 1,
+  "Status": "wave 350: HawkException accessor named from its own resource-key switch",
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v350.xml",
+      "Sha256": "00A983A4222FE6EEEC311C1CAA372A65CD9D856A11AC044A631BEB67546B7487",
+      "PreviousMap": "names63-staged-v349.xml",
+      "PreviousMapSha256": "00A983A4222FE6EEEC311C1CAA372A65CD9D856A11AC044A631BEB67546B7487",
+      "FrozenSha256": "00A983A4222FE6EEEC311C1CAA372A65CD9D856A11AC044A631BEB67546B7487",
+      "AppliedToSource": false
+    }
+  },
+  "Reviews": [
+    "extended63-wave350.review.json"
+  ],
+  "Method": {
+    "evidence": "Two tool rules surfaced: Class279::vmethod_2 is a virtual member and needs --review-families, so it was dropped and recorded; HawkException::a() is a property getter and the updater requires the conventional name, reporting the property as LegacyErrorCodeString (its map row already names it). Its body is a 119-instruction switch whose results are the HAWK_E_/HAWK_S_ resource keys. Name-diff gate: 1 added.",
+    "themes": "New route: perf-now/literal-worklist.py reads the Strings field of every method in graph63 and lists unnamed, unprotected methods that carry their own literals - 42,790 tree-wide, 771 in Knx.Ets.HawkNET.dll alone. Literals name rows directly (this one, plus the earlier NormalizeSerialNumber and the ft steps), so the list is the worklist for the rest of the tail. Virtual/override members in it must go through a family review, not a plain method row."
+  },
+  "GuardsFoldedIn": {
+    "virtual rows expanded to their contract family": true,
+    "SDK-protected rows and families dropped": 0,
+    "qualified explicit-implementation names dropped": true
+  },
+  "UpdatedRows": 1,
+  "NewCollisionSuffixes": [],
+  "Audit": {
+    "Renamed": 15781,
+    "VisibleRenamed": 5396,
+    "SdkVisibleRenamed": 0,
+    "SdkReferencedTypesRenamed": 0
+  },
+  "AppliedTree": {
+    "Modules": 528,
+    "Copied": 460,
+    "Errors": 0,
+    "Verified": true,
+    "CanonicalRows": 574,
+    "Types": 956,
+    "Methods": 12353
+  },
+  "Errors": 0
+}
