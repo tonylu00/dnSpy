@@ -1,0 +1,37 @@
+{
+ "Format": 1,
+ "Kind": "SymbolReview",
+ "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+ "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+ "Methods": [
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x06002587",
+   "Signature": "System.Void Knx.Falcon.Bus::method_16()",
+   "OriginalName": "method_16",
+   "NewName": "UpdateSegmentCouplerRegistration",
+   "NeedsReadableName": false,
+   "Reason": "It logs 'Changing interface address in segment coupler registration from {0} to {1}' and 'New interface address {0} is not in same subnetwork as segment coupler {1}; un-registering', reading the device's IndividualAddress and SubnetAddress, so it updates (or drops) the segment coupler's registration for a new interface address."
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class857",
+   "Token": "0x06000BEC",
+   "Signature": "System.Void Class857::vmethod_6(Interface64,Class844)",
+   "OriginalName": "vmethod_6",
+   "ContractFamily": "CF995796075FA2E8BB95ED081F0D9B106124518B99A600435117C0026C611796",
+   "NewName": "ValidateMaSStatusBytesAsync",
+   "NeedsReadableName": false,
+   "Reason": "It fails with \"MaS returned 'zero' status bytes, expected: {0} received: {1}\", 'MaS returned wrong number of status bytes, expected: {0} received: {1}' and 'MaS announced missed chunks for this block but no chunk is marked in the status', so it validates the status bytes a MaS returned for a chunk block. The row is a virtual member, so it is reviewed through its family."
+  }
+ ],
+ "Types": [],
+ "Fields": []
+}
