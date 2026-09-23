@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T13:20:00Z",
+  "UpdatedUtc": "2026-09-23T14:10:00Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 naming pass. It is deliberately short. History lives in git; long-form notes live in archive/ and are not read during normal work.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -17,20 +17,26 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v374.xml",
-      "Sha256": "FF587DFBA74F6566411CF00F786577CE1A1F4337FAB6F6B9A7C61EE2279849C9",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave374.json",
-      "NextWave": 375,
-      "CumulativeRenamedRows": 16423,
-      "RowsInMap": { "Methods": 12643, "Types": 965, "Fields": 2815, "Parameters": 2316, "Locals": 837 },
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v375.xml",
+      "Sha256": "5E999379267C664607A53579B3EDBEC84E095F895AF898E80B19CDC90DF5E85A",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave375.json",
+      "NextWave": 376,
+      "CumulativeRenamedRows": 16204,
+      "RowsInMap": {
+        "Methods": 12647,
+        "Types": 965,
+        "Fields": 2824,
+        "Parameters": 2316,
+        "Locals": 837
+      },
       "AppliedToSource": false
     },
     "64": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v172.xml",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v173.xml",
       "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v172.json",
-      "NextVersion": 173,
-      "RestagedFrom": "names63-staged-v374.xml",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v173.json",
+      "NextVersion": 174,
+      "RestagedFrom": "names63-staged-v375.xml",
       "AppliedToSource": false
     }
   },
@@ -60,38 +66,42 @@
     "Rules": "D:\\knx_analysis\\POLICY.md"
   },
   "Backlog": {
-    "MeasuredUtc": "2026-09-23T13:20:00Z",
-      "Report": "D:\\knx_analysis\\perf-now\\backlog-v374.json",
-    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v374.json",
+    "MeasuredUtc": "2026-09-23T14:10:00Z",
+    "Report": "D:\\knx_analysis\\perf-now\\backlog-v375.json",
+    "Command": "python D:\\knx_analysis\\perf-now\\backlog.py --json backlog-v375.json",
     "Inventories": {
       "Methods": "D:\\knx_analysis\\perf-now\\review63-<module>.json (raw --review; this is the only inventory that also lists imethod_N rows)",
       "Types": "D:\\knx_analysis\\perf-now\\tree-types63.json",
       "Fields": "D:\\knx_analysis\\perf-now\\tree-fields63.json"
     },
-    "NotYetNamedRows": 29223,
-    "ByKind": { "Methods": 5526, "Types": 2329, "Fields": 21368 },
-    "ByModule": {
-      "Knx.Falcon.dll": 10052,
-      "Knx.Ets.HawkNET.dll": 5416,
-      "Knx.Ets.ObjectModel.dll": 3526,
-      "Knx.Ets.ViewModel.dll": 2153,
-      "Knx.DevKit.dll": 1269,
-      "Knx.Ets.Ui.UserControls.dll": 904,
-      "Knx.Ets.Common.dll": 871,
-      "Knx.Ets.Sdk.dll": 642,
-      "Knx.Ets.DynamicData.dll": 554,
-      "Knx.Ets.Xml.ObjectModel.dll": 542,
-      "Knx.CloudKit.dll": 457,
-      "Knx.Ets.CvNext.dll": 454,
-      "all remaining modules": 6736
+    "NotYetNamedRows": 28363,
+    "ByKind": {
+      "Methods": 5522,
+      "Types": 2344,
+      "Fields": 20497
     },
-    "Note": "Measured from the tool's own inventories at v374. Waves 373 and 374 named 353 definitions: 343 fields whose named accessors prove them to be the property's backing store, 3 types that log their own name, and 7 accessors of fields the map already named. The field route is bootstrap-limited - it can only name fields whose accessors are already named, so re-run perf-now/suggest-fields.py after every method block.",
+    "ByModule": {
+      "Knx.Falcon.dll": 9928,
+      "Knx.Ets.HawkNET.dll": 5373,
+      "Knx.Ets.ObjectModel.dll": 3405,
+      "Knx.Ets.ViewModel.dll": 2153,
+      "Knx.DevKit.dll": 1264,
+      "Knx.Ets.Ui.UserControls.dll": 904,
+      "Knx.Ets.Common.dll": 864,
+      "Knx.Ets.Sdk.dll": 630,
+      "Knx.Ets.DynamicData.dll": 456,
+      "Knx.CloudKit.dll": 446,
+      "Knx.Ets.CvNext.dll": 388,
+      "Knx.Ets.CalculatedParameters.dll": 290,
+      "all remaining modules": 5663
+    },
+    "Note": "Measured at v375 with full-path identity. Wave 375 named 13 definitions (9 fields that are a named property's backing store, 4 CloudKit event accessors). Every mechanical route is now saturated or evidence-free; the remaining 28,363 rows need per-row reading or a new evidence source.",
     "ExcludedBuckets": {
-      "compiler-generated rows (never renamed)": 57977,
-      "already readable names (no rename needed)": 99033,
-      "sdk-whitelisted": 17267,
+      "compiler-generated rows (never renamed)": 55036,
+      "already readable names (no rename needed)": 92963,
+      "sdk-whitelisted": 15098,
       "protected contract family": 3657,
-      "constructors": 20825
+      "constructors": 20843
     },
     "BiggestMethodTypes": [
       "Knx.DevKit.dll akj 291",
@@ -107,51 +117,94 @@
       "Knx.Ets.HawkNET.dll et 84"
     ],
     "Routes": [
-      "6.4 compiler-generated state-machine name oracle (perf-now/sm-oracle.py)",
-      "operation-name literal (perf-now/propose-from-literals.py): a row passes its own name to the logger",
-      "contract family: one virtual/interface row names its whole family; the wave expands it",
-      "domain-callee anchor (perf-now/anchor-scan.py)",
-      "literal / self-naming worklist (perf-now/candidates.py)",
+      "6.4 compiler-generated state-machine oracle (sm-oracle.py)",
+      "operation-name literal passed to the logger (propose-from-literals.py)",
+      "contract family: one virtual/interface row names its family",
+      "domain-callee anchor (anchor-scan.py)",
+      "literal / self-naming worklist (candidates.py)",
+      "field backing store from a named accessor (suggest-fields.py) - re-run after every method block",
+      "accessor of a named field (suggest-accessors-from-fields.py)",
+      "type that logs its own name (suggest-types-selfname.py)",
       "structural fallback: offsets, bitfields, formatters, tables (slow; last)"
-      ,"field backing store (perf-now/suggest-fields.py): a field whose only named users are one property's accessors of the same type takes the camelCase property name; 95.6% agreement on already-named fields, 350 proposals at v373"
-      ,"accessor from a named field (perf-now/suggest-accessors-from-fields.py): a method that touches exactly one named field is its get_/set_/add_/remove_ accessor; 91.6% agreement on already-named methods"
-      ,"type self-name literal (perf-now/suggest-types-selfname.py): a type that logs its own fully qualified name; 94.3% agreement on already-named types"
     ],
     "Worklists": [
-      { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Falcon.dll.json", "Rows": 368, "Route": "literal / self-naming" },
-      { "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Ets.HawkNET.dll.json", "Rows": 116, "Route": "literal / self-naming" },
-      { "Path": "D:\\knx_analysis\\perf-now\\anchor-scan.json", "Rows": 21, "Route": "domain-callee anchor" },
-      { "Path": "D:\\knx_analysis\\perf-now\\proposals-devkit.json", "Rows": 72, "Route": "DevKit twin method names - NOT USABLE (4.2% agreement on known rows)" },
-      { "Path": "D:\\knx_analysis\\perf-now\\backlog-v372.json", "Rows": 29576, "Route": "the remainder itself, per module and per kind" }
+      {
+        "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Falcon.dll.json",
+        "Rows": 368,
+        "Route": "literal / self-naming"
+      },
+      {
+        "Path": "D:\\knx_analysis\\perf-now\\candidates-Knx.Ets.HawkNET.dll.json",
+        "Rows": 116,
+        "Route": "literal / self-naming"
+      },
+      {
+        "Path": "D:\\knx_analysis\\perf-now\\anchor-scan.json",
+        "Rows": 21,
+        "Route": "domain-callee anchor"
+      },
+      {
+        "Path": "D:\\knx_analysis\\perf-now\\proposals-devkit.json",
+        "Rows": 72,
+        "Route": "DevKit twin method names - NOT USABLE (4.2% agreement on known rows)"
+      },
+      {
+        "Path": "D:\\knx_analysis\\perf-now\\backlog-v372.json",
+        "Rows": 29576,
+        "Route": "the remainder itself, per module and per kind"
+      }
     ],
     "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, then --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
     "ExhaustedRoutes": [
-      "cross-version method transfer: 6.4 keeps compiler-generated type names only (1 readable method name in 6.4 Knx.Falcon)",
-      "property/field accessor inference re-run at v369: 1607 proposals -> 1099 already named, 447 whitelisted, 60 protected family, 1 net new",
-      "field-accessor inference re-run at v369: 1 proposal",
-      "property-backed field inference re-run at v369: 49 proposals, all in third-party assemblies",
-      "contract-family gaps",
-      "shape matching inside one version",
-      "per-module literal sweep",
-      "compiler-generated lambda shortcut",
-      "Falcon operation-name literals: 55 rows, 54 named in wave 370, 0 multi-literal rows left, 16 logger-call rows carry no identifier literal"
-      ,"6.4 state-machine oracle worklists: 59 Falcon + 51 HawkNET matches, 48 SDK-protected, 2 refused as external contracts (DevKit CollectionChanged), 25 already named, 66 legal rows landed in wave 371"
-      ,"Manufacturer Tool engine twins (Knx.Falcon, Knx.Ets.HawkNET, Knx.CloudKit, Knx.Ets.CvNext, Knx.Ets.Common, Knx.Ets.DynamicData, Knx.Ets.ActiveTree at MT-6.3/MT-6.4): the same obfuscation as the ETS builds, no readable names"
-      ,"Manufacturer Tool Knx.DevKit_orig.dll: type names transfer (8 of 9 already-named types agree under the strict readability filter), method names do not (4.2% agreement with the pass's own names, 114 of 119 matched rows disagree) - method transfer rejected"
-      ,"compare/*/src decompiled trees and sig/*.sig.txt dumps: projections of the pass's own map (0 of 446 ETS6N token names agree with the map), not an independent oracle"
-      ,"DevKit type names: 63 strict-readability proposals, 45 SDK-protected, 9 already named, 6 landed in wave 372, 3 dropped by review"
-      ,"--suggest-property-fields / --suggest-field-accessors / --suggest-accessors re-run at v372: identical to v369 (49 / 1 / 1607 proposals), still all out of scope or already named"
-    ]
+      "cross-version method transfer: 6.4 keeps compiler-generated type names only",
+      "accessor/property-field/field-accessor inference: re-run at v372 unchanged (49/1/1607 proposals, all out of scope or named)",
+      "contract-family gaps and shape matching inside one version",
+      "per-module literal sweep and the compiler-generated lambda shortcut",
+      "Falcon operation-name literals: 55 rows, 54 named (wave 370), none left",
+      "6.4 state-machine oracle worklists: 110 rows, 48 SDK-protected, 2 external contracts, 25 already named, 66 landed (wave 371)",
+      "Manufacturer Tool twins: Knx.Falcon/HawkNET/CloudKit/CvNext/Common/DynamicData/ActiveTree are obfuscated like the ETS builds",
+      "Manufacturer Tool Knx.DevKit_orig: type names transfer (wave 372), method names do not (4.2% agreement)",
+      "compare/*/src trees and sig dumps: projections of this pass's own map, not an independent oracle",
+      "--dump-attributes (de4dotEx de764d82): only XmlRoot/XmlType/JsonTypeName (already readable) and XmlEnum (the argument is the XML value, not the member name) - no rows",
+      "parameter-family inheritance: 3,864 placeholder parameters, no named sibling at that position - no rows",
+      "event accessors: 903 unnamed tree-wide, only 16 have a named raiser on the same field (waves 371+375)",
+      "single-callee forwarders: fires on 109 rows, 1.3% agreement with the pass's own names - rejected",
+      "field backing stores saturated at this method map: 350 landed (wave 373), 16 left (wave 375), 98.5% agreement",
+      "readable bucket verified: a tree-wide random-name scan found 3 rows, all real names"
+    ],
+    "Identity": "Rows are keyed by the full relative module path, not the file name: several CV/<version>/ copies share a file name with the main module and the earlier keying mixed them."
   },
   "NextItems": [
-    { "Module": "Knx.Falcon.dll", "Type": "nc", "Rows": 151, "Route": "literal worklist: MaS return-code validators and the SendWithRetryAsync tail" },
-    { "Module": "Knx.Ets.HawkNET.dll", "Type": "eo", "Rows": 117, "Route": "literal worklist" },
-    { "Module": "Knx.CloudKit.dll", "Type": "ajg", "Rows": 115, "Route": "literal worklist" },
-    { "Module": "Knx.Ets.HawkNET.dll", "Type": "et", "Rows": 84, "Route": "literal worklist" },
-    { "Module": "Knx.Falcon.dll", "Type": "Class1348", "Rows": 67, "Route": "log-message literals name the operation ManagedIoTStack forwards" },
-    { "Module": "Knx.Falcon.dll", "Type": "Class1222", "Rows": 31, "Route": "log-message literals name the IoTLogger dispatch methods" },
-    { "Module": "Knx.Ets.ViewModel.dll", "Kind": "Fields", "Rows": 2118, "Route": "field remainder has no route yet: --suggest-property-fields only proposes fields behind already-named properties" },
-    { "Module": "Knx.DevKit.dll", "Type": "akg/akj/amh/akg", "Rows": 788, "Route": "blocked for methods: the only readable twin fails method-level validation; fields remain unrouted" }
+    {
+      "Module": "Knx.Falcon.dll",
+      "Rows": 9928,
+      "Route": "per-row reading; the mechanical routes (oracle, literals, fields, event accessors) are exhausted here"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Rows": 5373,
+      "Route": "per-row reading"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Rows": 3405,
+      "Route": "per-row reading; 3,000+ are fields whose accessors are unnamed"
+    },
+    {
+      "Module": "Knx.Ets.ViewModel.dll",
+      "Rows": 2153,
+      "Route": "per-row reading"
+    },
+    {
+      "Module": "all modules",
+      "Rows": 20497,
+      "Kind": "Fields",
+      "Route": "bootstrap-blocked: a field needs a named accessor, so the next method block must come first, then re-run perf-now/suggest-fields.py"
+    },
+    {
+      "Module": "all modules",
+      "Needed": "a new evidence source: PDBs, an unobfuscated build of another module (only Knx.DevKit_orig exists), or per-row body reading at scale"
+    }
   ],
   "NextItemRules": [
     "Oracle rows are the strongest route: the 6.4 released surface names them, and a literal in the 6.3 body must corroborate the row before it is accepted.",
