@@ -144,7 +144,9 @@
       "MapFile": "D:\\knx_analysis\\perf-now\\nuget-packages.txt (23 entries: Autofac, BouncyCastle.Cryptography, FluentResults, log4net, Newtonsoft.Json, NiL.JS, System.* compatibility packages, ...)",
       "Driver": "D:\\knx_analysis\\perf-now\\export-firstparty.py - per-module maps, one export process per module (bounded memory), package map in the environment, then dotnet build per module.",
       "VerifiedUtc": "2026-09-25",
-      "Verified": "Knx.Ets.PrintLibrary, Knx.Ets.LabelCreator, Knx.Ets.Ids all exported and built with 0 errors (report: D:\\knx_analysis\\ets63-source-batch1\\export-report.txt). Third-party assemblies were consumed as NuGet packages, never decompiled."
+      "Verified": "Knx.Ets.PrintLibrary, Knx.Ets.LabelCreator, Knx.Ets.Ids (ets63-source-batch1) and Knx.Ets.CalculatedParameters (export-calcparams5) all exported and built with 0 errors. Third-party assemblies were consumed as NuGet packages, never decompiled.",
+      "BatchRun": "ets63-source-batch (2026-09-25, stopped early): 23 of 64 modules exported and 6 built. The run was stopped when Knx.Ets.Ui.UserControls grew to 78 GB of RAM (same pathology as Knx.Falcon.Monitor earlier); Knx.Ets.Reports, Knx.Ets.TelegramRecorderView and Knx.Ets.Ui.UserControls have no project, the other 17 exported-but-unbuilt ones failed on the parameter-field restore, which is fixed now (dnSpy 7126e3bcb).",
+      "RestoreFix": "dnSpy 7126e3bcb: the build-time parameter-field restore no longer fails on aliased parameters of compiler-generated owners; it prints 'source parameter field restore skipped: <signature>' and continues."
     },
     "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign (inherits the merge fixes), rebuild, overlay Stage-RecompiledTree + manifest, audit battery, verify against unchanged third-party ETS Apps.",
     "LiveEts": "user-coordinated; ask before running",
