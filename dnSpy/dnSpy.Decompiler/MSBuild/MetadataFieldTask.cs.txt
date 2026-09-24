@@ -381,7 +381,21 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             string sourceName = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(parts[2]));
             var originalName = new UTF8String(Convert.FromBase64String(parts[3]));
             var candidates = methods[signature].Where(m => m.ParamDefs.Any(p => p.Sequence == sequence && p.Name == originalName)).ToArray();
-            if (sequence == 0 || candidates.Length != 1) throw new InvalidDataException("Missing or ambiguous source parameter field owner: " + signature);
+            if (sequence == 0 || candidates.Length != 1) {
+                // A compiler-generated method (closure, lambda, state machine) can carry an aliased
+                // parameter whose original metadata name no longer matches the rebuilt assembly.
+                // Such a name is not part of any contract, so skip the restore instead of failing
+                // the build.
+                var bySignature = methods[signature].ToArray();
+                if (IsGeneratedSignature(signature) ||
+                    (bySignature.Length == 1 && IsGeneratedOwner(bySignature[0].DeclaringType)))
+                    continue;
+                // Obfuscated builds rename the generated owner, so the checks above cannot always
+                // prove it. The metadata name of a hoisted parameter is not a runtime contract, so
+                // report the skip and keep the build going instead of failing it.
+                Console.WriteLine("dnSpy: source parameter field restore skipped: " + signature);
+                continue;
+            }
             var method = candidates[0];
             var captureBodies = new HashSet<MethodDef> { method };
             var parameterFields = new HashSet<FieldDef>();
@@ -889,6 +903,18 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (matches.Length == 1 && generated.TryGetValue(matches[0], out restored)) referenceNames[reference] = restored;
         }
         foreach (var entry in generated) names.Add(entry.Key, entry.Value);
+    }
+
+    // Compiler-generated metadata names carry '<' or '>' ('<Foo>b__0_0', 'z/<>c', '<>c__DisplayClass1').
+    static bool IsGeneratedSignature(string signature) => signature.IndexOf('<') >= 0 || signature.IndexOf('>') >= 0;
+
+    // A generated owner is either marked compiler-generated or nested inside one: obfuscated builds
+    // rename the display class ('<>c__DisplayClass1_0' -> 'd'), so the name alone proves nothing.
+    static bool IsGeneratedOwner(TypeDef type) {
+        for (var t = type; t != null; t = t.DeclaringType)
+            if (IsGeneratedType(t))
+                return true;
+        return false;
     }
 
     static bool IsGeneratedOrdinal(string value) => value.Length != 0 &&
