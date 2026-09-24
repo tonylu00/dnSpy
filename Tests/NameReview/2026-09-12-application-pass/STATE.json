@@ -128,10 +128,16 @@
   "Deferred": {
     "SourceExport": {
       "Map": "names63-staged-v381.xml = v380 minus the two rows that collided in the source export (CvNext ConverterException::b -> get_Data; HawkNET Interface24`2 -> IIoTTaskState). check-map PASS, 0 errors.",
-      "ToolFixes": "dnSpy 17e48eec9: SourceNameMap/SourceNameAliases accept compiler-generated aliases (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, and the export needs -r for the CV/<version> modules.",
-      "Command": "dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -r -o <out> ETS6.3_api_preserved4",
-      "State": "2026-09-24 run wrote 33,198 .cs in 528 module folders, then died with a decompiler stack overflow: 'Repeated 2487 times: ICSharpCode.Decompiler.Ast.Transforms.DeclareVariables.Run'. The last files written belong to third-party assemblies (DevExpress.Xpf.Core, DevExpress.Pdf, System.Reactive, System.Text.Json), so the crash is in third-party code, not in the ETS modules.",
-      "Next": "Export only the map's first-party modules (pass those files as inputs) so third-party assemblies are never decompiled, and/or harden DeclareVariables.Run against deep recursion. Then build the generated solution."
+      "Scope": "Only the 64 modules the map covers are exported; third-party assemblies (DevExpress, Telerik, System.Reactive, System.Text.Json, HtmlAgilityPack, ...) stay untouched as binaries and are referenced, not decompiled - per the 2026-09-25 instruction to use the original packages.",
+      "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
+      "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
+      "Command": "dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> @firstparty-files.txt",
+      "State": "2026-09-25 run: passed the stack overflow, wrote 13,017 .cs, then memory blew up to 70 GB on Knx.Falcon.Monitor and stopped progressing (process killed). The exporter keeps every decompiled module's AST alive until project files are written, so a single-process export of the whole first-party set does not fit.",
+      "Next": [
+        "Export one module per process (or small batches) so the AST of each module is released; the pass already works module-by-module.",
+        "Third-party references: map known assemblies to PackageReference in SdkProjectWriter (it already emits PackageReference and HintPath) instead of referencing the tree DLLs by path; keep unknown ones as binary references.",
+        "Then dotnet build the generated solution and record the compile result."
+      ]
     },
     "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign (inherits the merge fixes), rebuild, overlay Stage-RecompiledTree + manifest, audit battery, verify against unchanged third-party ETS Apps.",
     "LiveEts": "user-coordinated; ask before running",
