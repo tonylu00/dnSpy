@@ -53,6 +53,44 @@ namespace dnSpy.Decompiler.MSBuild {
 		readonly DotNetPathProvider dotNetPathProvider;
 		HashSet<string>? standardReferenceNames;
 
+		// Assemblies that ship as NuGet packages. Set DNSPY_PACKAGE_MAP to a text file with
+		// '<assembly>=<package id>/<version>' lines: a matching reference becomes a
+		// PackageReference item instead of a HintPath reference to the input tree, so the
+		// third-party library keeps its original usage and is never recompiled from source.
+		static readonly Dictionary<string, (string Id, string Version)> packageMap = LoadPackageMap();
+
+		static Dictionary<string, (string Id, string Version)> LoadPackageMap() {
+			var result = new Dictionary<string, (string Id, string Version)>(StringComparer.OrdinalIgnoreCase);
+			var path = Environment.GetEnvironmentVariable("DNSPY_PACKAGE_MAP");
+			if (string.IsNullOrEmpty(path) || !File.Exists(path))
+				return result;
+			foreach (var line in File.ReadAllLines(path)) {
+				var text = line.Trim();
+				if (text.Length == 0 || text[0] == '#')
+					continue;
+				int eq = text.IndexOf('=');
+				if (eq <= 0)
+					continue;
+				var assembly = text.Substring(0, eq).Trim();
+				var value = text.Substring(eq + 1).Trim();
+				int slash = value.LastIndexOf('/');
+				if (assembly.Length == 0 || slash <= 0)
+					continue;
+				result[assembly] = (value.Substring(0, slash).Trim(), value.Substring(slash + 1).Trim());
+			}
+			return result;
+		}
+
+		static bool TryWritePackageReference(XmlWriter writer, string assemblyName) {
+			if (!packageMap.TryGetValue(assemblyName, out var package))
+				return false;
+			writer.WriteStartElement("PackageReference");
+			writer.WriteAttributeString("Include", package.Id);
+			writer.WriteAttributeString("Version", package.Version);
+			writer.WriteEndElement();
+			return true;
+		}
+
 		protected override string? GetHintPath(AssemblyDef? assembly) {
 			if (assembly is not null && !string.IsNullOrEmpty(assembly.ManifestModule.Location) &&
 				project.PreservedAssemblyFiles.TryGetValue(Path.GetFullPath(assembly.ManifestModule.Location), out var preserved))
@@ -251,6 +289,8 @@ namespace dnSpy.Decompiler.MSBuild {
 						if (asm is not null && ExistsInProject(asm.ManifestModule.Location))
 							continue;
 						hash.Add(r.Name);
+						if (TryWritePackageReference(writer, r.Name))
+							continue;
 						writer.WriteStartElement("Reference");
 						writer.WriteAttributeString("Include", IdentifierEscaper.Escape(r.Name));
 						var hintPath = GetHintPath(asm);
@@ -262,6 +302,8 @@ namespace dnSpy.Decompiler.MSBuild {
 						if (hash.Contains(r) || AssemblyExistsInProject(r))
 							continue;
 						hash.Add(r);
+						if (TryWritePackageReference(writer, r))
+							continue;
 						writer.WriteStartElement("Reference");
 						writer.WriteAttributeString("Include", IdentifierEscaper.Escape(r));
 						writer.WriteEndElement();
