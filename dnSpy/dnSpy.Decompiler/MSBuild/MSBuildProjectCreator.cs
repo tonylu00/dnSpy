@@ -63,6 +63,42 @@ namespace dnSpy.Decompiler.MSBuild {
 			}
 		}
 
+		// Obfuscated code (and lambda inlining) produces expression trees whose AST transforms
+		// recurse thousands of levels deep. Thread-pool threads only get the default 1 MB stack,
+		// which stack-overflows in the middle of an export, so run the work on dedicated threads
+		// with a large stack instead.
+		const int decompilerStackSize = 64 * 1024 * 1024;
+
+		static void RunWithLargeStacks<T>(T[] items, int maxDegreeOfParallelism, Action<T> body) {
+			if (items.Length == 0)
+				return;
+			int workers = Math.Min(Math.Max(1, maxDegreeOfParallelism), items.Length);
+			int next = -1;
+			var errors = new List<Exception>();
+			var threads = new Thread[workers];
+			for (int i = 0; i < workers; i++) {
+				threads[i] = new Thread(() => {
+					while (true) {
+						int index = Interlocked.Increment(ref next);
+						if (index >= items.Length)
+							break;
+						try {
+							body(items[index]);
+						}
+						catch (Exception ex) {
+							lock (errors)
+								errors.Add(ex);
+						}
+					}
+				}, decompilerStackSize) { IsBackground = true };
+				threads[i].Start();
+			}
+			foreach (var thread in threads)
+				thread.Join();
+			if (errors.Count != 0)
+				throw new AggregateException(errors);
+		}
+
 		public MSBuildProjectCreator(ProjectCreatorOptions options) {
 			this.options = options ?? throw new ArgumentNullException(nameof(options));
 			if (options.PublicSign && !options.GenerateSDKStyleProjects)
@@ -103,7 +139,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				satelliteAssemblyFinder = new SatelliteAssemblyFinder();
 				var namedModules = managedModules.OrderBy(m => m.Module.Location, StringComparer.OrdinalIgnoreCase)
 					.Select(m => (Options: m, Directory: filenameCreator.Create(m.Module))).ToArray();
-				Parallel.ForEach(namedModules, opts, named => {
+				RunWithLargeStacks(namedModules, opts.MaxDegreeOfParallelism, named => {
 					var modOpts = named.Options;
 					modOpts.PublicSign = options.PublicSign;
 					options.CancellationToken.ThrowIfCancellationRequested();
@@ -121,7 +157,7 @@ namespace dnSpy.Decompiler.MSBuild {
 					maxProgress++;
 				progressListener.SetMaxProgress(maxProgress);
 
-				Parallel.ForEach(jobs, opts, job => {
+				RunWithLargeStacks(jobs, opts.MaxDegreeOfParallelism, job => {
 					options.CancellationToken.ThrowIfCancellationRequested();
 					try {
 						job.Create(ctx);
@@ -137,7 +173,7 @@ namespace dnSpy.Decompiler.MSBuild {
 					}
 					progressListener.SetProgress(Interlocked.Increment(ref totalProgress));
 				});
-				Parallel.ForEach(projects, opts, p => {
+				RunWithLargeStacks(projects.ToArray(), opts.MaxDegreeOfParallelism, p => {
 					options.CancellationToken.ThrowIfCancellationRequested();
 					try {
 						ProjectWriterBase writer;
