@@ -67,6 +67,29 @@ public static class ProbitSourceFixture {
         return value < -(uint)(tolerance * 1000U + 20000U);
     }
 
+    // Roslyn fixes an array through a pinned local and only then computes the
+    // byte* the source named; the null/empty fallback belongs to the initializer.
+    public static unsafe int FixedBytes(byte[] data) {
+        int total = 0;
+        fixed (byte* p = data) {
+            for (int i = 0; i < data.Length; i++) {
+                total += p[i];
+            }
+        }
+        return total;
+    }
+
+    // The string form widens through conv.u and RuntimeHelpers.OffsetToStringData.
+    public static unsafe int FixedText(string text) {
+        int total = 0;
+        fixed (char* p = text) {
+            for (int i = 0; i < text.Length; i++) {
+                total += p[i];
+            }
+        }
+        return total;
+    }
+
     public static int Main() {
         List<Tuple<ushort[], string>> vector = InlineVector(1234);
         ProbeControl control = new ProbeControl();
@@ -80,6 +103,7 @@ public static class ProbitSourceFixture {
         }
         Console.WriteLine("discard={0}", DiscardedLiteral());
         Console.WriteLine("below={0},{1}", BelowLowerBound(-1000000, 100), BelowLowerBound(0, 100));
+        Console.WriteLine("fixed={0},{1}", FixedBytes(new byte[] { 1, 2, 3 }), FixedText("ABCD"));
         Console.WriteLine("control={0}", control.Marker);
         return 0;
     }
