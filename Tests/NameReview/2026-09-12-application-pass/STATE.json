@@ -142,9 +142,9 @@
     "MemoryBlowup": {
       "RootCause": "dnSpy 863effcee: a RECURSIVE lambda (a handler that subscribes itself - Knx.Ets.Common arx/b::c and UserControls ContextMenuPlacementBehavior/<>c__DisplayClass2_0::method_0). Inlining copies the body into its own body, so the AST grows without bound. Fixed by IsInLambdaCycle (walks the lambda's ldftn targets, memoized) plus relaxed backstop caps.",
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
-      "Fix": "dnSpy 0bec3dd2f: a lambda above 400 IL instructions stays a method (DNSPY_MAX_INLINED_LAMBDA_IL) and each method accepts at most 2000 inlined IL instructions (DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD). Readability is unchanged - HawkNET eh still shows its 13 lambdas and 31 awaits.",
+      "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
       "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
-      "FinalExport": "D:\\knx_analysis\\ets63-source-v381-final (64 projects, 13,296 .cs, ~5 min). Solution build: 14 errors left - Knx.Falcon 14 (CS7014 attribute placement, CS1061 member lookups) and Knx.Ets.Common.2 2 (CS1503). Those two categories are the next decompiler-output work."
+      "FinalExport": "D:\\knx_analysis\\ets63-source-v381-final (64 projects, 13,296 .cs, ~5 min). Solution build: 14 errors left - Knx.Falcon 14 (CS7014 attribute placement, CS1061 member lookups) and Knx.Ets.Common.2 2 (CS1503). Those two categories are the next decompiler-output work.",
       "ReadabilityImpact": {
         "MeasuredWith": "DNSPY_INLINE_TRACE=1 (dnSpy c4aaca673) over all 64 first-party modules",
         "SkippedLambdas": 4,
