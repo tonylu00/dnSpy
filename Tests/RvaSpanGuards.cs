@@ -55,11 +55,23 @@ class RvaSpanGuards {
         Func<ILExpression> makeInline = () => new ILExpression(ILCode.Call, initializer,
             new ILExpression(ILCode.Stloc, variable, new ILExpression(ILCode.Newarr, inline.Module.CorLibTypes.Byte.TypeDefOrRef, new ILExpression(ILCode.Ldc_I4, 3))),
             new ILExpression(ILCode.Ldtoken, inline.Field));
-        Func<ILExpression, bool> rewriteInline = call => (bool)typeof(ILAstOptimizer).GetMethod("TransformInlineInitializeArray", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { call, inline.Context });
+        var optimizer = new ILAstOptimizer();
+        Func<ILExpression, bool> rewriteInline = call => (bool)typeof(ILAstOptimizer).GetMethod("TransformInlineInitializeArray", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(optimizer, new object[] { call, inline.Context });
         var inlineCall = makeInline();
         Check(rewriteInline(inlineCall) &&
             inlineCall.Code == ILCode.Stloc && inlineCall.Operand == variable && inlineCall.Arguments[0].Code == ILCode.InitArray &&
             inlineCall.Arguments[0].Arguments.Select(a => (int)a.Operand).SequenceEqual(new[] { 7, 11, 13 }), "Inline allocation retains destination and exact data");
+        // A discarded literal has no destination local; the allocation must end up in
+        // a generated one, otherwise the initializer is not a valid statement.
+        Func<ILExpression> makeDiscarded = () => new ILExpression(ILCode.Call, initializer,
+            new ILExpression(ILCode.Newarr, inline.Module.CorLibTypes.Byte.TypeDefOrRef, new ILExpression(ILCode.Ldc_I4, 3)),
+            new ILExpression(ILCode.Ldtoken, inline.Field));
+        var discarded = makeDiscarded();
+        Check(rewriteInline(discarded) && discarded.Code == ILCode.Stloc && discarded.Operand is ILVariable generated &&
+            generated != variable && generated.GeneratedByDecompiler &&
+            discarded.Arguments[0].Code == ILCode.InitArray &&
+            discarded.Arguments[0].Arguments.Select(a => (int)a.Operand).SequenceEqual(new[] { 7, 11, 13 }),
+            "Discarded allocation receives a generated destination");
         var oversized = makeInline(); oversized.Arguments[0].Arguments[0].Arguments[0].Operand = 99;
         Check(!rewriteInline(oversized) && oversized.Code == ILCode.Call, "Oversized inline copy retains runtime failure");
         var negative = makeInline(); negative.Arguments[0].Arguments[0].Arguments[0].Operand = -1;

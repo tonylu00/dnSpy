@@ -132,6 +132,10 @@ namespace dnSpy.Decompiler.MSBuild {
 					foreach (var d in winFormsFile.GetDefsToRemove())
 						opts.Definitions.Add(d);
 					opts.ShowDefinitions = true;
+					// The main type file owns the type-level attributes; emitting them on
+					// both partial declarations duplicates every single-use attribute
+					// (eg. [DefaultEvent]) and the project no longer compiles.
+					opts.RemoveTypeAttributes = true;
 					opts.UseUsingDeclarations = false;
 					winFormsFile.Decompiler.Decompile(DecompilationType.PartialType, opts);
 				}

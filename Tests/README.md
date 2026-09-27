@@ -1021,6 +1021,15 @@ checks settings values, singleton state, custom type attributes and member
 attributes against the original behavior. Type attributes belong to one partial
 declaration; source hashes must be deterministic and the input must remain intact.
 
+`Invoke-ProbitSourceRegression.ps1` exports a plain, non-obfuscated Windows Forms
+program and requires the generated solution to compile with no source edits. The
+fixture covers a designer-split control whose single-use type attributes must be
+emitted once, an inline ushort vector literal whose non-constant element selects
+the unsigned element type, pointer subtraction converted to int32, a discarded RVA
+array literal that must not name the compiler's private data type, and unsigned
+negation widening to int64. One- and four-worker exports must be identical, the
+rebuilt program must print the original output and the input must stay intact.
+
 `Invoke-EtsAsyncChannelRegression.ps1` takes original/processed Falcon assemblies,
 the untouched exported `Async.cs`, and a new output folder. It compiles that source
 and runs only the channel reader helper in separate processes for all three targets.
