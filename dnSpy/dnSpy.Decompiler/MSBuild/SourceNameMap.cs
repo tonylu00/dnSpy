@@ -48,6 +48,18 @@ namespace dnSpy.Decompiler.MSBuild {
 					// (`Foo`1); the alias itself never carries the arity because the
 					// restore instruction adds it back from the type's parameters.
 					if (name != null && member is TypeDef aliasType) name = NormalizeTypeName(name, aliasType);
+					if (name != null && IsCompilerGeneratedAlias(name)) {
+						// An alias is written straight into the C# source and '<Owner>b__12_0' is not a
+						// legal identifier there. The metadata name stays as it is, and the decompiler
+						// renders the compiler-generated member itself, so the alias is dropped.
+						if (reportAll)
+							problems.Add((row.Name == "Type" ? "type " : "method ") +
+								((string?)row.Attribute("Signature") ?? "?") +
+								": compiler-generated alias not applied to source: " + name);
+						name = null;
+						if (!row.HasElements)
+							continue;
+					}
 					if (name != null) {
 						// A type alias may carry the namespace the obfuscator flattened
 						// away; everything else stays a single identifier.
@@ -204,11 +216,11 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (matches.Length != 1) throw new InvalidDataException("Source map name-only row must identify exactly one member: " + signature + " (" + matches.Length + " matches)");
 			return matches[0];
 		}
+		/// <summary>Compiler-generated names ('&lt;Foo&gt;b__0_0', '&lt;&gt;c', '&lt;Foo&gt;d__3') are not C# identifiers.</summary>
+		static bool IsCompilerGeneratedAlias(string name) => name.Length != 0 && (name.IndexOf('<') >= 0 || name.IndexOf('>') >= 0);
+
 		static void ValidateName(string name) {
-			// Compiler-generated members keep the compiler's own name ('<.ctor>b__37_0',
-			// '<>m__Finally1', '<Foo>d__3'). Those are what the decompiler emits for them and
-			// what the metadata must keep, so an alias in that form is accepted as-is.
-			if (name.Length != 0 && (name.IndexOf('<') >= 0 || name.IndexOf('>') >= 0))
+			if (IsCompilerGeneratedAlias(name))
 				return;
 			if (!MetadataTypeNames.IsIdentifier(name) || name.Any(c => char.GetUnicodeCategory(c) == UnicodeCategory.Format)) throw new InvalidDataException("Invalid source alias: " + name);
 		}
