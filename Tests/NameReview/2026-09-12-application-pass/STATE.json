@@ -142,7 +142,16 @@
     "MemoryBlowup": {
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
       "Fix": "dnSpy 0bec3dd2f: a lambda above 400 IL instructions stays a method (DNSPY_MAX_INLINED_LAMBDA_IL) and each method accepts at most 2000 inlined IL instructions (DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD). Readability is unchanged - HawkNET eh still shows its 13 lambdas and 31 awaits.",
-      "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB."
+      "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
+      "ReadabilityImpact": {
+        "MeasuredWith": "DNSPY_INLINE_TRACE=1 (dnSpy c4aaca673) over all 64 first-party modules",
+        "SkippedLambdas": 5,
+        "Breakdown": "1 above the 400-IL size cap, 4 above the 2000-IL per-method budget",
+        "Owners": ["Knx.Ets.Common arx/b::c", "Knx.Ets.Ui.UserControls Behaviors.ContextMenuPlacementBehavior/<>c__DisplayClass2_0::method_0"],
+        "Construct": "a recursive lambda chain: 'handler -= delegate(object, RoutedEventArgs) { ... handler -= delegate { ... } }' - exactly the construct that duplicated itself past 20 GB when inlined unbounded",
+        "AB": "Knx.Ets.LabelCreator exported with and without the caps is byte-identical (same 28 files, 219 lambdas, 3913 lines) - the budget only changes output where it must",
+        "Knobs": "DNSPY_MAX_INLINED_LAMBDA_IL and DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD (0 disables the per-method budget); raise them for a module or type when a specific case is worth the memory."
+      }
     },
     "SourceExportPackageMap": {
       "ToolFix": "dnSpy 6ccd9ac65: SdkProjectWriter emits PackageReference for assemblies listed in DNSPY_PACKAGE_MAP ('<assembly>=<package id>/<version>' lines) instead of HintPath references into the tree; unmapped assemblies keep HintPath.",
