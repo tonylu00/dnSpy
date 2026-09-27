@@ -144,7 +144,13 @@
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
       "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
       "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
-      "FinalExport": "D:\\knx_analysis\\ets63-source-v381-final (64 projects, 13,296 .cs, ~5 min). Solution build: 14 errors left - Knx.Falcon 14 (CS7014 attribute placement, CS1061 member lookups) and Knx.Ets.Common.2 2 (CS1503). Those two categories are the next decompiler-output work.",
+      "FinalExport": "D:\\knx_analysis\\ets63-source-v382 (64 projects, ~5 min). Solution build: 7 errors left (was 14 before the CS7014 fix, dnSpy 50f3a5ec2).",
+      "RemainingErrors": {
+        "Count": 7,
+        "CS1061ShadowedLambdaParameter": "4x Knx.Falcon/Discovery/IpDeviceDiscovery.cs - the lambda parameter is named 'sender' and shadows the outer 'sender' (Knx.Falcon.KnxnetIp.IUnicastCommunication) that the body actually uses: 'sender.add_Received(delegate(object sender, ReceivedIpFrameEventArgs e) { ... sender.get_RemoteEndPoint() ... })'. Fix: rename a lambda parameter that collides with a name visible in the enclosing method (needs scope info from NameVariables) or qualify the outer reference.",
+        "CS1061WrongLocalType": "2x Knx.Falcon/Class1109.cs(117,118) - 'byte[] a = RandomNumbers.a(16); this.get_EchoOptionCache()[a.a] = a;' - the local is rendered as byte[] while the usage needs the object that owns field 'a'; diagnose against the original IL.",
+        "CS1503ArgumentType": "1x Knx.Ets.Common.2/Class122.cs(21) - NoConstructorsFoundException(targetType, this) where the second argument is typed AllConstructorFinder instead of string."
+      },
       "ReadabilityImpact": {
         "MeasuredWith": "DNSPY_INLINE_TRACE=1 (dnSpy c4aaca673) over all 64 first-party modules",
         "SkippedLambdas": 4,
