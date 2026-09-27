@@ -41,6 +41,13 @@ namespace dnSpy.Decompiler.MSBuild {
 		public Guid LanguageGuid { get; }
 		public string Filename { get; }
 		public string Directory { get; }
+		/// <summary>
+		/// Directory the compiled output is written to, or null to use the default layout
+		/// (per project bin/ directory). Set when an export has to keep the input's
+		/// relative directory structure, eg. when an application loads private assemblies
+		/// from a subdirectory of its own folder.
+		/// </summary>
+		public string? OutputDirectory { get; set; }
 		public string? Platform { get; set; }
 		public HashSet<Guid> ProjectTypeGuids { get; }
 		public HashSet<string> ExtraAssemblyReferences { get; }

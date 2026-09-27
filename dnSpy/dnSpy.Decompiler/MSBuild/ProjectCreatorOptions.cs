@@ -82,6 +82,14 @@ namespace dnSpy.Decompiler.MSBuild {
 		/// </summary>
 		public bool GenerateSDKStyleProjects { get; set; }
 
+		/// <summary>
+		/// Set to 'true' to build every project into one output tree that keeps the
+		/// input's relative paths. Applications that load a private assembly from a
+		/// fixed subdirectory of their own folder need this, the default layout puts
+		/// each project's output below its own bin directory.
+		/// </summary>
+		public bool ApplicationLayout { get; set; }
+
 		/// <summary>Preserve public-key identities without producing cryptographic signatures.</summary>
 		public bool PublicSign { get; set; }
 		/// <summary>Checked source aliases, preserving runtime metadata names.</summary>

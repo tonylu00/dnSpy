@@ -35,6 +35,12 @@ namespace dnSpy.Decompiler.MSBuild {
 		readonly List<NativeAssemblyFile> nativeAssemblies = new List<NativeAssemblyFile>();
 		readonly IMSBuildProjectWriterLogger logger;
 		readonly IMSBuildProgressListener progressListener;
+		/// <summary>
+		/// Deepest directory shared by every input, and the directory holding the
+		/// compiled output when the inputs keep their relative structure.
+		/// </summary>
+		readonly string? sourceRoot;
+		readonly string? outputRoot;
 		int errors;
 		int totalProgress;
 
@@ -106,6 +112,96 @@ namespace dnSpy.Decompiler.MSBuild {
 			logger = new MyLogger(this, options.Logger);
 			progressListener = options.ProgressListener ?? NoMSBuildProgressListener.Instance;
 			projects = new List<Project>();
+			sourceRoot = GetCommonSourceDirectory(options.ProjectModules.Select(m => m.Module.Location));
+			// An application that loads a private assembly from a subdirectory of its own
+			// folder needs one output tree that keeps the relative paths, otherwise the
+			// rebuilt program can't find it. The default keeps each project's own bin dir.
+			if (options.ApplicationLayout)
+				outputRoot = Path.Combine(options.Directory, OutputFolderName);
+		}
+
+		const string OutputFolderName = "bin";
+
+		/// <summary>Deepest directory containing every input file, or null.</summary>
+		static string? GetCommonSourceDirectory(IEnumerable<string> locations) {
+			string? common = null;
+			foreach (var location in locations) {
+				if (string.IsNullOrEmpty(location))
+					return null;
+				string directory;
+				try {
+					directory = Path.GetDirectoryName(Path.GetFullPath(location));
+				}
+				catch (ArgumentException) { return null; }
+				catch (NotSupportedException) { return null; }
+				catch (PathTooLongException) { return null; }
+				if (string.IsNullOrEmpty(directory))
+					return null;
+				if (common is null) {
+					common = directory;
+					continue;
+				}
+				common = GetCommonDirectory(common, directory);
+				if (common is null)
+					return null;
+			}
+			return common;
+		}
+
+		static string? GetCommonDirectory(string a, string b) {
+			while (!IsSameOrParentDirectory(a, b)) {
+				var parent = Path.GetDirectoryName(a);
+				if (string.IsNullOrEmpty(parent))
+					return null;
+				a = parent;
+			}
+			return a;
+		}
+
+		static bool IsSameOrParentDirectory(string parent, string path) {
+			if (string.IsNullOrEmpty(parent))
+				return false;
+			if (parent.Length == path.Length)
+				return string.Equals(parent, path, StringComparison.OrdinalIgnoreCase);
+			if (!parent.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+				parent += Path.DirectorySeparatorChar;
+			return path.StartsWith(parent, StringComparison.OrdinalIgnoreCase);
+		}
+
+		/// <summary>
+		/// Input directory of a module relative to <see cref="sourceRoot"/>, or an empty
+		/// string when it can't be represented (unrelated roots, invalid path).
+		/// </summary>
+		string GetRelativeSourceDirectory(string? location) {
+			if (sourceRoot is null || string.IsNullOrEmpty(location))
+				return string.Empty;
+			string directory;
+			try {
+				directory = Path.GetDirectoryName(Path.GetFullPath(location));
+			}
+			catch (ArgumentException) { return string.Empty; }
+			catch (NotSupportedException) { return string.Empty; }
+			catch (PathTooLongException) { return string.Empty; }
+			if (string.IsNullOrEmpty(directory) || !IsSameOrParentDirectory(sourceRoot, directory))
+				return string.Empty;
+			if (directory.Length == sourceRoot.Length)
+				return string.Empty;
+			var relative = directory.Substring(sourceRoot.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+			if (relative.Length == 0 || Path.IsPathRooted(relative))
+				return string.Empty;
+			var parts = relative.Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
+			for (int i = 0; i < parts.Length; i++)
+				parts[i] = FilenameUtils.CleanName(parts[i]);
+			return string.Join(Path.DirectorySeparatorChar.ToString(), parts);
+		}
+
+		/// <summary>Project directory in the output tree, keeping the input's relative folder.</summary>
+		string GetProjectDirectory(FilenameCreator filenameCreator, dnlib.DotNet.ModuleDef module) {
+			var directory = filenameCreator.Create(module);
+			var relative = GetRelativeSourceDirectory(module.Location);
+			if (relative.Length == 0)
+				return directory;
+			return Path.Combine(Path.GetDirectoryName(directory)!, relative, Path.GetFileName(directory));
 		}
 
 		public void Create() {
@@ -128,7 +224,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				var managedModules = options.ProjectModules.Where(m => m.Module.IsILOnly).ToArray();
 				var preservedAssemblies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 				foreach (var modOpts in options.ProjectModules.Where(m => !m.Module.IsILOnly).OrderBy(m => m.Module.Location, StringComparer.OrdinalIgnoreCase)) {
-					var file = new NativeAssemblyFile(modOpts.Module, filenameCreator.Create(modOpts.Module));
+					var file = new NativeAssemblyFile(modOpts.Module, GetProjectDirectory(filenameCreator, modOpts.Module));
 					if (preservedAssemblies.ContainsKey(file.Source)) continue;
 					preservedAssemblies.Add(file.Source, file.Filename);
 					nativeAssemblies.Add(file);
@@ -138,12 +234,14 @@ namespace dnSpy.Decompiler.MSBuild {
 				var friendAssemblyNames = options.PublicSign ? new Dictionary<dnlib.DotNet.CustomAttribute, string>() : FriendAssemblyNames.Create(managedModules.Select(m => m.Module));
 				satelliteAssemblyFinder = new SatelliteAssemblyFinder();
 				var namedModules = managedModules.OrderBy(m => m.Module.Location, StringComparer.OrdinalIgnoreCase)
-					.Select(m => (Options: m, Directory: filenameCreator.Create(m.Module))).ToArray();
+					.Select(m => (Options: m, Directory: GetProjectDirectory(filenameCreator, m.Module))).ToArray();
 				RunWithLargeStacks(namedModules, opts.MaxDegreeOfParallelism, named => {
 					var modOpts = named.Options;
 					modOpts.PublicSign = options.PublicSign;
 					options.CancellationToken.ThrowIfCancellationRequested();
 					var p = new Project(modOpts, named.Directory, satelliteAssemblyFinder, options.CreateDecompilerOutput, friendAssemblyNames, preservedAssemblies);
+					if (outputRoot is not null)
+						p.OutputDirectory = Path.Combine(outputRoot, GetRelativeSourceDirectory(modOpts.Module.Location));
 					modOpts.DecompilationContext.RestoreMetadataOnlyFields = options.GenerateSDKStyleProjects && modOpts.Decompiler.GenericGuid == dnSpy.Contracts.Decompiler.DecompilerConstants.LANGUAGE_CSHARP;
 					lock (projects)
 						projects.Add(p);

@@ -106,7 +106,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteElementString("DebugSymbols", "true");
 				writer.WriteElementString("DebugType", "full");
 				writer.WriteElementString("Optimize", "false");
-				writer.WriteElementString("OutputPath", @"bin\Debug\");
+				writer.WriteElementString("OutputPath", GetLayoutOutputPath() ?? @"bin\Debug\");
 				writer.WriteElementString("DefineConstants", "DEBUG;TRACE");
 				writer.WriteElementString("ErrorReport", "prompt");
 				writer.WriteElementString("WarningLevel", "4");
@@ -124,7 +124,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteElementString("PlatformTarget", project.Platform);
 				writer.WriteElementString("DebugType", "pdbonly");
 				writer.WriteElementString("Optimize", "true");
-				writer.WriteElementString("OutputPath", @"bin\Release\");
+				writer.WriteElementString("OutputPath", GetLayoutOutputPath() ?? @"bin\Release\");
 				writer.WriteElementString("DefineConstants", "TRACE");
 				writer.WriteElementString("ErrorReport", "prompt");
 				writer.WriteElementString("WarningLevel", "4");

@@ -1030,6 +1030,13 @@ array literal that must not name the compiler's private data type, and unsigned
 negation widening to int64. One- and four-worker exports must be identical, the
 rebuilt program must print the original output and the input must stay intact.
 
+`Invoke-SubdirectoryLayoutRegression.ps1` exports a host program together with a
+private assembly stored in a `Plugins` subdirectory. It checks that the project
+keeps its subdirectory, that the solution references it there, and that
+`--app-layout` writes the rebuilt host and the rebuilt private assembly back into
+one tree whose relative paths match the input, so the host finds its private
+assembly after the rebuild. See [ApplicationLayout.md](ApplicationLayout.md).
+
 `Invoke-EtsAsyncChannelRegression.ps1` takes original/processed Falcon assemblies,
 the untouched exported `Async.cs`, and a new output folder. It compiles that source
 and runs only the channel reader helper in separate processes for all three targets.

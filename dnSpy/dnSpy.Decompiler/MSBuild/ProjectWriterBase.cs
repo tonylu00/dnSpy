@@ -136,6 +136,21 @@ namespace dnSpy.Decompiler.MSBuild {
 
 		protected string GetRelativePath(string filename) => GetRelativePath(project.Directory, filename);
 
+		/// <summary>
+		/// Output directory of a project that has to keep the input's relative structure,
+		/// relative to the project directory, or null when the default layout is used.
+		/// </summary>
+		protected string? GetLayoutOutputPath() {
+			if (project.OutputDirectory is null)
+				return null;
+			// GetRelativePath() takes a file, so ask for the directory through a child.
+			var relative = GetRelativePath(project.Directory, Path.Combine(project.OutputDirectory, "dnspy"));
+			var directory = Path.GetDirectoryName(relative);
+			if (string.IsNullOrEmpty(directory))
+				return null;
+			return directory + "\\";
+		}
+
 		protected static string ToString(BuildAction buildAction) => buildAction switch {
 			BuildAction.None => "None",
 			BuildAction.Compile => "Compile",

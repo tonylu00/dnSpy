@@ -87,10 +87,10 @@ New-Item -ItemType Directory -Path $guards | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'DuplicateAssemblyGuards.cs') -Destination $guards
 $runtime = Split-Path ([IO.Path]::GetFullPath($DnSpyConsole))
 $dnlib = [Security.SecurityElement]::Escape((Join-Path $runtime 'dnlib.dll'))
-"<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net48</TargetFramework><LangVersion>latest</LangVersion><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $guards 'Guards.csproj')
+"<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><LangVersion>latest</LangVersion><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $guards 'Guards.csproj')
 dotnet build (Join-Path $guards 'Guards.csproj') -c Release --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw 'Duplicate identity guard build failed.' }
-& (Join-Path $guards 'bin\Release\net48\Guards.exe') $runtime $deployment
+& (Join-Path $guards 'bin\Release\net10.0-windows\Guards.exe') $runtime $deployment
 if ($LASTEXITCODE -ne 0) { throw 'Duplicate identity guards failed.' }
 $after = $inputs | Get-FileHash | Select-Object Path,Hash
 if (Compare-Object $before $after -Property Path,Hash) { throw 'Duplicate export modified inputs.' }

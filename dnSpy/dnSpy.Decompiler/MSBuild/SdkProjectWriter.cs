@@ -201,6 +201,14 @@ namespace dnSpy.Decompiler.MSBuild {
 				if (project.AllowUnsafeBlocks)
 					writer.WriteElementString("AllowUnsafeBlocks", "True");
 				writer.WriteElementString("EnableDefaultItems", "False");
+				// Applications that load private assemblies from a subdirectory of their
+				// own folder need the input's relative structure back, so all projects of
+				// this export build into one tree instead of per project bin folders.
+				var layoutOutputPath = GetLayoutOutputPath();
+				if (layoutOutputPath is not null) {
+					writer.WriteElementString("OutputPath", layoutOutputPath);
+					writer.WriteElementString("AppendTargetFrameworkToOutputPath", "false");
+				}
 				writer.WriteEndElement();
 
 				writer.WriteStartElement("PropertyGroup");

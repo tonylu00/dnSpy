@@ -147,10 +147,10 @@ namespace dnSpy.Decompiler.MSBuild {
 					throw new InvalidOperationException();
 				}
 				foreach (var p in projects) {
-					writer.Write("Project(\"{0}\") = \"{1}\", \"{1}\\{2}\", \"{3}\"" + crlf,
+					writer.Write("Project(\"{0}\") = \"{1}\", \"{2}\", \"{3}\"" + crlf,
 						p.LanguageGuid.ToString("B").ToUpperInvariant(),
 						Path.GetFileName(Path.GetDirectoryName(p.Filename)!),
-						Path.GetFileName(p.Filename),
+						GetProjectRelativePath(p),
 						p.Guid.ToString("B").ToUpperInvariant()
 					);
 					writer.Write("EndProject" + crlf);
@@ -209,16 +209,23 @@ namespace dnSpy.Decompiler.MSBuild {
 
 				foreach (var p in projects) {
 					writer.WriteStartElement("Project");
-
-					var relativePath = Path.Combine(Path.GetFileName(Path.GetDirectoryName(p.Filename)!),
-						Path.GetFileName(p.Filename));
-
-					writer.WriteAttributeString("Path", relativePath);
+					writer.WriteAttributeString("Path", GetProjectRelativePath(p));
 					writer.WriteEndElement();
 				}
 
 				writer.WriteEndElement();
 			}
+		}
+
+		/// <summary>
+		/// Path of a project file relative to the solution, so projects of an export that
+		/// keeps the input's directory structure stay in their subdirectories.
+		/// </summary>
+		string GetProjectRelativePath(Project project) {
+			var relative = FilenameUtils.GetRelativePath(Path.GetDirectoryName(filename)!, project.Filename);
+			if (Path.DirectorySeparatorChar != '\\')
+				relative = relative.Replace(Path.DirectorySeparatorChar, '\\').Replace(Path.AltDirectorySeparatorChar, '\\');
+			return relative;
 		}
 	}
 }

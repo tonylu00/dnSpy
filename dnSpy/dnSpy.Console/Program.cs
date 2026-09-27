@@ -175,6 +175,7 @@ namespace dnSpy_Console {
 		bool colorizeOutput;
 		bool sdkProject;
 		bool publicSign;
+		bool appLayout;
 		string? sourceNameMap;
 		Guid projectGuid = Guid.NewGuid();
 		int numThreads;
@@ -340,6 +341,7 @@ namespace dnSpy_Console {
 		static readonly UsageInfo[] usageInfos = new UsageInfo[] {
 			new UsageInfo("--source-name-map", "FILE", "Use checked source aliases while restoring original runtime names (SDK export)."),
 			new UsageInfo("--public-sign", null, "Export SDK projects with original public-key identity; no valid cryptographic signature is produced."),
+			new UsageInfo("--app-layout", null, "Build every project into one bin/ tree that keeps the input's relative paths, so an application that loads private assemblies from a subdirectory of its own folder still finds them after a rebuild."),
 			new UsageInfo("--sdk-project", null, dnSpy_Console_Resources.CmdLineDescription_SdkProject),
 			new UsageInfo("--asm-path", dnSpy_Console_Resources.CmdLinePath, dnSpy_Console_Resources.CmdLineDescription_AsmPath),
 			new UsageInfo("--app-config", dnSpy_Console_Resources.CmdLinePath, "use assembly binding redirects from the application's configuration file"),
@@ -441,6 +443,7 @@ namespace dnSpy_Console {
 			"lang",
 			"sdk-project",
 			"public-sign",
+			"app-layout",
 			"source-name-map",
 			"il-dump",
 			"asm-path",
@@ -509,6 +512,9 @@ namespace dnSpy_Console {
 						break;
 					case "--public-sign":
 						publicSign = true; sdkProject = true;
+						break;
+					case "--app-layout":
+						appLayout = true; sdkProject = true;
 						break;
 					case "--sdk-project":
 						sdkProject = true;
@@ -826,6 +832,7 @@ namespace dnSpy_Console {
 					options.SolutionFilename = slnName;
 				options.GenerateSDKStyleProjects = sdkProject;
 				options.PublicSign = publicSign;
+			options.ApplicationLayout = appLayout;
 				options.SourceNameMapPath = sourceNameMap;
 				var creator = new MSBuildProjectCreator(options);
 				creator.Create();

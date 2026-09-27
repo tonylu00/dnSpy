@@ -28,7 +28,10 @@ static class DuplicateAssemblyGuards {
             var path=Path.Combine(runtime,new AssemblyName(e.Name).Name+".dll");
             return File.Exists(path)?Assembly.LoadFrom(path):null;
         };
-        var helper=Assembly.LoadFrom(Path.Combine(runtime,"dnSpy.Console.exe")).GetType("dnSpy_Console.InputAssemblyResolver",true);
+        // .NET Core builds ship a native apphost .exe; the managed assembly is the .dll.
+        var console=Path.Combine(runtime,"dnSpy.Console.dll");
+        if(!File.Exists(console)) console=Path.Combine(runtime,"dnSpy.Console.exe");
+        var helper=Assembly.LoadFrom(console).GetType("dnSpy_Console.InputAssemblyResolver",true);
         var paths=new[]{"Runner.exe","plugins\\Plugin.dll","Library.dll","compat\\v1\\Runner.exe","compat\\v1\\plugins\\Plugin.dll","compat\\v1\\Library.dll","Library_orig.dll"};
         var modules=paths.Select(p=>ModuleDefMD.Load(Path.Combine(deployment,p))).ToArray();
         try {
