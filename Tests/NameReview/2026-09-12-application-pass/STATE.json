@@ -134,10 +134,15 @@
       "Command": "dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> @firstparty-files.txt",
       "State": "2026-09-25 run: passed the stack overflow, wrote 13,017 .cs, then memory blew up to 70 GB on Knx.Falcon.Monitor and stopped progressing (process killed). The exporter keeps every decompiled module's AST alive until project files are written, so a single-process export of the whole first-party set does not fit.",
       "Next": [
-        "RUN THE FULL SET: python D:\\knx_analysis\\perf-now\\export-firstparty.py --out D:\\knx_analysis\\ets63-source-batch (64 modules, export + build each; ~10-60 s per module).",
-        "Then assemble one solution over the exported projects and build it as a set.",
-        "Refine nuget-packages.txt: DevExpress/Telerik need their vendor feeds and exact versions; fill in the packages still referenced by HintPath."
+        "Full export now works in ONE process: dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> @firstparty-files.txt - 64 projects, 13,296 .cs, 5.3 min, memory flat at 7.1 GB (was >70 GB). Use this instead of the per-module driver (per-module maps cannot validate cross-module contract families).",
+        "Solution build (ets63-source-full2) leaves 25 errors in 2 projects: Knx.Falcon 14 (12 CS1061 member lookups, 10 CS7014 attribute placement), Knx.Ets.Common.2 3 (CS1503/CS1661/CS1678 delegate-parameter mismatches). Fix those decompiler-output cases next.",
+        "Then refine nuget-packages.txt: versions must match the tree assemblies (Autofac is 7.0, not 6.5), DevExpress/Telerik need their vendor feeds."
       ]
+    },
+    "MemoryBlowup": {
+      "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
+      "Fix": "dnSpy 0bec3dd2f: a lambda above 400 IL instructions stays a method (DNSPY_MAX_INLINED_LAMBDA_IL) and each method accepts at most 2000 inlined IL instructions (DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD). Readability is unchanged - HawkNET eh still shows its 13 lambdas and 31 awaits.",
+      "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB."
     },
     "SourceExportPackageMap": {
       "ToolFix": "dnSpy 6ccd9ac65: SdkProjectWriter emits PackageReference for assemblies listed in DNSPY_PACKAGE_MAP ('<assembly>=<package id>/<version>' lines) instead of HintPath references into the tree; unmapped assemblies keep HintPath.",

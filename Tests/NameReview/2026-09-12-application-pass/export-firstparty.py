@@ -25,9 +25,13 @@ def per_module_maps():
     for module in root.findall("Module"):
         rel = (module.get("Path") or "").replace("\\", "/")
         name = rel.rsplit("/", 1)[-1]
+        # Modules with the same file name exist under different paths (CV/<version>/...);
+        # the map file must be keyed by the whole relative path or the two copies share one map
+        # and the export rejects it ("Mapped module is not an exact export input").
+        key = rel.replace("/", "__")
         doc = ET.Element("SourceNameMap", dict(root.attrib))
         doc.append(module)
-        path = PASS / ("map-" + name + ".xml")
+        path = PASS / ("map-" + key + ".xml")
         ET.ElementTree(doc).write(path, encoding="utf-8", xml_declaration=True)
         out.append((name, (TREE / rel).resolve(), path))
     return out
@@ -51,7 +55,7 @@ def main():
     for name, source, map_path in per_module_maps():
         if only and name not in only:
             continue
-        module_out = out_root / name.replace(".dll", "").replace(".exe", "")
+        module_out = out_root / map_path.stem.replace("map-", "").replace("__", "_")
         if not source.exists():
             results.append((name, "missing input"))
             continue
