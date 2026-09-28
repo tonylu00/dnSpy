@@ -883,7 +883,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                     .Concat(method.Name.Data.Skip(1 + owner.Name.Data.Length)).ToArray());
                 UTF8String previous;
                 if (generated.TryGetValue(method, out previous) && previous != restored)
-                    throw new InvalidDataException("Conflicting generated closure owner names.");
+                    throw new InvalidDataException("Conflicting generated closure owner names: " +
+                        method.DeclaringType.FullName + "::" + method.Name + " restored as both '" +
+                        previous + "' and '" + restored + "' (owner " + owner.FullName + " -> " + entry.Value + ")");
                 generated[method] = restored;
             }
         }
