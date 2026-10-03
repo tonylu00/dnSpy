@@ -1,9 +1,30 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias, validate_review_only
+from review_ledger import merge_scopes, replace_alias, validate_review_only, refresh_evidence
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
+    def test_evidence_refresh_keeps_decisions_and_unknown_annotations(self):
+        old = dict(Module='a.dll', Token='0x04000001', Identity='a', Mvid='m', Sha256='s', Type='T',
+                   Signature='System.String T::a', OriginalName='a', NewName='', Unresolved=True,
+                   NeedsReadableName=True, ParameterNames=[], LocalNames=[], ReviewDisposition='unresolved',
+                   Reason='Incorrect constant type', UnresolvedReason='Incorrect constant type', Annotation={'kept': True})
+        reviewed = copy.deepcopy(old)
+        reviewed.update(Reason='Native ConstantType is I1', UnresolvedReason='Native ConstantType is I1',
+                        PreviousEvidence={key: old[key] for key in ('Reason', 'UnresolvedReason')})
+        merged = refresh_evidence(old, reviewed)
+        self.assertEqual('Native ConstantType is I1', merged['Reason'])
+        self.assertEqual({'kept': True}, merged['Annotation'])
+        self.assertNotIn('PreviousEvidence', merged)
+        self.assertEqual('Incorrect constant type', old['Reason'])
+        for column, value in (('NewName', 'invented'), ('Mvid', 'other'), ('Unresolved', False),
+                              ('ParameterNames', [{'Sequence': 1, 'NewName': 'injected'}]),
+                              ('PreviousEvidence', {'Reason': 'stale', 'UnresolvedReason': 'stale'})):
+            changed = copy.deepcopy(reviewed)
+            changed[column] = value
+            with self.assertRaises(ValueError): refresh_evidence(old, changed)
+        with self.assertRaises(ValueError): refresh_evidence(old, old)
+
     def setUp(self):
         self.old = dict(Module='a.dll', Token='0x06000001', Identity='a, Version=1.0.0.0',
                         Mvid='physical-mvid', Sha256='physical-hash', Type='T',

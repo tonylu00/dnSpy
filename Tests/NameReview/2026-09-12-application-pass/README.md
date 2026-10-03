@@ -52,3 +52,19 @@ strict coverage still rejects arbitrary or stale owner annotations.
 Its `NotFlagged` count means the inventory did not request a readable name;
 it is not evidence of a completed behavioral review. Selected inventories
 measure their supplied rows only, not application-wide scope or compatibility.
+
+`inventory_physical_scope.py --scope <physical-scope.json> --cli <NameCandidates.dll>`
+`--map <checked-map.xml> --ledger <reviewed.json> --output <fresh-directory>`
+measures every definition in an explicit physical module scope using native
+inventories. Modules run sequentially and retain one native report at a time.
+It reports unreviewed native candidates separately from mapped, preserved and
+unresolved rows, plus total and aliased parameter/local positions. Unflagged
+names and missing scoped aliases do not establish readability or obfuscation.
+`--reuse-inventory <earlier-summary.json>` reuses native reports only after their
+hashes, scope, tool and current physical identities are checked again.
+
+For a corrected rationale, `checkpoint_naming_block.py --review-only`
+`--refresh-reviewed-evidence` requires `PreviousEvidence` with the exact previous
+`Reason` and `UnresolvedReason`. It preserves every naming decision and physical
+identity; native update/check must prove a byte-identical map. Arbitrary ledger
+overwrites and stale rationale preimages remain rejected.

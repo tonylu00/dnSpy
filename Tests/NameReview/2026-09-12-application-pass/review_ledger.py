@@ -22,6 +22,25 @@ def require_identity(previous, reviewed):
             raise ValueError('Ledger identity differs: ' + key)
 
 
+def refresh_evidence(previous, reviewed):
+    """Replace reviewed rationale only, with explicit preimages and no decision change."""
+    require_identity(previous, reviewed)
+    preimage = reviewed.get('PreviousEvidence')
+    if preimage != {key: previous.get(key, '') for key in ('Reason', 'UnresolvedReason')}:
+        raise ValueError('Evidence refresh requires the exact previous rationale')
+    for key in ('NewName', 'Unresolved', 'NeedsReadableName', 'ParameterNames', 'LocalNames', 'ReviewDisposition'):
+        if previous.get(key) != reviewed.get(key):
+            raise ValueError('Evidence refresh cannot change a naming decision: ' + key)
+    if not reviewed.get('Reason') or (reviewed.get('Unresolved') and not reviewed.get('UnresolvedReason')):
+        raise ValueError('Evidence refresh requires complete rationale')
+    if all(previous.get(key, '') == reviewed.get(key, '') for key in ('Reason', 'UnresolvedReason')):
+        raise ValueError('Evidence refresh has no corrected rationale')
+    result = copy.deepcopy(previous)
+    for key in ('Reason', 'UnresolvedReason'):
+        result[key] = reviewed.get(key, '')
+    return result
+
+
 def replace_alias(previous, reviewed, mapped_name, checked_change):
     require_identity(previous, reviewed)
     if previous.get('Unresolved') or reviewed.get('Unresolved'):

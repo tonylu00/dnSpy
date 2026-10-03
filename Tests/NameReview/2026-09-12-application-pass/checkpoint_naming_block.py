@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, validate_review_only
+from review_ledger import merge_scopes, replace_alias, validate_review_only, refresh_evidence
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -21,7 +21,10 @@ parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed field/type/parameter alias using its exact native change report')
 parser.add_argument('--review-only', action='store_true',
                     help='Checkpoint preservation/unresolved decisions with no aliases and a byte-identical checked map')
+parser.add_argument('--refresh-reviewed-evidence', action='store_true',
+                    help='Review-only rationale correction with exact previous evidence and unchanged naming decisions')
 args = parser.parse_args()
+assert not args.refresh_reviewed_evidence or args.review_only, 'Evidence refresh requires a review-only checkpoint'
 state_path, sink = pathlib.Path(args.state), pathlib.Path(args.sink)
 map_path, review_path = pathlib.Path(args.map), pathlib.Path(args.review)
 update_path, check_path = pathlib.Path(args.update), pathlib.Path(args.check)
@@ -59,6 +62,7 @@ checked_scopes = {(module.get('Path'), row.get('Token')):
                  for module in root.findall('Module') for row in module}
 merged_rows = 0
 replaced_rows = 0
+refreshed_rows = 0
 checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type')}
 scope_replacements = {}
 if args.replace_reviewed_aliases:
@@ -70,6 +74,10 @@ for kind in ('Types', 'Methods', 'Fields'):
     for row in review[kind]:
         key = (row['Module'], row['Token'])
         if key in keys:
+            if args.refresh_reviewed_evidence and row.get('PreviousEvidence'):
+                ledger[kind][keys[key]] = refresh_evidence(ledger[kind][keys[key]], row)
+                refreshed_rows += 1
+                continue
             if args.replace_reviewed_aliases and kind in ('Types', 'Fields'):
                 ledger[kind][keys[key]] = replace_alias(ledger[kind][keys[key]], row, base_names.get(key, ''), checked_changes.get(key))
                 replaced_rows += 1
@@ -93,6 +101,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ReviewedDecisions': sum(len(review[kind]) for kind in ('Types', 'Fields', 'Methods')),
               'ExplicitScopeMerges': merged_rows,
               'ExplicitAliasReplacements': replaced_rows,
+              'ExplicitEvidenceRefreshes': refreshed_rows,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}
 if args.review_only:
