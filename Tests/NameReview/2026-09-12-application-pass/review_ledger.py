@@ -246,6 +246,39 @@ def replace_method_alias(previous, reviewed, mapped_name, checked_change, checke
     return result
 
 
+def resolve_scoped_definition(previous, reviewed, mapped_name, checked_change, checked_name, checked_scopes):
+    """Close a scope-only method review with exact native definition proof."""
+    require_identity(previous, reviewed)
+    if (previous.get('Unresolved') or previous.get('NewName') or mapped_name or
+            not previous.get('UnresolvedDefinitionEvidence') or
+            not any(p.get('NewName') for label in ('ParameterNames', 'LocalNames') for p in previous.get(label, []))):
+        raise ValueError('Scoped definition resolution requires a previously unnamed scoped method')
+    if (not reviewed.get('ResolveExistingScopedDefinition') or reviewed.get('Unresolved') or
+            reviewed.get('UnresolvedReason') or not reviewed.get('NewName') or not reviewed.get('Reason') or
+            any(r.get(key) for r in (previous, reviewed) for key in ('MappingBlocker', 'ScopedMappingBlocker', 'ContractFamily'))):
+        raise ValueError('Scoped definition resolution requires a fresh unblocked method review')
+    expected = {key: previous.get(key, '') for key in ('Reason', 'UnresolvedDefinitionEvidence')}
+    if reviewed.get('PreviousScopedDefinitionEvidence') != expected:
+        raise ValueError('Scoped definition resolution requires the exact previous rationale')
+    if (not checked_change or 'Before' not in checked_change or checked_change['Before'] is not None or
+            any(checked_change.get(key) != value for key, value in
+                (('Kind', 'Method'), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
+                 ('Requested', reviewed['NewName']), ('Applied', reviewed['NewName']), ('Action', None))) or
+            checked_name != reviewed['NewName']):
+        raise ValueError('Scoped definition resolution requires the native addition and final checked alias')
+    # Native XML's absent NewName attribute is null in the report. The existing
+    # correction guard represents that same checked absence as an empty string.
+    result = replace_method_alias(previous, reviewed, '', dict(checked_change, Before=''), checked_scopes)
+    result.pop('UnresolvedDefinitionEvidence', None)
+    result.pop('ResolveExistingScopedDefinition', None)
+    result.pop('PreviousScopedDefinitionEvidence', None)
+    result.setdefault('ScopedDefinitionResolutions', []).append(dict(
+        Alias=reviewed['NewName'], PreviousReason=previous['Reason'],
+        PreviousUnresolvedDefinitionEvidence=previous['UnresolvedDefinitionEvidence'], Evidence=reviewed['Reason']))
+    result['Reason'] = reviewed['Reason']
+    return result
+
+
 def remove_method_alias(previous, reviewed, mapped_name, checked_change, checked_name):
     """Record a native-checked withdrawal without replaying its operational marker."""
     if previous is not None:

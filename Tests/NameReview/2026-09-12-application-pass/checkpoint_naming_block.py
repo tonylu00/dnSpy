@@ -10,13 +10,15 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, validate_review_only, refresh_evidence, apply_proposal
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
     parser.add_argument('--' + name, required=True)
 parser.add_argument('--merge-reviewed-scopes', action='store_true',
                     help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
+parser.add_argument('--resolve-reviewed-scoped-definitions', action='store_true',
+                    help='Resolve scope-only method definitions with exact prior rationale and native addition proof')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
 parser.add_argument('--remove-reviewed-aliases', action='store_true',
@@ -69,6 +71,7 @@ checked_scopes = {(module.get('Path'), row.get('Token')):
                   for scope in row.findall(tag)}
                  for module in root.findall('Module') for row in module}
 merged_rows = 0
+scoped_definitions_resolved = 0
 replaced_rows = 0
 refreshed_rows = 0
 removed_rows = 0
@@ -96,6 +99,12 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('ResolveExistingScopedDefinition'):
+            assert args.resolve_reviewed_scoped_definitions and kind == 'Methods' and key in keys, 'Scoped resolution requires its previous method and explicit checkpoint flag'
+            ledger[kind][keys[key]] = resolve_scoped_definition(ledger[kind][keys[key]], row, base_names.get(key, ''),
+                checked_changes.get(key), final_names.get(key, ''), checked_scopes.get(key, {}))
+            scoped_definitions_resolved += 1
+            continue
         if row.get('ApplyExistingProposal'):
             assert args.apply_reviewed_proposals and key in keys, 'Proposal application requires explicit authorization and previous ledger row'
             ledger[kind][keys[key]] = apply_proposal(ledger[kind][keys[key]], row, base_names.get(key, ''),
@@ -155,6 +164,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitEvidenceRefreshes': refreshed_rows,
               'ExplicitAliasWithdrawals': removed_rows,
               'ExplicitUnresolvedResolutions': resolved_rows,
+              'ExplicitScopedDefinitionResolutions': scoped_definitions_resolved,
               'ExplicitProposalApplications': applied_proposals,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}

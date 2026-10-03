@@ -1,9 +1,73 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, validate_review_only, refresh_evidence, apply_proposal, proposal_preimage
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal, proposal_preimage
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
+    def scoped_definition_fixture(self):
+        old = copy.deepcopy(self.old)
+        old.update(NewName='', Unresolved=False, UnresolvedReason='', MappingBlocker=None, ScopedMappingBlocker=None,
+                   ContractFamily=None, Annotation={'kept': True}, UnresolvedDefinitionEvidence='Only input forwarding was reviewed')
+        reviewed = dict(old, NewName='SetPropertyData', Reason='Verified property header and complete copy/resize behavior',
+                        ResolveExistingScopedDefinition=True,
+                        PreviousScopedDefinitionEvidence={k: old[k] for k in ('Reason', 'UnresolvedDefinitionEvidence')},
+                        ParameterNames=[], LocalNames=[])
+        change = dict(Kind='Method', Module=old['Module'], Token=old['Token'], Before=None,
+                      Requested=reviewed['NewName'], Applied=reviewed['NewName'])
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        return old, reviewed, change, checked
+
+    def test_scoped_definition_resolution_preserves_scopes_and_retires_uncertainty(self):
+        old, reviewed, change, checked = self.scoped_definition_fixture()
+        result = resolve_scoped_definition(old, reviewed, '', change, reviewed['NewName'], checked)
+        for key in ('ParameterNames', 'LocalNames', 'Annotation'):
+            self.assertEqual(old[key], result[key])
+        self.assertNotIn('UnresolvedDefinitionEvidence', result)
+        self.assertNotIn('ResolveExistingScopedDefinition', result)
+        self.assertNotIn('PreviousScopedDefinitionEvidence', result)
+        self.assertEqual(old['UnresolvedDefinitionEvidence'], result['ScopedDefinitionResolutions'][0]['PreviousUnresolvedDefinitionEvidence'])
+        self.assertIn('UnresolvedDefinitionEvidence', old)
+        with self.assertRaises(ValueError): resolve_scoped_definition(result, reviewed, result['NewName'], change, result['NewName'], checked)
+
+    def test_scoped_definition_resolution_requires_physical_preimages_native_and_final_alias(self):
+        old, reviewed, change, checked = self.scoped_definition_fixture()
+        for key, value in (('Module', 'CV/a.dll'), ('Mvid', 'twin'), ('Sha256', 'stale'), ('Signature', 'other'),
+                           ('PreviousScopedDefinitionEvidence', {}), ('ResolveExistingScopedDefinition', False),
+                           ('Reason', ''), ('NewName', ''), ('Unresolved', True), ('UnresolvedReason', 'unknown'),
+                           ('MappingBlocker', 'SDK'), ('ScopedMappingBlocker', 'virtual'), ('ContractFamily', 'family')):
+            with self.subTest(review=key), self.assertRaises(ValueError):
+                resolve_scoped_definition(old, dict(reviewed, **{key: value}), '', change, reviewed['NewName'], checked)
+        for key, value in (('Before', ''), ('Before', 'oldAlias'), ('Applied', 'SetPropertyData2'), ('Kind', 'Field'),
+                           ('Module', 'compat/a.dll'), ('Token', '0x06000002'), ('Action', 'RemoveAlias')):
+            with self.subTest(native=key), self.assertRaises(ValueError):
+                resolve_scoped_definition(old, reviewed, '', dict(change, **{key: value}), reviewed['NewName'], checked)
+        missing = {k: v for k, v in change.items() if k != 'Before'}
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, '', missing, reviewed['NewName'], checked)
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, 'already-mapped', change, reviewed['NewName'], checked)
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, '', change, 'unchecked', checked)
+        for key, value in (('NewName', 'already-named'), ('Unresolved', True), ('UnresolvedDefinitionEvidence', ''),
+                           ('ParameterNames', []), ('LocalNames', [])):
+            bad = dict(old, **{key: value})
+            if key in ('ParameterNames','LocalNames'): bad.update(ParameterNames=[], LocalNames=[])
+            with self.subTest(previous=key), self.assertRaises(ValueError):
+                resolve_scoped_definition(bad, reviewed, '', change, reviewed['NewName'], checked)
+
+    def test_scoped_definition_resolution_checks_old_and_new_scope_positions(self):
+        old, reviewed, change, checked = self.scoped_definition_fixture()
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, '', change, reviewed['NewName'], {})
+        bad = copy.deepcopy(checked);bad[('LocalNames', 0)]['ExpectedType']='System.String'
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, '', change, reviewed['NewName'], bad)
+        reviewed['ParameterNames'] = copy.deepcopy(self.review['ParameterNames'])
+        checked[('ParameterNames', 2)] = dict(ExpectedName='b', NewName='limit')
+        result = resolve_scoped_definition(old, reviewed, '', change, reviewed['NewName'], checked)
+        self.assertEqual(['count','limit'], [p['NewName'] for p in result['ParameterNames']])
+        checked[('ParameterNames', 2)]['ExpectedName']='wrong'
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, '', change, reviewed['NewName'], checked)
+        checked[('ParameterNames', 2)]['ExpectedName']='b'
+        reviewed['ParameterNames'].append(copy.deepcopy(reviewed['ParameterNames'][0]))
+        with self.assertRaises(ValueError): resolve_scoped_definition(old, reviewed, '', change, reviewed['NewName'], checked)
+
     def proposal_fixture(self):
         old = copy.deepcopy(self.old)
         old.update(Annotation={'kept': True}, NeedsReadableName=True)
