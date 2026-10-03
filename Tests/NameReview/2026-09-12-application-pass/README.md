@@ -45,6 +45,10 @@ It writes review JSON only. Run `python test_physical_review.py` for its guards.
 Native `--update-map` and `--check-map` remain required before checkpointing.
 
 Native coverage validates current physical identities and scoped metadata.
+For legacy missing method owners or field signatures stored in `Type`, use native
+`--normalize-review-owners <review> <fresh-review> <fresh-report>` before coverage.
+It verifies exact bytes/definitions/scopes and preserves all naming decisions;
+strict coverage still rejects arbitrary or stale owner annotations.
 Its `NotFlagged` count means the inventory did not request a readable name;
 it is not evidence of a completed behavioral review. Selected inventories
 measure their supplied rows only, not application-wide scope or compatibility.
