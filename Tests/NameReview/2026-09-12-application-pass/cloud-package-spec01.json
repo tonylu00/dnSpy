@@ -1,0 +1,1038 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D5",
+      "Reason": "060001C3 initializes Struct42; 060001B3/B4/B6/B9/BA/BB/C0 clear it, pass its bytes and an in/out count to native delegates, then copy the returned prefix. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "outputBuffer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D6",
+      "Reason": "All five physical reads are Monitor.Enter/Exit snapshots in 060001A1-A5; 060001C3 creates the object. No graph native-call/output-buffer lock consumers. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "eventHandlerLock"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D7",
+      "Reason": "06000197/06000198 Combine/Remove and Interlocked.CompareExchange this exact field; 060001A1 snapshots/invokes it. Windows/Unix load/unload bodies establish before/after/failure phase. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "loadingHandlers"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000197",
+      "Reason": "CompareExchange loop for loadingHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SubscribeNativeLibraryLoading",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000198",
+      "Reason": "CompareExchange loop for loadingHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeNativeLibraryLoading",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001A1",
+      "Reason": "Monitor snapshot for loadingHandlers: local 0 is the invoked handler chain, 1 is the lock object and 2 is the Enter by-ref acquisition flag. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "PublishNativeLibraryLoading",
+      "ParameterNames": {
+        "1": "localMutex"
+      },
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D8",
+      "Reason": "06000199/0600019A Combine/Remove and Interlocked.CompareExchange this exact field; 060001A2 snapshots/invokes it. Windows/Unix load/unload bodies establish before/after/failure phase. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "loadedHandlers"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000199",
+      "Reason": "CompareExchange loop for loadedHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SubscribeNativeLibraryLoaded",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600019A",
+      "Reason": "CompareExchange loop for loadedHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeNativeLibraryLoaded",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001A2",
+      "Reason": "Monitor snapshot for loadedHandlers: local 0 is the invoked handler chain, 1 is the lock object and 2 is the Enter by-ref acquisition flag. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "PublishNativeLibraryLoaded",
+      "ParameterNames": {
+        "1": "localMutex"
+      },
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D9",
+      "Reason": "0600019B/0600019C Combine/Remove and Interlocked.CompareExchange this exact field; 060001A3 snapshots/invokes it. Windows/Unix load/unload bodies establish before/after/failure phase. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "unloadingHandlers"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600019B",
+      "Reason": "CompareExchange loop for unloadingHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SubscribeNativeLibraryUnloading",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600019C",
+      "Reason": "CompareExchange loop for unloadingHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeNativeLibraryUnloading",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001A3",
+      "Reason": "Monitor snapshot for unloadingHandlers: local 0 is the invoked handler chain, 1 is the lock object and 2 is the Enter by-ref acquisition flag. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "PublishNativeLibraryUnloading",
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000DA",
+      "Reason": "0600019D/0600019E Combine/Remove and Interlocked.CompareExchange this exact field; 060001A4 snapshots/invokes it. Windows/Unix load/unload bodies establish before/after/failure phase. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "unloadedHandlers"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600019D",
+      "Reason": "CompareExchange loop for unloadedHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SubscribeNativeLibraryUnloaded",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600019E",
+      "Reason": "CompareExchange loop for unloadedHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeNativeLibraryUnloaded",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001A4",
+      "Reason": "Monitor snapshot for unloadedHandlers: local 0 is the invoked handler chain, 1 is the lock object and 2 is the Enter by-ref acquisition flag. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "PublishNativeLibraryUnloaded",
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000DB",
+      "Reason": "0600019F/060001A0 Combine/Remove and Interlocked.CompareExchange this exact field; 060001A5 snapshots/invokes it. Windows/Unix load/unload bodies establish before/after/failure phase. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "loadFailureHandlers"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600019F",
+      "Reason": "CompareExchange loop for loadFailureHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SubscribeNativeLibraryLoadFailure",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001A0",
+      "Reason": "CompareExchange loop for loadFailureHandlers: local 0 is the current handlers, 1 is the expected preimage, 2 is the combined/removed replacement; parameter 1 is the supplied handler. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeNativeLibraryLoadFailure",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001A5",
+      "Reason": "Monitor snapshot for loadFailureHandlers: local 0 is the invoked handler chain, 1 is the lock object and 2 is the Enter by-ref acquisition flag. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "PublishNativeLibraryLoadFailure",
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D3",
+      "Reason": "Literal Int32 value 500; 111 hash-verified graph inputs yield zero static references. No distinct association with inlined numeric uses or dynamic consumers establishes the intended role. Do not guess a timeout/retry meaning.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D4",
+      "Reason": "Literal Int32 value 10; 111 hash-verified graph inputs yield zero static references. No distinct association with inlined numeric uses or dynamic consumers establishes the intended role. Do not guess a timeout/retry meaning.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001AF",
+      "Reason": "Null/empty input returns String.Empty; UTF8.GetString decodes the entire array and TrimEnd(new char[1]) removes trailing NULs only. Embedded NULs remain; replace the unsupported terminator-scan implication. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "DecodeUtf8WithoutTrailingNulls",
+      "ParameterNames": {
+        "1": "bytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001AE",
+      "Reason": "String.IsNullOrEmpty returns byte[0]; nonempty UTF8.GetBytes is concatenated with byte[1] containing a zero terminator. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "EncodeNullTerminatedUtf8",
+      "ParameterNames": {
+        "1": "text"
+      }
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000031",
+      "Reason": "060001B7 selects this Windows/Unix unmanaged delegate with Class8/c by-ref output, then 0600029C constructs System.Version from its four fields. The two delegate types retain separate physical tokens, owners and calling-convention metadata.",
+      "Disposition": "rename",
+      "NewName": "ReadLibraryVersionFunction"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0200004C",
+      "Reason": "060001B7 selects this Windows/Unix unmanaged delegate with Class8/c by-ref output, then 0600029C constructs System.Version from its four fields. The two delegate types retain separate physical tokens, owners and calling-convention metadata.",
+      "Disposition": "rename",
+      "NewName": "ReadLibraryVersionFunction"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060001B7",
+      "Reason": "Local 0 is initialized by 0600029B, passed by ref to the selected native version delegate, and converted through 0600029C into System.Version. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "ReadNativeCloudLibraryVersion",
+      "LocalNames": {
+        "0": "version"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001BF",
+      "Reason": "060002EB stores the current static value into instance field 040001C2 and increments the static value by one; this is not an Interlocked operation. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "nextCreationOrder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C0",
+      "Reason": "060002EB parses raw bytes into Class11/e; vendor/name/label/features accessors and 060002ED consume that same record. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "payload"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C1",
+      "Reason": "060002EB stores constructor signature; 060002F2 returns it and 060002ED passes it into aj2 constructor argument 5. PKG formatting includes SIGN=. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "signature"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C2",
+      "Reason": "060002EB captures preincrement static creation order; 060002F3 returns it and IComparable.CompareTo compares it before package names. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "creationOrder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C4",
+      "Reason": "Vendor record 060002F6 encodes UTF8 and truncates to Marshal.SizeOf; fixed-array marshal Size=8, unspecified element type retained. ToString trims NULs at both ends. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "utf8Bytes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C5",
+      "Reason": "Name record 060002FB encodes UTF8 and truncates to Marshal.SizeOf; fixed-array marshal Size=64. 060002EC No name/Wrong length of name errors corroborate the role. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "utf8Bytes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C6",
+      "Reason": "Label record 06000300 encodes UTF8 and truncates to Marshal.SizeOf; fixed-array marshal Size=64. 060002EC No label/Wrong length of label errors corroborate the role. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "utf8Bytes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C7",
+      "Reason": "06000305/306 UTF8 encode the feature label and Take(16); 0600030B serializes these bytes before the UInt16 value. Fixed-array Size=16 retains its original native element metadata. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "labelBytes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C8",
+      "Reason": "06000305 stores UInt16 argument 2; 06000306 reads ajl value; 0600030B BitConverter.GetBytes serializes it, 0600030D reconstructs ajl(label,value). Zero/65535 predicates and =unlimited formatting corroborate value semantics. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "value"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001C9",
+      "Reason": "0600030F parses the first vendor-sized UTF8 record; 06000310 emits it first. 060002EC validates No vendor/Wrong length of vendor before filling this slot. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "vendor"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001CA",
+      "Reason": "0600030F parses the name after vendor bytes; 06000310 emits it second. 060002EC validates No name/Wrong length of name before filling this slot. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "name"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001CB",
+      "Reason": "0600030F parses the label after vendor/name bytes; 06000310 emits it third. 060002EC validates No label/Wrong length of label before filling this slot. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "label"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001CC",
+      "Reason": "0600030F divides the remaining payload into feature-size records and fills this array; 06000310 serializes every record and 06000312 reconstructs only nonempty labels. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "features"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001CD",
+      "Reason": "06000313 stores argument 1; 06000314 feeds No vendor/Wrong length of vendor checks in 060002EC, and PKG formatter emits it before the colon. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "vendor"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001CE",
+      "Reason": "06000313 stores argument 2; 06000315 feeds No name/Wrong length of name checks in 060002EC, and PKG formatter emits it after the colon. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "name"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001CF",
+      "Reason": "06000313 stores argument 3; 06000316 feeds No label/Wrong length of label checks in 060002EC, and PKG formatter emits it in quotes. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "label"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D0",
+      "Reason": "06000313 stores argument 4; 060002EC converts it to feature records and 0600031B formats labels with optional values/unlimited. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "features"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D1",
+      "Reason": "06000313 stores argument 5; 060002EC verifies it against serialized payload, throws Wrong signature on failure; 0600031B emits SIGN=. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "signature"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D4",
+      "Reason": "060000D8 counts parsed definitions into local 0 and passes it to aj4; 06000325 initializes this field from List.Count; 0600032D returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "totalPackageCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D5",
+      "Reason": "060000D8 increments local 1 only when ConcurrentDictionary.TryAdd succeeds, then passes it through aj4 constructors into this field; 0600032E returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "addedPackageCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D6",
+      "Reason": "060000D8 increments local 2 when ConcurrentDictionary.TryAdd fails, then passes it through aj4 constructors into this field; 0600032F returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "skippedPackageCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D7",
+      "Reason": "06000323 stores the definition name; 06000324 stores the supplied package name, completion constructors set it empty; 06000327 returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "packageName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D8",
+      "Reason": "060000D8 supplies true for TryAdd success and false for failure to 06000323, which stores it here; 0600032B returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "importSucceeded"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001D9",
+      "Reason": "06000323/324/325 set false; aggregate completion constructor 06000326 sets true with progress 100, after import loop in 060000D8; 0600032C returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "importFinished"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001DA",
+      "Reason": "Per-package progress constructor 06000323 stores its aj2 definition; completion/start constructors store null; 06000328 returns it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "packageDefinition"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001DB",
+      "Reason": "06000325 stores the parser result list; 06000326 stores the final list; 06000329/32A read/set it. 060000D8 passes its parsed definitions. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "parsedPackages"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001EC",
+      "Reason": "0600034C-34E climb feature->license->dongle parent links, reject non-ajg parents, and store the ajg cloud manager in this ajo slot; 0600034F rechecks/casts it. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "cloudManager"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001ED",
+      "Reason": "06000346/347 read/set the ajh slot; constructors resolve it from license parent and validate its ajg manager parent. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "dongle"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001EE",
+      "Reason": "06000348/349 read/set the ajq slot; feature-chain constructor requires the feature parent to be ajq before resolving its dongle parent. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "license"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001EF",
+      "Reason": "0600034A/34B read/set the ajl slot; feature constructor stores the input, then resolves license/dongle/manager through checked parent types. Full physical graph references retained; layout and runtime metadata names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "feature"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002EB",
+      "Reason": "Constructor parses raw payload bytes into field 040001C0 and stores argument 2 as the package signature. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "payloadBytes",
+        "2": "signature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002EC",
+      "Reason": "No vendor/name/label, Wrong length and Wrong signature checks establish definition roles; locals 0/1/2 are feature list, assembled payload record and feature index. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "CreateFromDefinition",
+      "ParameterNames": {
+        "1": "definition"
+      },
+      "LocalNames": {
+        "0": "features",
+        "1": "payload",
+        "2": "featureIndex"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002F4",
+      "Reason": "Enumerates package features and compares each label to supplied string; preserve the meaningful featureLabel parameter alias. True result local returned after disposing the enumerator. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "PackageContainsFeatureLabel",
+      "ParameterNames": {
+        "1": "featureLabel"
+      },
+      "LocalNames": {
+        "0": "featureEnumerator",
+        "1": "containsLabel"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002F6",
+      "Reason": "UTF8.GetBytes(vendor).Take(Marshal.SizeOf(record)).ToArray initializes the fixed-byte record. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "vendor"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002F8",
+      "Reason": "Local 0 is the stored UTF8 byte array; positive parameter resizes the returned array to exactly that byte count; nonpositive retains its size. Preserve the meaningful size parameter alias. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageVendorBytes",
+      "ParameterNames": {
+        "1": "size"
+      },
+      "LocalNames": {
+        "0": "bytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002FB",
+      "Reason": "UTF8.GetBytes(name).Take(Marshal.SizeOf(record)).ToArray initializes the fixed-byte record. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "name"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002FD",
+      "Reason": "Local 0 is the stored UTF8 byte array; positive parameter resizes the returned array to exactly that byte count; nonpositive retains its size. Preserve the meaningful size parameter alias. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageNameBytes",
+      "ParameterNames": {
+        "1": "size"
+      },
+      "LocalNames": {
+        "0": "bytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000300",
+      "Reason": "UTF8.GetBytes(label).Take(Marshal.SizeOf(record)).ToArray initializes the fixed-byte record. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "label"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000302",
+      "Reason": "Local 0 is the stored UTF8 byte array; positive parameter resizes the returned array to exactly that byte count; nonpositive retains its size. Preserve the meaningful size parameter alias. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageLabelBytes",
+      "ParameterNames": {
+        "1": "size"
+      },
+      "LocalNames": {
+        "0": "bytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002F7",
+      "Reason": "ToString().Length counts managed string characters after UTF8 decoding/NUL trimming; preserve the existing character-count alias, not an invented byte-count operation. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageVendorCharacterCount"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060002FC",
+      "Reason": "ToString().Length counts managed string characters after UTF8 decoding/NUL trimming; preserve the existing character-count alias, not an invented byte-count operation. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageNameCharacterCount"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000301",
+      "Reason": "ToString().Length counts managed string characters after UTF8 decoding/NUL trimming; preserve the existing character-count alias, not an invented byte-count operation. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageLabelCharacterCount"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000307",
+      "Reason": "ToString().Length counts managed string characters after UTF8 decoding/NUL trimming; preserve the existing character-count alias, not an invented byte-count operation. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "GetPackageFeatureLabelLength"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000305",
+      "Reason": "Constructor UTF8 encodes/truncates label into field 040001C7 and stores UInt16 value in field 040001C8. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "label",
+        "2": "value"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000306",
+      "Reason": "Constructor reads ajl label and UInt16 value into the native feature record. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "feature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600030B",
+      "Reason": "Local 0 is the label byte array resized to 16; local 1 is BitConverter.GetBytes(value) resized to 2; list appends label then value. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SerializePackageFeatureRecord",
+      "LocalNames": {
+        "0": "labelBytes",
+        "1": "valueBytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600030F",
+      "Reason": "Parser checks header length and feature-size divisibility, decodes each 16-byte label and UInt16 suffix, and constructs feature records; Wrong raw package size guards malformed input. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "payloadBytes"
+      },
+      "LocalNames": {
+        "0": "featureBytes",
+        "1": "featureCount",
+        "2": "featureIndex",
+        "3": "recordBytes",
+        "4": "label",
+        "5": "value"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000310",
+      "Reason": "Serializes vendor/name/label then iterates native feature records; catch returns null. Locals follow exact list, array, index, current record and returned byte array. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SerializePackagePayloadOrNull",
+      "LocalNames": {
+        "0": "payloadBytes",
+        "1": "featureRecords",
+        "2": "featureIndex",
+        "3": "featureRecord",
+        "4": "serializedPayload"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000312",
+      "Reason": "Builds managed feature list from native records; skips empty labels and reconstructs each accepted feature. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "ReadNonemptyPackageFeatures",
+      "LocalNames": {
+        "0": "features",
+        "1": "featureRecords",
+        "2": "featureIndex",
+        "3": "featureRecord"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000313",
+      "Reason": "Five constructor arguments feed vendor/name/label/features/signature slots; 060002EC validation literals and SIGN= formatting corroborate all roles. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "vendor",
+        "2": "name",
+        "3": "label",
+        "4": "features",
+        "5": "signature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000319",
+      "Reason": "Calls package payload 060002ED to create its definition. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "CreateDefinitionFromPackage",
+      "ParameterNames": {
+        "1": "package"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600031B",
+      "Reason": "PKG/SIGN= and =unlimited formatter iterates feature list; locals 0/1/2/3 are definition text, features, index and current feature. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "FormatPackageDefinitionText",
+      "LocalNames": {
+        "0": "definitionText",
+        "1": "features",
+        "2": "featureIndex",
+        "3": "feature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000323",
+      "Reason": "Caller 060000D8 computes (added+skipped)*100/total and supplies definition/counters/TryAdd success; constructor forwards progress to ProgressChangedEventArgs. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "progressPercentage",
+        "2": "definition",
+        "3": "totalPackageCount",
+        "4": "addedPackageCount",
+        "5": "skippedPackageCount",
+        "6": "importSucceeded"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000324",
+      "Reason": "Start progress constructor stores name with zero progress/counters and no definition. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "packageName"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000325",
+      "Reason": "Parsed-list constructor stores packages, total List.Count, progress 100 and importFinished=false. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "packages"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000326",
+      "Reason": "Aggregate import completion constructor stores counters/list with progress 100 and importFinished=true. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "totalPackageCount",
+        "2": "addedPackageCount",
+        "3": "skippedPackageCount",
+        "4": "packages"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600032A",
+      "Reason": "Stores the supplied parsed-package list in field 040001DB. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SetParsedPackages",
+      "ParameterNames": {
+        "1": "packages"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000347",
+      "Reason": "Stores supplied dongle in its exact typed chain slot. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SetChainDongle",
+      "ParameterNames": {
+        "1": "dongle"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600034C",
+      "Reason": "Starts from supplied dongle, validates parent types and resolves the dongle/license/manager chain; null or incompatible parents throw InvalidOperationException. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "dongle"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000349",
+      "Reason": "Stores supplied license in its exact typed chain slot. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SetChainLicense",
+      "ParameterNames": {
+        "1": "license"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600034D",
+      "Reason": "Starts from supplied license, validates parent types and resolves the dongle/license/manager chain; null or incompatible parents throw InvalidOperationException. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "license"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600034B",
+      "Reason": "Stores supplied feature in its exact typed chain slot. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "SetChainFeature",
+      "ParameterNames": {
+        "1": "feature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600034E",
+      "Reason": "Starts from supplied feature, validates parent types and resolves the dongle/license/manager chain; null or incompatible parents throw InvalidOperationException. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "feature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060000D8",
+      "Reason": "Parser supplies definitions; total=Count, added increments on TryAdd true, skipped on false. Each callback uses these counters; accepted packages invoke the notification delegate list. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "LoadPackages",
+      "ParameterNames": {
+        "1": "packageText",
+        "2": "progressCallback"
+      },
+      "LocalNames": {
+        "0": "totalPackageCount",
+        "1": "addedPackageCount",
+        "2": "skippedPackageCount",
+        "3": "definitions",
+        "4": "definitionEnumerator",
+        "5": "definition",
+        "6": "package",
+        "7": "handlers",
+        "8": "handlerIndex",
+        "9": "handlerDelegate",
+        "10": "packageAddedHandler"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x060000B5",
+      "Reason": "Snapshots completion handlers under Monitor; constructs aggregate aj4 from supplied counts/list then invokes every handler synchronously or through BeginInvoke. Existing supported scope aliases are carried forward; unused Int16/Int32 locals receive no invented roles.",
+      "Disposition": "rename",
+      "NewName": "RaisePackageImportProgress",
+      "ParameterNames": {
+        "1": "totalPackageCount",
+        "2": "addedPackageCount",
+        "3": "skippedPackageCount",
+        "4": "packages"
+      },
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken",
+        "3": "progress",
+        "4": "invocationList",
+        "5": "handlerIndex",
+        "6": "handlerDelegate",
+        "7": "completionHandler"
+      }
+    }
+  ]
+}
