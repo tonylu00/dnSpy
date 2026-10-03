@@ -1,14 +1,14 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T09:51:31Z",
+  "UpdatedUtc": "2026-10-03T10:21:32Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
     "CheckpointDir": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
     "SourceTree63": "D:\\knx_analysis\\ETS6.3_api_preserved4",
     "SourceTree64": "D:\\knx_analysis\\ETS6.4_api_preserved5",
-    "ToolCli": "dotnet D:\\knx_analysis\\review-owner-normalization-build01\\bin\\NameCandidates\\release\\NameCandidates.dll",
+    "ToolCli": "dotnet D:\\knx_analysis\\field-storage-inspection-build01\\bin\\NameCandidates\\release\\NameCandidates.dll",
     "ToolRepo": "D:\\git\\de4dotEx",
     "DnspyRepo": "D:\\git\\dnSpy",
     "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
@@ -23,7 +23,7 @@
     "63": {
       "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v391.xml",
       "Sha256": "1A1EFCA212606444529A491A1D74EE5BA5DD6859E7203A5DCCA9D4653A93A805",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v391.json",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-review-main-storage-fields.json",
       "NextWave": 392,
       "CumulativeRenamedRows": 16694,
       "RowsInMap": {"Types": 980, "Methods": 12906, "Fields": 2965, "Parameters": 2681, "Locals": 1020},
@@ -74,19 +74,18 @@
       "Inventory": "perf-now/ets63-managed-scope-inventory02.json: 528 managed modules, 270 satellites, 4 native PE, 0 scan errors; all 64 mapped physical paths matched.",
       "Additional": "45 additional pure-IL first-party candidates beyond the 64-project v388 baseline. v391 maps 76 physical modules. Calculator/serializer blocks add 341 aliases (88 + 253); ordinary fields/closures add 58 supported aliases plus 2 unchanged contract method bindings. Other scope/coverage remains pending. Preserve mixed-mode and third-party binaries.",
       "Discovery": "45 modules: 38,818 methods, 4,621 types, 23,064 fields. Additional inventories: 18 type flags reviewed; 1,976 field flags = 53 mapped + 220 preserved + 1,703 explicitly unresolved, 0 open flags. Also 7 unflagged compiler blobs preserved. These candidate flags do not establish complete method/parameter/local readability or whole-application naming closure.",
-      "ToolFix": "de4dotEx af8b8b23 plus dnSpy 451e05cc8 permit validated static primitive/explicit-layout RVA aliases; unsupported storage remains blocked. Synthetic unchanged caller, runtime names/flags/layout/bytes, deterministic workers and incremental hashes pass. Framework inference now includes exact-identity untouched dependencies; portable cycle/context/explicit-target regression passes. Coverage fixes remain 07f6d505/b9d90fed. de4dotEx 7af4b44d adds exhaustive physical incoming method references; portable cap/operand/signature/metadata/twin guards pass. df0f649f exposes exact interface assembly identities and structured compiler-attribute arguments; portable identity/array/constructor test passes. Native field inspection now exposes storage guards, full RVA length/SHA256 and a bounded 256-byte preview; 513-byte boundary regression passes. de4dotEx 2b9458f0 adds bounded RVA data evidence; 98bb31d5 exposes structured field/module/assembly attributes. Full payload hashes, >256-byte preview bounds and all attribute scopes pass the portable fixture. ae9198a8 adds native --normalize-review-owners: 755 legacy owner annotations repaired after exact physical/scoped checks; strict ledger coverage now has 0 invalid/conflicting rows. Portable stale/owner/token/scope/path/output guards pass; decisions preserved.",
-      "NextBlock": "v391: additional flagged type/field candidates reviewed; 58 supported aliases and unchanged ProjectArchive interface/family names checked. Native owner reconciliation repairs 97 missing method owners + 658 field signatures in Type, with every other ledger value unchanged; strict coverage passes for supplied ledger only, not all definitions. Next: measure current whole-application field/method remainder and generated serializer parameter/local roles. MoveNext local-only external-contract scope guard remains a concrete tool limitation before consolidated freeze."
+      "ToolFix": "de4dotEx af8b8b23 plus dnSpy 451e05cc8 permit validated static primitive/explicit-layout RVA aliases; unsupported storage remains blocked. Synthetic unchanged caller, runtime names/flags/layout/bytes, deterministic workers and incremental hashes pass. Framework inference now includes exact-identity untouched dependencies; portable cycle/context/explicit-target regression passes. Coverage fixes remain 07f6d505/b9d90fed. de4dotEx 7af4b44d adds exhaustive physical incoming method references; portable cap/operand/signature/metadata/twin guards pass. df0f649f exposes exact interface assembly identities and structured compiler-attribute arguments; portable identity/array/constructor test passes. Native field inspection now exposes storage guards, full RVA length/SHA256 and a bounded 256-byte preview; 513-byte boundary regression passes. de4dotEx 2b9458f0 adds bounded RVA data evidence; 98bb31d5 exposes structured field/module/assembly attributes. Full payload hashes, >256-byte preview bounds and all attribute scopes pass the portable fixture. ae9198a8 adds native --normalize-review-owners: 755 legacy owner annotations repaired after exact physical/scoped checks; strict ledger coverage now has 0 invalid/conflicting rows. Portable stale/owner/token/scope/path/output guards pass; decisions preserved. Complete streamed --inspect-field-storage exposes constant metadata type; all 11,565 reviewed storage constants are I1(32), correcting 1,659 earlier Int32 rationale records without changing naming decisions.",
+      "NextBlock": "109 first-party source candidates inventoried; FluentResults/HtmlAgilityPack remain binaries. Native remaining candidates 28,416 = 2,750 types + 18,631 fields + 7,035 methods. Naming.Backlog is now whole explicit physical scope; unflagged definitions and unaliased parameters/locals are not readability proof. Review next coupled behavior blocks; broader App/runtime and 6.4 remain pending."
     }
   },
   "Naming": {
     "Backlog": {
-      "NotYetNamedRows": 28105,
-      "ByKind": {"Fields": 20497, "Methods": 5264, "Types": 2344},
-      "TopModules": {"Knx.Falcon.dll": 9768, "Knx.Ets.HawkNET.dll": 5332, "Knx.Ets.ObjectModel.dll": 3403, "Knx.Ets.ViewModel.dll": 2146, "all others": 7456},
-      "Shape": "field remainder is 19,596 one-character private names (a 8017, b 3371, c 2678, d 2118, e 1797); method remainder is 4,040 one-character plus ~1,063 tool placeholders",
-      "Report": "D:\\knx_analysis\\perf-now\\backlog-v380.json",
-      "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
-      "OpenRoute": "No remaining bulk route established; the 6.4 anchor fixpoint is measured exhausted. Review remaining rows/clusters from behavior, recording unresolved evidence explicitly.",
+      "ByKind": {"Types": 2750, "Fields": 18631, "Methods": 7035},
+      "TopModules": {"Knx.Falcon.dll": 9714, "Knx.Ets.HawkNET.dll": 7325, "Knx.Ets.ObjectModel.dll": 3904, "Knx.DevKit.dll": 2292, "Knx.Ets.Sdk.dll": 883, "all others": 4298},
+      "Shape": "109 physical first-party source candidates: 27,570 types, 121,780 fields, 198,727 methods; 165,115 parameters/2,681 aliases and 397,219 locals/1,020 aliases. Native lexical flags select work only. 9,906 new storage fields unresolved; no semantic aliases invented.",
+      "Report": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v391-after-storage.json",
+      "Regenerate": "inventory_physical_scope.py --scope application-physical-scope-v391.json --cli <NameCandidates.dll> --map <current checked map> --ledger reviewed63.json --output <fresh directory>; optional --reuse-inventory <earlier summary> verifies physical/tool/report hashes. Retire filename-conflating backlog.py.",
+      "OpenRoute": "Current complete physical inventory, not historical v380 lexical counts. Native field storage evidence + 111 hash-matched graph inputs reviewed 11,565 fields with zero static uses; vendor semantics/reflection/dynamic/external Apps remain uncertain. Next: ordinary coupled fields/types/methods and scoped roles.",
       "ExhaustedRoutes": [
         "cross-version transfer by fingerprint/shape/ordinal: shape 4.2%, ordinal 10-40%, literal tiebreak 5 rows - rejected",
         "property/field accessor and field-backing inference: 49+4 proposals at v380, 5,280+1,966 skips - saturated",
@@ -103,16 +102,17 @@
         "largest cluster akj (DevKit): raiser, backing field and delegate type all unnamed; nothing to derive",
         "readable bucket verified by a tree-wide random scan: 3 rows, all real names",
         "type-anchor pairing (6.3 type -> 6.4 type through >=2 already-named method anchors): 21 Falcon + 6 HawkNET = 27 uniquely pairable types out of 2,478 unnamed, and only 129 types tree-wide have >=2 anchors - measured 2026-09-23, route closed, not worth a tool investment"
-      ]
+      ],
+      "RemainingNativeCandidates": 28416
     },
     "NextItems": [
-      {"Task": "complete additional first-party scope review", "Detail": "See Readability.PhysicalScope63. Review types/fields and coupled parameter/local evidence in feature blocks with native tools and cheap mapping/reference checks; confirm ownership before expanding export scope."},
+      {"Task": "whole physical first-party review", "Detail": "109 modules; 28,416 candidates remain. Additional-45 flags reviewed; unflagged names still need call-chain evidence. Keep exact compatibility paths and confirm source ownership before export expansion."},
       {"Task": "whole-tree readability baseline", "Detail": "Measure remaining 6.3/6.4 components and necessary generated leftovers. Falcon current four builder kickoffs are fixed; do not repeat the stale eight-stub investigation."},
       {
         "Task": "broader unchanged-App and SDK runtime compatibility",
         "Detail": "Chinese startup, test-mcp persistence and a synthetic password fixture across a fresh process passed in isolated v388. Installed unchanged MCP App initializes but lacks daemon project relay registration; broader APIs remain unproven."
       },
-      {"Task": "record the evidence-free remainder", "Detail": "Historical 28,105 rows are not current closure proof. Record token-bound reasons after each block evidence route is reviewed; never invent names or suffixes."},
+      {"Task": "record the evidence-free remainder", "Detail": "28,416 native candidates select work; they do not prove readability. Record token-bound missing evidence after measured routes; never invent names or suffixes."},
       {"Task": "consolidated verification", "Detail": "Freeze complete mapping/scope, export/build first-party source, stage tool outputs with manifests, audit contracts/resources/references and exercise unchanged Apps; then verify 6.4."}
     ],
     "NextItemRules": [
