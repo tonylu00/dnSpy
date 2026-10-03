@@ -137,6 +137,7 @@ def main():
                 counts['NativeReviewCandidates'] += bool(row['NeedsReadableName'])
                 counts['MappedNames'] += bool(alias)
                 disposition = ('Mapped' if alias else 'UnappliedLedgerAlias' if decision and decision.get('NewName')
+                               else 'ScopedOnly' if decision and decision.get('UnresolvedDefinitionEvidence')
                                else 'Unresolved' if decision and decision.get('Unresolved')
                                else 'Preserved' if decision and not decision.get('NewName') else 'Unreviewed')
                 counts[disposition] += 1
@@ -146,7 +147,7 @@ def main():
                                       'RecordedAlias': decision['NewName'], 'NativeReviewCandidate': row['NeedsReadableName']})
                 if row['NeedsReadableName']:
                     counts['Candidate' + disposition] += 1
-                    if disposition in ('Unreviewed', 'UnappliedLedgerAlias'):
+                    if disposition in ('Unreviewed', 'UnappliedLedgerAlias', 'ScopedOnly'):
                         remaining.append({**row, 'Module': physical_row['Path'], 'Kind': kind})
                 if kind == 'Methods':
                     for column, total in (('ParameterNames', 'Parameters'), ('LocalNames', 'Locals')):

@@ -115,3 +115,17 @@ positions with the missing evidence. `--preservations` accepts explicit physical
 and parameter/proposal preimages plus behavioral rationale for meaningful names
 that should remain unchanged. This workflow writes review JSON only; native map
 update/check and an application-wide coverage record remain separate gates.
+
+`prepare_forwarded_parameter_review.py` binds native direct-call parameter
+proposals to exact caller/callee bodies and physical graph references. Every
+eligible proposal requires an identity-bound accept, preserve or defer decision
+with its parameter/proposal preimage and domain rationale. Callee scope aliases
+and original metadata names are checked independently; SDK-protected callers and
+third-party modules are excluded. Meaningful short names remain intact, generic
+`value`/arithmetic labels retain missing evidence, and existing ledger scopes are
+merged only after native update/check. Scripts write review/evidence JSON only.
+
+An accepted parameter role does not resolve its opaque method owner. Such rows
+carry `UnresolvedDefinitionEvidence`; the whole physical inventory reports
+`ScopedOnly` and keeps flagged definitions in the remaining selection. Scoped
+readability cannot silently become whole-method preservation or naming coverage.
