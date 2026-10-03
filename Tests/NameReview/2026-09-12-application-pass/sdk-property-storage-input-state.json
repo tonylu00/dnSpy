@@ -1,0 +1,199 @@
+{
+  "Format": 1,
+  "Kind": "EtsNamePassState",
+  "UpdatedUtc": "2026-10-03T14:55:24Z",
+  "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
+  "Pass": {
+    "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
+    "CheckpointDir": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
+    "SourceTree63": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+    "SourceTree64": "D:\\knx_analysis\\ETS6.4_api_preserved5",
+    "ToolCli": "dotnet D:\\knx_analysis\\review-alias-removal-build01\\bin\\NameCandidates\\release\\NameCandidates.dll",
+    "ToolRepo": "D:\\git\\de4dotEx",
+    "DnspyRepo": "D:\\git\\dnSpy",
+    "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
+    "Policy": "D:\\knx_analysis\\POLICY.md",
+    "Goal": "D:\\knx_analysis\\GOAL.md",
+    "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
+    "DecompilerFix": "ILSpy submodule codex/local-commits: 3ea1c886f recognises checked source aliases for custom awaiter factories; 81659604d resolves checked framework facade references. Current closure-owner, XAML and 64-project build defects are fixed.",
+    "ExporterBuild": "Build the plugin, not the console: dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows. dnSpy.Console.csproj does NOT reference the ILSpy submodule, so building it silently leaves ICSharpCode.Decompiler.dll stale and an export then runs the old decompiler.",
+    "SdkGuard": "Numeric SDK token identity enforced in de4dotEx 4abea81f and actual dnSpy export. sdk-token-regression01 suite and portable dnSpy SDK guard pass; actual console rejects protected 06000002 before source output. Current 6.3/6.4 map checks pass. Full App/runtime compatibility remains pending."
+  },
+  "Maps": {
+    "63": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\cloud-owner-storage-final02\\names63-staged-v398.xml",
+      "Sha256": "9BFADA38D4B8221CFBF84FD65C4C8C1AB2F91919E53B0C5F1B514E49EE6DD656",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v398.json",
+      "NextWave": 399,
+      "CumulativeRenamedRows": 16694,
+      "RowsInMap": {"Types": 1035, "Methods": 12916, "Fields": 3285, "Parameters": 2887, "Locals": 1543},
+      "CountBasis": "v398 reviews 172 definitions: 328 supported additions (5 types, 70 fields, 9 methods, 71 parameters, 173 locals), 8 alias/scope corrections, 9 prior unknowns resolved, 3 compiler containers/1 meaningful field preserved and 11 unresolved fields. Historical CumulativeRenamedRows remains v380.",
+      "AppliedToSource": false
+    },
+    "64": {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v178.xml",
+      "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v178.json",
+      "NextVersion": 179,
+      "RestagedFrom": "names63-staged-v380.xml",
+      "AppliedToSource": false
+    }
+  },
+  "Compatibility": {
+    "ContractReferences63": {"Path": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json", "Sha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA"},
+    "SdkWhitelist63": {"Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml", "Sha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459", "Symbols": 21935, "ExcludedMapRows": 1974},
+    "SdkWhitelist64": {"Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist64-v1.xml", "Sha256": "E1F555A155E99C48D1296C09110D25023CF6902E71F3C8A96B98320383DECE34", "Symbols": 24209, "ExcludedMapRows": 167},
+    "SdkModules": ["Knx.Ets.Sdk.dll", "Knx.Ets.Sdk.AddIns.AddInViews.dll", "Knx.Ets.Common.Types.dll", "Knx.Ets.Common.Resources.dll"],
+    "Rules": "POLICY.md"
+  },
+  "Readability": {
+    "WhatMakesItReadable": "Compiler-generated members merge into their owners only when the decompiler can recognise them; Dotfuscator renamed the entry points and the compiler name patterns, so the decompiler had to be taught the structural evidence (MethodImpl override rows, ldftn delegate targets).",
+    "DecompilerFixes": {
+      "Async": "AsyncDecompiler matched the literal name 'MoveNext'; ETS names it 'System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext' with an override row. Now MethodUtils.IsMethod is used (00db96bac).",
+      "Closures": "DelegateConstruction.IsAnonymousMethod and AstBuilder.IsClosureType required the compiler name patterns (angle-bracket names, dollar names, the static-cache and DisplayClass names). Now a compiler-generated container whose method is reached through ldftn/ldvirtftn counts as a closure/lambda (fd5b322cc)."
+    },
+    "Measured": {
+      "Note": "6.3 tree, decompiler export; format = files | inline lambdas | async | await | raw builder stubs | display-class declarations",
+      "Knx.Ets.HawkNET.dll": "361 | 326 | 389 | 1190 | 0 | 0",
+      "Knx.Falcon.dll": "Focused same-map A/B: 1,031 application C# files in each; async 541 -> 548; await 1,137 -> 1,144; raw builder.Start kickoffs 4 -> 0; builder mentions 8 -> 0. Generated support excluded. Other historical module counts use a different export basis.",
+      "Knx.Ets.ObjectModel.dll": "1741 | 3340 | 12 | 9 | 0 | 0",
+      "Knx.CloudKit.dll": "53 | 29 | 0 | 0 | 0 | 0",
+      "Knx.DevKit.dll": "93 | 16 | 0 | 0 | 0 | 0",
+      "Before": "0 inline lambdas, raw AsyncTaskMethodBuilder stubs, display classes listed as types.",
+      "Regression": ".NET 9 System.Net.Http.HttpClient 4 async / 10 await / 0 stubs; System.Linq.Enumerable renders lambdas - unchanged.",
+      "6.4": "The pass 6.4 tree already renders async with the same decompiler (CompareDeviceTask 8 async / 29 await / 0 stubs). Earlier '6.4 raw' reading came from ETS6.4_orig, whose kickoff stubs still carry Dotfuscator control flow; not a work item."
+    },
+    "BaselineTask": "Inventory the whole 6.3/6.4 application trees; measure patched-decompiler readability for first-party components, keeping third-party dependencies untouched. Store per-module numbers here.",
+    "FalconAsyncReconstruction": {
+      "Cause": "Five await normalizers required raw GetAwaiter, but Class1080::d is identity-bound to GetAwaiter. All five now use the same checked metadata/name resolution as the renderer.",
+      "Verified": "3ea1c886f plus portable CustomAwaiterAliasRegression02: mapped/unmapped boundary, immediate/suspended results, same exception, cancellation, single factory evaluation, early null branch and restored d metadata. Old CLI reproduces the failure.",
+      "EtsEvidence": "perf-now/falcon-await-alias-report01.json: 06001F69, 06001F8C, 06001F8D, 06001F8E reconstructed. Focused Falcon export and Release build exit 0 (2,053 warnings). No map edits or full ETS rebuild.",
+      "RuntimeLimit": "Live v388 still contains the earlier Falcon build. The focused new Falcon has not been exercised against real network devices."
+    },
+    "PhysicalScope63": {
+      "Inventory": "perf-now/ets63-managed-scope-inventory02.json: 528 managed modules, 270 satellites, 4 native PE, 0 scan errors; all 64 mapped physical paths matched.",
+      "Additional": "45 additional pure-IL first-party candidates beyond the 64-project v388 baseline. v391 maps 76 physical modules. Calculator/serializer blocks add 341 aliases (88 + 253); ordinary fields/closures add 58 supported aliases plus 2 unchanged contract method bindings. Other scope/coverage remains pending. Preserve mixed-mode and third-party binaries.",
+      "Discovery": "45 modules: 38,818 methods, 4,621 types, 23,064 fields. Additional inventories: 18 type flags reviewed; 1,976 field flags = 53 mapped + 220 preserved + 1,703 explicitly unresolved, 0 open flags. Also 7 unflagged compiler blobs preserved. These candidate flags do not establish complete method/parameter/local readability or whole-application naming closure.",
+      "ToolFix": "de4dotEx af8b8b23 plus dnSpy 451e05cc8 permit validated static primitive/explicit-layout RVA aliases; unsupported storage remains blocked. Synthetic unchanged caller, runtime names/flags/layout/bytes, deterministic workers and incremental hashes pass. Framework inference now includes exact-identity untouched dependencies; portable cycle/context/explicit-target regression passes. Coverage fixes remain 07f6d505/b9d90fed. de4dotEx 7af4b44d adds exhaustive physical incoming method references; portable cap/operand/signature/metadata/twin guards pass. df0f649f exposes exact interface assembly identities and structured compiler-attribute arguments; portable identity/array/constructor test passes. Native field inspection now exposes storage guards, full RVA length/SHA256 and a bounded 256-byte preview; 513-byte boundary regression passes. de4dotEx 2b9458f0 adds bounded RVA data evidence; 98bb31d5 exposes structured field/module/assembly attributes. Full payload hashes, >256-byte preview bounds and all attribute scopes pass the portable fixture. ae9198a8 adds native --normalize-review-owners: 755 legacy owner annotations repaired after exact physical/scoped checks; strict ledger coverage now has 0 invalid/conflicting rows. Portable stale/owner/token/scope/path/output guards pass; decisions preserved. Complete streamed --inspect-field-storage exposes constant metadata type; all 11,565 reviewed storage constants are I1(32), correcting 1,659 earlier Int32 rationale records without changing naming decisions. Physical review preparation retains requested rows only: byte-identical 2,904-row A/B, observed peak working set 232 -> 166 MiB, time 10.341 -> 8.021 seconds. Native inventory distinguishes historical unapplied aliases from unreviewed rows. de4dotEx d1369f74 exposes fixed-array/string/array marshal shape and validity without inventing an omitted native subtype. Portable explicit/unspecified fixed-array regressions pass. dnSpy 1fa2d1f6e preserves checked scopes/annotations through method alias corrections; 18 review/physical preparation guards pass. de4dotEx 283e119d accepts explicit standalone unscoped alias withdrawal with physical/preimage/SDK/contract guards; portable twin/stale/scoped/partial-batch tests pass. dnSpy adac4387b retains withdrawal history without replay; 21 ledger/preparation tests pass. dnSpy guarded unresolved-to-named checkpoint requires exact prior rationale, native addition/final map and physical/scoped identities; preserves history and rejects stale proofs/replay/duplicate scopes. 25 portable ledger/preparation tests pass. Portable checkpoints now resolve complete native-checked contract families and correct historical proposal/map mismatches with both explicit preimages; 28 ledger/preparation tests pass.",
+      "NextBlock": "v398 owner/storage review: 328 additions, 8 corrections, 9 unknowns resolved; 111 graph hashes, native SDK/contract/map/ledger gates and saved-input reproduction pass. Whole inventory 30.99 s/0 native calls. CloudKit flags: 0 unreviewed, 14 uncertain types/157 fields/35 methods. Review full protected/delegate scopes and other meaningful call chains; consolidate build/runtime/6.4 after application-wide freeze."
+    }
+  },
+  "Naming": {
+    "Backlog": {
+      "ByKind": {"Types": 2555, "Fields": 18171, "Methods": 5881},
+      "TopModules": {"Knx.Falcon.dll": 9466, "Knx.Ets.HawkNET.dll": 6537, "Knx.Ets.ObjectModel.dll": 3897, "Knx.DevKit.dll": 2034, "Knx.Ets.Sdk.dll": 880, "all others": 3793},
+      "Shape": "109 physical first-party candidates: 27,570 types, 121,780 fields, 198,727 methods; 165,115 parameters/2,887 aliases and 397,219 locals/1,543 aliases. v398 adds 328 supported names, corrects 8 aliases/scopes and resolves 9 prior unknowns. Native flags do not establish readability.",
+      "Report": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v398-after-owner-storage.json",
+      "Regenerate": "inventory_physical_scope.py --scope application-physical-scope-v391.json --cli <NameCandidates.dll> --map <current checked map> --ledger reviewed63.json --output <fresh directory>; optional --reuse-inventory <earlier summary> verifies physical/tool/report hashes. Retire filename-conflating backlog.py.",
+      "OpenRoute": "109-module selection: 25,009 unreviewed native candidates + 1,598 historical unapplied proposals = 26,607 rows. CloudKit has no unreviewed native flags; 14 types/157 fields/35 methods remain uncertain and scopes/unflagged readability are partial. SDK/contract and ledger gates pass; full App/runtime pending.",
+      "ExhaustedRoutes": [
+        "cross-version transfer by fingerprint/shape/ordinal: shape 4.2%, ordinal 10-40%, literal tiebreak 5 rows - rejected",
+        "property/field accessor and field-backing inference: 49+4 proposals at v380, 5,280+1,966 skips - saturated",
+        "half-named contract families: 0 of 141,365 (v376)",
+        "de4dot-rename-map.xml: 1,036 meaningful entries, none with an obfuscated input name",
+        "attribute evidence: only XmlRoot/XmlType/JsonTypeName/XmlEnum - unusable",
+        "parameter-family inheritance: 3,864 placeholder parameters, no named sibling",
+        "event accessors: 903 unnamed, 16 with a named raiser (waves 371/375); 0 from a named backing field",
+        "single-callee forwarders 1.3%, bare self-name literal 0%, MoveNext-only literal rule 22.9% - rejected",
+        "field value-source dataflow: 0 of 540 DevKit writers validated",
+        "DevKit twin: 0 of 268 aligned type pairs trustworthy; literal-keyed join 13 matches, all random",
+        "resource-path literals: 52 rows, 20 named (wave 379)",
+        "6.4 state-machine oracle: 92.9% precision, 3 unnamed rows left",
+        "largest cluster akj (DevKit): raiser, backing field and delegate type all unnamed; nothing to derive",
+        "readable bucket verified by a tree-wide random scan: 3 rows, all real names",
+        "type-anchor pairing (6.3 type -> 6.4 type through >=2 already-named method anchors): 21 Falcon + 6 HawkNET = 27 uniquely pairable types out of 2,478 unnamed, and only 129 types tree-wide have >=2 anchors - measured 2026-09-23, route closed, not worth a tool investment"
+      ],
+      "RemainingNativeCandidates": 26607
+    },
+    "NextItems": [
+      {"Task": "whole physical first-party review", "Detail": "109 modules: 25,009 unreviewed candidates plus 1,598 historical unapplied proposals. Keep exact compatibility paths; inspect coupled behavior and scoped roles. Confirm first-party source ownership before export expansion."},
+      {"Task": "whole-tree readability baseline", "Detail": "Measure remaining 6.3/6.4 components and necessary generated leftovers. Falcon current four builder kickoffs are fixed; do not repeat the stale eight-stub investigation."},
+      {
+        "Task": "broader unchanged-App and SDK runtime compatibility",
+        "Detail": "Chinese startup, test-mcp persistence and a synthetic password fixture across a fresh process passed in isolated v388. Installed unchanged MCP App initializes but lacks daemon project relay registration; broader APIs remain unproven."
+      },
+      {"Task": "record the evidence-free remainder", "Detail": "26,607 selection rows include unapplied historical proposals. Native flags do not prove readability. Record missing evidence after measured routes; never invent names or suffixes."},
+      {"Task": "consolidated verification", "Detail": "Freeze complete mapping/scope, export/build first-party source, stage tool outputs with manifests, audit contracts/resources/references and exercise unchanged Apps; then verify 6.4."}
+    ],
+    "NextItemRules": [
+      "Oracle rows are the strongest naming route: the 6.4 released surface names them and a literal in the 6.3 body must corroborate the row.",
+      "Preserve legitimate overloads and meaningful names; reject only real signature/name collisions. Never invent a numeric suffix to make a mapping pass.",
+      "Virtual rows, interface implementations and contract-family members are renamed as a family.",
+      "One block is one evidence-backed review and inexpensive map/reference checks. Commit validated milestones; defer --wave full audits/application and ETS export/build until application-wide mapping freezes."
+    ]
+  },
+  "HardBlockers": {
+    "Codes": [
+      "accessor-operator-or-runtime-special-name",
+      "virtual-or-override row not yet family-reviewed",
+      "SDK-protected row or family (whitelist)",
+      "same-module name collision where the sibling has no distinct evidence",
+      "no-evidence-in-scope: every evidence route closed with a measured number (private state with no observable behaviour, no literal, no anchor, no readable counterpart)"
+    ],
+    "Rule": "A turn may stop with work left only when every remaining row of the current block carries one of these codes, recorded with its token. While an unmeasured route remains, switch route instead."
+  },
+  "Closure": {
+    "Rule": "The pass closes when every in-scope definition is exactly one of named | already-readable | SDK/protected | compiler-generated (merged) | unresolved-no-evidence with a reason, and Phase 4 has run.",
+    "Authority": "GOAL.md definition of done and POLICY.md: readable, compiling first-party source plus rebuilt ETS behavior and unchanged-App compatibility; unresolved rows require recorded evidence.",
+    "CategoriesMeasuredAt": "Historical v380 inventory; not proof of current coverage or completed runtime verification.",
+    "CategoriesMeasured": {"named": 16694, "already-readable": 92963, "sdk-whitelisted-or-protected-family": 18755, "compiler-generated": 55036, "constructors": 20843, "unresolved-no-evidence": 28105},
+    "NotClaimed": "Exported test source exists, but naming closure is not proof of a compiling or behavior-compatible ETS. AppliedToSource=false records the uncompleted consolidated application stage."
+  },
+  "Deferred": {
+    "RebuiltRuntime63": {
+      "Stage": "D:/knx_analysis/ets63-rebuilt-v388; 298 overlays. ets63-rebuilt-v388-manifest.json verifies original hashes and tree structure.",
+      "LiveCopy": "D:/knx_analysis/ets63-v388-live01; automation-stage.json, live-test-provenance.json and saving-feature-revocation.json record separate instrumentation/revocation overlays.",
+      "Tools": "VirtualDongle 566a79a fixes automation CLI dispatch; 4b0ed1c adds --disable-extended-logging. Portable executed-initializer regression passes, including idempotence and unsafe-control-flow rejection.",
+      "Observed": "Chinese dashboard and explicit --openProject test-mcp succeed. Installed MCP App 4.15 initializes unchanged, but has no daemon project relay registration. Full SDK/App compatibility remains unproven.",
+      "Save": "Live bridge reported save_suppressed=true despite configuration deny and isolated IsLicensed=false. Legacy optional license array ignored the deny. Tool removes only that entry in the live copy; fresh ETS bridge reports save_suppressed=false. A new test-mcp duplicate is present on disk and opens without error; close and reopen passed with is_open=true, is_broken=false and save_suppressed=false. Evidence: perf-now/ets63-v388-live-report.json. Test ETS exited normally; 15 profile files restored against checkpoint hashes.",
+      "OtherProjectFailure": "Initial auto-open selected saved project test (P-01C0), not test-mcp. Read-only original vs processed Knx.Ets.Ids probes both reject tag:livingRoom with the same ArgumentException and accept SU-0000/SU-0001 equivalently. Evidence: perf-now/id-parser-original01.log and id-parser-processed01.log. Do not change the parser to accept it; original ObjectModel/serialization comparison remains necessary before assigning root cause.",
+      "Profile": "First run wrote shared user.settings and Default.workspace; no pre-run backup existed. Subsequent run backed up settings/workspaces and restored them after exit. Use explicit test-mcp and preserve profile checkpoints; original binaries unchanged.",
+      "Evidence": "perf-now/ets63-v388-live-report.json and ets63-v388-password-report01.json. Duplicate persistence and isolated synthetic password reload passed; full unchanged-App/SDK and complex-project behavior remain pending.",
+      "Password": "Synthetic test-mcp-v388-password (P-0813, GUID 0f691dc1-e25a-473a-8f72-bffb229109d9) created password-protected, opened/closed, then reopened with password in a fresh process. is_open=true, is_broken=false, save_suppressed=false. perf-now/ets63-v388-password-report01.json; ETS exited normally; 16 checkpointed profile files restored with matching hashes. Full complex protected-project coverage remains unproven."
+    },
+    "SourceExport": {
+      "Map": "v388 baseline used v381. v398 has 1,567 added NewName entries relative to v381 (1,565 supported aliases and 2 unchanged family bindings), 66 aliases corrected ({'Method': 66}) and 9 unsupported aliases withdrawn; net entry increase 1,558. Native gates pass. Later maps are not consolidated.",
+      "Scope": "v388 exports the 64 mapped physical modules. The whole-tree inventory found 45 additional pure-IL first-party candidates; confirm scope and review naming before the next consolidated export. Third-party and mixed-mode binaries remain untouched.",
+      "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
+      "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
+      "Command": "Current fixed CLI: dnspy-sdk-guard-fix01/dnSpy.Console.exe --source-name-map <checked-map> --public-sign --app-config ETS6.3_api_preserved4/ETS6N.exe.config -o <fresh-out>, plus explicit physical module paths; DNSPY_PACKAGE_MAP=perf-now/nuget-packages.txt. Build the actual ILSpy plugin, then the exported solution in Release.",
+      "State": "64-project v388 baseline compiles with 0 errors (15,375 warnings; incremental recheck 153 warnings). Focused serializer export02 builds 3 projects with 0 errors/959 warnings; 1,524 original/rebuilt helper cases pass. v398 naming (76 physical mapped modules) is not consolidated; full scope/build/runtime pending.",
+      "Caveat": "The 64-project baseline and three focused serializer projects compile in separate exports. This is not one consolidated 67-project build, whole-tree naming closure or full ETS/App compatibility. xml-rva-runtime-comparison01.json and xml-serializer-behavior-comparison-repro02.json record only selected alias/storage and enum-helper behavior.",
+      "Next": [
+        "Complete remaining first-party scope and application-wide mapping using inexpensive checks. Consolidated ETS export/build, full audits and binary application follow map freeze.",
+        "Freeze maps for consolidated export/build and runtime audits. Continue unchanged-App/SDK tests on isolated copies, preserving profiles and keeping ExtendedLogging disabled."
+      ]
+    },
+    "MemoryBlowup": {
+      "RootCause": "dnSpy 863effcee: a RECURSIVE lambda (a handler that subscribes itself - Knx.Ets.Common arx/b::c and UserControls ContextMenuPlacementBehavior/<>c__DisplayClass2_0::method_0). Inlining copies the body into its own body, so the AST grows without bound. Fixed by IsInLambdaCycle (walks the lambda's ldftn targets, memoized) plus relaxed backstop caps.",
+      "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
+      "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
+      "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
+      "FinalExport": "D:/knx_analysis/ets63-source-v388: all 64 exported projects build successfully, 0 errors. Alias projection uses a unique physical target and checked signed-framework facade equivalence; vendor identities remain protected. Consolidated runtime verification is pending.",
+      "RemainingErrors": {
+        "Count": 0,
+        "ClosureOwnerConflict": "Fixed in v386: ownership follows exact generated body/state-machine references, not an overload name prefix. Portable ClosureOwnerRegression02 passes execution, restored metadata owner names and stable incremental rebuild.",
+        "XamlRuntimeNames": "Fixed for the current export: actual ParameterDialog and SDK WPF projects compile in v388. WpfSourceReferenceRegression03 also executes BAML against restored runtime type names with stable incremental hashes.",
+        "AsyncInterfacesVersion": "Fixed: preserve explicit physical contracts in custom items retained by WPF temporary projects. Exclude conflicting NuGet compile assets by name/culture/signing identity before package conflict resolution; never remove physical references or guess between explicit versions. SDK build passes; portable CompileReferenceRegression03 passes including legacy inline MSBuild.",
+        "FixedThisTurn": "CS1061 x4 IpDeviceDiscovery (lambda parameter 'sender' shadowing the outer 'sender' - the declaration was allocated 'sender1' but the printer took the name from the ILVariable; dnSpy eceb55413 makes the variable adopt the declaration name); CS1061 x2 Class1109 ('byte[] a = RandomNumbers.a(16); EchoOptionCache[a.a] = a' - a cached parent-closure substitution kept the stale spelling 'a' after the closure variable was renamed 'a2'; dnSpy eceb55413 refreshes every variable reference from its own variable); CS1503 Class122 (the IL calls NoConstructorsFoundException(Type, IConstructorFinder), which only exists in Autofac 7.0 while the package map pinned 6.5); CS0012 x5 FluentResults (package 3.15.2 ships assembly 3.15.2.0, the tree ships 3.15.2.21); CS0234 Knx.Ets.MyKnx System.Text.Encodings.Web (bare reference, now a package row)."
+      },
+      "ReadabilityImpact": {
+        "MeasuredWith": "DNSPY_INLINE_TRACE=1 (dnSpy c4aaca673) over all 64 first-party modules",
+        "SkippedLambdas": 4,
+        "Breakdown": "all 4 are recursive lambdas skipped by cycle detection; no lambda is refused for size or budget any more (dnSpy 863effcee raised the caps to 4000/20000 as a backstop only)",
+        "Owners": ["Knx.Ets.Common arx/b::c", "Knx.Ets.Ui.UserControls Behaviors.ContextMenuPlacementBehavior/<>c__DisplayClass2_0::method_0"],
+        "Construct": "a recursive lambda chain: 'handler -= delegate(object, RoutedEventArgs) { ... handler -= delegate { ... } }' - exactly the construct that duplicated itself past 20 GB when inlined unbounded",
+        "AB": "Knx.Ets.LabelCreator exported with and without the caps is byte-identical (same 28 files, 219 lambdas, 3913 lines) - the budget only changes output where it must",
+        "Knobs": "DNSPY_MAX_INLINED_LAMBDA_IL and DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD (0 disables the per-method budget); raise them for a module or type when a specific case is worth the memory."
+      }
+    },
+    "SourceExportPackageMap": {
+      "ToolFix": "dnSpy 6ccd9ac65: SdkProjectWriter emits PackageReference for assemblies listed in DNSPY_PACKAGE_MAP ('<assembly>=<package id>/<version>' lines) instead of HintPath references into the tree; unmapped assemblies keep HintPath.",
+      "MapFile": "D:\\knx_analysis\\perf-now\\nuget-packages.txt (11 entries). A row is only valid when the package's ASSEMBLY IDENTITY equals the tree binary's: the compiler matches identity, so 'FluentResults 3.15.2' (assembly 3.15.2.0) against the tree's 3.15.2.21 fails with CS0012. Rows whose identity differs (AngleSharp, Antlr4, BouncyCastle, FluentResults, HtmlAgilityPack, Microsoft.Bcl.AsyncInterfaces, System.Collections.Immutable, System.Reactive, System.Text.Json, log4net, zxing, NiL.JS, Scriban.Signed, dotNetRdf) were dropped so the writer emits a HintPath to the untouched tree binary instead.",
+      "Checker": "powershell -File D:\\knx_analysis\\perf-now\\check-package-versions.ps1 - prints tree identity, package identity and the verdict per row (AssemblyName.GetAssemblyName, not FileVersion; System.* file versions are build-stamped and always look different)."
+    },
+    "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign (inherits the merge fixes), rebuild, overlay Stage-RecompiledTree + manifest, audit battery, verify against unchanged third-party ETS Apps.",
+    "LiveEts": "Authorized by the user on 2026-10-03: autonomously launch ETS and control it through KNX-ETS-MCP for tests without asking again. Use staged output and test-mcp for mutations; preserve originals and unrelated work. Later user restrictions supersede this grant.",
+    "NotProven": "All 64 mapped projects build, test-mcp opens in Chinese, duplicate persistence passes, and a synthetic password project reloads across a fresh process. Complete first-party scope/naming, broader complex protected projects, unchanged-App/SDK runtime compatibility and 6.4 verification remain unproven."
+  }
+}
