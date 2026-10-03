@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T02:14:25Z",
+  "UpdatedUtc": "2026-10-03T02:34:47Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -98,7 +98,7 @@
       ]
     },
     "NextItems": [
-      { "Task": "source export, AsyncInterfaces WPF conflict", "Detail": "v387: 64 projects exported; 6 first-layer CS0433 errors in SDK wpftmp import both AsyncInterfaces 7 preserved binary and 1 NuGet contract. Filter conflicting transitive compile assets through the exporter/build support, then build the actual solution. WPF aliases pass a runtime fixture, but downstream ETS projects remain unproven." },
+      { "Task": "source export, ViewModel reference aliases", "Detail": "v387 compile-reference refresh: SDK WPF builds. Full ETS solution exposes 5 ViewModel reference-name errors (IHttpClient ad1/adx/ad0, ask.a, WebServiceRequestBase.a). Fix alias propagation in tools and rebuild; downstream runtime remains unproven." },
       { "Task": "readability baseline sweep", "Detail": "patched decompiler over the whole 6.3 tree + 6.4; per-module lambdas/async/await/raw stubs/display classes into Readability.Baseline" },
       { "Task": "Falcon 8 raw stubs", "Detail": "see Readability.FalconLeftover8" },
       { "Task": "record the evidence-free remainder", "Detail": "28105 rows unresolved with the no-evidence-in-scope reason so --coverage counts them; never invent names or suffixes" },
@@ -135,11 +135,11 @@
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
       "Command": "Latest run uses D:\\knx_analysis\\dnspy-runtime-fix01\\dnSpy.Console.exe --source-name-map names63-staged-v381.xml --public-sign --app-config D:\\knx_analysis\\ETS6.3_api_preserved4\\ETS6N.exe.config -o <fresh-out> plus the 64 paths in firstparty-files.txt. Then dotnet build <out>\\solution.sln -c Release; DOTNET_CLI_UI_LANGUAGE=en gives readable build logs.",
-      "State": "2026-10-03 ets63-source-v387: 64 projects, 13,296 C# files, export exit 0. Original ETS6N.exe.config redirects select AsyncInterfaces 7, and binary references are pinned by full resolved identity. Build has 6 CS0433 first-layer errors in Knx.Ets.Sdk wpftmp: NuGet AsyncInterfaces 1 remains alongside preserved version 7. Downstream projects may be skipped.",
-      "Caveat": "A failing project makes MSBuild skip its dependents, so the 3 errors are the first layer only: every earlier layer (25 -> 8 -> 3) hid the next one behind a dependency. Re-measure after each fix; do not read '3' as the total.",
+      "State": "2026-10-03 ets63-source-v387: 64 projects, 13,296 C# files, export exit 0. Compile-reference support refreshed by dnSpy tool only; application source unchanged. SDK WPF now builds (0 errors). Whole solution exposes 5 first-layer ViewModel CS1061/CS0117 runtime-name versus source-alias reference errors. Logs: solution-build-compilefilter2.log and compilefilter2-errors.txt.",
+      "Caveat": "A failing project makes MSBuild skip its dependents. Five errors are the current first layer, not a total; re-measure after the reference-name fix.",
       "Next": [
-        "Resolve SDK WPF temporary-build CS0433: keep the original AsyncInterfaces 7 physical binary and prevent conflicting NuGet version 1 compile assets from being imported alongside it. Both are currently retained by full identity; do not weaken identity pinning or collapse original compatibility binaries.",
-        "After the exporter/build-support fix, export and build the complete actual ETS solution; continue through newly exposed errors. WPF resource alias fixes pass WpfSourceReferenceRegression03 including runtime BAML loading, but the actual dependent ETS projects are not yet fully built."
+        "Fix ViewModel reference aliases consistently: IHttpClient ad1/adx/ad0, ask.a and WebServiceRequestBase.a are printed as runtime names despite mapped source declarations. Follow physical definitions and resolve without source-text edits.",
+        "After the reference fix, build the actual ETS solution; targeted export is allowed for this concrete compiler defect. SDK WPF builds; consolidated ETS compilation and runtime remain unproven."
       ]
     },
     "MemoryBlowup": {
@@ -147,12 +147,12 @@
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
       "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
       "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
-      "FinalExport": "D:\\knx_analysis\\ets63-source-v387: 64 projects, 13,296 C# files; 6 first-layer CS0433 errors in SDK WPF temporary compilation. Closure ownership is fixed; consolidated ETS compilation and runtime remain incomplete.",
+      "FinalExport": "D:/knx_analysis/ets63-source-v387: SDK WPF build passes; full solution exposes five ViewModel reference-name errors. Compile-reference refresh is source-preserving and idempotent across all 64 projects. Runtime verification remains incomplete.",
       "RemainingErrors": {
-        "Count": 6,
+        "Count": 5,
         "ClosureOwnerConflict": "Fixed in v386: ownership follows exact generated body/state-machine references, not an overload name prefix. Portable ClosureOwnerRegression02 passes execution, restored metadata owner names and stable incremental rebuild.",
         "XamlRuntimeNames": "Pending fresh ETS export. WpfSourceReferenceRegression03 passes: resolve reference assemblies before testing the item condition; register BAML-only type references; restore resource names directly from mappings. Readable XAML compiles, runtime BAML loads original types, incremental hash is stable.",
-        "AsyncInterfacesVersion": "v387: full-identity pinned AsyncInterfaces 7 and original host redirects remove the old HawkNET CS1705 error, but Knx.Ets.Sdk WPF temporary compilation now imports both version 7 and NuGet version 1; 6 CS0433 errors. Fix transitive compile asset selection, not original binary identities.",
+        "AsyncInterfacesVersion": "Fixed: preserve explicit physical contracts in custom items retained by WPF temporary projects. Exclude conflicting NuGet compile assets by name/culture/signing identity before package conflict resolution; never remove physical references or guess between explicit versions. SDK build passes; portable CompileReferenceRegression03 passes including legacy inline MSBuild.",
         "FixedThisTurn": "CS1061 x4 IpDeviceDiscovery (lambda parameter 'sender' shadowing the outer 'sender' - the declaration was allocated 'sender1' but the printer took the name from the ILVariable; dnSpy eceb55413 makes the variable adopt the declaration name); CS1061 x2 Class1109 ('byte[] a = RandomNumbers.a(16); EchoOptionCache[a.a] = a' - a cached parent-closure substitution kept the stale spelling 'a' after the closure variable was renamed 'a2'; dnSpy eceb55413 refreshes every variable reference from its own variable); CS1503 Class122 (the IL calls NoConstructorsFoundException(Type, IConstructorFinder), which only exists in Autofac 7.0 while the package map pinned 6.5); CS0012 x5 FluentResults (package 3.15.2 ships assembly 3.15.2.0, the tree ships 3.15.2.21); CS0234 Knx.Ets.MyKnx System.Text.Encodings.Web (bare reference, now a package row)."
       },
       "ReadabilityImpact": {

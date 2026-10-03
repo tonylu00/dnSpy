@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
+
+public sealed class DnSpyFilterPreservedCompileReferences : Microsoft.Build.Utilities.Task {
+    [Required] public ITaskItem[] References { get; set; }
+    [Required] public string ProjectDirectory { get; set; }
+    public ITaskItem[] PreservedReferences { get; set; }
+    [Output] public ITaskItem[] FilteredReferences { get; set; }
+
+    static string Family(AssemblyName identity) {
+        return identity.Name.ToUpperInvariant() + "|" + (identity.CultureName ?? "").ToUpperInvariant() + "|" +
+            string.Concat((identity.GetPublicKeyToken() ?? new byte[0]).Select(b => b.ToString("x2")));
+    }
+
+    AssemblyName ReadIdentity(ITaskItem item) {
+        string hint = item.GetMetadata("HintPath");
+        string path = string.IsNullOrEmpty(hint) ? item.ItemSpec : hint;
+        if (!Path.IsPathRooted(path)) path = Path.Combine(ProjectDirectory, path);
+        if (!File.Exists(path)) return null;
+        return AssemblyName.GetAssemblyName(path);
+    }
+
+    IEnumerable<ITaskItem> PinnedReferences() {
+        // WPF replaces Reference items while retaining custom item lists.
+        // These paths carry the original export's contracts into wpftmp builds.
+        foreach (var item in PreservedReferences ?? new ITaskItem[0]) yield return item;
+        foreach (var item in References) {
+            if (!string.IsNullOrEmpty(item.GetMetadata("NuGetPackageId")) ||
+                string.IsNullOrEmpty(item.GetMetadata("HintPath")) ||
+                !string.Equals(item.GetMetadata("SpecificVersion"), "true", StringComparison.OrdinalIgnoreCase)) continue;
+            yield return item;
+        }
+    }
+
+    public override bool Execute() {
+        try {
+            // Only explicit pinned files are authoritative. Do not collapse
+            // physical input references or match different vendors by name.
+            var pinned = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+            foreach (var item in PinnedReferences()) {
+                var identity = ReadIdentity(item);
+                if (identity == null) {
+                    Log.LogError("Preserved compile reference is missing: {0}", string.IsNullOrEmpty(item.GetMetadata("HintPath")) ? item.ItemSpec : item.GetMetadata("HintPath"));
+                    return false;
+                }
+                HashSet<string> identities;
+                string key = Family(identity);
+                if (!pinned.TryGetValue(key, out identities)) pinned.Add(key, identities = new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+                identities.Add(identity.FullName);
+            }
+            var filtered = new List<ITaskItem>();
+            foreach (var item in References) {
+                if (!string.IsNullOrEmpty(item.GetMetadata("NuGetPackageId"))) {
+                    var identity = ReadIdentity(item);
+                    HashSet<string> identities;
+                    if (identity != null && pinned.TryGetValue(Family(identity), out identities) && identities.Count == 1) {
+                        Log.LogMessage(MessageImportance.Low, "dnSpy: preserved {0}; excluded NuGet compile reference {1}", identities.Single(), identity.FullName);
+                        continue;
+                    }
+                }
+                filtered.Add(item);
+            }
+            FilteredReferences = filtered.ToArray();
+            return true;
+        }
+        catch (Exception ex) { Log.LogErrorFromException(ex, true); return false; }
+    }
+}

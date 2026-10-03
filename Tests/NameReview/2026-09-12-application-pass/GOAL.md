@@ -54,9 +54,10 @@ Dotfuscator/NetReactor workflow. Success means rebuilt ETS behavior, not just to
 
 ## Execution order and verification
 
-1. Repair the current ETS 6.3 exporter/build blockers: generated closure-owner conflicts
-   and XAML resolution against restored runtime type names. Re-export and compile the
-   actual ETS solution after a concrete fix; continue through subsequently revealed errors.
+1. Continue repairing concrete ETS 6.3 exporter/build blockers. Closure ownership and
+   SDK WPF compile-reference conflicts are fixed; the actual solution now exposes five
+   ViewModel reference-alias errors. Fix reference propagation in the tools and compile
+   the actual ETS solution; continue through subsequently revealed errors.
 2. Measure whole-tree readability, close or explain the eight remaining Falcon async
    stubs, and finish application-wide naming coverage in complete feature/type blocks.
 3. Freeze the maps, export the complete first-party source, compile the full solution,
@@ -85,9 +86,10 @@ precedence. Fix ETS-MCP tooling gaps when necessary for these tests.
 
 - Maps: 6.3 names63-staged-v381.xml; 6.4 names64-staged-v178.xml. Check actual hashes
   against STATE before use; v381 removes two conflicting rows from v380.
-- Latest recorded export: D:\knx_analysis\ets63-source-v385, 64 projects and 13,296 C#
-  files. Its build reported three first-layer errors: two closure-owner conflicts and one
-  XAML/runtime-name mismatch. Dependent projects may reveal more errors after those fixes.
+- Latest recorded export: D:\knx_analysis\ets63-source-v387, 64 projects and 13,296 C#
+  files. The SDK WPF build passes after a source-preserving compile-support refresh. The
+  whole solution exposes five ViewModel reference-name errors; dependent projects may
+  reveal more errors after those fixes.
 - The 6.4 bulk anchor route is measured exhausted. Remaining naming is evidence-led
   per-row/cluster work, not another bulk anchor engine.
 - Consolidated rebuilt-application compatibility and live tests are not yet proven.

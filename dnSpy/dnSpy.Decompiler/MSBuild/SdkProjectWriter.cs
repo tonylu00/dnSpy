@@ -310,6 +310,8 @@ namespace dnSpy.Decompiler.MSBuild {
 							writer.WriteElementString("SpecificVersion", "true");
 						}
 						writer.WriteEndElement();
+						if (hintPath is not null)
+							CompileReferenceProjectSupport.WritePreservedReference(writer, hintPath);
 					}
 					foreach (var r in extraRefsWithoutImplicitRefs) {
 						if (hash.Contains(r) || AssemblyExistsInProject(r))

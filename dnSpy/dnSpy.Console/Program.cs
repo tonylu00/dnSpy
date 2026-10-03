@@ -45,6 +45,14 @@ namespace dnSpy_Console {
 
 	static class Program {
 		static int Main(string[] args) {
+			if (args.Length > 0 && args[0] == "--refresh-compile-references") {
+				try {
+					if (args.Length != 2) throw new ArgumentException("Usage: dnSpy.Console --refresh-compile-references <export-directory>");
+					Console.WriteLine("Refreshed compile-reference support in " + CompileReferenceProjectSupport.Refresh(args[1]) + " exported projects.");
+					return 0;
+				}
+				catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+			}
 			if (CustomNames.BatchNameMap.TryRun(args, out int nameMapExit)) return nameMapExit;
 			if (!dnlib.Settings.IsThreadSafe) {
 				Console.WriteLine("dnlib wasn't compiled with THREAD_SAFE defined");
@@ -339,6 +347,7 @@ namespace dnSpy_Console {
 			}
 		}
 		static readonly UsageInfo[] usageInfos = new UsageInfo[] {
+			new UsageInfo("--refresh-compile-references", "DIRECTORY", "Refresh compile-reference build support in exported projects without decompiling source; use as a standalone command."),
 			new UsageInfo("--source-name-map", "FILE", "Use checked source aliases while restoring original runtime names (SDK export)."),
 			new UsageInfo("--public-sign", null, "Export SDK projects with original public-key identity; no valid cryptographic signature is produced."),
 			new UsageInfo("--app-layout", null, "Build every project into one bin/ tree that keeps the input's relative paths, so an application that loads private assemblies from a subdirectory of its own folder still finds them after a rebuild."),

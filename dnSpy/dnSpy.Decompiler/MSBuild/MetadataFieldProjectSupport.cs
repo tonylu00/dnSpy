@@ -23,6 +23,7 @@ namespace dnSpy.Decompiler.MSBuild {
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
 		public static void Write(Project project, XmlWriter writer) {
 			if (project.Options.DecompilationContext.RestoreMetadataOnlyFields) {
+				CompileReferenceProjectSupport.Write(project.Directory, writer);
 				// WPF's temporary compilation invokes CoreCompile directly. Resolve
 				// source reference assemblies there too, before runtime names are restored.
 				writer.WriteStartElement("Target");
