@@ -15,11 +15,33 @@ namespace SourceNameMapping {
         public static string Blocker(FieldDef field) {
             if (field.IsRuntimeSpecialName) return "runtime-special-field";
             if (field.DeclaringType == null || field.DeclaringType.IsGlobalModuleType) return "global-module-field";
-            // These carry a second, storage-specific restoration instruction.
-            // Do not accept a custom alias until its interaction is verified.
-            if (field.HasFieldRVA || field.IsCompilerControlled || field.Constant != null && !field.IsLiteral)
+            // Name restoration precedes data restoration in exported builds.
+            // Accept only static primitive or local, explicit-layout RVA data
+            // whose exact storage size is known without resolving dependencies.
+            if (field.HasFieldRVA && !SupportsRvaAlias(field))
+                return "unsupported-rva-field-alias";
+            if (field.IsCompilerControlled || field.Constant != null && !field.IsLiteral)
                 return "field-storage-restoration requires separate review";
             return null;
+        }
+        static bool SupportsRvaAlias(FieldDef field) {
+            var bytes = field.InitialValue;
+            if (!field.IsStatic || field.IsLiteral || field.Constant != null || field.HasMarshalType || field.FieldOffset != null || bytes == null || bytes.Length == 0)
+                return false;
+            var signature = field.FieldSig?.Type?.RemovePinnedAndModifiers();
+            int size;
+            switch (signature?.ElementType) {
+            case ElementType.Boolean: case ElementType.I1: case ElementType.U1: size = 1; break;
+            case ElementType.Char: case ElementType.I2: case ElementType.U2: size = 2; break;
+            case ElementType.I4: case ElementType.U4: case ElementType.R4: size = 4; break;
+            case ElementType.I8: case ElementType.U8: case ElementType.R8: size = 8; break;
+            case ElementType.ValueType:
+                var type = signature.ToTypeDefOrRef() as TypeDef;
+                return type?.Module == field.Module && type.IsExplicitLayout && type.ClassLayout != null &&
+                    type.Fields.All(f => f.IsStatic) && type.ClassLayout.ClassSize == (uint)bytes.Length;
+            default: return false;
+            }
+            return bytes.Length == size;
         }
         /// <summary>
         /// <paramref name="analyze"/> restricts which modules contribute their own
