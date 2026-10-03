@@ -50,23 +50,60 @@ namespace dnSpy.Contracts.Decompiler {
 				other.Name == method.Name && new SigComparer().Equals(other.MethodSig, method.MethodSig));
 		/// <summary>Returns the source identifier from the resolved declaring module.</summary>
 		public static string GetName(MethodDef method) => SourceNameAliases.Get(method) ?? (method.Module != null && names.GetValue(method.Module, Find).TryGetValue(method, out var alias) ? alias : method.Name.String);
-		/// <summary>Resolves a method reference, retrying without type scopes for facade-only differences.</summary>
+		/// <summary>Resolves a method reference, tolerating trusted framework facade differences only.</summary>
 		public static MethodDef? ResolveMethodDefExtended(IMethod method) {
 			var resolved = method.ResolveMethodDef();
 			if (resolved != null) return resolved;
 			// References compiled against equivalent facade assemblies can fail strict
-			// signature comparison; accept a unique name/signature match without type scopes.
+			// signature comparison. Keep the selected physical declaring type and
+			// require a unique match; arbitrary same-named vendor types are not facades.
 			var reference = method is MethodSpec spec ? spec.Method : method;
 			var typeDef = reference.DeclaringType?.ResolveTypeDef();
 			if (typeDef == null) return null;
 			var comparer = new SigComparer(SigComparerOptions.DontCompareTypeScope);
 			MethodDef? match = null;
 			foreach (var candidate in typeDef.Methods) {
-				if (candidate.Name != reference.Name || !comparer.Equals(candidate.MethodSig, reference.MethodSig)) continue;
+				if (candidate.Name != reference.Name || !comparer.Equals(candidate.MethodSig, reference.MethodSig) ||
+					!CompatibleScopes(candidate.MethodSig, reference.MethodSig)) continue;
 				if (match != null) return null;
 				match = candidate;
 			}
 			return match;
+		}
+		static bool CompatibleScopes(MethodSig left, MethodSig right) =>
+			CompatibleScopes(left.RetType, right.RetType) && left.Params.Zip(right.Params, CompatibleScopes).All(equal => equal) &&
+			(left.ParamsAfterSentinel == null && right.ParamsAfterSentinel == null ||
+			 left.ParamsAfterSentinel != null && right.ParamsAfterSentinel != null &&
+			 left.ParamsAfterSentinel.Count == right.ParamsAfterSentinel.Count && left.ParamsAfterSentinel.Zip(right.ParamsAfterSentinel, CompatibleScopes).All(equal => equal));
+		static bool CompatibleScopes(TypeSig left, TypeSig right) {
+			if (left == null || right == null) return left == right;
+			if (new SigComparer().Equals(left, right)) return true;
+			if (left is GenericInstSig lg && right is GenericInstSig rg)
+				return CompatibleScopes(lg.GenericType, rg.GenericType) && lg.GenericArguments.Zip(rg.GenericArguments, CompatibleScopes).All(equal => equal);
+			if (left is TypeDefOrRefSig ln && right is TypeDefOrRefSig rn) return CompatibleFrameworkType(ln.TypeDefOrRef, rn.TypeDefOrRef);
+			if (left is ModifierSig lm && right is ModifierSig rm && !CompatibleFrameworkType(lm.Modifier, rm.Modifier)) return false;
+			if (left is FnPtrSig lf && right is FnPtrSig rf)
+				return lf.Signature is MethodSig ls && rf.Signature is MethodSig rs && CompatibleScopes(ls, rs);
+			return left.Next != null && right.Next != null && CompatibleScopes(left.Next, right.Next);
+		}
+		static bool CompatibleFrameworkType(ITypeDefOrRef left, ITypeDefOrRef right) {
+			if (new SigComparer().Equals(left, right)) return true;
+			if (left.FullName != right.FullName || !left.FullName.StartsWith("System.", StringComparison.Ordinal)) return false;
+			var la = left.DefinitionAssembly;
+			var ra = right.DefinitionAssembly;
+			if (!TrustedFrameworkAssembly(la) || !TrustedFrameworkAssembly(ra)) return false;
+			return IsFacade(la) || IsFacade(ra);
+		}
+		static bool IsFacade(IAssembly assembly) => assembly.Name == "netstandard" || assembly.Name == "System.Runtime";
+		static bool TrustedFrameworkAssembly(IAssembly? assembly) {
+			if (assembly == null) return false;
+			string token = PublicKeyBase.ToPublicKeyToken(assembly.PublicKeyOrToken)?.ToString() ?? "";
+			switch (assembly.Name.String) {
+			case "netstandard": return token == "cc7b13ffcd2ddd51";
+			case "mscorlib": case "System": case "System.Core": return token == "b77a5c561934e089";
+			case "System.Runtime": case "System.Net.Http": case "System.Threading.Tasks": return token == "b03f5f7f11d50a3a";
+			default: return false;
+			}
 		}
 		static readonly ConditionalWeakTable<ModuleDef, string[]> mappings = new ConditionalWeakTable<ModuleDef, string[]>();
 		/// <summary>Instructions use resolved assembly context and source owner/alias pairs.</summary>

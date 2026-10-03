@@ -7,8 +7,8 @@ using dnSpy_Console;
 using dnSpy.Contracts.Decompiler;
 
 // Read-only preflight uses the exporter's exact physical-input/config resolvers.
-// Scope-insensitive comparison diagnoses missed alias candidates; it NEVER binds
-// a reference or permits two same-named dependency types to be substituted.
+// Export and preflight share checked framework-facade tolerance. Scope-insensitive
+// comparison below only diagnoses missed candidates; it NEVER binds vendor types.
 if (args.Length < 3) {
     Console.Error.WriteLine("Usage: SourceAliasReferences <inputs.json> <names.xml> <new-report.json> [--contexts file] [--config file] [--asm-path directory] [--no-gac]");
     return 2;
@@ -143,7 +143,7 @@ try {
         var owner = reference.DeclaringType?.ResolveTypeDef();
         if (owner == null || !owners.TryGetValue(owner, out var methods)) continue;
         references++;
-        var resolved = reference.ResolveMethodDef();
+        var resolved = MetadataMethodNames.ResolveMethodDefExtended(reference);
         if (resolved != null) { if (mapped.Contains(resolved)) resolvedAliases++; continue; }
         var typeArgs = ((reference.DeclaringType as TypeSpec)?.TypeSig as GenericInstSig)?.GenericArguments;
         var candidates = methods.Where(m => m.Name == reference.Name &&
