@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias
+from review_ledger import merge_scopes, replace_alias, validate_review_only
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -19,6 +19,8 @@ parser.add_argument('--merge-reviewed-scopes', action='store_true',
                     help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed field/type/parameter alias using its exact native change report')
+parser.add_argument('--review-only', action='store_true',
+                    help='Checkpoint preservation/unresolved decisions with no aliases and a byte-identical checked map')
 args = parser.parse_args()
 state_path, sink = pathlib.Path(args.state), pathlib.Path(args.sink)
 map_path, review_path = pathlib.Path(args.map), pathlib.Path(args.review)
@@ -34,7 +36,11 @@ assert update['BaseMapSha256'] == previous['Sha256'], 'Block is not based on the
 assert update['ReviewSha256'] == digest(review_path), 'Stale review report'
 assert check['BaseMapSha256'] == digest(map_path), 'Stale final map check'
 assert update['Success'] and check['Success'] and not update['Errors'] and not check['Errors']
-assert update['Changes'] and all(c['Requested'] == c['Applied'] for c in update['Changes']), 'Rejected or suffixed name'
+if args.review_only:
+    assert args.block and all(c.isalnum() or c in '-_' for c in args.block), 'Invalid review checkpoint filename'
+    validate_review_only(review, update['Changes'], previous['Sha256'], digest(map_path))
+else:
+    assert update['Changes'] and all(c['Requested'] == c['Applied'] for c in update['Changes']), 'Rejected or suffixed name'
 assert review['ContractReferenceSha256'] == update['ContractReferenceSha256'] == check['ContractReferenceSha256']
 root = ET.parse(map_path).getroot()
 assert root.get('SdkNameWhitelistSha256') == update['SdkNameWhitelistSha256'] == check['SdkNameWhitelistSha256']
@@ -75,20 +81,24 @@ for kind in ('Types', 'Methods', 'Fields'):
         keys[key] = len(ledger[kind])
         ledger[kind].append(row)
 version = int(map_path.stem.rsplit('-v', 1)[1])
-checkpoint_path = sink / ('checkpoint-naming-v' + str(version) + '.json')
+checkpoint_path = sink / ('checkpoint-review-' + args.block + '.json' if args.review_only else 'checkpoint-naming-v' + str(version) + '.json')
 assert not checkpoint_path.exists(), 'Checkpoint already exists'
 for original in (review_path, update_path, check_path):
     assert not (sink / original.name).exists(), 'Review/report already published'
-checkpoint = {'Format': 1, 'Kind': 'NamingCheckpoint', 'Block': args.block,
+checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else 'NamingCheckpoint', 'Block': args.block,
               'Map': {'Path': str(map_path), 'Sha256': digest(map_path), 'Modules': len(root.findall('Module')), 'Rows': rows},
               'PreviousMap': dict(previous), 'Review': {'Path': str(review_path), 'Sha256': digest(review_path)},
               'UpdateReport': str(update_path), 'CheckReport': str(check_path),
               'AcceptedDecisions': len(update['Changes']), 'SdkNameWhitelistSha256': update['SdkNameWhitelistSha256'],
+              'ReviewedDecisions': sum(len(review[kind]) for kind in ('Types', 'Fields', 'Methods')),
               'ExplicitScopeMerges': merged_rows,
               'ExplicitAliasReplacements': replaced_rows,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}
-previous.update(Path=str(map_path), Sha256=digest(map_path), Checkpoint=str(checkpoint_path), NextWave=version + 1, RowsInMap=rows, AppliedToSource=False)
+if args.review_only:
+    previous['Checkpoint'] = str(checkpoint_path)
+else:
+    previous.update(Path=str(map_path), Sha256=digest(map_path), Checkpoint=str(checkpoint_path), NextWave=version + 1, RowsInMap=rows, AppliedToSource=False)
 state['UpdatedUtc'] = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 def encode(value, depth=0):
     if not isinstance(value, (dict, list)) or not value:
@@ -106,7 +116,7 @@ assert len(encoded.splitlines()) < 200, 'State must stay under 200 lines'
 assert json.loads(encoded) == state
 progress_path = sink / 'progress.json'
 progress = read(progress_path)
-progress['Maps']['63'] = {'Path': str(map_path), 'Sha256': digest(map_path), 'AppliedToSource': False}
+progress['Maps']['63'] = {'Path': previous['Path'], 'Sha256': previous['Sha256'], 'AppliedToSource': False}
 progress['NamingCheckpoint'] = str(checkpoint_path)
 for path, document in ((checkpoint_path, checkpoint), (ledger_path, ledger), (progress_path, progress)):
     path.write_text(json.dumps(document, indent=1 if path == ledger_path else 2, ensure_ascii=path == ledger_path) + '\n', encoding='utf-8')

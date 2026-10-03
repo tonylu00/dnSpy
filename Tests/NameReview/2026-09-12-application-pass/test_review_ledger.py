@@ -1,6 +1,6 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias
+from review_ledger import merge_scopes, replace_alias, validate_review_only
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
@@ -17,6 +17,19 @@ class LedgerScopeMergeTests(unittest.TestCase):
         self.review['ParameterNames'][0]['NewName'] = ''
         self.review['ParameterNames'][1]['NewName'] = 'limit'
         self.review['LocalNames'][0]['NewName'] = ''
+
+    def test_review_only_guard(self):
+        row = dict(ReviewDisposition='preserve', Reason='Established schema acronym', NewName='', ParameterNames=[], LocalNames=[])
+        review = dict(Types=[row], Fields=[], Methods=[])
+        validate_review_only(review, [], 'same-sha', 'same-sha')
+        for changes, checked in (([dict(Requested='Alias')], 'same-sha'), ([], 'changed-sha')):
+            with self.assertRaises(ValueError): validate_review_only(review, changes, 'same-sha', checked)
+        row['LocalNames'] = [dict(NewName='hiddenAlias')]
+        with self.assertRaises(ValueError): validate_review_only(review, [], 'same-sha', 'same-sha')
+        row['LocalNames'] = []
+        row['ReviewDisposition'] = 'rename'
+        with self.assertRaises(ValueError): validate_review_only(review, [], 'same-sha', 'same-sha')
+        with self.assertRaises(ValueError): validate_review_only(dict(Types=[], Fields=[], Methods=[]), [], 'same-sha', 'same-sha')
 
     def test_keeps_prior_scopes_and_uses_current_map_alias(self):
         merged = merge_scopes(self.old, self.review, 'CurrentAcceptedAlias')

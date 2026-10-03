@@ -2,6 +2,20 @@
 import copy
 
 
+def validate_review_only(review, changes, base_sha, checked_sha):
+    """A preservation/unresolved review must leave the checked map byte-identical."""
+    if changes or not base_sha or base_sha != checked_sha:
+        raise ValueError('Review-only checkpoint cannot change the map')
+    rows = [row for kind in ('Types', 'Fields', 'Methods') for row in review[kind]]
+    if not rows:
+        raise ValueError('Review-only checkpoint requires reviewed decisions')
+    for row in rows:
+        if row.get('ReviewDisposition') not in ('preserve', 'unresolved') or not row.get('Reason'):
+            raise ValueError('Review-only checkpoint requires explicit preservation/unresolved evidence')
+        if row.get('NewName') or any(entry.get('NewName') for label in ('ParameterNames', 'LocalNames') for entry in row.get(label, [])):
+            raise ValueError('Review-only checkpoint cannot carry aliases')
+
+
 def require_identity(previous, reviewed):
     for key in ('Module', 'Token', 'Identity', 'Mvid', 'Sha256', 'Type', 'Signature', 'OriginalName'):
         if previous.get(key) != reviewed.get(key):

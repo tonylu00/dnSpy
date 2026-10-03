@@ -19,6 +19,9 @@ What lives here:
 Rules:
 
 - One block = one evidence-backed review and inexpensive map/reference checks.
+  `checkpoint_naming_block.py --review-only` also records explicit preservation or
+  unresolved decisions when native update/check reports prove the map is byte-identical.
+  It rejects aliases and map changes and keeps the current map/version in place.
   Commit validated milestones; defer full `--wave` audits/application and ETS
   export/build until application-wide mapping freezes.
 - No per-block narrative, no commit-hash prose, no wave reports. `git log` is the log.
