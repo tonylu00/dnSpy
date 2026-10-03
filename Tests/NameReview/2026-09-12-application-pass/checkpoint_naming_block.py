@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, validate_review_only, refresh_evidence
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -21,6 +21,8 @@ parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
 parser.add_argument('--remove-reviewed-aliases', action='store_true',
                     help='Record explicit native withdrawal of an unsupported standalone unscoped method alias')
+parser.add_argument('--resolve-reviewed-unresolved', action='store_true',
+                    help='Resolve explicitly reviewed unknown definitions using exact native additions and previous evidence')
 parser.add_argument('--review-only', action='store_true',
                     help='Checkpoint preservation/unresolved decisions with no aliases and a byte-identical checked map')
 parser.add_argument('--refresh-reviewed-evidence', action='store_true',
@@ -68,6 +70,7 @@ merged_rows = 0
 replaced_rows = 0
 refreshed_rows = 0
 removed_rows = 0
+resolved_rows = 0
 checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type', 'Method')}
 scope_replacements = {}
 if args.replace_reviewed_aliases:
@@ -78,6 +81,12 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('ResolveExistingUnresolved'):
+            assert args.resolve_reviewed_unresolved and key in keys, 'Resolution requires explicit authorization and previous ledger row'
+            ledger[kind][keys[key]] = resolve_unresolved(ledger[kind][keys[key]], row, base_names.get(key, ''),
+                checked_changes.get(key), final_names.get(key, ''), checked_scopes.get(key, {}))
+            resolved_rows += 1
+            continue
         if row.get('RemoveExistingAlias'):
             assert args.remove_reviewed_aliases and kind == 'Methods', 'Alias withdrawal requires explicit checkpoint authorization'
             old = ledger[kind][keys[key]] if key in keys else None
@@ -124,6 +133,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitAliasReplacements': replaced_rows,
               'ExplicitEvidenceRefreshes': refreshed_rows,
               'ExplicitAliasWithdrawals': removed_rows,
+              'ExplicitUnresolvedResolutions': resolved_rows,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}
 if args.review_only:

@@ -47,6 +47,15 @@ reviews never remove aliases. Checkpoint with `--remove-reviewed-aliases` after 
 native gates; the ledger retains the former decision in `AliasWithdrawals` and
 removes the operational marker so later reviews cannot replay the request.
 
+When new behavioral evidence resolves a previously unresolved definition, prepare
+`ResolveExistingUnresolved: true` and `PreviousUnresolvedEvidence` containing its
+exact earlier `Reason` and `UnresolvedReason`. Checkpoint with
+`--resolve-reviewed-unresolved` after native update/check. The guard requires an
+unmapped previous definition, exact native addition and final alias, plus checked
+scope identities. It preserves annotations and the former rationale in
+`UnresolvedResolutions`, rejects duplicate scope positions and removes replay
+markers. No earlier scoped alias may be discarded.
+
 `prepare_physical_review.py --spec <spec.json> --output <fresh-review.json>`
 normalizes native inventory roots to exact application-relative physical paths
 and validates current hashes. Specs support evidence-backed aliases, explicit

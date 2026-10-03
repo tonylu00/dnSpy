@@ -1,0 +1,854 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000006",
+      "Reason": "ai7 Invoke/BeginInvoke accept Object and ai9 CertificateEventArgs; import publisher0600004D delivers certificate-registration progress.",
+      "Disposition": "rename",
+      "NewName": "CertificateProgressEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000007",
+      "Reason": "ai8 discriminator belongs to ai9 progress args; import0600004A selects separate registration-success/failure constructors and start/completion publishers.",
+      "Disposition": "rename",
+      "NewName": "CertificateImportStatus"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0200000E",
+      "Reason": "aje Invoke/BeginInvoke accept Object and ajf, whose only payload is the ajd result wrapper. Preserve runtime delegate entry points.",
+      "Disposition": "rename",
+      "NewName": "CloudResultEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0200000F",
+      "Reason": "ajf derives EventArgs, accepts ajd or wraps raw Int32 in ajd, exposes that result; no unsupported operation-specific purpose assigned.",
+      "Disposition": "rename",
+      "NewName": "CloudResultEventArgs"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000016",
+      "Reason": "aji Invoke/BeginInvoke accept Object and ajj EventArgs containing ajh dongle and its license-count accessor.",
+      "Disposition": "rename",
+      "NewName": "CloudDongleEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000017",
+      "Reason": "ajj constructors store ajh, optional Int64; getters return dongle and its ajq collection count. Int64 purpose/unit is explicitly unresolved.",
+      "Disposition": "rename",
+      "NewName": "CloudDongleEventArgs"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0200001F",
+      "Reason": "ajs Invoke/BeginInvoke accept Object and aju ProgressChangedEventArgs containing ajr definition/list/status/label. Preserve delegate methods.",
+      "Disposition": "rename",
+      "NewName": "CloudLicenseProgressEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000021",
+      "Reason": "aju derives ProgressChangedEventArgs; typed definition/status/label/completion/list roles are visible even without callers. Four Int32 roles remain unresolved.",
+      "Disposition": "rename",
+      "NewName": "CloudLicenseProgressEventArgs"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000022",
+      "Reason": "ajv Invoke/BeginInvoke accept Object and ajw LicenseEventArgs, which stores label and license/dongle identifier. Boolean purpose remains unresolved.",
+      "Disposition": "rename",
+      "NewName": "CloudLicenseEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000024",
+      "Reason": "ajx Invoke/BeginInvoke accept Object and ajy manager payload; enumeration start/completion and additional manager changes publish it.",
+      "Disposition": "rename",
+      "NewName": "CloudManagerEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000025",
+      "Reason": "ajy holds ajo manager, enumeration-completed flag, Stopwatch.ElapsedMilliseconds and ajd result. Also used for other manager changes; retain shared payload.",
+      "Disposition": "rename",
+      "NewName": "CloudManagerEventArgs"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000071",
+      "Reason": "aj8 Invoke/BeginInvoke accept Object and aj9 payload. Producer060000C0 decrypts changed native output; hash-checked Common arx060001C0 logs Received new session token then reads this event payload.",
+      "Disposition": "rename",
+      "NewName": "CloudSessionTokenEventHandler"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000072",
+      "Reason": "aj9 holds changed native output from publisher060000B0. Exact Common arx060001C0 getter consumer logs Received new session token and forwards it to ar7; token validity/authentication behavior is not claimed.",
+      "Disposition": "rename",
+      "NewName": "CloudSessionTokenEventArgs"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000023",
+      "Reason": "Enum literal 0 stored by0x06000033; full import/start/completion caller bodies establish this phase, preserving exact original value. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "Registered"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000024",
+      "Reason": "Enum literal 1 stored by0x06000034; full import/start/completion caller bodies establish this phase, preserving exact original value. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "RegistrationFailed"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000025",
+      "Reason": "Enum literal 2 stored by0x06000032; full import/start/completion caller bodies establish this phase, preserving exact original value. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "Started"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000026",
+      "Reason": "Enum literal 3 stored by0x06000035; full import/start/completion caller bodies establish this phase, preserving exact original value. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "Completed"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000027",
+      "Reason": "0600004A local2=Enumerable.Count(parsed certificates), passed as total to all ai9 constructors. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "totalCertificateCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000028",
+      "Reason": "0600004A local3 increments only after certificate.TryRegister06000012 returns true; constructor/getter store/expose that count. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "registeredCertificateCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000029",
+      "Reason": "0600004A local4 increments only after TryRegister false; success/failure/completion constructors receive it. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "failedCertificateCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400002A",
+      "Reason": "Constructor32 sets Started2,33 Registered0,34 RegistrationFailed1,35 Completed3; getter36 returns ai8. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "status"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400002B",
+      "Reason": "Only completion constructor35 sets true, at ProgressPercentage100; other constructors false, getter37 returns it. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "isCompleted"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400002C",
+      "Reason": "Successful registration branch obtains ai6.GetName0600000B and supplies constructor33 arg5; others store String.Empty. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "certificateName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400003C",
+      "Reason": "ajc constructor62 stores DateTime.Now; direct timestamp getter63 preserves local time. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "changeTimestamp"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400003D",
+      "Reason": "Class8 publisher1A1 supplies Windows loader Interlocked.Read user/instance count060001D3 to ctor62 arg1; getter64 returns it, not duration. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "nativeLibraryInstanceCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000041",
+      "Reason": "ajd stores defined aj7 result enum or fallback1023/599 from raw code; ctor68 stores supplied enum directly. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "resultCode"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000042",
+      "Reason": "ajd ctor67 retains supplied Int32 even when normalized enum differs; ctor68 casts enum to Int32. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "nativeCode"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000045",
+      "Reason": "ajf ctor70 stores ajd; ctor71 constructs it from Int32; getter72 and ToString73 consume same result. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "result"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000082",
+      "Reason": "ajj ctor115/116 stores ajh argument1; getter117 returns it and119 reads ajq collection count through060000FC, zero for null. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "dongle"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C3",
+      "Reason": "aju definition-progress ctor175 sets false; terminal ctor176 sets true with base progress100 and empty definition. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "isCompleted"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C4",
+      "Reason": "aju ctor175 stores ajr definition; ctor176 creates empty definition; getters177/17A/17B and setter178 use typed definition semantics. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "licenseDefinition"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C5",
+      "Reason": "Both aju constructors create List<ajr>; getter180 returns it and setter181 stores supplied list. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "licenseDefinitions"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C6",
+      "Reason": "aju ctor175 stores definition.GetLabel06000163; terminal ctor176 stores String.Empty. Getter17A reads live definition label, not this cached field. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "licenseLabel"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C9",
+      "Reason": "ajw constructors186/187 store supplied ajq.GetLabel06000143 if nonnull, otherwise Empty; getter188 returns it. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "licenseLabel"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000CA",
+      "Reason": "ajw ctor186 stores license identifier0600013A; ctor187 stores dongle identifier060000FD. Shared field/getter intentionally covers both identities. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "identifier"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000CE",
+      "Reason": "ajy constructors190/191 store ajg argument as ajo manager; getter192 returns it and195 delegates dongle count. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "cloudManager"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000CF",
+      "Reason": "Only ctor191 sets true; sole producer060000AB completes native dongle enumeration/update/clear in060000C0. Shared simpler ctor190 sets false. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "isEnumerationCompleted"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D0",
+      "Reason": "060000C0 feeds Stopwatch.ElapsedMilliseconds into060000AB and ctor191 arg2; getter194 returns that duration unchanged. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "elapsedMilliseconds"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000D1",
+      "Reason": "ajy ctor191 stores ajd arg3, ctor190 creates raw-zero ajd; getter196 returns it. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "result"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001E5",
+      "Reason": "060000C0 decrypts changed native output andB0 supplies ctor344; getter345 consumer Common arx060001C0 logs Received new session token and forwards it to ar7. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "sessionToken"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001F1",
+      "Reason": "Class13 cctor subscribes no-op handler358, calls EventHandler.BeginInvoke, then unsubscribes;355/356 CAS update this probe chain. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "asyncProbeHandlers"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001F2",
+      "Reason": "Class13 cctor sets true only if BeginInvoke returns without throwing, false on catch; setters35A/35C are gated by it. Does not prove callback completion. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "supportsAsyncDelegateInvocation"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001F3",
+      "Reason": "Publishers4D,AA,AB,B0 and other event chains read359 to choose Invoke vs BeginInvoke; cctor forces true when async probe throws. Storage/signature/value and runtime restoration names remain unchanged.",
+      "Disposition": "rename",
+      "NewName": "useSynchronousCloudEvents"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000083",
+      "Reason": "no-evidence-in-scope: ajj optional Int64 has no constructor callers or semantic consumers; units and purpose missing. Hash-checked physical graph has 3 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000BF",
+      "Reason": "no-evidence-in-scope: aju Int32 constructor slots have no callers or nontrivial consumers; total/success/failure/count associations unproven. Hash-checked physical graph has 3 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C0",
+      "Reason": "no-evidence-in-scope: aju Int32 constructor slots have no callers or nontrivial consumers; total/success/failure/count associations unproven. Hash-checked physical graph has 3 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C1",
+      "Reason": "no-evidence-in-scope: aju Int32 constructor slots have no callers or nontrivial consumers; total/success/failure/count associations unproven. Hash-checked physical graph has 3 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000C2",
+      "Reason": "no-evidence-in-scope: aju Int32 constructor slots have no callers or nontrivial consumers; total/success/failure/count associations unproven. Hash-checked physical graph has 3 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000CB",
+      "Reason": "no-evidence-in-scope: ajw Boolean input is stored/read/inverted, but neither constructor has callers; default/custom time-setting association lacks evidence. Hash-checked physical graph has 4 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001F4",
+      "Reason": "no-evidence-in-scope: Additional Class13 Boolean option is initialized true and exposed by35B/35C/35D; all three have zero callers. No package/device dispatch behavior establishes its purpose. Hash-checked physical graph has 6 incoming edges across 111 inputs; static analysis excludes reflection and external Apps.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000032",
+      "Reason": "Coupled import0600004A and certificate-name getter establish constructor counts/progress/name; phase values kept. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "totalCertificateCount"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000033",
+      "Reason": "Coupled import0600004A and certificate-name getter establish constructor counts/progress/name; phase values kept. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "progressPercentage",
+        "2": "totalCertificateCount",
+        "3": "registeredCertificateCount",
+        "4": "failedCertificateCount",
+        "5": "certificateName"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000034",
+      "Reason": "Coupled import0600004A and certificate-name getter establish constructor counts/progress/name; phase values kept. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "progressPercentage",
+        "2": "totalCertificateCount",
+        "3": "registeredCertificateCount",
+        "4": "failedCertificateCount"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000035",
+      "Reason": "Coupled import0600004A and certificate-name getter establish constructor counts/progress/name; phase values kept. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "totalCertificateCount",
+        "2": "registeredCertificateCount",
+        "3": "failedCertificateCount"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000038",
+      "Reason": "Returns successful-registration certificate-name field2C; other phases use Empty. Correct generic detail alias to observed name. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetCertificateName"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000039",
+      "Reason": "Direct count getter now resolved through complete import producer0600004A and exact constructor fields; retain previous missing-producer decision as history. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetTotalCertificateCount",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "operation result accessor; field role not recoverable from aggregated evidence"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600003A",
+      "Reason": "Direct count getter now resolved through complete import producer0600004A and exact constructor fields; retain previous missing-producer decision as history. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetRegisteredCertificateCount",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "operation result accessor; field role not recoverable from aggregated evidence"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600003B",
+      "Reason": "Direct count getter now resolved through complete import producer0600004A and exact constructor fields; retain previous missing-producer decision as history. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetFailedCertificateCount",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "operation result accessor; field role not recoverable from aggregated evidence"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000062",
+      "Reason": "Publisher1A1 passes native library instance count as argument1. Boolean role remains outside this review. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "nativeLibraryInstanceCount"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000067",
+      "Reason": "Constructor preserves raw Int32 and normalizes known enum/fallback1023/599; parameter is native result code. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "nativeCode"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000068",
+      "Reason": "Constructor stores typed aj7 result and its Int32 representation. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "resultCode"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000070",
+      "Reason": "Stores supplied ajd result unchanged. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "result"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000071",
+      "Reason": "Constructs ajd result wrapper from supplied native Int32. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "nativeCode"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000115",
+      "Reason": "Typed ajh input is stored and returned; optional Int64 lacks producer/unit evidence and remains unnamed. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "dongle"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000116",
+      "Reason": "Typed ajh input is stored and returned; optional Int64 lacks producer/unit evidence and remains unnamed. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "dongle"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000175",
+      "Reason": "Base progressPercentage and typed definition are proven by base constructor and label/status methods. Four Int32 fields have no producer roles. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "progressPercentage",
+        "2": "licenseDefinition"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000177",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetProgressStatus",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000178",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "SetDefinitionStatus",
+      "ParameterNames": {
+        "1": "status"
+      },
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000179",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "IsCompleted",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600017A",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetLicenseLabel",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600017B",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetLicenseDefinition",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000180",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "GetLicenseDefinitions",
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000181",
+      "Reason": "Typed aju field/definition calls resolve this operation despite no callers. Empty definition returns status0/2 or Empty label; status setter ignores empty definition. Preserve those branches. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "SetLicenseDefinitions",
+      "ParameterNames": {
+        "1": "licenseDefinitions"
+      },
+      "ResolveExistingUnresolved": true,
+      "PreviousUnresolvedEvidence": {
+        "Reason": "short-unrecognized-name",
+        "UnresolvedReason": "dead license-progress record (ProgressChangedEventArgs subclass); constructors and accessors have zero references anywhere in the graph, so the int field roles are unverifiable"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000186",
+      "Reason": "License label/identifier getters establish ajq input; Boolean role remains unresolved. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "license"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000187",
+      "Reason": "Dongle/ajq inputs supply dongle identifier and license label; Boolean role remains unresolved. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "dongle",
+        "2": "license"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000190",
+      "Reason": "Stores typed manager; creates raw-zero result and false enumeration-completed flag. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "cloudManager"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000191",
+      "Reason": "Native enumeration060000C0 passes Stopwatch.ElapsedMilliseconds and ajd outcome via publisherAB; constructor marks enumeration complete. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "cloudManager",
+        "2": "elapsedMilliseconds",
+        "3": "result"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000344",
+      "Reason": "Native change publisherB0 passes decrypted changed session token; Common arx060001C0 literal corroborates token role. Preserve actual text without claiming validity. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "sessionToken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000355",
+      "Reason": "CAS async-probe chain update; local0 current chain,1 expected preimage,2 combined/removed chain; unused controls excluded. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "SubscribeAsyncDispatchProbe",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000356",
+      "Reason": "CAS async-probe chain update; local0 current chain,1 expected preimage,2 combined/removed chain; unused controls excluded. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeAsyncDispatchProbe",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600004A",
+      "Reason": "Complete import: Count parsed certificates; local3 increments on TryRegister true and4 on false, percentage=(success+failure)*100/total; local5 certificates,6 enumerator,7 certificate. Retain catch/dispose behavior. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "EndLoadCertificate",
+      "ParameterNames": {
+        "1": "certificateText",
+        "2": "progressCallback"
+      },
+      "LocalNames": {
+        "0": "importLock",
+        "1": "lockTaken",
+        "2": "totalCertificateCount",
+        "3": "registeredCertificateCount",
+        "4": "failedCertificateCount",
+        "5": "certificates",
+        "6": "certificateEnumerator",
+        "7": "certificate"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600004D",
+      "Reason": "Publishes both supplied callback invocation list and shared certificate-progress subscribers; Monitor protects snapshot, handler exceptions ignored and Class13 selects Invoke/BeginInvoke. Carry forward accepted scoped aliases; unused control/Int16 slots remain unnamed.",
+      "Disposition": "rename",
+      "NewName": "DispatchResult",
+      "ParameterNames": {
+        "1": "eventArgs",
+        "2": "progressCallback"
+      },
+      "LocalNames": {
+        "0": "handlers",
+        "1": "invocationList",
+        "2": "handlerIndex",
+        "3": "callbackDelegate",
+        "4": "callback",
+        "5": "eventLock",
+        "6": "lockTaken",
+        "7": "handlerDelegate",
+        "8": "handler"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600018A",
+      "Reason": "no-evidence-in-scope: Negates ajw BooleanCB; constructors have zero callers and no time-setting behavior. Default time-setting name unsupported. All 111 physical graph inputs checked. Retain unresolved operation/trigger purpose; withdraw unsupported alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "IsDefaultTimeSettings"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600018B",
+      "Reason": "no-evidence-in-scope: Directly reads ajw BooleanCB; constructors have zero callers and no time-setting behavior. Custom time-setting name unsupported. All 111 physical graph inputs checked. Retain unresolved operation/trigger purpose; withdraw unsupported alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "IsCustomTimeSettings"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600035B",
+      "Reason": "no-evidence-in-scope: Reads additional Class13 option1F4; no callers or package behavior. All 111 physical graph inputs checked. Retain unresolved operation/trigger purpose; withdraw unsupported alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "UseSynchronousPackageDispatch"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600035C",
+      "Reason": "no-evidence-in-scope: Stores additional option1F4 only if async probe succeeds; no callers or package behavior. All 111 physical graph inputs checked. Retain unresolved operation/trigger purpose; withdraw unsupported alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "SetSynchronousPackageDispatch"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600035D",
+      "Reason": "no-evidence-in-scope: Returns option1F4 AND synchronous-events1F3; no callers or device/package behavior. All 111 physical graph inputs checked. Retain unresolved operation/trigger purpose; withdraw unsupported alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "UseSynchronousDeviceAndPackageDispatch"
+    }
+  ]
+}

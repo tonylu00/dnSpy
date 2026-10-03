@@ -83,6 +83,11 @@ def prepare(spec):
                 raise ValueError('Alias withdrawal requires an unresolved method and its exact previous alias')
             row['RemoveExistingAlias'] = True
             row['ExpectedAlias'] = decision['ExpectedAlias']
+        if decision.get('ResolveExistingUnresolved'):
+            if disposition != 'rename' or not row['NewName'] or not decision.get('PreviousUnresolvedEvidence'):
+                raise ValueError('Resolution requires a named definition and previous unresolved evidence')
+            row['ResolveExistingUnresolved'] = True
+            row['PreviousUnresolvedEvidence'] = decision['PreviousUnresolvedEvidence']
         result[key[0]].append(row)
     return result
 

@@ -43,6 +43,17 @@ class PhysicalReviewTests(unittest.TestCase):
         self.assertFalse(row['Unresolved'])
         self.assertEqual('preserve', row['ReviewDisposition'])
 
+    def test_resolution_carries_explicit_preimage_only_for_named_definition(self):
+        decision = self.spec['Rows'][0]
+        decision.update(ResolveExistingUnresolved=True, PreviousUnresolvedEvidence={'Reason': 'old', 'UnresolvedReason': 'missing'})
+        row = prepare(self.spec)['Types'][0]
+        self.assertTrue(row['ResolveExistingUnresolved'])
+        self.assertEqual(decision['PreviousUnresolvedEvidence'], row['PreviousUnresolvedEvidence'])
+        decision['PreviousUnresolvedEvidence'] = {}
+        with self.assertRaises(ValueError): prepare(self.spec)
+        decision.update(Disposition='unresolved', NewName='', PreviousUnresolvedEvidence={'Reason': 'old'})
+        with self.assertRaises(ValueError): prepare(self.spec)
+
     def test_unresolved_rejects_alias_and_requires_reason(self):
         self.spec['Rows'][0]['Disposition'] = 'unresolved'
         with self.assertRaises(ValueError): prepare(self.spec)

@@ -1,9 +1,65 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, validate_review_only, refresh_evidence
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
+    def resolution_fixture(self, kind='Method', token='0x06000001'):
+        old = dict(Module='a.dll', Token=token, Identity='a', Mvid='physical-mvid', Sha256='physical-hash',
+                   Type='T', Signature='original-signature', OriginalName='a', NewName='', Unresolved=True,
+                   Reason='Previous inspection', UnresolvedReason='Missing producer', NeedsReadableName=True,
+                   ParameterNames=[], LocalNames=[], Annotation={'kept': True})
+        reviewed = copy.deepcopy(old)
+        reviewed.update(NewName='GetRegisteredCount', Unresolved=False, UnresolvedReason='', Reason='Producer increments on successful registration',
+                        ResolveExistingUnresolved=True, PreviousUnresolvedEvidence={k: old[k] for k in ('Reason', 'UnresolvedReason')})
+        change = dict(Module='a.dll', Token=token, Kind=kind, Before=None, Requested='GetRegisteredCount', Applied='GetRegisteredCount')
+        return old, reviewed, change
+
+    def test_resolution_preserves_history_and_annotations_without_replay(self):
+        for kind, token in (('Method', '0x06000001'), ('Field', '0x04000001'), ('Type', '0x02000001')):
+            old, reviewed, change = self.resolution_fixture(kind, token)
+            resolved = resolve_unresolved(old, reviewed, '', change, 'GetRegisteredCount')
+            self.assertFalse(resolved['Unresolved'])
+            self.assertEqual('', resolved['UnresolvedReason'])
+            self.assertEqual('Missing producer', resolved['UnresolvedResolutions'][0]['PreviousUnresolvedReason'])
+            self.assertEqual(old['Annotation'], resolved['Annotation'])
+            self.assertTrue(old['Unresolved'])
+            self.assertNotIn('ResolveExistingUnresolved', resolved)
+            self.assertNotIn('PreviousUnresolvedEvidence', resolved)
+            with self.assertRaises(ValueError): resolve_unresolved(resolved, reviewed, '', change, 'GetRegisteredCount')
+
+    def test_resolution_rejects_stale_preimages_and_wrong_native_proof(self):
+        old, reviewed, change = self.resolution_fixture()
+        for key, value in (('Sha256', 'stale'), ('Mvid', 'other'), ('Module', 'CV/a.dll'), ('Type', 'other-owner'),
+                           ('ResolveExistingUnresolved', False), ('PreviousUnresolvedEvidence', {'Reason': 'stale'}),
+                           ('Unresolved', True), ('NewName', ''), ('Reason', ''), ('UnresolvedReason', 'still unknown')):
+            bad = dict(reviewed, **{key: value})
+            with self.assertRaises(ValueError): resolve_unresolved(old, bad, '', change, 'GetRegisteredCount')
+        for key, value in (('Before', 'unexpected'), ('Applied', 'GetRegisteredCount2'), ('Requested', 'other'), ('Action', 'RemoveAlias'),
+                           ('Kind', 'Field'), ('Module', 'CV/a.dll'), ('Token', '0x06000002')):
+            with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, '', dict(change, **{key: value}), 'GetRegisteredCount')
+        with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, 'existing-alias', change, 'GetRegisteredCount')
+        with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, '', change, 'unchecked-alias')
+        missing = {key: value for key, value in change.items() if key != 'Before'}
+        with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, '', missing, 'GetRegisteredCount')
+        self.assertEqual('GetRegisteredCount', resolve_unresolved(old, reviewed, '', dict(change, Before=''), 'GetRegisteredCount')['NewName'])
+
+    def test_resolution_scopes_require_checked_identity_and_no_scope_loss(self):
+        old, reviewed, change = self.resolution_fixture()
+        old['ParameterNames'] = [dict(Sequence=1, OriginalName='a', HasMetadata=True, NewName='')]
+        reviewed['ParameterNames'] = [dict(Sequence=1, OriginalName='a', HasMetadata=True, NewName='certificate')]
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='certificate')}
+        resolved = resolve_unresolved(old, reviewed, '', change, 'GetRegisteredCount', checked)
+        self.assertEqual('certificate', resolved['ParameterNames'][0]['NewName'])
+        duplicated = copy.deepcopy(reviewed)
+        duplicated['ParameterNames'].append(copy.deepcopy(duplicated['ParameterNames'][0]))
+        with self.assertRaises(ValueError): resolve_unresolved(old, duplicated, '', change, 'GetRegisteredCount', checked)
+        with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, '', change, 'GetRegisteredCount', {})
+        checked[('ParameterNames', 1)]['ExpectedName'] = 'different'
+        with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, '', change, 'GetRegisteredCount', checked)
+        old['ParameterNames'][0]['NewName'] = 'prior'
+        with self.assertRaises(ValueError): resolve_unresolved(old, reviewed, '', change, 'GetRegisteredCount', checked)
+
     def test_evidence_refresh_keeps_decisions_and_unknown_annotations(self):
         old = dict(Module='a.dll', Token='0x04000001', Identity='a', Mvid='m', Sha256='s', Type='T',
                    Signature='System.String T::a', OriginalName='a', NewName='', Unresolved=True,

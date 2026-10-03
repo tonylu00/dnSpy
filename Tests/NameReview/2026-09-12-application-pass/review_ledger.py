@@ -54,6 +54,55 @@ def replace_alias(previous, reviewed, mapped_name, checked_change):
     return result
 
 
+def resolve_unresolved(previous, reviewed, mapped_name, checked_change, checked_name, checked_scopes=None):
+    """Accept fresh native proof for an explicit previously unresolved definition."""
+    require_identity(previous, reviewed)
+    if not previous.get('Unresolved') or previous.get('NewName') or mapped_name:
+        raise ValueError('Resolution requires an unresolved, unmapped previous definition')
+    if any(scope.get('NewName') for label in ('ParameterNames', 'LocalNames') for scope in previous.get(label, [])):
+        raise ValueError('Resolution cannot discard previous scoped aliases')
+    if (not reviewed.get('ResolveExistingUnresolved') or reviewed.get('Unresolved') or
+            not reviewed.get('NewName') or not reviewed.get('Reason') or reviewed.get('UnresolvedReason')):
+        raise ValueError('Resolution requires an explicit supported alias and evidence')
+    if reviewed.get('PreviousUnresolvedEvidence') != {key: previous.get(key, '') for key in ('Reason', 'UnresolvedReason')}:
+        raise ValueError('Resolution requires the exact previous unresolved rationale')
+    kind = {2: 'Type', 4: 'Field', 6: 'Method'}.get(int(reviewed['Token'], 16) >> 24)
+    if (not kind or not checked_change or 'Before' not in checked_change or checked_change['Before'] not in (None, '') or
+            any(checked_change.get(key) != value for key, value in (
+            ('Kind', kind), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
+            ('Requested', reviewed['NewName']), ('Applied', reviewed['NewName']), ('Action', None)))):
+        raise ValueError('Resolution requires the exact native definition addition')
+    if checked_name != reviewed['NewName']:
+        raise ValueError('Resolution requires the checked final map alias')
+    result = copy.deepcopy(previous)
+    result['Unresolved'] = False
+    for label, position in (('ParameterNames', 'Sequence'), ('LocalNames', 'Index')):
+        for record in (previous, reviewed):
+            positions = [entry[position] for entry in record.get(label, [])]
+            if len(positions) != len(set(positions)):
+                raise ValueError('Duplicate resolution scope position: ' + label)
+    scope_review = copy.deepcopy(reviewed)
+    scope_review['NewName'] = ''
+    if any(scope.get('NewName') for label in ('ParameterNames', 'LocalNames') for scope in reviewed.get(label, [])):
+        result = merge_scopes(result, scope_review, '', checked_scopes)
+    for label, position, expected_key, inventory_key in (
+            ('ParameterNames', 'Sequence', 'ExpectedName', 'OriginalName'),
+            ('LocalNames', 'Index', 'ExpectedType', 'ExpectedType')):
+        for scope in result.get(label, []):
+            if not scope.get('NewName'):
+                continue
+            checked = (checked_scopes or {}).get((label, scope[position]))
+            if not checked or checked.get('NewName') != scope['NewName'] or checked.get(expected_key) != scope.get(inventory_key):
+                raise ValueError('Resolution requires checked scoped identity: ' + label)
+    result.update(NewName=reviewed['NewName'], UnresolvedReason='', NeedsReadableName=reviewed['NeedsReadableName'],
+                  ReviewDisposition='rename', Reason=reviewed['Reason'])
+    result.setdefault('UnresolvedResolutions', []).append(dict(Alias=reviewed['NewName'],
+        PreviousReason=previous.get('Reason', ''), PreviousUnresolvedReason=previous.get('UnresolvedReason', ''), Evidence=reviewed['Reason']))
+    for key in ('ResolveExistingUnresolved', 'PreviousUnresolvedEvidence'):
+        result.pop(key, None)
+    return result
+
+
 def replace_method_alias(previous, reviewed, mapped_name, checked_change, checked_scopes, replacements=None):
     """Correct a method alias while retaining and checking earlier scope decisions."""
     require_identity(previous, reviewed)
