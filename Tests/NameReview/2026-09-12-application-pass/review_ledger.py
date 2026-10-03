@@ -54,6 +54,43 @@ def replace_alias(previous, reviewed, mapped_name, checked_change):
     return result
 
 
+def replace_method_alias(previous, reviewed, mapped_name, checked_change, checked_scopes, replacements=None):
+    """Correct a method alias while retaining and checking earlier scope decisions."""
+    require_identity(previous, reviewed)
+    if not checked_change or any(checked_change.get(key) != value for key, value in
+                                 (('Kind', 'Method'), ('Module', reviewed['Module']), ('Token', reviewed['Token']))):
+        raise ValueError('Method replacement requires its exact native definition change')
+    # The generic guard checks current alias, physical identity and exact native
+    # before/requested/applied values. Its fresh-row result must not replace the
+    # method's historical scope inventory or annotations.
+    replace_alias(previous, reviewed, mapped_name, checked_change)
+    needs_merge = False
+    for label, position in (('ParameterNames', 'Sequence'), ('LocalNames', 'Index')):
+        for record in (previous, reviewed):
+            positions = [entry[position] for entry in record.get(label, [])]
+            if len(positions) != len(set(positions)):
+                raise ValueError('Duplicate method scope position: ' + label)
+        old = {entry[position]: entry for entry in previous.get(label, [])}
+        needs_merge |= any(entry.get('NewName') and entry['NewName'] != old.get(entry[position], {}).get('NewName')
+                           for entry in reviewed.get(label, []))
+    scope_review = copy.deepcopy(reviewed)
+    scope_review['NewName'] = ''
+    result = (merge_scopes(previous, scope_review, mapped_name, checked_scopes, replacements)
+              if needs_merge else copy.deepcopy(previous))
+    for label, position, expected_key, inventory_key in (
+            ('ParameterNames', 'Sequence', 'ExpectedName', 'OriginalName'),
+            ('LocalNames', 'Index', 'ExpectedType', 'ExpectedType')):
+        for entry in result.get(label, []):
+            if not entry.get('NewName'):
+                continue
+            checked = checked_scopes.get((label, entry[position]))
+            if not checked or checked.get('NewName') != entry['NewName'] or checked.get(expected_key) != entry.get(inventory_key):
+                raise ValueError('Method correction lost a checked scope decision: ' + label)
+    result['NewName'] = reviewed['NewName']
+    result['Reason'] = (result.get('Reason') or '') + '\nReviewed method correction: ' + reviewed['Reason']
+    return result
+
+
 def merge_scopes(previous, reviewed, mapped_name, checked_scopes=None, replacements=None):
     require_identity(previous, reviewed)
     if reviewed.get('Unresolved') or previous.get('Unresolved'):

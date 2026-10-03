@@ -32,9 +32,11 @@ For scoped additions to previously reviewed methods, run `checkpoint_naming_bloc
 with `--merge-reviewed-scopes` after the native update and check gates. It preserves
 earlier parameter/local aliases and verifies physical identity. Locals absent from an
 older ledger require matching entries in the native-checked map.
-`--replace-reviewed-aliases` additionally permits explicit field/type/parameter
+`--replace-reviewed-aliases` additionally permits explicit field/type/method/parameter
 corrections only when the native change report records the exact previous and new
-aliases. These options edit review records; they do not modify ETS source or binaries.
+aliases. Method corrections retain earlier scope aliases and annotations; every
+retained or newly added scope alias must match the native-checked map. These options
+edit review records; they do not modify ETS source or binaries.
 The merge guards can be verified with `python test_review_ledger.py`.
 
 `prepare_physical_review.py --spec <spec.json> --output <fresh-review.json>`

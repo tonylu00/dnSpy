@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, validate_review_only, refresh_evidence
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -18,7 +18,7 @@ for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
 parser.add_argument('--merge-reviewed-scopes', action='store_true',
                     help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
-                    help='Explicitly replace a reviewed field/type/parameter alias using its exact native change report')
+                    help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
 parser.add_argument('--review-only', action='store_true',
                     help='Checkpoint preservation/unresolved decisions with no aliases and a byte-identical checked map')
 parser.add_argument('--refresh-reviewed-evidence', action='store_true',
@@ -63,7 +63,7 @@ checked_scopes = {(module.get('Path'), row.get('Token')):
 merged_rows = 0
 replaced_rows = 0
 refreshed_rows = 0
-checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type')}
+checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type', 'Method')}
 scope_replacements = {}
 if args.replace_reviewed_aliases:
     for c in update['Changes']:
@@ -80,6 +80,11 @@ for kind in ('Types', 'Methods', 'Fields'):
                 continue
             if args.replace_reviewed_aliases and kind in ('Types', 'Fields'):
                 ledger[kind][keys[key]] = replace_alias(ledger[kind][keys[key]], row, base_names.get(key, ''), checked_changes.get(key))
+                replaced_rows += 1
+                continue
+            if args.replace_reviewed_aliases and kind == 'Methods' and row.get('NewName') and row['NewName'] != base_names.get(key, ''):
+                ledger[kind][keys[key]] = replace_method_alias(ledger[kind][keys[key]], row, base_names.get(key, ''),
+                                                             checked_changes.get(key), checked_scopes.get(key, {}), scope_replacements.get(key, {}))
                 replaced_rows += 1
                 continue
             assert args.merge_reviewed_scopes and kind == 'Methods', 'Existing row requires explicit reviewed scope merge'

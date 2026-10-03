@@ -1,6 +1,6 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, validate_review_only, refresh_evidence
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
@@ -104,6 +104,40 @@ class LedgerScopeMergeTests(unittest.TestCase):
         self.assertEqual('textParameterRefId', merged['ParameterNames'][0]['NewName'])
         replacements[('ParameterNames', 1)]['Before'] = 'otherPreviousAlias'
         with self.assertRaises(ValueError): merge_scopes(self.old, self.review, 'CurrentAcceptedAlias', replacements=replacements)
+
+    def test_method_correction_preserves_checked_scopes_and_annotations(self):
+        self.old['Annotation'] = {'kept': True}
+        self.review.update(NewName='CopyBufferPrefix', ParameterNames=[], LocalNames=[])
+        change = dict(Kind='Method', Module='a.dll', Token='0x06000001', Before='HistoricalAlias',
+                      Requested='CopyBufferPrefix', Applied='CopyBufferPrefix')
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        corrected = replace_method_alias(self.old, self.review, 'HistoricalAlias', change, checked)
+        self.assertEqual('CopyBufferPrefix', corrected['NewName'])
+        self.assertEqual(self.old['ParameterNames'], corrected['ParameterNames'])
+        self.assertEqual(self.old['LocalNames'], corrected['LocalNames'])
+        self.assertEqual(self.old['Annotation'], corrected['Annotation'])
+        self.assertEqual('HistoricalAlias', self.old['NewName'])
+        for column, value in (('Before', 'stale'), ('Applied', 'CopyBufferPrefix2'), ('Token', '0x06000002'),
+                              ('Module', 'other/a.dll'), ('Kind', 'Field')):
+            bad = dict(change, **{column: value})
+            with self.assertRaises(ValueError): replace_method_alias(self.old, self.review, 'HistoricalAlias', bad, checked)
+        with self.assertRaises(ValueError): replace_method_alias(self.old, self.review, 'HistoricalAlias', change, {})
+
+    def test_method_correction_accepts_new_scopes_only_with_native_checks(self):
+        self.review['NewName'] = 'CopyBufferPrefix'
+        change = dict(Kind='Method', Module='a.dll', Token='0x06000001', Before='HistoricalAlias',
+                      Requested='CopyBufferPrefix', Applied='CopyBufferPrefix')
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('ParameterNames', 2): dict(ExpectedName='b', NewName='limit'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        corrected = replace_method_alias(self.old, self.review, 'HistoricalAlias', change, checked)
+        self.assertEqual(['count', 'limit'], [p['NewName'] for p in corrected['ParameterNames']])
+        self.assertEqual('total', corrected['LocalNames'][0]['NewName'])
+        checked[('ParameterNames', 2)]['NewName'] = 'unchecked'
+        with self.assertRaises(ValueError): replace_method_alias(self.old, self.review, 'HistoricalAlias', change, checked)
+        self.review['ParameterNames'].append(copy.deepcopy(self.review['ParameterNames'][0]))
+        with self.assertRaises(ValueError): replace_method_alias(self.old, self.review, 'HistoricalAlias', change, checked)
 
 
 if __name__ == '__main__': unittest.main()
