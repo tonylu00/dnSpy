@@ -1,0 +1,1302 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\034-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000070",
+      "Reason": "Class12<T> implements exact netstandard IEnumerable<T>/IEnumerable/INotifyCollectionChanged contracts. Add/remove/clear/replace publish change notifications, enumeration snapshots its locked List<T>, and optional owner assignment is limited to ajq/ajh. Keep generic arity and contract method names.",
+      "Disposition": "rename",
+      "NewName": "ObservableCloudCollection`1"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0200001C",
+      "Reason": "ajp is the Byte enum stored by ajq/ajr and selected by LIC parser 0600012A; definition formatter 0600016D chooses plain-label vs feature-list rendering. Numeric value meanings remain explicitly unresolved.",
+      "Disposition": "rename",
+      "NewName": "CloudLicenseKind"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x02000020",
+      "Reason": "ajt is the Int32 enum stored in ajr field 040000B8, initialized by definition constructor 0600015C and exposed by 06000167/168. No unsupported lifecycle names assigned to its values.",
+      "Disposition": "rename",
+      "NewName": "CloudLicenseDefinitionStatus"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0200006F",
+      "Reason": "aj5 is the Int32 type discriminator accepted by aj6 public-key constructor 0600001A and returned by 0600001C; PUBLICKEY parser creates aj6. Native algorithm meanings remain unresolved.",
+      "Disposition": "rename",
+      "NewName": "CloudPublicKeyType"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000016",
+      "Reason": "0600001A requires a 48-byte constructor input and stores the original array; 0600001B returns it directly. PUBLICKEY= parser supplies these bytes; no copy is implied. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "keyBytes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000017",
+      "Reason": "0600001A stores aj5 argument 2 and 0600001C returns it; PUBLICKEY= parser supplies value 0 without revealing algorithm semantics. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "keyType"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000019",
+      "Reason": "06000020 stores signatureBytes.Take(24).ToArray; 06000021 copies Take(24).ToArray from that field. Native opaque verification does not establish an ECDSA R role. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "firstHalf"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400001A",
+      "Reason": "06000020 stores signatureBytes.Skip(24).Take(24).ToArray; 06000022 copies Take(24).ToArray from that field. 06000028 concatenates first then second; no ECDSA S role claimed. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "secondHalf"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400001B",
+      "Reason": "06000020 stores aka argument 2; 06000023 returns it, 06000024 casts it to Char and verification 06000026 branches on the value. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "signatureType"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400001C",
+      "Reason": "06000025 snapshots field 0400001D under Monitor.Enter/Exit; 0600002C creates this lock. It does not lock native verification. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "eventHandlerLock"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400001D",
+      "Reason": "0600001E/1F Combine/Remove with CompareExchange; 06000025 invokes the snapshot, and 06000026/27 call it on failed signature verification. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "verificationFailureHandlers"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400009F",
+      "Reason": "Only 0600012C reads/writes this cache: UTF8 of Knx.CloudKit.Secure.v{major}.{minor}.{build}.{revision}:. Callers prepend it to hash inputs. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "versionedHashPrefix"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000A0",
+      "Reason": "Only 0600012B reads/writes the cached first 16 bytes of derived SHA256; its only managed caller 06000128 supplies the result to SymmetricAlgorithm.set_Key. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "payloadDecryptionKey"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000A2",
+      "Reason": "Both ajn constructors compute Class8 native cloud hash; String input is Base64 decoded first. 06000135 returns this byte array and certificate verification appends it to its hash input. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "hashBytes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000006",
+      "Reason": "06000130 parses the CERT header prefix before the colon into constructor argument 1; 06000008 stores it and 06000015 emits it in that position. Vendor/issuer identity is not established; no invented vendor role. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "headerIdentifier"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000007",
+      "Reason": "06000130 parses the quoted CERT header name into constructor argument 2; 0600000B returns this field. 06000058/59 compare that getter to the requested name, and 06000009 hashes its UTF8 bytes. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "name"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000008",
+      "Reason": "06000008 fixes this field to CloudLicense; 06000015 emits ID=, 0600000A appends its first 12 ASCII bytes to root verification data, 0600000C returns it. Parsed ID= text is discarded; not a dongle ID. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "classIdentifier"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000009",
+      "Reason": "PUBLICKEY= parser creates aj6 and supplies certificate constructor argument 3; root verification appends its first 48 bytes and certificate signature verification uses this public key. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "publicKey"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400000A",
+      "Reason": "ROOTCERT= parser creates aka value 82 signature, supplies certificate argument 4; 0600000A verifies it against the public-key/class-identifier root hash. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "rootSignature"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400000B",
+      "Reason": "LICENSE= parser supplies argument 5; constructor stores it, formatter emits LICENSE= and certificate hash appends its UTF8 bytes. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "licenseLabel"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400000C",
+      "Reason": "CUSTOMER= parser supplies argument 6; formatter emits CUSTOMER= and certificate hash appends its UTF8 bytes. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "customer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400000D",
+      "Reason": "NUMBER= parser supplies argument 7; formatter emits NUMBER= and certificate hash appends its UTF8 bytes. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "number"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400000E",
+      "Reason": "DATE=/TIME= parse into argument 8; constructor preserves ticks while setting DateTimeKind.Utc. Formatter emits date/time and hash uses all six components. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "timestamp"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400000F",
+      "Reason": "SIGN= parser supplies argument 9 as aka value 85; 06000009 verifies this signature with the certificate public key and 06000015 emits SIGN=. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "signature"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000010",
+      "Reason": "Constructor initializes false; 06000009 stores the root/certificate signature verification outcome and 06000011 returns it. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "isValid"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000011",
+      "Reason": "06000013/14 snapshot their handler chains under Monitor.Enter/Exit; static initializer creates this lock. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "eventHandlerLock"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000012",
+      "Reason": "06000004/05 CAS subscribe/unsubscribe; 06000013 publishes from failed root or certificate verification branches in 06000009/0A. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "verificationFailureHandlers"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000AD",
+      "Reason": "0600015C stores ajp argument 1; LIC parser selects it and definition formatter branches on 80. Value semantics remain unresolved. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "kind"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000AE",
+      "Reason": "LIC ID= parser supplies constructor argument 2; 0600015E returns it and formatter emits ID=. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "dongleIdentifier"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000AF",
+      "Reason": "EXPIRE= parser supplies nullable argument 3; 0600015F returns it and formatter conditionally emits EXPIRE=. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "expirationDate"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B0",
+      "Reason": "ISSUE= parser supplies nullable argument 4; constructor stores its Value as DateTime, 06000160 returns it and formatter emits ISSUE=. Preserve missing-date exception behavior. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "issueDate"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B1",
+      "Reason": "Constructor stores argument 5; parser creates ajl entries from comma-separated labels/values and formatter enumerates labels with value or unlimited text. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "features"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B2",
+      "Reason": "LIC parser takes the prefix before colon into argument 6; formatter emits it immediately after LIC, consistent with the coupled PKG vendor prefix. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "vendor"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B3",
+      "Reason": "LIC plain/quoted label parser supplies argument 7; formatter emits it and constructor tests IsNullOrEmpty to select initial status. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "label"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B4",
+      "Reason": "CUSTOMER= parser supplies argument 8; formatter emits this field under CUSTOMER=. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "customer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B5",
+      "Reason": "NUMBER= parser supplies argument 9; formatter emits this field under NUMBER=. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "number"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B6",
+      "Reason": "LIC SIGN= parser constructs aka value 76 into argument 10; formatter emits SIGN= and constructor derives an object hash code from its first four bytes. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "signature"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B7",
+      "Reason": "Constructor stores BitConverter.ToInt32(first signature half,0), or zero for null signature; actual Object.GetHashCode override 06000170 returns this cached value. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "hashCode"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000B8",
+      "Reason": "Constructor sets ajt 1 for nonempty label, otherwise 0; 06000167/168 read/write it. Complete lifecycle/value meanings are not established. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "status"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001E0",
+      "Reason": "Exact CollectionChanged accessors CAS this delegate; virtual 0600033C snapshots its invocation list and calls handlers after collection mutations. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "collectionChangedHandlers"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001E1",
+      "Reason": "Class12<T> constructors initialize this object; list mutation/count/snapshot/notification bodies enter and exit it through Monitor. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "syncRoot"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001E2",
+      "Reason": "Constructor creates List<T>; Add/AddRange/Remove/Clear/count/snapshot/enumeration all consume the same exact generic field. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "items"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000003",
+      "Reason": "Literal I4 value 64; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000004",
+      "Reason": "Literal I4 value 48; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000005",
+      "Reason": "Literal I4 value 12; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000015",
+      "Reason": "Literal I4 value 48; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400001E",
+      "Reason": "Literal I4 value 24; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400001F",
+      "Reason": "Literal I4 value 48; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000090",
+      "Reason": "Literal I4 value 64; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000091",
+      "Reason": "Literal I4 value 64; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000092",
+      "Reason": "Literal I4 value 16; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000093",
+      "Reason": "Literal I4 value 8; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000094",
+      "Reason": "Literal I4 value 65535; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000095",
+      "Reason": "Literal I4 value 10; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000096",
+      "Reason": "Literal I4 value 8; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000097",
+      "Reason": "Literal I4 value 10; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000098",
+      "Reason": "Literal I4 value 10; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000099",
+      "Reason": "Literal I4 value 80; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400009A",
+      "Reason": "Literal I4 value 32; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400009B",
+      "Reason": "Literal I4 value 96; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400009C",
+      "Reason": "Literal I4 value 48; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400009D",
+      "Reason": "Literal I4 value 96; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0400009E",
+      "Reason": "Literal I4 value 48; numeric uses were inlined. No token-to-use association or distinct declaration responsibility is established; do not invent a length/limit name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000A5",
+      "Reason": "Enum value 80. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000A6",
+      "Reason": "Enum value 73. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000BC",
+      "Reason": "Enum value 0. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000BD",
+      "Reason": "Enum value 1. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040000BE",
+      "Reason": "Enum value 2. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001DE",
+      "Reason": "Enum value 0. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001DF",
+      "Reason": "Enum value 1. Managed producers expose label/feature format, initial status or public-key discriminator, but intended domain/lifecycle/native algorithm meaning lacks decisive evidence; retain original enum value name. Physical graph has 0 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001E8",
+      "Reason": "Unique aka constant 85; complete physical constructor references identify 0x06000130:439 from SIGN= in this record context. Immediate constant feeds signature constructor; field/runtime value unchanged. Names describe observed signature context, not native cryptographic algorithm. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "Certificate"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001E9",
+      "Reason": "Unique aka constant 80; complete physical constructor references identify 0x0600012E:180 from SIGN= in this record context. Immediate constant feeds signature constructor; field/runtime value unchanged. Names describe observed signature context, not native cryptographic algorithm. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "Package"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001EA",
+      "Reason": "Unique aka constant 76; complete physical constructor references identify 0x0600012A:1419 from SIGN= in this record context. Immediate constant feeds signature constructor; field/runtime value unchanged. Names describe observed signature context, not native cryptographic algorithm. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "License"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x040001EB",
+      "Reason": "Unique aka constant 82; complete physical constructor references identify 0x06000130:1135 from ROOTCERT= in this record context. Immediate constant feeds signature constructor; field/runtime value unchanged. Names describe observed signature context, not native cryptographic algorithm. Exact physical graph references and storage retained; runtime names remain restoration inputs.",
+      "Disposition": "rename",
+      "NewName": "RootCertificate"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600001A",
+      "Reason": "PUBLICKEY= parser supplies exact raw key bytes and type; constructor validates 48-byte length and retains array without cloning. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "keyBytes",
+        "2": "keyType"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000020",
+      "Reason": "Wrong length of raw signature requires 48 bytes; constructor stores Take(24) and Skip(24).Take(24) halves and type. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "signatureBytes",
+        "2": "signatureType"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000021",
+      "Reason": "Copies 24 bytes of this field through Take(24).ToArray. Retain the meaningful copy operation; opaque native verification and byte slicing do not prove mathematical R/S roles. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "CopyFirstSignatureHalf"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000022",
+      "Reason": "Copies 24 bytes of this field through Take(24).ToArray. Retain the meaningful copy operation; opaque native verification and byte slicing do not prove mathematical R/S roles. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "CopySecondSignatureHalf"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000026",
+      "Reason": "Native verification result is stored and returned in local 0; zero/failed signature branches publish verification failure. Existing hash parameter retained. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "VerifySignatureHash",
+      "ParameterNames": {
+        "1": "hash"
+      },
+      "LocalNames": {
+        "0": "isValid"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000027",
+      "Reason": "Passes serialized signature, supplied hash and public-key bytes to native public-key verification; failure publishes signature event. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "VerifySignatureHashWithPublicKey",
+      "ParameterNames": {
+        "1": "hash",
+        "2": "publicKey"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600001E",
+      "Reason": "CAS event update: local 0 current handler chain, 1 expected preimage, 2 combined/removed chain; argument is supplied handler. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "SubscribeSignatureVerificationFailure",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600001F",
+      "Reason": "CAS event update: local 0 current handler chain, 1 expected preimage, 2 combined/removed chain; argument is supplied handler. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeSignatureVerificationFailure",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000004",
+      "Reason": "CAS event update: local 0 current handler chain, 1 expected preimage, 2 combined/removed chain; argument is supplied handler. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "SubscribeCertificateVerificationFailure",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000005",
+      "Reason": "CAS event update: local 0 current handler chain, 1 expected preimage, 2 combined/removed chain; argument is supplied handler. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "UnsubscribeCertificateVerificationFailure",
+      "ParameterNames": {
+        "1": "handler"
+      },
+      "LocalNames": {
+        "0": "currentHandlers",
+        "1": "expectedHandlers",
+        "2": "updatedHandlers"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000025",
+      "Reason": "Snapshot under Monitor then iterate invocation list; event runs synchronously or BeginInvoke according to Class13 setting and catches handler exceptions. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "PublishSignatureVerificationFailure",
+      "ParameterNames": {
+        "1": "signature"
+      },
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken",
+        "3": "invocationList",
+        "4": "handlerIndex",
+        "5": "handlerDelegate",
+        "6": "handler"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000013",
+      "Reason": "Snapshot under Monitor then iterate invocation list; event runs synchronously or BeginInvoke according to Class13 setting and catches handler exceptions. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "PublishCertificateVerificationFailure",
+      "ParameterNames": {
+        "1": "certificate"
+      },
+      "LocalNames": {
+        "0": "handlers",
+        "1": "eventLock",
+        "2": "lockTaken",
+        "3": "invocationList",
+        "4": "handlerIndex",
+        "5": "handlerDelegate",
+        "6": "handler"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000128",
+      "Reason": "AES decrypt: IV=first16 input bytes, key=0600012B; decrypted prefix holds SHA256 and UInt64 length, then UTF8 text at offset40. Local names follow exact calls/offsets; preserve mode, padding, ignored Read count and exceptions. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "DecryptPayload",
+      "ParameterNames": {
+        "1": "encryptedPayload"
+      },
+      "LocalNames": {
+        "0": "decryptedBytes",
+        "1": "aes",
+        "2": "decryptor",
+        "3": "encryptedStream",
+        "4": "cryptoStream",
+        "5": "declaredPayloadByteCount",
+        "6": "payloadByteCount",
+        "7": "storedSha256",
+        "8": "sha256",
+        "9": "payloadText"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600012B",
+      "Reason": "Caches first16 bytes of SHA256(versionedPrefix + UTF8(String.Format(prefix.Length*997))). Only caller supplies result to AES.set_Key; correct misleading ComputePayloadHash alias. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "GetPayloadDecryptionKey",
+      "LocalNames": {
+        "0": "keyMaterial",
+        "1": "sha256"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600012C",
+      "Reason": "Caches UTF8 Knx.CloudKit.Secure.v{major}.{minor}.{build}.{revision}: from native library Version. Used as hash prefix/key material; no payload composition occurs. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "GetVersionedHashPrefix",
+      "LocalNames": {
+        "0": "version"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000131",
+      "Reason": "Repeatedly removes the final UTF16 code unit until UTF8.GetByteCount <= argument2. No field extraction. Preserve negative-limit/surrogate behavior. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "TruncateToUtf8ByteLimit",
+      "ParameterNames": {
+        "1": "text",
+        "2": "maxByteCount"
+      },
+      "LocalNames": {
+        "0": "truncatedText"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000129",
+      "Reason": "LIC record loop uses IndexOf/Substring; count increments before parsing and appears in Invalid license/count exception data. Definitions only added when nonnull. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ParseLicenseDefinitions",
+      "ParameterNames": {
+        "1": "content"
+      },
+      "LocalNames": {
+        "0": "definitions",
+        "1": "recordNumber",
+        "2": "recordStartIndex",
+        "3": "nextLicenseOffset",
+        "4": "remainingText",
+        "5": "definitionText",
+        "6": "definition"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600012D",
+      "Reason": "PKG record loop uses relative IndexOf after Substring(4), assembles each definition and skips caught parser errors. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ParsePackageDefinitions",
+      "ParameterNames": {
+        "1": "content"
+      },
+      "LocalNames": {
+        "0": "definitions",
+        "1": "recordStartIndex",
+        "2": "nextPackageOffset",
+        "3": "remainingText",
+        "4": "definitionText",
+        "5": "definition"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600012F",
+      "Reason": "CERT record loop uses relative IndexOf after Substring(5), assembles each certificate and skips caught parser errors. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ParseCertificates",
+      "ParameterNames": {
+        "1": "content"
+      },
+      "LocalNames": {
+        "0": "certificates",
+        "1": "recordStartIndex",
+        "2": "nextCertificateOffset",
+        "3": "remainingText",
+        "4": "certificateText",
+        "5": "certificate"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600012E",
+      "Reason": "PKG header feeds vendor/name/label/features; comma/equal/unlimited parse assigns feature roles. SIGN= hexadecimal loop fills48 bytes and constructs signature type80. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ParsePackageDefinition",
+      "ParameterNames": {
+        "1": "definitionText"
+      },
+      "LocalNames": {
+        "0": "lines",
+        "1": "vendor",
+        "2": "name",
+        "3": "label",
+        "4": "features",
+        "5": "signature",
+        "6": "line",
+        "7": "lineIndex",
+        "8": "featureEntries",
+        "9": "featureEntriesToParse",
+        "10": "featureIndex",
+        "11": "featureLabel",
+        "12": "featureValue",
+        "13": "featureValueParts",
+        "14": "signatureHex",
+        "15": "signatureBytes",
+        "16": "signatureHexIndex",
+        "17": "signatureByteIndex"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600012A",
+      "Reason": "LIC/ISSUE/EXPIRE/ID/CUSTOMER/NUMBER/SIGN literals establish data roles; hash input=versioned prefix + original LIC text up to SIGN + final16 signature bytes, compared to first32 signature bytes. Fields feed ajr constructor; failed hash returns null. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ParseLicenseDefinition",
+      "ParameterNames": {
+        "1": "definitionText"
+      },
+      "LocalNames": {
+        "0": "licenseStartIndex",
+        "1": "signatureStartIndex",
+        "2": "lines",
+        "3": "kind",
+        "4": "vendor",
+        "5": "label",
+        "6": "features",
+        "7": "dongleIdentifier",
+        "8": "expirationDate",
+        "9": "issueDate",
+        "10": "customer",
+        "11": "number",
+        "12": "signature",
+        "13": "line",
+        "14": "lineIndex",
+        "15": "featureEntries",
+        "16": "featureEntriesToParse",
+        "17": "featureIndex",
+        "18": "featureLabel",
+        "19": "featureValue",
+        "20": "featureValueParts",
+        "21": "issueDateText",
+        "22": "issueDateParts",
+        "23": "expirationDateText",
+        "24": "expirationDateParts",
+        "25": "signatureHex",
+        "26": "signatureBytes",
+        "27": "signatureHexIndex",
+        "28": "signatureByteIndex",
+        "29": "serializedSignature",
+        "30": "hashInput",
+        "31": "storedSha256",
+        "32": "sha256",
+        "33": "definition"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000130",
+      "Reason": "CERT header/publickey/rootcert/license/customer/number/date/time/sign parse feeds ai6 constructor; ID text is validated/truncated then discarded and constructor fixes CloudLicense. Preserve this behavior. Each hex loop tracks text index and output byte index separately. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ParseCertificate",
+      "ParameterNames": {
+        "1": "certificateText"
+      },
+      "LocalNames": {
+        "0": "lines",
+        "1": "headerIdentifier",
+        "2": "name",
+        "3": "publicKey",
+        "4": "rootSignature",
+        "5": "licenseLabel",
+        "6": "customer",
+        "7": "number",
+        "8": "timestamp",
+        "9": "signature",
+        "10": "line",
+        "11": "lineIndex",
+        "12": "publicKeyHex",
+        "13": "publicKeyBytes",
+        "14": "publicKeyHexIndex",
+        "15": "publicKeyByteIndex",
+        "16": "rootSignatureHex",
+        "17": "rootSignatureBytes",
+        "18": "rootSignatureHexIndex",
+        "19": "rootSignatureByteIndex",
+        "20": "dateText",
+        "21": "dateParts",
+        "22": "timeText",
+        "23": "timeParts",
+        "24": "signatureHex",
+        "25": "signatureBytes",
+        "26": "signatureHexIndex",
+        "27": "signatureByteIndex"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000133",
+      "Reason": "Convert.FromBase64String decodes input into local0, then native cloud hash computes stored bytes; no algorithm is guessed. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "base64Payload"
+      },
+      "LocalNames": {
+        "0": "payloadBytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000134",
+      "Reason": "Native cloud hash computes stored bytes from supplied raw payload; null native result throws original NullReferenceException. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "payloadBytes"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000008",
+      "Reason": "Constructor fields are corroborated by CERT formatter/parser and name lookup consumers; timestamp ticks retained with Utc kind, classIdentifier fixed to CloudLicense. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "headerIdentifier",
+        "2": "name",
+        "3": "publicKey",
+        "4": "rootSignature",
+        "5": "licenseLabel",
+        "6": "customer",
+        "7": "number",
+        "8": "timestamp",
+        "9": "signature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000009",
+      "Reason": "Root verification then public-key signature verification: supplied hash bytes + six timestamp components + name/license/customer/number UTF8 produce local1 hash; local0 validity cached and failure published. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "VerifyCertificateHash",
+      "ParameterNames": {
+        "1": "hash"
+      },
+      "LocalNames": {
+        "0": "isValid",
+        "1": "signatureHash"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600000A",
+      "Reason": "Root data=publicKey.Take48 + ASCII classIdentifier.Take12, resized64; local1 native hash passed to root signature verification. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "VerifyRootCertificate",
+      "LocalNames": {
+        "0": "rootCertificateBytes",
+        "1": "rootHash"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600000C",
+      "Reason": "Getter returns field04000008, fixed by constructor to CloudLicense and formatted as ID=. No dongle identifier or dynamic value is returned. Correct unsupported GetCertificateDongleId. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "GetCertificateClassIdentifier"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000015",
+      "Reason": "CERT/ID/PUBLICKEY/ROOTCERT/DATE/TIME/LICENSE/CUSTOMER/NUMBER/SIGN text assembled in local0; local1 repeatedly formats timestamp components. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "FormatCertificateText",
+      "LocalNames": {
+        "0": "certificateText",
+        "1": "dateTimeComponent"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000006",
+      "Reason": "no-evidence-in-scope: event updater/publisher is associated with field04000013 and publisher supplies ajh sender, but no failure condition or signing operation exists in these bodies. Complete module inspection and physical graph yield zero callers. Trigger semantics/reflection/external consumers are missing; withdraw unsupported DongleSigningFailure alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "SubscribeDongleSigningFailure"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000007",
+      "Reason": "no-evidence-in-scope: event updater/publisher is associated with field04000013 and publisher supplies ajh sender, but no failure condition or signing operation exists in these bodies. Complete module inspection and physical graph yield zero callers. Trigger semantics/reflection/external consumers are missing; withdraw unsupported DongleSigningFailure alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "UnsubscribeDongleSigningFailure"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000014",
+      "Reason": "no-evidence-in-scope: event updater/publisher is associated with field04000013 and publisher supplies ajh sender, but no failure condition or signing operation exists in these bodies. Complete module inspection and physical graph yield zero callers. Trigger semantics/reflection/external consumers are missing; withdraw unsupported DongleSigningFailure alias.",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "PublishDongleSigningFailure"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x04000013",
+      "Reason": "Event handler chain is updated by06000006/07 and published by06000014 with ajh sender, all with zero callers. Intended trigger (including alleged signing failure) has no managed evidence; retain unresolved rather than perpetuate unsupported purpose. Physical graph has 5 incoming edges across 111 hash-verified inputs; original metadata retained.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600015C",
+      "Reason": "ISSUE/EXPIRE/ID/CUSTOMER/NUMBER/SIGN parser/formatter corroborate ten constructor roles; preserve nullable issueDate.Value, signature-derived hashCode and status initialization. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "kind",
+        "2": "dongleIdentifier",
+        "3": "expirationDate",
+        "4": "issueDate",
+        "5": "features",
+        "6": "vendor",
+        "7": "label",
+        "8": "customer",
+        "9": "number",
+        "10": "signature"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000168",
+      "Reason": "Stores the supplied status in exact ajt field040000B8 without interpreting enum values. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "SetDefinitionStatus",
+      "ParameterNames": {
+        "1": "status"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600016A",
+      "Reason": "Constructs empty definition with nullable expirationDate default in local0 and nullable DateTime.MinValue issueDate; preserve constructor fields/values. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "CreateEmptyDefinition",
+      "LocalNames": {
+        "0": "expirationDate"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600016B",
+      "Reason": "Directly returns supplied license.GetDefinition via06000150; does not allocate a definition. Correct CreateDefinitionFromLicense implication. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "GetDefinitionFromLicense",
+      "ParameterNames": {
+        "1": "license"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600016D",
+      "Reason": "LIC/ID/ISSUE/EXPIRE/CUSTOMER/NUMBER/SIGN formatter iterates features and uses shared DateTime/Int32 component locals to emit issue/expiration dates. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "FormatLicenseDefinitionText",
+      "LocalNames": {
+        "0": "definitionText",
+        "1": "features",
+        "2": "featureIndex",
+        "3": "feature",
+        "4": "date",
+        "5": "dateComponent"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000334",
+      "Reason": "Add retains meaningful original name. Local0 insertion index from List.Count, optional ajq/ajh owner assignments, then locked Add and collection Add notification. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "item",
+        "2": "owner"
+      },
+      "LocalNames": {
+        "0": "insertionIndex",
+        "1": "license",
+        "2": "dongle",
+        "3": "collectionLock",
+        "4": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000335",
+      "Reason": "Locked list update enumerates items to assign optional ajq/ajh parent; exact locals are lock/flag/enumerator/item/license/dongle. Replace callback runs before List.AddRange after owner assignment; changes publish after lock. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "AddRangeWithOwner",
+      "ParameterNames": {
+        "1": "items",
+        "2": "owner"
+      },
+      "LocalNames": {
+        "0": "collectionLock",
+        "1": "lockTaken",
+        "2": "itemEnumerator",
+        "3": "item",
+        "4": "license",
+        "5": "dongle"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000336",
+      "Reason": "Locked list update enumerates items to assign optional ajq/ajh parent; exact locals are lock/flag/enumerator/item/license/dongle. Replace callback runs before List.AddRange after owner assignment; changes publish after lock. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ReplaceAllWithOwner",
+      "ParameterNames": {
+        "1": "items",
+        "2": "owner",
+        "3": "beforeAdd"
+      },
+      "LocalNames": {
+        "0": "collectionLock",
+        "1": "lockTaken",
+        "2": "itemEnumerator",
+        "3": "item",
+        "4": "license",
+        "5": "dongle"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000337",
+      "Reason": "List.IndexOf captures removal index; List.Remove captures boolean result under Monitor, then notification uses item/index. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "RemoveItem",
+      "ParameterNames": {
+        "1": "item"
+      },
+      "LocalNames": {
+        "0": "removed",
+        "1": "itemIndex",
+        "2": "collectionLock",
+        "3": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x06000338",
+      "Reason": "Monitor guards List.Clear, then publishes reset notification. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ClearItems",
+      "LocalNames": {
+        "0": "collectionLock",
+        "1": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600033A",
+      "Reason": "Monitor guards ToList snapshot; exact local0 lock,1 flag,2 returned snapshot. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "SnapshotCollectionItems",
+      "LocalNames": {
+        "0": "collectionLock",
+        "1": "lockTaken",
+        "2": "snapshot"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600033B",
+      "Reason": "Monitor guards List.Contains; exact local0 returned boolean,1 lock,2 flag. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "ContainsCollectionItem",
+      "ParameterNames": {
+        "1": "item"
+      },
+      "LocalNames": {
+        "0": "containsItem",
+        "1": "collectionLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.CloudKit.dll",
+      "Token": "0x0600033D",
+      "Reason": "Monitor guards List.Count; exact local0 returned count,1 lock,2 flag. Carry forward checked scope aliases; unused control/Int16 locals receive no invented role.",
+      "Disposition": "rename",
+      "NewName": "GetCollectionItemCount",
+      "LocalNames": {
+        "0": "count",
+        "1": "collectionLock",
+        "2": "lockTaken"
+      }
+    }
+  ]
+}
