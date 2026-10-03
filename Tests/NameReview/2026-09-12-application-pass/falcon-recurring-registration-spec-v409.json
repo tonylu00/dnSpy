@@ -1,0 +1,972 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x020000F0",
+      "NewName": "Knx.Falcon.Impl.RecurringFunctionPropertyTask",
+      "Reason": "Generic recurring task supplies Frequency and sends FunctionPropertyCommand through nc.b; construction stores object index/property ID, normal payload and optional disposal payload. Regular execution does not test the dispose flag. Segment registration is one caller, not its general role. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000123",
+      "NewName": "TaskRegistration",
+      "Reason": "Non-generated nested scheduler registration owns taskObject, due time and scheduler removal lifetime; returned Register handle is distinct from underlying task passed to SetDueNow. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04002405",
+      "NewName": "recurringTaskScheduler",
+      "Reason": "Bus RegisterRecurringTask lazily constructs Class698 at2580:9/14; disposal awaits its DisposeAsync in25F6 and clears it. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x06002580",
+          "Offset": 1,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002580",
+          "Offset": 14,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x06002580",
+          "Offset": 20,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002587",
+          "Offset": 205,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060025F6",
+          "Offset": 1165,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060025F6",
+          "Offset": 1176,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060025F6",
+          "Offset": 1227,
+          "OpCode": "stfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04002407",
+      "NewName": "outboundSegmentCouplerKey",
+      "Reason": "SDK-protected setter2581 stores configured key with address; configured registration state25FA snapshots and clears request before forwarding key to registration. Keep already named address x. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x06002581",
+          "Offset": 9,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060025FA",
+          "Offset": 224,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060025FA",
+          "Offset": 244,
+          "OpCode": "stfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04002408",
+      "NewName": "outboundSegmentCouplerConnection",
+      "Reason": "Registration state2622 stores opened nc at286; update2587 reads its individual/subnet address and unregister state262E disposes and clears it. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x06002587",
+          "Offset": 32,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002587",
+          "Offset": 62,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002587",
+          "Offset": 251,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002622",
+          "Offset": 286,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x06002622",
+          "Offset": 310,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002622",
+          "Offset": 333,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 60,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 128,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 213,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04002409",
+      "NewName": "segmentCouplerRegistrationTask",
+      "Reason": "State2624 constructs generic Class680 at111 and stores116, executes133 then registers184; update2587 adjusts byte2 of command payload and forces this underlying task due now at216. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x06002587",
+          "Offset": 91,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002587",
+          "Offset": 138,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002587",
+          "Offset": 178,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002587",
+          "Offset": 211,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 72,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x06002624",
+          "Offset": 116,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x06002624",
+          "Offset": 122,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002624",
+          "Offset": 173,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400240A",
+      "NewName": "segmentCouplerRegistrationHandle",
+      "Reason": "State2622 stores returned IAsyncDisposable registration handle at75. Unregister state262E awaits handle DisposeAsync before connection disposal and clears it; distinct from task object. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x06002587",
+          "Offset": 1,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x06002622",
+          "Offset": 75,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 54,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 136,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x0600262E",
+          "Offset": 257,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000682",
+      "NewName": "deviceConnection",
+      "Reason": "Ctor stores nc argument1; regular4C9:39 and cleanup4CB:91 invoke its FunctionProperty command operation. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060004C4",
+          "Offset": 8,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060004C9",
+          "Offset": 15,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 14,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CB",
+          "Offset": 63,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000683",
+      "NewName": "objectIndex",
+      "Reason": "Ctor argument2 feeds nc.b argument1, exact state00162 field001C2 feeds FunctionPropertyCommandMessage ctor argument1 which invokes checked set_ObjectIndex/00CCE at39. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060004C4",
+          "Offset": 15,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060004C9",
+          "Offset": 21,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 23,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CB",
+          "Offset": 69,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000684",
+      "NewName": "propertyId",
+      "Reason": "Ctor argument3 feeds nc.b argument2, exact state00162 field001C3 feeds FunctionPropertyCommandMessage ctor argument2 which invokes checked set_PropertyId/00CD0 at46. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060004C4",
+          "Offset": 22,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060004C9",
+          "Offset": 27,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 37,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CB",
+          "Offset": 75,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000685",
+      "NewName": "commandData",
+      "Reason": "Mutable normal payload: getter4C5/setter4C6, regular4C9 null returns CompletedTask otherwise sends; Bus updates byte2 to current interface device address. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060004C4",
+          "Offset": 30,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060004C5",
+          "Offset": 1,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004C6",
+          "Offset": 2,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060004C9",
+          "Offset": 1,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 51,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 59,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000686",
+      "NewName": "disposalData",
+      "Reason": "Ctor argument5 supplies optional cleanup payload sent once by DisposeAsync state4CB using CancellationToken.None; original catch System.Object suppresses command failure. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060004C4",
+          "Offset": 38,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 74,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CA",
+          "Offset": 82,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CB",
+          "Offset": 81,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CB",
+          "Offset": 164,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000688",
+      "NewName": "disposed",
+      "Reason": "Dispose state4CB gates repeated cleanup and sets true after attempt. Regular4C9 never checks this flag; preserve that behavior. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060004CB",
+          "Offset": 156,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060004CB",
+          "Offset": 176,
+          "OpCode": "stfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400088A",
+      "NewName": "logger",
+      "Reason": "Static constructor5D6 GetLogger(Falcon.RecurringTaskScheduler); used for registration, execution and cancellation/failure diagnostics. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005CD",
+          "Offset": 43,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005CE",
+          "Offset": 0,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005D6",
+          "Offset": 15,
+          "OpCode": "stsfld"
+        },
+        {
+          "Method": "0x060005E0",
+          "Offset": 101,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005E0",
+          "Offset": 177,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005E2",
+          "Offset": 81,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 397,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005EA",
+          "Offset": 170,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005EE",
+          "Offset": 180,
+          "OpCode": "ldsfld"
+        },
+        {
+          "Method": "0x060005EE",
+          "Offset": 212,
+          "OpCode": "ldsfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400088B",
+      "NewName": "registrations",
+      "Reason": "List<TaskRegistration> initialized in ctor5D5, added by5CD, removed by5D0 state5EE, snapshotted by execution/disposal. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005CD",
+          "Offset": 32,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005D2",
+          "Offset": 31,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005D5",
+          "Offset": 6,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005E8",
+          "Offset": 58,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EA",
+          "Offset": 294,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EE",
+          "Offset": 157,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EE",
+          "Offset": 243,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400088C",
+      "NewName": "registrationsLock",
+      "Reason": "Object initialized5D5, exclusively Monitor.Enter/Exit around registration list and task-selector operations. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005CD",
+          "Offset": 15,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005D2",
+          "Offset": 14,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005D5",
+          "Offset": 17,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005EA",
+          "Offset": 276,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EE",
+          "Offset": 139,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400088D",
+      "NewName": "timerTask",
+      "Reason": "CreateTimerTask5CE stores5D3 Task.Run result; stop5CF cancels, awaits and disposes this task then clears; last unregistration stops it. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005CD",
+          "Offset": 88,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005CE",
+          "Offset": 38,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005E8",
+          "Offset": 254,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 53,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 65,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 84,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 106,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EE",
+          "Offset": 256,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400088E",
+      "NewName": "timerInterval",
+      "Reason": "Initial1000ms in ctor5D5. Register reduces to smaller task Frequency; timer-loop callback5D7 uses quarter-interval lower delay bound and due-time lookahead. Preserve one-way reduction. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005CD",
+          "Offset": 75,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005CD",
+          "Offset": 104,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005D5",
+          "Offset": 37,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 124,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 201,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 221,
+          "OpCode": "ldflda"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 328,
+          "OpCode": "ldflda"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400088F",
+      "NewName": "timerCancellation",
+      "Reason": "CreateTimerTask creates CTS, Task.Run receives its token, callback delay/execution uses token; stop cancels, awaits task, disposes and clears CTS. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005CE",
+          "Offset": 26,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005D3",
+          "Offset": 13,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 54,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005E4",
+          "Offset": 135,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 71,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 92,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 138,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005EC",
+          "Offset": 150,
+          "OpCode": "stfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000891",
+      "NewName": "scheduler",
+      "Reason": "Registration ctor arg1; Dispose state5E0 calls scheduler.Unregister with this registration before disposing taskObject. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005D8",
+          "Offset": 8,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005E0",
+          "Offset": 203,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000893",
+      "NewName": "nextDueTime",
+      "Reason": "Ctor sets Class701.c()+initialDelay;5DC compares<=now; execution state5E2 reschedules after successful task completion to Class701.c()+task.Frequency;5DF sets current time. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005D8",
+          "Offset": 32,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005DC",
+          "Offset": 1,
+          "OpCode": "ldfld"
+        },
+        {
+          "Method": "0x060005DF",
+          "Offset": 6,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005E2",
+          "Offset": 74,
+          "OpCode": "stfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000894",
+      "NewName": "disposeStarted",
+      "Reason": "Registration Dispose state5E0 sets true at172 before unregister await and underlying task disposal; repeated calls skip operation. Flag marks start, not successful completion. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "NativeFieldUses": [
+        {
+          "Method": "0x060005E0",
+          "Offset": 172,
+          "OpCode": "stfld"
+        },
+        {
+          "Method": "0x060005E0",
+          "Offset": 278,
+          "OpCode": "ldfld"
+        }
+      ]
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060004C4",
+      "NewName": "",
+      "Reason": "Constructor stores device connection, object index/property ID, normal/cleanup data and task frequency; downstream message ctor and complete execution/disposal bodies prove each position. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "deviceConnection",
+        "2": "objectIndex",
+        "3": "propertyId",
+        "4": "commandData",
+        "5": "disposalData",
+        "6": "frequency"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060004C5",
+      "NewName": "get_CommandData",
+      "Reason": "Return only mutable normal commandData; paired setter4C6 and Bus registration updater establish payload property semantics. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {},
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060004C6",
+      "NewName": "set_CommandData",
+      "Reason": "Store supplied normal commandData unchanged; paired getter4C5 and regular function-property command establish payload property semantics. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "value"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005CD",
+      "NewName": "",
+      "Reason": "Register null-checks task, constructs TaskRegistration(now+initialDelay), locks/adds, lowers timer interval from task Frequency, and starts timer only when absent. Initial delay is distinct from repeat frequency. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "task",
+        "2": "initialDelay"
+      },
+      "LocalNames": {
+        "0": "startTimer",
+        "1": "registration",
+        "2": "registrationsLock",
+        "3": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005CF",
+      "NewName": "StopTimerTaskAsync",
+      "Reason": "Exact owner state5EC cancels timer CTS if present, awaits timer task, disposes and clears task then disposes/clears CTS. Preserve null and exception paths. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {},
+      "LocalNames": {
+        "0": "stateMachine"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005D0",
+      "NewName": "Unregister",
+      "Reason": "Exact state5EE removes supplied TaskRegistration under lock; if last registration and timer exists, await StopTimerTaskAsync with original suppressed stop failures. Existing Unregister describes full operation. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "registration"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005D1",
+      "NewName": "",
+      "Reason": "Exact state5EA snapshots list under lock then sequentially awaits registration.ExecuteAsyncIfDue(now,token). Rethrows operation cancellation only when token requested; logs other failures and continues. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "now",
+        "2": "cancellationToken"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005D2",
+      "NewName": "",
+      "Reason": "Generated predicate5E7 compares registration.get_TaskObject()==captured task, not registration handle. Bus2587 passes Class680 underlying task; selected registration5DF sets nextDueTime to current time. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "task"
+      },
+      "LocalNames": {
+        "0": "taskSelector",
+        "1": "registrationsLock",
+        "2": "lockTaken"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005D3",
+      "NewName": "StartTimerTask",
+      "Reason": "Task.Run(Func<Task>,timerCancellation.Token); callback5D7 is CompilerGenerated and owns async state5E4. Reconstruct callback into this owner; keep its original metadata/name. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {},
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005D8",
+      "NewName": "",
+      "Reason": "Registration ctor retains scheduler/task and initializes nextDueTime=Class701.c()+initialDelay; it does not store repeat frequency. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "scheduler",
+        "2": "task",
+        "3": "initialDelay"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005DC",
+      "NewName": "ExecuteAsyncIfDue",
+      "Reason": "Return CompletedTask if nextDueTime>now; otherwise delegate ExecuteAsync(token). Legitimate scheduler/registration receivers share same operation spelling. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "now",
+        "2": "cancellationToken"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005DD",
+      "NewName": "ExecuteAsync",
+      "Reason": "Exact state5E2 logs, awaits task.kx(token), then updates nextDueTime to Class701.c()+task.kw(). A failure prevents rescheduling; preserve original condition. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "cancellationToken"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060005DF",
+      "NewName": "SetDueNow",
+      "Reason": "Set nextDueTime to Class701.c(); scheduler task selector calls this operation. Legitimate nested receiver uses same operation name. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {},
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06002580",
+      "NewName": "",
+      "Reason": "Lazily create recurring scheduler and forward task plus initialDelay to Register; returned handle is TaskRegistration. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "task",
+        "2": "initialDelay"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06002586",
+      "NewName": "",
+      "Reason": "Exact state2624 finds SecondaryRouterObject; builds FunctionProperty command PID69 normal payload with interface device address and optional cleanup payload, executes once then registers task with interval; preserve failures and same-subnet guards. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {
+        "1": "segmentCouplerConnection",
+        "2": "registrationInterval",
+        "3": "cancellationToken"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06002587",
+      "NewName": "UpdateSegmentCouplerRegistration",
+      "Reason": "Retain checked UpdateSegmentCouplerRegistration alias. On same subnet update changed interface device-address byte2 and SetDueNow(underlying registration task); on changed subnet initiate original unregister with CancellationToken.None. Preserve catch/log and unawaited unregister. Preserve exact physical signatures, metadata contracts, branch/timing/cancellation/error behavior. Compiler-generated types/callbacks remain attached to exact attribute/ldftn owners; no invented generated name or ordinal. Source aliases only; no source/binary patch or runtime claim.",
+      "ParameterNames": {},
+      "LocalNames": {
+        "0": "interfaceAddress",
+        "1": "segmentCouplerAddress",
+        "2": "registrationUpdateException"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060004C8",
+      "Disposition": "preserve",
+      "Reason": "Complete hash-bound application family includes SDK-protected n9 definition. Keep original implementation method identity and scopes for unchanged Apps. Frequency accessor returns stored repeat interval. Readability comes from private type/fields/callers; no independent virtual alias or semantic-readability claim for protected spelling."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060004C9",
+      "Disposition": "preserve",
+      "Reason": "Complete hash-bound application family includes SDK-protected n9 definition. Keep original implementation method identity and scopes for unchanged Apps. Execution forwards normal payload/object index/property ID to nc function-property command, or returns CompletedTask for null data; original behavior does not check disposed. Readability comes from private type/fields/callers; no independent virtual alias or semantic-readability claim for protected spelling."
+    }
+  ]
+}
