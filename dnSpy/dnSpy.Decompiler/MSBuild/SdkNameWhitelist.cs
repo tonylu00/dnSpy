@@ -28,7 +28,14 @@ namespace SourceNameMapping {
             string normalized = string.Join("/", path.Split('/', '\\').Where(p => p.Length != 0 && p != "."));
             return Path.DirectorySeparatorChar == '\\' ? normalized.ToUpperInvariant() : normalized;
         }
-        static string Key(string module, string token) => Normalize(module) + "|" + token.ToUpperInvariant();
+        static string Key(string module, string token) {
+            // Maps accept optional prefixes and padding. Compare the numeric
+            // identity so alternate spellings cannot bypass SDK protection.
+            string digits = token.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? token.Substring(2) : token;
+            if (!uint.TryParse(digits, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint value))
+                throw new InvalidDataException("Invalid SDK whitelist map token: " + token);
+            return Normalize(module) + "|0x" + value.ToString("X8", CultureInfo.InvariantCulture);
+        }
         public static string ResolveModule(string root, string relative) {
             if (string.IsNullOrWhiteSpace(relative) || Path.IsPathRooted(relative) || relative.Split('/', '\\').Any(p => p == ".."))
                 throw new InvalidDataException("Whitelist requires a relative physical module path.");

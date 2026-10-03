@@ -21,6 +21,13 @@ Retain the SDK whitelist binding, record coverage and unresolved evidence, and c
 validated substantial milestones. These are naming checkpoints, not consolidated binary
 verification. Choose fresh outputs and never patch maps or ETS source by replacement.
 
+`Tests/NameReview/2026-09-12-application-pass/checkpoint_naming_block.py` records a
+new naming block from its native update/check reports, bound review and map hashes.
+It updates the cumulative review ledger and current state without running full audits
+or editing ETS source/binaries. Pass `--state`, `--sink`, `--map`, `--review`,
+`--update`, `--check` and a descriptive `--block`. Existing ledger rows require an
+explicit reviewed merge; this helper only accepts new rows.
+
 After application-wide naming closes, freeze the mapping and scope. Run full SDK/public
 API audits, binary application/reference verification, source export/build and staged
 runtime verification together. `--wave` includes full audits and application: do not run

@@ -18,7 +18,9 @@ What lives here:
 
 Rules:
 
-- One block = one review file, one `--wave` run, one checkpoint, one commit.
+- One block = one evidence-backed review and inexpensive map/reference checks.
+  Commit validated milestones; defer full `--wave` audits/application and ETS
+  export/build until application-wide mapping freezes.
 - No per-block narrative, no commit-hash prose, no wave reports. `git log` is the log.
 - `AppliedToSource` stays `false` until the consolidated Phase 4 export/build/verification.
   Metadata apply and `--verify-applied` do not prove source rebuilding or ETS runtime behaviour.

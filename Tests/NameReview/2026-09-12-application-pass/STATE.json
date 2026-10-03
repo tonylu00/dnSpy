@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T04:34:32Z",
+  "UpdatedUtc": "2026-10-03T05:20:56Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -16,16 +16,17 @@
     "Goal": "D:\\knx_analysis\\GOAL.md",
     "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
     "DecompilerFix": "ILSpy submodule codex/local-commits: 3ea1c886f recognises checked source aliases for custom awaiter factories; 81659604d resolves checked framework facade references. Current closure-owner, XAML and 64-project build defects are fixed.",
-    "ExporterBuild": "Build the plugin, not the console: dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows. dnSpy.Console.csproj does NOT reference the ILSpy submodule, so building it silently leaves ICSharpCode.Decompiler.dll stale and an export then runs the old decompiler."
+    "ExporterBuild": "Build the plugin, not the console: dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows. dnSpy.Console.csproj does NOT reference the ILSpy submodule, so building it silently leaves ICSharpCode.Decompiler.dll stale and an export then runs the old decompiler.",
+    "SdkGuard": "Numeric SDK token identity enforced in de4dotEx 4abea81f and actual dnSpy export. sdk-token-regression01 suite and portable dnSpy SDK guard pass; actual console rejects protected 06000002 before source output. Current 6.3/6.4 map checks pass. Full App/runtime compatibility remains pending."
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v381.xml",
-      "Sha256": "9E3AFE384D99689964F0B924CE250A3025B76C953BD14C7863F1954DED07F7F9",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave380.json",
-      "NextWave": 382,
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v382.xml",
+      "Sha256": "D1B04F53CF97C73C6C299FCAB339B4567FF076C5495AA9F2D3783B2988C910D2",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v382.json",
+      "NextWave": 383,
       "CumulativeRenamedRows": 16694,
-      "RowsInMap": {"Methods": 12904, "Types": 964, "Fields": 2824, "Parameters": 2550, "Locals": 866},
+      "RowsInMap": {"Types": 970, "Methods": 12904, "Fields": 2858, "Parameters": 2553, "Locals": 866},
       "CountBasis": "RowsInMap counts actual NewName entries in v381; CumulativeRenamedRows is the historical v380 checkpoint total, not current coverage.",
       "AppliedToSource": false
     },
@@ -71,10 +72,10 @@
     },
     "PhysicalScope63": {
       "Inventory": "perf-now/ets63-managed-scope-inventory02.json: 528 managed modules, 270 satellites, 4 native PE, 0 scan errors; all 64 mapped physical paths matched.",
-      "Additional": "45 additional pure-IL first-party candidates require scope/coverage review. Preserve 5 mixed-mode companions and third-party FluentResults (KNX signing alone is not ownership). The 64-project export is incomplete first-party coverage.",
+      "Additional": "45 additional pure-IL first-party candidates beyond v388 baseline. v382 accepts names in Metrics, Compatibility.Utility and PluginRepository, expanding the map to 67 physical modules. Other scope/coverage remains pending; preserve mixed-mode and third-party binaries.",
       "Discovery": "45 modules: 38,818 methods, 4,621 types, 23,064 fields. Updated inventories: unmapped-type-review03 (18 type candidates), unmapped-field-review02 (1,976 field candidates). These are review flags, not rename decisions or completed coverage.",
-      "ToolFix": "de4dotEx 2697c405 classifies types/generated field placeholders; --inspect-type binds aliases by physical path, hash/MVID and definition signature/name, and exposes field values/flags and layout. Portable suite passes. 856e4c1c preserves meaningful Iri.",
-      "NextBlock": "Review additional type/field feature blocks with coupled parameter/local evidence. Metrics constants and compatibility-wrapper readers give semantic anchors. Preserve legitimate RDF/unit/XML terms. Metrics has unused PrivateScope/default-data fields that may need tool-native export support."
+      "ToolFix": "de4dotEx 19795c62 exposes exact field dependency assembly identity; 4abea81f adds SDK-preserving physical --select-map and numeric whitelist tokens. Portable native suite passes. Metrics dead padding uses existing metadata-only field support; no exporter patch needed.",
+      "NextBlock": "Continue remaining XML/device and generated-storage evidence. KnxXmlDevice b_0 is the ActivityCalculationFinished backing delegate from DynamicData bw/b (xml-device-type01.json); review that coupled contract before naming. Preserve meaningful RDF/unit/schema abbreviations."
     }
   },
   "Naming": {
@@ -151,15 +152,15 @@
       "Password": "Synthetic test-mcp-v388-password (P-0813, GUID 0f691dc1-e25a-473a-8f72-bffb229109d9) created password-protected, opened/closed, then reopened with password in a fresh process. is_open=true, is_broken=false, save_suppressed=false. perf-now/ets63-v388-password-report01.json; ETS exited normally; 16 checkpointed profile files restored with matching hashes. Full complex protected-project coverage remains unproven."
     },
     "SourceExport": {
-      "Map": "names63-staged-v381.xml = v380 minus the two rows that collided in the source export (CvNext ConverterException::b -> get_Data; HawkNET Interface24`2 -> IIoTTaskState). check-map PASS, 0 errors.",
+      "Map": "v388 baseline used v381. Current naming map v382 adds 43 decisions in three components. additional-components-export02 built three focused projects before mapping-first policy revision (0 errors, 27 warnings); this is not current full-scope or runtime verification.",
       "Scope": "v388 exports the 64 mapped physical modules. The whole-tree inventory found 45 additional pure-IL first-party candidates; confirm scope and review naming before the next consolidated export. Third-party and mixed-mode binaries remain untouched.",
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
-      "Command": "Current fixed CLI: dnspy-await-alias-fix01/dnSpy.Console.exe --source-name-map <checked-map> --public-sign --app-config ETS6.3_api_preserved4/ETS6N.exe.config -o <fresh-out>, plus explicit physical module paths; DNSPY_PACKAGE_MAP=perf-now/nuget-packages.txt. Build the actual ILSpy plugin, then the exported solution in Release.",
+      "Command": "Current fixed CLI: dnspy-sdk-guard-fix01/dnSpy.Console.exe --source-name-map <checked-map> --public-sign --app-config ETS6.3_api_preserved4/ETS6N.exe.config -o <fresh-out>, plus explicit physical module paths; DNSPY_PACKAGE_MAP=perf-now/nuget-packages.txt. Build the actual ILSpy plugin, then the exported solution in Release.",
       "State": "2026-10-03 ets63-source-v388: fresh export of all 64 projects exits 0; 13,017 application C# files plus generated support (13,360 total). Complete Release solution build succeeds: 64 outputs, 0 errors, 15,375 warnings. Former five ViewModel alias errors fixed through checked framework facade resolution. Evidence: ets63-source-v388/solution-build.log; portable MethodReferenceResolutionRegression and SourceAliasReferencesRegression pass.",
       "Caveat": "All 64 exported projects now compile, including ETS6N and ParameterDialog. This proves source-build readiness for the mapped first-party set, not whole-tree naming closure, complete first-party inventory or runtime compatibility.",
       "Next": [
-        "Complete additional first-party coverage and confirm pure-IL scope. Targeted exports/builds are allowed for concrete exporter failures, not after every small name decision.",
+        "Complete remaining first-party scope and application-wide mapping using inexpensive checks. Consolidated ETS export/build, full audits and binary application follow map freeze.",
         "Freeze maps for consolidated export/build and runtime audits. Continue unchanged-App/SDK tests on isolated copies, preserving profiles and keeping ExtendedLogging disabled."
       ]
     },
