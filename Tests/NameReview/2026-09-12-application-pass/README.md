@@ -106,3 +106,12 @@ coupled accessors to native getter bodies, physical graph references and complet
 native families. It checks every graph input hash, the selected first-party scope,
 exact SDK whitelist and previous decisions. It writes review/evidence JSON only;
 native update/check and the explicit checkpoint guards remain required.
+
+`prepare_constructor_parameter_review.py` prepares constructor scope decisions
+from native direct-storage proposals, original bodies and physical graph uses.
+It preserves constructor identity and meaningful existing names, binds role
+provenance to exact field aliases/metadata, and records unresolved parameter/local
+positions with the missing evidence. `--preservations` accepts explicit physical
+and parameter/proposal preimages plus behavioral rationale for meaningful names
+that should remain unchanged. This workflow writes review JSON only; native map
+update/check and an application-wide coverage record remain separate gates.
