@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T01:58:28Z",
+  "UpdatedUtc": "2026-10-03T02:14:25Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -66,7 +66,7 @@
       "Where": "Class1353::a(Class989, CoapMessageCode, string, string, string, byte[], [opt] bool, [opt] bool, [opt] List<Class1112>) -> state machine Class1353/Struct958; and Class1360 x7 (Task<ValueTuple<...>>, state machines under Class1360/Type_1424).",
       "Verified": "Class1353::a kickoff IL is canonical end to end (ldloca/initobj, Create, stfld builder, this, params, state=-1, ldflda builder + ldloca state + Start<T>(!!0&), get_Task, ret) and Struct958 has [CompilerGenerated] + IAsyncStateMachine.",
       "Hypotheses": ["one Class1360 state machine 'a' under Type_1424 lacks [CompilerGenerated]", "both stubs carry an unused extra local ([1] int16) - partially cleaned control flow", "Task<ValueTuple<...>> return shape adds an instruction the middle loop rejects"],
-      "Next": "Narrowed 2026-09-23 with the ILSPY_ASYNC_TRACE diagnostic (dnSpy 55e15459a + d7d01bfc5): the factory log shows 06001F69 IS offered to MicrosoftAsyncDecompiler.TryCreateCore and a kickoff stub in Class1353 IS accepted, so the remaining failure is downstream - RunStep2/AnalyzeMoveNext on the state machine either throws IncompleteAsyncMethodException or leaves the raw body. Next: trace RunStep2 for that token (same env var) and fix that path."
+      "Next": "2026-10-03 ILSPY_ASYNC_TRACE proves 06001F69 kickoff accepted, Step2 exception-region branches valid, but one await(ldloca(var_14)) remains. Its factory is obfuscated Class1080::d rather than literal GetAwaiter, which the detached/backward await normalizers require. Evidence: perf-now/falcon-async-leftover-trace04.txt. Fix structural awaiter-factory recognition plus source compilation of that pattern; examine the other seven independently. Diagnostic changes leave emitted source unchanged."
     },
     "BaselineTask": "Inventory the whole 6.3/6.4 application trees; measure patched-decompiler readability for first-party components, keeping third-party dependencies untouched. Store per-module numbers here."
   },
@@ -98,7 +98,7 @@
       ]
     },
     "NextItems": [
-      { "Task": "source export, remaining 2 first-layer errors", "Detail": "v386 fixes both closure-owner errors; HawkNET CS1705 AsyncInterfaces 7 versus 1 is newly exposed. WPF fix passes a runtime fixture but needs a fresh ETS export. See Deferred.SourceExport." },
+      { "Task": "source export, AsyncInterfaces WPF conflict", "Detail": "v387: 64 projects exported; 6 first-layer CS0433 errors in SDK wpftmp import both AsyncInterfaces 7 preserved binary and 1 NuGet contract. Filter conflicting transitive compile assets through the exporter/build support, then build the actual solution. WPF aliases pass a runtime fixture, but downstream ETS projects remain unproven." },
       { "Task": "readability baseline sweep", "Detail": "patched decompiler over the whole 6.3 tree + 6.4; per-module lambdas/async/await/raw stubs/display classes into Readability.Baseline" },
       { "Task": "Falcon 8 raw stubs", "Detail": "see Readability.FalconLeftover8" },
       { "Task": "record the evidence-free remainder", "Detail": "28105 rows unresolved with the no-evidence-in-scope reason so --coverage counts them; never invent names or suffixes" },
@@ -134,12 +134,12 @@
       "Scope": "Only the 64 modules the map covers are exported; third-party assemblies (DevExpress, Telerik, System.Reactive, System.Text.Json, HtmlAgilityPack, ...) stay untouched as binaries and are referenced, not decompiled - per the 2026-09-25 instruction to use the original packages.",
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
-      "Command": "python D:\\knx_analysis\\perf-now\\export-full.py --out <out>  (dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> plus the 64 paths from firstparty-files.txt - the console has no @response-file support; then dotnet build <out>\\solution.sln)",
-      "State": "2026-10-03 run ets63-source-v386: 64 projects, 13,296 C# files, export exit 0. Both closure-owner errors are fixed. Build exposes HawkNET CS1705 (Falcon needs AsyncInterfaces 7; HawkNET selects package version 1) and the old XAML target condition skips reference resolution. WPF fixes are validated separately, not yet in this tree.",
+      "Command": "Latest run uses D:\\knx_analysis\\dnspy-runtime-fix01\\dnSpy.Console.exe --source-name-map names63-staged-v381.xml --public-sign --app-config D:\\knx_analysis\\ETS6.3_api_preserved4\\ETS6N.exe.config -o <fresh-out> plus the 64 paths in firstparty-files.txt. Then dotnet build <out>\\solution.sln -c Release; DOTNET_CLI_UI_LANGUAGE=en gives readable build logs.",
+      "State": "2026-10-03 ets63-source-v387: 64 projects, 13,296 C# files, export exit 0. Original ETS6N.exe.config redirects select AsyncInterfaces 7, and binary references are pinned by full resolved identity. Build has 6 CS0433 first-layer errors in Knx.Ets.Sdk wpftmp: NuGet AsyncInterfaces 1 remains alongside preserved version 7. Downstream projects may be skipped.",
       "Caveat": "A failing project makes MSBuild skip its dependents, so the 3 errors are the first layer only: every earlier layer (25 -> 8 -> 3) hid the next one behind a dependency. Re-measure after each fix; do not read '3' as the total.",
       "Next": [
-        "Fix AsyncInterfaces physical resolution: inspect the original application binding redirects and resolved references; do not let a transitive NuGet dependency replace the original version 7 binary or collapse genuinely distinct compatibility assemblies.",
-        "WPF fixes pass WpfSourceReferenceRegression03 including runtime resource loading; re-export ETS with the updated BAML plugin and console, build the actual whole solution and continue through newly exposed errors."
+        "Resolve SDK WPF temporary-build CS0433: keep the original AsyncInterfaces 7 physical binary and prevent conflicting NuGet version 1 compile assets from being imported alongside it. Both are currently retained by full identity; do not weaken identity pinning or collapse original compatibility binaries.",
+        "After the exporter/build-support fix, export and build the complete actual ETS solution; continue through newly exposed errors. WPF resource alias fixes pass WpfSourceReferenceRegression03 including runtime BAML loading, but the actual dependent ETS projects are not yet fully built."
       ]
     },
     "MemoryBlowup": {
@@ -147,12 +147,12 @@
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
       "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
       "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
-      "FinalExport": "D:\\knx_analysis\\ets63-source-v386: 64 projects, 13,296 C# files; build has 2 first-layer errors. Closure-owner fix passes the full tree; the newer WPF fix has not been exported into this tree.",
+      "FinalExport": "D:\\knx_analysis\\ets63-source-v387: 64 projects, 13,296 C# files; 6 first-layer CS0433 errors in SDK WPF temporary compilation. Closure ownership is fixed; consolidated ETS compilation and runtime remain incomplete.",
       "RemainingErrors": {
-        "Count": 2,
+        "Count": 6,
         "ClosureOwnerConflict": "Fixed in v386: ownership follows exact generated body/state-machine references, not an overload name prefix. Portable ClosureOwnerRegression02 passes execution, restored metadata owner names and stable incremental rebuild.",
         "XamlRuntimeNames": "Pending fresh ETS export. WpfSourceReferenceRegression03 passes: resolve reference assemblies before testing the item condition; register BAML-only type references; restore resource names directly from mappings. Readable XAML compiles, runtime BAML loads original types, incremental hash is stable.",
-        "AsyncInterfacesVersion": "v386 HawkNET CS1705: Falcon references Microsoft.Bcl.AsyncInterfaces 7.0.0.0 but HawkNET selects 1.0.0.0 from Autofac transitive package 1.1.0. Export emits a resolved original HintPath plus a duplicate unresolved bare reference; inspect original binding redirects and physical resolution before fixing.",
+        "AsyncInterfacesVersion": "v387: full-identity pinned AsyncInterfaces 7 and original host redirects remove the old HawkNET CS1705 error, but Knx.Ets.Sdk WPF temporary compilation now imports both version 7 and NuGet version 1; 6 CS0433 errors. Fix transitive compile asset selection, not original binary identities.",
         "FixedThisTurn": "CS1061 x4 IpDeviceDiscovery (lambda parameter 'sender' shadowing the outer 'sender' - the declaration was allocated 'sender1' but the printer took the name from the ILVariable; dnSpy eceb55413 makes the variable adopt the declaration name); CS1061 x2 Class1109 ('byte[] a = RandomNumbers.a(16); EchoOptionCache[a.a] = a' - a cached parent-closure substitution kept the stale spelling 'a' after the closure variable was renamed 'a2'; dnSpy eceb55413 refreshes every variable reference from its own variable); CS1503 Class122 (the IL calls NoConstructorsFoundException(Type, IConstructorFinder), which only exists in Autofac 7.0 while the package map pinned 6.5); CS0012 x5 FluentResults (package 3.15.2 ships assembly 3.15.2.0, the tree ships 3.15.2.21); CS0234 Knx.Ets.MyKnx System.Text.Encodings.Web (bare reference, now a package row)."
       },
       "ReadabilityImpact": {

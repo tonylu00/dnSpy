@@ -299,11 +299,16 @@ namespace dnSpy.Decompiler.MSBuild {
 						hash.Add(r.Name);
 						if (TryWritePackageReference(writer, r.Name))
 							continue;
-						writer.WriteStartElement("Reference");
-						writer.WriteAttributeString("Include", IdentifierEscaper.Escape(r.Name));
 						var hintPath = GetHintPath(asm);
-						if (hintPath is not null)
+						writer.WriteStartElement("Reference");
+						// Pin the effective physical identity, including host binding
+						// redirects. A simple-name Include lets a transitive NuGet
+						// contract silently replace this preserved runtime binary.
+						writer.WriteAttributeString("Include", hintPath is not null && asm is not null ? asm.FullNameToken : IdentifierEscaper.Escape(r.Name));
+						if (hintPath is not null) {
 							writer.WriteElementString("HintPath", hintPath);
+							writer.WriteElementString("SpecificVersion", "true");
+						}
 						writer.WriteEndElement();
 					}
 					foreach (var r in extraRefsWithoutImplicitRefs) {
