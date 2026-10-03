@@ -176,3 +176,15 @@ contract preservation; it does not count as new semantic names or reconstructed
 source. Run `test_sdk_proposal_retirement.py` for stale identity, scope, history,
 whitelist and path guards. The v407 review retires 1,567 rejected proposals and
 166 proposed scope aliases; actual checked names and runtime metadata are intact.
+
+The v408 Bus/connection checkpoint adds 133 coupled aliases (two types, 12
+methods, 34 fields, 38 parameters and 47 locals) and corrects nine earlier names
+that described only a guard, logging or a collision suffix. Complete original
+send/security/RF, response wait, disposal and shared connection lifetime bodies
+support those roles. `GetAsync2` becomes `OpenConnectorAsync`; the shared
+connection acquisition overload retains `GetAsync`. All older scopes and physical
+bindings remain intact. Native SDK/contract checks accept 142 exact edits with
+zero errors, ledger coverage has no invalid rows, and preparation reproduces
+byte-for-byte. See `falcon-bus-connection-verification-v408.json`. The map is
+staged; consolidated source/build/runtime and unchanged-App verification remain
+pending. The 109-module inventory has 23,292 remaining native candidates.

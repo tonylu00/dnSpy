@@ -265314,7 +265314,7 @@
    "Token": "0x060025D2",
    "Signature": "T Knx.Falcon.Bus::a<T>(System.String,T)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing GetOption reads lazy Falcon-prefixed entry-assembly appSettings strings and converts using InvariantCulture; missing key returns caller default. Keep checked method alias. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -265327,20 +265327,20 @@
      "Sequence": 1,
      "OriginalName": "string_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "optionName"
     },
     {
      "Sequence": 2,
      "OriginalName": "gparam_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "defaultValue"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.String",
-     "NewName": ""
+     "NewName": "optionValue"
     },
     {
      "Index": 1,
@@ -265350,7 +265350,24 @@
    ],
    "NewName": "GetOption",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing GetOption reads lazy Falcon-prefixed entry-assembly appSettings strings and converts using InvariantCulture; missing key returns caller default. Keep checked method alias. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -289662,7 +289679,7 @@
    "Token": "0x06001AEC",
    "Signature": "System.Threading.Tasks.Task`1<Class1293> Class1293::b(Knx.Falcon.Configuration.ConnectorParameters,Knx.Falcon.ConnectorMode,System.Threading.CancellationToken,Interface64)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing GetAsync reuses a compatible connection only after TryAddReference; otherwise reserves matching pending endpoint, opens connector, publishes connection, signals reservation disposal and preserves original retry/conflict paths. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -289677,32 +289694,32 @@
      "Sequence": 1,
      "OriginalName": "connectorParameters_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "connectorParameters"
     },
     {
      "Sequence": 2,
      "OriginalName": "connectorMode_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "mode"
     },
     {
      "Sequence": 3,
      "OriginalName": "cancellationToken_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cancellationToken"
     },
     {
      "Sequence": 4,
      "OriginalName": "interface64_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "diagnosticEvents"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "Class1293/e",
-     "NewName": ""
+     "NewName": "stateMachine"
     },
     {
      "Index": 1,
@@ -289712,7 +289729,24 @@
    ],
    "NewName": "GetAsync",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing GetAsync reuses a compatible connection only after TryAddReference; otherwise reserves matching pending endpoint, opens connector, publishes connection, signals reservation disposal and preserves original retry/conflict paths. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -289754,7 +289788,7 @@
    "Token": "0x06001AF1",
    "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.Connectors.IBusConnector> Class1293::a(Knx.Falcon.Configuration.ConnectorParameters,Knx.Falcon.ConnectorMode,System.Threading.CancellationToken,Interface64)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Exact MoveNext 06001AFD selects original connector factory by ConnectorParameters subtype, awaits it and returns IBusConnector. GetAsync2 was collision spelling, not an operation role; distinguish connector opening from shared connection acquisition. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.\nReviewed method correction: Exact MoveNext 06001AFD selects original connector factory by ConnectorParameters subtype, awaits it and returns IBusConnector. GetAsync2 was collision spelling, not an operation role; distinguish connector opening from shared connection acquisition. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -289769,32 +289803,32 @@
      "Sequence": 1,
      "OriginalName": "connectorParameters_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "connectorParameters"
     },
     {
      "Sequence": 2,
      "OriginalName": "connectorMode_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "mode"
     },
     {
      "Sequence": 3,
      "OriginalName": "cancellationToken_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "cancellationToken"
     },
     {
      "Sequence": 4,
      "OriginalName": "interface64_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "diagnosticEvents"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "Class1293/d",
-     "NewName": ""
+     "NewName": "stateMachine"
     },
     {
      "Index": 1,
@@ -289802,9 +289836,34 @@
      "NewName": ""
     }
    ],
-   "NewName": "GetAsync",
+   "NewName": "OpenConnectorAsync",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Exact MoveNext 06001AFD selects original connector factory by ConnectorParameters subtype, awaits it and returns IBusConnector. GetAsync2 was collision spelling, not an operation role; distinguish connector opening from shared connection acquisition. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "GetAsync",
+     "PreviousMappedAlias": "GetAsync2",
+     "Alias": "OpenConnectorAsync",
+     "Evidence": "Exact MoveNext 06001AFD selects original connector factory by ConnectorParameters subtype, awaits it and returns IBusConnector. GetAsync2 was collision spelling, not an operation role; distinguish connector opening from shared connection acquisition. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ]
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -388256,7 +388315,54 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "OnConnectionPropertyChanged",
-   "ParameterNames": []
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "connectionStateHandlerException"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Exception",
+     "NewName": "interfaceConfigurationHandlerException"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing connection property event handler retains sender/e; distinguish caught ConnectionStateChanged and InterfaceConfigurationChanged subscriber failures by exact EH stores/logs. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 1,
+      "OriginalName": "sender",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     },
+     {
+      "Sequence": 2,
+      "OriginalName": "e",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     }
+    ],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   },
+   "Reason": "\nScope review: Existing connection property event handler retains sender/e; distinguish caught ConnectionStateChanged and InterfaceConfigurationChanged subscriber failures by exact EH stores/logs. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -388270,7 +388376,94 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "OnGroupMessageReceived",
-   "ParameterNames": []
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class750",
+     "NewName": "messagePrimitive"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class818",
+     "NewName": "groupMessage"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "isSecure"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class936",
+     "NewName": "secureMessage"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.GroupEventArgs",
+     "NewName": "groupEventArgs"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Class895",
+     "NewName": "readMessage"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "Class969`1<Class823>",
+     "NewName": "decryptionResult"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "Class894",
+     "NewName": "writeMessage"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "Class893",
+     "NewName": "responseMessage"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Exception",
+     "NewName": "handlerException"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing group reception decrypts secure messages when needed and creates GroupEventArgs for original read/write/response variants. Boolean defaults false and becomes true after successful secure decryption, matching GroupEventArgs.IsSecure; locals bind typed dispatch and exact constructor flow. Keep sender/e and original event alias. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 1,
+      "OriginalName": "sender",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     },
+     {
+      "Sequence": 2,
+      "OriginalName": "e",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     }
+    ],
+    "Locals": [
+     {
+      "Index": 10,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 11,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   },
+   "Reason": "\nScope review: Existing group reception decrypts secure messages when needed and creates GroupEventArgs for original read/write/response variants. Boolean defaults false and becomes true after successful secure decryption, matching GroupEventArgs.IsSecure; locals bind typed dispatch and exact constructor flow. Keep sender/e and original event alias. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -388284,7 +388477,49 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "OnKnxMessageReceived",
-   "ParameterNames": []
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Exception",
+     "NewName": "handlerException"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing OnKnxMessageReceived retains sender/e; slot0 is the caught subscriber exception logged as Exception in KnxMessageReceived. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 1,
+      "OriginalName": "sender",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     },
+     {
+      "Sequence": 2,
+      "OriginalName": "e",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     }
+    ],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   },
+   "Reason": "\nScope review: Existing OnKnxMessageReceived retains sender/e; slot0 is the caught subscriber exception logged as Exception in KnxMessageReceived. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name."
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -565648,6 +565883,1364 @@
      }
     ]
    }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0600259F",
+   "Signature": "System.Collections.BitArray Knx.Falcon.Bus::a(System.Collections.Generic.IReadOnlyCollection`1<System.Byte>)",
+   "OriginalName": "a",
+   "Reason": "Two original collection passes mask acknowledgment indexes with 63. First computes maximum masked index plus one for BitArray length; second calls BitArray.Set(index,true). Preserve masks, empty collection result and both enumerator finally blocks. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IReadOnlyCollection`1<System.Byte> ireadOnlyCollection_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ireadOnlyCollection_0",
+     "HasMetadata": true,
+     "NewName": "expectedAcks"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Byte",
+     "NewName": "bitmapLength"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.BitArray",
+     "NewName": "ackBitmap"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Byte>",
+     "NewName": "ackEnumerator"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Byte",
+     "NewName": "requiredAckIndex"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Byte",
+     "NewName": "ackIndex"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "BuildExpectedRfAckBitmap",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025A7",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> Knx.Falcon.Bus::a(Class891,Knx.Falcon.RfMulti.RfMultiSend,System.Boolean,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "Reason": "Async owner 060025A7 is exactly linked to MoveNext 0600262A/type 020006FC. It checks connection/mode, sets HopCount, selects group key at 730, encrypts at 665, enumerates RF variants at 688/767, sends and waits for confirmations, folds IsConfirmed and adds original timeout diagnostics. Its old guard-only alias omits most behavior. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class891 class891_0",
+    "2: Knx.Falcon.RfMulti.RfMultiSend rfMultiSend_0",
+    "3: System.Boolean bool_3",
+    "4: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class891_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "rfMultiSend_0",
+     "HasMetadata": true,
+     "NewName": "rfMultiSend"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "requestRfMultiAcknowledgments"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/ak",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SendGroupMessageAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "EnsureBusModeAllowsRemoteGroupMessages",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025A8",
+   "Signature": "System.Collections.Generic.IEnumerable`1<Class818> Knx.Falcon.Bus::a(Class818,Knx.Falcon.RfMulti.RfMultiSend,System.Boolean)",
+   "OriginalName": "a",
+   "Reason": "Exact iterator owner 060025A8 links type 020006F0/MoveNext 0600260E; null RF options yield the original message, otherwise clones Ready/Fast/Slow variants with original band/mode and AckSlots/expected-fast-or-slow-ack bitmaps. Boolean controls RF acknowledgments, not security or ordinary send confirmation. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_0",
+    "2: Knx.Falcon.RfMulti.RfMultiSend rfMultiSend_0",
+    "3: System.Boolean bool_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "rfMultiSend_0",
+     "HasMetadata": true,
+     "NewName": "rfMultiSend"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "bool_3",
+     "HasMetadata": true,
+     "NewName": "requestRfMultiAcknowledgments"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "EnumerateRfMultiMessages",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025A9",
+   "Signature": "Knx.Falcon.DataSecurity.SecureKey Knx.Falcon.Bus::a(Knx.Falcon.GroupAddress)",
+   "OriginalName": "a",
+   "Reason": "Use GroupCommunicationSecurity[groupAddress].Key when present, wrapped as a non-tool SecureKey; otherwise use first ISecureKeyService.GetAvailableMulticastKeys(default IndividualAddress,groupAddress), or null. Preserve fallback/null and key-selection order. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.GroupAddress groupAddress_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddress_0",
+     "HasMetadata": true,
+     "NewName": "groupAddress"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.DataSecurity.GroupAddressSecurityData",
+     "NewName": "groupAddressSecurityData"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.IndividualAddress",
+     "NewName": "defaultSourceAddress"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetGroupSecureKey",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025CE",
+   "Signature": "System.Threading.Tasks.Task`1<T> Knx.Falcon.Bus::a<T>(Class818,System.Func`2<T,System.Boolean>,System.TimeSpan,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "Reason": "Exact async owners 060025CE/25CF link MoveNext 06002626/2628. LayerListener is installed on applicationLayer before Class750(message) dispatch; callback selects typed responses and TaskCompletionSource<T> waits with original cancellation. Timeout overload uses ac3 timeout helper, original No Response text/diagnostics, and listener disposal. Both are legitimate same-name overloads with distinct signatures. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_0",
+    "2: System.Func`2<T,System.Boolean> func_1",
+    "3: System.TimeSpan timeSpan_0",
+    "4: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "responsePredicate"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "timeSpan_0",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/ai<T>",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SendMessageAndWaitForResponseAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025CF",
+   "Signature": "System.Threading.Tasks.Task`1<T> Knx.Falcon.Bus::a<T>(Class818,System.Func`2<T,System.Boolean>,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "Reason": "Exact async owners 060025CE/25CF link MoveNext 06002626/2628. LayerListener is installed on applicationLayer before Class750(message) dispatch; callback selects typed responses and TaskCompletionSource<T> waits with original cancellation. Timeout overload uses ac3 timeout helper, original No Response text/diagnostics, and listener disposal. Both are legitimate same-name overloads with distinct signatures. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_0",
+    "2: System.Func`2<T,System.Boolean> func_1",
+    "3: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "responsePredicate"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/Struct1081`1<T>",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SendMessageAndWaitForResponseAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025CC",
+   "Signature": "System.Void Knx.Falcon.Bus::b(System.Object,EventArgs5)",
+   "OriginalName": "b",
+   "Reason": "Native body forwards EventArgs5.a() unchanged to applicationLayer dispatch. Exact link-layer event subscription/ldftn 25CC in 060025F8 at 525 and detach in shutdown at 25F6:2175 prove layer origin; retain meaningful sender/e. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object sender",
+    "2: EventArgs5 e"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ForwardLinkLayerMessageToApplicationLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 1,
+      "OriginalName": "sender",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     },
+     {
+      "Sequence": 2,
+      "OriginalName": "e",
+      "MissingEvidence": "Meaningful original sender/e retained, or role needs further caller evidence."
+     }
+    ],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025D4",
+   "Signature": "System.Void Knx.Falcon.Bus::a(Class818)",
+   "OriginalName": "a",
+   "Reason": "Wrap typed message in KnxMessageEventArgs at IL3 and call existing OnKnxMessageReceived/25D0 at IL8 with null sender. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_0",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "NotifyKnxMessageReceived",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025D1",
+   "Signature": "Knx.Falcon.NetworkDeviceInfo[] Knx.Falcon.Bus::a()",
+   "OriginalName": "a",
+   "Reason": "Lock device weak-reference registry, prune dead entries, cast each device transport to ConnectionOrientedTransportLayer and emit NetworkDeviceInfo only when its connected getter is true. Preserve snapshot iteration/order and nullable address metadata. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Falcon.NetworkDeviceInfo>",
+     "NewName": "networkDevices"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<System.WeakReference`1<nc>>",
+     "NewName": "deviceReferencesLock"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.WeakReference`1<nc>[]",
+     "NewName": "deviceReferenceSnapshot"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": "referenceIndex"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.WeakReference`1<nc>",
+     "NewName": "deviceReference"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "nc",
+     "NewName": "deviceConnection"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "Class737",
+     "NewName": "transportLayer"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Nullable`1<System.Byte>",
+     "NewName": ""
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetConnectedNetworkDeviceInfo",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 8,
+      "ExpectedType": "System.Nullable`1<System.Byte>",
+      "IlUses": [
+       {
+        "Offset": 100,
+        "OpCode": "stloc.s"
+       },
+       {
+        "Offset": 103,
+        "OpCode": "ldloc.s"
+       }
+      ],
+      "MissingEvidence": "Typed temporary requires complete semantic caller/operation evidence; no invented suffix."
+     },
+     {
+      "Index": 9,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 10,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x06002582",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Bus::c(System.Threading.CancellationToken)",
+   "OriginalName": "c",
+   "Reason": "Exact MoveNext 060025FA snapshots stored outbound segment address/key, clears stored request, calls original 06002583 registration overload and logs original failures. Call is registration; do not relabel it unregistration because request fields are cleared. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/Struct1062",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "RegisterConfiguredOutboundSegmentCouplerAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogSegmentCouplerRegistrationFailure",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025AD",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Bus::method_36()",
+   "OriginalName": "method_36",
+   "Reason": "MoveNext 060025FE snapshots weak nw group communications, warns for live objects, awaits each DisposeAsync then clears registry. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/Struct1064",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DisposeActiveIoTGroupCommunicationsAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogActiveIoTGroupCommunicationsDuringDispose",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025AF",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Bus::e()",
+   "OriginalName": "e",
+   "Reason": "MoveNext 06002600 snapshots weak nh IoT networks, warns for live objects, awaits each DisposeAsync then clears registry. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/s",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DisposeActiveIoTNetworksAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogActiveIoTNetworksDuringDispose",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025B1",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Bus::d()",
+   "OriginalName": "d",
+   "Reason": "MoveNext 060025FC snapshots weak Class604 IoT devices, warns for live objects, awaits each DisposeAsync then clears registry. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/q",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DisposeActiveIoTDevicesAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogActiveIoTDevicesDuringDispose",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025C6",
+   "Signature": "System.Threading.Tasks.Task Knx.Falcon.Bus::c()",
+   "OriginalName": "c",
+   "Reason": "Exact async owner 060025C6/MoveNext 060025F6 releases connection and global weak reference; disposes active device/network sessions; detaches connector/layer handlers; shuts down link/application/transport layers with original ignored-exception diagnostics; clears registries and recurring tasks. Old alias described only one log statement. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/Struct1060",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DisposeConnectionsAndLayersAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogIgnoredLinkLayerShutdownException",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x060025BE",
+   "Signature": "System.Threading.Tasks.Task`1<System.UInt16> Knx.Falcon.Bus::a(Knx.Falcon.IndividualAddress[],System.UInt16,Knx.Falcon.IndividualAddress,System.Threading.CancellationToken)",
+   "OriginalName": "a",
+   "Reason": "MoveNext 0600261A iterates supplied routers while current length exceeds 15, awaits ReadMaxRouterApduLengthAsync, keeps min(current,router limit), logs original caught failures and preserves cancellation checks. Third IndividualAddress input has zero kickoff/state-machine use; do not guess a role. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress[] individualAddress_0",
+    "2: System.UInt16 ushort_1",
+    "3: Knx.Falcon.IndividualAddress individualAddress_1",
+    "4: System.Threading.CancellationToken cancellationToken_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "routerAddresses"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "initialApduLength"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "individualAddress_1",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "cancellationToken_0",
+     "HasMetadata": true,
+     "NewName": "cancellationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.Bus/Struct1074",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ReadMinimumRouterApduLengthAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 3,
+      "OriginalName": "individualAddress_1",
+      "MissingEvidence": "Unused kickoff input: not stored in the exact state machine and not read by operation; original signature retained."
+     }
+    ],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x06001AE9",
+   "Signature": "System.Void Class1293::.ctor(Knx.Falcon.Connectors.IBusConnector,Knx.Falcon.ConnectorMode)",
+   "OriginalName": ".ctor",
+   "Reason": "Connection constructor stores connector and mode and initializes referenceCount to one. Preserve constructor metadata identity. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.IBusConnector ibusConnector_1",
+    "2: Knx.Falcon.ConnectorMode connectorMode_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ibusConnector_1",
+     "HasMetadata": true,
+     "NewName": "busConnector"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "connectorMode_1",
+     "HasMetadata": true,
+     "NewName": "mode"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": []
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x06001AED",
+   "Signature": "System.Boolean Class1293::a(Class1293,Knx.Falcon.Configuration.ConnectorParameters,Knx.Falcon.ConnectorMode)",
+   "OriginalName": "a",
+   "Reason": "Compare connector type, restrict reuse to original modes 0/4, cast connector to Interface67 and delegate original compatibility check. Preserve exact mode conditions. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class1293 class1293_0",
+    "2: Knx.Falcon.Configuration.ConnectorParameters connectorParameters_0",
+    "3: Knx.Falcon.ConnectorMode connectorMode_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class1293_0",
+     "HasMetadata": true,
+     "NewName": "connection"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "connectorParameters_0",
+     "HasMetadata": true,
+     "NewName": "connectorParameters"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "connectorMode_1",
+     "HasMetadata": true,
+     "NewName": "mode"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Interface67",
+     "NewName": "reusableConnector"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "CanReuseConnection",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x06001AEE",
+   "Signature": "System.Boolean Class1293::c()",
+   "OriginalName": "c",
+   "Reason": "Interlocked.Increment referenceCount; if result is one, undo increment and return false to avoid reviving released connection; otherwise log and return true. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "TryAddReference",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogAddRef",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x06001AEF",
+   "Signature": "System.Void Class1293::b()",
+   "OriginalName": "b",
+   "Reason": "Interlocked.Decrement referenceCount; at zero remove active registry entry under Monitor lock, dispose connector and null field. Logging is secondary to lifetime operation. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Object",
+     "NewName": "connectionsLock"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "Release",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "LogRelease",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x06001AF4",
+   "Signature": "System.Void Class1293/a::.ctor(Knx.Falcon.Configuration.ConnectorParameters)",
+   "OriginalName": ".ctor",
+   "Reason": "Pending connection constructor records ConnectorType, USB DevicePath or successfully parsed IPEndPoint and initializes completion source. Preserve fallback null endpoint and original parse conditions. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Configuration.ConnectorParameters connectorParameters_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connectorParameters_0",
+     "HasMetadata": true,
+     "NewName": "connectorParameters"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Net.IPAddress",
+     "NewName": "hostAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Configuration.UsbConnectorParameters",
+     "NewName": "usbParameters"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.Configuration.IpUnicastConnectorParameters",
+     "NewName": "ipParameters"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": []
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x06001AF6",
+   "Signature": "System.Threading.Tasks.Task Class1293/a::a()",
+   "OriginalName": "a",
+   "Reason": "Return stored completionSource.Task, lazily creating source if null; pending reservation Dispose.TrySetResult releases waiting acquisition loop. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Threading.Tasks.TaskCompletionSource`1<Struct827>",
+     "NewName": "completionSource"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "WaitForCompletionAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x06001AF7",
+   "Signature": "System.Boolean Class1293/a::a(Class1293/a)",
+   "OriginalName": "a",
+   "Reason": "Compare ConnectorType then exact endpoint object equality. Either null endpoint matches any endpoint of the same type; preserve original permissive null semantics. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class1293/a a_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "a_0",
+     "HasMetadata": true,
+     "NewName": "other"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "MatchesEndpoint",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "PreviousMappedAlias": "",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses: retain compiler/protection storage pending consolidated export."
+     }
+    ]
+   }
   }
  ],
  "Types": [
@@ -591327,6 +592920,50 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "Knx.Falcon.KnxMessages.RawLinkLayerMessage",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x020004B7",
+   "Signature": "Class1293",
+   "OriginalName": "Class1293",
+   "Reason": "Physical Class1293 owns a shared reference-counted connector, active/pending endpoint registries, conflict detection and connector factory selection. Exact logger Falcon.BusConnection corroborates complete lifetime/ownership review. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.Impl.BusConnection",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x020004B8",
+   "Signature": "Class1293/a",
+   "OriginalName": "a",
+   "Reason": "Nested non-generated reservation groups physical endpoint identity with completion signaling while connector factory runs; GetAsync uses it to serialize conflicting acquisition attempts. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "PendingConnection",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
@@ -950717,6 +952354,2532 @@
    "Unresolved": true,
    "UnresolvedReason": "no-evidence-in-scope: I4 constant 15 has zero field-token references across 111 hash-verified modules. Literal inlining or protection metadata provides no unique semantic field role. Preserve original storage, attributes and value.",
    "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023EF",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Knx.Falcon.Bus::a",
+   "OriginalName": "a",
+   "Reason": "Static ctor GetLogger(Falcon.Bus); exception and lifetime logging consumer fields. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002569",
+     "Offset": 35,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002587",
+     "Offset": 112,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002587",
+     "Offset": 223,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002587",
+     "Offset": 287,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 68,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025C7",
+     "Offset": 8,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025CB",
+     "Offset": 82,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025CB",
+     "Offset": 135,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025CD",
+     "Offset": 115,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025D0",
+     "Offset": 31,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025D3",
+     "Offset": 15,
+     "OpCode": "stsfld"
+    },
+    {
+     "Method": "0x060025DA",
+     "Offset": 247,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 506,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 867,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1670,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1779,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1999,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 118,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 153,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 326,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025FA",
+     "Offset": 146,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025FC",
+     "Offset": 107,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025FE",
+     "Offset": 107,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002600",
+     "Offset": 107,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 400,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 605,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 917,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 1210,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 1360,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 1837,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002622",
+     "Offset": 291,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023F1",
+   "Signature": "System.Boolean Knx.Falcon.Bus::c",
+   "OriginalName": "c",
+   "Reason": "DisposeAsync MoveNext sets true before shutdown; repeated calls return and event/connect paths gate on this flag. It marks start, not completed disposal. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "disposeStarted",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025CB",
+     "Offset": 45,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CB",
+     "Offset": 174,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CD",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025D0",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F4",
+     "Offset": 256,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 86,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002602",
+     "Offset": 168,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002602",
+     "Offset": 177,
+     "OpCode": "stfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023F2",
+   "Signature": "Class1293 Knx.Falcon.Bus::d",
+   "OriginalName": "d",
+   "Reason": "ConnectAsync stores shared Class1293 acquired from its factory; bus feature/config/state/mode getters dereference connector; private shutdown releases and clears it. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connection",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002569",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002569",
+     "Offset": 61,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600256A",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600256A",
+     "Offset": 20,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600256B",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600256E",
+     "Offset": 19,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600256E",
+     "Offset": 90,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002570",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002571",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002572",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002573",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025AA",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025AC",
+     "Offset": 14,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025C7",
+     "Offset": 49,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CA",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F4",
+     "Offset": 180,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 120,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 199,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 542,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 553,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 569,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 597,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 97,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 190,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 226,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 254,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 434,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002604",
+     "Offset": 351,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002604",
+     "Offset": 461,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002604",
+     "Offset": 488,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002606",
+     "Offset": 33,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002608",
+     "Offset": 33,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 286,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 294,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 372,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 154,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 165,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 182,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002614",
+     "Offset": 2256,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 217,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 228,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 1182,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 81,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 92,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 111,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 185,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 778,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 891,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 217,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 228,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 1131,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002622",
+     "Offset": 88,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002622",
+     "Offset": 99,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002622",
+     "Offset": 443,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 821,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 832,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 896,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262C",
+     "Offset": 8,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023F3",
+   "Signature": "System.Boolean Knx.Falcon.Bus::e",
+   "OriginalName": "e",
+   "Reason": "ConnectAsync sets true before factory await and clears on completion; second connect waits while this flag is true. Preserve synchronization and exception behavior. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionInProgress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025F8",
+     "Offset": 75,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 359,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 624,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023F7",
+   "Signature": "Class1278 Knx.Falcon.Bus::i",
+   "OriginalName": "i",
+   "Reason": "EnableDataSecurity creates Class1278 and propagates it to existing device/network sessions; IsDataSecurityEnabled tests this field. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceDataSecurityProcessor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002592",
+     "Offset": 8,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002592",
+     "Offset": 26,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 63,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 146,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 253,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002594",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 140,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 725,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 455,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 675,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023F8",
+   "Signature": "Class1278 Knx.Falcon.Bus::class1278_1",
+   "OriginalName": "class1278_1",
+   "Reason": "GroupCommunicationSecurity setter constructs/clears Class1278; group send encrypts and group reception decrypts through this exact field. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "groupDataSecurityProcessor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x0600258E",
+     "Offset": 12,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x0600258E",
+     "Offset": 45,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06002592",
+     "Offset": 16,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002592",
+     "Offset": 45,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CD",
+     "Offset": 154,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CD",
+     "Offset": 175,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 648,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 874,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023FD",
+   "Signature": "Class738 Knx.Falcon.Bus::class738_0",
+   "OriginalName": "class738_0",
+   "Reason": "Exact checked Class738 LinkLayer type, connect construction, link event subscriptions and shutdown use. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002579",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257A",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257A",
+     "Offset": 20,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257B",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257C",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257C",
+     "Offset": 20,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257D",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257E",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600257E",
+     "Offset": 20,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 34,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 351,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 405,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 536,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 661,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 669,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 467,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 474,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 565,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002604",
+     "Offset": 365,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 57,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 468,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 395,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023FE",
+   "Signature": "Class736 Knx.Falcon.Bus::class736_0",
+   "OriginalName": "class736_0",
+   "Reason": "Exact checked Class736 ConnectionlessTransportLayer type and secure-group local indication use before send. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionlessTransportLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025F6",
+     "Offset": 650,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1613,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1898,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 2169,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 2192,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 490,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 497,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 519,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 577,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 946,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x040023FF",
+   "Signature": "Class735 Knx.Falcon.Bus::q",
+   "OriginalName": "q",
+   "Reason": "Exact checked Class735 ApplicationLayer type; LayerListener waits, outbound dispatch and incoming group conversion. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "applicationLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025C7",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CC",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 642,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 686,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 709,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 768,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 897,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 513,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 542,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 589,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002626",
+     "Offset": 177,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002626",
+     "Offset": 193,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002626",
+     "Offset": 205,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002626",
+     "Offset": 221,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002626",
+     "Offset": 267,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002626",
+     "Offset": 337,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002628",
+     "Offset": 97,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002628",
+     "Offset": 226,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 230,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 246,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 551,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600262A",
+     "Offset": 567,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002402",
+   "Signature": "Class1271 Knx.Falcon.Bus::class1271_0",
+   "OriginalName": "class1271_0",
+   "Reason": "Ctor allocates checked DiagEventCollector with capacity100; connector/layer operations receive this collector and shutdown diagnostics query it. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "diagnosticEvents",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 8,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 383,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 445,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 480,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 503,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002604",
+     "Offset": 405,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 97,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 486,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 202,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 908,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 430,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002403",
+   "Signature": "System.Collections.Generic.List`1<System.WeakReference`1<nc>> Knx.Falcon.Bus::list_0",
+   "OriginalName": "list_0",
+   "Reason": "Weak nc registry: session creation adds, network-info and security setup inspect, shutdown logs Active device connection and disposes/prunes. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceConnections",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 19,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 89,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 106,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025D1",
+     "Offset": 7,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025D1",
+     "Offset": 24,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025D1",
+     "Offset": 63,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E7",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E7",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E9",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E9",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025ED",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025ED",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 272,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1631,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 78,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 96,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 244,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 262,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 304,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 616,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002616",
+     "Offset": 634,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 343,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 363,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 696,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002618",
+     "Offset": 841,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 78,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 96,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 244,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 262,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 314,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 566,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600261C",
+     "Offset": 584,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002404",
+   "Signature": "System.Collections.Generic.List`1<System.WeakReference`1<oc>> Knx.Falcon.Bus::list_1",
+   "OriginalName": "list_1",
+   "Reason": "Weak oc registry: network session creation adds, security setup propagates and shutdown logs Active network connection/disposes/clears. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "networkConnections",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 30,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 182,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002593",
+     "Offset": 201,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025EF",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025EF",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 970,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1643,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 168,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x0600260A",
+     "Offset": 188,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400240B",
+   "Signature": "Knx.Falcon.PrepareCommunicationPath Knx.Falcon.Bus::prepareCommunicationPath_0",
+   "OriginalName": "prepareCommunicationPath_0",
+   "Reason": "Exact get_CommunicationPath lazy storage and typed PrepareCommunicationPath(this) construction. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "communicationPath",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002589",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002589",
+     "Offset": 19,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1107,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 1426,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400240D",
+   "Signature": "System.WeakReference`1<Knx.Falcon.Bus> Knx.Falcon.Bus::ae",
+   "OriginalName": "ae",
+   "Reason": "Ctor stores WeakReference<Bus>(this), adds to static registry; shutdown removes this exact reference and clears it. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "instanceReference",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 125,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06002561",
+     "Offset": 136,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 229,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 242,
+     "OpCode": "stfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400240E",
+   "Signature": "System.Collections.Generic.List`1<System.WeakReference`1<Knx.Falcon.Bus>> Knx.Falcon.Bus::af",
+   "OriginalName": "af",
+   "Reason": "Static weak Bus registry initialized in cctor; constructor adds, CurrentInstances prunes dead references and shutdown removes. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "instanceReferences",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 102,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002561",
+     "Offset": 130,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002564",
+     "Offset": 0,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002564",
+     "Offset": 26,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002564",
+     "Offset": 46,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06002564",
+     "Offset": 58,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025D3",
+     "Offset": 25,
+     "OpCode": "stsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 204,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025F6",
+     "Offset": 223,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400240F",
+   "Signature": "System.EventHandler Knx.Falcon.Bus::eventHandler_0",
+   "OriginalName": "eventHandler_0",
+   "Reason": "Static handlers invoked with new Bus and EventArgs.Empty after constructor registry insertion. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "instanceCreatedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 158,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002410",
+   "Signature": "System.EventHandler Knx.Falcon.Bus::eventHandler_1",
+   "OriginalName": "eventHandler_1",
+   "Reason": "Static handlers invoked with disposed Bus and EventArgs.Empty after private shutdown, distinct from per-instance Disposed field. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "instanceDisposedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002602",
+     "Offset": 146,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002412",
+   "Signature": "System.EventHandler`1<System.EventArgs> Knx.Falcon.Bus::eventHandler_2",
+   "OriginalName": "eventHandler_2",
+   "Reason": "PropertyName ConnectionState branch loads field at25CB:57 and invokes at71; catch logs Exception in ConnectionStateChanged. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionStateChangedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002575",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002575",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06002576",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002576",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025CB",
+     "Offset": 57,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F4",
+     "Offset": 105,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025F8",
+     "Offset": 297,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002413",
+   "Signature": "System.EventHandler`1<System.EventArgs> Knx.Falcon.Bus::ak",
+   "OriginalName": "ak",
+   "Reason": "PropertyName InterfaceConfiguration branch loads field at25CB:110 and invokes at124; catch logs its exact event name. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "interfaceConfigurationChangedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002577",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002577",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06002578",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002578",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025CB",
+     "Offset": 110,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002416",
+   "Signature": "System.EventHandler`1<Knx.Falcon.GroupEventArgs> Knx.Falcon.Bus::an",
+   "OriginalName": "an",
+   "Reason": "25CD loads field and invokes typed GroupEventArgs; catch logs Exception in GroupMessageReceived. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "groupMessageReceivedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025A3",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025A3",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025A4",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025A4",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025CD",
+     "Offset": 92,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025CD",
+     "Offset": 144,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002417",
+   "Signature": "System.Collections.Generic.List`1<System.WeakReference`1<nw>> Knx.Falcon.Bus::ao",
+   "OriginalName": "ao",
+   "Reason": "Weak nw registry disposed by exact private IoT group communication helper and cleared. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "iotGroupCommunications",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 59,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025AC",
+     "Offset": 60,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025AC",
+     "Offset": 132,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E1",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E1",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025FE",
+     "Offset": 210,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025FE",
+     "Offset": 245,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002418",
+   "Signature": "System.Collections.Generic.List`1<System.WeakReference`1<nh>> Knx.Falcon.Bus::ap",
+   "OriginalName": "ap",
+   "Reason": "Weak nh registry disposed by exact private IoT network helper and cleared. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "iotNetworks",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 70,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025E3",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E3",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002600",
+     "Offset": 210,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002600",
+     "Offset": 245,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002608",
+     "Offset": 82,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002608",
+     "Offset": 139,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x04002419",
+   "Signature": "System.Collections.Generic.List`1<System.WeakReference`1<Class604>> Knx.Falcon.Bus::aq",
+   "OriginalName": "aq",
+   "Reason": "Weak Class604 registry disposed by exact private IoT device helper and cleared. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "iotDevices",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06002561",
+     "Offset": 81,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x060025E5",
+     "Offset": 6,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025E5",
+     "Offset": 28,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025FC",
+     "Offset": 210,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025FC",
+     "Offset": 245,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002606",
+     "Offset": 82,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06002606",
+     "Offset": 199,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400241A",
+   "Signature": "System.EventHandler`1<Knx.Falcon.KnxMessageEventArgs> Knx.Falcon.Bus::eventHandler_5",
+   "OriginalName": "eventHandler_5",
+   "Reason": "25D0 invokes typed KnxMessageEventArgs through this field, logging exact KnxMessageReceived subscriber failure. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "knxMessageReceivedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025B3",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025B3",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025B4",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025B4",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025D0",
+     "Offset": 10,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400241B",
+   "Signature": "System.EventHandler Knx.Falcon.Bus::eventHandler_6",
+   "OriginalName": "eventHandler_6",
+   "Reason": "Existing checked add_Disposed/remove_Disposed combine/remove and CompareExchange this field; DisposeAsync invokes it after shutdown. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "disposedHandlers",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025C8",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025C8",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x060025C9",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x060025C9",
+     "Offset": 23,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06002602",
+     "Offset": 127,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Knx.Falcon.Bus",
+   "Token": "0x0400241C",
+   "Signature": "System.Lazy`1<System.Collections.Generic.Dictionary`2<System.String,System.String>> Knx.Falcon.Bus::lazy_0",
+   "OriginalName": "lazy_0",
+   "Reason": "Lazy dictionary factory loads entry-assembly .config appSettings keys beginning Falcon:, first duplicate wins; existing GetOption queries it. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "configurationOptions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x060025D2",
+     "Offset": 0,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x060025D3",
+     "Offset": 51,
+     "OpCode": "stsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x04001654",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class1293::a",
+   "OriginalName": "a",
+   "Reason": "Connection cctor GetLogger(Falcon.BusConnection). Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AEE",
+     "Offset": 16,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AEF",
+     "Offset": 13,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AEF",
+     "Offset": 58,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AF3",
+     "Offset": 15,
+     "OpCode": "stsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 341,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 707,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001B01",
+     "Offset": 81,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001B01",
+     "Offset": 217,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x04001655",
+   "Signature": "System.Collections.Generic.List`1<Class1293> Class1293::b",
+   "OriginalName": "b",
+   "Reason": "GetAsync scans for compatible live connection and adds opened connection; final Release removes it under shared lock. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "activeConnections",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AEF",
+     "Offset": 104,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AF3",
+     "Offset": 25,
+     "OpCode": "stsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 87,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 406,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 677,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001B01",
+     "Offset": 189,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x04001656",
+   "Signature": "System.Collections.Generic.List`1<Class1293/a> Class1293::c",
+   "OriginalName": "c",
+   "Reason": "GetAsync scans/adds matching endpoint reservation before connector opening, removes on every original success/failure branch; waiters await completion. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "pendingConnections",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AF3",
+     "Offset": 35,
+     "OpCode": "stsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 117,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 239,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 384,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 634,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 842,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x04001657",
+   "Signature": "System.Object Class1293::d",
+   "OriginalName": "d",
+   "Reason": "Static object exclusively used by Monitor.Enter/Exit around active/pending connection registry accesses. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectionsLock",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AEF",
+     "Offset": 88,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AF3",
+     "Offset": 45,
+     "OpCode": "stsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 70,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 367,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 610,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001AFF",
+     "Offset": 825,
+     "OpCode": "ldsfld"
+    },
+    {
+     "Method": "0x06001B01",
+     "Offset": 247,
+     "OpCode": "ldsfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293",
+   "Token": "0x0400165A",
+   "Signature": "System.Int32 Class1293::int_0",
+   "OriginalName": "int_0",
+   "Reason": "Constructor initializes one; TryAddReference atomically increments/undoes failed revival and synchronous/async Release decrements to final disposal. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "referenceCount",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AE9",
+     "Offset": 22,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06001AEE",
+     "Offset": 1,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06001AEE",
+     "Offset": 44,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AEE",
+     "Offset": 63,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06001AEF",
+     "Offset": 1,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06001AEF",
+     "Offset": 41,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001B01",
+     "Offset": 66,
+     "OpCode": "ldflda"
+    },
+    {
+     "Method": "0x06001B01",
+     "Offset": 109,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x0400165C",
+   "Signature": "Knx.Falcon.Configuration.ConnectorType Class1293/a::a",
+   "OriginalName": "a",
+   "Reason": "Pending ctor stores ConnectorParameters.Type, MatchesEndpoint compares both fields. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connectorType",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AF4",
+     "Offset": 13,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06001AF7",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AF7",
+     "Offset": 7,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x0400165D",
+   "Signature": "System.Object Class1293/a::b",
+   "OriginalName": "b",
+   "Reason": "Pending ctor stores USB DevicePath or parsed IPEndPoint; comparer uses exact equality with permissive null matching. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "endpointIdentity",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AF4",
+     "Offset": 35,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06001AF4",
+     "Offset": 80,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06001AF7",
+     "Offset": 17,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AF7",
+     "Offset": 29,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AF7",
+     "Offset": 37,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AF7",
+     "Offset": 43,
+     "OpCode": "ldfld"
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1293/a",
+   "Token": "0x0400165E",
+   "Signature": "System.Threading.Tasks.TaskCompletionSource`1<Struct827> Class1293/a::c",
+   "OriginalName": "c",
+   "Reason": "Pending ctor initializes TCS<Struct827>, WaitForCompletion returns Task and Dispose.TrySetResult signals competing acquisition waiters. Retain original signatures, branch/timeout/cancellation/error behavior, runtime metadata and third-party/SDK contracts. Generated scaffolding is linked by exact attributes/ldftn edges; no invented compiler ordinal or standalone lambda name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "completionSource",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "NativeFieldUses": [
+    {
+     "Method": "0x06001AF4",
+     "Offset": 91,
+     "OpCode": "stfld"
+    },
+    {
+     "Method": "0x06001AF5",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AF6",
+     "Offset": 1,
+     "OpCode": "ldfld"
+    },
+    {
+     "Method": "0x06001AF6",
+     "Offset": 18,
+     "OpCode": "stfld"
+    }
+   ]
   }
  ],
  "Skips": [],
