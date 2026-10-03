@@ -33,3 +33,15 @@ older ledger require matching entries in the native-checked map.
 corrections only when the native change report records the exact previous and new
 aliases. These options edit review records; they do not modify ETS source or binaries.
 The merge guards can be verified with `python test_review_ledger.py`.
+
+`prepare_physical_review.py --spec <spec.json> --output <fresh-review.json>`
+normalizes native inventory roots to exact application-relative physical paths
+and validates current hashes. Specs support evidence-backed aliases, explicit
+preservation and unresolved decisions; unresolved rows cannot carry aliases.
+It writes review JSON only. Run `python test_physical_review.py` for its guards.
+Native `--update-map` and `--check-map` remain required before checkpointing.
+
+Native coverage validates current physical identities and scoped metadata.
+Its `NotFlagged` count means the inventory did not request a readable name;
+it is not evidence of a completed behavioral review. Selected inventories
+measure their supplied rows only, not application-wide scope or compatibility.

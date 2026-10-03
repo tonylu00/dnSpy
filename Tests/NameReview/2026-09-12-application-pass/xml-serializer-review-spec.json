@@ -1,0 +1,144 @@
+{
+  "TargetRoot": "D:/knx_analysis/ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\unmapped-type-review03\\Knx.Ets.Xml.ObjectModel.dll.types.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-type-review03\\CV__4.0.1477.15773__Knx.Ets.Xml.ObjectModel.dll.types.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-type-review03\\Knx.Ets.Xml.ObjectModel.XmlSerializers.dll.types.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-type-review03\\CV__4.0.1477.15773__Knx.Ets.Xml.ObjectModel.XmlSerializers.dll.types.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-type-review03\\Knx.Updater.XmlSerializers.dll.types.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-scope-review01\\Knx.Ets.Xml.ObjectModel.XmlSerializers.dll.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-scope-review01\\CV__4.0.1477.15773__Knx.Ets.Xml.ObjectModel.XmlSerializers.dll.json",
+    "D:\\knx_analysis\\perf-now\\unmapped-scope-review01\\Knx.Updater.XmlSerializers.dll.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x02000005",
+      "NewName": "ScriptItemValueTableStorage",
+      "Reason": "Explicit-layout 24-byte private storage: field 04000004 is the ldtoken operand of writer 060001CE Write504_SCRIPTITEM; InitializeArray fills three Int64 values consumed with script-item XML names by FromEnum. Runtime names, layout and RVA data stay original; numeric token embedded in the blob name is stale and was not used to infer ownership."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x02000006",
+      "NewName": "ElementPropertyFlagValueTableStorage",
+      "Reason": "Explicit-layout 40-byte private storage: field 04000005 is referenced by writer 06000378 Write245_ElementPropertyFlags; InitializeArray fills five Int64 values consumed with element-property XML flag names by FromEnum. Preserve runtime metadata and storage bytes."
+    },
+    {
+      "Kind": "Types",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x02000005",
+      "NewName": "ElementPropertyFlagValueTableStorage",
+      "Reason": "Physical CV 4.0 serializer only: explicit-layout 40-byte field 04000003 is loaded by 0600025D Write226_ElementPropertyFlags into five Int64 values for FromEnum. Same semantic source alias as the root deployment, distinct physical identity and runtime metadata."
+    },
+    {
+      "Kind": "Types",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x02000006",
+      "NewName": "ScriptItemValueTableStorage",
+      "Reason": "Physical CV 4.0 serializer only: explicit-layout 24-byte field 04000004 is loaded by 06000262 Write207_SCRIPTITEM into three Int64 values for FromEnum. Preserve its separate legacy Check.SCRIPTITEM enum contract."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Updater.XmlSerializers.dll",
+      "Token": "0x02000005",
+      "NewName": "MoveFileFlagValueTableStorage",
+      "Reason": "Explicit-layout 56-byte field 04000004 is loaded by updater writer 0600004C Write54_MoveFileFlag; InitializeArray creates seven Int64 values for FromEnum with move-file XML flag names. Preserve runtime layout and bytes."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.Xml.ObjectModel.dll",
+      "Token": "0x02000104",
+      "Disposition": "preserve",
+      "Reason": "KNX is the domain document root, carrying XmlRoot/XmlType and domain metadata; GetChildElementById and Document traversals confirm behavior. Preserve the established schema acronym."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.Xml.ObjectModel.dll",
+      "Token": "0x020001B1",
+      "Disposition": "preserve",
+      "Reason": "P2PLinkEndpoint is an XML domain endpoint with DeviceRefId and a P2PLink parent, not an obfuscation placeholder. Preserve meaningful P2P schema naming."
+    },
+    {
+      "Kind": "Types",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Xml.ObjectModel.dll",
+      "Token": "0x020000D2",
+      "Disposition": "preserve",
+      "Reason": "Legacy CV KNX retains its XML document-root schema contract. Inspect physical CV attributes/parent/document behavior separately; preserve its established domain acronym."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x020000D2",
+      "Disposition": "preserve",
+      "Reason": "P2PLinkSerializer CanDeserialize tests the P2PLink XML element; Serialize/Deserialize call Write753_P2PLink/Read753_P2PLink. Preserve the meaningful generated serializer name."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x060001CE",
+      "ParameterNames": {
+        "1": "scriptItems"
+      },
+      "LocalNames": {
+        "0": "serializedValue",
+        "2": "flagNames"
+      },
+      "Reason": "Exact writer IL accepts script-item flags in parameter 1, builds the XML names array in local 2 and returns the serialized XML enum string from local 0. Keep the meaningful Write* method name; local 1 and remaining control-flow temporaries await separate dataflow review."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x06000378",
+      "ParameterNames": {
+        "1": "elementPropertyFlags"
+      },
+      "LocalNames": {
+        "0": "serializedValue",
+        "2": "flagNames"
+      },
+      "Reason": "Exact writer IL accepts element-property flags in parameter 1, builds the XML names array in local 2 and returns the serialized XML enum string from local 0. Keep the meaningful Write* method name; local 1 and remaining control-flow temporaries await separate dataflow review."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x0600025D",
+      "ParameterNames": {
+        "1": "elementPropertyFlags"
+      },
+      "LocalNames": {
+        "0": "serializedValue",
+        "2": "flagNames"
+      },
+      "Reason": "Exact writer IL accepts element-property flags in parameter 1, builds the XML names array in local 2 and returns the serialized XML enum string from local 0. Keep the meaningful Write* method name; local 1 and remaining control-flow temporaries await separate dataflow review."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Xml.ObjectModel.XmlSerializers.dll",
+      "Token": "0x06000262",
+      "ParameterNames": {
+        "1": "scriptItems"
+      },
+      "LocalNames": {
+        "0": "serializedValue",
+        "2": "flagNames"
+      },
+      "Reason": "Exact writer IL accepts script-item flags in parameter 1, builds the XML names array in local 2 and returns the serialized XML enum string from local 0. Keep the meaningful Write* method name; local 1 and remaining control-flow temporaries await separate dataflow review."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Updater.XmlSerializers.dll",
+      "Token": "0x0600004C",
+      "ParameterNames": {
+        "1": "moveFileFlags"
+      },
+      "LocalNames": {
+        "0": "serializedValue",
+        "2": "flagNames"
+      },
+      "Reason": "Exact writer IL accepts move-file flags in parameter 1, builds the XML names array in local 2 and returns the serialized XML enum string from local 0. Keep the meaningful Write* method name; local 1 and remaining control-flow temporaries await separate dataflow review."
+    }
+  ]
+}
