@@ -856,9 +856,13 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         foreach (var entry in names.ToArray()) {
             var owner = entry.Key as MethodDef;
             if (owner == null || owner.Name == entry.Value) continue;
+            var bodies = GeneratedBodiesOwnedBy(module, owner);
             var prefix = "<" + owner.Name.String.Replace('.', '-') + ">";
             foreach (var method in methods) {
                 if (names.ContainsKey(method) || !method.Name.String.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                // Overloads share the source spelling, but not their lambdas.
+                // Prefix and containing type alone cannot establish ownership.
+                if (!bodies.Contains(method)) continue;
                 var suffix = method.Name.String.Substring(prefix.Length);
                 var ordinal = suffix.StartsWith("b__", StringComparison.Ordinal) ? suffix.Substring(3) : null;
                 if (suffix.StartsWith("g__", StringComparison.Ordinal)) {
@@ -905,6 +909,64 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (matches.Length == 1 && generated.TryGetValue(matches[0], out restored)) referenceNames[reference] = restored;
         }
         foreach (var entry in generated) names.Add(entry.Key, entry.Value);
+    }
+
+    static HashSet<MethodDef> GeneratedBodiesOwnedBy(ModuleDef module, MethodDef owner) {
+        var bodies = new HashSet<MethodDef>();
+        var pending = new Queue<MethodDef>();
+        pending.Enqueue(owner);
+        while (pending.Count != 0) {
+            var body = pending.Dequeue();
+            if (!bodies.Add(body)) continue;
+            // An async/iterator kickoff references its state type, not its
+            // MoveNext method. Follow only the state machine recorded on this
+            // exact method, never every sibling in a shared closure container.
+            foreach (var attribute in body.CustomAttributes) {
+                if (attribute.TypeFullName != "System.Runtime.CompilerServices.AsyncStateMachineAttribute" &&
+                    attribute.TypeFullName != "System.Runtime.CompilerServices.IteratorStateMachineAttribute" &&
+                    attribute.TypeFullName != "System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute") continue;
+                var signature = attribute.ConstructorArguments.Count == 1 ? attribute.ConstructorArguments[0].Value as TypeSig : null;
+                var state = signature == null ? null : signature.ToTypeDefOrRef().ResolveTypeDef();
+                if (state == null || state.Module != module || !IsGeneratedDescendant(state, owner.DeclaringType)) continue;
+                foreach (var method in state.Methods) pending.Enqueue(method);
+            }
+            if (!body.HasBody) continue;
+            foreach (var instruction in body.Body.Instructions) {
+                var reference = instruction.Operand as IMethod;
+                if (reference is MethodSpec specification) reference = specification.Method;
+                if (reference == null) continue;
+                var target = ResolveLocalGeneratedMethod(module, reference);
+                if (target == null || target.Module != module) continue;
+                bool generated = target.DeclaringType == owner.DeclaringType ?
+                    target.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute") :
+                    IsGeneratedDescendant(target.DeclaringType, owner.DeclaringType);
+                if (generated) pending.Enqueue(target);
+            }
+        }
+        return bodies;
+    }
+
+    static bool IsGeneratedDescendant(TypeDef type, TypeDef owner) {
+        if (type == owner) return false;
+        while (type != null && type != owner && IsGeneratedType(type)) type = type.DeclaringType;
+        return type == owner;
+    }
+
+    static MethodDef ResolveLocalGeneratedMethod(ModuleDef module, IMethod reference) {
+        if (reference is MethodDef definition) return definition.Module == module ? definition : null;
+        var owner = reference.DeclaringType;
+        if (owner is TypeSpec specification) {
+            var generic = specification.TypeSig.RemovePinnedAndModifiers() as GenericInstSig;
+            if (generic == null) return null;
+            owner = generic.GenericType.TypeDefOrRef;
+        }
+        if (owner == null || owner.DefinitionAssembly == null || owner.DefinitionAssembly.FullName != module.Assembly.FullName) return null;
+        // Do not let a resolver substitute a same-identity deployment.
+        var type = owner as TypeDef ?? module.Find(owner.FullName, false);
+        if (type == null || type.Module != module) return null;
+        var matches = type.Methods.Where(m => m.Name == reference.Name &&
+            new SigComparer().Equals(m.MethodSig, reference.MethodSig)).ToArray();
+        return matches.Length == 1 ? matches[0] : null;
     }
 
     // Compiler-generated metadata names carry '<' or '>' ('<Foo>b__0_0', 'z/<>c', '<>c__DisplayClass1').
@@ -1162,7 +1224,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 throw new InvalidDataException("Conflicting BAML type restoration names.");
             bamlNames[type.Value] = type.Key.ReflectionFullName;
         }
-        RestoreBamlTypeNames(module, bamlNames);
+        RestoreBamlTypeNames(module, bamlNames, maps);
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
         return true;
     }
@@ -1197,8 +1259,23 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
         }
     }
 
-    static void RestoreBamlTypeNames(ModuleDef module, Dictionary<string, string> names) {
-        if (names.Count == 0) return;
+    static string RestoreResourceTypeName(string source, IAssembly assembly, Dictionary<string, TypeRestore> maps) {
+        Func<string, string> encode = value => Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
+        string key = string.Join("|", new[] { source, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "" }.Select(encode));
+        TypeRestore restore;
+        maps.TryGetValue(key, out restore);
+        int nested = source.LastIndexOf('/');
+        if (nested >= 0)
+            return RestoreResourceTypeName(source.Substring(0, nested), assembly, maps) + "/" +
+                (restore == null ? source.Substring(nested + 1) : restore.Name);
+        if (restore == null) return source;
+        int separator = source.LastIndexOf('.');
+        string ns = restore.Namespace ?? (separator < 0 ? "" : source.Substring(0, separator));
+        return string.IsNullOrEmpty(ns) ? restore.Name : ns + "." + restore.Name;
+    }
+
+    static void RestoreBamlTypeNames(ModuleDef module, Dictionary<string, string> names, Dictionary<string, TypeRestore> maps) {
+        if (names.Count == 0 && maps.Count == 0) return;
         for (int index = 0; index < module.Resources.Count; index++) {
             var resource = module.Resources[index] as EmbeddedResource;
             if (resource == null || !resource.Name.String.EndsWith(".resources", StringComparison.OrdinalIgnoreCase)) continue;
@@ -1232,7 +1309,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                             else if (!assemblies.TryGetValue(record.AssemblyId & 0xfff, out assembly))
                                 throw new InvalidDataException("Missing BAML assembly record: " + key);
                             string name;
-                            if (names.TryGetValue(BamlTypeKey(record.TypeFullName, assembly), out name)) {
+                            if (!names.TryGetValue(BamlTypeKey(record.TypeFullName, assembly), out name))
+                                name = RestoreResourceTypeName(record.TypeFullName.Replace('+', '/'), assembly, maps).Replace('/', '+');
+                            if (name != record.TypeFullName) {
                                 record.TypeFullName = name;
                                 renamed = true;
                             }

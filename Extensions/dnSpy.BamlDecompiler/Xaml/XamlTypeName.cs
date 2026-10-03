@@ -47,7 +47,7 @@ namespace dnSpy.BamlDecompiler.Xaml {
 				type = declaringType;
 			}
 
-			clrNs = type.ReflectionNamespace;
+			clrNs = MetadataTypeNames.GetSourceNamespace(type);
 			return new XamlTypeName(declaringTypes.ToArray(), typeName);
 		}
 

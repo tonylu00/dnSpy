@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T01:30:36Z",
+  "UpdatedUtc": "2026-10-03T01:58:28Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -98,7 +98,7 @@
       ]
     },
     "NextItems": [
-      { "Task": "source export, remaining 3 errors", "Detail": "closure-owner conflict x2 + XAML runtime-name gap; see Deferred.SourceExport and Deferred.MemoryBlowup.RemainingErrors" },
+      { "Task": "source export, remaining 2 first-layer errors", "Detail": "v386 fixes both closure-owner errors; HawkNET CS1705 AsyncInterfaces 7 versus 1 is newly exposed. WPF fix passes a runtime fixture but needs a fresh ETS export. See Deferred.SourceExport." },
       { "Task": "readability baseline sweep", "Detail": "patched decompiler over the whole 6.3 tree + 6.4; per-module lambdas/async/await/raw stubs/display classes into Readability.Baseline" },
       { "Task": "Falcon 8 raw stubs", "Detail": "see Readability.FalconLeftover8" },
       { "Task": "record the evidence-free remainder", "Detail": "28105 rows unresolved with the no-evidence-in-scope reason so --coverage counts them; never invent names or suffixes" },
@@ -135,11 +135,11 @@
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
       "Command": "python D:\\knx_analysis\\perf-now\\export-full.py --out <out>  (dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> plus the 64 paths from firstparty-files.txt - the console has no @response-file support; then dotnet build <out>\\solution.sln)",
-      "State": "2026-09-28 run (ets63-source-v385): 64 projects, 13,296 .cs, export exit 0; solution build leaves 3 errors - Knx.Falcon and Knx.Ets.ObjectModel 'Conflicting generated closure owner names', Knx.Ets.UI.ParameterDialog MC2000 'Could not find type UIGridRow in ... Knx.Ets.ActiveTree.dll'.",
+      "State": "2026-10-03 run ets63-source-v386: 64 projects, 13,296 C# files, export exit 0. Both closure-owner errors are fixed. Build exposes HawkNET CS1705 (Falcon needs AsyncInterfaces 7; HawkNET selects package version 1) and the old XAML target condition skips reference resolution. WPF fixes are validated separately, not yet in this tree.",
       "Caveat": "A failing project makes MSBuild skip its dependents, so the 3 errors are the first layer only: every earlier layer (25 -> 8 -> 3) hid the next one behind a dependency. Re-measure after each fix; do not read '3' as the total.",
       "Next": [
-        "Close the closure-owner conflict: the restore task claims a compiled closure method by NAME PREFIX ('<Owner>b__0'), so two overloads sharing a source alias both claim it. Measured example: 'LocalInterfaceManagement/<>c__DisplayClass12_0::<TryReadMPropAsync>b__0 restored as both <b>b__0 and <a>b__0' (owner TryReadMPropAsync(ushort,byte,byte,ushort,byte,CancellationToken) -> a; the 3-parameter overload -> b has no lambda at all). Fix candidates: (a) record the exact original closure name per owner at export time and look it up by declaring type + compiled name, or (b) reject a candidate whose body and generated state machine do not reference the closure's declaring type. Do not simply drop the row: the restored name is what keeps the rebuilt metadata identical.",
-        "Close the XAML/BAML gap: the runtime assemblies carry the ORIGINAL metadata names (TypeNames.cs maps source alias UIGridRow back to am1) while the WPF mark-up compiler resolves types against those runtime assemblies, so any XAML that reaches a renamed type fails (MC2000). Decide between emitting runtime names in BAML-bound type references, or compiling XAML against the source reference assemblies."
+        "Fix AsyncInterfaces physical resolution: inspect the original application binding redirects and resolved references; do not let a transitive NuGet dependency replace the original version 7 binary or collapse genuinely distinct compatibility assemblies.",
+        "WPF fixes pass WpfSourceReferenceRegression03 including runtime resource loading; re-export ETS with the updated BAML plugin and console, build the actual whole solution and continue through newly exposed errors."
       ]
     },
     "MemoryBlowup": {
@@ -147,11 +147,12 @@
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
       "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
       "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
-      "FinalExport": "D:\\knx_analysis\\ets63-source-v385 (64 projects, ~5 min). Solution build: 3 errors left (was 7; the four CS1061 shadowing rows and the two Class1109 rows are fixed by dnSpy eceb55413, the CS1503 row by the Autofac 7.0 package row; the six FluentResults CS0012 rows and the CS0234 row by the package-map identity rule).",
+      "FinalExport": "D:\\knx_analysis\\ets63-source-v386: 64 projects, 13,296 C# files; build has 2 first-layer errors. Closure-owner fix passes the full tree; the newer WPF fix has not been exported into this tree.",
       "RemainingErrors": {
-        "Count": 3,
-        "ClosureOwnerConflict": "2x - Knx.Falcon/Knx.Falcon.csproj(1249) and Knx.Ets.ObjectModel/Knx.Ets.ObjectModel.csproj(2234), raised by the generated RestoreFields task (MetadataFieldTask.cs.txt:886). See Deferred.SourceExport.Next.",
-        "XamlRuntimeNames": "1x - Knx.Ets.UI.ParameterDialog/view/resourcedictionaries/datatemplates.xaml(195,7) MC2000 'Could not find type UIGridRow in assembly ...Knx.Ets.ActiveTree.dll'. Evidence: that project's .dnspy-metadata/TypeNames.cs carries 'dnSpy.metadata.type-name.v1|UIGridRow|Knx.Ets.ActiveTree|6.3.7959.0||am1', and the built ActiveTree.dll declares 'class public ... am1'. The mark-up compiler reads the runtime assembly, not the source reference assembly. See Deferred.SourceExport.Next.",
+        "Count": 2,
+        "ClosureOwnerConflict": "Fixed in v386: ownership follows exact generated body/state-machine references, not an overload name prefix. Portable ClosureOwnerRegression02 passes execution, restored metadata owner names and stable incremental rebuild.",
+        "XamlRuntimeNames": "Pending fresh ETS export. WpfSourceReferenceRegression03 passes: resolve reference assemblies before testing the item condition; register BAML-only type references; restore resource names directly from mappings. Readable XAML compiles, runtime BAML loads original types, incremental hash is stable.",
+        "AsyncInterfacesVersion": "v386 HawkNET CS1705: Falcon references Microsoft.Bcl.AsyncInterfaces 7.0.0.0 but HawkNET selects 1.0.0.0 from Autofac transitive package 1.1.0. Export emits a resolved original HintPath plus a duplicate unresolved bare reference; inspect original binding redirects and physical resolution before fixing.",
         "FixedThisTurn": "CS1061 x4 IpDeviceDiscovery (lambda parameter 'sender' shadowing the outer 'sender' - the declaration was allocated 'sender1' but the printer took the name from the ILVariable; dnSpy eceb55413 makes the variable adopt the declaration name); CS1061 x2 Class1109 ('byte[] a = RandomNumbers.a(16); EchoOptionCache[a.a] = a' - a cached parent-closure substitution kept the stale spelling 'a' after the closure variable was renamed 'a2'; dnSpy eceb55413 refreshes every variable reference from its own variable); CS1503 Class122 (the IL calls NoConstructorsFoundException(Type, IConstructorFinder), which only exists in Autofac 7.0 while the package map pinned 6.5); CS0012 x5 FluentResults (package 3.15.2 ships assembly 3.15.2.0, the tree ships 3.15.2.21); CS0234 Knx.Ets.MyKnx System.Text.Encodings.Web (bare reference, now a package row)."
       },
       "ReadabilityImpact": {

@@ -30,6 +30,23 @@ namespace dnSpy.Decompiler.MSBuild {
 				writer.WriteAttributeString("BeforeTargets", "CoreCompile");
 				writer.WriteAttributeString("DependsOnTargets", "FindReferenceAssembliesForReferences");
 				writer.WriteEndElement();
+				// WPF uses ReferencePath rather than the C# compiler's
+				// ReferencePathWithRefAssemblies. Resolve markup against the same
+				// readable source contracts; copy-local still uses runtime binaries.
+				writer.WriteStartElement("Target");
+				writer.WriteAttributeString("Name", "DnSpyResolveMarkupReferences");
+				writer.WriteAttributeString("BeforeTargets", "MarkupCompilePass1;MarkupCompilePass2");
+				writer.WriteAttributeString("DependsOnTargets", "FindReferenceAssembliesForReferences");
+				writer.WriteStartElement("ItemGroup");
+				writer.WriteAttributeString("Condition", "'@(ReferencePathWithRefAssemblies)' != ''");
+				writer.WriteStartElement("ReferencePath");
+				writer.WriteAttributeString("Remove", "@(ReferencePath)");
+				writer.WriteEndElement();
+				writer.WriteStartElement("ReferencePath");
+				writer.WriteAttributeString("Include", "@(ReferencePathWithRefAssemblies)");
+				writer.WriteEndElement();
+				writer.WriteEndElement();
+				writer.WriteEndElement();
 			}
 			if (!Required(project)) return;
 			string directory = Path.Combine(project.Directory, ".dnspy-metadata");

@@ -15,6 +15,16 @@ namespace dnSpy.Contracts.Decompiler {
 		public const string PrefixV2 = "dnSpy.metadata.type-name.v2|";
 		static readonly ConditionalWeakTable<ModuleDef, Dictionary<TypeDef, string>> names = new ConditionalWeakTable<ModuleDef, Dictionary<TypeDef, string>>();
 		static readonly ConditionalWeakTable<ModuleDef, string[]> mappings = new ConditionalWeakTable<ModuleDef, string[]>();
+		static readonly ConditionalWeakTable<ModuleDef, HashSet<TypeDef>> resourceTypes = new ConditionalWeakTable<ModuleDef, HashSet<TypeDef>>();
+		/// <summary>Includes types referenced only by resources in runtime name restoration.</summary>
+		public static void RegisterResourceType(ModuleDef module, ITypeDefOrRef reference) {
+			var types = resourceTypes.GetOrCreateValue(module);
+			lock (types) {
+				bool changed = false;
+				for (var type = reference?.ResolveTypeDef(); type != null; type = type.DeclaringType) changed |= types.Add(type);
+				if (changed) mappings.Remove(module);
+			}
+		}
 		/// <summary>Removes the generic arity suffix used in metadata.</summary>
 		public static string SimpleName(string name) {
 			int index = name.LastIndexOf('`');
@@ -106,9 +116,12 @@ namespace dnSpy.Contracts.Decompiler {
 		}
 		static string Encode(string text) => Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
 		/// <summary>Maps local definitions and external references using the resolved input context.</summary>
-		public static string[] GetMappings(ModuleDef module) => mappings.GetValue(module, CreateMappings);
+		public static string[] GetMappings(ModuleDef module) {
+			lock (resourceTypes.GetOrCreateValue(module)) return mappings.GetValue(module, CreateMappings);
+		}
 		static string[] CreateMappings(ModuleDef module) {
 			var types = new HashSet<TypeDef>(module.GetTypes());
+			lock (resourceTypes.GetOrCreateValue(module)) types.UnionWith(resourceTypes.GetOrCreateValue(module));
 			foreach (var reference in module.GetTypeRefs()) {
 				for (var type = reference.ResolveTypeDef(); type != null; type = type.DeclaringType) types.Add(type);
 			}

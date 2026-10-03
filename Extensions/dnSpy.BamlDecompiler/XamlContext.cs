@@ -106,6 +106,7 @@ namespace dnSpy.BamlDecompiler {
 				type = TypeNameParser.ParseReflectionThrow(Module, typeRec.TypeFullName, new DummyAssemblyRefFinder(assembly));
 			}
 
+			MetadataTypeNames.RegisterResourceType(Module, type);
 			var name = XamlTypeName.From(type, out string clrNs);
 			var xmlNs = XmlNs.LookupXmlns(assembly, clrNs);
 
