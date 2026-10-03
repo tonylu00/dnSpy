@@ -1,0 +1,499 @@
+{
+  "Format": 1,
+  "Kind": "FalconFrameBehaviorEvidence",
+  "BaseMapSha256": "8F695EC7B2EB4BDAE6E4CCAC908956DEF722C968586576F3BAB9DE866AF7C2D1",
+  "Inputs": [
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\falcon-frame-final01\\input-state-v404.json",
+      "Sha256": "C5E5BA4037084A85AD55BA83105DA75E47790462CAF62BC9A2E2C7845DE07802"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\falcon-frame-final01\\input-ledger-v404.json",
+      "Sha256": "AD18DFC04C11DBE0936D248C23CD2D8EBAE35AFC26DD572A4F44FABF56615F5D"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\application-inventory-v404-01\\summary.json",
+      "Sha256": "00EA642ED9B8BD18CF3B1B9E33A965F1CAE9FC7CDA02C0DBDF3EC14F007B1C1B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\graph63-v3.sqlite",
+      "Sha256": "627EB0EDC5855CF0B0884B50C2523D267BE7F5F1C2218CDC6F85692AC9C4FEC6"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\APCI.json",
+      "Sha256": "35ACA40567E591A9C4D43E7626342E4A43BF2DA20A86EA0CED46E69AB1E535E9"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\caller-bodies.json",
+      "Sha256": "6C2BF506BAD5C1168EFD9C7B8A42C52DC7EC541604C4C26C991B53ECBE58E279"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\Class830.json",
+      "Sha256": "613AA55354125ED284365220EFD7F6C7F4FA17375CF20983C7AA5F72D700D57B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\Class831.json",
+      "Sha256": "6929B020311F2A3B96005DB57296CAB8D86DE028243267EA8F56DA9BD351A7F8"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\Class91-family.json",
+      "Sha256": "4D61F374D8974E0799EEF6330E5EB3758E28950C2AF039054614AF10BDD0D9AD"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\Class911.json",
+      "Sha256": "C016DD4A2820EF9A5663BC8C0D6C8917A0958D784781310F78981519D0CB5D2C"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\Class915.json",
+      "Sha256": "8B5E8837E37C9E9A82B77DCE878816BC67E77410FAE191D396A887F19A0A7995"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\foreign-callers-00.json",
+      "Sha256": "9E6CBE3DDE59C0AE2F1E90265BBA81BA5373F24C804A4F0FD4DC712D27261851"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\frame-bodies.json",
+      "Sha256": "A24BF9BE88581DEC96D898F3FC4502FB13770E5DFC1FE8F010AA6C089DB7BC19"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\incoming.json",
+      "Sha256": "8C5887CF3361374C181E2594E4DFF126297F3005F93660E534DFFF49D4FE3858"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\falcon-frame-owner-v404-01\\prepare.py",
+      "Sha256": "887AD814CBECACF4834FFE9E076DF1F915F002DDBF3134A1480487E4E24CB26F"
+    }
+  ],
+  "GraphInputsVerified": 111,
+  "Decisions": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0200020A",
+      "NewName": "Knx.Falcon.KnxMessages.ApplicationLayer.DeviceDescriptorReadMessage",
+      "Reason": "APCI 0x0300 (DeviceDescriptor_Read) is selected by ctor 06000B3A, its matching response check accepts 0x0340 (DeviceDescriptor_Response), and Monitor 06000280/GetDeviceDescriptorReadMessageProperties exposes getter 06000B3C as DescriptorType. This qualifies request owner and descriptor-type getter/setter; shared SixBitData is only wire storage. Buffer factory forwards to the constructor with original length validation."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000256",
+      "NewName": "Knx.Falcon.KnxMessages.ApplicationLayer.MemoryMessageBase",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000257",
+      "NewName": "Knx.Falcon.KnxMessages.ApplicationLayer.MemoryReadMessage",
+      "Reason": "Ctor 06000DAE supplies Memory_Read(512), address/count and false payload allocation to Class911. Monitor GetMemoryReadMessageProperties exposes this physical class. Parser constructor checks fixed APDU length; response predicate 06000DB0 compares APCI with Memory_Response(576). Retain checked IsResponse/GetFormattedData family aliases."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000258",
+      "NewName": "Knx.Falcon.KnxMessages.ApplicationLayer.MemoryResponseMessage",
+      "Reason": "Ctor 06000DB4 supplies Memory_Response(576), address and nullable array length to Class911 and sets MessageCode indication. Monitor GetMemoryResponseMessageProperties exposes MemoryData from getter 06000DB5. Getter copies Count bytes after two address bytes. Setter 06000DB6 rejects null, updates length/count and copies the full array; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Preserve empty-array fallback and original packing."
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000259",
+      "NewName": "Knx.Falcon.KnxMessages.ApplicationLayer.MemoryWriteMessage",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000123",
+      "NewName": "",
+      "Reason": "Compiler-generated callback immediately constructs the reviewed Memory_Read or Memory_Write frame from unchanged inputs. Preserve checked lambda ownership and generated alias; qualify only address/count/memoryData inputs.",
+      "ParameterNames": {
+        "1": "address",
+        "2": "count"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600012D",
+      "NewName": "",
+      "Reason": "Compiler-generated callback immediately constructs the reviewed Memory_Read or Memory_Write frame from unchanged inputs. Preserve checked lambda ownership and generated alias; qualify only address/count/memoryData inputs.",
+      "ParameterNames": {
+        "1": "address",
+        "2": "memoryData"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600012F",
+      "NewName": "",
+      "Reason": "Compiler-generated callback immediately constructs the reviewed Memory_Read or Memory_Write frame from unchanged inputs. Preserve checked lambda ownership and generated alias; qualify only address/count/memoryData inputs.",
+      "ParameterNames": {
+        "1": "address",
+        "2": "count"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B3A",
+      "NewName": "",
+      "Reason": "APCI 0x0300 (DeviceDescriptor_Read) is selected by ctor 06000B3A, its matching response check accepts 0x0340 (DeviceDescriptor_Response), and Monitor 06000280/GetDeviceDescriptorReadMessageProperties exposes getter 06000B3C as DescriptorType. This qualifies request owner and descriptor-type getter/setter; shared SixBitData is only wire storage. Buffer factory forwards to the constructor with original length validation.",
+      "ParameterNames": {
+        "1": "descriptorType"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B3C",
+      "NewName": "get_DescriptorType",
+      "Reason": "APCI 0x0300 (DeviceDescriptor_Read) is selected by ctor 06000B3A, its matching response check accepts 0x0340 (DeviceDescriptor_Response), and Monitor 06000280/GetDeviceDescriptorReadMessageProperties exposes getter 06000B3C as DescriptorType. This qualifies request owner and descriptor-type getter/setter; shared SixBitData is only wire storage. Buffer factory forwards to the constructor with original length validation."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B3D",
+      "NewName": "set_DescriptorType",
+      "Reason": "APCI 0x0300 (DeviceDescriptor_Read) is selected by ctor 06000B3A, its matching response check accepts 0x0340 (DeviceDescriptor_Response), and Monitor 06000280/GetDeviceDescriptorReadMessageProperties exposes getter 06000B3C as DescriptorType. This qualifies request owner and descriptor-type getter/setter; shared SixBitData is only wire storage. Buffer factory forwards to the constructor with original length validation.",
+      "ParameterNames": {
+        "1": "descriptorType"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B3E",
+      "NewName": "UnsafeFromBuffer",
+      "Reason": "APCI 0x0300 (DeviceDescriptor_Read) is selected by ctor 06000B3A, its matching response check accepts 0x0340 (DeviceDescriptor_Response), and Monitor 06000280/GetDeviceDescriptorReadMessageProperties exposes getter 06000B3C as DescriptorType. This qualifies request owner and descriptor-type getter/setter; shared SixBitData is only wire storage. Buffer factory forwards to the constructor with original length validation.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B3F",
+      "NewName": "",
+      "Reason": "APCI 0x0300 (DeviceDescriptor_Read) is selected by ctor 06000B3A, its matching response check accepts 0x0340 (DeviceDescriptor_Response), and Monitor 06000280/GetDeviceDescriptorReadMessageProperties exposes getter 06000B3C as DescriptorType. This qualifies request owner and descriptor-type getter/setter; shared SixBitData is only wire storage. Buffer factory forwards to the constructor with original length validation.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B41",
+      "NewName": "",
+      "Reason": "Retain checked DeviceDescriptorResponseMessage owner and getter/setter aliases. Ctor 06000B41 builds descriptor type zero from mask-version big-endian bytes; 06000B42 sets DeviceDescriptor_Response(832), writes descriptor type and copies descriptor payload. Monitor 06000288 labels DescriptorType/Value/MaskVersion. Buffer constructor/factory retain original validation.",
+      "ParameterNames": {
+        "1": "maskVersion"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B42",
+      "NewName": "",
+      "Reason": "Retain checked DeviceDescriptorResponseMessage owner and getter/setter aliases. Ctor 06000B41 builds descriptor type zero from mask-version big-endian bytes; 06000B42 sets DeviceDescriptor_Response(832), writes descriptor type and copies descriptor payload. Monitor 06000288 labels DescriptorType/Value/MaskVersion. Buffer constructor/factory retain original validation.",
+      "ParameterNames": {
+        "1": "descriptorType",
+        "2": "descriptorValue"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B47",
+      "NewName": "UnsafeFromBuffer",
+      "Reason": "Retain checked DeviceDescriptorResponseMessage owner and getter/setter aliases. Ctor 06000B41 builds descriptor type zero from mask-version big-endian bytes; 06000B42 sets DeviceDescriptor_Response(832), writes descriptor type and copies descriptor payload. Monitor 06000288 labels DescriptorType/Value/MaskVersion. Buffer constructor/factory retain original validation.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B48",
+      "NewName": "",
+      "Reason": "Retain checked DeviceDescriptorResponseMessage owner and getter/setter aliases. Ctor 06000B41 builds descriptor type zero from mask-version big-endian bytes; 06000B42 sets DeviceDescriptor_Response(832), writes descriptor type and copies descriptor payload. Monitor 06000288 labels DescriptorType/Value/MaskVersion. Buffer constructor/factory retain original validation.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DA6",
+      "NewName": "",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DA7",
+      "NewName": "",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses.",
+      "ParameterNames": {
+        "1": "apci",
+        "2": "address",
+        "3": "count",
+        "4": "includeMemoryData"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DA8",
+      "NewName": "get_Address",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses.",
+      "LocalNames": {
+        "0": "dataOffset"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DA9",
+      "NewName": "set_Address",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses.",
+      "ParameterNames": {
+        "1": "address"
+      },
+      "LocalNames": {
+        "0": "dataOffset"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DAA",
+      "NewName": "get_Count",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DAB",
+      "NewName": "set_Count",
+      "Reason": "Abstract base for APCI Memory_Read(512), Memory_Response(576) and Memory_Write(640). Formatter callers and exact-identity Monitor 06000370/378/380 expose getters 06000DA8/DAA as Address/Count. Address reads/writes two big-endian bytes at OffsetToData while retaining UInt32 metadata; count uses the six-bit payload. Constructor Boolean includes count payload bytes in allocation. Preserve original truncation and allocation. Local dataOffset is the result of get_OffsetToData used in both byte accesses.",
+      "ParameterNames": {
+        "1": "count"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DAC",
+      "NewName": "UnsafeFromBuffer",
+      "Reason": "Ctor 06000DAE supplies Memory_Read(512), address/count and false payload allocation to Class911. Monitor GetMemoryReadMessageProperties exposes this physical class. Parser constructor checks fixed APDU length; response predicate 06000DB0 compares APCI with Memory_Response(576). Retain checked IsResponse/GetFormattedData family aliases.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DAD",
+      "NewName": "",
+      "Reason": "Ctor 06000DAE supplies Memory_Read(512), address/count and false payload allocation to Class911. Monitor GetMemoryReadMessageProperties exposes this physical class. Parser constructor checks fixed APDU length; response predicate 06000DB0 compares APCI with Memory_Response(576). Retain checked IsResponse/GetFormattedData family aliases.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DAE",
+      "NewName": "",
+      "Reason": "Ctor 06000DAE supplies Memory_Read(512), address/count and false payload allocation to Class911. Monitor GetMemoryReadMessageProperties exposes this physical class. Parser constructor checks fixed APDU length; response predicate 06000DB0 compares APCI with Memory_Response(576). Retain checked IsResponse/GetFormattedData family aliases.",
+      "ParameterNames": {
+        "1": "address",
+        "2": "count"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB0",
+      "NewName": "IsMemoryResponseApci",
+      "Reason": "Ctor 06000DAE supplies Memory_Read(512), address/count and false payload allocation to Class911. Monitor GetMemoryReadMessageProperties exposes this physical class. Parser constructor checks fixed APDU length; response predicate 06000DB0 compares APCI with Memory_Response(576). Retain checked IsResponse/GetFormattedData family aliases.",
+      "ParameterNames": {
+        "1": "apci"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB2",
+      "NewName": "UnsafeFromBuffer",
+      "Reason": "Ctor 06000DB4 supplies Memory_Response(576), address and nullable array length to Class911 and sets MessageCode indication. Monitor GetMemoryResponseMessageProperties exposes MemoryData from getter 06000DB5. Getter copies Count bytes after two address bytes. Setter 06000DB6 rejects null, updates length/count and copies the full array; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Preserve empty-array fallback and original packing.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB3",
+      "NewName": "",
+      "Reason": "Ctor 06000DB4 supplies Memory_Response(576), address and nullable array length to Class911 and sets MessageCode indication. Monitor GetMemoryResponseMessageProperties exposes MemoryData from getter 06000DB5. Getter copies Count bytes after two address bytes. Setter 06000DB6 rejects null, updates length/count and copies the full array; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Preserve empty-array fallback and original packing.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB4",
+      "NewName": "",
+      "Reason": "Ctor 06000DB4 supplies Memory_Response(576), address and nullable array length to Class911 and sets MessageCode indication. Monitor GetMemoryResponseMessageProperties exposes MemoryData from getter 06000DB5. Getter copies Count bytes after two address bytes. Setter 06000DB6 rejects null, updates length/count and copies the full array; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Preserve empty-array fallback and original packing.",
+      "ParameterNames": {
+        "1": "address",
+        "2": "memoryData"
+      },
+      "LocalNames": {
+        "0": "memoryDataLength"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB5",
+      "NewName": "get_MemoryData",
+      "Reason": "Ctor 06000DB4 supplies Memory_Response(576), address and nullable array length to Class911 and sets MessageCode indication. Monitor GetMemoryResponseMessageProperties exposes MemoryData from getter 06000DB5. Getter copies Count bytes after two address bytes. Setter 06000DB6 rejects null, updates length/count and copies the full array; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Preserve empty-array fallback and original packing."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB6",
+      "NewName": "set_MemoryData",
+      "Reason": "Ctor 06000DB4 supplies Memory_Response(576), address and nullable array length to Class911 and sets MessageCode indication. Monitor GetMemoryResponseMessageProperties exposes MemoryData from getter 06000DB5. Getter copies Count bytes after two address bytes. Setter 06000DB6 rejects null, updates length/count and copies the full array; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Preserve empty-array fallback and original packing.",
+      "ParameterNames": {
+        "1": "memoryData"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB8",
+      "NewName": "UnsafeFromBuffer",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DB9",
+      "NewName": "",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names.",
+      "ParameterNames": {
+        "1": "buffer"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DBA",
+      "NewName": "",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names.",
+      "ParameterNames": {
+        "1": "address",
+        "2": "memoryData"
+      },
+      "LocalNames": {
+        "0": "memoryDataLength"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DBB",
+      "NewName": "get_MemoryData",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DBC",
+      "NewName": "set_MemoryData",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names.",
+      "ParameterNames": {
+        "1": "memoryData"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DBF",
+      "NewName": "IsMemoryResponseApci",
+      "Reason": "Ctor 06000DBA supplies Memory_Write(640), address and array length to Class911, with exact memoryData null-argument literal. Monitor GetMemoryWriteMessageProperties exposes MemoryData from getter 06000DBB. Setter 06000DBC rejects null, updates length/count and copies full payload; EnsureDataSpecified omits its main mutations. Nullable local memoryDataLength stores array.Length or an empty nullable before base construction. Predicate 06000DBF accepts Memory_Response(576); preserve virtual family names.",
+      "ParameterNames": {
+        "1": "apci"
+      }
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000CD0",
+      "Disposition": "unresolved",
+      "Reason": "no-evidence-in-scope: literal Int32(63) on memory frame base has zero field-token references across all 111 hash-verified graph modules. Shared count storage uses a six-bit mask, but no reader/caller evidence distinguishes this field as count limit versus another inlined protocol constant. Keep exact metadata and unresolved role."
+    }
+  ],
+  "MapPreimages": [
+    {
+      "Token": "0x06000123",
+      "Alias": "<ReadMemoryAsync>b__101_0",
+      "ParameterAliases": [],
+      "LocalAliases": []
+    },
+    {
+      "Token": "0x0600012D",
+      "Alias": "<WriteMemoryAsync>b__114_0",
+      "ParameterAliases": [],
+      "LocalAliases": []
+    },
+    {
+      "Token": "0x0600012F",
+      "Alias": "<WriteMemoryAsync>b__114_2",
+      "ParameterAliases": [],
+      "LocalAliases": []
+    },
+    {
+      "Token": "0x06000B47",
+      "Alias": "UnsafeFromBuffer",
+      "ParameterAliases": [],
+      "LocalAliases": []
+    },
+    {
+      "Token": "0x06000DB6",
+      "Alias": "EnsureDataSpecified",
+      "ParameterAliases": [],
+      "LocalAliases": []
+    },
+    {
+      "Token": "0x06000DBC",
+      "Alias": "EnsureDataSpecified",
+      "ParameterAliases": [],
+      "LocalAliases": []
+    }
+  ],
+  "MissingEvidence": {
+    "Constant": "0x04000CD0",
+    "PreviouslyUnresolvedMetadataFields": [
+      "0x04000C5E",
+      "0x04000CD1",
+      "0x04000CD2",
+      "0x04000CD3",
+      "0x04000CD4"
+    ],
+    "VirtualScopes": "Retain native-checked family aliases; individual overrides need complete family review before adding input/local aliases."
+  },
+  "Limits": "Source aliases only. No ETS source/IL/binary editing, export/build/runtime or compatibility claim. Retain runtime names, virtual families, lambda ownership and exact physical Monitor references. Native update/check must enforce SDK/contracts and preserve every existing alias/scope except the two reviewed setter corrections."
+}
