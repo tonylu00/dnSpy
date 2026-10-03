@@ -1,14 +1,14 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T07:37:48Z",
+  "UpdatedUtc": "2026-10-03T07:55:50Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
     "CheckpointDir": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
     "SourceTree63": "D:\\knx_analysis\\ETS6.3_api_preserved4",
     "SourceTree64": "D:\\knx_analysis\\ETS6.4_api_preserved5",
-    "ToolCli": "dotnet D:\\knx_analysis\\rva-field-alias-toolbuild02\\bin\\NameCandidates\\release\\NameCandidates.dll",
+    "ToolCli": "dotnet D:\\knx_analysis\\method-reference-nativebuild01\\bin\\NameCandidates\\release\\NameCandidates.dll",
     "ToolRepo": "D:\\git\\de4dotEx",
     "DnspyRepo": "D:\\git\\dnSpy",
     "Playbook": "D:\\knx_analysis\\PLAYBOOK.md",
@@ -21,13 +21,13 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v389.xml",
-      "Sha256": "E920D7DFCCA48CF31EBD0A79B63222B3FFC9393A56BDBC809766FE358AAAF4FB",
-      "Checkpoint": "Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v389.json",
-      "NextWave": 390,
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v390.xml",
+      "Sha256": "91A776BA90DE243B9BCEF19504F2780CB855C02DE5651DBF408C3A4F9ED77A78",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v390.json",
+      "NextWave": 391,
       "CumulativeRenamedRows": 16694,
-      "RowsInMap": {"Types": 980, "Methods": 12904, "Fields": 2921, "Parameters": 2639, "Locals": 939},
-      "CountBasis": "RowsInMap counts actual NewName entries in v389; CumulativeRenamedRows remains the historical v380 total, not current whole-application coverage.",
+      "RowsInMap": {"Types": 980, "Methods": 12904, "Fields": 2947, "Parameters": 2665, "Locals": 996},
+      "CountBasis": "RowsInMap counts actual NewName entries in v390; CumulativeRenamedRows remains the historical v380 total, not current whole-application coverage.",
       "AppliedToSource": false
     },
     "64": {
@@ -72,10 +72,10 @@
     },
     "PhysicalScope63": {
       "Inventory": "perf-now/ets63-managed-scope-inventory02.json: 528 managed modules, 270 satellites, 4 native PE, 0 scan errors; all 64 mapped physical paths matched.",
-      "Additional": "45 additional pure-IL first-party candidates beyond the 64-project v388 baseline. v389 maps 71 physical modules. Calculator and serializer blocks add 232 aliases (88 + 144) with checked physical identities; other scope/coverage remains pending. Preserve mixed-mode and third-party binaries.",
+      "Additional": "45 additional pure-IL first-party candidates beyond the 64-project v388 baseline. v390 maps 71 physical modules. Calculator and serializer blocks add 341 aliases (88 + 253) with checked physical identities; other scope/coverage remains pending. Preserve mixed-mode and third-party binaries.",
       "Discovery": "45 modules: 38,818 methods, 4,621 types, 23,064 fields. Updated inventories: unmapped-type-review03 (18 type candidates), unmapped-field-review02 (1,976 field candidates). These are review flags, not rename decisions or completed coverage.",
-      "ToolFix": "de4dotEx af8b8b23 plus dnSpy 451e05cc8 permit validated static primitive/explicit-layout RVA aliases; unsupported storage remains blocked. Synthetic unchanged caller, runtime names/flags/layout/bytes, deterministic workers and incremental hashes pass. Framework inference now includes exact-identity untouched dependencies; portable cycle/context/explicit-target regression passes. Coverage fixes remain 07f6d505/b9d90fed.",
-      "NextBlock": "Continue XML serializer reference contexts: 26 duplicate enum dispatch tables and 60 selected locals remain recorded in xml-dispatch-pending-contexts.json and xml-serializer-pending-local-dataflow.json. Actual original/rebuilt behavior matches 1,524 cases across 55 readers/5 writers. Inspect remaining caller/dataflow roles; keep uncertainty explicit. RVA guards and five blob aliases are verified; three semantic storage-owner aliases are staged in v389."
+      "ToolFix": "de4dotEx af8b8b23 plus dnSpy 451e05cc8 permit validated static primitive/explicit-layout RVA aliases; unsupported storage remains blocked. Synthetic unchanged caller, runtime names/flags/layout/bytes, deterministic workers and incremental hashes pass. Framework inference now includes exact-identity untouched dependencies; portable cycle/context/explicit-target regression passes. Coverage fixes remain 07f6d505/b9d90fed. de4dotEx 7af4b44d adds exhaustive physical incoming method references; portable cap/operand/signature/metadata/twin guards pass.",
+      "NextBlock": "Serializer dispatch contexts closed in v390: 26 duplicate tables + 26 XML inputs + 52 reader locals + 5 writer enum snapshots named. 93 unused IL slots explicitly reviewed (55 prior pending + 38 duplicate-reader slots), no invented aliases. Actual helper behavior previously matched 1,524 cases; new aliases await consolidated freeze. Next: Common.Metrics type/field roles, PluginRepository compiler attributes and vocabulary acronym preservation, then additional first-party modules."
     }
   },
   "Naming": {
@@ -152,12 +152,12 @@
       "Password": "Synthetic test-mcp-v388-password (P-0813, GUID 0f691dc1-e25a-473a-8f72-bffb229109d9) created password-protected, opened/closed, then reopened with password in a fresh process. is_open=true, is_broken=false, save_suppressed=false. perf-now/ets63-v388-password-report01.json; ETS exited normally; 16 checkpointed profile files restored with matching hashes. Full complex protected-project coverage remains unproven."
     },
     "SourceExport": {
-      "Map": "v388 baseline used v381. v389 adds 275 aliases relative to v381, including 144 serializer aliases. Native identity/SDK/reference gates pass. Focused export02/build tests serializer subset v388; three v389 storage-owner aliases and the application-wide map are not yet consolidated.",
+      "Map": "v388 baseline used v381. v390 adds 384 aliases relative to v381, including 253 serializer aliases. Native identity/SDK/reference gates pass. Focused export02/build tests serializer subset v388; v389/v390 names and the application-wide map are not yet consolidated.",
       "Scope": "v388 exports the 64 mapped physical modules. The whole-tree inventory found 45 additional pure-IL first-party candidates; confirm scope and review naming before the next consolidated export. Third-party and mixed-mode binaries remain untouched.",
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
       "Command": "Current fixed CLI: dnspy-sdk-guard-fix01/dnSpy.Console.exe --source-name-map <checked-map> --public-sign --app-config ETS6.3_api_preserved4/ETS6N.exe.config -o <fresh-out>, plus explicit physical module paths; DNSPY_PACKAGE_MAP=perf-now/nuget-packages.txt. Build the actual ILSpy plugin, then the exported solution in Release.",
-      "State": "64-project v388 baseline compiles with 0 errors (15,375 warnings; fresh incremental recheck 153 warnings). Focused serializer export02 adds three physical project builds: root/updater net48 and CV net40, 0 errors/959 warnings. Runtime alias/layout/RVA metadata comparison and 1,524 separately executed original/rebuilt helper cases pass. Naming v389 is not consolidated.",
+      "State": "64-project v388 baseline compiles with 0 errors (15,375 warnings; fresh incremental recheck 153 warnings). Focused serializer export02 adds three physical project builds: root/updater net48 and CV net40, 0 errors/959 warnings. Runtime alias/layout/RVA metadata comparison and 1,524 separately executed original/rebuilt helper cases pass. Naming v390 is not consolidated.",
       "Caveat": "The 64-project baseline and three focused serializer projects compile in separate exports. This is not one consolidated 67-project build, whole-tree naming closure or full ETS/App compatibility. xml-rva-runtime-comparison01.json and xml-serializer-behavior-comparison-repro02.json record only selected alias/storage and enum-helper behavior.",
       "Next": [
         "Complete remaining first-party scope and application-wide mapping using inexpensive checks. Consolidated ETS export/build, full audits and binary application follow map freeze.",
