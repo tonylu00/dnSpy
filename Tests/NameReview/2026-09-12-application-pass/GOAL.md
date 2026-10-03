@@ -1,93 +1,106 @@
-# Goal: make the ETS application readable — merge, name, then verify
+# Goal: readable, rebuildable and behavior-compatible ETS
 
-Read `D:\knx_analysis\STATE.json` first, then `POLICY.md` and `PLAYBOOK.md`. Those three
-files are the complete state, policy and pipeline. Do not read `archive/` and do not write
-journals anywhere.
+Read STATE.json, then POLICY.md and PLAYBOOK.md. These files are the current state
+and requirements. Do not use archived handoffs to select maps or restart work.
 
 ## Objective
 
-The measure is **how readable the decompiled ETS application is**, not how many symbols were
-renamed. In priority order:
+Produce a readable, consistently named ETS application across its executable and
+coupled first-party components, export source that actually compiles, and verify
+the rebuilt application against original behavior and unchanged third-party ETS Apps.
+Complete ETS 6.3 first, then apply and verify the tooling and mapping workflow on 6.4.
+ETS 6.3 primarily exercises Dotfuscator restoration; 6.4 exercises the combined
+Dotfuscator/NetReactor workflow. Success means rebuilt ETS behavior, not just tool builds.
 
-1. **Compiler-generated code is merged into its owners** — lambdas inline, `async`/`await`
-   bodies, state machines and display classes no longer appear as separate obfuscated types.
-2. **Semantics-bearing members are named from evidence** — method, type, field, parameter.
-3. **Evidence-free private state is recorded unresolved with a reason** — never invented,
-   never suffixed, never counted as progress.
+## Naming and readability
 
-## Where the work stands (2026-09-23)
+- Treat the complete application tree as a shared symbol/call graph. Identify a symbol
+  by physical module path, hash/MVID, metadata token and signature; preserve distinct
+  compatibility assemblies even when their assembly names match.
+- Follow recognizable framework/library calls through inner helpers to callers. Name
+  methods, types, fields, parameters and locals together from demonstrated behavior.
+  Apply a mapping across references, interfaces and override families through the tools.
+- Detect short names and tool placeholders as review candidates. Preserve meaningful
+  existing names and legitimate overloads; spelling or overload count alone is not proof
+  of obfuscation. Never replace a placeholder with a, b, c_1 or an invented suffix.
+- Keep unsupported guesses explicitly unresolved with missing evidence and the routes
+  examined. Record evidence-free private state as no-evidence-in-scope only after the
+  relevant evidence routes have been exhausted. Do not restart measured exhausted routes
+  without new evidence.
+- Reconstruct lambdas, closures, async/await and state machines into their owning source
+  methods using structural evidence. Record every necessary leftover with its cause;
+  prevent recursive inlining from exhausting memory without broadly reducing readability.
 
-- **Merge: done at the decompiler level.** dnSpy/ILSpy submodule
-  `Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler` @ `codex/local-commits`
-  `00db96bac` (async `MoveNext` found through its MethodImpl override) and `fd5b322cc`
-  (renamed closures/lambdas recognised structurally instead of by name).
-  Verified on the 6.3 tree: HawkNET 389 async / 1,190 await / 326 inline lambdas / 0 raw
-  stubs / 0 display classes; Falcon 556 / 1,125 / 461; ObjectModel 12 / 9 / 3,340;
-  CloudKit 29; DevKit 16. Normal .NET 9 assemblies are unchanged.
-- **8 raw stubs remain in Falcon** (`Class1353::a`, `Class1360` ×7) — cause not yet pinned;
-  see `STATE.Backlog.CompilerGeneratedMerge.Status.FalconLeftover8`.
-- **Naming:** map 6.3 = `names63-staged-v380.xml` (16,694 renamed rows), 6.4 = v178.
-  Backlog is 28,105 rows (20,492 fields, 5,778 methods, 2,333 types) whose evidence routes
-  are closed with measured numbers, plus one open route (the 6.4 readable-surface anchor
-  fixpoint).
-- **Phase 4 has never run.** `AppliedToSource` is `false`; the ETS binaries are untouched.
+## Compatibility and tool requirements
 
-## Task order for this goal
+- Enforce the ETS SDK whitelist and protected contract families. Unchanged third-party
+  ETS Apps must remain compatible; rebuilding those Apps is not an acceptable workaround.
+- Keep readable source aliases distinct from original runtime metadata identities where
+  required. Preserve assembly/member/signature identity, MethodImpl, reflection,
+  serialization, resources and XAML/BAML binding contracts. Generated closure restoration
+  must identify the actual owner, including overloads, rather than match a name prefix.
+- Export only first-party components. Reference known NuGet packages when their assembly
+  identities match the original dependencies; otherwise reference untouched original
+  binaries. Keep DevExpress, Telerik and other third-party components intact.
+- Enhance dnSpy, de4dotEx and NetReactorSlayer when a concrete gap prevents this goal.
+  Reusable naming, reference propagation, restoration, export and patching behavior must
+  live in the tools. Scripts may explore code, prepare maps and orchestrate tools, but
+  must not directly replace names or patch ETS source, IL, metadata or binaries.
+- Core helpers must be usable through .NET or another portable language. Do not make the
+  naming workflow depend on Windows-only PowerShell parsing or regex replacements.
+- Preserve folder structure, skip components without the relevant protection, and resolve
+  dependencies in their physical compatibility context. Improve batching, caching and
+  parallelism where measurement identifies a bottleneck, with bounded memory usage.
 
-1. **Readability baseline:** run the patched decompiler over the whole 6.3 tree (528
-   assemblies) and the 6.4 tree and record per module: files, inline lambdas, async
-   methods, awaits, raw builder stubs, display-class declarations, decompiler errors.
-   Write it into `STATE.Readability` (per module + totals).
-2. **Close the Falcon 8:** instrument or diff `MicrosoftAsyncDecompiler.MatchTaskCreationPattern`
-   for the two cases listed in STATE; fix the matcher or record why it cannot be fixed.
-3. **Anchor route: closed by measurement (2026-09-23).** Type-anchor pairing (6.3 type → 6.4
-   type through ≥2 already-named method anchors) can pair only 27 of 2,478 unnamed types, and
-   only 129 types tree-wide have ≥2 anchors. Do not spend tool work on it; treat the naming
-   remainder as per-row work only.
-4. **Settle the evidence-free remainder** per `POLICY.md`: record those rows as unresolved
-   with the `no-evidence-in-scope` reason so `--coverage` counts them as decided.
-5. **Phase 4:** freeze the map, export the source with `dnSpy.Console --source-name-map <map>
-   --public-sign` (the same patched engine, so the export inherits the merge), rebuild,
-   overlay `Stage-RecompiledTree`, run the audit battery, and verify against unchanged
-   third-party ETS Apps.
+## Execution order and verification
 
-## Turn contract
+1. Repair the current ETS 6.3 exporter/build blockers: generated closure-owner conflicts
+   and XAML resolution against restored runtime type names. Re-export and compile the
+   actual ETS solution after a concrete fix; continue through subsequently revealed errors.
+2. Measure whole-tree readability, close or explain the eight remaining Falcon async
+   stubs, and finish application-wide naming coverage in complete feature/type blocks.
+3. Freeze the maps, export the complete first-party source, compile the full solution,
+   stage the rebuilt application into a separate output tree, and run consolidated
+   identity, contract, resource, reference and compatibility verification.
+4. Launch and test rebuilt ETS 6.3 through KNX-ETS-MCP, then verify ETS 6.4. Exercise
+   startup, system language, test-mcp project loading, password-protected project loading,
+   saving/reopening and available unchanged third-party Apps. Verify string restoration
+   and the previously reported failures against original evidence. Do not enable
+   ExtendedLogging, which disables saving.
 
-A checkpoint or commit does **not** end a turn.
+During naming, use inexpensive identity, map and reference checks. Do not export or
+rebuild the whole application after each small name change. Targeted tool regressions
+and ETS source builds needed to repair concrete exporter/compiler failures are allowed
+before naming closes. Consolidated end-to-end verification follows the frozen mapping pass.
 
-- Keep working until the current block is exhausted (every row named or recorded as
-  blocked), every remaining row carries a hard-blocker code from `STATE.HardBlockers`, or you
-  hit a real context limit.
-- Floor per turn: one complete block and at least 100 definitions, unless fewer than 100
-  unblocked rows remain in scope.
-- If you stop early, write the remaining tokens and the exact reason into `STATE.NextItems` —
-  never into prose.
-- "Nothing to do this turn" is not a valid turn: take the next route, or the next item in the
-  task order above.
-- Missing evidence is not a blocker; it is an unresolved row with a recorded reason.
+## Live ETS authorization
 
-## Working rules
+The user authorizes the agent to launch ETS autonomously and control it through the
+KNX-ETS-MCP plugin for this goal, without asking again before each launch or test.
+Use the test project and staged output tree for mutating scenarios. Preserve original
+installations and unrelated work; later user instructions restricting ETS use take
+precedence. Fix ETS-MCP tooling gaps when necessary for these tests.
 
-- Bounded state: `STATE.json` stays under 200 lines. History is git; no per-block journals,
-  no wave reports, no commit-hash prose.
-- One block = one review file, one `--wave` run, one checkpoint, one commit.
-- Tool changes only when a row or block cannot be consumed, and the next action after a tool
-  fix is always the work it unblocked. Decompiler fixes live in the submodule on
-  `codex/local-commits` and must be verified with a before/after decompile or map measurement.
-- Never modify ETS binaries with scripts. No ETS exports, rebuilds, audits or launches outside
-  Phase 4.
-- Preserve unrelated work: the dnSpy repo carries an untracked `ILSpy/` folder and a coupled
-  `D:\git\de4dotEx` checkout — leave both alone.
-- Report per turn: block name, definitions named, readability delta (lambdas / async / raw
-  stubs), remaining unblocked count. Nothing else.
+## Current starting point
 
-## Definition of done
+- Maps: 6.3 names63-staged-v381.xml; 6.4 names64-staged-v178.xml. Check actual hashes
+  against STATE before use; v381 removes two conflicting rows from v380.
+- Latest recorded export: D:\knx_analysis\ets63-source-v385, 64 projects and 13,296 C#
+  files. Its build reported three first-layer errors: two closure-owner conflicts and one
+  XAML/runtime-name mismatch. Dependent projects may reveal more errors after those fixes.
+- The 6.4 bulk anchor route is measured exhausted. Remaining naming is evidence-led
+  per-row/cluster work, not another bulk anchor engine.
+- Consolidated rebuilt-application compatibility and live tests are not yet proven.
 
-- **Merge:** zero raw builder stubs and zero display-class declarations across the in-scope
-  tree, or every leftover recorded with its cause.
-- **Naming:** every in-scope definition is exactly one of named | already readable |
-  SDK/protected | compiler-generated (merged) | unresolved-no-evidence with a reason.
-- **Phase 4:** completed, with compatibility verified against the unchanged third-party ETS
-  Apps.
+## Definition of done and progress
 
-Until Phase 4 has run, do not claim the application is readable, applied or compatible.
+- Every in-scope symbol is named, already readable, SDK/protected, compiler-generated
+  and reconstructed, or explicitly unresolved with evidence recorded.
+- The complete first-party ETS solution builds from tool-exported source with the intended
+  dependencies. No manual generated-source edits are needed to reproduce that build.
+- Staged rebuilt ETS passes the declared runtime scenarios and unchanged-App compatibility
+  checks. Report unavailable tests and every remaining limitation explicitly.
+- Progress is whole-application coverage, readable call chains, reconstruction quality,
+  successful ETS source builds and observed behavior. Commits, test counts and duplicate
+  alias totals are not substitutes. Commit validated milestones and keep STATE under
+  200 lines; history belongs in git, not per-wave journals.

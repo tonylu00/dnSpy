@@ -13,7 +13,7 @@ remainder) — not a "wave" of three rows. One block is one review file and one 
 $pass = 'D:\knx_analysis\application-name-pass01'
 $repo = 'D:\git\dnSpy\Tests\NameReview\2026-09-12-application-pass'
 $tool = 'D:\git\de4dotEx\tools\NameCandidates\bin\Release\net8.0\NameCandidates.dll'
-$W    = 370                       # next 6.3 wave number from STATE.json
+$W    = 382                       # read the actual next number from STATE.json
 $work = "D:\knx_analysis\perf-now\w$W"
 
 # 1. build the review rows (Module, Token, NewName, Reason) for this block.
@@ -33,7 +33,7 @@ dotnet $tool --wave "$pass\extended63-wave$W.review.json" "$pass\names63-staged-
 python "$pass\checkpoint-waveN.py" $W "<block status>" "extended63-wave$W.review.json" "<method-json>" $work
 
 # 4. 6.4 restage (see §4), then:
-python "$pass\checkpoint64-vN.py" 168 167 $W
+python "$pass\checkpoint64-vN.py" <nextVersion64> <baseVersion64> $W
 ```
 
 `--wave` refuses to overwrite an existing output directory: delete the work directory
@@ -110,17 +110,41 @@ alternatives are re-typing six commands per wave, which is what produced the spr
   copy per wave is not acceptable long term.
 - **Commit once per block**, with the block name in the message. A commit is a checkpoint,
   not an endpoint.
-- **Cheap checks only during naming.** No ETS export, rebuild, launch, or full-tree audit
-  during the naming phase, and no repeated whole-tree scans after each block.
+- **Cheap checks during naming.** Avoid whole-tree exports, builds and audits after minor
+  map changes. Targeted regressions and actual ETS source builds are allowed when repairing
+  a concrete exporter/compiler defect; consolidated runtime verification follows map freeze.
 - **Do not stop while unblocked rows exist.** If a route is exhausted for a block, record
   it in `STATE.Backlog.ExhaustedRoutes` and take the next route or the next block.
 - **`STATE.json` stays under 200 lines.** When it grows, delete detail — do not create a
   second state file.
-- **Do not optimize the tools** unless a specific row cannot be consumed by them. A tool fix
-  is followed immediately by naming work, not by a measurement round.
+- **Tie tool changes to a concrete gap.** Fix naming, reconstruction, export, compilation
+  or measured batching bottlenecks, then complete the work the change unblocks. Keep core
+  helpers portable; scripts orchestrate tools and maps, never edit generated ETS source.
 
 ## 7. Resume after a context reset
 
 1. Read `STATE.json`. 2. Confirm the current map SHA matches the file on disk (one
    `Get-FileHash`). 3. Open `STATE.NextItems` and continue at the first row whose route is
    not exhausted. Nothing else needs to be rediscovered.
+
+## 8. Current source-compilation and runtime work
+
+Start with STATE.Deferred.SourceExport: fix closure-owner restoration by exact owner/closure
+identity and resolve the XAML/source-alias versus restored-runtime-name mismatch. Build the
+actual ILSpy plugin before exporting; building only dnSpy.Console leaves the decompiler stale:
+
+```
+dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows
+python D:\knx_analysis\perf-now\export-full.py --out <fresh-output>
+dotnet build <fresh-output>\solution.sln
+```
+
+Export first-party modules only. PackageReference requires matching original assembly
+identity; otherwise keep an original-binary HintPath. Do not decompile third-party libraries.
+Each failed dependency may hide additional compiler errors: continue until the whole solution
+builds, then stage rebuilt output through the tools and run consolidated audits and live tests.
+
+ETS launches and KNX-ETS-MCP control are authorized without repeated permission requests.
+Use the staged application and test-mcp project for mutations. Test language, password loading,
+saving/reopening and unchanged third-party Apps. Keep ExtendedLogging disabled. Do not modify
+original installations or unrelated projects. Report measured outcomes and remaining gaps.

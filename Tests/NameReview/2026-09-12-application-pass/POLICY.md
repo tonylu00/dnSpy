@@ -41,8 +41,8 @@ the whitelist; `--update-map` drops or blocks excluded rows rather than trusting
 
 - The Apps ship as binaries and cannot be rebuilt. "Recompile the Apps" is not a solution
   and not an acceptable risk.
-- Compatibility is proven against the *unchanged* third-party binaries, and only in the
-  consolidated Phase-4 verification — never claimed from a metadata-only check.
+- Compatibility is proven against the *unchanged* third-party binaries during consolidated
+  rebuilt-application verification; a metadata-only check is not runtime proof.
 - The few Apps on hand do **not** define the compatibility boundary. The whitelist, the
   SDK surface and the graph evidence define it.
 
@@ -59,10 +59,24 @@ the whitelist; `--update-map` drops or blocks excluded rows rather than trusting
 - Keep genuinely different definitions distinct: overloads, same-named types across
   assemblies, and 6.3/6.4 compatibility twins are different rows even when the displayed
   name matches. Always key by physical module + metadata token/identity.
+- Short names and placeholders are review candidates, not sufficient evidence by themselves.
+  Preserve meaningful existing names and valid overloads. Source aliases may differ from
+  restored runtime names; both must remain consistent with their respective references.
+
+## Builds and live ETS testing
+
+- Concrete exporter/compiler defects may be tested with targeted exports and actual ETS
+  source builds before naming closes. Avoid whole-tree rebuilds after minor name changes;
+  freeze mappings before consolidated runtime and unchanged-App verification.
+- The user authorizes autonomous ETS launches and KNX-ETS-MCP control for this goal without
+  repeated permission requests. Use staged copies and test-mcp for mutating tests; preserve
+  original installations and unrelated work. Later user restrictions supersede this grant.
+- Include system language, password-protected project loading, saving and reopening in
+  runtime checks. Keep VirtualDongle ExtendedLogging disabled because it prevents saving.
 
 ## What this policy does not authorize
 
 - Editing ETS source, IL, metadata or binaries with a script. Renaming happens only through
   the dnSpy/de4dotEx tooling.
-- Running ETS exports, rebuilds, full audits or live ETS scenarios during the naming phase.
-  Those belong to Phase 4 and to the user-coordinated live checks.
+- Treating tool builds, map checks or a successful source export as proof that rebuilt ETS
+  compiles, launches or preserves behavior. Report each level of verification separately.

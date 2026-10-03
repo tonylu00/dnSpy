@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-09-23T21:40:00Z",
+  "UpdatedUtc": "2026-10-03T01:30:36Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -15,16 +15,18 @@
     "Policy": "D:\\knx_analysis\\POLICY.md",
     "Goal": "D:\\knx_analysis\\GOAL.md",
     "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
-    "DecompilerFix": "submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits: 00db96bac (async MoveNext via MethodImpl override), fd5b322cc (renamed closures/lambdas via delegate-target structure)"
+    "DecompilerFix": "submodule Extensions/ILSpy.Decompiler/ICSharpCode.Decompiler @ codex/local-commits: 00db96bac (async MoveNext via MethodImpl override), fd5b322cc (renamed closures/lambdas via delegate-target structure), eceb55413 (lambda parameter names reach the printer; closure substitutions refresh variable names)",
+    "ExporterBuild": "Build the plugin, not the console: dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows. dnSpy.Console.csproj does NOT reference the ILSpy submodule, so building it silently leaves ICSharpCode.Decompiler.dll stale and an export then runs the old decompiler."
   },
   "Maps": {
     "63": {
-    "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v381.xml",
-      "Sha256": "98BEAFAA31CD33A648B7BCB9BFBAF42CBF0E572BC8731E791844D4A0AD4B1ACE",
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v381.xml",
+      "Sha256": "9E3AFE384D99689964F0B924CE250A3025B76C953BD14C7863F1954DED07F7F9",
       "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-wave380.json",
       "NextWave": 382,
       "CumulativeRenamedRows": 16694,
-      "RowsInMap": { "Methods": 12905, "Types": 965, "Fields": 2824, "Parameters": 2316, "Locals": 837 },
+      "RowsInMap": { "Methods": 12904, "Types": 964, "Fields": 2824, "Parameters": 2550, "Locals": 866 },
+      "CountBasis": "RowsInMap counts actual NewName entries in v381; CumulativeRenamedRows is the historical v380 checkpoint total, not current coverage.",
       "AppliedToSource": false
     },
     "64": {
@@ -66,7 +68,7 @@
       "Hypotheses": ["one Class1360 state machine 'a' under Type_1424 lacks [CompilerGenerated]", "both stubs carry an unused extra local ([1] int16) - partially cleaned control flow", "Task<ValueTuple<...>> return shape adds an instruction the middle loop rejects"],
       "Next": "Narrowed 2026-09-23 with the ILSPY_ASYNC_TRACE diagnostic (dnSpy 55e15459a + d7d01bfc5): the factory log shows 06001F69 IS offered to MicrosoftAsyncDecompiler.TryCreateCore and a kickoff stub in Class1353 IS accepted, so the remaining failure is downstream - RunStep2/AnalyzeMoveNext on the state machine either throws IncompleteAsyncMethodException or leaves the raw body. Next: trace RunStep2 for that token (same env var) and fix that path."
     },
-    "BaselineTask": "Sweep the patched decompiler over all 528 6.3 assemblies and the 6.4 tree; store per-module numbers here."
+    "BaselineTask": "Inventory the whole 6.3/6.4 application trees; measure patched-decompiler readability for first-party components, keeping third-party dependencies untouched. Store per-module numbers here."
   },
   "Naming": {
     "Backlog": {
@@ -76,7 +78,7 @@
       "Shape": "field remainder is 19,596 one-character private names (a 8017, b 3371, c 2678, d 2118, e 1797); method remainder is 4,040 one-character plus ~1,063 tool placeholders",
       "Report": "D:\\knx_analysis\\perf-now\\backlog-v380.json",
       "Regenerate": "dotnet <tool> --review <tree>\\<module> <out> per module, --review-types/--review-fields on the tree, then python D:\\knx_analysis\\perf-now\\backlog.py",
-      "OpenRoute": "6.4 readable-surface anchor fixpoint: 6.4 types are fully readable (Falcon 2214/2214, HawkNET 1056, ObjectModel 4024, DevKit 287) and Falcon has 12,589 readable methods; naive shape pairing gave 0 unique matches, so pair by already-named-member anchors and iterate.",
+      "OpenRoute": "No remaining bulk route established; the 6.4 anchor fixpoint is measured exhausted. Review remaining rows/clusters from behavior, recording unresolved evidence explicitly.",
       "ExhaustedRoutes": [
         "cross-version transfer by fingerprint/shape/ordinal: shape 4.2%, ordinal 10-40%, literal tiebreak 5 rows - rejected",
         "property/field accessor and field-backing inference: 49+4 proposals at v380, 5,280+1,966 skips - saturated",
@@ -96,15 +98,15 @@
       ]
     },
     "NextItems": [
+      { "Task": "source export, remaining 3 errors", "Detail": "closure-owner conflict x2 + XAML runtime-name gap; see Deferred.SourceExport and Deferred.MemoryBlowup.RemainingErrors" },
       { "Task": "readability baseline sweep", "Detail": "patched decompiler over the whole 6.3 tree + 6.4; per-module lambdas/async/await/raw stubs/display classes into Readability.Baseline" },
       { "Task": "Falcon 8 raw stubs", "Detail": "see Readability.FalconLeftover8" },
-      { "Task": "6.4 anchor fixpoint", "Detail": "the only open naming route with bulk potential; record the measured yield per module before accepting" },
       { "Task": "record the evidence-free remainder", "Detail": "28105 rows unresolved with the no-evidence-in-scope reason so --coverage counts them; never invent names or suffixes" },
       { "Task": "Phase 4", "Detail": "freeze map, dnSpy.Console --source-name-map <map> --public-sign export, rebuild, Stage-RecompiledTree overlay, audit battery, third-party App compatibility" }
     ],
     "NextItemRules": [
       "Oracle rows are the strongest naming route: the 6.4 released surface names them and a literal in the 6.3 body must corroborate the row.",
-      "A NewName may not repeat inside one type; the sibling stays open rather than taking a numeric suffix.",
+      "Preserve legitimate overloads and meaningful names; reject only real signature/name collisions. Never invent a numeric suffix to make a mapping pass.",
       "Virtual rows, interface implementations and contract-family members are renamed as a family.",
       "One block is one review file, one --wave run, one checkpoint, one commit."
     ]
@@ -121,9 +123,10 @@
   },
   "Closure": {
     "Rule": "The pass closes when every in-scope definition is exactly one of named | already-readable | SDK/protected | compiler-generated (merged) | unresolved-no-evidence with a reason, and Phase 4 has run.",
-    "Authority": "GOAL.md task 5 and POLICY.md; the mission text allows unresolved rows explicitly and forbids claiming more than the evidence shows.",
+    "Authority": "GOAL.md definition of done and POLICY.md: readable, compiling first-party source plus rebuilt ETS behavior and unchanged-App compatibility; unresolved rows require recorded evidence.",
+    "CategoriesMeasuredAt": "Historical v380 inventory; not proof of current coverage or completed runtime verification.",
     "CategoriesMeasured": { "named": 16694, "already-readable": 92963, "sdk-whitelisted-or-protected-family": 18755, "compiler-generated": 55036, "constructors": 20843, "unresolved-no-evidence": 28105 },
-    "NotClaimed": "Closing the naming phase is not a renamed or verified ETS; AppliedToSource stays false until Phase 4."
+    "NotClaimed": "Exported test source exists, but naming closure is not proof of a compiling or behavior-compatible ETS. AppliedToSource=false records the uncompleted consolidated application stage."
   },
   "Deferred": {
     "SourceExport": {
@@ -131,12 +134,12 @@
       "Scope": "Only the 64 modules the map covers are exported; third-party assemblies (DevExpress, Telerik, System.Reactive, System.Text.Json, HtmlAgilityPack, ...) stay untouched as binaries and are referenced, not decompiled - per the 2026-09-25 instruction to use the original packages.",
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
-      "Command": "dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> @firstparty-files.txt",
-      "State": "2026-09-25 run: passed the stack overflow, wrote 13,017 .cs, then memory blew up to 70 GB on Knx.Falcon.Monitor and stopped progressing (process killed). The exporter keeps every decompiled module's AST alive until project files are written, so a single-process export of the whole first-party set does not fit.",
+      "Command": "python D:\\knx_analysis\\perf-now\\export-full.py --out <out>  (dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> plus the 64 paths from firstparty-files.txt - the console has no @response-file support; then dotnet build <out>\\solution.sln)",
+      "State": "2026-09-28 run (ets63-source-v385): 64 projects, 13,296 .cs, export exit 0; solution build leaves 3 errors - Knx.Falcon and Knx.Ets.ObjectModel 'Conflicting generated closure owner names', Knx.Ets.UI.ParameterDialog MC2000 'Could not find type UIGridRow in ... Knx.Ets.ActiveTree.dll'.",
+      "Caveat": "A failing project makes MSBuild skip its dependents, so the 3 errors are the first layer only: every earlier layer (25 -> 8 -> 3) hid the next one behind a dependency. Re-measure after each fix; do not read '3' as the total.",
       "Next": [
-        "Full export now works in ONE process: dnSpy.Console --source-name-map names63-staged-v381.xml --public-sign -o <out> @firstparty-files.txt - 64 projects, 13,296 .cs, 5.3 min, memory flat at 7.1 GB (was >70 GB). Use this instead of the per-module driver (per-module maps cannot validate cross-module contract families).",
-        "Solution build (ets63-source-full2) leaves 25 errors in 2 projects: Knx.Falcon 14 (12 CS1061 member lookups, 10 CS7014 attribute placement), Knx.Ets.Common.2 3 (CS1503/CS1661/CS1678 delegate-parameter mismatches). Fix those decompiler-output cases next.",
-        "Then refine nuget-packages.txt: versions must match the tree assemblies (Autofac is 7.0, not 6.5), DevExpress/Telerik need their vendor feeds."
+        "Close the closure-owner conflict: the restore task claims a compiled closure method by NAME PREFIX ('<Owner>b__0'), so two overloads sharing a source alias both claim it. Measured example: 'LocalInterfaceManagement/<>c__DisplayClass12_0::<TryReadMPropAsync>b__0 restored as both <b>b__0 and <a>b__0' (owner TryReadMPropAsync(ushort,byte,byte,ushort,byte,CancellationToken) -> a; the 3-parameter overload -> b has no lambda at all). Fix candidates: (a) record the exact original closure name per owner at export time and look it up by declaring type + compiled name, or (b) reject a candidate whose body and generated state machine do not reference the closure's declaring type. Do not simply drop the row: the restored name is what keeps the rebuilt metadata identical.",
+        "Close the XAML/BAML gap: the runtime assemblies carry the ORIGINAL metadata names (TypeNames.cs maps source alias UIGridRow back to am1) while the WPF mark-up compiler resolves types against those runtime assemblies, so any XAML that reaches a renamed type fails (MC2000). Decide between emitting runtime names in BAML-bound type references, or compiling XAML against the source reference assemblies."
       ]
     },
     "MemoryBlowup": {
@@ -144,12 +147,12 @@
       "Found": "2026-09-27: with '--no-anon-methods' the same module exported in 40 s at 3 GB, so lambda inlining is the trigger - it copies each lambda's AST into its call site and generated code creates hundreds per method.",
       "Fix": "dnSpy 863effcee: IsInLambdaCycle refuses to inline a lambda that reaches itself; size and per-method budgets remain only as a backstop (DNSPY_MAX_INLINED_LAMBDA_IL default 4000, DNSPY_MAX_INLINED_LAMBDA_IL_PER_METHOD default 20000, 0 disables the latter).",
       "Result": "Knx.Ets.Ui.UserControls exports in ~40 s at ~3 GB (was >20 GB); the whole 64-module set exports in one process in 5.3 min at 7.1 GB.",
-      "FinalExport": "D:\\knx_analysis\\ets63-source-v383 (64 projects, ~5 min). Solution build: 7 errors left (was 14; CS7014 fixed by dnSpy 50f3a5ec2).",
+      "FinalExport": "D:\\knx_analysis\\ets63-source-v385 (64 projects, ~5 min). Solution build: 3 errors left (was 7; the four CS1061 shadowing rows and the two Class1109 rows are fixed by dnSpy eceb55413, the CS1503 row by the Autofac 7.0 package row; the six FluentResults CS0012 rows and the CS0234 row by the package-map identity rule).",
       "RemainingErrors": {
-        "Count": 7,
-        "CS1061ShadowedLambdaParameter": "4x Knx.Falcon/Discovery/IpDeviceDiscovery.cs - the lambda parameter is named 'sender' and shadows the outer 'sender' (Knx.Falcon.KnxnetIp.IUnicastCommunication) the body actually uses. Progress: dnSpy 43e230bb5 + a25a19a21 + 582c1c2e8 reserve the enclosing scope's names (metadata, aliases and now the reconstructed AST: method/lambda parameters, locals, foreach variables). DNSPY_LAMBDA_NAME_TRACE=1 now shows, for the exact case, '<>c__DisplayClass41_0::method_0 metadata=sender reserved=True' and the declaration allocated as 'sender1'. The PRINTED source still says 'sender', so the printer takes an anonymous-method parameter's name from its ILVariable instead of the declaration: renaming the ILVariable (or its annotation) together with the declaration is the next step.",
-        "CS1061WrongLocalType": "2x Knx.Falcon/Class1109.cs(117,118) - 'byte[] a = RandomNumbers.a(16); this.get_EchoOptionCache()[a.a] = a;' - the local is rendered as byte[] while the usage needs the object that owns field 'a'; diagnose against the original IL.",
-        "CS1503ArgumentType": "1x Knx.Ets.Common.2/Class122.cs(21) - NoConstructorsFoundException(targetType, this) where the second argument is typed AllConstructorFinder instead of string."
+        "Count": 3,
+        "ClosureOwnerConflict": "2x - Knx.Falcon/Knx.Falcon.csproj(1249) and Knx.Ets.ObjectModel/Knx.Ets.ObjectModel.csproj(2234), raised by the generated RestoreFields task (MetadataFieldTask.cs.txt:886). See Deferred.SourceExport.Next.",
+        "XamlRuntimeNames": "1x - Knx.Ets.UI.ParameterDialog/view/resourcedictionaries/datatemplates.xaml(195,7) MC2000 'Could not find type UIGridRow in assembly ...Knx.Ets.ActiveTree.dll'. Evidence: that project's .dnspy-metadata/TypeNames.cs carries 'dnSpy.metadata.type-name.v1|UIGridRow|Knx.Ets.ActiveTree|6.3.7959.0||am1', and the built ActiveTree.dll declares 'class public ... am1'. The mark-up compiler reads the runtime assembly, not the source reference assembly. See Deferred.SourceExport.Next.",
+        "FixedThisTurn": "CS1061 x4 IpDeviceDiscovery (lambda parameter 'sender' shadowing the outer 'sender' - the declaration was allocated 'sender1' but the printer took the name from the ILVariable; dnSpy eceb55413 makes the variable adopt the declaration name); CS1061 x2 Class1109 ('byte[] a = RandomNumbers.a(16); EchoOptionCache[a.a] = a' - a cached parent-closure substitution kept the stale spelling 'a' after the closure variable was renamed 'a2'; dnSpy eceb55413 refreshes every variable reference from its own variable); CS1503 Class122 (the IL calls NoConstructorsFoundException(Type, IConstructorFinder), which only exists in Autofac 7.0 while the package map pinned 6.5); CS0012 x5 FluentResults (package 3.15.2 ships assembly 3.15.2.0, the tree ships 3.15.2.21); CS0234 Knx.Ets.MyKnx System.Text.Encodings.Web (bare reference, now a package row)."
       },
       "ReadabilityImpact": {
         "MeasuredWith": "DNSPY_INLINE_TRACE=1 (dnSpy c4aaca673) over all 64 first-party modules",
@@ -163,7 +166,8 @@
     },
     "SourceExportPackageMap": {
       "ToolFix": "dnSpy 6ccd9ac65: SdkProjectWriter emits PackageReference for assemblies listed in DNSPY_PACKAGE_MAP ('<assembly>=<package id>/<version>' lines) instead of HintPath references into the tree; unmapped assemblies keep HintPath.",
-      "MapFile": "D:\\knx_analysis\\perf-now\\nuget-packages.txt (23 entries: Autofac, BouncyCastle.Cryptography, FluentResults, log4net, Newtonsoft.Json, NiL.JS, System.* compatibility packages, ...)",
+      "MapFile": "D:\\knx_analysis\\perf-now\\nuget-packages.txt (11 entries). A row is only valid when the package's ASSEMBLY IDENTITY equals the tree binary's: the compiler matches identity, so 'FluentResults 3.15.2' (assembly 3.15.2.0) against the tree's 3.15.2.21 fails with CS0012. Rows whose identity differs (AngleSharp, Antlr4, BouncyCastle, FluentResults, HtmlAgilityPack, Microsoft.Bcl.AsyncInterfaces, System.Collections.Immutable, System.Reactive, System.Text.Json, log4net, zxing, NiL.JS, Scriban.Signed, dotNetRdf) were dropped so the writer emits a HintPath to the untouched tree binary instead.",
+      "Checker": "powershell -File D:\\knx_analysis\\perf-now\\check-package-versions.ps1 - prints tree identity, package identity and the verdict per row (AssemblyName.GetAssemblyName, not FileVersion; System.* file versions are build-stamped and always look different).",
       "Driver": "D:\\knx_analysis\\perf-now\\export-firstparty.py - per-module maps, one export process per module (bounded memory), package map in the environment, then dotnet build per module.",
       "VerifiedUtc": "2026-09-25",
       "Verified": "Knx.Ets.PrintLibrary, Knx.Ets.LabelCreator, Knx.Ets.Ids (ets63-source-batch1) and Knx.Ets.CalculatedParameters (export-calcparams5) all exported and built with 0 errors. Third-party assemblies were consumed as NuGet packages, never decompiled.",
@@ -171,7 +175,7 @@
       "RestoreFix": "dnSpy 7126e3bcb: the build-time parameter-field restore no longer fails on aliased parameters of compiler-generated owners; it prints 'source parameter field restore skipped: <signature>' and continues."
     },
     "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign (inherits the merge fixes), rebuild, overlay Stage-RecompiledTree + manifest, audit battery, verify against unchanged third-party ETS Apps.",
-    "LiveEts": "user-coordinated; ask before running",
-    "NotProven": "Mapping is not source application. AppliedToSource=false means the ETS binaries and sources are unchanged."
+    "LiveEts": "Authorized by the user on 2026-10-03: autonomously launch ETS and control it through KNX-ETS-MCP for tests without asking again. Use staged output and test-mcp for mutations; preserve originals and unrelated work. Later user restrictions supersede this grant.",
+    "NotProven": "Exported source exists, but the whole solution build, consolidated rebuilt runtime compatibility and live scenarios remain unproven; original installations are unchanged."
   }
 }
