@@ -11,6 +11,7 @@ import pathlib
 import shutil
 import xml.etree.ElementTree as ET
 from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal
+from sdk_proposal_retirement import load_sdk_symbols, key as sdk_key, retire_sdk_proposal
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -19,6 +20,8 @@ parser.add_argument('--merge-reviewed-scopes', action='store_true',
                     help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
 parser.add_argument('--resolve-reviewed-scoped-definitions', action='store_true',
                     help='Resolve scope-only method definitions with exact prior rationale and native addition proof')
+parser.add_argument('--retire-rejected-sdk-proposals', action='store_true',
+                    help='Review-only: retire unapplied proposals protected by the physical map-bound SDK whitelist')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
 parser.add_argument('--remove-reviewed-aliases', action='store_true',
@@ -33,6 +36,7 @@ parser.add_argument('--refresh-reviewed-evidence', action='store_true',
                     help='Review-only rationale correction with exact previous evidence and unchanged naming decisions')
 args = parser.parse_args()
 assert not args.refresh_reviewed_evidence or args.review_only, 'Evidence refresh requires a review-only checkpoint'
+assert not args.retire_rejected_sdk_proposals or args.review_only, 'SDK proposal retirement requires a review-only checkpoint'
 state_path, sink = pathlib.Path(args.state), pathlib.Path(args.sink)
 map_path, review_path = pathlib.Path(args.map), pathlib.Path(args.review)
 update_path, check_path = pathlib.Path(args.update), pathlib.Path(args.check)
@@ -78,6 +82,9 @@ removed_rows = 0
 resolved_rows = 0
 applied_proposals = 0
 checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type', 'Method', 'ContractMethod')}
+sdk_symbols = load_sdk_symbols(map_path) if args.retire_rejected_sdk_proposals else {}
+mapped_entries = {sdk_key(module.get('Path'), row.get('Token')): row for module in root.findall('Module') for row in module}
+retired_sdk_proposals = 0
 checked_families = {}
 for method in review['Methods']:
     family = method.get('ContractFamily')
@@ -99,6 +106,13 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('RetireRejectedSdkProposal'):
+            assert args.retire_rejected_sdk_proposals and key in keys, 'SDK retirement requires its previous ledger proposal and explicit checkpoint flag'
+            sk = sdk_key(*key)
+            ledger[kind][keys[key]] = retire_sdk_proposal(ledger[kind][keys[key]], row, mapped_entries.get(sk),
+                sdk_symbols.get(sk), check['SdkNameWhitelistSha256'])
+            retired_sdk_proposals += 1
+            continue
         if row.get('ResolveExistingScopedDefinition'):
             assert args.resolve_reviewed_scoped_definitions and kind == 'Methods' and key in keys, 'Scoped resolution requires its previous method and explicit checkpoint flag'
             ledger[kind][keys[key]] = resolve_scoped_definition(ledger[kind][keys[key]], row, base_names.get(key, ''),
@@ -165,6 +179,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitAliasWithdrawals': removed_rows,
               'ExplicitUnresolvedResolutions': resolved_rows,
               'ExplicitScopedDefinitionResolutions': scoped_definitions_resolved,
+              'ExplicitRejectedSdkProposalRetirements': retired_sdk_proposals,
               'ExplicitProposalApplications': applied_proposals,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}

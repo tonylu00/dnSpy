@@ -164,3 +164,15 @@ Scope merges retain previous uncertainty in history and retire active missing
 evidence for accepted positions. Run `test_property_parameter_review.py` and
 `test_review_ledger.py` for these guards. See `property-parameter-milestone-v404.json`
 for the measured whole-tree proposal scan, review decisions and verification limits.
+
+`checkpoint_naming_block.py --review-only --retire-rejected-sdk-proposals`
+records explicit preservation of historical proposals rejected by the SDK
+whitelist. `sdk_proposal_retirement.py` requires the exact prior decision/scopes,
+physical module identity, token/signature and map-bound whitelist hash. It rejects
+any existing map entry, including scoped-only bindings, and preserves the prior
+proposal and its evidence in `RejectedSdkProposals`. Native update/check must
+produce zero edits and a byte-identical map. This is ledger consistency and SDK
+contract preservation; it does not count as new semantic names or reconstructed
+source. Run `test_sdk_proposal_retirement.py` for stale identity, scope, history,
+whitelist and path guards. The v407 review retires 1,567 rejected proposals and
+166 proposed scope aliases; actual checked names and runtime metadata are intact.
