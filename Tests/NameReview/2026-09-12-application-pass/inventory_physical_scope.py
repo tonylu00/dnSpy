@@ -101,7 +101,7 @@ def main():
         assert set(cached) == {(module, kind) for module in physical for kind in all_counts_kinds()}
     started = time.monotonic()
     all_counts = {kind: collections.Counter() for kind in ('Types', 'Fields', 'Methods')}
-    modules, remaining, reports = [], [], []
+    modules, remaining, reports, unapplied = [], [], [], []
     seen_aliases, seen_decisions = set(), set()
     for number, (name, physical_row) in enumerate(physical.items(), 1):
         path = root / physical_row['Path']
@@ -136,12 +136,17 @@ def main():
                 counts['Definitions'] += 1
                 counts['NativeReviewCandidates'] += bool(row['NeedsReadableName'])
                 counts['MappedNames'] += bool(alias)
-                disposition = ('Mapped' if alias else 'Unresolved' if decision and decision.get('Unresolved')
+                disposition = ('Mapped' if alias else 'UnappliedLedgerAlias' if decision and decision.get('NewName')
+                               else 'Unresolved' if decision and decision.get('Unresolved')
                                else 'Preserved' if decision and not decision.get('NewName') else 'Unreviewed')
                 counts[disposition] += 1
+                if disposition == 'UnappliedLedgerAlias':
+                    unapplied.append({'Module': physical_row['Path'], 'Kind': kind, 'Token': row['Token'],
+                                      'Signature': row['Signature'], 'OriginalName': row['OriginalName'],
+                                      'RecordedAlias': decision['NewName'], 'NativeReviewCandidate': row['NeedsReadableName']})
                 if row['NeedsReadableName']:
                     counts['Candidate' + disposition] += 1
-                    if disposition == 'Unreviewed':
+                    if disposition in ('Unreviewed', 'UnappliedLedgerAlias'):
                         remaining.append({**row, 'Module': physical_row['Path'], 'Kind': kind})
                 if kind == 'Methods':
                     for column, total in (('ParameterNames', 'Parameters'), ('LocalNames', 'Locals')):
@@ -179,9 +184,11 @@ def main():
         'Counts': {kind: dict(counts) for kind, counts in all_counts.items()},
         'Modules': modules, 'Reports': reports, 'ExcludedLedgerRows': excluded_decisions,
         'RemainingNativeCandidates': len(remaining),
+        'UnappliedLedgerAliases': unapplied,
         'Limits': [scope['Limit'], 'Native lexical flags select work; unflagged or unreviewed names are not proven meaningful.',
                    'No source export, build, applied-map audit or runtime compatibility is established by this inventory.',
-                   'Parameter/local totals include unaliased original and compiler roles; missing aliases do not prove obfuscation.'],
+                   'Parameter/local totals include unaliased original and compiler roles; missing aliases do not prove obfuscation.',
+                   'UnappliedLedgerAlias records historical proposals absent from the current map; they are not applied names or new unreviewed definitions.'],
     }
     (args.output / 'summary.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
     (args.output / 'remaining-candidates.json').write_text(json.dumps(remaining, indent=2) + '\n', encoding='utf-8')

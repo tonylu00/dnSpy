@@ -62,6 +62,11 @@ unresolved rows, plus total and aliased parameter/local positions. Unflagged
 names and missing scoped aliases do not establish readability or obfuscation.
 `--reuse-inventory <earlier-summary.json>` reuses native reports only after their
 hashes, scope, tool and current physical identities are checked again.
+`UnappliedLedgerAlias` separates historical proposals absent from the checked map
+from applied names and newly unreviewed definitions. Keep those proposals as
+history; whitelist/family exclusions must not become applied aliases in counts.
+Review preparation retains only requested definitions from native inventories;
+all inventory-root and physical-path escape guards still apply.
 
 For a corrected rationale, `checkpoint_naming_block.py --review-only`
 `--refresh-reviewed-evidence` requires `PreviousEvidence` with the exact previous

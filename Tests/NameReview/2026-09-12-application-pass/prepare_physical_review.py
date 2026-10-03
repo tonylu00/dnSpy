@@ -12,6 +12,8 @@ import pathlib
 
 def prepare(spec):
     root = pathlib.Path(spec['TargetRoot']).resolve()
+    requested = {(row['Kind'], row['Module'].replace('\\', '/'), row['Token'].upper())
+                 for row in spec['Rows']}
     index = {}
     for source in spec['Inventories']:
         inventory = json.loads(pathlib.Path(source).read_text(encoding='utf-8-sig'))
@@ -25,9 +27,14 @@ def prepare(spec):
                 physical = (native_root / native_module).resolve()
                 if not physical.is_relative_to(native_root): raise ValueError('Inventory module leaves its native root')
                 relative = physical.relative_to(root).as_posix()
+                key = (kind, relative, original['Token'].upper())
+                # Large method inventories include every local in every body.
+                # Retain only explicitly requested definitions; input roots and
+                # all physical paths still pass the same escape checks.
+                if key not in requested:
+                    continue
                 row = copy.deepcopy(original)
                 row['Module'] = relative
-                key = (kind, relative, row['Token'].upper())
                 if key in index and index[key] != row:
                     raise ValueError('Conflicting native inventories for ' + str(key))
                 index[key] = row

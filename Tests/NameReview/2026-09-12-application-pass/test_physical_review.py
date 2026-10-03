@@ -56,5 +56,17 @@ class PhysicalReviewTests(unittest.TestCase):
         path.write_text(json.dumps(inventory), encoding='utf-8')
         with self.assertRaises(ValueError): prepare(self.spec)
 
+    def test_unselected_rows_still_cannot_escape_and_selected_duplicates_conflict(self):
+        path = pathlib.Path(self.inventories[1])
+        inventory = json.loads(path.read_text())
+        unselected = dict(inventory['Types'][0], Token='0x02000002', Module='../../Same.dll')
+        inventory['Types'].append(unselected)
+        path.write_text(json.dumps(inventory), encoding='utf-8')
+        with self.assertRaises(ValueError): prepare(self.spec)
+        inventory['Types'].pop()
+        inventory['Types'].append(dict(inventory['Types'][0], NewName='ConflictingAlias'))
+        path.write_text(json.dumps(inventory), encoding='utf-8')
+        with self.assertRaises(ValueError): prepare(self.spec)
+
 
 if __name__ == '__main__': unittest.main()
