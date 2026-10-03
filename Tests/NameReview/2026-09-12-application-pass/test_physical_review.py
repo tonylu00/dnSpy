@@ -68,5 +68,21 @@ class PhysicalReviewTests(unittest.TestCase):
         path.write_text(json.dumps(inventory), encoding='utf-8')
         with self.assertRaises(ValueError): prepare(self.spec)
 
+    def test_alias_withdrawal_requires_explicit_method_preimage(self):
+        native_path = pathlib.Path(self.inventories[0])
+        native = json.loads(native_path.read_text())
+        native['Methods'] = [dict(native['Types'][0], Token='0x06000001')]
+        native_path.write_text(json.dumps(native), encoding='utf-8')
+        self.spec['Rows'] = [dict(Kind='Methods', Module='Same.dll', Token='0x06000001', Disposition='unresolved',
+                                 Reason='The predicate role lacks evidence', RemoveExistingAlias=True, ExpectedAlias='BadWidthName')]
+        reviewed = prepare(self.spec)['Methods'][0]
+        self.assertTrue(reviewed['RemoveExistingAlias'])
+        self.assertEqual('BadWidthName', reviewed['ExpectedAlias'])
+        self.assertTrue(reviewed['Unresolved'])
+        self.spec['Rows'][0]['ExpectedAlias'] = ''
+        with self.assertRaises(ValueError): prepare(self.spec)
+        self.spec['Rows'][0].update(Kind='Types', Token='0x02000001', ExpectedAlias='BadTypeName')
+        with self.assertRaises(ValueError): prepare(self.spec)
+
 
 if __name__ == '__main__': unittest.main()

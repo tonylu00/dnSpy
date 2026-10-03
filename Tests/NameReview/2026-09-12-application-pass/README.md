@@ -39,6 +39,14 @@ retained or newly added scope alias must match the native-checked map. These opt
 edit review records; they do not modify ETS source or binaries.
 The merge guards can be verified with `python test_review_ledger.py`.
 
+For an unsupported standalone method alias, prepare an unresolved review with
+`RemoveExistingAlias: true` and the exact current `ExpectedAlias`. Native
+`--update-map` checks the physical definition, alias preimage, SDK/contracts and
+absence of accepted scoped names before removing that map row. Ordinary unresolved
+reviews never remove aliases. Checkpoint with `--remove-reviewed-aliases` after the
+native gates; the ledger retains the former decision in `AliasWithdrawals` and
+removes the operational marker so later reviews cannot replay the request.
+
 `prepare_physical_review.py --spec <spec.json> --output <fresh-review.json>`
 normalizes native inventory roots to exact application-relative physical paths
 and validates current hashes. Specs support evidence-backed aliases, explicit

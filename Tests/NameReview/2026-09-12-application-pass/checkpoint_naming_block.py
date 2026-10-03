@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, validate_review_only, refresh_evidence
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -19,6 +19,8 @@ parser.add_argument('--merge-reviewed-scopes', action='store_true',
                     help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
+parser.add_argument('--remove-reviewed-aliases', action='store_true',
+                    help='Record explicit native withdrawal of an unsupported standalone unscoped method alias')
 parser.add_argument('--review-only', action='store_true',
                     help='Checkpoint preservation/unresolved decisions with no aliases and a byte-identical checked map')
 parser.add_argument('--refresh-reviewed-evidence', action='store_true',
@@ -55,6 +57,8 @@ assert ledger['TargetRoot'] == review['TargetRoot'] == root.get('InputDirectory'
 base_root = ET.parse(previous['Path']).getroot()
 base_names = {(module.get('Path'), row.get('Token')): row.get('NewName', '')
               for module in base_root.findall('Module') for row in module}
+final_names = {(module.get('Path'), row.get('Token')): row.get('NewName', '')
+               for module in root.findall('Module') for row in module}
 checked_scopes = {(module.get('Path'), row.get('Token')):
                  {(label, int(scope.get(position))): dict(scope.attrib)
                   for label, tag, position in (('ParameterNames', 'Parameter', 'Sequence'), ('LocalNames', 'Local', 'Index'))
@@ -63,6 +67,7 @@ checked_scopes = {(module.get('Path'), row.get('Token')):
 merged_rows = 0
 replaced_rows = 0
 refreshed_rows = 0
+removed_rows = 0
 checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type', 'Method')}
 scope_replacements = {}
 if args.replace_reviewed_aliases:
@@ -73,6 +78,17 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('RemoveExistingAlias'):
+            assert args.remove_reviewed_aliases and kind == 'Methods', 'Alias withdrawal requires explicit checkpoint authorization'
+            old = ledger[kind][keys[key]] if key in keys else None
+            recorded = remove_method_alias(old, row, base_names.get(key, ''), checked_changes.get(key), final_names.get(key, ''))
+            if key in keys:
+                ledger[kind][keys[key]] = recorded
+            else:
+                keys[key] = len(ledger[kind])
+                ledger[kind].append(recorded)
+            removed_rows += 1
+            continue
         if key in keys:
             if args.refresh_reviewed_evidence and row.get('PreviousEvidence'):
                 ledger[kind][keys[key]] = refresh_evidence(ledger[kind][keys[key]], row)
@@ -107,6 +123,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitScopeMerges': merged_rows,
               'ExplicitAliasReplacements': replaced_rows,
               'ExplicitEvidenceRefreshes': refreshed_rows,
+              'ExplicitAliasWithdrawals': removed_rows,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}
 if args.review_only:

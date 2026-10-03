@@ -1,6 +1,6 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, validate_review_only, refresh_evidence
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
@@ -138,6 +138,43 @@ class LedgerScopeMergeTests(unittest.TestCase):
         with self.assertRaises(ValueError): replace_method_alias(self.old, self.review, 'HistoricalAlias', change, checked)
         self.review['ParameterNames'].append(copy.deepcopy(self.review['ParameterNames'][0]))
         with self.assertRaises(ValueError): replace_method_alias(self.old, self.review, 'HistoricalAlias', change, checked)
+
+    def test_alias_withdrawal_keeps_history_but_does_not_replay_request(self):
+        self.old['ParameterNames'] = []
+        self.old['LocalNames'] = []
+        self.old['Annotation'] = {'kept': True}
+        reviewed = copy.deepcopy(self.old)
+        reviewed.update(RemoveExistingAlias=True, ExpectedAlias='HistoricalAlias', NewName='', Unresolved=True,
+                        Reason='Behavior contradicts the alias', UnresolvedReason='Caller role lacks evidence')
+        change = dict(Action='RemoveAlias', Kind='Method', Module='a.dll', Token='0x06000001',
+                      Before='HistoricalAlias', Requested='', Applied='')
+        withdrawn = remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '')
+        self.assertTrue(withdrawn['Unresolved'])
+        self.assertEqual('', withdrawn['NewName'])
+        self.assertEqual({'kept': True}, withdrawn['Annotation'])
+        self.assertEqual('HistoricalAlias', withdrawn['AliasWithdrawals'][0]['Alias'])
+        self.assertNotIn('RemoveExistingAlias', withdrawn)
+        self.assertNotIn('ExpectedAlias', withdrawn)
+        self.assertEqual('HistoricalAlias', self.old['NewName'])
+        fresh = remove_method_alias(None, reviewed, 'HistoricalAlias', change, '')
+        self.assertNotIn('RemoveExistingAlias', fresh)
+        for key, value in (('Action', None), ('Before', 'stale'), ('Applied', 'invented'), ('Kind', 'Field'),
+                           ('Module', 'CV/a.dll'), ('Token', '0x06000002')):
+            with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', dict(change, **{key: value}), '')
+        with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, 'HistoricalAlias')
+        reviewed['Sha256'] = 'stale'
+        with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '')
+
+    def test_alias_withdrawal_rejects_scope_loss_or_missing_evidence(self):
+        reviewed = copy.deepcopy(self.old)
+        reviewed.update(RemoveExistingAlias=True, ExpectedAlias='HistoricalAlias', NewName='', Unresolved=True,
+                        Reason='Behavior contradicts the alias', UnresolvedReason='Caller role lacks evidence')
+        change = dict(Action='RemoveAlias', Kind='Method', Module='a.dll', Token='0x06000001',
+                      Before='HistoricalAlias', Requested='', Applied='')
+        with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '')
+        self.old.update(ParameterNames=[], LocalNames=[])
+        reviewed.update(ParameterNames=[], LocalNames=[], UnresolvedReason='')
+        with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '')
 
 
 if __name__ == '__main__': unittest.main()

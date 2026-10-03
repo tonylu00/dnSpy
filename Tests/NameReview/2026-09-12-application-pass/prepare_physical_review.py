@@ -78,6 +78,11 @@ def prepare(spec):
                 raise ValueError('Rename decision requires a supported name')
         else:
             raise ValueError('Unknown disposition: ' + disposition)
+        if decision.get('RemoveExistingAlias'):
+            if key[0] != 'Methods' or disposition != 'unresolved' or not decision.get('ExpectedAlias'):
+                raise ValueError('Alias withdrawal requires an unresolved method and its exact previous alias')
+            row['RemoveExistingAlias'] = True
+            row['ExpectedAlias'] = decision['ExpectedAlias']
         result[key[0]].append(row)
     return result
 

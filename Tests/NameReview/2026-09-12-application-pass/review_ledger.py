@@ -91,6 +91,33 @@ def replace_method_alias(previous, reviewed, mapped_name, checked_change, checke
     return result
 
 
+def remove_method_alias(previous, reviewed, mapped_name, checked_change, checked_name):
+    """Record a native-checked withdrawal without replaying its operational marker."""
+    if previous is not None:
+        require_identity(previous, reviewed)
+        if previous.get('Unresolved') or previous.get('NewName') != mapped_name:
+            raise ValueError('Alias withdrawal requires the current ledger/map decision')
+    if not mapped_name or checked_name or not reviewed.get('RemoveExistingAlias') or reviewed.get('ExpectedAlias') != mapped_name:
+        raise ValueError('Alias withdrawal requires exact current and final map names')
+    if not reviewed.get('Unresolved') or reviewed.get('NewName') or not reviewed.get('Reason') or not reviewed.get('UnresolvedReason'):
+        raise ValueError('Alias withdrawal requires complete unresolved evidence')
+    if not checked_change or any(checked_change.get(key) != value for key, value in (
+            ('Action', 'RemoveAlias'), ('Kind', 'Method'), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
+            ('Before', mapped_name), ('Requested', ''), ('Applied', ''))):
+        raise ValueError('Alias withdrawal requires the exact native removal report')
+    for record in (previous, reviewed):
+        if record and any(scope.get('NewName') for label in ('ParameterNames', 'LocalNames') for scope in record.get(label, [])):
+            raise ValueError('Alias withdrawal cannot discard accepted scope names')
+    result = copy.deepcopy(previous if previous is not None else reviewed)
+    for key in ('RemoveExistingAlias', 'ExpectedAlias'):
+        result.pop(key, None)
+    result.update(NewName='', Unresolved=True, NeedsReadableName=True, ReviewDisposition='unresolved',
+                  Reason=reviewed['Reason'], UnresolvedReason=reviewed['UnresolvedReason'])
+    result.setdefault('AliasWithdrawals', []).append(dict(Alias=mapped_name, PreviousReason=(previous or {}).get('Reason', ''),
+                                                       Evidence=reviewed['Reason']))
+    return result
+
+
 def merge_scopes(previous, reviewed, mapped_name, checked_scopes=None, replacements=None):
     require_identity(previous, reviewed)
     if reviewed.get('Unresolved') or previous.get('Unresolved'):
