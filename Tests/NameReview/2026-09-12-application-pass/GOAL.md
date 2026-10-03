@@ -54,14 +54,14 @@ Dotfuscator/NetReactor workflow. Success means rebuilt ETS behavior, not just to
 
 ## Execution order and verification
 
-1. The v388 export now builds all 64 projects, including ETS6N, with zero errors. Preserve
-   this compile milestone while continuing readability coverage and staging a separate
-   rebuilt copy for authorized targeted runtime tests. Repair further concrete defects
-   in the tools; do not patch generated ETS source directly.
-2. Complete whole-tree naming in feature/type blocks, including 45 additional pure-IL
-   first-party candidates beyond the current 64-project export. The current four Falcon
-   builder kickoffs are repaired through checked custom-awaiter aliases. Measure other
-   generated-code leftovers and record their causes.
+1. Confirm the full physical application scope and existing checkpoints from STATE.json.
+   Preserve previous validated results and distinct compatibility deployments. Review
+   the executable and all coupled first-party components as one naming pass.
+2. Complete whole-tree naming in substantial feature/type blocks, working from inner
+   helpers to callers. Each mapping decision must propagate through the tools to its
+   references and applicable interface/override family in one operation. Include enums
+   and their members as well as methods, types, fields, parameters and locals. Record
+   uncertain names and necessary generated-code leftovers with their evidence gaps.
 3. Freeze the maps, export the complete first-party source, compile the full solution,
    stage the rebuilt application into a separate output tree, and run consolidated
    identity, contract, resource, reference and compatibility verification.
@@ -71,10 +71,11 @@ Dotfuscator/NetReactor workflow. Success means rebuilt ETS behavior, not just to
    and the previously reported failures against original evidence. Do not enable
    ExtendedLogging, which disables saving.
 
-During naming, use inexpensive identity, map and reference checks. Do not export or
-rebuild the whole application after each small name change. Targeted tool regressions
-and ETS source builds needed to repair concrete exporter/compiler failures are allowed
-before naming closes. Consolidated end-to-end verification follows the frozen mapping pass.
+During naming, use inexpensive identity, map, SDK-whitelist and reference checks.
+Do not repeatedly export ETS, rebuild ETS, apply the full binary tree or run full audits
+after individual mapping blocks. Complete the application-wide mapping pass before
+freezing it for consolidated verification. Focused tool regressions may verify a concrete
+tool defect; they do not constitute ETS application completion.
 
 ## Live ETS authorization
 
@@ -84,26 +85,11 @@ Use the test project and staged output tree for mutating scenarios. Preserve ori
 installations and unrelated work; later user instructions restricting ETS use take
 precedence. Fix ETS-MCP tooling gaps when necessary for these tests.
 
-## Current starting point
+## Starting state
 
-- Maps: 6.3 names63-staged-v381.xml; 6.4 names64-staged-v178.xml. Check actual hashes
-  against STATE before use; v381 removes two conflicting rows from v380.
-- Latest recorded export: D:\knx_analysis\ets63-source-v388, all 64 projects build in
-  Release with zero errors. It contains 13,017 application C# files and generated build
-  support (13,360 C# files total). Source-build success does not prove naming closure or
-  runtime behavior.
-- The 6.4 bulk anchor route is measured exhausted. Remaining naming is evidence-led
-  per-row/cluster work, not another bulk anchor engine.
-- Staging succeeded for 298 rebuilt assemblies/satellites. An explicit test-mcp launch
-  reached the Chinese project window; full runtime compatibility is still unproven.
-- Live checks found an inherited ExtendedLogging license entry despite a configuration
-  deny. Tool-native revocation fixes the legacy initializer. The bridge reports
-  save_suppressed=false; a test duplicate persists across close/reopen, and an isolated
-  synthetic password fixture reloads across a fresh process. Broader complex-project and
-  unchanged-App/SDK behavior remain unproven. Preserve profile checkpoints during tests.
-- The physical audit found 45 additional pure-IL first-party candidates. Native inventories
-  now expose short/placeholder types and fields; retain legitimate vocabulary terms.
-  Preserve mixed-mode companions and third-party binaries.
+STATE.json records the authoritative maps, hashes, scope, validated results, remaining
+work and current tool versions. Recheck those identities before resuming. This goal
+defines requirements; historical milestones do not narrow the application scope.
 
 ## Definition of done and progress
 

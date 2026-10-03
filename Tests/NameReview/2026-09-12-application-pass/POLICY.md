@@ -65,9 +65,10 @@ the whitelist; `--update-map` drops or blocks excluded rows rather than trusting
 
 ## Builds and live ETS testing
 
-- Concrete exporter/compiler defects may be tested with targeted exports and actual ETS
-  source builds before naming closes. Avoid whole-tree rebuilds after minor name changes;
-  freeze mappings before consolidated runtime and unchanged-App verification.
+- During naming, use inexpensive identity, mapping, SDK-whitelist and reference checks.
+  Complete the application-wide mapping pass before consolidated ETS export, build,
+  binary application and full audits. Focused tool regressions may verify concrete tool
+  defects; do not repeat ETS exports or builds after individual naming blocks.
 - The user authorizes autonomous ETS launches and KNX-ETS-MCP control for this goal without
   repeated permission requests. Use staged copies and test-mcp for mutating tests; preserve
   original installations and unrelated work. Later user restrictions supersede this grant.

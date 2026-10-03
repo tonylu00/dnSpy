@@ -6,51 +6,39 @@ Read `STATE.json` first, then this file. Nothing else from disk is needed to sta
 ## 1. The loop
 
 A work unit is a **block** (one type cluster, one feature, or one module's worklist
-remainder) — not a "wave" of three rows. One block is one review file and one commit.
+remainder), with one evidence-backed review file. Resolve inner helpers before callers
+and propagate decisions across the applicable reference and contract families.
 
-```powershell
-# 0. settings
-$pass = 'D:\knx_analysis\application-name-pass01'
-$repo = 'D:\git\dnSpy\Tests\NameReview\2026-09-12-application-pass'
-$tool = 'D:\git\de4dotEx\tools\NameCandidates\bin\Release\net8.0\NameCandidates.dll'
-$W    = 382                       # read the actual next number from STATE.json
-$work = "D:\knx_analysis\perf-now\w$W"
+During naming, prepare rows through portable exploration/mapping helpers, then invoke
+the native .NET tool with the same identity-checked contract manifest:
 
-# 1. build the review rows (Module, Token, NewName, Reason) for this block.
-#    Route builders live in D:\knx_analysis\perf-now (anchor-scan.py, sm-oracle.py,
-#    literal-worklist.py, candidates.py ...). Today a small row-builder script writes
-#    extended63-wave$W.review.json; the target is one parameterized builder
-#    (build-rows.py --spec <rows.json> --wave $W). Do not copy a build-waveNNN.py per wave.
-python D:\knx_analysis\perf-now\<row-builder>.py
-
-# 2. one process runs update -> check -> both audits -> filter -> apply -> verify
-dotnet $tool --wave "$pass\extended63-wave$W.review.json" "$pass\names63-staged-v$($W-1).xml" $work `
-  --contract-references "$pass\contract-references63-v3.json" `
-  --sdk-module Knx.Ets.Sdk.dll --sdk-module Knx.Ets.Sdk.AddIns.AddInViews.dll `
-  --sdk-module Knx.Ets.Common.Types.dll --sdk-module Knx.Ets.Common.Resources.dll
-
-# 3. checkpoint: copies artifacts, asserts the gates, updates STATE/progress
-python "$pass\checkpoint-waveN.py" $W "<block status>" "extended63-wave$W.review.json" "<method-json>" $work
-
-# 4. 6.4 restage (see §4), then:
-python "$pass\checkpoint64-vN.py" <nextVersion64> <baseVersion64> $W
+```text
+dotnet <NameCandidates.dll> --contract-references <contract-manifest.json> --update-map <review.json> <current-map.xml> <new-map.xml> <update-report.json>
+dotnet <NameCandidates.dll> --contract-references <contract-manifest.json> --check-map <new-map.xml> <check-report.json>
 ```
 
-`--wave` refuses to overwrite an existing output directory: choose a fresh directory
-for each retry, preserve earlier evidence, and never edit a map by hand.
+Retain the SDK whitelist binding, record coverage and unresolved evidence, and commit
+validated substantial milestones. These are naming checkpoints, not consolidated binary
+verification. Choose fresh outputs and never patch maps or ETS source by replacement.
 
-## 2. Gates that must pass before a checkpoint
+After application-wide naming closes, freeze the mapping and scope. Run full SDK/public
+API audits, binary application/reference verification, source export/build and staged
+runtime verification together. `--wave` includes full audits and application: do not run
+it after every naming block. Historical checkpoint-waveN.py requires those full-pipeline
+artifacts; do not fabricate its gates or use it for lightweight naming checkpoints.
+
+## 2. Naming and consolidated gates
 
 - `update.Success`, no `update.Errors`, and **no `Requested != Applied`** rows
   (a numeric suffix means the block is wrong — fix it and re-run).
 - `check.Success`, no `check.Errors`.
-- `audit.SdkVisibleRenamed == 0` and `audit.SdkReferencedTypesRenamed == 0`.
 - Name-diff expectation: the number of added rows equals the review file's rows
   (removals and renames of previously accepted rows must be explicit).
-- `--verify-applied` on the applied tree: all modules load.
+- SDK bindings and protected families remain valid during each map check.
 
-`checkpoint-waveN.py` performs these assertions itself; if it throws, the block did not
-land and STATE must not be updated.
+At consolidated verification, additionally require `audit.SdkVisibleRenamed == 0`,
+`audit.SdkReferencedTypesRenamed == 0`, and `--verify-applied` success on the complete
+applied tree. All modules must load. Keep these outcomes separate from naming progress.
 
 ## 3. Evidence routes (use in this order)
 
@@ -71,6 +59,9 @@ Evidence must be recorded in the row's `Reason` (token, literal, callee or peer)
 checkpoint is self-explaining without a journal.
 
 ## 4. 6.4 restage
+
+Complete 6.3 first. Use this restage workflow during the 6.4 pass and its consolidated
+verification; do not repeat full audits after each 6.3 naming block.
 
 Artifacts live in `D:\knx_analysis\perfprobe` and are consumed by `checkpoint64-vN.py`:
 
@@ -110,9 +101,9 @@ alternatives are re-typing six commands per wave, which is what produced the spr
   copy per wave is not acceptable long term.
 - **Commit once per block**, with the block name in the message. A commit is a checkpoint,
   not an endpoint.
-- **Cheap checks during naming.** Avoid whole-tree exports, builds and audits after minor
-  map changes. Targeted regressions and actual ETS source builds are allowed when repairing
-  a concrete exporter/compiler defect; consolidated runtime verification follows map freeze.
+- **Cheap checks during naming.** Use identity, mapping, SDK-whitelist and reference checks.
+  Complete the application-wide mapping pass before ETS exports/builds, full audits and
+  binary application. Focused tool regressions may verify a concrete tool defect.
 - **Do not stop while unblocked rows exist.** If a route is exhausted for a block, record
   it in `STATE.Backlog.ExhaustedRoutes` and take the next route or the next block.
 - **`STATE.json` stays under 200 lines.** When it grows, delete detail — do not create a
