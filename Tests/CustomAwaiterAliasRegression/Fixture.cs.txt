@@ -1,0 +1,93 @@
+using System;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+
+public class Awaitable {
+    readonly Task<int> task;
+    public static int FactoryCalls;
+    public Awaitable(Task<int> task) { this.task = task; }
+    public TaskAwaiter<int> GetAwaiter() { FactoryCalls++; return task.GetAwaiter(); }
+}
+
+public static class Fixture {
+    [AsyncStateMachine(typeof(DetachedState))]
+    public static Task<int> ReadDetached(Awaitable input) {
+        var machine = new DetachedState();
+        machine.builder = AsyncTaskMethodBuilder<int>.Create();
+        machine.input = input;
+        machine.state = -1;
+        machine.builder.Start(ref machine);
+        return machine.builder.Task;
+    }
+    public static async Task<int> ReadCanonical(Awaitable input) { return await input; }
+
+    [CompilerGenerated]
+    sealed class DetachedState : IAsyncStateMachine {
+        public int state;
+        public AsyncTaskMethodBuilder<int> builder;
+        public Awaitable input;
+        TaskAwaiter<int> saved;
+        public void MoveNext() {
+            int result, cachedState = state;
+            try {
+                TaskAwaiter<int> awaiter;
+                if (cachedState != 0) goto Start;
+            Resume:
+                awaiter = saved;
+                saved = default(TaskAwaiter<int>);
+                state = -1;
+            Complete:
+                result = awaiter.GetResult();
+                goto Success;
+            Start:
+                if (input == null) goto Gap;
+                awaiter = input.GetAwaiter();
+                if (awaiter.IsCompleted) goto Complete;
+                goto Suspend;
+            Gap:
+                result = 31;
+                goto Success;
+            Suspend:
+                state = 0;
+                saved = awaiter;
+                var self = this;
+                builder.AwaitUnsafeOnCompleted(ref awaiter, ref self);
+                return;
+            Success: ;
+            }
+            catch (Exception error) { state = -2; builder.SetException(error); return; }
+            state = -2;
+            builder.SetResult(result);
+        }
+        public void SetStateMachine(IAsyncStateMachine value) { }
+    }
+
+    public static async Task Main() {
+        foreach (var read in new Func<Awaitable, Task<int>>[] { ReadDetached, ReadCanonical })
+        foreach (bool delayed in new[] { false, true })
+        foreach (int outcome in new[] { 0, 1, 2 }) {
+            var source = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var error = new InvalidOperationException("fixture failure");
+            Action complete = () => {
+                if (outcome == 0) source.SetResult(17);
+                else if (outcome == 1) source.SetException(error);
+                else source.SetCanceled();
+            };
+            int calls = Awaitable.FactoryCalls;
+            if (!delayed) complete();
+            var result = read(new Awaitable(source.Task));
+            if (Awaitable.FactoryCalls != calls + 1) throw new Exception("Factory evaluated incorrectly");
+            if (delayed) { if (result.IsCompleted) throw new Exception("Suspension lost"); complete(); }
+            try {
+                int value = await result;
+                if (outcome != 0 || value != 17) throw new Exception("Result changed");
+            }
+            catch (InvalidOperationException observed) { if (outcome != 1 || !ReferenceEquals(observed, error)) throw; }
+            catch (OperationCanceledException) { if (outcome != 2 || !result.IsCanceled) throw; }
+            if (Awaitable.FactoryCalls != calls + 1) throw new Exception("Factory reevaluated on resume");
+        }
+        int before = Awaitable.FactoryCalls;
+        if (await ReadDetached(null) != 31 || Awaitable.FactoryCalls != before) throw new Exception("Early branch changed");
+        Console.WriteLine("PASS: immediate/suspended values, exceptions, cancellation, single factory evaluation and early branch.");
+    }
+}

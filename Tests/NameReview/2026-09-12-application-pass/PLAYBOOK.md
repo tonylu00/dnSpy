@@ -36,8 +36,8 @@ python "$pass\checkpoint-waveN.py" $W "<block status>" "extended63-wave$W.review
 python "$pass\checkpoint64-vN.py" <nextVersion64> <baseVersion64> $W
 ```
 
-`--wave` refuses to overwrite an existing output directory: delete the work directory
-before re-running, never edit a map by hand.
+`--wave` refuses to overwrite an existing output directory: choose a fresh directory
+for each retry, preserve earlier evidence, and never edit a map by hand.
 
 ## 2. Gates that must pass before a checkpoint
 
@@ -128,21 +128,30 @@ alternatives are re-typing six commands per wave, which is what produced the spr
    not exhausted. Nothing else needs to be rediscovered.
 
 ## 8. Current source-compilation and runtime work
+The v388 solution builds all 64 mapped projects with zero errors. Exact closure ownership,
+XAML/runtime aliases and framework-facade contracts are fixed. The current four Falcon
+builder kickoffs reconstruct in a focused export/build through checked custom-awaiter
+aliases. The live v388 copy still carries the earlier Falcon output.
 
-Start with STATE.Deferred.SourceExport: fix closure-owner restoration by exact owner/closure
-identity and resolve the XAML/source-alias versus restored-runtime-name mismatch. Build the
-actual ILSpy plugin before exporting; building only dnSpy.Console leaves the decompiler stale:
+Start with STATE.Readability.PhysicalScope63: review the 45 additional pure-IL candidates
+and coupled symbols before the next consolidated export. Candidate flags indicate review
+work, not automatic renames; preserve meaningful RDF/unit/schema terms. Native --inspect-type
+includes field values, storage flags and layout; aliases are checked against physical path,
+hash/MVID and definition name/signature.
 
-```
-dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows
-python D:\knx_analysis\perf-now\export-full.py --out <fresh-output>
-dotnet build <fresh-output>\solution.sln
-```
+Build the actual ILSpy plugin before a necessary export; building only dnSpy.Console leaves
+it stale. Use explicit physical module lists and a new output directory:
 
-Export first-party modules only. PackageReference requires matching original assembly
-identity; otherwise keep an original-binary HintPath. Do not decompile third-party libraries.
-Each failed dependency may hide additional compiler errors: continue until the whole solution
-builds, then stage rebuilt output through the tools and run consolidated audits and live tests.
+    dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows
+    <fixed-console> --source-name-map <checked-map> --public-sign -o <fresh-output> <physical-first-party-inputs>
+    dotnet build <fresh-output>/solution.sln -c Release
+
+Do not run the historical export-full.py driver blindly: it performs broad process cleanup
+and output removal. A fresh output and explicitly scoped tool invocation preserve active work.
+Export confirmed first-party pure-IL modules only. PackageReference requires matching original
+assembly identity; otherwise keep an untouched binary HintPath. Mixed-mode companions and
+third-party libraries stay as binaries. Use inexpensive checks while naming; consolidate the
+full export/build and runtime audit after the mapping/scope freeze.
 
 ETS launches and KNX-ETS-MCP control are authorized without repeated permission requests.
 Use the staged application and test-mcp project for mutations. Test language, password loading,

@@ -58,8 +58,10 @@ Dotfuscator/NetReactor workflow. Success means rebuilt ETS behavior, not just to
    this compile milestone while continuing readability coverage and staging a separate
    rebuilt copy for authorized targeted runtime tests. Repair further concrete defects
    in the tools; do not patch generated ETS source directly.
-2. Measure whole-tree readability, close or explain the eight remaining Falcon async
-   stubs, and finish application-wide naming coverage in complete feature/type blocks.
+2. Complete whole-tree naming in feature/type blocks, including 45 additional pure-IL
+   first-party candidates beyond the current 64-project export. The current four Falcon
+   builder kickoffs are repaired through checked custom-awaiter aliases. Measure other
+   generated-code leftovers and record their causes.
 3. Freeze the maps, export the complete first-party source, compile the full solution,
    stage the rebuilt application into a separate output tree, and run consolidated
    identity, contract, resource, reference and compatibility verification.
@@ -95,10 +97,13 @@ precedence. Fix ETS-MCP tooling gaps when necessary for these tests.
 - Staging succeeded for 298 rebuilt assemblies/satellites. An explicit test-mcp launch
   reached the Chinese project window; full runtime compatibility is still unproven.
 - Live checks found an inherited ExtendedLogging license entry despite a configuration
-  deny. Tool-native revocation fixes the legacy initializer; the fresh bridge reports
-  save_suppressed=false, and a test duplicate persists across close/reopen. Password
-  and broader compatibility checks remain necessary. Preserve
-  profile snapshots as well as binary trees during launch tests.
+  deny. Tool-native revocation fixes the legacy initializer. The bridge reports
+  save_suppressed=false; a test duplicate persists across close/reopen, and an isolated
+  synthetic password fixture reloads across a fresh process. Broader complex-project and
+  unchanged-App/SDK behavior remain unproven. Preserve profile checkpoints during tests.
+- The physical audit found 45 additional pure-IL first-party candidates. Native inventories
+  now expose short/placeholder types and fields; retain legitimate vocabulary terms.
+  Preserve mixed-mode companions and third-party binaries.
 
 ## Definition of done and progress
 
