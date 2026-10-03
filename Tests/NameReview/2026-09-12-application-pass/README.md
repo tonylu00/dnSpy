@@ -129,3 +129,23 @@ An accepted parameter role does not resolve its opaque method owner. Such rows
 carry `UnresolvedDefinitionEvidence`; the whole physical inventory reports
 `ScopedOnly` and keeps flagged definitions in the remaining selection. Scoped
 readability cannot silently become whole-method preservation or naming coverage.
+
+`prepare_parameter_field_review.py` binds native constructor-storage proposals to
+the complete physical graph, exact field references, constructor callers and
+native method bodies. Run once without `--bodies`/`--decisions` to collect native
+inspection requests, then provide both for an explicit domain review. Every
+eligible field requires its physical preimage, ExpectedProposal and a rename,
+preserve or unresolved decision with rationale. SDK tokens, mapped fields and
+third-party inputs are excluded; historical ledger decisions require a separate
+guarded transition. It writes review/evidence JSON only. Preserve useful original
+names when a proposal merely removes a suffix or loses domain specificity.
+
+The v403 constructor-storage checkpoint adds 56 field aliases in eight physical
+modules, preserves 10 meaningful existing names and clarifies 24 proposed roles.
+Evidence retains 282 native method bodies across nine physical modules and checks
+all 111 graph input hashes. SDK/contract checks pass with no collision suffixes,
+strict ledger coverage has zero invalid/conflicting rows, and spec/review/evidence
+reproduce byte-for-byte. The 109-module inventory has 25,088 remaining native
+candidates, including six opaque definitions with scoped aliases only. The map
+is staged; the latest consolidated ETS export/build and runtime compatibility
+remain pending. See `parameter-field-milestone-v403.json` for checks and limits.

@@ -1,0 +1,545 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\002-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\041-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\052-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\055-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\056-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\063-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\066-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\067-fields.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x0400004F",
+      "Disposition": "rename",
+      "NewName": "manufacturerId",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Caller 0600007E reads manufacturer_id and caller 06000082 reads KnxManufacturerId into constructor input 1; value-type collection keys retain this identifier. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000050",
+      "Disposition": "rename",
+      "NewName": "deviceTypeNumber",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Caller 0600007E reads device_type and 06000082 supplies the application number as the legacy device type; this is a numeric device/application identifier, not a System.Type. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000054",
+      "Disposition": "rename",
+      "NewName": "applicationProgram",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: AppendApplicationProgramDynamic and GetPageParamClosestPreceeding read the stored application program Static.Parameters and Id; this is the dynamic conversion target. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x0400006A",
+      "Disposition": "rename",
+      "NewName": "tableName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ConverterRow tests the uppercase source table name to interpret schema-specific columns. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x0400006B",
+      "Disposition": "rename",
+      "NewName": "memoryRow",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: HasField and the Item indexer use DataRow.Table.Columns and DataRow.Item; alternate converter input is a database reader. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000070",
+      "Disposition": "rename",
+      "NewName": "reader",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Count uses RecordsAffected and enumeration materializes a DataTable through CreateDataTableFromReader; this is the injected ODBC row reader. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000071",
+      "Disposition": "rename",
+      "NewName": "connection",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The exact ODBC constructor input is retained separately from its reader; visible IL retains the connection reference without additional readers. Do not infer resource ownership/disposal. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000074",
+      "Disposition": "rename",
+      "NewName": "tableName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Rows, Select and GetOdbcDataReader pass this name to GetReader and name the in-memory DataTable; both constructor overloads agree. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000075",
+      "Disposition": "rename",
+      "NewName": "memoryTable",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: HasColumn and Rows access DataTable.Columns/Rows; GetReader is the distinct ODBC path. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x04000076",
+      "Disposition": "rename",
+      "NewName": "connection",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Rows, Select and GetOdbcDataReader pass this connection to ConverterDataSet.GetReader. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x0400007E",
+      "Disposition": "rename",
+      "NewName": "connection",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The exact ODBC dataset constructor input is retained; no additional direct readers are resolved. Preserve lifetime behavior and do not invent ownership semantics. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x040001A8",
+      "Disposition": "rename",
+      "NewName": "outputFileName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Patch saves the XML document to this filename and compares it with the distinct source filename before deletion. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x040001A9",
+      "Disposition": "rename",
+      "NewName": "sourceFileName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Patch loads the XmlDocument from this filename and retains the distinction from the optional output filename. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x040001AA",
+      "Disposition": "rename",
+      "NewName": "mappings",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Patch enumerates the exact IdPatcherMapping list when replacing XML identifiers. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "CV/4.0.1477.15773/Knx.Ets.Converter.ConverterEngine.dll",
+      "Token": "0x040001C3",
+      "Disposition": "rename",
+      "NewName": "applicationProgram",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ConvertToXml builds the application Static part and uses its mask, application number/version, extensions and baggage. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.Common.Types.dll",
+      "Token": "0x0400006C",
+      "Disposition": "rename",
+      "NewName": "formatArguments",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ResourceHandler 06000162 passes the stored object array to String.Format with the resource getter result; null retains the unformatted getter result. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x04000017",
+      "Disposition": "rename",
+      "NewName": "tableName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The row converter switches on ToUpperInvariant of the source table name before interpreting schema fields. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x04000018",
+      "Disposition": "rename",
+      "NewName": "memoryRow",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: HasField and Item use the in-memory DataRow column collection and indexed values; conversion reads PARAMETER_ADDRESS from the same row. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x0400001F",
+      "Disposition": "rename",
+      "NewName": "tableName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Rows and Select pass this table name to ConverterRowCollection and schema-specific selection compares it with parameter. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x04000020",
+      "Disposition": "rename",
+      "NewName": "memoryTable",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: HasColumn, Rows and Select access the stored DataTable, distinct from its table-name string. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x04000021",
+      "Disposition": "rename",
+      "NewName": "memorySet",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The Item indexer and GetMemoryDataTable obtain DataSet.Tables entries from this in-memory dataset. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x040000C5",
+      "Disposition": "rename",
+      "NewName": "zipHelper",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Schema checks use this injected helper for ExtractToTempDir and ExtractDeviceTemplateToTempDirectories. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x040000F4",
+      "Disposition": "rename",
+      "NewName": "rawText",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: GetRawText returns this stored trace string; trace processing passes it to the formatter/parser without changing the storage role. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.MyKnx.dll",
+      "Token": "0x04000040",
+      "Disposition": "rename",
+      "NewName": "domain",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The UriBuilder constructor uses this string as its host with HTTPS port 443 and the v1 path. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.MyKnx.dll",
+      "Token": "0x04000113",
+      "Disposition": "rename",
+      "NewName": "sessionStorage",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Session-scope and async session flows call BeginSessionScopeAsync, HasValidSessionAsync, ClearAsync and GetSessionLeaseAsync on this injected storage. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04000AF0",
+      "Disposition": "rename",
+      "NewName": "passwordRequiredCallback",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The security operation invokes the unchanged boolean callback during its project/password requirement flow. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04000AF3",
+      "Disposition": "rename",
+      "NewName": "deviceFlagService",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The operation forwards the injected flag service into ChangeDeviceAddressOperation during security changes. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04000CF6",
+      "Disposition": "rename",
+      "NewName": "targetArea",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Coupler validation reads this area MainLine and distinguishes the area-target constructor from the line-target overload. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04000CF7",
+      "Disposition": "rename",
+      "NewName": "targetLine",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Coupler validation reads this target line MainSegment medium and distinguishes it from the area target. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04000CF9",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The existing catalog-item spelling describes the stored catalog item; the constructor role adds no responsibility beyond removing the interface prefix and numeric suffix. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04000EC7",
+      "Disposition": "rename",
+      "NewName": "deviceFlagService",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: CopyTradeOperation forwards this service to connector creation and nested device copy operations. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04001376",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The existing installation-guid-writer spelling already describes the injected service used by ProjectHmacValidator; a suffix alone does not prove an obfuscated role. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x0400140F",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The existing root spelling denotes the ETS object-model root used for Projects and Factory; removing its numeric suffix would not add a domain role. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040015E3",
+      "Disposition": "rename",
+      "NewName": "groupAddressStrategy",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Security impact and group-address validation read GroupAddressBehavior from this strategy. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04001667",
+      "Disposition": "rename",
+      "NewName": "groupAddressStrategy",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Line-copy security impacts consult the same GroupAddressBehavior strategy for copied group addresses. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04001EB2",
+      "Disposition": "rename",
+      "NewName": "sourceFileName",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The XML group-address reader retains the input filename for reader/error context; this is constructor source input, not an output destination. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x0400201D",
+      "Disposition": "rename",
+      "NewName": "deviceFlagService",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The extended device copy operation forwards this injected flag service into its nested device operations. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040020CB",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The existing device-flag-service spelling already describes the injected service; the proposal adds no new responsibility. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040020CC",
+      "Disposition": "rename",
+      "NewName": "passwordRequiredCallback",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Extended-copy security/password flows retain and invoke the injected boolean password requirement callback. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040020CD",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The existing message-bus spelling describes the injected message bus; numeric spelling alone is not evidence for replacement. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040021BF",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The original device-product-importer spelling is more specific than the proposed importer; retain its useful domain meaning. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040021C2",
+      "Disposition": "rename",
+      "NewName": "productStore",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: AddDeviceOperation consults the injected product store for catalog/product lookup while creating devices. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040021C3",
+      "Disposition": "rename",
+      "NewName": "unsecuredDeviceDecisionCallback",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: BeforeOpenMarker forwards this callback to AddIpDeviceBackboneSecurityHandler for catalog items lacking secure enablement; its result is SecurityAddDeviceAction, not a simple yes/no. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040021C6",
+      "Disposition": "rename",
+      "NewName": "deviceFlagService",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: AddDeviceOperation resets segment communication flags and passes the service into additional-address and segment validation operations. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04002200",
+      "Disposition": "rename",
+      "NewName": "deviceCount",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The stored count bounds SpecializedExecute device creation, appears in telemetry, and is forwarded to coupler validation. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04002201",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The original device-product-importer spelling is more specific than the proposed importer; retain it. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04002202",
+      "Disposition": "rename",
+      "NewName": "unsecuredDeviceDecisionCallback",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: BeforeOpenMarker forwards this Hardware2ProgramInfo decision callback to AddIpDeviceBackboneSecurityHandler; result is SecurityAddDeviceAction. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040022AA",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The original address-allocation spelling describes the enum option passed to CreateDeviceStrategy; suffix removal alone does not improve the role. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040022AB",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The original device-product-importer spelling remains more specific than the generic importer proposal. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040022AC",
+      "Disposition": "rename",
+      "NewName": "startingAddress",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: CreateDeviceStrategy receives this UInt16 as the allocation start, alongside address-allocation mode and reserved addresses. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040022AD",
+      "Disposition": "rename",
+      "NewName": "copyConnectors",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The device-copy path tests this unchanged option before building/copying connector relationships. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04002302",
+      "Disposition": "rename",
+      "NewName": "deviceProductImporterFactory",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The delegate is invoked with a DeviceTemplateProductStore and returns the product importer used to create the template device. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040023F2",
+      "Disposition": "preserve",
+      "NewName": "",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: The original device-product-importer spelling remains more specific than the generic importer proposal. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040023F3",
+      "Disposition": "rename",
+      "NewName": "isValidated",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: MoveDeviceAcrossProjectOperation tests the constructor-supplied validation option before the execution/validation path; this is not a mutable success result. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040023F4",
+      "Disposition": "rename",
+      "NewName": "startingAddress",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Cross-project device movement passes this value to CreateDeviceStrategy as the destination address-allocation start. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040023F5",
+      "Disposition": "rename",
+      "NewName": "copyConnectors",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Cross-project movement branches on this option when copying connector/group-address relationships. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x040023F9",
+      "Disposition": "rename",
+      "NewName": "deviceFlagService",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Cross-project movement forwards the service to segment validation and additional-address changes. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04002653",
+      "Disposition": "rename",
+      "NewName": "deviceFlagService",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: Area movement forwards the service to nested operations and security-impact handling. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x04002A95",
+      "Disposition": "rename",
+      "NewName": "passwordCompareHash",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ProjectMerger 06005AFD writes this value as Birdy-PasswordCompareHash in ProjectInformation; preserve the serialized element spelling. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ProjectCompare.dll",
+      "Token": "0x0400001B",
+      "Disposition": "rename",
+      "NewName": "currentProject",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ProjectComparer traverses the supplied current project during comparison and distinguishes it from the other comparison inputs. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ProjectCompare.dll",
+      "Token": "0x0400001C",
+      "Disposition": "rename",
+      "NewName": "masterData",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ProjectComparer resolves manufacturers through MasterData.Manufacturers to obtain manufacturer names. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.ProjectCompare.dll",
+      "Token": "0x0400001F",
+      "Disposition": "rename",
+      "NewName": "endPercent",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ProgressGear.Report scales progress by the difference between this end percentage and its distinct starting percentage. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.Sdk.dll",
+      "Token": "0x04000608",
+      "Disposition": "rename",
+      "NewName": "parameterRefCache",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: ParentParameterValue lookup uses the injected ParameterRefCache with the current parameter-reference Id; SDK runtime metadata and exact public whitelist remain protected. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.SemanticExport.dll",
+      "Token": "0x04000010",
+      "Disposition": "rename",
+      "NewName": "visitorContext",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: KimReverseCheckVisitor obtains the export Filename from this context when writing its reverse-check output. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.SemanticExport.dll",
+      "Token": "0x04000019",
+      "Disposition": "rename",
+      "NewName": "runtimeKimClassManager",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: KimVisitorState forwards this exact runtime class manager into its group-address, application-function and other KIM mapper constructors. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.SemanticExport.dll",
+      "Token": "0x0400001A",
+      "Disposition": "rename",
+      "NewName": "logger",
+      "Reason": "private storage with only uniform direct stores of a named unchanged constructor input. Domain review: RenderKim and ExportAsync send KIM progress and output messages through ILogger.Write. All resolved field references, constructor stores and incoming constructor callers are retained in the physical evidence. Keep runtime metadata and reflection/serialization/resource contracts; this decision does not resolve other owner or method scopes."
+    }
+  ]
+}
