@@ -1,0 +1,61 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Methods": [
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000052",
+      "Signature": "System.String bw::a(Knx.Ets.Ids.Product.ParameterRefId,Knx.Ets.Ids.Product.ParameterRefId,Knx.Ets.Ids.Project.ModuleInstanceId)",
+      "OriginalName": "a",
+      "Reason": "Resolve the ignored-argument evidence gap from the exact readable released counterpart, not an ordinal or spelling match. ETS 6.4 DeviceActivityCalculator.GetCurrentTextForTextParamRef 06000076 has the same three argument types and body ldarg.0, ldarg.1, ldarg.3, call GetCurrentText, ret; it names arguments textParamRefId, parameterRefId and moduleInstanceId. ETS 6.3 06000052 forwards the same argument positions to mapped GetCurrentParameterText, with only extra control-flow local metadata. Native xml-calculation-oracle64-text-il01.json includes SHA/MVID/tokens/signature and formal names. Independent CV/5.6.241.33672 readable method 06000057 searches TextParamRefInfos[textParamRefId] for element.Id==parameterRefId, corroborating both roles while preserving that distinct compatibility method's body. Replace only this block's provisional first-argument alias and add the second; retain moduleInstanceId.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.Ids.Product.ParameterRefId A_0",
+        "2: Knx.Ets.Ids.Product.ParameterRefId A_1",
+        "3: Knx.Ets.Ids.Project.ModuleInstanceId A_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "textParamRefId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "A_1",
+          "HasMetadata": true,
+          "NewName": "parameterRefId"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "A_2",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    }
+  ],
+  "Types": [],
+  "Fields": [],
+  "Skips": []
+}

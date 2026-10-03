@@ -1,0 +1,1143 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Methods": [
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x0600004D",
+      "Signature": "System.Tuple`3<System.Collections.Generic.IList`1<Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade>,System.Collections.Generic.IList`1<Knx.Ets.DynamicData.IComObjectInstanceRefDynamicFacade>,System.Int32> bw::a(Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade,System.Boolean,Knx.Ets.ActiveTree.IGroupTree)",
+      "OriginalName": "a",
+      "Reason": "UpdateDependenciesOnParameterValueChange reads parameterInstance.Id/ParameterRefFacade, sets _recalculationSuppressed around the call when Boolean true, and supplies the IGroupTree to SetGroupTree. ObjectModel.UpdateParameterValue passes !UndoManager.IsEnabled for suppression. bw.cs 0600004D and DeviceCalculator.cs 060019FB.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade A_0",
+        "2: System.Boolean A_1",
+        "3: Knx.Ets.ActiveTree.IGroupTree A_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "parameterInstance"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "A_1",
+          "HasMetadata": true,
+          "NewName": "suppressRecalculation"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "A_2",
+          "HasMetadata": true,
+          "NewName": "groupTree"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.UInt32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Exception",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Tuple`3<System.Collections.Generic.IList`1<Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade>,System.Collections.Generic.IList`1<Knx.Ets.DynamicData.IComObjectInstanceRefDynamicFacade>,System.Int32>",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x0600004E",
+      "Signature": "System.Boolean bw::a(Knx.Ets.DynamicData.IComObjectInstanceRefDynamicFacade)",
+      "OriginalName": "a",
+      "Reason": "Passes this IComObjectInstanceRefDynamicFacade to the deactivation-query delegate; 0600004E body is null-handler-or-query-result. Couple with the delegate declaration parameter 06000075.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.DynamicData.IComObjectInstanceRefDynamicFacade icomObjectInstanceRefDynamicFacade_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "icomObjectInstanceRefDynamicFacade_0",
+          "HasMetadata": true,
+          "NewName": "comObjectInstance"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000052",
+      "Signature": "System.String bw::a(Knx.Ets.Ids.Product.ParameterRefId,Knx.Ets.Ids.Product.ParameterRefId,Knx.Ets.Ids.Project.ModuleInstanceId)",
+      "OriginalName": "a",
+      "Reason": "Native xml-calculation-dynamic-il01.json: forwards arguments 1 and 3 to GetCurrentParameterText. Sequence 2 remains explicitly unresolved: no-evidence-in-scope, body has zero loads of argument 2, zero literals and one callee; two ParameterRefId arguments cannot distinguish its intended role. Do not invent a name for that ignored argument.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.Ids.Product.ParameterRefId A_0",
+        "2: Knx.Ets.Ids.Product.ParameterRefId A_1",
+        "3: Knx.Ets.Ids.Project.ModuleInstanceId A_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "parameterRefId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "A_1",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "A_2",
+          "HasMetadata": true,
+          "NewName": "moduleInstanceId"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000059",
+      "Signature": "System.Boolean bw::b(dj)",
+      "OriginalName": "b",
+      "Reason": "IsParameterBlockCurrent compares dj argument state version to this calculation state version. Same dj is traversed by GetChannelByParameter 06000068; preserve accepted method alias.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: dj A_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "parameterBlock"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x0600005D",
+      "Signature": "System.Int64 bw::a(Knx.Ets.Ids.Product.AllocatorId,Knx.Ets.Ids.Project.ModuleInstanceId)",
+      "OriginalName": "a",
+      "Reason": "Exact AllocatorId and ModuleInstanceId argument types passed to root state allocator's GetCurrentValue/associated module selection. Preserve allocator/current-value role; bw.cs GetCurrentAllocatorValue body 0600005D.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.Ids.Product.AllocatorId A_0",
+        "2: Knx.Ets.Ids.Project.ModuleInstanceId A_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "allocatorId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "A_1",
+          "HasMetadata": true,
+          "NewName": "moduleInstanceId"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x0600005E",
+      "Signature": "System.Boolean bw::a(Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade)",
+      "OriginalName": "a",
+      "Reason": "IsParameterReferenced passes this parameter facade to ParameterCounter.GetActiveReferenceCount and compares count >0. bw.cs 0600005E.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade A_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "parameterInstance"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x0600005F",
+      "Signature": "System.Boolean bw::a(Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade,System.Boolean)",
+      "OriginalName": "a",
+      "Reason": "Parameter facade supplies ParameterRefFacade.Id to chooser/assigner/updater. Boolean controls the IsParameterInModule call whose result contributes to the returned change flag; false skips that check. bw.cs 0600005F complete body.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.DynamicData.IParameterInstanceRefDynamicFacade iparameterInstanceRefDynamicFacade_0",
+        "2: System.Boolean bool_5"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "iparameterInstanceRefDynamicFacade_0",
+          "HasMetadata": true,
+          "NewName": "parameterInstance"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "bool_5",
+          "HasMetadata": true,
+          "NewName": "checkModuleMembership"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Boolean",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Boolean",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Boolean",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Collections.Generic.List`1<ck>",
+          "NewName": ""
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Collections.Generic.List`1<dv>",
+          "NewName": ""
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.Boolean",
+          "NewName": ""
+        },
+        {
+          "Index": 6,
+          "ExpectedType": "System.Collections.Generic.List`1/Enumerator<ck>",
+          "NewName": ""
+        },
+        {
+          "Index": 7,
+          "ExpectedType": "ck",
+          "NewName": ""
+        },
+        {
+          "Index": 8,
+          "ExpectedType": "c1",
+          "NewName": ""
+        },
+        {
+          "Index": 9,
+          "ExpectedType": "System.IDisposable",
+          "NewName": ""
+        },
+        {
+          "Index": 10,
+          "ExpectedType": "System.Collections.Generic.List`1<dv>",
+          "NewName": ""
+        },
+        {
+          "Index": 11,
+          "ExpectedType": "System.Collections.Generic.List`1/Enumerator<dv>",
+          "NewName": ""
+        },
+        {
+          "Index": 12,
+          "ExpectedType": "dv",
+          "NewName": ""
+        },
+        {
+          "Index": 13,
+          "ExpectedType": "dv",
+          "NewName": ""
+        },
+        {
+          "Index": 14,
+          "ExpectedType": "c1",
+          "NewName": ""
+        },
+        {
+          "Index": 15,
+          "ExpectedType": "System.Collections.Generic.IEnumerator`1<ce>",
+          "NewName": ""
+        },
+        {
+          "Index": 16,
+          "ExpectedType": "ce",
+          "NewName": ""
+        },
+        {
+          "Index": 17,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 18,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000060",
+      "Signature": "c1 bw::a(c5)",
+      "OriginalName": "a",
+      "Reason": "GetRepeatForParameter traverses c5.Parent until a RepeatState is found, then returns it; preserve general state role instead of implying the input is already a RepeatState. bw.cs 06000060.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: c5 c5_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "c5_0",
+          "HasMetadata": true,
+          "NewName": "state"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "c1",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000063",
+      "Signature": "System.Boolean bw::b(amp)",
+      "OriginalName": "b",
+      "Reason": "Tests amp.IsActive, IsModuleActiveByAccess and AccessControlled; accepted element subclasses include channels and separators, so avoid narrowing input to module-only state. bw.cs 06000063/64.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: amp amp_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "amp_0",
+          "HasMetadata": true,
+          "NewName": "elementState"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Nullable`1<Knx.Ets.ActiveTree.Enumerations.AccessDynamicFacade>",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Knx.Ets.ActiveTree.Enumerations.AccessDynamicFacade",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000064",
+      "Signature": "System.Boolean bw::a(amp)",
+      "OriginalName": "a",
+      "Reason": "Checks dynamic element subclasses cv, cy, cx, ci, cg, cm and c4; same amp object passed from 06000063. Name identifies the tested element state without guessing a narrower module role.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: amp amp_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "amp_0",
+          "HasMetadata": true,
+          "NewName": "elementState"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x06000068",
+      "Signature": "dd bw::a(dj)",
+      "OriginalName": "a",
+      "Reason": "GetChannelByParameter walks dj.c() parent links until a channel dd is reached or null; parameter block is the starting node. bw.cs 06000068.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: dj dj_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "dj_0",
+          "HasMetadata": true,
+          "NewName": "parameterBlock"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019E5",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.DeviceCalculator::b(Knx.Ets.ObjectModel.Project.IDevice)",
+      "OriginalName": "b",
+      "Reason": "ShouldCreateActivityCalc examines the IDevice.HasApplicationProgram, HasPeiProgram, GroupTreeIsCalculated and application-program cache; source 060019E5. Rename placeholder idevice_0 only.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "idevice_0",
+          "HasMetadata": true,
+          "NewName": "device"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.ModuleInstance>",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.ModuleInstance",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Boolean",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.DeviceCalculator/<>c__DisplayClass10_0",
+          "NewName": ""
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        },
+        {
+          "Index": 6,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019E8",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Project.DeviceCalculator::a(Knx.Ets.ObjectModel.Project.IDevice)",
+      "OriginalName": "a",
+      "Reason": "AttachCalculators uses IDevice.ParentProject/ObjectContext and GroupObjectTree when constructing main/PEI calculators; source 060019E8 and DynamicData constructor corroboration.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "idevice_0",
+          "HasMetadata": true,
+          "NewName": "device"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019EE",
+      "Signature": "Knx.Ets.ObjectModel.Project.ModuleInstance Knx.Ets.ObjectModel.Project.DeviceCalculator::a(System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Project.ModuleInstance>,Knx.Ets.Ids.Project.ModuleInstanceId)",
+      "OriginalName": "a",
+      "Reason": "FindCorrectModule handles empty/singleton IList<ModuleInstance>, then selects matching instance Id or first entry. Preserve list and searched identity separately; DeviceCalculator.cs 060019EE.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Project.ModuleInstance> ilist_0",
+        "2: Knx.Ets.Ids.Project.ModuleInstanceId moduleInstanceId_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ilist_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstances"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "moduleInstanceId_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstanceId"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.DeviceCalculator/<>c__DisplayClass19_0",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019EF",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.DeviceCalculator::a(Knx.Ets.ObjectModel.Project.ModuleInstance,Knx.Ets.Ids.Project.ModuleInstanceId)",
+      "OriginalName": "a",
+      "Reason": "MatchesModuleInstanceId compares input ModuleInstance.Id.ModuleId/Number with searched ModuleInstanceId.ModuleId/Number. Direct 060019EF body.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.ObjectModel.Project.ModuleInstance moduleInstance_0",
+        "2: Knx.Ets.Ids.Project.ModuleInstanceId moduleInstanceId_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "moduleInstance_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstance"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "moduleInstanceId_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstanceId"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019F0",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.DeviceCalculator::a(Knx.Ets.Ids.Product.ParameterRefId,Knx.Ets.ObjectModel.Project.ModuleInstance)",
+      "OriginalName": "a",
+      "Reason": "MatchesSubModuleScope checks ParameterRefId.SubModuleDefId and ModuleInstance.Id.SubModuleId nullness. Direct 060019F0 body and input types.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.Ids.Product.ParameterRefId parameterRefId_0",
+        "2: Knx.Ets.ObjectModel.Project.ModuleInstance moduleInstance_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "parameterRefId_0",
+          "HasMetadata": true,
+          "NewName": "parameterRefId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "moduleInstance_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstance"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019F9",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.DeviceCalculator::a(Knx.Ets.DynamicData.IComObjectInstanceRefDynamicFacade)",
+      "OriginalName": "a",
+      "Reason": "Unwraps ComObjInstDynamicFacade.Parent and calls _comObjectDeactivationQuery; same facade is passed by DynamicData completion filtering. DeviceCalculator.cs 060019F9.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.DynamicData.IComObjectInstanceRefDynamicFacade icomObjectInstanceRefDynamicFacade_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "icomObjectInstanceRefDynamicFacade_0",
+          "HasMetadata": true,
+          "NewName": "comObjectInstance"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x060019FA",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Project.DeviceCalculator::a(Knx.Ets.Ids.Product.ParameterRefId,Knx.Ets.Ids.Project.ModuleInstanceId,System.String)",
+      "OriginalName": "a",
+      "Reason": "OnTextParameterRefChanged forwards all three inputs to TextParameterRefManager.TextParameterRefChanged; roles established by that readable callee and exact ParameterRefId/ModuleInstanceId/string signature. 060019FA.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.Ids.Product.ParameterRefId parameterRefId_0",
+        "2: Knx.Ets.Ids.Project.ModuleInstanceId moduleInstanceId_0",
+        "3: System.String string_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "parameterRefId_0",
+          "HasMetadata": true,
+          "NewName": "parameterRefId"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "moduleInstanceId_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstanceId"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "string_0",
+          "HasMetadata": true,
+          "NewName": "text"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x06001A00",
+      "Signature": "dd Knx.Ets.ObjectModel.Project.DeviceCalculator::GetChannelById(System.String)",
+      "OriginalName": "GetChannelById",
+      "Reason": "GetChannelById compares channel dd.Id.ToString(WriterMode.Long) to input string in a captured predicate. Source 06001A00; input is serialized channel identity.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_0",
+          "HasMetadata": true,
+          "NewName": "channelId"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.DeviceCalculator/<>c__DisplayClass43_0",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x06001A01",
+      "Signature": "dq Knx.Ets.ObjectModel.Project.DeviceCalculator::GetParameterBlockById(System.String)",
+      "OriginalName": "GetParameterBlockById",
+      "Reason": "GetParameterBlockById matches the parameter block's ID string against this input. Source 06001A01 and original method name establish search responsibility without changing overloads.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_0",
+          "HasMetadata": true,
+          "NewName": "parameterBlockId"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.DeviceCalculator/<>c__DisplayClass44_0",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x06001A08",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Project.DeviceCalculator::b(b6)",
+      "OriginalName": "b",
+      "Reason": "RegisterModuleInstance adds b6 argument into _moduleInstancesByModuleId under its ModuleId/SubModuleId. Direct source 06001A08 body; b6 is the module facade passed to InstantiateModule/UninstantiateModule.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: b6 b6_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "b6_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstance"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x06001A0D",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Project.DeviceCalculator::a(b6)",
+      "OriginalName": "a",
+      "Reason": "UnregisterModuleInstance removes b6 argument from ID-keyed lists and cleans empty groups; paired with RegisterModuleInstance 06001A08. Direct 06001A0D source body.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: b6 b6_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "b6_0",
+          "HasMetadata": true,
+          "NewName": "moduleInstance"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Ets.Ids.Product.ModuleId",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    }
+  ],
+  "Types": [],
+  "Fields": [
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "bw",
+      "Token": "0x04000030",
+      "Signature": "System.UInt32 bw::e",
+      "OriginalName": "e",
+      "Reason": "Refine the new block proposal using complete call-chain evidence: 0600004B and 0600004D increment before calculation and decrement after it; only prior depth zero selects root calculation and zero after decrement returns changes. This is nesting depth, not a cumulative cycle count. Original bw.cs 0600004B/4D bodies preserve increments and decrements.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_calculationDepth",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.DeviceCalculator",
+      "Token": "0x0400062B",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.DeviceCalculator::i",
+      "OriginalName": "i",
+      "Reason": "Refine the new block proposal using all readers: ClearRenames 06001A0C is the only read and exits when false. PerformInitialActivityCalculation/EnsureCalculatorsValid set true for the main calculation, false for PEI calculation, and restore true in finally. The flag gates clearing device renames; it does not indicate that initial calculation is required.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_allowRenameClearing",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    }
+  ],
+  "Skips": []
+}

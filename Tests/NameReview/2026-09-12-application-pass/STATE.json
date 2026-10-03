@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T05:20:56Z",
+  "UpdatedUtc": "2026-10-03T06:02:51Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -21,13 +21,13 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v382.xml",
-      "Sha256": "D1B04F53CF97C73C6C299FCAB339B4567FF076C5495AA9F2D3783B2988C910D2",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v382.json",
-      "NextWave": 383,
+      "Path": "D:\\knx_analysis\\application-name-pass01\\names63-staged-v385.xml",
+      "Sha256": "F5EEDE08289657621E04717DF9A05FDEB82D0656BB1ADB5F034B11DD38EB239E",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v385.json",
+      "NextWave": 386,
       "CumulativeRenamedRows": 16694,
-      "RowsInMap": {"Types": 970, "Methods": 12904, "Fields": 2858, "Parameters": 2553, "Locals": 866},
-      "CountBasis": "RowsInMap counts actual NewName entries in v381; CumulativeRenamedRows is the historical v380 checkpoint total, not current coverage.",
+      "RowsInMap": {"Types": 972, "Methods": 12904, "Fields": 2887, "Parameters": 2605, "Locals": 871},
+      "CountBasis": "RowsInMap counts actual NewName entries in v385; CumulativeRenamedRows remains the historical v380 total, not current whole-application coverage.",
       "AppliedToSource": false
     },
     "64": {
@@ -72,10 +72,10 @@
     },
     "PhysicalScope63": {
       "Inventory": "perf-now/ets63-managed-scope-inventory02.json: 528 managed modules, 270 satellites, 4 native PE, 0 scan errors; all 64 mapped physical paths matched.",
-      "Additional": "45 additional pure-IL first-party candidates beyond v388 baseline. v382 accepts names in Metrics, Compatibility.Utility and PluginRepository, expanding the map to 67 physical modules. Other scope/coverage remains pending; preserve mixed-mode and third-party binaries.",
+      "Additional": "45 additional pure-IL first-party candidates beyond the 64-project v388 baseline. v385 maps 68 physical modules, including root XML.ObjectModel activity callback storage. The calculator block adds 88 aliases across three coupled components; other scope and coverage remains pending. Preserve mixed-mode and third-party binaries.",
       "Discovery": "45 modules: 38,818 methods, 4,621 types, 23,064 fields. Updated inventories: unmapped-type-review03 (18 type candidates), unmapped-field-review02 (1,976 field candidates). These are review flags, not rename decisions or completed coverage.",
       "ToolFix": "de4dotEx 19795c62 exposes exact field dependency assembly identity; 4abea81f adds SDK-preserving physical --select-map and numeric whitelist tokens. Portable native suite passes. Metrics dead padding uses existing metadata-only field support; no exporter patch needed.",
-      "NextBlock": "Continue remaining XML/device and generated-storage evidence. KnxXmlDevice b_0 is the ActivityCalculationFinished backing delegate from DynamicData bw/b (xml-device-type01.json); review that coupled contract before naming. Preserve meaningful RDF/unit/schema abbreviations."
+      "NextBlock": "Review XML schema/serializer generated-storage candidates and device facade interfaces in their physical compatibility context. Root XML.KnxXmlDevice activity storage, DynamicData delegates and ObjectModel completion call chains are mapped in v385. Preserve distinct CV assemblies and meaningful RDF/unit/schema abbreviations."
     }
   },
   "Naming": {
@@ -152,12 +152,12 @@
       "Password": "Synthetic test-mcp-v388-password (P-0813, GUID 0f691dc1-e25a-473a-8f72-bffb229109d9) created password-protected, opened/closed, then reopened with password in a fresh process. is_open=true, is_broken=false, save_suppressed=false. perf-now/ets63-v388-password-report01.json; ETS exited normally; 16 checkpointed profile files restored with matching hashes. Full complex protected-project coverage remains unproven."
     },
     "SourceExport": {
-      "Map": "v388 baseline used v381. Current naming map v382 adds 43 decisions in three components. additional-components-export02 built three focused projects before mapping-first policy revision (0 errors, 27 warnings); this is not current full-scope or runtime verification.",
+      "Map": "v388 baseline used v381. v385 adds 131 aliases across the additional-component and calculator blocks relative to v381. Native identity/SDK/reference checks pass; the new names have not been consolidated into a new exported/runtime tree. Reviewed bodies, physical identities, native gates and scoped-merge tests are retained in the checkpoint sink.",
       "Scope": "v388 exports the 64 mapped physical modules. The whole-tree inventory found 45 additional pure-IL first-party candidates; confirm scope and review naming before the next consolidated export. Third-party and mixed-mode binaries remain untouched.",
       "ModuleList": "D:\\knx_analysis\\perf-now\\firstparty-files.txt (64 paths, generated from the map)",
       "ToolFixes": "dnSpy 17e48eec9: compiler-generated aliases accepted (574 rows), DNSPY_SOURCEMAP_REPORT_ALL=1 reports every map problem in one run, -r needed for the CV/<version> modules. dnSpy 6a616c531: export phases run on 64 MB-stack threads instead of 1 MB thread-pool threads.",
       "Command": "Current fixed CLI: dnspy-sdk-guard-fix01/dnSpy.Console.exe --source-name-map <checked-map> --public-sign --app-config ETS6.3_api_preserved4/ETS6N.exe.config -o <fresh-out>, plus explicit physical module paths; DNSPY_PACKAGE_MAP=perf-now/nuget-packages.txt. Build the actual ILSpy plugin, then the exported solution in Release.",
-      "State": "2026-10-03 ets63-source-v388: fresh export of all 64 projects exits 0; 13,017 application C# files plus generated support (13,360 total). Complete Release solution build succeeds: 64 outputs, 0 errors, 15,375 warnings. Former five ViewModel alias errors fixed through checked framework facade resolution. Evidence: ets63-source-v388/solution-build.log; portable MethodReferenceResolutionRegression and SourceAliasReferencesRegression pass.",
+      "State": "2026-10-03 v388 exported all 64 projects and compiled 64 outputs with 0 errors, 15,375 warnings; closure, XAML and facade errors are fixed. Fresh incremental Release recheck also succeeds: 0 errors, 153 warnings, including unresolved unused references. Evidence: ets63-source-v388/solution-build.log and perf-now/ets63-v388-build-recheck-20261003.log. Naming v385 is not yet consolidated.",
       "Caveat": "All 64 exported projects now compile, including ETS6N and ParameterDialog. This proves source-build readiness for the mapped first-party set, not whole-tree naming closure, complete first-party inventory or runtime compatibility.",
       "Next": [
         "Complete remaining first-party scope and application-wide mapping using inexpensive checks. Consolidated ETS export/build, full audits and binary application follow map freeze.",

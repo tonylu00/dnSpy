@@ -10,10 +10,15 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
+from review_ledger import merge_scopes, replace_alias
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
     parser.add_argument('--' + name, required=True)
+parser.add_argument('--merge-reviewed-scopes', action='store_true',
+                    help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
+parser.add_argument('--replace-reviewed-aliases', action='store_true',
+                    help='Explicitly replace a reviewed field/type/parameter alias using its exact native change report')
 args = parser.parse_args()
 state_path, sink = pathlib.Path(args.state), pathlib.Path(args.sink)
 map_path, review_path = pathlib.Path(args.map), pathlib.Path(args.review)
@@ -38,11 +43,36 @@ rows = {kind: sum(1 for row in root.iter(tag) if row.get('NewName')) for kind, t
 ledger_path = sink / 'reviewed63.json'
 ledger = read(ledger_path)
 assert ledger['TargetRoot'] == review['TargetRoot'] == root.get('InputDirectory')
+base_root = ET.parse(previous['Path']).getroot()
+base_names = {(module.get('Path'), row.get('Token')): row.get('NewName', '')
+              for module in base_root.findall('Module') for row in module}
+checked_scopes = {(module.get('Path'), row.get('Token')):
+                 {(label, int(scope.get(position))): dict(scope.attrib)
+                  for label, tag, position in (('ParameterNames', 'Parameter', 'Sequence'), ('LocalNames', 'Local', 'Index'))
+                  for scope in row.findall(tag)}
+                 for module in root.findall('Module') for row in module}
+merged_rows = 0
+replaced_rows = 0
+checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type')}
+scope_replacements = {}
+if args.replace_reviewed_aliases:
+    for c in update['Changes']:
+        if c['Kind'] == 'Parameter':
+            scope_replacements.setdefault((c['Module'], c['Token']), {})[('ParameterNames', c['ParameterSequence'])] = c
 for kind in ('Types', 'Methods', 'Fields'):
-    keys = {(r['Module'], r['Token']) for r in ledger[kind]}
+    keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
-        assert (row['Module'], row['Token']) not in keys, 'Existing row requires explicit reviewed merge'
-        keys.add((row['Module'], row['Token']))
+        key = (row['Module'], row['Token'])
+        if key in keys:
+            if args.replace_reviewed_aliases and kind in ('Types', 'Fields'):
+                ledger[kind][keys[key]] = replace_alias(ledger[kind][keys[key]], row, base_names.get(key, ''), checked_changes.get(key))
+                replaced_rows += 1
+                continue
+            assert args.merge_reviewed_scopes and kind == 'Methods', 'Existing row requires explicit reviewed scope merge'
+            ledger[kind][keys[key]] = merge_scopes(ledger[kind][keys[key]], row, base_names.get(key, ''), checked_scopes.get(key, {}), scope_replacements.get(key, {}))
+            merged_rows += 1
+            continue
+        keys[key] = len(ledger[kind])
         ledger[kind].append(row)
 version = int(map_path.stem.rsplit('-v', 1)[1])
 checkpoint_path = sink / ('checkpoint-naming-v' + str(version) + '.json')
@@ -54,6 +84,8 @@ checkpoint = {'Format': 1, 'Kind': 'NamingCheckpoint', 'Block': args.block,
               'PreviousMap': dict(previous), 'Review': {'Path': str(review_path), 'Sha256': digest(review_path)},
               'UpdateReport': str(update_path), 'CheckReport': str(check_path),
               'AcceptedDecisions': len(update['Changes']), 'SdkNameWhitelistSha256': update['SdkNameWhitelistSha256'],
+              'ExplicitScopeMerges': merged_rows,
+              'ExplicitAliasReplacements': replaced_rows,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}
 previous.update(Path=str(map_path), Sha256=digest(map_path), Checkpoint=str(checkpoint_path), NextWave=version + 1, RowsInMap=rows, AppliedToSource=False)

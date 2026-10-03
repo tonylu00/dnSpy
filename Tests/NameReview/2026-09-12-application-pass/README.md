@@ -24,3 +24,12 @@ Rules:
 - No per-block narrative, no commit-hash prose, no wave reports. `git log` is the log.
 - `AppliedToSource` stays `false` until the consolidated Phase 4 export/build/verification.
   Metadata apply and `--verify-applied` do not prove source rebuilding or ETS runtime behaviour.
+
+For scoped additions to previously reviewed methods, run `checkpoint_naming_block.py`
+with `--merge-reviewed-scopes` after the native update and check gates. It preserves
+earlier parameter/local aliases and verifies physical identity. Locals absent from an
+older ledger require matching entries in the native-checked map.
+`--replace-reviewed-aliases` additionally permits explicit field/type/parameter
+corrections only when the native change report records the exact previous and new
+aliases. These options edit review records; they do not modify ETS source or binaries.
+The merge guards can be verified with `python test_review_ledger.py`.
