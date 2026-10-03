@@ -139,6 +139,9 @@ preserve or unresolved decision with rationale. SDK tokens, mapped fields and
 third-party inputs are excluded; historical ledger decisions require a separate
 guarded transition. It writes review/evidence JSON only. Preserve useful original
 names when a proposal merely removes a suffix or loses domain specificity.
+Resolved graph writes must match native constructor tokens and IL offsets in the
+same physical module. Foreign/static/unsupported writers and field-address edges
+are rejected independently of the native local-body scan.
 
 The v403 constructor-storage checkpoint adds 56 field aliases in eight physical
 modules, preserves 10 meaningful existing names and clarifies 24 proposed roles.

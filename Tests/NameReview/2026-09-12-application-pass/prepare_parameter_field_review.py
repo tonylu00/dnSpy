@@ -6,6 +6,7 @@ source aliases and runtime-name restoration; this script never changes ETS code.
 import argparse
 import json
 import pathlib
+import re
 import sqlite3
 import xml.etree.ElementTree as ET
 from prepare_physical_review import prepare
@@ -43,6 +44,25 @@ def validate_decisions(selected, decisions):
         result[key] = decision
     assert result.keys() == wanted.keys(), 'Every proposed field needs an explicit domain decision'
     return result
+
+
+def validate_graph_storage(module, stores, references):
+    """No resolved foreign writer/address may hide behind a local IL proof."""
+    expected = set()
+    for store in stores:
+        last = store['StoreInstructions'][-1]
+        match = re.match(r'^IL_([0-9A-Fa-f]+): stfld ', last)
+        assert match, 'Expected a native direct field store'
+        expected.add((module['Id'] + ':' + store['ConstructorToken'], int(match.group(1), 16)))
+    observed = set()
+    for edge in references:
+        operation = edge['Reference']['Operation']
+        assert operation not in ('ldflda', 'ldsflda'), 'Resolved graph exposes the storage address'
+        if operation in ('stfld', 'stsfld'):
+            write = (edge['Source'], edge['Reference']['Offset'])
+            assert operation == 'stfld' and write in expected, 'Unsupported resolved graph writer'
+            observed.add(write)
+    assert observed == expected, 'Native constructor stores and resolved graph writes differ'
 
 
 def main():
@@ -99,6 +119,7 @@ def main():
         stores = [e for e in proposals['ParameterFieldEvidence'] if (e['Module'], e['FieldToken']) == key]
         assert stores and all(e['FieldSignature'] == field['Signature'] and e['ProposedName'] == field['NewName'] for e in stores)
         incoming = references(module, key[1])
+        validate_graph_storage(module, stores, incoming)
         callers = []
         for store in stores:
             requests.setdefault(key[0].replace('\\', '/'), set()).add(store['ConstructorToken'])

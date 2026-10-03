@@ -1,6 +1,6 @@
 import copy
 import unittest
-from prepare_parameter_field_review import select_fields, validate_decisions
+from prepare_parameter_field_review import select_fields, validate_decisions, validate_graph_storage
 
 
 class ParameterStorageDecisionTests(unittest.TestCase):
@@ -41,6 +41,18 @@ class ParameterStorageDecisionTests(unittest.TestCase):
             accepted = dict(self.decision, Disposition=disposition, NewName='')
             self.assertEqual(1, len(validate_decisions(self.rows[:1], [accepted])))
         with self.assertRaises(AssertionError): validate_decisions(self.rows[:1], [dict(self.decision, Reason='')])
+
+    def test_resolved_foreign_writer_or_address_cannot_hide_in_local_proof(self):
+        stores = [dict(ConstructorToken='0x06000001', StoreInstructions=['IL_000A: stfld Int32 Owner::a'])]
+        write = dict(Source='m0:0x06000001', Reference=dict(Operation='stfld', Offset=10))
+        validate_graph_storage(dict(Id='m0'), stores, [write])
+        for changed in (dict(Source='m1:0x06000001', Reference=write['Reference']),
+                        dict(Source='m0:0x06000002', Reference=write['Reference']),
+                        dict(Source=write['Source'], Reference=dict(Operation='stfld', Offset=11)),
+                        dict(Source=write['Source'], Reference=dict(Operation='ldflda', Offset=10)),
+                        dict(Source=write['Source'], Reference=dict(Operation='stsfld', Offset=10))):
+            with self.assertRaises(AssertionError): validate_graph_storage(dict(Id='m0'), stores, [write, changed])
+        with self.assertRaises(AssertionError): validate_graph_storage(dict(Id='m0'), stores, [])
 
 
 if __name__ == '__main__':
