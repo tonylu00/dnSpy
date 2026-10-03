@@ -221,6 +221,22 @@ class LedgerScopeMergeTests(unittest.TestCase):
         self.assertIn('Earlier behavior evidence', merged['Reason'])
         self.assertEqual('', self.old['ParameterNames'][1]['NewName'])
 
+    def test_scope_evidence_retires_resolved_positions_and_keeps_history(self):
+        self.old['UnresolvedScopeEvidence'] = dict(Parameters=[dict(Sequence=2, OriginalName='b', MissingEvidence='No role yet')], Locals=[])
+        self.review['LocalNames'].append(dict(Index=1, ExpectedType='System.Int32', NewName=''))
+        self.review['UnresolvedScopeEvidence'] = dict(Parameters=[], Locals=[dict(Index=1, ExpectedType='System.Int32', MissingEvidence='Loop use not reviewed')])
+        result = merge_scopes(self.old, self.review, 'CurrentAcceptedAlias')
+        self.assertEqual([], result['UnresolvedScopeEvidence']['Parameters'])
+        self.assertEqual(self.review['UnresolvedScopeEvidence']['Locals'], result['UnresolvedScopeEvidence']['Locals'])
+        self.assertEqual(self.old['UnresolvedScopeEvidence'], result['ScopeEvidenceReviews'][0]['PreviousUnresolvedScopeEvidence'])
+        self.assertEqual('No role yet', self.old['UnresolvedScopeEvidence']['Parameters'][0]['MissingEvidence'])
+
+    def test_scope_evidence_rejects_stale_duplicate_and_unknown_positions(self):
+        entry = dict(Sequence=2, OriginalName='b', MissingEvidence='Caller unknown')
+        for entries in ([dict(entry, OriginalName='stale')], [entry, entry], [dict(entry, Sequence=9)], [dict(entry, MissingEvidence='')]):
+            self.review['UnresolvedScopeEvidence'] = dict(Parameters=entries, Locals=[])
+            with self.assertRaises(ValueError): merge_scopes(self.old, self.review, 'CurrentAcceptedAlias')
+
     def test_rejects_stale_identity(self):
         self.review['Mvid'] = 'other-physical-module'
         with self.assertRaises(ValueError): merge_scopes(self.old, self.review, 'CurrentAcceptedAlias')

@@ -15,14 +15,42 @@ from prepare_constructor_parameter_review import argument
 from review_ledger import require_identity
 
 
+def validate_property_anchor(native_evidence, callee, proposed_name):
+    anchor = native_evidence['Property']
+    assert native_evidence['Call']['RoleSource'] == 'existing-property-name'
+    assert anchor['ProposedName'] == proposed_name and re.fullmatch(r'0x17[0-9A-F]{6}', anchor['PropertyToken'])
+    owners = callee['AccessorOwners']
+    assert len(owners) == 1
+    owner = owners[0]
+    assert owner['OwnerKind'] == 'Property' and owner['AccessorRole'] == 'set'
+    assert owner['OwnerToken'] == anchor['PropertyToken'] and owner['OwnerSignature'] == anchor['PropertySignature']
+    assert owner['OwnerName'] == anchor['PropertyName']
+    assert [p['Sequence'] for p in callee['Parameters'] if p['Sequence'] is not None] == [1]
+
+
+def validate_domain_decision(decision, row, parameter, mapping, property_parameters):
+    require_identity(row, decision)
+    assert decision['Reason'] and decision['Disposition'] in ('accept', 'preserve', 'defer')
+    assert decision['ExpectedParameterName'] == parameter['OriginalName'] and decision['ExpectedProposal'] == parameter['NewName']
+    assert not decision.get('AcceptedName') or property_parameters and decision['Disposition'] == 'accept'
+    if 'AcceptedName' in decision:
+        assert re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', decision['AcceptedName'])
+    if decision.get('ExpectedCallerAlias'):
+        assert mapping is not None
+        assert mapping.get('ExpectedName') == row['OriginalName'] and mapping.get('Signature') == row['Signature']
+        assert mapping.get('NewName') == decision['ExpectedCallerAlias']
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('state', 'inventory', 'proposals', 'bodies', 'ledger', 'graph', 'decisions', 'output'):
         parser.add_argument('--' + name, required=True)
+    parser.add_argument('--property-parameters', action='store_true', help='Require exact native property-owner evidence for generic setter inputs')
     args = parser.parse_args()
     state, inventory, proposals, index, ledger, decisions = map(read,
         (args.state, args.inventory, args.proposals, args.bodies, args.ledger, args.decisions))
     root = pathlib.Path(state['Pass']['SourceTree63']).resolve()
+    assert proposals['InferenceKind'] == ('PropertyParameter' if args.property_parameters else 'ForwardedParameter')
     assert str(root) == proposals['TargetRoot'] == ledger['TargetRoot']
     assert digest(state['Maps']['63']['Path']) == state['Maps']['63']['Sha256'] == inventory['MapSha256'] == proposals['BaseMapSha256']
     assert digest(args.ledger) == inventory['LedgerSha256']
@@ -48,10 +76,8 @@ def main():
     for decision in decisions:
         key = decision['Module'], decision['Token'], decision['Sequence']
         assert key in proposed_scopes and key not in reviewed and decision['Reason']
-        require_identity(wanted[key[:2]], decision)
         parameter = proposed_scopes[key]
-        assert decision['ExpectedParameterName'] == parameter['OriginalName'] and decision['ExpectedProposal'] == parameter['NewName']
-        assert decision['Disposition'] in ('accept', 'preserve', 'defer')
+        validate_domain_decision(decision, wanted[key[:2]], parameter, mapped.get(key[:2]), args.property_parameters)
         reviewed[key] = decision
     assert set(reviewed) == set(proposed_scopes), 'Every eligible proposed input requires an explicit domain decision'
     bodies = {}
@@ -86,27 +112,35 @@ def main():
             assert metadata['Name'] == parameter['OriginalName']
             uses = [dict(Instruction=i, Context=body['Instructions'][max(0, n-2):n+5]) for n, i in enumerate(body['Instructions']) if argument(i) == metadata['ArgumentIndex']]
             assert uses and not any(u['Instruction']['OpCode'] in ('starg', 'starg.s', 'ldarga', 'ldarga.s') for u in uses)
-            forwarding = [e for e in proposals['ForwardedParameterEvidence'] if (e['Module'], e['MethodToken'], e['ParameterSequence']) == scope]
+            source_evidence = proposals['PropertyParameterEvidence'] if args.property_parameters else proposals['ForwardedParameterEvidence']
+            forwarding = [e for e in source_evidence if ((e['Call'] if args.property_parameters else e)['Module'],
+                (e['Call'] if args.property_parameters else e)['MethodToken'],
+                (e['Call'] if args.property_parameters else e)['ParameterSequence']) == scope]
             assert forwarding
             anchors = []
-            for evidence in forwarding:
+            for native_evidence in forwarding:
+                evidence = native_evidence['Call'] if args.property_parameters else native_evidence
                 callee_key = key[0], evidence['CalleeToken']
                 callee = bodies[callee_key]
                 assert evidence['MethodSignature'] == row['Signature'] and evidence['CalleeSignature'] == callee['Signature']
                 assert evidence['ProposedName'] == parameter['NewName']
                 target = next(p for p in callee['Parameters'] if p['Sequence'] == evidence['CalleeParameterSequence'])
                 assert target['Type'] == metadata['Type']
-                if evidence['RoleSource'] == 'checked-source-alias':
+                role_source = native_evidence['CalleeRoleSource'] if args.property_parameters else evidence['RoleSource']
+                expected_role = 'value' if args.property_parameters else parameter['NewName']
+                if args.property_parameters:
+                    validate_property_anchor(native_evidence, callee, parameter['NewName'])
+                if role_source == 'checked-source-alias':
                     mapping = mapped[callee_key]
                     assert mapping.get('Signature') == callee['Signature']
                     name = next(p for p in mapping.findall('Parameter') if int(p.get('Sequence')) == target['Sequence'])
-                    assert name.get('ExpectedName') == target['Name'] and name.get('NewName') == parameter['NewName']
+                    assert name.get('ExpectedName') == target['Name'] and name.get('NewName') == expected_role
                 else:
-                    assert evidence['RoleSource'] == 'existing-metadata-name' and target['Name'] == parameter['NewName']
+                    assert role_source == 'existing-metadata-name' and target['Name'] == expected_role
                 assert any(i['OpCode'] in ('call', 'callvirt', 'newobj') and isinstance(i['Operand'], dict) and i['Operand'].get('Token') == evidence['CalleeToken'] for i in body['Instructions'])
-                anchors.append(dict(Evidence=evidence, Parameter=target, Body=callee))
+                anchors.append(dict(Evidence=native_evidence, Parameter=target, Body=callee))
             if decision['Disposition'] == 'accept':
-                accepted[scope[2]] = parameter['NewName']
+                accepted[scope[2]] = decision.get('AcceptedName') or parameter['NewName']
             elif decision['Disposition'] == 'preserve':
                 preserved.append(decision)
             scope_proof.append(dict(Decision=decision, AllInputUses=uses, PhysicalCallees=anchors))
@@ -146,12 +180,13 @@ def main():
     output = pathlib.Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
     version = state['Maps']['63']['NextWave']
-    evidence = dict(Format=1, Kind='ForwardedParameterEvidence', BaseMapSha256=proposals['BaseMapSha256'],
+    evidence = dict(Format=1, Kind='PropertyParameterEvidence' if args.property_parameters else 'ForwardedParameterEvidence', BaseMapSha256=proposals['BaseMapSha256'],
         Inputs=[dict(Path=p, Sha256=digest(p)) for p in (args.state, args.inventory, args.proposals, args.bodies, args.ledger, args.graph, args.decisions)],
         GraphInputsVerified=len(meta['Modules']), NativeBodyReports=index, Callers=proof, Excluded=excluded,
         Limits='Source-scope parameter decisions only. Deferrals retain their missing evidence. No new type/field/local alias, runtime metadata edit, ETS export/build or unchanged-App compatibility claim.')
     for label, document in (('spec', spec), ('review', review), ('evidence', evidence)):
-        with (output / f'forwarded-parameter-{label}-v{version}.json').open('x', encoding='utf-8') as stream:
+        prefix = 'property-parameter' if args.property_parameters else 'forwarded-parameter'
+        with (output / f'{prefix}-{label}-v{version}.json').open('x', encoding='utf-8') as stream:
             json.dump(document, stream, indent=2)
             stream.write('\n')
     print(dict(EligibleCallers=len(selected), LedgerRows=len(rows), ScopeMergedRows=sum((r['Module'], r['Token']) in previous for r in rows),

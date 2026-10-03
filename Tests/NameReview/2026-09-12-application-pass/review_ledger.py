@@ -318,5 +318,36 @@ def merge_scopes(previous, reviewed, mapped_name, checked_scopes=None, replaceme
                 added += 1
     if not added:
         raise ValueError('Existing row has no new reviewed scope additions')
+    if 'UnresolvedScopeEvidence' in reviewed:
+        # Keep earlier unknown positions unless fresh positional evidence
+        # replaces them. Accepted aliases retire their active missing-evidence
+        # entries, while the previous evidence remains in the review history.
+        current = {}
+        for label, inventory_label, position, preimage in (
+                ('Parameters', 'ParameterNames', 'Sequence', 'OriginalName'),
+                ('Locals', 'LocalNames', 'Index', 'ExpectedType')):
+            inventory = {p[position]: p for p in reviewed.get(inventory_label, [])}
+            aliases = {p[position] for p in result.get(inventory_label, []) if p.get('NewName')}
+            merged = {}
+            for document in (previous.get('UnresolvedScopeEvidence', {}), reviewed['UnresolvedScopeEvidence']):
+                seen = set()
+                for entry in document.get(label, []):
+                    slot = entry[position]
+                    if slot in seen or not entry.get('MissingEvidence'):
+                        raise ValueError('Duplicate or empty unresolved scope evidence')
+                    seen.add(slot)
+                    if slot in inventory and inventory[slot].get(preimage) != entry.get(preimage):
+                        raise ValueError('Unresolved scope preimage differs: ' + label)
+                    if document is reviewed['UnresolvedScopeEvidence'] and slot not in inventory:
+                        raise ValueError('Unresolved scope is absent from reviewed inventory')
+                    merged[slot] = copy.deepcopy(entry)
+            current[label] = [entry for slot, entry in sorted(merged.items()) if slot not in aliases]
+        if current != previous.get('UnresolvedScopeEvidence'):
+            result.setdefault('ScopeEvidenceReviews', []).append(dict(
+                PreviousUnresolvedScopeEvidence=copy.deepcopy(previous.get('UnresolvedScopeEvidence', {})),
+                Evidence=reviewed['Reason']))
+        result['UnresolvedScopeEvidence'] = current
+    if reviewed.get('UnresolvedDefinitionEvidence') and not result['NewName']:
+        result['UnresolvedDefinitionEvidence'] = reviewed['UnresolvedDefinitionEvidence']
     result['Reason'] = (previous.get('Reason') or '') + '\nScope review: ' + reviewed['Reason']
     return result

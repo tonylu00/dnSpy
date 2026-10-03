@@ -1,0 +1,220 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\036-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\037-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\046-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\047-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\052-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\056-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\080-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\081-methods.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.ActiveTree.dll",
+      "Token": "0x06000076",
+      "ParameterNames": {
+        "1": "renameText"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Input updates RenameText only when changed, then refreshes Text; retain the reviewed RefreshText method alias and original notifications. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.CalculatedParameters.dll",
+      "Token": "0x060001C6",
+      "ParameterNames": {
+        "1": "parent"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Constructor forwards this input unchanged to Parent; parser callers derive the parent from grammar transitions and store the stack record. This qualifies the parent input only; the opaque record and parser owners remain unresolved. Data stores strings and an opaque parser-stack payload ao. Record/parser ownership and payload reader semantics are unresolved; the generic Data property alone cannot establish a useful domain role. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.DiagnosticLibrary.dll",
+      "Token": "0x06000071",
+      "ParameterNames": {
+        "1": "timeCreated",
+        "2": "eventType",
+        "3": "message"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Windows EventLogReader caller supplies EventRecord.TimeCreated, its StandardEventLevel and FormatDescription respectively; constructor stores each through its exact named property setter. Windows EventLogReader caller supplies EventRecord.TimeCreated, its StandardEventLevel and FormatDescription respectively; constructor stores each through its exact named property setter. Windows EventLogReader caller supplies EventRecord.TimeCreated, its StandardEventLevel and FormatDescription respectively; constructor stores each through its exact named property setter. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Token": "0x06000327",
+      "ParameterNames": {
+        "2": "startValue",
+        "3": "allocates",
+        "4": "alignment"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Allocator callers compute StartValue from allocator.Start plus offsets, obtain Allocates from IArgument.Allocates and Alignment from IArgument.Alignment; each constructor input reaches the matching property. Retain earlier definition/order/baseValue scopes. Allocator callers compute StartValue from allocator.Start plus offsets, obtain Allocates from IArgument.Allocates and Alignment from IArgument.Alignment; each constructor input reaches the matching property. Retain earlier definition/order/baseValue scopes. Allocator callers compute StartValue from allocator.Start plus offsets, obtain Allocates from IArgument.Allocates and Alignment from IArgument.Alignment; each constructor input reaches the matching property. Retain earlier definition/order/baseValue scopes. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x0600004F",
+      "ParameterNames": {
+        "1": "name"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. DeviceInfo constructor stores the device name through Name; its other string is separately validated as individualAddress and is outside this property-role proposal. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Token": "0x060000D7",
+      "ParameterNames": {
+        "1": "inputFile"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Input is forwarded directly to InputFile on InfoBase; retain the checked SetInputFile method alias. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x060021F4",
+      "ParameterNames": {
+        "1": "longValue"
+      },
+      "Disposition": "rename",
+      "NewName": "SetLongValue",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Full input is stored in LargeStringCache when over 50 characters and only its truncated prefix reaches ShortValue; the checked SetLongValue alias and cache behavior establish longValue, rather than the intermediate storage label. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x06004932",
+      "ParameterNames": {
+        "4": "keepExistingGroupRange"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Extended-copy address-strategy constructor stores this Boolean unchanged through KeepExistingGroupRange; retain earlier options/starting-address/device-count scopes. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Token": "0x06004A08",
+      "ParameterNames": {
+        "1": "id"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Identifier stores this identity through Id and the other string through NumberOfCopy; retain the meaningful existing numberOfCopy input. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.Ui.UserControls.dll",
+      "Token": "0x06000D00",
+      "ParameterNames": {
+        "2": "id"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Extended-copy DeviceInstance stores this identifier through Id alongside already named address, displayName, productRefId, numberOfCopy and addressOverflow inputs. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.ViewModel.dll",
+      "Token": "0x060007A9",
+      "ParameterNames": {
+        "1": "tabPropertiesSelectedIndex"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Constructor-owned callback forwards selected index directly to TabPropertiesSelectedIndex; preserve generated method ownership for lambda reconstruction. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.ViewModel.dll",
+      "Token": "0x06007953",
+      "ParameterNames": {
+        "1": "configuredSearchBoxText"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Constructor-owned callback forwards search text directly to ConfiguredSearchBoxText; preserve generated method ownership for lambda reconstruction. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000AFD",
+      "ParameterNames": {
+        "1": "channel"
+      },
+      "Disposition": "rename",
+      "NewName": "set_Channel",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Caller rejects values above seven with the exact channel must be <= 7 message, then packs SixBitData; checked set_Channel alias establishes channel rather than the shared packet storage label. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B13",
+      "ParameterNames": {
+        "1": "channel"
+      },
+      "Disposition": "rename",
+      "NewName": "set_Channel",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Caller rejects values above seven with the exact channel must be <= 7 message, then packs SixBitData; checked set_Channel alias establishes channel rather than the shared packet storage label. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000B44",
+      "ParameterNames": {
+        "1": "descriptorType"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Checked set_DescriptorType alias and constructor selecting APCI 832 then forwarding its first byte establish descriptorType; SixBitData is shared packet storage and cannot qualify the application role alone. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000DC0",
+      "ParameterNames": {
+        "2": "hopCount"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Frame constructor sets APCI and MessageCode, then passes this byte to HopCount; exact setter validates range zero through seven and places it in ControlField2 bits four through six. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A8C",
+      "ParameterNames": {
+        "2": "transportLayerSequenceNumber"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Secure-message callback rewrites this byte through TransportLayerSequenceNumber on the outer and embedded frame between secure-key helper calls. Exact setter validates four-bit range and packs transport-control bits; callback registration is on numbered TPCI messages. Owner, crypto helpers and local roles remain unresolved. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A8F",
+      "ParameterNames": {
+        "2": "transportLayerSequenceNumber"
+      },
+      "Disposition": "rename",
+      "NewName": "",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Secure-message callback rewrites this byte through TransportLayerSequenceNumber on the outer and embedded frame between secure-key helper calls. Exact setter validates four-bit range and packs transport-control bits; callback registration is on numbered TPCI messages. Owner, crypto helpers and local roles remain unresolved. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone."
+    }
+  ]
+}

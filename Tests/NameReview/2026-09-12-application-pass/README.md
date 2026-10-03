@@ -152,3 +152,15 @@ reproduce byte-for-byte. The 109-module inventory has 25,088 remaining native
 candidates, including six opaque definitions with scoped aliases only. The map
 is staged; the latest consolidated ETS export/build and runtime compatibility
 remain pending. See `parameter-field-milestone-v403.json` for checks and limits.
+
+`prepare_forwarded_parameter_review.py --property-parameters` additionally binds
+generic setter inputs to the exact property token/signature/name exposed by native
+inspection. Every proposal still requires its physical and parameter preimages
+and a domain decision. `AcceptedName` can clarify the caller role when the property
+is intermediate storage; `ExpectedCallerAlias` guards supporting checked method
+aliases. The generic setter role must be original metadata `value` or an exact
+checked scope alias. Prefixes and adjacent tokens cannot establish ownership.
+Scope merges retain previous uncertainty in history and retire active missing
+evidence for accepted positions. Run `test_property_parameter_review.py` and
+`test_review_ledger.py` for these guards. See `property-parameter-milestone-v404.json`
+for the measured whole-tree proposal scan, review decisions and verification limits.

@@ -1,0 +1,1048 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Ets.ActiveTree.dll",
+      "Identity": "Knx.Ets.ActiveTree, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "8f7fe008-7e66-42e7-95a2-cbb6a8185058",
+      "Sha256": "0C83947281A6774A9C1C2690FF2CE94C0A7016C695C59D1EC9620DD0CA26363D",
+      "Type": "amw",
+      "Token": "0x06000076",
+      "Signature": "System.Void amw::d(System.String)",
+      "OriginalName": "d",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Input updates RenameText only when changed, then refreshes Text; retain the reviewed RefreshText method alias and original notifications. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String A_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "renameText"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Ets.CalculatedParameters.dll",
+      "Identity": "Knx.Ets.CalculatedParameters, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2cda762-f335-4385-a702-00a79aa99a39",
+      "Sha256": "4721C85B0D3865C80E4FDE6C209B8ECA2A9FD6D6C88DC3D86C53868CD148CD6C",
+      "Type": "Class86",
+      "Token": "0x060001C6",
+      "Signature": "System.Void Class86::.ctor(aq,System.Object)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Constructor forwards this input unchanged to Parent; parser callers derive the parent from grammar transitions and store the stack record. This qualifies the parent input only; the opaque record and parser owners remain unresolved. Data stores strings and an opaque parser-stack payload ao. Record/parser ownership and payload reader semantics are unresolved; the generic Data property alone cannot establish a useful domain role. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: aq aq_1",
+        "2: System.Object object_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "aq_1",
+          "HasMetadata": true,
+          "NewName": "parent"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "object_1",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 2,
+            "OriginalName": "object_1",
+            "MissingEvidence": "Data stores strings and an opaque parser-stack payload ao. Record/parser ownership and payload reader semantics are unresolved; the generic Data property alone cannot establish a useful domain role."
+          }
+        ],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.DiagnosticLibrary.dll",
+      "Identity": "Knx.Ets.DiagnosticLibrary, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "f327b3c2-1c5d-4d94-946d-97b55b730fe8",
+      "Sha256": "F664BDC117B0D5742F179E3D7E48E18984E3DE9DD118C7CFD71E8D39731C37E3",
+      "Type": "bl",
+      "Token": "0x06000071",
+      "Signature": "System.Void bl::.ctor(System.DateTime,System.Nullable`1<System.Diagnostics.Eventing.Reader.StandardEventLevel>,System.String)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Windows EventLogReader caller supplies EventRecord.TimeCreated, its StandardEventLevel and FormatDescription respectively; constructor stores each through its exact named property setter. Windows EventLogReader caller supplies EventRecord.TimeCreated, its StandardEventLevel and FormatDescription respectively; constructor stores each through its exact named property setter. Windows EventLogReader caller supplies EventRecord.TimeCreated, its StandardEventLevel and FormatDescription respectively; constructor stores each through its exact named property setter. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.DateTime A_0",
+        "2: System.Nullable`1<System.Diagnostics.Eventing.Reader.StandardEventLevel> A_1",
+        "3: System.String A_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": "timeCreated"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "A_1",
+          "HasMetadata": true,
+          "NewName": "eventType"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "A_2",
+          "HasMetadata": true,
+          "NewName": "message"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.DynamicData.dll",
+      "Identity": "Knx.Ets.DynamicData, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "3563fdf9-4d75-40fe-83dd-604e7b69cda9",
+      "Sha256": "6C6F59434C3EDAFD73E22CD52DD97B84E03959BC8533621EC5697635D8457622",
+      "Type": "d0",
+      "Token": "0x06000327",
+      "Signature": "System.Void d0::.ctor(by,System.Int64,System.Int64,System.Nullable`1<System.UInt16>,System.Func`1<Knx.Ets.Ids.Project.ModuleInstanceId>,Knx.Ets.ActiveTree.MultiDimensionalOrder,System.Int64)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Allocator callers compute StartValue from allocator.Start plus offsets, obtain Allocates from IArgument.Allocates and Alignment from IArgument.Alignment; each constructor input reaches the matching property. Retain earlier definition/order/baseValue scopes. Allocator callers compute StartValue from allocator.Start plus offsets, obtain Allocates from IArgument.Allocates and Alignment from IArgument.Alignment; each constructor input reaches the matching property. Retain earlier definition/order/baseValue scopes. Allocator callers compute StartValue from allocator.Start plus offsets, obtain Allocates from IArgument.Allocates and Alignment from IArgument.Alignment; each constructor input reaches the matching property. Retain earlier definition/order/baseValue scopes. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: by A_0",
+        "2: System.Int64 A_1",
+        "3: System.Int64 A_2",
+        "4: System.Nullable`1<System.UInt16> A_3",
+        "5: System.Func`1<Knx.Ets.Ids.Project.ModuleInstanceId> A_4",
+        "6: Knx.Ets.ActiveTree.MultiDimensionalOrder A_5",
+        "7: System.Int64 A_6"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "A_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "A_1",
+          "HasMetadata": true,
+          "NewName": "startValue"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "A_2",
+          "HasMetadata": true,
+          "NewName": "allocates"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "A_3",
+          "HasMetadata": true,
+          "NewName": "alignment"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "A_4",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "A_5",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "A_6",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 5,
+            "OriginalName": "A_4",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Identity": "Knx.Ets.InformationExtract, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "da60eb46-0401-403c-b448-eaa6cd95fcd6",
+      "Sha256": "B5676BE39C9C30CA0FBB60676583E15FD75459FE35119E14093BE6C12C63E6DD",
+      "Type": "Knx.Ets.InformationExtract.DeviceInfo",
+      "Token": "0x0600004F",
+      "Signature": "System.Void Knx.Ets.InformationExtract.DeviceInfo::.ctor(System.String,System.String)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. DeviceInfo constructor stores the device name through Name; its other string is separately validated as individualAddress and is outside this property-role proposal. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_6",
+        "2: System.String string_7"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_6",
+          "HasMetadata": true,
+          "NewName": "name"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "string_7",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 2,
+            "OriginalName": "string_7",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.InformationExtract.dll",
+      "Identity": "Knx.Ets.InformationExtract, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "da60eb46-0401-403c-b448-eaa6cd95fcd6",
+      "Sha256": "B5676BE39C9C30CA0FBB60676583E15FD75459FE35119E14093BE6C12C63E6DD",
+      "Type": "Knx.Ets.InformationExtract.InfoBase",
+      "Token": "0x060000D7",
+      "Signature": "System.Void Knx.Ets.InformationExtract.InfoBase::a(System.String)",
+      "OriginalName": "a",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Input is forwarded directly to InputFile on InfoBase; retain the checked SetInputFile method alias. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_2",
+          "HasMetadata": true,
+          "NewName": "inputFile"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Project.ProjectDomObject/ReadOnlyLongString",
+      "Token": "0x060021F4",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Project.ProjectDomObject/ReadOnlyLongString::a(System.String,System.Boolean)",
+      "OriginalName": "a",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Full input is stored in LargeStringCache when over 50 characters and only its truncated prefix reaches ShortValue; the checked SetLongValue alias and cache behavior establish longValue, rather than the intermediate storage label. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_2",
+        "2: System.Boolean bool_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_2",
+          "HasMetadata": true,
+          "NewName": "longValue"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "bool_1",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.ProjectDomObject",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "SetLongValue",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 2,
+            "OriginalName": "bool_1",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "Knx.Ets.ObjectModel.Project.ProjectDomObject",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          },
+          {
+            "Index": 2,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.ExtendedCopy.ExtendedCopyAddressStrategy",
+      "Token": "0x06004932",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Operations.ExtendedCopy.ExtendedCopyAddressStrategy::.ctor(Knx.Ets.ObjectModel.Enumerations.AddressOptions,System.UInt16,System.Int32,System.Boolean)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Extended-copy address-strategy constructor stores this Boolean unchanged through KeepExistingGroupRange; retain earlier options/starting-address/device-count scopes. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.ObjectModel.Enumerations.AddressOptions addressOptions_1",
+        "2: System.UInt16 ushort_1",
+        "3: System.Int32 int_1",
+        "4: System.Boolean bool_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "addressOptions_1",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ushort_1",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "int_1",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "bool_2",
+          "HasMetadata": true,
+          "NewName": "keepExistingGroupRange"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 1,
+            "OriginalName": "addressOptions_1",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.ExtendedCopy.ExtendedCopyImporter/Identifier",
+      "Token": "0x06004A08",
+      "Signature": "System.Void Knx.Ets.ObjectModel.Operations.ExtendedCopy.ExtendedCopyImporter/Identifier::.ctor(System.String,System.String)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Identifier stores this identity through Id and the other string through NumberOfCopy; retain the meaningful existing numberOfCopy input. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_2",
+        "2: System.String numberOfCopy"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_2",
+          "HasMetadata": true,
+          "NewName": "id"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "numberOfCopy",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.Ui.UserControls.dll",
+      "Identity": "Knx.Ets.Ui.UserControls, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "01b1cb2e-525b-4b53-9213-14d66bc66e02",
+      "Sha256": "9F236ED2447FDDA13354A5D2707000330820C013EC03C40C3BEFF439A1D059F6",
+      "Type": "Knx.Ets.Ui.UserControls.ExtendedCopy.ExtendedCopyXsltExtension/DeviceInstance",
+      "Token": "0x06000D00",
+      "Signature": "System.Void Knx.Ets.Ui.UserControls.ExtendedCopy.ExtendedCopyXsltExtension/DeviceInstance::.ctor(Knx.Ets.Ui.UserControls.ExtendedCopy.ExtendedCopyXsltExtension/DeviceInstance/DeviceAddress,System.String,System.String,System.String,System.String,System.Boolean)",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Extended-copy DeviceInstance stores this identifier through Id alongside already named address, displayName, productRefId, numberOfCopy and addressOverflow inputs. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.Ui.UserControls.ExtendedCopy.ExtendedCopyXsltExtension/DeviceInstance/DeviceAddress address",
+        "2: System.String string_1",
+        "3: System.String displayName",
+        "4: System.String productRefId",
+        "5: System.String numberOfCopy",
+        "6: System.Boolean addressOverflow"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "address",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "string_1",
+          "HasMetadata": true,
+          "NewName": "id"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "displayName",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "productRefId",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "numberOfCopy",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "addressOverflow",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Ets.ViewModel.dll",
+      "Identity": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "20cac48e-7d09-4e21-86c0-6189d1115ee2",
+      "Sha256": "FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2",
+      "Type": "Knx.Ets.ViewModel.ViewModel.Sidebar.PendingOperationsViewModel",
+      "Token": "0x060007A9",
+      "Signature": "System.Void Knx.Ets.ViewModel.ViewModel.Sidebar.PendingOperationsViewModel::<.ctor>b__5_1(System.Int32)",
+      "OriginalName": "<.ctor>b__5_1",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Constructor-owned callback forwards selected index directly to TabPropertiesSelectedIndex; preserve generated method ownership for lambda reconstruction. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Int32 int_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "tabPropertiesSelectedIndex"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Ets.ViewModel.dll",
+      "Identity": "Knx.Ets.ViewModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "20cac48e-7d09-4e21-86c0-6189d1115ee2",
+      "Sha256": "FFF3A862DDF76075FB2ECFB8D613B72BCE29ABE70BDB280A401A9232AA8A85A2",
+      "Type": "Knx.Ets.ViewModel.Application.Dashboard.Settings.Connections.ManageConfiguredConnectionsViewModel",
+      "Token": "0x06007953",
+      "Signature": "System.Void Knx.Ets.ViewModel.Application.Dashboard.Settings.Connections.ManageConfiguredConnectionsViewModel::<.ctor>b__10_1(System.String)",
+      "OriginalName": "<.ctor>b__10_1",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Constructor-owned callback forwards search text directly to ConfiguredSearchBoxText; preserve generated method ownership for lambda reconstruction. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.String string_5"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "string_5",
+          "HasMetadata": true,
+          "NewName": "configuredSearchBoxText"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class824",
+      "Token": "0x06000AFD",
+      "Signature": "System.Void Class824::a(System.Byte)",
+      "OriginalName": "a",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Caller rejects values above seven with the exact channel must be <= 7 message, then packs SixBitData; checked set_Channel alias establishes channel rather than the shared packet storage label. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "channel"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "set_Channel",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class825",
+      "Token": "0x06000B13",
+      "Signature": "System.Void Class825::a(System.Byte)",
+      "OriginalName": "a",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Caller rejects values above seven with the exact channel must be <= 7 message, then packs SixBitData; checked set_Channel alias establishes channel rather than the shared packet storage label. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "channel"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "set_Channel",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class831",
+      "Token": "0x06000B44",
+      "Signature": "System.Void Class831::a(System.Byte)",
+      "OriginalName": "a",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Checked set_DescriptorType alias and constructor selecting APCI 832 then forwarding its first byte establish descriptorType; SixBitData is shared packet storage and cannot qualify the application role alone. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte byte_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "descriptorType"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      }
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class915",
+      "Token": "0x06000DC0",
+      "Signature": "System.Void Class915::.ctor(Knx.Falcon.KnxMessages.ApplicationLayer.APCI,System.Byte,System.UInt16,System.Byte,System.Byte[])",
+      "OriginalName": ".ctor",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Frame constructor sets APCI and MessageCode, then passes this byte to HopCount; exact setter validates range zero through seven and places it in ControlField2 bits four through six. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.KnxMessages.ApplicationLayer.APCI apci_0",
+        "2: System.Byte byte_1",
+        "3: System.UInt16 ushort_0",
+        "4: System.Byte byte_2",
+        "5: System.Byte[] byte_3"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "apci_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_1",
+          "HasMetadata": true,
+          "NewName": "hopCount"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "ushort_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "byte_2",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "byte_3",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 1,
+            "OriginalName": "apci_0",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          },
+          {
+            "Sequence": 3,
+            "OriginalName": "ushort_0",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          },
+          {
+            "Sequence": 4,
+            "OriginalName": "byte_2",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          },
+          {
+            "Sequence": 5,
+            "OriginalName": "byte_3",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": []
+      }
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1278/d",
+      "Token": "0x06001A8C",
+      "Signature": "System.Void Class1278/d::c(Class935,System.Byte)",
+      "OriginalName": "c",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Secure-message callback rewrites this byte through TransportLayerSequenceNumber on the outer and embedded frame between secure-key helper calls. Exact setter validates four-bit range and packs transport-control bits; callback registration is on numbered TPCI messages. Owner, crypto helpers and local roles remain unresolved. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class935 class935_0",
+        "2: System.Byte byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class935_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "transportLayerSequenceNumber"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 1,
+            "OriginalName": "class935_0",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      },
+      "UnresolvedDefinitionEvidence": "Only parameter forwarding was reviewed. Method/owner behavior and its callers still need a domain name; this scoped block does not resolve the definition."
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1278/e",
+      "Token": "0x06001A8F",
+      "Signature": "System.Void Class1278/e::c(Class935,System.Byte)",
+      "OriginalName": "c",
+      "Reason": "Reviewed direct physical callee roles, every input use and incoming graph references. Secure-message callback rewrites this byte through TransportLayerSequenceNumber on the outer and embedded frame between secure-key helper calls. Exact setter validates four-bit range and packs transport-control bits; callback registration is on numbered TPCI messages. Owner, crypto helpers and local roles remain unresolved. Preserve runtime metadata, existing definition aliases, legitimate short names and all other scopes. No owner or local role follows from the forwarded parameter alone.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class935 class935_0",
+        "2: System.Byte byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class935_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "transportLayerSequenceNumber"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 1,
+            "OriginalName": "class935_0",
+            "MissingEvidence": "No reviewed named callee/storage/caller role for this input; preserve metadata and review its owning call chain."
+          }
+        ],
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "Owning expression, control flow and use sites require behavioral review; no role inferred from slot or type alone."
+          }
+        ]
+      },
+      "UnresolvedDefinitionEvidence": "Only parameter forwarding was reviewed. Method/owner behavior and its callers still need a domain name; this scoped block does not resolve the definition."
+    }
+  ],
+  "Skips": []
+}

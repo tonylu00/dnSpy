@@ -61,6 +61,7 @@ class AliasReplacementTests(unittest.TestCase):
         review.aliases = {(review.relative, self.key[2]): self.before[self.key]}
         review.selected, review.decisions, review.pending = set(), [], []
         review.delta = {'Methods': []}
+        review.prior = {'Methods': []}
         review.source = lambda token: [{'Id': f'm0001:0x{token:08X}'}]
         for expected in (None, 'stale'):
             review.selected.clear()
