@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-03T02:59:57Z",
+  "UpdatedUtc": "2026-10-03T03:31:11Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -98,7 +98,7 @@
       ]
     },
     "NextItems": [
-      { "Task": "stage successful ETS 6.3 build", "Detail": "v388 exports and builds all 64 projects with zero errors, including ETS6N. Stage identity/path-checked rebuilt copies with matching satellites, then perform authorized targeted runtime tests. Naming coverage and consolidated compatibility remain incomplete." },
+      { "Task": "validate rebuilt ETS 6.3 runtime", "Detail": "v388 builds all 64 mapped projects and stages 298 assemblies/satellites. test-mcp opens in Chinese; live save suppression revealed a legacy injected feature entry. Revocation tool tested and committed; live save_suppressed=false. A disk-persisted test-mcp duplicate opens; close/reopen passed. Continue password and broader unchanged-App scenarios. Naming and consolidated compatibility remain incomplete." },
       { "Task": "readability baseline sweep", "Detail": "patched decompiler over the whole 6.3 tree + 6.4; per-module lambdas/async/await/raw stubs/display classes into Readability.Baseline" },
       { "Task": "Falcon 8 raw stubs", "Detail": "see Readability.FalconLeftover8" },
       { "Task": "record the evidence-free remainder", "Detail": "28105 rows unresolved with the no-evidence-in-scope reason so --coverage counts them; never invent names or suffixes" },
@@ -129,6 +129,16 @@
     "NotClaimed": "Exported test source exists, but naming closure is not proof of a compiling or behavior-compatible ETS. AppliedToSource=false records the uncompleted consolidated application stage."
   },
   "Deferred": {
+    "RebuiltRuntime63": {
+      "Stage": "D:/knx_analysis/ets63-rebuilt-v388; 298 overlays. ets63-rebuilt-v388-manifest.json verifies original hashes and tree structure.",
+      "LiveCopy": "D:/knx_analysis/ets63-v388-live01; automation-stage.json, live-test-provenance.json and saving-feature-revocation.json record separate instrumentation/revocation overlays.",
+      "Tools": "VirtualDongle 566a79a fixes automation CLI dispatch; 4b0ed1c adds --disable-extended-logging. Portable executed-initializer regression passes, including idempotence and unsafe-control-flow rejection.",
+      "Observed": "Chinese dashboard and explicit --openProject test-mcp succeed. Installed MCP App 4.15 initializes unchanged, but has no daemon project relay registration. Full SDK/App compatibility remains unproven.",
+      "Save": "Live bridge reported save_suppressed=true despite configuration deny and isolated IsLicensed=false. Legacy optional license array ignored the deny. Tool removes only that entry in the live copy; fresh ETS bridge reports save_suppressed=false. A new test-mcp duplicate is present on disk and opens without error; close and reopen passed with is_open=true, is_broken=false and save_suppressed=false. Evidence: perf-now/ets63-v388-live-report.json. Test ETS exited normally; 15 profile files restored against checkpoint hashes.",
+      "OtherProjectFailure": "Initial auto-open selected saved project test (P-01C0), not test-mcp; tag:livingRoom ID parse failed, then null references and emergency quit. Compare original 6.3 before attributing it to restoration.",
+      "Profile": "First run wrote shared user.settings and Default.workspace; no pre-run backup existed. Subsequent run backed up settings/workspaces and restored them after exit. Use explicit test-mcp and preserve profile checkpoints; original binaries unchanged.",
+      "Evidence": "perf-now/ets63-v388-live01-project-error.json; perf-now/ets63-v388-live02-profile-before; current ETS log from 2026-10-03. Password and full unchanged-App tests pending; duplicate persistence/close/reopen passed."
+    },
     "SourceExport": {
       "Map": "names63-staged-v381.xml = v380 minus the two rows that collided in the source export (CvNext ConverterException::b -> get_Data; HawkNET Interface24`2 -> IIoTTaskState). check-map PASS, 0 errors.",
       "Scope": "Only the 64 modules the map covers are exported; third-party assemblies (DevExpress, Telerik, System.Reactive, System.Text.Json, HtmlAgilityPack, ...) stay untouched as binaries and are referenced, not decompiled - per the 2026-09-25 instruction to use the original packages.",
@@ -138,7 +148,7 @@
       "State": "2026-10-03 ets63-source-v388: fresh export of all 64 projects exits 0; 13,017 application C# files plus generated support (13,360 total). Complete Release solution build succeeds: 64 outputs, 0 errors, 15,375 warnings. Former five ViewModel alias errors fixed through checked framework facade resolution. Evidence: ets63-source-v388/solution-build.log; portable MethodReferenceResolutionRegression and SourceAliasReferencesRegression pass.",
       "Caveat": "All 64 exported projects now compile, including ETS6N and ParameterDialog. This proves source-build readiness for the mapped first-party set, not whole-tree naming closure, complete first-party inventory or runtime compatibility.",
       "Next": [
-        "Stage the successfully built v388 application in a fresh tree using identity/path-checked assembly and satellite overlays. Preserve originals and do not treat staging or startup as consolidated compatibility proof.",
+        "Staging passed for 298 overlays. Validate the password loading, close/reopen persistence and unchanged Apps after verified live save_suppressed=false; preserve settings/workspaces and original binaries.",
         "Continue whole-tree readability coverage and eight Falcon raw async stubs; naming remains evidence-led with inexpensive checks. Use autonomous KNX-ETS-MCP tests on staged copies, keeping ExtendedLogging disabled."
       ]
     },
@@ -177,6 +187,6 @@
     },
     "Phase4": "Freeze the map, export the source tree with dnSpy.Console --source-name-map <map> --public-sign (inherits the merge fixes), rebuild, overlay Stage-RecompiledTree + manifest, audit battery, verify against unchanged third-party ETS Apps.",
     "LiveEts": "Authorized by the user on 2026-10-03: autonomously launch ETS and control it through KNX-ETS-MCP for tests without asking again. Use staged output and test-mcp for mutations; preserve originals and unrelated work. Later user restrictions supersede this grant.",
-    "NotProven": "Exported source exists, but the whole solution build, consolidated rebuilt runtime compatibility and live scenarios remain unproven; original installations are unchanged."
+    "NotProven": "All 64 mapped first-party projects build, and explicit test-mcp opens in Chinese. Complete first-party inventory, naming closure, persistence, password scenarios and consolidated unchanged-App compatibility remain unproven; original binaries are unchanged."
   }
 }

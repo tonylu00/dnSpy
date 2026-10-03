@@ -92,7 +92,13 @@ precedence. Fix ETS-MCP tooling gaps when necessary for these tests.
   runtime behavior.
 - The 6.4 bulk anchor route is measured exhausted. Remaining naming is evidence-led
   per-row/cluster work, not another bulk anchor engine.
-- Consolidated rebuilt-application compatibility and live tests are not yet proven.
+- Staging succeeded for 298 rebuilt assemblies/satellites. An explicit test-mcp launch
+  reached the Chinese project window; full runtime compatibility is still unproven.
+- Live checks found an inherited ExtendedLogging license entry despite a configuration
+  deny. Tool-native revocation fixes the legacy initializer; the fresh bridge reports
+  save_suppressed=false, and a test duplicate persists across close/reopen. Password
+  and broader compatibility checks remain necessary. Preserve
+  profile snapshots as well as binary trees during launch tests.
 
 ## Definition of done and progress
 
