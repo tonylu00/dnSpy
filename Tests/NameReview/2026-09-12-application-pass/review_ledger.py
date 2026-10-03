@@ -151,6 +151,62 @@ def resolve_unresolved(previous, reviewed, mapped_name, checked_change, checked_
     return result
 
 
+def proposal_preimage(row):
+    """Bind a proposal application to the prior decision and scope inventory."""
+    return copy.deepcopy({key: row.get(key, '' if key not in ('ParameterNames', 'LocalNames') else [])
+                          for key in ('NewName', 'Reason', 'UnresolvedReason', 'ParameterNames', 'LocalNames')})
+
+
+def apply_proposal(previous, reviewed, mapped_name, checked_change, checked_name, checked_scopes=None, checked_family=None):
+    """Apply the same historical proposal only after a fresh complete native check."""
+    require_identity(previous, reviewed)
+    alias = previous.get('NewName')
+    if (not alias or previous.get('Unresolved') or mapped_name or
+            not reviewed.get('ApplyExistingProposal') or reviewed.get('NewName') != alias or
+            reviewed.get('Unresolved') or reviewed.get('UnresolvedReason') or not reviewed.get('Reason')):
+        raise ValueError('Proposal application requires an explicit unchanged, supported, unmapped proposal')
+    if reviewed.get('PreviousProposalEvidence') != proposal_preimage(previous):
+        raise ValueError('Proposal application requires the exact previous decision and scopes')
+    kind = {2: 'Type', 4: 'Field', 6: 'Method'}.get(int(reviewed['Token'], 16) >> 24)
+    if kind == 'Method' and reviewed.get('ContractFamily'):
+        validate_contract_resolution(reviewed, checked_family)
+        kind = 'ContractMethod'
+    if (not kind or not checked_change or 'Before' not in checked_change or checked_change['Before'] not in (None, '') or
+            any(checked_change.get(key) != value for key, value in (
+                ('Kind', kind), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
+                ('Requested', alias), ('Applied', alias), ('Action', None))) or checked_name != alias):
+        raise ValueError('Proposal application requires the exact fresh native addition and checked final alias')
+    needs_merge = False
+    for label, position in (('ParameterNames', 'Sequence'), ('LocalNames', 'Index')):
+        for record in (previous, reviewed):
+            positions = [entry[position] for entry in record.get(label, [])]
+            if len(positions) != len(set(positions)):
+                raise ValueError('Duplicate proposal scope position: ' + label)
+        old = {entry[position]: entry for entry in previous.get(label, [])}
+        needs_merge |= any(entry.get('NewName') and entry['NewName'] != old.get(entry[position], {}).get('NewName')
+                           for entry in reviewed.get(label, []))
+    scope_review = copy.deepcopy(reviewed)
+    scope_review['NewName'] = ''
+    result = merge_scopes(previous, scope_review, '', checked_scopes) if needs_merge else copy.deepcopy(previous)
+    for label, position, expected_key, inventory_key in (
+            ('ParameterNames', 'Sequence', 'ExpectedName', 'OriginalName'),
+            ('LocalNames', 'Index', 'ExpectedType', 'ExpectedType')):
+        for entry in result.get(label, []):
+            if not entry.get('NewName'):
+                continue
+            checked = (checked_scopes or {}).get((label, entry[position]))
+            if not checked or checked.get('NewName') != entry['NewName'] or checked.get(expected_key) != entry.get(inventory_key):
+                raise ValueError('Proposal application lost a checked scope decision: ' + label)
+    result.update(Reason=reviewed['Reason'], UnresolvedReason='', ReviewDisposition='rename',
+                  NeedsReadableName=reviewed['NeedsReadableName'], ContractFamily=reviewed.get('ContractFamily'),
+                  MappingBlocker=reviewed.get('MappingBlocker'))
+    result.setdefault('ProposalApplications', []).append(dict(Alias=alias, PreviousReason=previous.get('Reason', ''),
+                                                              Evidence=reviewed['Reason']))
+    for key in ('ApplyExistingProposal', 'PreviousProposalEvidence'):
+        result.pop(key, None)
+    return result
+
+
 def replace_method_alias(previous, reviewed, mapped_name, checked_change, checked_scopes, replacements=None):
     """Correct a method alias while retaining and checking earlier scope decisions."""
     require_identity(previous, reviewed)

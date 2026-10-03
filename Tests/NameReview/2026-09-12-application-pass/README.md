@@ -92,3 +92,17 @@ For a corrected rationale, `checkpoint_naming_block.py --review-only`
 `Reason` and `UnresolvedReason`. It preserves every naming decision and physical
 identity; native update/check must prove a byte-identical map. Arbitrary ledger
 overwrites and stale rationale preimages remain rejected.
+
+For a supported historical proposal absent from the current map, use
+`ApplyExistingProposal: true`, with `PreviousProposalEvidence` from
+`review_ledger.proposal_preimage(previous)`, then checkpoint with
+`--apply-reviewed-proposals`. The alias must remain exactly the same; physical
+identity, earlier decision/scopes, fresh native addition and final map are checked.
+Complete interface/override families and every retained scope alias are required.
+The ledger retains `ProposalApplications` history and removes operational markers.
+
+`prepare_application_property_review.py` binds reviewed field/property roles and
+coupled accessors to native getter bodies, physical graph references and complete
+native families. It checks every graph input hash, the selected first-party scope,
+exact SDK whitelist and previous decisions. It writes review/evidence JSON only;
+native update/check and the explicit checkpoint guards remain required.

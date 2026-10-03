@@ -1,9 +1,71 @@
 import copy
 import unittest
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, validate_review_only, refresh_evidence
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, validate_review_only, refresh_evidence, apply_proposal, proposal_preimage
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
+    def proposal_fixture(self):
+        old = copy.deepcopy(self.old)
+        old.update(Annotation={'kept': True}, NeedsReadableName=True)
+        reviewed = dict(old, ApplyExistingProposal=True, PreviousProposalEvidence=proposal_preimage(old),
+                        Reason='Fresh property ownership and complete physical family evidence', UnresolvedReason='')
+        change = dict(Module=old['Module'], Token=old['Token'], Kind='Method', Before=None,
+                      Requested=old['NewName'], Applied=old['NewName'])
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        return old, reviewed, change, checked
+
+    def test_proposal_application_preserves_scopes_history_and_annotations(self):
+        old, reviewed, change, checked = self.proposal_fixture()
+        reviewed.update(ParameterNames=[], LocalNames=[])
+        result = apply_proposal(old, reviewed, '', change, old['NewName'], checked)
+        for key in ('ParameterNames', 'LocalNames', 'Annotation', 'NewName'):
+            self.assertEqual(old[key], result[key])
+        self.assertEqual(old['Reason'], result['ProposalApplications'][0]['PreviousReason'])
+        self.assertNotIn('ApplyExistingProposal', result)
+        self.assertNotIn('PreviousProposalEvidence', result)
+        with self.assertRaises(ValueError): apply_proposal(result, reviewed, old['NewName'], change, old['NewName'], checked)
+
+    def test_proposal_application_rejects_stale_preimages_alias_changes_and_native_suffixes(self):
+        old, reviewed, change, checked = self.proposal_fixture()
+        for key, value in (('Mvid', 'other'), ('Module', 'CV/a.dll'), ('NewName', 'OtherAlias'),
+                           ('PreviousProposalEvidence', {}), ('ApplyExistingProposal', False), ('Unresolved', True),
+                           ('Reason', ''), ('UnresolvedReason', 'still unknown')):
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                apply_proposal(old, dict(reviewed, **{key: value}), '', change, old['NewName'], checked)
+        for key, value in (('Before', 'mapped'), ('Applied', 'HistoricalAlias2'), ('Kind', 'Field'),
+                           ('Module', 'other/a.dll'), ('Token', '0x06000002'), ('Action', 'RemoveAlias')):
+            with self.subTest(native=key), self.assertRaises(ValueError):
+                apply_proposal(old, reviewed, '', dict(change, **{key: value}), old['NewName'], checked)
+        missing = {k: v for k, v in change.items() if k != 'Before'}
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, '', missing, old['NewName'], checked)
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, '', change, 'unchecked', checked)
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, 'already-mapped', change, old['NewName'], checked)
+        old['ParameterNames'][0]['NewName'] = 'changed'
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, '', change, old['NewName'], checked)
+
+    def test_proposal_application_requires_all_scope_identities_and_rejects_duplicates(self):
+        old, reviewed, change, checked = self.proposal_fixture()
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, '', change, old['NewName'], {})
+        checked[('LocalNames', 0)]['ExpectedType'] = 'System.String'
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, '', change, old['NewName'], checked)
+        checked[('LocalNames', 0)]['ExpectedType'] = 'System.Int32'
+        reviewed['ParameterNames'].append(copy.deepcopy(reviewed['ParameterNames'][0]))
+        with self.assertRaises(ValueError): apply_proposal(old, reviewed, '', change, old['NewName'], checked)
+
+    def test_proposal_application_requires_complete_contract_family(self):
+        old, reviewed, change, proof = self.contract_resolution_fixture()
+        old.update(NewName=reviewed['NewName'], Unresolved=False, UnresolvedReason='')
+        reviewed.pop('ResolveExistingUnresolved')
+        reviewed.pop('PreviousUnresolvedEvidence')
+        reviewed.update(ApplyExistingProposal=True, PreviousProposalEvidence=proposal_preimage(old))
+        result = apply_proposal(old, reviewed, '', change, old['NewName'], checked_family=proof)
+        self.assertEqual('family-id', result['ContractFamily'])
+        self.assertIsNone(result['MappingBlocker'])
+        for group in ('ReviewedMembers', 'Changes', 'FinalRows'):
+            with self.assertRaises(ValueError):
+                apply_proposal(old, reviewed, '', change, old['NewName'], checked_family=dict(proof, **{group: proof[group][:1]}))
+
     def contract_resolution_fixture(self):
         old, reviewed, change = self.resolution_fixture()
         old['MappingBlocker'] = 'previous unresolved interface family'
