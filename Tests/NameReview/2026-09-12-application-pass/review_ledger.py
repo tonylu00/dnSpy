@@ -45,16 +45,57 @@ def replace_alias(previous, reviewed, mapped_name, checked_change):
     require_identity(previous, reviewed)
     if previous.get('Unresolved') or reviewed.get('Unresolved'):
         raise ValueError('Unresolved decisions require separate review')
-    if previous.get('NewName') != mapped_name or not reviewed.get('NewName'):
+    historical = previous.get('NewName') != mapped_name
+    if historical and (not mapped_name or reviewed.get('PreviousLedgerAlias') != previous.get('NewName') or
+                       reviewed.get('ExpectedMappedAlias') != mapped_name):
+        raise ValueError('Historical proposal correction requires exact ledger and checked-map preimages')
+    if not historical and any(k in reviewed for k in ('PreviousLedgerAlias', 'ExpectedMappedAlias')):
+        raise ValueError('Historical proposal correction annotations are stale')
+    if not reviewed.get('NewName'):
         raise ValueError('Alias replacement requires the current ledger/map decision')
     if not checked_change or checked_change['Before'] != mapped_name or checked_change['Requested'] != reviewed['NewName'] or checked_change['Applied'] != reviewed['NewName']:
         raise ValueError('Alias replacement requires the exact native-checked change')
     result = copy.deepcopy(reviewed)
+    for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias'):
+        result.pop(key, None)
+    if historical:
+        result.setdefault('LedgerAliasCorrections', []).append(dict(PreviousLedgerAlias=previous['NewName'],
+            PreviousMappedAlias=mapped_name, Alias=reviewed['NewName'], Evidence=reviewed['Reason']))
     result['Reason'] = 'Reviewed correction: ' + reviewed['Reason']
     return result
 
 
-def resolve_unresolved(previous, reviewed, mapped_name, checked_change, checked_name, checked_scopes=None):
+def validate_contract_resolution(reviewed, proof):
+    """Require the full reviewed/native/final-map family for a fresh addition."""
+    family = reviewed.get('ContractFamily')
+    if not family or not proof or proof.get('Id') != family:
+        raise ValueError('Contract resolution requires its checked complete family')
+    groups = [proof.get(k, []) for k in ('ReviewedMembers', 'Changes', 'FinalRows')]
+    keys = [{(r['Module'], r['Token']) for r in rows} for rows in groups]
+    if not keys[0] or any(len(rows) != len(keyset) for rows, keyset in zip(groups, keys)):
+        raise ValueError('Contract resolution requires unique family members')
+    if keys[0] != keys[1] or keys[0] != keys[2] or (reviewed['Module'], reviewed['Token']) not in keys[0]:
+        raise ValueError('Contract resolution cannot accept a partial family')
+    changes = {(r['Module'], r['Token']): r for r in groups[1]}
+    final = {(r['Module'], r['Token']): r for r in groups[2]}
+    for member in groups[0]:
+        key = (member['Module'], member['Token'])
+        if member.get('ContractFamily') != family or member.get('NewName') != reviewed['NewName']:
+            raise ValueError('Contract resolution requires consistent reviewed family names')
+        change, mapped = changes[key], final[key]
+        if ('Before' not in change or change['Before'] not in (None, '') or
+                any(change.get(k) != v for k, v in (
+                    ('Kind', 'ContractMethod'), ('Action', None),
+                    ('Requested', reviewed['NewName']), ('Applied', reviewed['NewName'])))):
+            raise ValueError('Contract resolution requires fresh native additions for the whole family')
+        for k, value in (('ContractFamily', family), ('NewName', reviewed['NewName']),
+                         ('Signature', member['Signature']), ('ExpectedName', member['OriginalName']),
+                         ('Mvid', member['Mvid']), ('Sha256', member['Sha256'])):
+            if mapped.get(k) != value:
+                raise ValueError('Contract resolution requires the exact checked family map: ' + k)
+
+
+def resolve_unresolved(previous, reviewed, mapped_name, checked_change, checked_name, checked_scopes=None, checked_family=None):
     """Accept fresh native proof for an explicit previously unresolved definition."""
     require_identity(previous, reviewed)
     if not previous.get('Unresolved') or previous.get('NewName') or mapped_name:
@@ -67,9 +108,13 @@ def resolve_unresolved(previous, reviewed, mapped_name, checked_change, checked_
     if reviewed.get('PreviousUnresolvedEvidence') != {key: previous.get(key, '') for key in ('Reason', 'UnresolvedReason')}:
         raise ValueError('Resolution requires the exact previous unresolved rationale')
     kind = {2: 'Type', 4: 'Field', 6: 'Method'}.get(int(reviewed['Token'], 16) >> 24)
+    native_kind = kind
+    if kind == 'Method' and reviewed.get('ContractFamily'):
+        validate_contract_resolution(reviewed, checked_family)
+        native_kind = 'ContractMethod'
     if (not kind or not checked_change or 'Before' not in checked_change or checked_change['Before'] not in (None, '') or
             any(checked_change.get(key) != value for key, value in (
-            ('Kind', kind), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
+            ('Kind', native_kind), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
             ('Requested', reviewed['NewName']), ('Applied', reviewed['NewName']), ('Action', None)))):
         raise ValueError('Resolution requires the exact native definition addition')
     if checked_name != reviewed['NewName']:
@@ -96,6 +141,9 @@ def resolve_unresolved(previous, reviewed, mapped_name, checked_change, checked_
                 raise ValueError('Resolution requires checked scoped identity: ' + label)
     result.update(NewName=reviewed['NewName'], UnresolvedReason='', NeedsReadableName=reviewed['NeedsReadableName'],
                   ReviewDisposition='rename', Reason=reviewed['Reason'])
+    if reviewed.get('ContractFamily'):
+        result['ContractFamily'] = reviewed['ContractFamily']
+        result['MappingBlocker'] = reviewed.get('MappingBlocker')
     result.setdefault('UnresolvedResolutions', []).append(dict(Alias=reviewed['NewName'],
         PreviousReason=previous.get('Reason', ''), PreviousUnresolvedReason=previous.get('UnresolvedReason', ''), Evidence=reviewed['Reason']))
     for key in ('ResolveExistingUnresolved', 'PreviousUnresolvedEvidence'):
@@ -112,7 +160,7 @@ def replace_method_alias(previous, reviewed, mapped_name, checked_change, checke
     # The generic guard checks current alias, physical identity and exact native
     # before/requested/applied values. Its fresh-row result must not replace the
     # method's historical scope inventory or annotations.
-    replace_alias(previous, reviewed, mapped_name, checked_change)
+    checked_replacement = replace_alias(previous, reviewed, mapped_name, checked_change)
     needs_merge = False
     for label, position in (('ParameterNames', 'Sequence'), ('LocalNames', 'Index')):
         for record in (previous, reviewed):
@@ -136,6 +184,8 @@ def replace_method_alias(previous, reviewed, mapped_name, checked_change, checke
             if not checked or checked.get('NewName') != entry['NewName'] or checked.get(expected_key) != entry.get(inventory_key):
                 raise ValueError('Method correction lost a checked scope decision: ' + label)
     result['NewName'] = reviewed['NewName']
+    if previous.get('NewName') != mapped_name:
+        result.setdefault('LedgerAliasCorrections', []).append(checked_replacement['LedgerAliasCorrections'][-1])
     result['Reason'] = (result.get('Reason') or '') + '\nReviewed method correction: ' + reviewed['Reason']
     return result
 

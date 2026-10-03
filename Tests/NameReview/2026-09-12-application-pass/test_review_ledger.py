@@ -4,6 +4,49 @@ from review_ledger import merge_scopes, replace_alias, replace_method_alias, rem
 
 
 class LedgerScopeMergeTests(unittest.TestCase):
+    def contract_resolution_fixture(self):
+        old, reviewed, change = self.resolution_fixture()
+        old['MappingBlocker'] = 'previous unresolved interface family'
+        reviewed.update(ContractFamily='family-id', MappingBlocker=None)
+        change['Kind'] = 'ContractMethod'
+        sibling = dict(reviewed, Token='0x06000002', Type='Interface', Signature='interface-signature')
+        changes = [change, dict(change, Token=sibling['Token'])]
+        rows = [dict(Module=r['Module'], Token=r['Token'], ContractFamily='family-id', NewName=r['NewName'],
+                     Signature=r['Signature'], ExpectedName=r['OriginalName'], Mvid=r['Mvid'], Sha256=r['Sha256'])
+                for r in (reviewed, sibling)]
+        proof = dict(Id='family-id', ReviewedMembers=[reviewed, sibling], Changes=changes, FinalRows=rows)
+        return old, reviewed, change, proof
+
+    def test_complete_contract_resolution_retains_family_history(self):
+        old, reviewed, change, proof = self.contract_resolution_fixture()
+        result = resolve_unresolved(old, reviewed, '', change, reviewed['NewName'], checked_family=proof)
+        self.assertEqual('family-id', result['ContractFamily'])
+        self.assertIsNone(result['MappingBlocker'])
+        self.assertEqual(old['Annotation'], result['Annotation'])
+        self.assertTrue(old['Unresolved'])
+        self.assertEqual(old['UnresolvedReason'], result['UnresolvedResolutions'][0]['PreviousUnresolvedReason'])
+        self.assertNotIn('ResolveExistingUnresolved', result)
+
+    def test_contract_resolution_rejects_partial_duplicate_and_wrong_physical_family(self):
+        old, reviewed, change, proof = self.contract_resolution_fixture()
+        invalid = [None, dict(proof, Id='another-family')]
+        for group in ('ReviewedMembers', 'Changes', 'FinalRows'):
+            invalid.extend([dict(proof, **{group: proof[group][:1]}),
+                            dict(proof, **{group: proof[group] + [proof[group][0]]})])
+        for group, key, value in (
+                ('ReviewedMembers', 'ContractFamily', 'other'), ('ReviewedMembers', 'NewName', 'wrong'),
+                ('Changes', 'Before', 'old-alias'), ('Changes', 'Kind', 'Method'),
+                ('Changes', 'Applied', 'GetRegisteredCount2'), ('Changes', 'Action', 'RemoveAlias'),
+                ('FinalRows', 'Module', 'CV/a.dll'), ('FinalRows', 'Mvid', 'compatibility-twin'),
+                ('FinalRows', 'Sha256', 'stale'), ('FinalRows', 'Signature', 'wrong'),
+                ('FinalRows', 'ExpectedName', 'wrong'), ('FinalRows', 'ContractFamily', 'other')):
+            bad = copy.deepcopy(proof)
+            bad[group][1][key] = value
+            invalid.append(bad)
+        for bad in invalid:
+            with self.subTest(proof=bad), self.assertRaises(ValueError):
+                resolve_unresolved(old, reviewed, '', change, reviewed['NewName'], checked_family=bad)
+
     def resolution_fixture(self, kind='Method', token='0x06000001'):
         old = dict(Module='a.dll', Token=token, Identity='a', Mvid='physical-mvid', Sha256='physical-hash',
                    Type='T', Signature='original-signature', OriginalName='a', NewName='', Unresolved=True,
@@ -152,6 +195,32 @@ class LedgerScopeMergeTests(unittest.TestCase):
         change['Applied'] = 'RefinedBehaviorName2'
         with self.assertRaises(ValueError): replace_alias(self.old, self.review, 'HistoricalAlias', change)
         with self.assertRaises(ValueError): replace_alias(self.old, self.review, 'OtherMapAlias', change)
+
+    def test_historical_proposal_correction_preserves_checked_scopes(self):
+        self.review.update(NewName='GetFeatureCount', ParameterNames=[], LocalNames=[],
+                           PreviousLedgerAlias='HistoricalAlias', ExpectedMappedAlias='HistoricalAlias2')
+        change = dict(Kind='Method', Module=self.old['Module'], Token=self.old['Token'],
+                      Before='HistoricalAlias2', Requested='GetFeatureCount', Applied='GetFeatureCount')
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        corrected = replace_method_alias(self.old, self.review, 'HistoricalAlias2', change, checked)
+        self.assertEqual(self.old['ParameterNames'], corrected['ParameterNames'])
+        self.assertEqual(self.old['LocalNames'], corrected['LocalNames'])
+        self.assertEqual('HistoricalAlias', corrected['LedgerAliasCorrections'][0]['PreviousLedgerAlias'])
+        self.assertEqual('HistoricalAlias2', corrected['LedgerAliasCorrections'][0]['PreviousMappedAlias'])
+        self.assertNotIn('PreviousLedgerAlias', corrected)
+        self.assertNotIn('ExpectedMappedAlias', corrected)
+        for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias'):
+            for value in (None, 'stale'):
+                bad = dict(self.review, **{key:value})
+                with self.assertRaises(ValueError):
+                    replace_method_alias(self.old, bad, 'HistoricalAlias2', change, checked)
+        with self.assertRaises(ValueError):
+            replace_method_alias(self.old, self.review, 'HistoricalAlias2', dict(change, Before='HistoricalAlias'), checked)
+        with self.assertRaises(ValueError):
+            replace_method_alias(self.old, self.review, 'HistoricalAlias', dict(change, Before='HistoricalAlias'), checked)
+        with self.assertRaises(ValueError):
+            replace_method_alias(self.old, self.review, 'HistoricalAlias2', change, {})
 
     def test_scope_correction_requires_exact_native_before_and_after(self):
         self.review['ParameterNames'][0]['NewName'] = 'textParameterRefId'

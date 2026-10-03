@@ -71,7 +71,19 @@ replaced_rows = 0
 refreshed_rows = 0
 removed_rows = 0
 resolved_rows = 0
-checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type', 'Method')}
+checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c['Kind'] in ('Field', 'Type', 'Method', 'ContractMethod')}
+checked_families = {}
+for method in review['Methods']:
+    family = method.get('ContractFamily')
+    if not method.get('ResolveExistingUnresolved') or not family or family in checked_families:
+        continue
+    members = [m for m in review['Methods'] if m.get('ContractFamily') == family]
+    member_keys = {(m['Module'], m['Token']) for m in members}
+    checked_families[family] = dict(Id=family, ReviewedMembers=members,
+        Changes=[c for c in update['Changes'] if c['Kind'] == 'ContractMethod' and (c['Module'], c['Token']) in member_keys],
+        FinalRows=[dict(row.attrib, Module=module.get('Path'), Mvid=module.get('Mvid'), Sha256=module.get('Sha256'))
+                   for module in root.findall('Module') for row in module.findall('Method')
+                   if row.get('ContractFamily') == family])
 scope_replacements = {}
 if args.replace_reviewed_aliases:
     for c in update['Changes']:
@@ -84,7 +96,7 @@ for kind in ('Types', 'Methods', 'Fields'):
         if row.get('ResolveExistingUnresolved'):
             assert args.resolve_reviewed_unresolved and key in keys, 'Resolution requires explicit authorization and previous ledger row'
             ledger[kind][keys[key]] = resolve_unresolved(ledger[kind][keys[key]], row, base_names.get(key, ''),
-                checked_changes.get(key), final_names.get(key, ''), checked_scopes.get(key, {}))
+                checked_changes.get(key), final_names.get(key, ''), checked_scopes.get(key, {}), checked_families.get(row.get('ContractFamily')))
             resolved_rows += 1
             continue
         if row.get('RemoveExistingAlias'):
