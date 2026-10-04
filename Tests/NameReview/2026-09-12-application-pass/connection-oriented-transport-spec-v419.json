@@ -1,0 +1,1307 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\naming-v419-falcon-types01.json",
+    "D:\\knx_analysis\\naming-v419-falcon-fields01.json",
+    "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json",
+    "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014A5",
+      "Reason": "06001910 parameter 1 stored at IL46; 06001927/28 subscribe/unsubscribe lower-layer receive handler and transport actions send through Interface58.",
+      "Disposition": "rename",
+      "NewName": "_lowerLayer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014A6",
+      "Reason": "0600191B accepted get_IndividualAddress reads this field; ConnectAsync owner body 06001949 stores its individualAddress argument at IL321. This is the connection target address.",
+      "Disposition": "rename",
+      "NewName": "_individualAddress"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014A7",
+      "Reason": "0600190F creates IFalconLogger using Falcon.KnxStack.coTL and stores at IL15; accepted GetLogger 0600190E returns it.",
+      "Disposition": "rename",
+      "NewName": "_logger"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014A8",
+      "Reason": "06001915/16 get/set this bool; setter arms Timer.KeepaliveTimeout only for active state, and ProcessAsync 0600192D logs Keepalive before processing that timer.",
+      "Disposition": "rename",
+      "NewName": "_keepaliveEnabled"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014A9",
+      "Reason": "0600190F constructs mapped StateMachine<Class737,State,Trigger,Class818> with field-get/set delegates 06001942/43, transitions and logger; 0600193E dispatches through it.",
+      "Disposition": "rename",
+      "NewName": "_stateMachine"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014AA",
+      "Reason": "06001910 initializes State.CLOSED; 06001942/43 are the state-machine get/set delegates and ProcessAsync uses this value to select transitions.",
+      "Disposition": "rename",
+      "NewName": "_state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014AB",
+      "Reason": "0600192F stores incoming SourceAddress, 0600193A stores outgoing DestinationAddress; disconnect handlers clear it, and SendAck targets this peer.",
+      "Disposition": "rename",
+      "NewName": "_connectedPeerAddress"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014AC",
+      "Reason": "0600192D IL801-807 compares incoming TransportLayerSequenceNumber with this field; 06001930 increments modulo16 after accepted receive, while 06001931 acknowledges a repeat without increment.",
+      "Disposition": "rename",
+      "NewName": "_expectedReceiveSequenceNumber"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014AD",
+      "Reason": "06001921 applies this number to outgoing connected frames; 06001935 uses it for secure TL sequence re-encryption; confirmation handler 06001936 increments modulo16.",
+      "Disposition": "rename",
+      "NewName": "_sendSequenceNumber"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014AE",
+      "Reason": "06001935 resets to zero for a new send; retransmit handler 06001937 increments at IL65; ProcessAsync compares it with 06001913 retry limit on ACK timeout.",
+      "Disposition": "rename",
+      "NewName": "_sendRetryCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014AF",
+      "Reason": "Accepted accessor 06001919 get_LastReceivedHopCount returns it; ProcessAsync 0600192D IL124 stores received message HopCount.",
+      "Disposition": "rename",
+      "NewName": "_lastReceivedHopCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B0",
+      "Reason": "06001933/34/3C store Class701.c() on disconnect; ReconnectIfNecessaryAsync body 06001955 computes lastDisconnect + minimumReconnectDelay - current time.",
+      "Disposition": "rename",
+      "NewName": "_lastDisconnectTime"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B1",
+      "Reason": "06001935 remembers the outgoing frame; 06001937 logs A9 without _lastSentFrame when null and retransmits this frame otherwise; 06001936 clears after confirmation.",
+      "Disposition": "rename",
+      "NewName": "_lastSentFrame"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B2",
+      "Reason": "Accepted DeferRequest 06001939 adds frames after Deferred request because we are in state log; ProcessAsync discards at CLOSED or processes at OPEN_IDLE.",
+      "Disposition": "rename",
+      "NewName": "_deferredRequests"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B3",
+      "Reason": "06001910 parameter3 stores this CommunicationOptions; transport actions clone it onto generated KNX messages.",
+      "Disposition": "rename",
+      "NewName": "_communicationOptions"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B4",
+      "Reason": "0600192D calls 0600192A with Class818.get_ConfirmationTime on L_Data_con; 0600192A records positive samples and 0600192B computes mean/max. Original forward-copy order is preserved.",
+      "Disposition": "rename",
+      "NewName": "_confirmationTimes"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B5",
+      "Reason": "0600190F sets 6000ms; transition actions arm Timer.ConnectionTimeout with this interval.",
+      "Disposition": "rename",
+      "NewName": "_connectionTimeout"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B6",
+      "Reason": "0600190F sets 3000ms; initial send 06001935 and retry 06001937 arm Timer.AcknowledgeTimeout using this interval.",
+      "Disposition": "rename",
+      "NewName": "_acknowledgementTimeout"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B7",
+      "Reason": "0600190F sets 5000ms; keepalive setter/send handlers arm Timer.KeepaliveTimeout with this interval.",
+      "Disposition": "rename",
+      "NewName": "_keepaliveInterval"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B8",
+      "Reason": "0600190F sets 2500ms; 06001955 IL279-299 adds it to lastDisconnectTime, subtracts current time and awaits only a positive remaining delay.",
+      "Disposition": "rename",
+      "NewName": "_minimumReconnectDelay"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014B9",
+      "Reason": "0600190F constructs StatisticsDefinition labelled ConnectionOrientedTransportLayer with seven ordered counters; constructor 06001910 uses it to create existing statistics field040014BA.",
+      "Disposition": "rename",
+      "NewName": "_statisticsDefinition"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014BB",
+      "Reason": "Public literal string value SendCount, exactly matches cctor StatisticsDefinition item0.",
+      "Disposition": "rename",
+      "NewName": "SendCountStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014BC",
+      "Reason": "Public literal string value ReceivedCount, exactly matches cctor StatisticsDefinition item1.",
+      "Disposition": "rename",
+      "NewName": "ReceivedCountStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014BD",
+      "Reason": "Public literal string value ReceiveRepetitions, exactly matches cctor StatisticsDefinition item2.",
+      "Disposition": "rename",
+      "NewName": "ReceiveRepetitionsStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014BE",
+      "Reason": "Public literal string value BadSequenceNumber, exactly matches cctor StatisticsDefinition item3.",
+      "Disposition": "rename",
+      "NewName": "BadSequenceNumberStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014BF",
+      "Reason": "Public literal string value ReceivedNak, exactly matches cctor StatisticsDefinition item4.",
+      "Disposition": "rename",
+      "NewName": "ReceivedNakStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C0",
+      "Reason": "Public literal string value AckTimeout, exactly matches cctor StatisticsDefinition item5.",
+      "Disposition": "rename",
+      "NewName": "AckTimeoutStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C1",
+      "Reason": "Public literal string value SendRepetitions, exactly matches cctor StatisticsDefinition item6.",
+      "Disposition": "rename",
+      "NewName": "SendRepetitionsStatisticName"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C9",
+      "Reason": "Call site nc/Struct606::MoveNext 06000170 IL1158-1163 loads CommunicationOptions.get_EvaluateLinkLayerConfirmationOnConnect then calls setter06001912; ProcessAsync gates connect L_Data_con handling with this flag.",
+      "Disposition": "rename",
+      "NewName": "_evaluateLinkLayerConfirmationOnConnect"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014CB",
+      "Reason": "06001913/14 read/write this byte; ProcessAsync ACK timeout compares retryCount with this limit; 060001A0 temporarily sets zero and restores saved value in finally.",
+      "Disposition": "rename",
+      "NewName": "_sendRetryLimit"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014CC",
+      "Reason": "06001917/18 read/write byte; BeginDisconnect and outgoing connect/ack builders pass getter to Class818.set_HopCount; caller06000170 applies nc.r() value.",
+      "Disposition": "rename",
+      "NewName": "_hopCount"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014CD",
+      "Reason": "0600190F constructs112 typed StateTransition entries and stores this array at IL2970; same array passed to StateMachine constructor.",
+      "Disposition": "rename",
+      "NewName": "_transitions"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C2",
+      "Reason": "Unresolved: private Int32 literal value 0 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C3",
+      "Reason": "Unresolved: private Int32 literal value 1 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C4",
+      "Reason": "Unresolved: private Int32 literal value 2 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C5",
+      "Reason": "Unresolved: private Int32 literal value 3 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C6",
+      "Reason": "Unresolved: private Int32 literal value 4 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C7",
+      "Reason": "Unresolved: private Int32 literal value 5 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014C8",
+      "Reason": "Unresolved: private Int32 literal value 6 agrees with a StatisticsDefinition slot but has no retained field reference in the inspected type/descendant bodies. Constants are inlined; missing a unique declaration-to-counter identity binding. Value/order alone does not prove a source name.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014CA",
+      "Reason": "Unresolved: public Byte literal3 has no retained field reference in inspected type/descendant bodies. Both default configurable retry count and fixed NAK retry threshold use3; cannot uniquely bind this declaration to either role.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014FC",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: dispatch and suspension state stores. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014FD",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: AsyncTaskMethodBuilder<bool> Start/SetResult/SetException. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "builder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014FE",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: kickoff stores this; body reads Class737. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "transportLayer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040014FF",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: kickoff parameter1 capture, outgoing connect target. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "individualAddress"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001500",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: kickoff parameter2 capture passed into listener wait. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "cancellationToken"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001501",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: Class1253 constructed from transport layer, wait registration and IDisposable cleanup. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "listener"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001502",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Storage role: ConfiguredTaskAwaiter<bool> on listener connect confirmation wait, resume GetResult. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "connectAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001504",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Storage role: dispatch and suspension state stores. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001505",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Storage role: AsyncTaskMethodBuilder Start/SetResult/SetException. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "builder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001506",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Storage role: kickoff stores this; body reads Class737. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "transportLayer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001507",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Storage role: Class1253 wait registration and IDisposable cleanup. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "listener"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001508",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Storage role: bool listener disconnect confirmation wait; GetResult discarded before200ms delay. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "disconnectAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001509",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Storage role: Task.Delay(200) non-generic awaiter, resume GetResult. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "delayAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400150B",
+      "Reason": "Native owner Interface30.get_AdditionalSources06001925; trusted IteratorStateMachineAttribute; ctor0600194D and iterator body0600194F. Storage role: ctor initialState, iterator dispatch and0/1/-1 transitions. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400150C",
+      "Reason": "Native owner Interface30.get_AdditionalSources06001925; trusted IteratorStateMachineAttribute; ctor0600194D and iterator body0600194F. Storage role: iterator yields lower-layer Interface30 diagnostic source and both Current accessors read it. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "current"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400150D",
+      "Reason": "Native owner Interface30.get_AdditionalSources06001925; trusted IteratorStateMachineAttribute; ctor0600194D and iterator body0600194F. Storage role: ctor Environment.CurrentManagedThreadId and enumerator reuse check. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "initialThreadId"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400150E",
+      "Reason": "Native owner Interface30.get_AdditionalSources06001925; trusted IteratorStateMachineAttribute; ctor0600194D and iterator body0600194F. Storage role: kickoff captures this; iterator accesses lowerLayer. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "transportLayer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001510",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Storage role: dispatch and suspension state stores. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001511",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Storage role: AsyncTaskMethodBuilder<bool> Start/SetResult/SetException. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "builder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001512",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Storage role: kickoff stores this; body reads Class737. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "transportLayer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001513",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Storage role: kickoff parameter1 capture passed into Task.Delay and ConnectAsync. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "cancellationToken"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001514",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Storage role: Task.Delay(reconnectDelay,cancellationToken) non-generic awaiter. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "delayAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001515",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Storage role: ConnectAsync result<bool> awaiter and resume GetResult. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "connectAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001517",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: dispatch and suspension state stores. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001518",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: AsyncTaskMethodBuilder Start/SetResult/SetException. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "builder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001519",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: kickoff stores this; body reads Class737. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "transportLayer"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400151A",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: kickoff parameter2 capture passed into listener wait. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "cancellationToken"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400151B",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: kickoff parameter1 capture included in T_Data_req item. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "message"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400151C",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: Class1253 wait registration and IDisposable cleanup. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "listener"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400151D",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Storage role: listener bool confirmation wait; suspended/resumed GetResult. Source merging and reconstructed owner aliases remain subject to consolidated verification.",
+      "Disposition": "rename",
+      "NewName": "acknowledgementAwaiter"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0200046D",
+      "Reason": "Unresolved source reconstruction: native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Exact compiler type spelling and source-owner merge are not proven by structural ownership alone; retain original generated type and do not invent a semantic implementation type.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0200046E",
+      "Reason": "Unresolved source reconstruction: native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Exact compiler type spelling and source-owner merge are not proven by structural ownership alone; retain original generated type and do not invent a semantic implementation type.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0200046F",
+      "Reason": "Unresolved source reconstruction: native owner Interface30.get_AdditionalSources06001925; trusted IteratorStateMachineAttribute; ctor0600194D and iterator body0600194F. Exact compiler type spelling and source-owner merge are not proven by structural ownership alone; retain original generated type and do not invent a semantic implementation type.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000470",
+      "Reason": "Unresolved source reconstruction: native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Exact compiler type spelling and source-owner merge are not proven by structural ownership alone; retain original generated type and do not invent a semantic implementation type.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000471",
+      "Reason": "Unresolved source reconstruction: native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Exact compiler type spelling and source-owner merge are not proven by structural ownership alone; retain original generated type and do not invent a semantic implementation type.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001911",
+      "Reason": "Reads040014C9; 06000170 setter call follows exact CommunicationOptions.get_EvaluateLinkLayerConfirmationOnConnect. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "GetEvaluateLinkLayerConfirmationOnConnect",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001912",
+      "Reason": "Stores040014C9; caller06000170 IL1158-1163 provides the named CommunicationOptions setting. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "SetEvaluateLinkLayerConfirmationOnConnect",
+      "ParameterNames": {
+        "1": "enabled"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001913",
+      "Reason": "Reads040014CB used as configurable ACK retry limit in ProcessAsync; caller060001A0 saves/restores it. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "GetSendRetryLimit",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001914",
+      "Reason": "Stores040014CB; caller060001A0 temporarily disables retries and restores saved limit in finally. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "SetSendRetryLimit",
+      "ParameterNames": {
+        "1": "retryLimit"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001915",
+      "Reason": "Reads040014A8 checked before Timer.KeepaliveTimeout scheduling. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "GetKeepaliveEnabled",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001916",
+      "Reason": "Stores040014A8 and arms keepalive timer when enabling for non-CLOSED state. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int32, 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "SetKeepaliveEnabled",
+      "ParameterNames": {
+        "1": "enabled"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001917",
+      "Reason": "Reads040014CC; outgoing messages feed result into Class818.set_HopCount. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "GetHopCount",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001918",
+      "Reason": "Stores040014CC; caller06000170 configures hop count and messages propagate it. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "SetHopCount",
+      "ParameterNames": {
+        "1": "hopCount"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600191A",
+      "Reason": "Returns State>0: OPEN_IDLE, OPEN_WAIT and CONNECTING count active; CLOSED does not. This does not assert a completed connection. Native metadata has no property accessor owner; ordinary method alias only, runtime SpecialName/metadata restoration retained. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "IsConnectionActive",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001910",
+      "Reason": "Constructor assignments at IL46/60 store lowerLayer/communicationOptions; base ctor IL39 receives IDiagEventSink. Preserve .ctor identity.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "lowerLayer",
+        "2": "diagEventSink",
+        "3": "communicationOptions"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600191C",
+      "Reason": "Preserve accepted ConnectAsync. Kickoff captures individualAddress/cancellationToken into exact ownerClass737/a and builder.Start receives local0. Unresolved local positions: 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "individualAddress",
+        "2": "cancellationToken"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600191E",
+      "Reason": "Preserve accepted DisconnectAsync. Kickoff local0 is exact Class737/b passed byref to builder.Start. Unresolved local positions: 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "stateMachine"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600191F",
+      "Reason": "Preserve accepted SendAndAwaitAckAsync. Kickoff captures message/cancellationToken into Class737/e and passes local0 to builder.Start. Unresolved local positions: 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "message",
+        "2": "cancellationToken"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001920",
+      "Reason": "Preserve accepted ReconnectIfNecessaryAsync CLR family. Only scoped aliases: captured cancellationToken and exact Class737/d builder.Start local0. Unresolved local positions: 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "cancellationToken"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001929",
+      "Reason": "Exact ldftn subscription/unsubscription in StartingAsync06001927/Completed06001928; callback forwards EventArgs5 item to the protocol-layer queue. Preserve meaningful sender spelling. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "OnLowerLayerReceived",
+      "ParameterNames": {
+        "2": "eventArgs"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600192A",
+      "Reason": "Only call from ProcessAsync L_Data_con handling passes Class818.get_ConfirmationTime. Positive sample stored at index0 after original forward-copy loop; no loop behavior change. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "RecordConfirmationTime",
+      "ParameterNames": {
+        "1": "confirmationTime"
+      },
+      "LocalNames": {
+        "0": "index"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600192B",
+      "Reason": "Loops040014B4, counts/sums/maxes positive samples and returns tuple(total/sampleCount or0, maximum). Locals0/1/2/3/4 follow exact arithmetic and array indices. Unresolved local positions: 5:System.Int32, 6:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "GetConfirmationTimeStatistics",
+      "LocalNames": {
+        "0": "sampleCount",
+        "1": "maximum",
+        "2": "total",
+        "3": "index",
+        "4": "confirmationTime"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001926",
+      "Reason": "Preserve accepted CanHandle. Input casts to Class750 then Class818; local3 combines SourceAddress on indication and DestinationAddress on confirmation, compared with connected peer snapshot; local0 is returned acceptance predicate. Unresolved local positions: 5:System.Int32, 6:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "item"
+      },
+      "LocalNames": {
+        "0": "canHandle",
+        "1": "busMessageItem",
+        "2": "message",
+        "3": "remoteAddress",
+        "4": "peerAddressSnapshot"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600192D",
+      "Reason": "Preserve accepted ProcessAsync family. Native casts/local writes identify Class750 item, Class818 message, messageCode/TPCI, received SourceAddress, connected peer snapshot, Timer event and deferred-request foreach frame. Unresolved local positions: 8:System.Int32, 9:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "item"
+      },
+      "LocalNames": {
+        "0": "busMessageItem",
+        "1": "message",
+        "2": "messageCode",
+        "3": "transportControl",
+        "4": "senderAddress",
+        "5": "peerAddressSnapshot",
+        "6": "timerEvent",
+        "7": "deferredRequest"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600192F",
+      "Reason": "Incoming connect stores SourceAddress peer and resets both sequence counters. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 0:System.Int32, 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001930",
+      "Reason": "Existing SendAck builds acknowledgmentMessage; local1 snapshots nullable peer for target selection, local2 holds disposable statistics transaction. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "1": "peerAddressSnapshot",
+        "2": "statisticsUpdate"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001931",
+      "Reason": "Existing SendAckForMessageSequence acknowledges incoming sequence without changing expectedReceiveSequenceNumber; local1 peer snapshot and local2 statistics transaction. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "1": "peerAddressSnapshot",
+        "2": "statisticsUpdate"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001932",
+      "Reason": "Existing SendNak builds acknowledgmentMessage; local1 peer snapshot and local2 statistics transaction. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "1": "peerAddressSnapshot",
+        "2": "statisticsUpdate"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001933",
+      "Reason": "Existing HandleConnectionClosed casts lowerLayer to mapped LinkLayer and clears connected peer/timers. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "linkLayer"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001934",
+      "Reason": "Existing HandleDisconnectRequest builds L_Data_req Class822 in local0 and T_Disconnect_ind Class822 in local1; local2 snapshots peer. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "disconnectRequest",
+        "1": "disconnectIndication",
+        "2": "peerAddressSnapshot"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001935",
+      "Reason": "Existing HandleTlSequenceNumberReEncryption casts Class935 secure message into local0, compares TL sequence and invokes its re-encryption callback. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "secureMessage"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001936",
+      "Reason": "Existing HandleConfirmation disposable statistics transaction in local0; increments send sequence modulo16 and clears last sent frame. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "statisticsUpdate"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001937",
+      "Reason": "Existing HandleAcknowledged retransmits lastSentFrame and increments send retry count; local0 disposable statistics transaction. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "statisticsUpdate"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001939",
+      "Reason": "Existing DeferRequest logs current state and appends input message to deferredRequests. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600193A",
+      "Reason": "Existing HandleSendDataRequest stores outgoing message DestinationAddress as peer and passes message to lowerLayer. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 0:System.Int32, 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600193B",
+      "Reason": "Existing HandleConnectConfirmed builds Class821 with T_Connect_con134 in local0 and delivers to parent. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "connectConfirmation"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600193C",
+      "Reason": "Existing HandleDisconnectConfirmed builds L_Data_req and T_Disconnect_ind messages; local2 snapshots nullable peer. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "disconnectRequest",
+        "1": "disconnectIndication",
+        "2": "peerAddressSnapshot"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001938",
+      "Reason": "State transition rejection builds Class822 disconnect to incoming SourceAddress, L_Data_req17, cloned options/HopCount then sends to lowerLayer. Unresolved local positions: 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "RejectConnectRequest",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "message"
+      },
+      "LocalNames": {
+        "0": "disconnectMessage"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600193D",
+      "Reason": "Builds Class822 T_Disconnect_con136 addressed to connected peer or individualAddress fallback, delivers to parent and cancels all three timers. Unresolved local positions: 2:System.Int32, 3:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "ReportDisconnectConfirmation",
+      "ParameterNames": {
+        "1": "transportLayer"
+      },
+      "LocalNames": {
+        "0": "disconnectConfirmation",
+        "1": "peerAddressSnapshot"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600193E",
+      "Reason": "Preserve accepted ProcessEvent. Passes this/Trigger/input frame directly to StateMachine.a; positional parameters follow typed transition contract. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "trigger",
+        "2": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001922",
+      "Reason": "Unresolved: explicit diagnostic accessor has accessor-operator-or-runtime-special-name blocker. Family has13 members, including unnamed ownerless variants. Missing canonical diagnostic property owner/name proof; do not invent property metadata or rename one family member. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "unresolved",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001908",
+      "Reason": "Complete native family68901FB97DF45C80203F72B9F3A37977EFE57428B1E19D9405FCA830DC3E4D29: Interface61 outgoing frame adjustment, Class7380600197E sets message individual address from BusInterfaceConfiguration, Class73706001921 sets connected frame send sequence and forwards to lower-layer Interface61, Class73606001908 forwards and Class740060019E3 is no-op. Same physical Falcon identity and all5 members reviewed together. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "PrepareOutgoingFrame",
+      "ParameterNames": {
+        "1": "message"
+      },
+      "LocalNames": {
+        "0": "framePreparer"
+      },
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600190D",
+      "Reason": "Complete native family68901FB97DF45C80203F72B9F3A37977EFE57428B1E19D9405FCA830DC3E4D29: Interface61 outgoing frame adjustment, Class7380600197E sets message individual address from BusInterfaceConfiguration, Class73706001921 sets connected frame send sequence and forwards to lower-layer Interface61, Class73606001908 forwards and Class740060019E3 is no-op. Same physical Falcon identity and all5 members reviewed together.",
+      "Disposition": "rename",
+      "NewName": "PrepareOutgoingFrame",
+      "ParameterNames": {
+        "1": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001921",
+      "Reason": "Complete native family68901FB97DF45C80203F72B9F3A37977EFE57428B1E19D9405FCA830DC3E4D29: Interface61 outgoing frame adjustment, Class7380600197E sets message individual address from BusInterfaceConfiguration, Class73706001921 sets connected frame send sequence and forwards to lower-layer Interface61, Class73606001908 forwards and Class740060019E3 is no-op. Same physical Falcon identity and all5 members reviewed together. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "PrepareOutgoingFrame",
+      "ParameterNames": {
+        "1": "message"
+      },
+      "LocalNames": {
+        "0": "framePreparer"
+      },
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600197E",
+      "Reason": "Complete native family68901FB97DF45C80203F72B9F3A37977EFE57428B1E19D9405FCA830DC3E4D29: Interface61 outgoing frame adjustment, Class7380600197E sets message individual address from BusInterfaceConfiguration, Class73706001921 sets connected frame send sequence and forwards to lower-layer Interface61, Class73606001908 forwards and Class740060019E3 is no-op. Same physical Falcon identity and all5 members reviewed together. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "PrepareOutgoingFrame",
+      "ParameterNames": {
+        "1": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060019E3",
+      "Reason": "Complete native family68901FB97DF45C80203F72B9F3A37977EFE57428B1E19D9405FCA830DC3E4D29: Interface61 outgoing frame adjustment, Class7380600197E sets message individual address from BusInterfaceConfiguration, Class73706001921 sets connected frame send sequence and forwards to lower-layer Interface61, Class73606001908 forwards and Class740060019E3 is no-op. Same physical Falcon identity and all5 members reviewed together. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "PrepareOutgoingFrame",
+      "ParameterNames": {
+        "1": "message"
+      },
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001903",
+      "Reason": "Complete native familyAC71DC48247670B54D5A7D08A50D427C6D8C753C8F3CF8083B2EB17415885712: Interface60 predicate, Class7370600192C obtains mean/max confirmation times from0600192B and MediumType from lower-layer BusInterfaceFeatures. Medium0: max>1000 or mean>500; Medium2 and others: max>3000 or mean>2000. Class73606001903 and Class740060019DC return false. All4 physical members reviewed together. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "HasSlowConfirmations",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600190C",
+      "Reason": "Complete native familyAC71DC48247670B54D5A7D08A50D427C6D8C753C8F3CF8083B2EB17415885712: Interface60 predicate, Class7370600192C obtains mean/max confirmation times from0600192B and MediumType from lower-layer BusInterfaceFeatures. Medium0: max>1000 or mean>500; Medium2 and others: max>3000 or mean>2000. Class73606001903 and Class740060019DC return false. All4 physical members reviewed together.",
+      "Disposition": "rename",
+      "NewName": "HasSlowConfirmations",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600192C",
+      "Reason": "Complete native familyAC71DC48247670B54D5A7D08A50D427C6D8C753C8F3CF8083B2EB17415885712: Interface60 predicate, Class7370600192C obtains mean/max confirmation times from0600192B and MediumType from lower-layer BusInterfaceFeatures. Medium0: max>1000 or mean>500; Medium2 and others: max>3000 or mean>2000. Class73606001903 and Class740060019DC return false. All4 physical members reviewed together. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "HasSlowConfirmations",
+      "LocalNames": {
+        "0": "averageConfirmationTime",
+        "1": "maximumConfirmationTime",
+        "2": "mediumType"
+      },
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060019DC",
+      "Reason": "Complete native familyAC71DC48247670B54D5A7D08A50D427C6D8C753C8F3CF8083B2EB17415885712: Interface60 predicate, Class7370600192C obtains mean/max confirmation times from0600192B and MediumType from lower-layer BusInterfaceFeatures. Medium0: max>1000 or mean>500; Medium2 and others: max>3000 or mean>2000. Class73606001903 and Class740060019DC return false. All4 physical members reviewed together. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "NewName": "HasSlowConfirmations",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001942",
+      "Reason": "Compiler-generated cctor state reader delegate:0600190F constructs Func<Class737,State>; body loads parameter1 state field at IL1. Keep generated method spelling; no semantic lambda rename. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001943",
+      "Reason": "Compiler-generated cctor state writer delegate:0600190F constructs Action<Class737,State>; body stores parameter2 state into parameter1 field at IL2. Keep generated method spelling. Unresolved local positions: 0:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transportLayer",
+        "2": "state"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001949",
+      "Reason": "Native owner ConnectAsync0600191C; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001949. Scope-only managed body; CLR method/family spelling unchanged. local2 bool from connect GetResult flows to builder.SetResult; awaiter/awaitable locals match exact protocol; exception local5 passed into SetException. No source reconstruction/export/build claimed. Unresolved local positions: 6:System.Int32, 7:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "cachedState",
+        "1": "transportLayer",
+        "2": "connected",
+        "3": "connectAwaiter",
+        "4": "connectAwaitable",
+        "5": "error"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600194B",
+      "Reason": "Native owner DisconnectAsync0600191E; trusted AsyncStateMachineAttribute and exact builder.Start at IL37; body0600194B. Scope-only managed body; CLR method/family spelling unchanged. local2 is Class822 T_Disconnect_req68; listener GetResult is discarded, then Task.Delay(200) is awaited; exception local7 passed into SetException. No source reconstruction/export/build claimed. Unresolved local positions: 8:System.Int32, 9:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "cachedState",
+        "1": "transportLayer",
+        "2": "disconnectMessage",
+        "3": "disconnectAwaiter",
+        "4": "disconnectAwaitable",
+        "5": "delayAwaiter",
+        "6": "delayAwaitable",
+        "7": "error"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600194F",
+      "Reason": "Native owner Interface30.get_AdditionalSources06001925; trusted IteratorStateMachineAttribute; ctor0600194D and iterator body0600194F. Scope-only managed body; CLR method/family spelling unchanged. local0 dispatch state, local1 captured owner; local2 lowerLayer cast to Interface30, yields through current field. No source reconstruction/export/build claimed. Unresolved local positions: 3:System.Int32, 4:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "cachedState",
+        "1": "transportLayer",
+        "2": "diagnosticSource"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001955",
+      "Reason": "Native owner ReconnectIfNecessaryAsync06001920; trusted AsyncStateMachineAttribute and exact builder.Start at IL45; body06001955. Scope-only managed body; CLR method/family spelling unchanged. local3 lastDisconnect + minimumDelay - now with positive guard; delay and connect await protocols separately traced; local2 ConnectAsync result passed to builder.SetResult. No source reconstruction/export/build claimed. Unresolved local positions: 9:System.Int32, 10:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "cachedState",
+        "1": "transportLayer",
+        "2": "connected",
+        "3": "reconnectDelay",
+        "4": "delayAwaiter",
+        "5": "delayAwaitable",
+        "6": "connectAwaiter",
+        "7": "connectAwaitable",
+        "8": "error"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001957",
+      "Reason": "Native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Scope-only managed body; CLR method/family spelling unchanged. local2/3 listener bool acknowledgement wait GetAwaiter/GetResult; result discarded, local4 exception to builder.SetException. No source reconstruction/export/build claimed. Unresolved local positions: 5:System.Int32, 6:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "cachedState",
+        "1": "transportLayer",
+        "2": "acknowledgementAwaiter",
+        "3": "acknowledgementAwaitable",
+        "4": "error"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600194D",
+      "Reason": "Preserve iterator .ctor identity; parameter1 stored to dispatch state at IL8, Environment.CurrentManagedThreadId stored separately at IL19.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "initialState"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    }
+  ]
+}
