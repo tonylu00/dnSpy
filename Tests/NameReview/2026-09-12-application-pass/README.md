@@ -25,6 +25,16 @@ What lives here:
 
 Rules:
 
+- `managed-body-scope-verification-v418.json` pins the protected managed-body
+  scope fix, explicit-method parameter restoration and awaited-result source
+  identity transfer. Current validated tools live on isolated
+  `tonycloud/protected-body-scopes` branches (paths and commits in that proof).
+  Integrate them without overwriting the parallel primary-checkout changes.
+  Scope-only aliases preserve method names and families; the SDK whitelist and
+  physical token/type/name/hash/MVID guards still apply. The v418 lexical worklist
+  reuses exact old-tool inventory flags and rejoins the current map/ledger; the
+  changed Falcon scope eligibility has a fresh new-tool inventory and preflight.
+
 - One block = one evidence-backed review and inexpensive map/reference checks.
   `checkpoint_naming_block.py --review-only` also records explicit preservation or
   unresolved decisions when native update/check reports prove the map is byte-identical.
