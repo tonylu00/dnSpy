@@ -20,6 +20,8 @@ What lives here:
 - `generated-source-scope-verification.json` — native whole-scope observation audit
   and read-only structural candidate joins, with no naming retirement verdict
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
+- `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
+  synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
 
 Rules:
 
