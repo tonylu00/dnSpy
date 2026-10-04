@@ -224,3 +224,16 @@ The summary records both the full retained-row count and selected scope; missing
 or malformed filters fail before output. A token can select multiple physical
 modules, whose identities remain distinct. Filtered witnesses do not change
 whole-scope coverage or retire candidates.
+
+`Tests/Invoke-ReferenceAwaitRegression.ps1` exports and rebuilds typed and
+object-backed reference awaiters with one and four workers, comparing 492
+original behavior cases and 92 identity/receiver/resume guards. The native
+matcher preserves assembly/type identity and accepts only compiler resume
+bookkeeping; foreign receivers, casts, fields and side effects remain rejected.
+`Tests/Invoke-ArchiveMetricsAwaitBehaviorProbe.ps1` compiles one caller against
+original ETS contracts and runs its real public archive collector against each
+physical module. Its 336 Rx cases record all loaded assembly identities, paths
+and hashes, require rebuilt ViewModel/Common/ObjectModel companions in the
+validated run, and retain raw traces. Disposal may race a continuation on another
+thread, so the stable comparison checks its exact count without imposing that
+interthread order. These focused checks do not establish complete ETS/App startup.
