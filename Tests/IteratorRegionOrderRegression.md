@@ -1,13 +1,14 @@
 # Iterator exception regions after block permutation
 
-The native Microsoft iterator converter first tries its existing reconstruction.
-If that fails on a flat body with proven Dispose/finally contracts, it retries
-after ordering the basic blocks of the actual control-flow graph. Fall-through
+The native Microsoft iterator converter orders a flat body with proven
+Dispose/finally contracts before reconstructing its lexical exception regions.
+A physically earlier exhaustion block can otherwise produce an empty finally
+region without triggering a conversion failure. Fall-through
 edges become explicit. A yielded state's proven resume target is an additional
 ordering edge; it does not replace any real branch. Dominators and natural loops
 keep complete loop bodies before cleanup, independent of branch polarity.
 
-The retry accepts at most 1,024 blocks, supports only locally proven constant
+The ordering accepts at most 1,024 blocks, supports only locally proven constant
 yield-state assignments, and retains unreachable blocks. It keeps the existing
 exception-region branch and residual state-read guards. Unknown targets, state
 transitions, nested IL regions or unsupported graphs retain the explicit state
