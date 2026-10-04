@@ -63,6 +63,12 @@ preservation and unresolved decisions; unresolved rows cannot carry aliases.
 It writes review JSON only. Run `python test_physical_review.py` for its guards.
 Native `--update-map` and `--check-map` remain required before checkpointing.
 
+`verify_native_library_lifetime.py` reproduces a prepared physical review plus
+its explicit scope annotations and compares the native-checked maps. It verifies
+that every prior alias, scope and module binding survives, distinguishes new
+aliases from repeated accepted requests, and checks input/report hashes. This
+read-only verification writes evidence JSON; it does not modify ETS artifacts.
+
 Native coverage validates current physical identities and scoped metadata.
 For legacy missing method owners or field signatures stored in `Type`, use native
 `--normalize-review-owners <review> <fresh-review> <fresh-report>` before coverage.
