@@ -261989,7 +261989,7 @@
    "Token": "0x06001ADE",
    "Signature": "System.Byte[] Class1291::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing GeneratePrivateKey allocates32 bytes from exact RNG field; first byte&248, last&127|64 clamps scalar. Existing alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -261999,7 +261999,7 @@
     {
      "Index": 0,
      "ExpectedType": "System.Byte[]",
-     "NewName": ""
+     "NewName": "privateKey"
     },
     {
      "Index": 1,
@@ -262009,7 +262009,24 @@
    ],
    "NewName": "GeneratePrivateKey",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing GeneratePrivateKey allocates32 bytes from exact RNG field; first byte&248, last&127|64 clamps scalar. Existing alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -262020,7 +262037,7 @@
    "Token": "0x06001ADF",
    "Signature": "System.Byte[] Class1291::b(System.Byte[])",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing GeneratePublicKey passes privateKey and initialized32-byte base-point array with first byte9 to ScalarMultiply; no new validation/clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -262032,7 +262049,7 @@
      "Sequence": 1,
      "OriginalName": "byte_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "privateKey"
     }
    ],
    "LocalNames": [
@@ -262044,7 +262061,24 @@
    ],
    "NewName": "GeneratePublicKey",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing GeneratePublicKey passes privateKey and initialized32-byte base-point array with first byte9 to ScalarMultiply; no new validation/clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -262055,7 +262089,7 @@
    "Token": "0x06001AE1",
    "Signature": "System.Byte[] Class1291::a(System.Byte[])",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing GetSessionKey computesSHA256(sharedSecret), disposes algorithm, resizes digest to16. Alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -262067,19 +262101,19 @@
      "Sequence": 1,
      "OriginalName": "byte_2",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "sharedSecret"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Byte[]",
-     "NewName": ""
+     "NewName": "sessionKey"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Security.Cryptography.SHA256",
-     "NewName": ""
+     "NewName": "sha256"
     },
     {
      "Index": 2,
@@ -262094,7 +262128,30 @@
    ],
    "NewName": "GetSessionKey",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing GetSessionKey computesSHA256(sharedSecret), disposes algorithm, resizes digest to16. Alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -262105,7 +262162,7 @@
    "Token": "0x06001AE3",
    "Signature": "System.Byte[] Class1291::b(System.Security.SecureString)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing user-password helper passes literal user-password.1.secure.ip.knx.org,65536 iterations,16-byte output to checked password hash helper. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -262117,7 +262174,7 @@
      "Sequence": 1,
      "OriginalName": "secureString_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "password"
     }
    ],
    "LocalNames": [
@@ -262129,7 +262186,24 @@
    ],
    "NewName": "GetUserPasswordHash",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing user-password helper passes literal user-password.1.secure.ip.knx.org,65536 iterations,16-byte output to checked password hash helper. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -262140,7 +262214,7 @@
    "Token": "0x06001AE4",
    "Signature": "System.Byte[] Class1291::a(System.Security.SecureString)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing device authentication helper passes literal device-authentication-code.1.secure.ip.knx.org,65536 iterations,16-byte output. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -262152,7 +262226,7 @@
      "Sequence": 1,
      "OriginalName": "secureString_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "authenticationCode"
     }
    ],
    "LocalNames": [
@@ -262164,7 +262238,24 @@
    ],
    "NewName": "GetDeviceAuthenticationCodeHash",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing device authentication helper passes literal device-authentication-code.1.secure.ip.knx.org,65536 iterations,16-byte output. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -262175,7 +262266,7 @@
    "Token": "0x06001AE5",
    "Signature": "System.Security.SecureString Class1291::a(System.String)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Existing StringToSecureString delegates through NetworkCredential with empty username and supplied password. Preserve null/encoding behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -262187,7 +262278,7 @@
      "Sequence": 1,
      "OriginalName": "string_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "password"
     }
    ],
    "LocalNames": [
@@ -262199,7 +262290,24 @@
    ],
    "NewName": "StringToSecureString",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Existing StringToSecureString delegates through NetworkCredential with empty username and supplied password. Preserve null/encoding behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -569752,6 +569860,1957 @@
       "ExpectedType": "System.Int16",
       "IlUses": [],
       "MissingEvidence": "Zero IL uses; retain compiler/protection storage pending export."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A99",
+   "Signature": "System.Void Class1286::smethod_0(System.Int64[],System.Int64[])",
+   "OriginalName": "smethod_0",
+   "Reason": "Ten unrolled destination[i]+=addend[i] stores; no reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "destination"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "addend"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "AddFieldElementInPlace",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A9A",
+   "Signature": "System.Void Class1286::e(System.Int64[],System.Int64[])",
+   "OriginalName": "e",
+   "Reason": "Ten stores destination[i]=minuend[i]-destination[i]; argument order is deliberately reversed. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "destination"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "minuend"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SubtractFromFieldElementInPlace",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A9B",
+   "Signature": "System.Void Class1286::b(System.Int64[],System.Int64[],System.Int64)",
+   "OriginalName": "b",
+   "Reason": "Ten coefficient products without modular reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1",
+    "3: System.Int64 long_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "input"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "long_2",
+     "HasMetadata": true,
+     "NewName": "scalar"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "MultiplyByScalar",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A9C",
+   "Signature": "System.Void Class1286::b(System.Int64[],System.Int64[],System.Int64[])",
+   "OriginalName": "b",
+   "Reason": "Nineteen convolution coefficients with doubled odd-limb products; retain Int32 input casts and Int64 products. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1",
+    "3: System.Int64[] long_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "left"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "long_2",
+     "HasMetadata": true,
+     "NewName": "right"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "MultiplyUnreduced",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A9D",
+   "Signature": "System.Void Class1286::b(System.Int64[])",
+   "OriginalName": "b",
+   "Reason": "Fold coefficients10..18 into0..8 with 16+2+1 times each high coefficient; no clearing high storage. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "coefficients"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ReduceDegree",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A9E",
+   "Signature": "System.Int64 Class1286::b(System.Int64)",
+   "OriginalName": "b",
+   "Reason": "Extract sign and add 26-bit negative rounding bias before signed >>26; truncation toward zero. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64 long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "negativeRoundingBias"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DivideByPowerOfTwo26",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001A9F",
+   "Signature": "System.Int64 Class1286::a(System.Int64)",
+   "OriginalName": "a",
+   "Reason": "Extract sign and add 25-bit negative rounding bias before signed >>25; truncation toward zero. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64 long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "negativeRoundingBias"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DivideByPowerOfTwo25",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA0",
+   "Signature": "System.Void Class1286::a(System.Int64[])",
+   "OriginalName": "a",
+   "Reason": "Propagate alternating26/25-bit carries, fold limb10 by19, clear it, then final first-limb carry. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "coefficients"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt32",
+     "NewName": "limbIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int64",
+     "NewName": "carry"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int64",
+     "NewName": "finalCarry"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ReduceCoefficients",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA1",
+   "Signature": "System.Void Class1286::d(System.Int64[],System.Int64[])",
+   "OriginalName": "d",
+   "Reason": "Copy exactly ten Int64 limbs, leaving any remaining destination storage untouched. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "destination"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "source"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "CopyFieldElement",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA2",
+   "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Int64[])",
+   "OriginalName": "a",
+   "Reason": "Allocate19 coefficients, MultiplyUnreduced, ReduceDegree, ReduceCoefficients, then CopyFieldElement. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1",
+    "3: System.Int64[] long_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "left"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "long_2",
+     "HasMetadata": true,
+     "NewName": "right"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "productCoefficients"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "MultiplyField",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA3",
+   "Signature": "System.Void Class1286::c(System.Int64[],System.Int64[])",
+   "OriginalName": "c",
+   "Reason": "Nineteen explicitly expanded square coefficients with original weights/casts. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "input"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SquareUnreduced",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA4",
+   "Signature": "System.Void Class1286::b(System.Int64[],System.Int64[])",
+   "OriginalName": "b",
+   "Reason": "Allocate19 coefficients, SquareUnreduced, ReduceDegree, ReduceCoefficients, then CopyFieldElement. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "input"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "squareCoefficients"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SquareField",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA5",
+   "Signature": "System.Int64 Class1286::a(System.Byte[],System.Int32,System.Int32,System.Int64)",
+   "OriginalName": "a",
+   "Reason": "Existing expandCoefficientFromBytes alias retained. Read four little-endian bytes, signed shift and mask one coefficient. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0",
+    "2: System.Int32 int_0",
+    "3: System.Int32 int_1",
+    "4: System.Int64 long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "input"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "byteOffset"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "rightShift"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "mask"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "expandCoefficientFromBytes",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA6",
+   "Signature": "System.Void Class1286::a(System.Int64[],System.Byte[])",
+   "OriginalName": "a",
+   "Reason": "Ten calls to checked coefficient extractor at byte offsets0/3/6/9/12/16/19/22/25/28 with alternating26/25-bit masks. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Byte[] byte_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "encodedPoint"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ExpandFieldElement",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA7",
+   "Signature": "System.Int32 Class1286::b(System.Int32,System.Int32)",
+   "OriginalName": "b",
+   "Reason": "Bitwise NOT XOR, propagate equality through left-shift ANDs16/8/4/2/1, then arithmetic >>31; return mask, not Boolean. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_0",
+    "2: System.Int32 int_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "left"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "right"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "EqualMask",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA8",
+   "Signature": "System.Int32 Class1286::a(System.Int32,System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Return bitwise complement of (left-right)>>31. Name describes bounded coefficient use; retain unchecked subtraction for arbitrary Int32 inputs. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_0",
+    "2: System.Int32 int_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "left"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "right"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GreaterThanOrEqualMask",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AA9",
+   "Signature": "System.Void Class1286::a(System.Byte[],System.Int32,System.Int32)",
+   "OriginalName": "a",
+   "Reason": "OR low byte into existing output, overwrite next three bytes from shifts8/16/24. Preserve overlap packing. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0",
+    "2: System.Int32 int_0",
+    "3: System.Int32 int_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "int_0",
+     "HasMetadata": true,
+     "NewName": "byteOffset"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "coefficient"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "WritePackedCoefficient",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AAA",
+   "Signature": "System.Void Class1286::a(System.Byte[],System.Int64[])",
+   "OriginalName": "a",
+   "Reason": "Copy ten limbs to Int32; two borrow and carry passes, conditional modulus subtraction using masks, original packed little-endian writes. No mutation of input coefficients. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0",
+    "2: System.Int64[] long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "encodedPoint"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "coefficients"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "limbIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "normalizationPass"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32[]",
+     "NewName": "normalizedCoefficients"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": "modulusSubtractionMask"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": "evenLimbSignMask"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": "evenLimbBorrow"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int32",
+     "NewName": "oddLimbSignMask"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int32",
+     "NewName": "oddLimbBorrow"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Int32",
+     "NewName": "lastLimbSignMask"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Int32",
+     "NewName": "lastLimbBorrow"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int32",
+     "NewName": "firstLimbSignMask"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Int32",
+     "NewName": "firstLimbBorrow"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Int32",
+     "NewName": "lastLimbCarry"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "System.Int32",
+     "NewName": "evenLimbCarry"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.Int32",
+     "NewName": "oddLimbCarry"
+    },
+    {
+     "Index": 15,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ContractFieldElement",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 15,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 16,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AAB",
+   "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[])",
+   "OriginalName": "a",
+   "Reason": "Ladder step computes doubled point and differential sum; mutates input X/Z into sums/differences, retains differenceX, factor121665 and original staged reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1",
+    "3: System.Int64[] long_2",
+    "4: System.Int64[] long_3",
+    "5: System.Int64[] long_4",
+    "6: System.Int64[] long_5",
+    "7: System.Int64[] long_6",
+    "8: System.Int64[] long_7",
+    "9: System.Int64[] long_8"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "doubledPointX"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "doubledPointZ"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "long_2",
+     "HasMetadata": true,
+     "NewName": "addedPointX"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "long_3",
+     "HasMetadata": true,
+     "NewName": "addedPointZ"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "long_4",
+     "HasMetadata": true,
+     "NewName": "pointX"
+    },
+    {
+     "Sequence": 6,
+     "OriginalName": "long_5",
+     "HasMetadata": true,
+     "NewName": "pointZ"
+    },
+    {
+     "Sequence": 7,
+     "OriginalName": "long_6",
+     "HasMetadata": true,
+     "NewName": "otherPointX"
+    },
+    {
+     "Sequence": 8,
+     "OriginalName": "long_7",
+     "HasMetadata": true,
+     "NewName": "otherPointZ"
+    },
+    {
+     "Sequence": 9,
+     "OriginalName": "long_8",
+     "HasMetadata": true,
+     "NewName": "differenceX"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "originalPointX"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "originalOtherPointX"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "doubleZFactor"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "pointSumSquared"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "pointDifferenceSquared"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "crossSumBuffer"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "crossDifferenceBuffer"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "crossDifferenceSquared"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "crossSumSquared"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Int32",
+     "NewName": "highCoefficientIndex"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "MontgomeryDoubleAndAdd",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 10,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 11,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AAC",
+   "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Int64)",
+   "OriginalName": "a",
+   "Reason": "Negated swapBit mask controls ten XOR swaps of Int32-cast limbs. Do not claim full Int64 or arbitrary-flag semantics. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1",
+    "3: System.Int64 long_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "left"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "right"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "long_2",
+     "HasMetadata": true,
+     "NewName": "swapBit"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt32",
+     "NewName": "limbIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": "swapMask"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "maskedDifference"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SwapFieldElementsConditionally",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AAD",
+   "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Byte[],System.Int64[])",
+   "OriginalName": "a",
+   "Reason": "Process32 scalar bytes from index31 down, eight high bits per byte. Conditional swaps surround exact double/add, then swap work buffers. Return ten-limb projective X/Z; no scalar clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1",
+    "3: System.Byte[] byte_0",
+    "4: System.Int64[] long_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "resultX"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "resultZ"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "scalar"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "long_2",
+     "HasMetadata": true,
+     "NewName": "pointX"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "initialAdjacentX"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "initialAdjacentZ"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "initialPointX"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "adjacentPointX"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "adjacentPointZ"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "multiplePointX"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "multiplePointZ"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "initialAdjacentXWork"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "initialAdjacentZWork"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "initialPointXWork"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "adjacentPointXWork"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "adjacentPointZWork"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "multiplePointXWork"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "multiplePointZWork"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.UInt32",
+     "NewName": "scalarByteIndex"
+    },
+    {
+     "Index": 15,
+     "ExpectedType": "System.Byte",
+     "NewName": "scalarByte"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "System.UInt32",
+     "NewName": "scalarBitIndex"
+    },
+    {
+     "Index": 17,
+     "ExpectedType": "System.Int64",
+     "NewName": "scalarBit"
+    },
+    {
+     "Index": 18,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 19,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "MultiplyPointProjective",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 18,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 19,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AAE",
+   "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[])",
+   "OriginalName": "a",
+   "Reason": "Exact immutable-IL bookkeeping proves addition-chain output exponent2^255-21. Retain zero behavior, multiplication/squaring sequence and loop thresholds10/20/50/100. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64[] long_0",
+    "2: System.Int64[] long_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "output"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "long_1",
+     "HasMetadata": true,
+     "NewName": "input"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power2"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power9"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power11"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power2To5Minus1"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power2To10Minus1"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power2To20Minus1"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power2To50Minus1"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "power2To100Minus1"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "powerScratch"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "alternatePowerScratch"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Int32",
+     "NewName": "squaringCount"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "InvertFieldElement",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 11,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 12,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1286",
+   "Token": "0x06001AAF",
+   "Signature": "System.Byte[] Class1286::a(System.Byte[],System.Byte[])",
+   "OriginalName": "a",
+   "Reason": "Copy first32 scalar bytes without clamping, expand point, multiply projectively, invert Z, multiply X/Z and contract32 result bytes. Preserve original length/exception/noncanonical-input behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_0",
+    "2: System.Byte[] byte_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_0",
+     "HasMetadata": true,
+     "NewName": "scalar"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "encodedPoint"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "pointX"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "resultX"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "resultZAndAffineX"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int64[]",
+     "NewName": "inverseResultZ"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "scalarCopy"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": "byteIndex"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ScalarMultiply",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 7,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1291",
+   "Token": "0x06001AE0",
+   "Signature": "System.Byte[] Class1291::a(System.Byte[],System.Byte[])",
+   "OriginalName": "a",
+   "Reason": "Wrapper directly ScalarMultiply(privateKey,peerPublicKey). Caller720/e at479 obtains shared secret then checked GetSessionKey at494; no added key validation. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte[] byte_2",
+    "2: System.Byte[] byte_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_2",
+     "HasMetadata": true,
+     "NewName": "privateKey"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "byte_3",
+     "HasMetadata": true,
+     "NewName": "peerPublicKey"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ComputeSharedSecret",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1291",
+   "Token": "0x06001AE2",
+   "Signature": "System.Byte[] Class1291::a(System.Security.SecureString,System.String,System.UInt32,System.UInt32)",
+   "OriginalName": "a",
+   "Reason": "Existing GetPbkdf2HmacSha256PasswordHash alias retained. ANSI SecureString bytes form HMAC key; salt NormalizationForm5 UTF8 plus big-endian1; XOR original iteration chain. Reject output lengths>32, preserve zero iterations/length and all disposal/clearing. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Security.SecureString secureString_0",
+    "2: System.String string_1",
+    "3: System.UInt32 uint_0",
+    "4: System.UInt32 uint_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "secureString_0",
+     "HasMetadata": true,
+     "NewName": "password"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "string_1",
+     "HasMetadata": true,
+     "NewName": "salt"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "uint_0",
+     "HasMetadata": true,
+     "NewName": "iterationCount"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "uint_1",
+     "HasMetadata": true,
+     "NewName": "derivedKeyLengthInBytes"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.IntPtr",
+     "NewName": "passwordPointer"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "passwordBytes"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Security.Cryptography.HMACSHA256",
+     "NewName": "hmacSha256"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "derivedKey"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "normalizedSaltBytes"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "iterationInput"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.UInt32",
+     "NewName": "iterationIndex"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.UInt32",
+     "NewName": "byteIndex"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetPbkdf2HmacSha256PasswordHash",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 8,
+      "ExpectedType": "System.Int32",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
+     },
+     {
+      "Index": 9,
+      "ExpectedType": "System.Int16",
+      "IlUses": [],
+      "MissingEvidence": "Zero IL uses; preserve unused compiler/protection storage without invented role."
      }
     ]
    }
@@ -958767,6 +960826,94 @@
      "OpCode": "ldsfld"
     }
    ]
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1291",
+   "Token": "0x0400164F",
+   "Signature": "System.Security.Cryptography.RandomNumberGenerator Class1291::b",
+   "OriginalName": "b",
+   "Reason": "Static readonly RNG initialized by RandomNumberGenerator.Create at1AE7:0/5 and used by GeneratePrivateKey at1ADE:8/14. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "randomNumberGenerator",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1291",
+   "Token": "0x04001650",
+   "Signature": "System.Byte[] Class1291::c",
+   "OriginalName": "c",
+   "Reason": "Static readonly32-byte array initialized with leading9 at1AE7:10..22; GeneratePublicKey at1ADF:1 passes this exact array to ScalarMultiply. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "curveBasePoint",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1291",
+   "Token": "0x0400164E",
+   "Signature": "System.Int32 Class1291::a",
+   "OriginalName": "a",
+   "Reason": "Literal I4(32) has zero physical graph references, so exact constant role is unproven despite nearby32-byte allocation. Missing metadata/caller identity evidence; do not invent a key-size name. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Literal I4(32) has zero physical graph references, so exact constant role is unproven despite nearby32-byte allocation. Missing metadata/caller identity evidence; do not invent a key-size name. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1291",
+   "Token": "0x04001651",
+   "Signature": "System.Byte[] Class1291::d",
+   "OriginalName": "d",
+   "Reason": "Readonly16-byte array initialized via private RVA helper; whole111-module graph finds one write and no reads. Missing consumer/domain evidence for original bytes; do not call it a salt, key or protocol constant. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Readonly16-byte array initialized via private RVA helper; whole111-module graph finds one write and no reads. Missing consumer/domain evidence for original bytes; do not call it a salt, key or protocol constant. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim.",
+   "ReviewDisposition": "unresolved"
   }
  ],
  "Skips": [],

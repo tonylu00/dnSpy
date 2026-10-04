@@ -1,0 +1,513 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A99",
+      "NewName": "AddFieldElementInPlace",
+      "ParameterNames": {
+        "1": "destination",
+        "2": "addend"
+      },
+      "LocalNames": {},
+      "Reason": "Ten unrolled destination[i]+=addend[i] stores; no reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A9A",
+      "NewName": "SubtractFromFieldElementInPlace",
+      "ParameterNames": {
+        "1": "destination",
+        "2": "minuend"
+      },
+      "LocalNames": {},
+      "Reason": "Ten stores destination[i]=minuend[i]-destination[i]; argument order is deliberately reversed. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A9B",
+      "NewName": "MultiplyByScalar",
+      "ParameterNames": {
+        "1": "output",
+        "2": "input",
+        "3": "scalar"
+      },
+      "LocalNames": {},
+      "Reason": "Ten coefficient products without modular reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A9C",
+      "NewName": "MultiplyUnreduced",
+      "ParameterNames": {
+        "1": "output",
+        "2": "left",
+        "3": "right"
+      },
+      "LocalNames": {},
+      "Reason": "Nineteen convolution coefficients with doubled odd-limb products; retain Int32 input casts and Int64 products. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A9D",
+      "NewName": "ReduceDegree",
+      "ParameterNames": {
+        "1": "coefficients"
+      },
+      "LocalNames": {},
+      "Reason": "Fold coefficients10..18 into0..8 with 16+2+1 times each high coefficient; no clearing high storage. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A9E",
+      "NewName": "DivideByPowerOfTwo26",
+      "ParameterNames": {
+        "1": "value"
+      },
+      "LocalNames": {
+        "0": "negativeRoundingBias"
+      },
+      "Reason": "Extract sign and add 26-bit negative rounding bias before signed >>26; truncation toward zero. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A9F",
+      "NewName": "DivideByPowerOfTwo25",
+      "ParameterNames": {
+        "1": "value"
+      },
+      "LocalNames": {
+        "0": "negativeRoundingBias"
+      },
+      "Reason": "Extract sign and add 25-bit negative rounding bias before signed >>25; truncation toward zero. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA0",
+      "NewName": "ReduceCoefficients",
+      "ParameterNames": {
+        "1": "coefficients"
+      },
+      "LocalNames": {
+        "0": "limbIndex",
+        "1": "carry",
+        "2": "finalCarry"
+      },
+      "Reason": "Propagate alternating26/25-bit carries, fold limb10 by19, clear it, then final first-limb carry. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA1",
+      "NewName": "CopyFieldElement",
+      "ParameterNames": {
+        "1": "destination",
+        "2": "source"
+      },
+      "LocalNames": {},
+      "Reason": "Copy exactly ten Int64 limbs, leaving any remaining destination storage untouched. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA2",
+      "NewName": "MultiplyField",
+      "ParameterNames": {
+        "1": "output",
+        "2": "left",
+        "3": "right"
+      },
+      "LocalNames": {
+        "0": "productCoefficients"
+      },
+      "Reason": "Allocate19 coefficients, MultiplyUnreduced, ReduceDegree, ReduceCoefficients, then CopyFieldElement. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA3",
+      "NewName": "SquareUnreduced",
+      "ParameterNames": {
+        "1": "output",
+        "2": "input"
+      },
+      "LocalNames": {},
+      "Reason": "Nineteen explicitly expanded square coefficients with original weights/casts. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA4",
+      "NewName": "SquareField",
+      "ParameterNames": {
+        "1": "output",
+        "2": "input"
+      },
+      "LocalNames": {
+        "0": "squareCoefficients"
+      },
+      "Reason": "Allocate19 coefficients, SquareUnreduced, ReduceDegree, ReduceCoefficients, then CopyFieldElement. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA5",
+      "NewName": "expandCoefficientFromBytes",
+      "ParameterNames": {
+        "1": "input",
+        "2": "byteOffset",
+        "3": "rightShift",
+        "4": "mask"
+      },
+      "LocalNames": {},
+      "Reason": "Existing expandCoefficientFromBytes alias retained. Read four little-endian bytes, signed shift and mask one coefficient. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA6",
+      "NewName": "ExpandFieldElement",
+      "ParameterNames": {
+        "1": "output",
+        "2": "encodedPoint"
+      },
+      "LocalNames": {},
+      "Reason": "Ten calls to checked coefficient extractor at byte offsets0/3/6/9/12/16/19/22/25/28 with alternating26/25-bit masks. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA7",
+      "NewName": "EqualMask",
+      "ParameterNames": {
+        "1": "left",
+        "2": "right"
+      },
+      "LocalNames": {},
+      "Reason": "Bitwise NOT XOR, propagate equality through left-shift ANDs16/8/4/2/1, then arithmetic >>31; return mask, not Boolean. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA8",
+      "NewName": "GreaterThanOrEqualMask",
+      "ParameterNames": {
+        "1": "left",
+        "2": "right"
+      },
+      "LocalNames": {},
+      "Reason": "Return bitwise complement of (left-right)>>31. Name describes bounded coefficient use; retain unchecked subtraction for arbitrary Int32 inputs. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AA9",
+      "NewName": "WritePackedCoefficient",
+      "ParameterNames": {
+        "1": "output",
+        "2": "byteOffset",
+        "3": "coefficient"
+      },
+      "LocalNames": {},
+      "Reason": "OR low byte into existing output, overwrite next three bytes from shifts8/16/24. Preserve overlap packing. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AAA",
+      "NewName": "ContractFieldElement",
+      "ParameterNames": {
+        "1": "encodedPoint",
+        "2": "coefficients"
+      },
+      "LocalNames": {
+        "0": "limbIndex",
+        "1": "normalizationPass",
+        "2": "normalizedCoefficients",
+        "3": "modulusSubtractionMask",
+        "4": "evenLimbSignMask",
+        "5": "evenLimbBorrow",
+        "6": "oddLimbSignMask",
+        "7": "oddLimbBorrow",
+        "8": "lastLimbSignMask",
+        "9": "lastLimbBorrow",
+        "10": "firstLimbSignMask",
+        "11": "firstLimbBorrow",
+        "12": "lastLimbCarry",
+        "13": "evenLimbCarry",
+        "14": "oddLimbCarry"
+      },
+      "Reason": "Copy ten limbs to Int32; two borrow and carry passes, conditional modulus subtraction using masks, original packed little-endian writes. No mutation of input coefficients. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AAB",
+      "NewName": "MontgomeryDoubleAndAdd",
+      "ParameterNames": {
+        "1": "doubledPointX",
+        "2": "doubledPointZ",
+        "3": "addedPointX",
+        "4": "addedPointZ",
+        "5": "pointX",
+        "6": "pointZ",
+        "7": "otherPointX",
+        "8": "otherPointZ",
+        "9": "differenceX"
+      },
+      "LocalNames": {
+        "0": "originalPointX",
+        "1": "originalOtherPointX",
+        "2": "doubleZFactor",
+        "3": "pointSumSquared",
+        "4": "pointDifferenceSquared",
+        "5": "crossSumBuffer",
+        "6": "crossDifferenceBuffer",
+        "7": "crossDifferenceSquared",
+        "8": "crossSumSquared",
+        "9": "highCoefficientIndex"
+      },
+      "Reason": "Ladder step computes doubled point and differential sum; mutates input X/Z into sums/differences, retains differenceX, factor121665 and original staged reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AAC",
+      "NewName": "SwapFieldElementsConditionally",
+      "ParameterNames": {
+        "1": "left",
+        "2": "right",
+        "3": "swapBit"
+      },
+      "LocalNames": {
+        "0": "limbIndex",
+        "1": "swapMask",
+        "2": "maskedDifference"
+      },
+      "Reason": "Negated swapBit mask controls ten XOR swaps of Int32-cast limbs. Do not claim full Int64 or arbitrary-flag semantics. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AAD",
+      "NewName": "MultiplyPointProjective",
+      "ParameterNames": {
+        "1": "resultX",
+        "2": "resultZ",
+        "3": "scalar",
+        "4": "pointX"
+      },
+      "LocalNames": {
+        "0": "initialAdjacentX",
+        "1": "initialAdjacentZ",
+        "2": "initialPointX",
+        "3": "adjacentPointX",
+        "4": "adjacentPointZ",
+        "5": "multiplePointX",
+        "6": "multiplePointZ",
+        "7": "initialAdjacentXWork",
+        "8": "initialAdjacentZWork",
+        "9": "initialPointXWork",
+        "10": "adjacentPointXWork",
+        "11": "adjacentPointZWork",
+        "12": "multiplePointXWork",
+        "13": "multiplePointZWork",
+        "14": "scalarByteIndex",
+        "15": "scalarByte",
+        "16": "scalarBitIndex",
+        "17": "scalarBit"
+      },
+      "Reason": "Process32 scalar bytes from index31 down, eight high bits per byte. Conditional swaps surround exact double/add, then swap work buffers. Return ten-limb projective X/Z; no scalar clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AAE",
+      "NewName": "InvertFieldElement",
+      "ParameterNames": {
+        "1": "output",
+        "2": "input"
+      },
+      "LocalNames": {
+        "0": "power2",
+        "1": "power9",
+        "2": "power11",
+        "3": "power2To5Minus1",
+        "4": "power2To10Minus1",
+        "5": "power2To20Minus1",
+        "6": "power2To50Minus1",
+        "7": "power2To100Minus1",
+        "8": "powerScratch",
+        "9": "alternatePowerScratch",
+        "10": "squaringCount"
+      },
+      "Reason": "Exact immutable-IL bookkeeping proves addition-chain output exponent2^255-21. Retain zero behavior, multiplication/squaring sequence and loop thresholds10/20/50/100. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AAF",
+      "NewName": "ScalarMultiply",
+      "ParameterNames": {
+        "1": "scalar",
+        "2": "encodedPoint"
+      },
+      "LocalNames": {
+        "0": "pointX",
+        "1": "resultX",
+        "2": "resultZAndAffineX",
+        "3": "inverseResultZ",
+        "4": "scalarCopy",
+        "5": "byteIndex"
+      },
+      "Reason": "Copy first32 scalar bytes without clamping, expand point, multiply projectively, invert Z, multiply X/Z and contract32 result bytes. Preserve original length/exception/noncanonical-input behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001ADE",
+      "NewName": "GeneratePrivateKey",
+      "ParameterNames": {},
+      "LocalNames": {
+        "0": "privateKey"
+      },
+      "Reason": "Existing GeneratePrivateKey allocates32 bytes from exact RNG field; first byte&248, last&127|64 clamps scalar. Existing alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001ADF",
+      "NewName": "GeneratePublicKey",
+      "ParameterNames": {
+        "1": "privateKey"
+      },
+      "LocalNames": {},
+      "Reason": "Existing GeneratePublicKey passes privateKey and initialized32-byte base-point array with first byte9 to ScalarMultiply; no new validation/clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AE0",
+      "NewName": "ComputeSharedSecret",
+      "ParameterNames": {
+        "1": "privateKey",
+        "2": "peerPublicKey"
+      },
+      "LocalNames": {},
+      "Reason": "Wrapper directly ScalarMultiply(privateKey,peerPublicKey). Caller720/e at479 obtains shared secret then checked GetSessionKey at494; no added key validation. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AE1",
+      "NewName": "GetSessionKey",
+      "ParameterNames": {
+        "1": "sharedSecret"
+      },
+      "LocalNames": {
+        "0": "sessionKey",
+        "1": "sha256"
+      },
+      "Reason": "Existing GetSessionKey computesSHA256(sharedSecret), disposes algorithm, resizes digest to16. Alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AE2",
+      "NewName": "GetPbkdf2HmacSha256PasswordHash",
+      "ParameterNames": {
+        "1": "password",
+        "2": "salt",
+        "3": "iterationCount",
+        "4": "derivedKeyLengthInBytes"
+      },
+      "LocalNames": {
+        "0": "passwordPointer",
+        "1": "passwordBytes",
+        "2": "hmacSha256",
+        "3": "derivedKey",
+        "4": "normalizedSaltBytes",
+        "5": "iterationInput",
+        "6": "iterationIndex",
+        "7": "byteIndex"
+      },
+      "Reason": "Existing GetPbkdf2HmacSha256PasswordHash alias retained. ANSI SecureString bytes form HMAC key; salt NormalizationForm5 UTF8 plus big-endian1; XOR original iteration chain. Reject output lengths>32, preserve zero iterations/length and all disposal/clearing. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AE3",
+      "NewName": "GetUserPasswordHash",
+      "ParameterNames": {
+        "1": "password"
+      },
+      "LocalNames": {},
+      "Reason": "Existing user-password helper passes literal user-password.1.secure.ip.knx.org,65536 iterations,16-byte output to checked password hash helper. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AE4",
+      "NewName": "GetDeviceAuthenticationCodeHash",
+      "ParameterNames": {
+        "1": "authenticationCode"
+      },
+      "LocalNames": {},
+      "Reason": "Existing device authentication helper passes literal device-authentication-code.1.secure.ip.knx.org,65536 iterations,16-byte output. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001AE5",
+      "NewName": "StringToSecureString",
+      "ParameterNames": {
+        "1": "password"
+      },
+      "LocalNames": {},
+      "Reason": "Existing StringToSecureString delegates through NetworkCredential with empty username and supplied password. Preserve null/encoding behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400164F",
+      "NewName": "randomNumberGenerator",
+      "Reason": "Static readonly RNG initialized by RandomNumberGenerator.Create at1AE7:0/5 and used by GeneratePrivateKey at1ADE:8/14. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001650",
+      "NewName": "curveBasePoint",
+      "Reason": "Static readonly32-byte array initialized with leading9 at1AE7:10..22; GeneratePublicKey at1ADF:1 passes this exact array to ScalarMultiply. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0400164E",
+      "Disposition": "unresolved",
+      "Reason": "Literal I4(32) has zero physical graph references, so exact constant role is unproven despite nearby32-byte allocation. Missing metadata/caller identity evidence; do not invent a key-size name. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001651",
+      "Disposition": "unresolved",
+      "Reason": "Readonly16-byte array initialized via private RVA helper; whole111-module graph finds one write and no reads. Missing consumer/domain evidence for original bytes; do not call it a salt, key or protocol constant. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    }
+  ]
+}

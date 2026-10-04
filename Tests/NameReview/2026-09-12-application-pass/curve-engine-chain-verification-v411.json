@@ -1,0 +1,393 @@
+{
+  "Format": 1,
+  "Kind": "CurveArithmeticEngineVerification",
+  "MapSha256": "A83755DFECC84599083C1B84F000106889C592F9D2C912B0EBD4E2487C93D63F",
+  "NewAliases": 175,
+  "NewAliasCounts": {
+    "Local": 81,
+    "Parameter": 69,
+    "Method": 23,
+    "Field": 2
+  },
+  "ScopeMerges": 6,
+  "NativeRequestedAppliedExact": true,
+  "NativeChanges": 183,
+  "NativeErrors": 0,
+  "LedgerInvalid": 0,
+  "ByteIdenticalReviewReproduction": true,
+  "PreviousScopesPreserved": true,
+  "PreviousPhysicalModuleBindingsPreserved": true,
+  "GraphPhysicalInputsVerified": 111,
+  "IncomingReferences": 146,
+  "ReviewedClusterDefinitions": [
+    {
+      "Kind": "Type",
+      "Token": "0x020004AE",
+      "Signature": "Class1286",
+      "Disposition": "existing-checked-alias",
+      "Alias": "Knx.Falcon.Cryptography.Curve25519"
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A99",
+      "Signature": "System.Void Class1286::smethod_0(System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "AddFieldElementInPlace",
+      "Evidence": "Ten unrolled destination[i]+=addend[i] stores; no reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A9A",
+      "Signature": "System.Void Class1286::e(System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "SubtractFromFieldElementInPlace",
+      "Evidence": "Ten stores destination[i]=minuend[i]-destination[i]; argument order is deliberately reversed. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A9B",
+      "Signature": "System.Void Class1286::b(System.Int64[],System.Int64[],System.Int64)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "MultiplyByScalar",
+      "Evidence": "Ten coefficient products without modular reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A9C",
+      "Signature": "System.Void Class1286::b(System.Int64[],System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "MultiplyUnreduced",
+      "Evidence": "Nineteen convolution coefficients with doubled odd-limb products; retain Int32 input casts and Int64 products. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A9D",
+      "Signature": "System.Void Class1286::b(System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "ReduceDegree",
+      "Evidence": "Fold coefficients10..18 into0..8 with 16+2+1 times each high coefficient; no clearing high storage. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A9E",
+      "Signature": "System.Int64 Class1286::b(System.Int64)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "DivideByPowerOfTwo26",
+      "Evidence": "Extract sign and add 26-bit negative rounding bias before signed >>26; truncation toward zero. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001A9F",
+      "Signature": "System.Int64 Class1286::a(System.Int64)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "DivideByPowerOfTwo25",
+      "Evidence": "Extract sign and add 25-bit negative rounding bias before signed >>25; truncation toward zero. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA0",
+      "Signature": "System.Void Class1286::a(System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "ReduceCoefficients",
+      "Evidence": "Propagate alternating26/25-bit carries, fold limb10 by19, clear it, then final first-limb carry. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA1",
+      "Signature": "System.Void Class1286::d(System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "CopyFieldElement",
+      "Evidence": "Copy exactly ten Int64 limbs, leaving any remaining destination storage untouched. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA2",
+      "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "MultiplyField",
+      "Evidence": "Allocate19 coefficients, MultiplyUnreduced, ReduceDegree, ReduceCoefficients, then CopyFieldElement. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA3",
+      "Signature": "System.Void Class1286::c(System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "SquareUnreduced",
+      "Evidence": "Nineteen explicitly expanded square coefficients with original weights/casts. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA4",
+      "Signature": "System.Void Class1286::b(System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "SquareField",
+      "Evidence": "Allocate19 coefficients, SquareUnreduced, ReduceDegree, ReduceCoefficients, then CopyFieldElement. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA5",
+      "Signature": "System.Int64 Class1286::a(System.Byte[],System.Int32,System.Int32,System.Int64)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "expandCoefficientFromBytes",
+      "Evidence": "Existing expandCoefficientFromBytes alias retained. Read four little-endian bytes, signed shift and mask one coefficient. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA6",
+      "Signature": "System.Void Class1286::a(System.Int64[],System.Byte[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "ExpandFieldElement",
+      "Evidence": "Ten calls to checked coefficient extractor at byte offsets0/3/6/9/12/16/19/22/25/28 with alternating26/25-bit masks. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA7",
+      "Signature": "System.Int32 Class1286::b(System.Int32,System.Int32)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "EqualMask",
+      "Evidence": "Bitwise NOT XOR, propagate equality through left-shift ANDs16/8/4/2/1, then arithmetic >>31; return mask, not Boolean. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA8",
+      "Signature": "System.Int32 Class1286::a(System.Int32,System.Int32)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GreaterThanOrEqualMask",
+      "Evidence": "Return bitwise complement of (left-right)>>31. Name describes bounded coefficient use; retain unchecked subtraction for arbitrary Int32 inputs. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AA9",
+      "Signature": "System.Void Class1286::a(System.Byte[],System.Int32,System.Int32)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "WritePackedCoefficient",
+      "Evidence": "OR low byte into existing output, overwrite next three bytes from shifts8/16/24. Preserve overlap packing. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AAA",
+      "Signature": "System.Void Class1286::a(System.Byte[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "ContractFieldElement",
+      "Evidence": "Copy ten limbs to Int32; two borrow and carry passes, conditional modulus subtraction using masks, original packed little-endian writes. No mutation of input coefficients. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AAB",
+      "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "MontgomeryDoubleAndAdd",
+      "Evidence": "Ladder step computes doubled point and differential sum; mutates input X/Z into sums/differences, retains differenceX, factor121665 and original staged reduction. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AAC",
+      "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Int64)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "SwapFieldElementsConditionally",
+      "Evidence": "Negated swapBit mask controls ten XOR swaps of Int32-cast limbs. Do not claim full Int64 or arbitrary-flag semantics. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AAD",
+      "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[],System.Byte[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "MultiplyPointProjective",
+      "Evidence": "Process32 scalar bytes from index31 down, eight high bits per byte. Conditional swaps surround exact double/add, then swap work buffers. Return ten-limb projective X/Z; no scalar clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AAE",
+      "Signature": "System.Void Class1286::a(System.Int64[],System.Int64[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "InvertFieldElement",
+      "Evidence": "Exact immutable-IL bookkeeping proves addition-chain output exponent2^255-21. Retain zero behavior, multiplication/squaring sequence and loop thresholds10/20/50/100. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AAF",
+      "Signature": "System.Byte[] Class1286::a(System.Byte[],System.Byte[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "ScalarMultiply",
+      "Evidence": "Copy first32 scalar bytes without clamping, expand point, multiply projectively, invert Z, multiply X/Z and contract32 result bytes. Preserve original length/exception/noncanonical-input behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AB0",
+      "Signature": "System.Void Class1286::.ctor()",
+      "Disposition": "runtime-constructor-preserved",
+      "Evidence": "Exact constructor/runtime flags and body inspected; original metadata name required."
+    },
+    {
+      "Kind": "Field",
+      "Token": "0x0400163A",
+      "Signature": "System.String Class1286::a",
+      "Disposition": "previous-explicit-unresolved",
+      "Evidence": "unresolved-metadata-storage: native field metadata is nonliteral System.String with I1 Constant(32), Private, NotSerialized, HasDefault; zero static graph references in 111 current hash-matched physical modules. Vendor storage meaning and reflection/dynamic/external-App consumers are unproven; retain original metadata and record no semantic alias."
+    },
+    {
+      "Kind": "Type",
+      "Token": "0x020004B5",
+      "Signature": "Class1291",
+      "Disposition": "existing-checked-alias",
+      "Alias": "Knx.Falcon.Cryptography.SecureCryptoEngineEcdhCurve25519"
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001ADE",
+      "Signature": "System.Byte[] Class1291::a()",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GeneratePrivateKey",
+      "Evidence": "Existing GeneratePrivateKey allocates32 bytes from exact RNG field; first byte&248, last&127|64 clamps scalar. Existing alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001ADF",
+      "Signature": "System.Byte[] Class1291::b(System.Byte[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GeneratePublicKey",
+      "Evidence": "Existing GeneratePublicKey passes privateKey and initialized32-byte base-point array with first byte9 to ScalarMultiply; no new validation/clamping. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE0",
+      "Signature": "System.Byte[] Class1291::a(System.Byte[],System.Byte[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "ComputeSharedSecret",
+      "Evidence": "Wrapper directly ScalarMultiply(privateKey,peerPublicKey). Caller720/e at479 obtains shared secret then checked GetSessionKey at494; no added key validation. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE1",
+      "Signature": "System.Byte[] Class1291::a(System.Byte[])",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GetSessionKey",
+      "Evidence": "Existing GetSessionKey computesSHA256(sharedSecret), disposes algorithm, resizes digest to16. Alias retained. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE2",
+      "Signature": "System.Byte[] Class1291::a(System.Security.SecureString,System.String,System.UInt32,System.UInt32)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GetPbkdf2HmacSha256PasswordHash",
+      "Evidence": "Existing GetPbkdf2HmacSha256PasswordHash alias retained. ANSI SecureString bytes form HMAC key; salt NormalizationForm5 UTF8 plus big-endian1; XOR original iteration chain. Reject output lengths>32, preserve zero iterations/length and all disposal/clearing. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE3",
+      "Signature": "System.Byte[] Class1291::b(System.Security.SecureString)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GetUserPasswordHash",
+      "Evidence": "Existing user-password helper passes literal user-password.1.secure.ip.knx.org,65536 iterations,16-byte output to checked password hash helper. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE4",
+      "Signature": "System.Byte[] Class1291::a(System.Security.SecureString)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "GetDeviceAuthenticationCodeHash",
+      "Evidence": "Existing device authentication helper passes literal device-authentication-code.1.secure.ip.knx.org,65536 iterations,16-byte output. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE5",
+      "Signature": "System.Security.SecureString Class1291::a(System.String)",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "StringToSecureString",
+      "Evidence": "Existing StringToSecureString delegates through NetworkCredential with empty username and supplied password. Preserve null/encoding behavior. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE6",
+      "Signature": "System.Void Class1291::.ctor()",
+      "Disposition": "runtime-constructor-preserved",
+      "Evidence": "Exact constructor/runtime flags and body inspected; original metadata name required."
+    },
+    {
+      "Kind": "Method",
+      "Token": "0x06001AE7",
+      "Signature": "System.Void Class1291::.cctor()",
+      "Disposition": "runtime-constructor-preserved",
+      "Evidence": "Exact constructor/runtime flags and body inspected; original metadata name required."
+    },
+    {
+      "Kind": "Field",
+      "Token": "0x0400164E",
+      "Signature": "System.Int32 Class1291::a",
+      "Disposition": "explicit-unresolved",
+      "Alias": "",
+      "Evidence": "Literal I4(32) has zero physical graph references, so exact constant role is unproven despite nearby32-byte allocation. Missing metadata/caller identity evidence; do not invent a key-size name. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Field",
+      "Token": "0x0400164F",
+      "Signature": "System.Security.Cryptography.RandomNumberGenerator Class1291::b",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "randomNumberGenerator",
+      "Evidence": "Static readonly RNG initialized by RandomNumberGenerator.Create at1AE7:0/5 and used by GeneratePrivateKey at1ADE:8/14. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Field",
+      "Token": "0x04001650",
+      "Signature": "System.Byte[] Class1291::c",
+      "Disposition": "checked-alias-and-scopes",
+      "Alias": "curveBasePoint",
+      "Evidence": "Static readonly32-byte array initialized with leading9 at1AE7:10..22; GeneratePublicKey at1ADF:1 passes this exact array to ScalarMultiply. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Field",
+      "Token": "0x04001651",
+      "Signature": "System.Byte[] Class1291::d",
+      "Disposition": "explicit-unresolved",
+      "Alias": "",
+      "Evidence": "Readonly16-byte array initialized via private RVA helper; whole111-module graph finds one write and no reads. Missing consumer/domain evidence for original bytes; do not call it a salt, key or protocol constant. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+    },
+    {
+      "Kind": "Field",
+      "Token": "0x04001652",
+      "Signature": "System.String Class1291::e",
+      "Disposition": "previous-explicit-unresolved",
+      "Evidence": "unresolved-metadata-storage: native field metadata is nonliteral System.String with I1 Constant(32), Private, NotSerialized, HasDefault; zero static graph references in 111 current hash-matched physical modules. Vendor storage meaning and reflection/dynamic/external-App consumers are unproven; retain original metadata and record no semantic alias."
+    }
+  ],
+  "InverseExponentProof": {
+    "Method": "0x06001AAE",
+    "FinalExponent": "57896044618658097711785492504343953926634992332820282019728792003956564819947",
+    "Expected": "2^255-21",
+    "ExecutedBookkeepingInstructions": 1675,
+    "FixedBufferExponents": {
+      "0": "2",
+      "1": "9",
+      "2": "11",
+      "3": "31",
+      "4": "1023",
+      "5": "1048575",
+      "6": "1125899906842623",
+      "7": "1267650600228229401496703205375"
+    }
+  },
+  "SdkWhitelistSha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459",
+  "Reports": [
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\curve-engine-chain-final02\\curve-engine-chain-update-v411.json",
+      "Sha256": "77307550AC96FE86CFF006507E68832771A8E760995C5CB52040113C6D7A9997"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\curve-engine-chain-final02\\curve-engine-chain-check-v411.json",
+      "Sha256": "15B3DF354BC3E66498EAEB9E932E8A43BC0622E8128796B38A4409C79811F8BC"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\curve-engine-chain-final02\\curve-engine-chain-coverage-v411.json",
+      "Sha256": "F18BE82735AB8FF873B091890DF0C2F133EF134875291F6AC3BCA091BF58D6AA"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\curve-engine-chain-final02\\curve-engine-chain-alias-difference-v411.json",
+      "Sha256": "4DC809665CF91713CAA381667FD32F5EEE87E9CFFE3954C4F7E680BFD4ABC3B8"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\curve-engine-chain-final02\\curve-engine-chain-tentative-ledger-v411.json",
+      "Sha256": "270851B47BBE958780E3F238AE5CAB768926741B5F6855C86D38AD2964E0A90E"
+    }
+  ],
+  "Limits": "Two generated secure callbacks remain scoped-only. Generated stack/accessor ownership and application-wide naming/source/runtime remain pending. Literal32 and unused16-byte array roles explicitly unresolved. Reviewed exact arithmetic and physical caller graph; keep overflow casts, signed shifts, aliasing, array sizes, control flow, exceptions and cleanup unchanged. Preserve runtime/SDK contracts and meaningful existing aliases. No source/binary patch, algorithm replacement or consolidated runtime claim."
+}
