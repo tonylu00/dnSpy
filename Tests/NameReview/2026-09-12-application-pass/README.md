@@ -17,6 +17,8 @@ What lives here:
 - `archive/` — the former handoff and README journals (history; do not read to resume)
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
+- `generated-source-scope-verification.json` — native whole-scope observation audit
+  and read-only structural candidate joins, with no naming retirement verdict
 
 Rules:
 

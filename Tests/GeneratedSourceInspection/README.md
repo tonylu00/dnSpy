@@ -15,6 +15,7 @@ dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --re
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map> --sdk-source
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> metadata --references=<manifest>
 dotnet GeneratedSourceInspection.dll <runtime> <seed-manifest> <new-context> prepare-context --contexts=<loader-xml> --app-config=<main-config> --framework=<directory> --support=<directory>
+dotnet GeneratedSourceInspection.dll <runtime> <complete-scope-summary> <new-audit> audit-scope
 ```
 
 `--method=0x06000005` selects partial member scope. Ordinary decompiler switches
@@ -35,6 +36,21 @@ async/iterator and anonymous method witnesses, retained declarations, surviving
 local member references, unresolved references and hoisted-field/source-variable
 bindings. Compressed async lambdas retain their body witness. Captured parameter
 substitutions retain their exact field binding without mutating shared ILVariables.
+
+`NonlocalReferences` retains emitted external/unresolved use records with the
+local source owner, requested signature/assembly, originating physical metadata
+path/MVID/token and resolved definition path/MVID/assembly/token/signature. It
+uses the reference's metadata context, so the inspection host supplies the pinned
+source resolver. Type forwarders retain both the requested facade and actual
+definition assembly. A `MemberRef` is classified by its signature because dnlib
+implements both method and field interfaces on it. Local reference tokens remain
+separate. Unresolved strings now mean resolution failed, rather than every external
+reference. The host audits resolved targets against exact pinned definitions and
+records any unpinned definition explicitly. Counts describe distinct annotation
+records per owner; they are not call counts. This data does not prove source removal.
+Reference tokens/annotations can also identify declaration names or inlined body
+implementations for debugging. A downstream retirement decision must distinguish
+these from printed member accesses; the current joins deliberately stay conservative.
 
 Raw inspection uses `Mode=RawMetadataFinalCSharpAst` and `MapApplied=false`.
 `--map` invokes the actual native source-map applier across all pinned export
@@ -94,6 +110,35 @@ not proof of loader equivalence, source merging or runtime compatibility.
 `ContextRegression` also exercises preparation redirects/no-config overrides,
 competing physical identities, read-only roles, retained netmodules, stale seeds,
 DTD/duplicate contexts and failed publication.
+
+Run `ReferenceRegression/Invoke-Regression.ps1` with `-RuntimeDirectory`,
+`-Inspector` and a fresh `-OutputDirectory`. Its synthetic assemblies deliberately
+share complete identity, MVID and definition tokens while retaining different
+paths and bytes. Method/field/type uses must bind to their own physical twin;
+missing and ambiguous contexts must remain unresolved. It also checks owner
+provenance, deterministic observations/source and unchanged input hashes.
+
+`Inspect-PhysicalScope.ps1` takes `-RuntimeDirectory`, `-Inspector`,
+`-ReferenceManifest`, `-SourceMap` and a fresh `-OutputDirectory`. It inspects every
+explicit export input in a required-context manifest using mapped SDK C# settings.
+Native child processes run sequentially to bound decompiler lifetime to one
+physical module. Reports preserve application-relative directories, and a hash-bound
+summary records native observations, timing, peak child working set and explicit
+uncertainties. Maps, runtime/host binaries and context pins are checked again at
+each checkpoint. This is source observation only; it performs no ETS source/binary
+patches, candidate retirement, project exports, builds or runtime tests.
+
+`audit-scope` verifies the complete observation summary against original metadata.
+It requires exactly the pinned export inputs, every original top-level root,
+complete original definition inventories and printed-source hash coverage. It
+rejects filtered scopes, differing normalized maps, stale native reports/tool pins,
+foreign owner tokens, invalid rewrite implementations and hoisted-field bindings.
+Nonlocal targets are checked again by physical path/MVID/identity/token/signature;
+missing or unpinned targets and unknown owners stay explicit. The audit also
+indexes first-party definitions retained by other modules' emitted references.
+This establishes observation coverage, not source retirement or runtime behavior.
+`ReferenceRegression/Invoke-ScopeAuditRegression.ps1` exercises these native guards
+with the previously emitted physical-twin fixture.
 
 Run `Invoke-Regression.ps1` with `-RuntimeDirectory`, `-Inspector`,
 `-ReferenceManifest` and a fresh `-OutputDirectory`. It builds synthetic fixtures,

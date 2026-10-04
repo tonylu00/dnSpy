@@ -24,7 +24,7 @@ internal static class Program {
 
     static int Main(string[] args) {
         try {
-            if (args.Length < 4) throw new ArgumentException("Usage: GeneratedSourceInspection <actual-plugin-runtime> <input-or-seed> <new-report> <inspect|self-test|metadata|prepare-context>. Inspection: [--references=<manifest>] [--map=<source-map>] [--sdk-source] [--root=0xTOKEN|--method=0xTOKEN] [--no-async|--no-yield|--no-anon-methods|--show-all|--declare-state-machines]. Preparation: --contexts=<loader-xml> --app-config=<config> --framework=<directory> [--support=<directory>].");
+            if (args.Length < 4) throw new ArgumentException("Usage: GeneratedSourceInspection <actual-plugin-runtime> <input-or-seed-or-scope-summary> <new-report> <inspect|self-test|metadata|prepare-context|audit-scope>. Inspection: [--references=<manifest>] [--map=<source-map>] [--sdk-source] [--root=0xTOKEN|--method=0xTOKEN] [--no-async|--no-yield|--no-anon-methods|--show-all|--declare-state-machines]. Preparation: --contexts=<loader-xml> --app-config=<config> --framework=<directory> [--support=<directory>]. Scope audit: complete scope summary and fresh output only.");
             runtime = Path.GetFullPath(args[0]);
             foreach (string name in new[] { "dnlib", "dnSpy.Contracts.Logic", "ICSharpCode.Decompiler" }) {
                 string path = Path.Combine(runtime, name + ".dll");
@@ -51,6 +51,10 @@ internal static class Program {
     }
 
     static int Run(string[] args) {
+        if (args[3] == "audit-scope") {
+            if (args.Length != 4) throw new ArgumentException("Scope audit accepts one complete scope summary and a fresh output.");
+            return PhysicalScopeAudit.Run(args[1], args[2]);
+        }
         if (args[3] == "prepare-context") return PhysicalContextPreparation.Run(args[1], args[2], args.Skip(4).ToArray());
         string input = Path.GetFullPath(args[1]), output = Path.GetFullPath(args[2]);
         if (File.Exists(output) || Directory.Exists(output)) throw new IOException("Choose a new report path.");
@@ -204,6 +208,22 @@ internal static class Program {
                 throw new ArgumentException("Metadata inspection accepts only pinned references and no source output/map.");
         }
         else throw new ArgumentException("Unknown command.");
+        int pinnedNonlocal = 0, unresolvedNonlocal = 0;
+        var unpinnedNonlocal = new List<object>();
+        foreach (var root in reports) foreach (var use in root.NonlocalReferences) {
+            if (use.OwnerToken != 0 && module.ResolveToken(use.OwnerToken) is not IMemberDef)
+                throw new InvalidDataException("Nonlocal reference owner is not an exact local definition.");
+            if (use.DefinitionToken == 0) { unresolvedNonlocal++; continue; }
+            var target = string.IsNullOrEmpty(use.DefinitionModulePath) ? null : references.FindModule(use.DefinitionModulePath);
+            if (target == null) {
+                unpinnedNonlocal.Add(new { root.RootTypeToken, use.OwnerToken, use.RequestedSignature, use.DefinitionModulePath, use.DefinitionToken, Reason = "resolved metadata definition is outside the pinned physical context" });
+                continue;
+            }
+            if (target.Mvid != use.DefinitionModuleMvid || target.Assembly.FullName != use.DefinitionAssemblyIdentity ||
+                target.ResolveToken(use.DefinitionToken) is not IMemberDef definition || definition.FullName != use.DefinitionSignature)
+                throw new InvalidDataException("Nonlocal reference does not match its exact pinned physical definition.");
+            pinnedNonlocal++;
+        }
         foreach (var pair in dependencies) if (Hash(pair.Key) != pair.Value) throw new InvalidDataException("Decompiler dependency changed: " + pair.Key);
         references.Verify();
         if (mapPath != null && (Hash(mapPath) != mapHash || whitelistPath != null && Hash(whitelistPath) != whitelistHash)) throw new InvalidDataException("Source map/whitelist changed.");
@@ -227,6 +247,7 @@ internal static class Program {
             PhysicalResolutions = references.Resolutions,
             Dependencies = dependencies.OrderBy(p => p.Key, StringComparer.OrdinalIgnoreCase).Select(p => new { Path = p.Key, Sha256 = p.Value }).ToArray(),
             Definitions = originals, Roots = reports, SourceHashes = sourceHashes, SourceOutput = sourceOutput, Checks = checks, ElapsedSeconds = stopwatch.Elapsed.TotalSeconds,
+            NonlocalReferenceAudit = new { PinnedDefinitions = pinnedNonlocal, UnresolvedUses = unresolvedNonlocal, UnpinnedDefinitions = unpinnedNonlocal, Limits = "Final AST use records only. Pinned definitions have matching path/MVID/assembly identity/token/signature; this is not proof of complete source coverage or runtime contracts." },
             SourceAliases = module.GetTypes().SelectMany(t => new IMemberDef[] { t }.Concat(t.Methods).Concat(t.Fields)).Where(d => SourceNameAliases.Get(d) != null)
                 .Select(d => new { Token = d.MDToken.Raw, Alias = SourceNameAliases.Get(d), AliasNamespace = d is TypeDef type ? SourceNameAliases.GetAliasNamespace(type) : null }).ToArray(),
             ParameterAliases = methods.SelectMany(m => m.Parameters.Where(p => p.IsNormalMethodParameter).Select(p => new { MethodToken = m.MDToken.Raw, Sequence = p.MethodSigIndex + 1, OriginalName = p.Name, Alias = SourceNameAliases.GetParameter(p) })).Where(p => p.Alias != null).ToArray(),

@@ -85,7 +85,10 @@ $proof=Get-Content -Raw "$OutputDirectory\fixture-proof.json" | ConvertFrom-Json
 $field=@($proof.Definitions | Where-Object OriginalName -eq 'recurse')
 if($field.Count -ne 1){throw 'Expected one physical recursive capture field.'}
 $references=Get-Content -Raw $ReferenceManifest | ConvertFrom-Json
-$context=@{Format=1;InputDirectory=(Split-Path $fixture);Assemblies=@(@{Path=$fixture;Identity=$proof.AssemblyIdentity;Mvid=$proof.Mvid;Sha256=$proof.InputSha256;ExportInput=$true})+@($references.Assemblies);Bindings=@();Configs=@()}
+$readonlyReferences=@($references.Assemblies | ForEach-Object {
+    @{Path=$_.Path;Identity=$_.Identity;Mvid=$_.Mvid;Sha256=$_.Sha256;ExportInput=$false}
+})
+$context=@{Format=1;InputDirectory=(Split-Path $fixture);Assemblies=@(@{Path=$fixture;Identity=$proof.AssemblyIdentity;Mvid=$proof.Mvid;Sha256=$proof.InputSha256;ExportInput=$true})+$readonlyReferences;Bindings=@();Configs=@()}
 $contextPath="$OutputDirectory\capture-context.json"
 $context | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $contextPath
 foreach($alias in @('countRemaining','value')) {
