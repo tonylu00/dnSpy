@@ -49,6 +49,8 @@ def source_index(report):
     return {'Definitions': {d['Token']: d for d in report['Definitions']},
             'Declared': set(t for r in report['Roots'] for t in r['DeclarationTokens']),
             'Referenced': set(t for r in report['Roots'] for t in r['ReferenceTokens']),
+            'PrintedCoverage': all(r.get('PrintedReferenceCoverage', False) for r in report['Roots']),
+            'PrintedReferenced': set(t for r in report['Roots'] for t in r.get('PrintedReferenceTokens', [])),
             'States': states, 'Anonymous': anonymous, 'Fields': fields}
 
 
@@ -71,11 +73,14 @@ def join_candidate(candidate, index, cross_references):
                            (bool(state), 'StateMachineBodyReconstructed'), (bool(anonymous), 'AnonymousBodyReconstructed')):
         if present:
             facts.append(label)
+    if index['PrintedCoverage'] and ident in index['PrintedReferenced']:
+        facts.append('LocalPrintedSourceReferenceRetained')
     if not facts:
         facts.append('NoPositiveSourceObservation')
     return {'Facts': facts, 'StateMachineBodyWitnesses': state, 'AnonymousBodyWitnesses': anonymous,
             'MatchedDelegateOwners': sorted(set(w['OwnerToken'] for w in anonymous) & delegate_owners),
             'FieldBindings': bindings, 'CrossModuleUseRecords': cross_references.get(ident, 0),
+            'PrintedReferenceCoverage': index['PrintedCoverage'],
             'ReferenceTokenSemantics': 'Conservative AST member annotations can include declaration identifiers and inlined implementation/debug annotations; not a count or proof of printed member accesses.',
             'Limits': 'Observed source facts only. Absence does not prove merging, semantic names or restoration contracts. No candidate retirement.'}
 

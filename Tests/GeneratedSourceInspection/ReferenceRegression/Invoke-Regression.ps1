@@ -35,12 +35,17 @@ foreach($name in @('first','second')) {
     Check (@($uses | Where-Object OwnerToken -NE 100663297).Count -eq 0) "$name binds uses to local Read owner"
     Check ($proof.NonlocalReferenceAudit.PinnedDefinitions -eq $uses.Count -and $proof.NonlocalReferenceAudit.UnpinnedDefinitions.Count -eq 0) "$name native physical definition audit"
     Check (@($proof.Roots[0].ReferenceTokens | Where-Object { $_ -notin $proof.Roots[0].DeclarationTokens }).Count -eq 0 -and 67108865 -notin $proof.Roots[0].ReferenceTokens) "$name retains local declarations without importing the external field token"
+    $printed=@($proof.Roots[0].PrintedReferences | Where-Object RequestedAssemblyIdentity -EQ $fixture.Identity)
+    Check ($proof.Roots[0].PrintedReferenceCoverage -and $proof.Roots[0].PrintedReferenceTokens.Count -eq 0) "$name printed coverage excludes declaration names and external tokens"
+    foreach($kind in @('Type','Method','Field')) { Check (@($printed | Where-Object { $_.Kind -eq $kind -and !$_.IsDefinition -and !$_.IsImplementationAnnotation }).Count -gt 0) "$name writes actual $kind bindings" }
+    Check (@($printed | Where-Object { $_.DefinitionModulePath -ne $target -or $_.DefinitionModuleMvid -ne $fixture.TwinMvid }).Count -eq 0) "$name printed references preserve physical twins"
 }
 foreach($name in @('missing','ambiguous')) {
     $proof=$proofs[$name]
     $uses=@($proof.Roots[0].NonlocalReferences | Where-Object RequestedAssemblyIdentity -EQ $fixture.Identity)
     Check ($uses.Count -gt 0 -and @($uses | Where-Object DefinitionToken -NE 0).Count -eq 0) "$name keeps unavailable physical definitions unresolved"
     Check ($proof.NonlocalReferenceAudit.PinnedDefinitions -eq 0) "$name has no invented pinned targets"
+    Check (@($proof.Roots[0].PrintedReferences | Where-Object { $_.RequestedAssemblyIdentity -eq $fixture.Identity -and $_.DefinitionToken -ne 0 }).Count -eq 0) "$name printed references remain unresolved"
     foreach($kind in @('Type','Method','Field')) { Check (@($uses | Where-Object Kind -EQ $kind).Count -gt 0) "$name retains unresolved $kind signature"
     }
 }

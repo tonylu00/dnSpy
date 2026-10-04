@@ -118,6 +118,20 @@ paths and bytes. Method/field/type uses must bind to their own physical twin;
 missing and ambiguous contexts must remain unresolved. It also checks owner
 provenance, deterministic observations/source and unchanged input hashes.
 
+`PrintedReferences` records metadata bindings selected by the actual C# token
+writer, including identifier, keyword and operator/indexer/delegate-call tokens.
+Each record has physical reference/definition provenance, source owner, node kind,
+printed text and form. `IsDefinition` separates declaration names from uses;
+`IsImplementationAnnotation` marks the anonymous method link attached to the
+`delegate` keyword. Such links are not printed implementation calls.
+`PrintedReferenceTokens` contains only local definition tokens used outside those
+two categories. `PrintedReferenceCoverage` distinguishes an observed writer from
+an older or AST-only capture. No observer runs on the default printing path.
+The inspector audits resolved printed records against exact physical metadata.
+Comments, debug spans and implicit compiler bindings are outside these records;
+their absence cannot establish removal or restoration safety. Preserve the
+existing conservative AST reference observations alongside this additional view.
+
 `Inspect-PhysicalScope.ps1` takes `-RuntimeDirectory`, `-Inspector`,
 `-ReferenceManifest`, `-SourceMap` and a fresh `-OutputDirectory`. It inspects every
 explicit export input in a required-context manifest using mapped SDK C# settings.
@@ -152,8 +166,11 @@ Output/reference/scope guards must reject without publishing a report.
 The suite also maps one exact captured-field definition through the actual native
 applier. Its checked alias must seed the reconstructed local and every recursive
 reference. A second alias collides with a nested lambda parameter; allocation
-must avoid shadowing. Both SDK C# views compile and reproduce the original 23
+must avoid shadowing. Both SDK C# views compile and reproduce the original 24
 behavior cases, while captured parameter identity and input bytes stay intact.
+Printed-reference guards cover declaration/debug distinctions, reconstructed and
+recursive lambdas, ordinary field accesses, named method groups, constructor
+keywords, operators, indexers and delegate invocation punctuation.
 
 Current Roslyn emits a no-cleanup iterator Dispose body as `state = -2; return;`.
 The iterator recognizer now accepts only that complete exact pattern and keeps

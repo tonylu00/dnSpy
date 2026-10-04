@@ -125,6 +125,10 @@ internal static class Program {
             Check(sharedFirst.Source == observed.Source && sharedObserved.Source == observed.Source && sharedLast.Source == observed.Source, "Reused opt-in context changed source.");
             Check(JsonSerializer.Serialize(sharedObserved.Evidence, json) == JsonSerializer.Serialize(proof, json), "Reused cache lost reconstruction annotations.");
             Check(proof.CompleteTypeScope && proof.RootTypeToken == root.MDToken.Raw && proof.ModuleMvid == module.Mvid, "Full physical root scope lost.");
+            Check(proof.PrintedReferenceCoverage, "Actual C# token writer did not report reference coverage.");
+            Check(proof.PrintedReferences.Any(r => r.IsDefinition && r.DefinitionToken == root.MDToken.Raw), "Printed type declaration was not distinguished from a use.");
+            Check(proof.PrintedReferences.Where(r => r.DefinitionModulePath == input).All(r =>
+                r.DefinitionModuleMvid == module.Mvid && module.ResolveToken(r.DefinitionToken) is IMemberDef), "Printed local bindings lost physical metadata identity.");
             var witnesses = proof.BodyWitnesses;
             Check(witnesses.Any(w => w.Kind == "AsyncMethod"), "No successful async body observed.");
             Check(witnesses.Any(w => w.Kind == "AnonymousMethod"), "No successful lambda body observed.");
@@ -143,10 +147,16 @@ internal static class Program {
             Check(retained.BodyWitnesses.Any(w => retained.DeclarationTokens.Contains(w.ImplementationTypeToken)), "Explicit retained implementation declarations disappeared from evidence.");
             decompiler.Settings.TryGetOption("show-all")!.Value = false;
             if (root.Name == "GeneratedSourceFixture") {
+                Check(!proof.PrintedReferenceTokens.Contains(awaitOwner.MDToken.Raw), "An async owner declaration was counted as a printed method use.");
                 Check(witnesses.Any(w => w.Kind == "IteratorMethod"), "No iterator rewrite observed.");
                 var fake = root.NestedTypes.Single(t => t.Name == "State_NotGenerated");
                 Check(proof.DeclarationTokens.Contains(fake.MDToken.Raw) && !witnesses.Any(w => w.ImplementationTypeToken == fake.MDToken.Raw), "Generated-looking spelling counted as reconstruction.");
+                var ordinaryField = fake.Fields.Single(f => f.Name == "field_1");
+                Check(proof.PrintedReferenceTokens.Contains(ordinaryField.MDToken.Raw), "A real printed field access was discarded.");
+                Check(!proof.PrintedReferenceTokens.Contains(fake.Methods.Single(m => m.Name == "MoveNext").MDToken.Raw), "A method declaration was counted as a printed call.");
                 var capture = root.Methods.Single(m => m.Name == "Capture");
+                var captureImplementation = witnesses.Single(w => w.Kind == "AnonymousMethod" && w.OwnerToken == capture.MDToken.Raw);
+                Check(proof.ReferenceTokens.Contains(captureImplementation.ImplementationToken) && !proof.PrintedReferenceTokens.Contains(captureImplementation.ImplementationToken), "Inlined lambda metadata was confused with a printed implementation call.");
                 Check(proof.FieldBindings.Any(f => f.OwnerToken == capture.MDToken.Raw && f.SourceName == "offset"), "Captured field-to-source parameter evidence lost.");
                 var anonymousAsync = module.GetTypes().SelectMany(t => t.Methods)
                     .Where(m => m.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.AsyncStateMachineAttribute"))
@@ -156,6 +166,16 @@ internal static class Program {
                 Check(!Decompile(decompiler, root, true).Evidence!.BodyWitnesses.Any(w => w.Kind == "IteratorMethod"), "Disabled iterator rewrite produced a witness.");
                 decompiler.Settings.TryGetOption("yield")!.Value = true;
                 var recursive = root.Methods.Single(m => m.Name == "Recursive");
+                Check(proof.PrintedReferences.Any(r => r.OwnerToken == recursive.MDToken.Raw && r.IsImplementationAnnotation && r.Form == "Keyword" && r.Text == "delegate"), "Anonymous delegate implementation link was not explicitly classified.");
+                Check(proof.PrintedReferences.Where(r => r.IsImplementationAnnotation).All(r => !proof.PrintedReferenceTokens.Contains(r.DefinitionToken)), "Anonymous implementation links counted as printed calls.");
+                var referenceValue = root.NestedTypes.Single(t => t.Name == "ReferenceValue");
+                var sourceReferences = proof.PrintedReferences.Where(r => !r.IsDefinition && !r.IsImplementationAnnotation).ToArray();
+                uint Token(string name) => referenceValue.Methods.Single(m => m.Name == name).MDToken.Raw;
+                Check(sourceReferences.Any(r => r.DefinitionToken == Token("Read") && r.Form == "Identifier"), "Named method-group reference lost.");
+                Check(sourceReferences.Any(r => r.DefinitionToken == Token(".ctor") && r.Form == "Keyword" && r.Text == "new"), "Constructor keyword binding lost.");
+                Check(sourceReferences.Any(r => r.DefinitionToken == Token("op_Addition") && r.Form == "Token" && r.Text == "+"), "Printed operator binding lost.");
+                Check(sourceReferences.Any(r => r.DefinitionToken == referenceValue.Properties.Single().MDToken.Raw && r.SourceNodeKind == "IndexerExpression"), "Printed indexer binding lost.");
+                Check(sourceReferences.Any(r => r.Kind == "Method" && r.RequestedSignature.Contains("::Invoke(") && r.SourceNodeKind == "InvocationExpression" && r.Form == "Token"), "Delegate invocation punctuation binding lost.");
                 Check(proof.FieldBindings.Any(f => f.OwnerToken == recursive.MDToken.Raw && f.SourceName == "recurse"), "Recursive delegate storage binding lost.");
                 // Synthetic metadata only: reject similar Dispose bodies with
                 // a different state, field or additional side effect.
@@ -224,6 +244,32 @@ internal static class Program {
                 throw new InvalidDataException("Nonlocal reference does not match its exact pinned physical definition.");
             pinnedNonlocal++;
         }
+        int printedLocal = 0, printedNonlocal = 0, printedUnresolved = 0, printedUnknownOwner = 0;
+        var unpinnedPrinted = new List<object>();
+        foreach (var root in reports) {
+            if (!root.PrintedReferenceCoverage) throw new InvalidDataException("Actual C# writer reference coverage missing.");
+            var localUses = new HashSet<uint>();
+            foreach (var use in root.PrintedReferences) {
+                if (use.OwnerToken == 0) printedUnknownOwner++;
+                else if (module.ResolveToken(use.OwnerToken) is not IMemberDef owner || owner.Module != module)
+                    throw new InvalidDataException("Printed reference owner is not a local definition.");
+                if (use.DefinitionToken == 0) { printedUnresolved++; continue; }
+                var target = use.DefinitionModulePath == module.Location ? module :
+                    string.IsNullOrEmpty(use.DefinitionModulePath) ? null : references.FindModule(use.DefinitionModulePath);
+                if (target == null) {
+                    unpinnedPrinted.Add(new { root.RootTypeToken, use.OwnerToken, use.RequestedSignature, use.DefinitionModulePath, use.DefinitionToken });
+                    continue;
+                }
+                if (target.Mvid != use.DefinitionModuleMvid || target.Assembly.FullName != use.DefinitionAssemblyIdentity ||
+                    target.ResolveToken(use.DefinitionToken) is not IMemberDef definition || definition.FullName != use.DefinitionSignature)
+                    throw new InvalidDataException("Printed reference does not match its exact physical definition.");
+                if (target == module) {
+                    if (!use.IsDefinition && !use.IsImplementationAnnotation) { printedLocal++; localUses.Add(use.DefinitionToken); }
+                }
+                else printedNonlocal++;
+            }
+            if (!localUses.SetEquals(root.PrintedReferenceTokens)) throw new InvalidDataException("Printed local use token classification mismatch.");
+        }
         foreach (var pair in dependencies) if (Hash(pair.Key) != pair.Value) throw new InvalidDataException("Decompiler dependency changed: " + pair.Key);
         references.Verify();
         if (mapPath != null && (Hash(mapPath) != mapHash || whitelistPath != null && Hash(whitelistPath) != whitelistHash)) throw new InvalidDataException("Source map/whitelist changed.");
@@ -248,6 +294,11 @@ internal static class Program {
             Dependencies = dependencies.OrderBy(p => p.Key, StringComparer.OrdinalIgnoreCase).Select(p => new { Path = p.Key, Sha256 = p.Value }).ToArray(),
             Definitions = originals, Roots = reports, SourceHashes = sourceHashes, SourceOutput = sourceOutput, Checks = checks, ElapsedSeconds = stopwatch.Elapsed.TotalSeconds,
             NonlocalReferenceAudit = new { PinnedDefinitions = pinnedNonlocal, UnresolvedUses = unresolvedNonlocal, UnpinnedDefinitions = unpinnedNonlocal, Limits = "Final AST use records only. Pinned definitions have matching path/MVID/assembly identity/token/signature; this is not proof of complete source coverage or runtime contracts." },
+            PrintedReferenceAudit = new { Records = reports.Sum(r => r.PrintedReferences.Count), LocalUseRecords = printedLocal,
+                PinnedNonlocalRecords = printedNonlocal, UnresolvedRecords = printedUnresolved, UnpinnedDefinitions = unpinnedPrinted,
+                UnknownOwnerRecords = printedUnknownOwner, Definitions = reports.Sum(r => r.PrintedReferences.Count(u => u.IsDefinition)),
+                ImplementationAnnotations = reports.Sum(r => r.PrintedReferences.Count(u => u.IsImplementationAnnotation)),
+                Limits = "Actual C# token-writer metadata bindings. Definitions and anonymous implementation links are separate from source uses. Comments/debug spans and compiler-inferred implicit bindings are outside this observation; absence alone cannot retire a symbol." },
             SourceAliases = module.GetTypes().SelectMany(t => new IMemberDef[] { t }.Concat(t.Methods).Concat(t.Fields)).Where(d => SourceNameAliases.Get(d) != null)
                 .Select(d => new { Token = d.MDToken.Raw, Alias = SourceNameAliases.Get(d), AliasNamespace = d is TypeDef type ? SourceNameAliases.GetAliasNamespace(type) : null }).ToArray(),
             ParameterAliases = methods.SelectMany(m => m.Parameters.Where(p => p.IsNormalMethodParameter).Select(p => new { MethodToken = m.MDToken.Raw, Sequence = p.MethodSigIndex + 1, OriginalName = p.Name, Alias = SourceNameAliases.GetParameter(p) })).Where(p => p.Alias != null).ToArray(),

@@ -40,6 +40,7 @@ public static class BehaviorProbe {
         Check(GeneratedSourceFixture.Capture(13)(4) == 17);
         Check(GeneratedSourceFixture.Recursive()(8) == 8);
         Check(new GeneratedSourceFixture.State_NotGenerated { field_1 = 29 }.MoveNext() == 29);
+        Check(GeneratedSourceFixture.References() == 17);
         Console.WriteLine("PASS: " + checks + " generated-source behavior checks.");
     }
 }

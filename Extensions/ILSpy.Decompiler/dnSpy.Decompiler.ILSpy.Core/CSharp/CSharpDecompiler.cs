@@ -288,11 +288,12 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 					}
 				}
 			}
-			astBuilder.GenerateCode(output);
+			var printedReferences = ctx.CaptureGeneratedSourceEvidence && output.UsesCustomData ? new List<GeneratedPrintedReference>() : null;
+			astBuilder.GenerateCode(output, printedReferences);
 			if (ctx.CaptureGeneratedSourceEvidence && output.UsesCustomData)
 				output.AddCustomData(PredefinedCustomDataIds.GeneratedSourceEvidence,
 					GeneratedSourceEvidence.Capture(astBuilder.SyntaxTree, astBuilder.Context.CurrentType,
-						completeTypeScope && additionalTransform == null && transformAbortCondition == null));
+						completeTypeScope && additionalTransform == null && transformAbortCondition == null, printedReferences));
 		}
 
 		internal static void AddXmlDocumentation(ref BuilderState state, DecompilerSettings settings, AstBuilder astBuilder) {

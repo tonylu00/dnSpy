@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-04T06:42:42Z",
+  "UpdatedUtc": "2026-10-04T07:01:03Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -15,7 +15,7 @@
     "Policy": "D:\\knx_analysis\\POLICY.md",
     "Goal": "D:\\knx_analysis\\GOAL.md",
     "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
-    "DecompilerFix": "ILSpy 3dac6ddc0 records physical nonlocal final-AST references and resolves field MemberRefs by signature; original C# unchanged. Signed delegate fix df529ce7c included in tested isolated composition. Plugin net48/net10 builds; 35 physical-reference/34 native scope-audit guards, six join tests and 47 native/six rejection/123 original-rebuilt behavior cases pass. Earlier closure-owner/XAML and capture-alias fixes remain validated.",
+    "DecompilerFix": "ILSpy 1d2204143 records actual C# token-writer bindings, separating declarations and anonymous implementation links; previous physical nonlocal/field MemberRef fix 3dac6ddc0 retained. Signed delegate fix df529ce7c in tested isolated composition. Plugin net48/net10 builds; 47 physical/34 scope guards, eight join tests, 64 native/six rejection/126 original-rebuilt behavior cases pass. All 228 Common source hashes/original AST observations unchanged. Earlier closure-owner/XAML and capture-alias fixes remain validated.",
     "ExporterBuild": "Build the plugin, not the console: dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows. dnSpy.Console.csproj does NOT reference the ILSpy submodule, so building it silently leaves ICSharpCode.Decompiler.dll stale and an export then runs the old decompiler.",
     "SdkGuard": "Numeric SDK token identity enforced in de4dotEx 4abea81f and actual dnSpy export. sdk-token-regression01 suite and portable dnSpy SDK guard pass; actual console rejects protected 06000002 before source output. Current 6.3/6.4 map checks pass. Full App/runtime compatibility remains pending."
   },
@@ -85,7 +85,7 @@
       "Shape": "109 physical first-party modules: 27,570 types, 121,780 fields, 198,727 methods; 165,115 parameters/3,851 aliases and 397,219 locals/1,848 aliases. v412 has 1,115 type/13,132 method/5,208 field aliases. Two generated methods remain ScopedOnly.",
       "Report": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v412-after-framework-contracts.json",
       "Regenerate": "inventory_physical_scope.py --scope application-physical-scope-v391.json --cli <NameCandidates.dll> --map <current checked map> --ledger reviewed63.json --output <fresh directory>; optional --reuse-inventory <earlier summary> verifies physical/tool/report hashes. Retire filename-conflating backlog.py.",
-      "OpenRoute": "Whole 109-module mapped SDK final-AST coverage audited against original metadata: 16,345 roots, 20,217 body witnesses, 9,862 field bindings, 1,415,185 pinned nonlocal use records; 5,655 unresolved uses explicit. Joined all 21,903 candidates: 7,578 state-body witnesses, 588 anonymous-body witnesses, 2,330 hoisted fields (overlapping); 597 have no positive source observation. 8,331 have reconstruction/projection and no retained-member annotation. References are conservative annotations: distinguish printed accesses/debug sites and bind owner/restoration/SDK proofs before retirement. See generated-source-scope-verification.json. No candidates retired or consolidated ETS build/runtime verdict.",
+      "OpenRoute": "Whole 109-module mapped SDK final-AST coverage audited against original metadata: 16,345 roots, 20,217 body witnesses, 9,862 field bindings, 1,415,185 pinned nonlocal use records; 5,655 unresolved uses explicit. Joined all 21,903 candidates: 7,578 state-body witnesses, 588 anonymous-body witnesses, 2,330 hoisted fields (overlapping); 597 have no positive source observation. 8,331 have reconstruction/projection and no retained-member annotation. References are conservative annotations: distinguish printed accesses/debug sites and bind owner/restoration/SDK proofs before retirement. See generated-source-scope-verification.json. No candidates retired or consolidated ETS build/runtime verdict. Printed-reference fix verified on Common (13,083 records, 31 implementation links, 88 unresolved, 0 unpinned/unknown owners); only this targeted sample has writer coverage. See printed-reference-verification.json; bind whole-scope writer coverage and canonical owner/restoration/SDK evidence before retiring generated candidates.",
       "ExhaustedRoutes": [
         "cross-version transfer by fingerprint/shape/ordinal: shape 4.2%, ordinal 10-40%, literal tiebreak 5 rows - rejected",
         "half-named contract families: 0 of 141,365 (v376)",

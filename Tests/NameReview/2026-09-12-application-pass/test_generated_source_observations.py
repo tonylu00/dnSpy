@@ -51,6 +51,24 @@ class SourceObservationTests(unittest.TestCase):
     def test_physical_twins_stay_distinct(self):
         self.assertNotEqual(path_key('left/shared.dll'), path_key('right/shared.dll'))
 
+    def test_printed_uses_require_explicit_complete_writer_coverage(self):
+        report = copy.deepcopy(self.report)
+        report['Roots'][0]['PrintedReferenceTokens'] = [0x04000001]
+        self.assertFalse(self.observe(report=report)['PrintedReferenceCoverage'])
+        self.assertNotIn('LocalPrintedSourceReferenceRetained', self.observe(report=report)['Facts'])
+        report['Roots'][0]['PrintedReferenceCoverage'] = True
+        self.assertIn('LocalPrintedSourceReferenceRetained', self.observe(report=report)['Facts'])
+        report['Roots'].append({'DeclarationTokens': [], 'ReferenceTokens': [], 'BodyWitnesses': [], 'FieldBindings': []})
+        self.assertFalse(self.observe(report=report)['PrintedReferenceCoverage'])
+        self.assertNotIn('LocalPrintedSourceReferenceRetained', self.observe(report=report)['Facts'])
+
+    def test_annotations_do_not_invent_printed_uses(self):
+        report = copy.deepcopy(self.report)
+        report['Roots'][0].update(ReferenceTokens=[0x04000001], PrintedReferenceCoverage=True, PrintedReferenceTokens=[])
+        result = self.observe(report=report)
+        self.assertIn('LocalSourceReferenceRetained', result['Facts'])
+        self.assertNotIn('LocalPrintedSourceReferenceRetained', result['Facts'])
+
 
 if __name__ == '__main__':
     unittest.main()
