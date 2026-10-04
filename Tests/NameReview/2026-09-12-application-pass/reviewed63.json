@@ -294333,7 +294333,7 @@
    "Token": "0x0600197B",
    "Signature": "System.Void Class738::a(Knx.Falcon.DataSecurity.ISecureReceivingSeqNrService)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: ISecureReceivingSeqNrService parameter stores04001549. Correct stale ledger ConnectionClosed proposal to existing checked-map set_SecureReceivingSeqNrService without changing accepted definition alias. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -294345,7 +294345,7 @@
      "Sequence": 1,
      "OriginalName": "isecureReceivingSeqNrService_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "secureReceivingSeqNrService"
     }
    ],
    "LocalNames": [
@@ -294355,7 +294355,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "ConnectionClosed",
+   "NewName": "set_SecureReceivingSeqNrService",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -294368,7 +294368,7 @@
    "Token": "0x0600197F",
    "Signature": "System.Void Class738::a(Knx.Falcon.IndividualAddress)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Preserve ConnectionClosed: parameter captured in closure; queue converted to list and RemoveAll returns removed count; remaining entries rebuild queue. Unresolved local positions 3:System.Int32, 4:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -294380,24 +294380,24 @@
      "Sequence": 1,
      "OriginalName": "individualAddress_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "individualAddress"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "Class738/b",
-     "NewName": ""
+     "NewName": "addressFilterContext"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Collections.Generic.List`1<System.ValueTuple`2<Class818,System.UInt64>>",
-     "NewName": ""
+     "NewName": "remainingQueueEntries"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "removedCount"
     },
     {
      "Index": 3,
@@ -708236,7 +708236,7 @@
    "Token": "0x06001999",
    "Signature": "System.Void Class738/c::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Confirmation elapsed time, disposable statistics update, SendNextQueuedMessage State result and SetException local traced. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 7:System.Int32, 8:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -708247,37 +708247,37 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738/State",
-     "NewName": ""
+     "NewName": "nextState"
     },
     {
      "Index": 2,
      "ExpectedType": "System.TimeSpan",
-     "NewName": ""
+     "NewName": "elapsedSinceSend"
     },
     {
      "Index": 3,
      "ExpectedType": "Class1268/b",
-     "NewName": ""
+     "NewName": "statisticsUpdate"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Class738/State>",
-     "NewName": ""
+     "NewName": "nextStateAwaiter"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1<Class738/State>",
-     "NewName": ""
+     "NewName": "nextStateAwaitable"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 7,
@@ -708387,7 +708387,7 @@
    "Token": "0x0600199B",
    "Signature": "System.Void Class738/d::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Timeout generates negative confirmation with elapsed duration; statistics transaction and SendNextQueuedMessage result traced. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 7:System.Int32, 8:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -708398,37 +708398,37 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738/State",
-     "NewName": ""
+     "NewName": "nextState"
     },
     {
      "Index": 2,
      "ExpectedType": "System.TimeSpan",
-     "NewName": ""
+     "NewName": "elapsedSinceSend"
     },
     {
      "Index": 3,
      "ExpectedType": "Class1268/b",
-     "NewName": ""
+     "NewName": "statisticsUpdate"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Class738/State>",
-     "NewName": ""
+     "NewName": "nextStateAwaiter"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1<Class738/State>",
-     "NewName": ""
+     "NewName": "nextStateAwaitable"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 7,
@@ -708538,7 +708538,7 @@
    "Token": "0x0600199D",
    "Signature": "System.Void Class738/e::d()",
    "OriginalName": "d",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Dequeue separates Message/EnqueueTime, age Class701.b()-enqueueTime feeds QueueAge histogram/log, send awaited and next domain state returned. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 9:System.Int32, 10:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -708549,47 +708549,47 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738/State",
-     "NewName": ""
+     "NewName": "nextState"
     },
     {
      "Index": 2,
      "ExpectedType": "Class818",
-     "NewName": ""
+     "NewName": "message"
     },
     {
      "Index": 3,
      "ExpectedType": "System.UInt64",
-     "NewName": ""
+     "NewName": "enqueueTime"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "queueAgeMilliseconds"
     },
     {
      "Index": 5,
      "ExpectedType": "Class1268/b",
-     "NewName": ""
+     "NewName": "statisticsUpdate"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "sendAwaiter"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "sendAwaitable"
     },
     {
      "Index": 8,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 9,
@@ -708750,7 +708750,7 @@
    "Token": "0x060019A1",
    "Signature": "System.Boolean Class738/Class1262::b()",
    "OriginalName": "b",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Boolean System.Collections.IEnumerator::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x06002FD2. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Boolean System.Collections.IEnumerator::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x06002FD2. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Iterator casts captured busConnector to Interface30 then yields that diagnostic source through current field. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 3:System.Int32, 4:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -708761,17 +708761,17 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738",
-     "NewName": ""
+     "NewName": "linkLayer"
     },
     {
      "Index": 2,
      "ExpectedType": "Interface30",
-     "NewName": ""
+     "NewName": "diagnosticSource"
     },
     {
      "Index": 3,
@@ -708923,7 +708923,7 @@
    "Token": "0x060019A7",
    "Signature": "System.Void Class738/Struct842::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Message/timer casts, secure receiving sequence attachment, named message code and shared awaited trigger dispatches traced. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 10:System.Int32, 11:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -708934,52 +708934,52 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738",
-     "NewName": ""
+     "NewName": "linkLayer"
     },
     {
      "Index": 2,
      "ExpectedType": "Class750",
-     "NewName": ""
+     "NewName": "busMessageItem"
     },
     {
      "Index": 3,
      "ExpectedType": "Class818",
-     "NewName": ""
+     "NewName": "message"
     },
     {
      "Index": 4,
      "ExpectedType": "Class936",
-     "NewName": ""
+     "NewName": "secureDataMessage"
     },
     {
      "Index": 5,
      "ExpectedType": "Knx.Falcon.KnxMessages.MessageCode",
-     "NewName": ""
+     "NewName": "messageCode"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "transitionAwaiter"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "transitionAwaitable"
     },
     {
      "Index": 8,
      "ExpectedType": "Class748`1<Class738/Timer>",
-     "NewName": ""
+     "NewName": "timerEvent"
     },
     {
      "Index": 9,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 10,
@@ -709089,7 +709089,7 @@
    "Token": "0x060019A9",
    "Signature": "System.Void Class738/Struct843::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Spacing delay and connector send share awaiter; RF medium info constructed with signal255/battery state1; inner sendError logs failure, outer error goes to builder.SetException. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 10:System.Int32, 11:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -709100,52 +709100,52 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738",
-     "NewName": ""
+     "NewName": "linkLayer"
     },
     {
      "Index": 2,
      "ExpectedType": "System.TimeSpan",
-     "NewName": ""
+     "NewName": "elapsedSinceLastSendAttempt"
     },
     {
      "Index": 3,
      "ExpectedType": "System.TimeSpan",
-     "NewName": ""
+     "NewName": "sendDelay"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "sendOrDelayAwaiter"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "sendOrDelayAwaitable"
     },
     {
      "Index": 6,
      "ExpectedType": "Class977",
-     "NewName": ""
+     "NewName": "rfMediumInfo"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "sendError"
     },
     {
      "Index": 8,
      "ExpectedType": "Class1268/b",
-     "NewName": ""
+     "NewName": "statisticsUpdate"
     },
     {
      "Index": 9,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 10,
@@ -709255,7 +709255,7 @@
    "Token": "0x060019AB",
    "Signature": "System.Void Class738/i::d()",
    "OriginalName": "d",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Base-start bridge await then queue creation/high-water reset/connector event subscription traced. Managed protocol body scope aliases only; preserve CLR definition/family names, no source reconstruction claimed. Unresolved local positions 5:System.Int32, 6:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -709266,27 +709266,27 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cachedState"
     },
     {
      "Index": 1,
      "ExpectedType": "Class738",
-     "NewName": ""
+     "NewName": "linkLayer"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "baseStartingAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "baseStartingAwaitable"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 5,
@@ -736442,6 +736442,1334 @@
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001970",
+   "Signature": "System.TimeSpan Class738::i()",
+   "OriginalName": "i",
+   "Reason": "GetResponseTimeout06001990 adds getter ticks to per-byte ticks*frame length. Getter reads04001544. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetBaseResponseTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001971",
+   "Signature": "System.Void Class738::c(System.TimeSpan)",
+   "OriginalName": "c",
+   "Reason": "Stores04001544; constructor selects200/1000ms based on connector type. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.TimeSpan timeSpan_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "timeout"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SetBaseResponseTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001972",
+   "Signature": "System.TimeSpan Class738::method_15()",
+   "OriginalName": "method_15",
+   "Reason": "GetResponseTimeout06001990 multiplies this getter ticks by message.Length. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetResponseTimeoutPerByte",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001973",
+   "Signature": "System.Void Class738::b(System.TimeSpan)",
+   "OriginalName": "b",
+   "Reason": "Stores04001545; constructor selects1/3/10ms based on medium. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.TimeSpan timeSpan_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "timeoutPerByte"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SetResponseTimeoutPerByte",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001976",
+   "Signature": "System.Boolean Class738::method_19()",
+   "OriginalName": "method_19",
+   "Reason": "Exact Bus.DefendOwnAddress property getter0600257B forwards to this field read; receive handler rejects connects to own address. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDefendOwnAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001977",
+   "Signature": "System.Void Class738::b(System.Boolean)",
+   "OriginalName": "b",
+   "Reason": "Exact Bus.DefendOwnAddress property setter0600257C forwards its value to this field store. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean bool_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "enabled"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SetDefendOwnAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001978",
+   "Signature": "System.Boolean Class738::e()",
+   "OriginalName": "e",
+   "Reason": "Exact Bus.FilterIncomingUnicastMessages property getter0600257D forwards to this field read; ProcessAsync filters foreign unicast destinations. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetFilterIncomingUnicastMessages",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001979",
+   "Signature": "System.Void Class738::a(System.Boolean)",
+   "OriginalName": "a",
+   "Reason": "Exact Bus.FilterIncomingUnicastMessages property setter0600257E forwards value to this field store. No local PropertyDef owner; ordinary source method alias only, retain original runtime metadata. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Boolean bool_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "enabled"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "SetFilterIncomingUnicastMessages",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600196C",
+   "Signature": "System.Void Class738::.ctor(Knx.Falcon.Connectors.IBusConnector,Interface64)",
+   "OriginalName": ".ctor",
+   "Reason": "Preserve .ctor. IBusConnector argument1 stores at IL56 and IDiagEventSink argument2 goes to base constructor. Nullable/enum locals follow exact ConnectorFeatures and InterfaceFeatures queries and null fallbacks.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.Connectors.IBusConnector ibusConnector_1",
+    "2: Interface64 interface64_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ibusConnector_1",
+     "HasMetadata": true,
+     "NewName": "busConnector"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "interface64_1",
+     "HasMetadata": true,
+     "NewName": "diagEventSink"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.Configuration.ConnectorType>",
+     "NewName": "optionalConnectorType"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.Configuration.ConnectorType",
+     "NewName": "connectorType"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.Configuration.ConnectorType>",
+     "NewName": "unavailableConnectorType"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.KnxMediumType>",
+     "NewName": "optionalMediumType"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Falcon.KnxMediumType",
+     "NewName": "mediumType"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.KnxMediumType>",
+     "NewName": "unavailableMediumType"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600196F",
+   "Signature": "System.Void Class738::a(System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Preserve accepted set_QueueLimit; argument stores accepted queueLimit field04001543. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_14"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_14",
+     "HasMetadata": true,
+     "NewName": "queueLimit"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001975",
+   "Signature": "System.Void Class738::a(System.TimeSpan)",
+   "OriginalName": "a",
+   "Reason": "Preserve accepted set_MinTimeBetweenSend; argument stores04001546 used for send spacing. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.TimeSpan timeSpan_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timeSpan_3",
+     "HasMetadata": true,
+     "NewName": "minTimeBetweenSend"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001985",
+   "Signature": "System.Void Class738::a(System.Object,Knx.Falcon.KnxMessageEventArgs)",
+   "OriginalName": "a",
+   "Reason": "Preserve HandleKnxMessageReceived and meaningful sender name. KnxMessageEventArgs supplied by IBusConnector event subscribed in StartingAsync and removed in Completed; wraps message for protocol queue. Unresolved local positions 0:System.Int32, 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object sender",
+    "2: Knx.Falcon.KnxMessageEventArgs e"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "sender",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "e",
+     "HasMetadata": true,
+     "NewName": "eventArgs"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001987",
+   "Signature": "System.Threading.Tasks.Task Class738::vmethod_4(Class743)",
+   "OriginalName": "vmethod_4",
+   "Reason": "Preserve ProcessAsync CLR family: captures Class743 item and local0 exact Struct842 builder.Start. Unresolved local positions 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class743 class743_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class743_0",
+     "HasMetadata": true,
+     "NewName": "item"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class738/Struct842",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001989",
+   "Signature": "System.Threading.Tasks.Task Class738::e(Class738,Class818)",
+   "OriginalName": "e",
+   "Reason": "Preserve HandleReceivedFrame; increments receive counters and applies DefendOwnAddress before delivering incoming frame. Unresolved local positions 1:System.Int32, 2:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0",
+    "2: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1268/b",
+     "NewName": "statisticsUpdate"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600198A",
+   "Signature": "System.Threading.Tasks.Task Class738::d(Class738,Class818)",
+   "OriginalName": "d",
+   "Reason": "Preserve HandleRequest; transition callback forwards message to SendAndAwaitConfirmationAsync. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0",
+    "2: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600198B",
+   "Signature": "System.Threading.Tasks.Task Class738::c(Class738,Class818)",
+   "OriginalName": "c",
+   "Reason": "Preserve QueueRequest; queue tuple/message capture, overflow oldest entry converted to negative confirmation. Original queue/log behavior retained. Unresolved local positions 1:System.Int32, 2:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0",
+    "2: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.ValueTuple`2<Class818,System.UInt64>",
+     "NewName": "discardedQueueEntry"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600198C",
+   "Signature": "System.Threading.Tasks.Task`1<Class738/State> Class738::b(Class738,Class818)",
+   "OriginalName": "b",
+   "Reason": "Preserve HandleConfirmation; both callback arguments captured by exact Class738/c builder.Start owner. Unresolved local positions 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0",
+    "2: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class738/c",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600198D",
+   "Signature": "System.Threading.Tasks.Task`1<Class738/State> Class738::a(Class738,Class818)",
+   "OriginalName": "a",
+   "Reason": "Preserve HandleConfirmationTimeout; both callback arguments captured by exact Class738/d, message subsequently becomes synthetic negative confirmation. Unresolved local positions 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0",
+    "2: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class738/d",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600198E",
+   "Signature": "System.Threading.Tasks.Task`1<Class738/State> Class738::a(Class738)",
+   "OriginalName": "a",
+   "Reason": "Preserve SendNextQueuedMessage; layer captured by exact Class738/e builder.Start owner. Unresolved local positions 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class738/e",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600198F",
+   "Signature": "System.Threading.Tasks.Task Class738::b(Class818)",
+   "OriginalName": "b",
+   "Reason": "Preserve SendAndAwaitConfirmationAsync; message captured by exact Struct843 builder.Start owner. Unresolved local positions 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class738/Struct843",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001990",
+   "Signature": "System.TimeSpan Class738::a(Class818)",
+   "OriginalName": "a",
+   "Reason": "Preserve GetResponseTimeout; message Length and RF band/mode determine duration. Local0 mapped RF mode, local1 temporary timeout interval. Unresolved local positions 2:System.Int32, 3:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Falcon.RfMode",
+     "NewName": "rfMode"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.TimeSpan",
+     "NewName": "timeoutInterval"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001991",
+   "Signature": "System.Void Class738::a(Class818,System.Boolean)",
+   "OriginalName": "a",
+   "Reason": "Preserve PublishConfirmation; bool flows to Class750 third constructor argument. Real confirmation body06001999 passes false; timeout body0600199B and overflow0600198B pass true. Unresolved local positions 0:System.Int32, 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class818 class818_1",
+    "2: System.Boolean bool_4"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class818_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "bool_4",
+     "HasMetadata": true,
+     "NewName": "isSyntheticConfirmation"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001984",
+   "Signature": "System.Threading.Tasks.Task Class738::vmethod_2()",
+   "OriginalName": "vmethod_2",
+   "Reason": "Preserve StartingAsync CLR family; local0 Class738/i goes byref into trusted builder.Start. Unresolved local positions 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class738/i",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001992",
+   "Signature": "System.Threading.Tasks.Task Class738::a()",
+   "OriginalName": "a",
+   "Reason": "Unresolved compiler bridge: trusted CompilerGenerated method forwards exact nonvirtual base Class731.StartingAsync (body IL0-6). Native owner body060019AB calls it at IL127. Missing original compiler proxy spelling and merged base-call source witness; do not invent semantic helper alias. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved compiler bridge: trusted CompilerGenerated method forwards exact nonvirtual base Class731.StartingAsync (body IL0-6). Native owner body060019AB calls it at IL127. Missing original compiler proxy spelling and merged base-call source witness; do not invent semantic helper alias. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001980",
+   "Signature": "Knx.Falcon.Diagnostics.DiagSourceType Class738::Interface30.get_Type()",
+   "OriginalName": "Interface30.get_Type",
+   "Reason": "Preserve meaningful original explicit Interface30 diagnostic accessor name and CLR property contract. Native accessor/runtime-special-name blocker retained; unused Int16 local has no domain role. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "accessor-operator-or-runtime-special-name",
+   "ScopedMappingBlocker": "accessor-operator-or-runtime-special-name",
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "preserve"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001981",
+   "Signature": "System.String Class738::Interface30.get_Instance()",
+   "OriginalName": "Interface30.get_Instance",
+   "Reason": "Preserve meaningful original explicit Interface30 diagnostic accessor name and CLR property contract. Native accessor/runtime-special-name blocker retained; unused Int16 local has no domain role. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "accessor-operator-or-runtime-special-name",
+   "ScopedMappingBlocker": "accessor-operator-or-runtime-special-name",
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "preserve"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x06001983",
+   "Signature": "System.Collections.Generic.IEnumerable`1<Interface30> Class738::Interface30.get_AdditionalSources()",
+   "OriginalName": "Interface30.get_AdditionalSources",
+   "Reason": "Preserve meaningful original explicit Interface30 diagnostic accessor name and CLR property contract. Native accessor/runtime-special-name blocker retained; unused Int16 local has no domain role. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "accessor-operator-or-runtime-special-name",
+   "ScopedMappingBlocker": "accessor-operator-or-runtime-special-name",
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "preserve"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/<>c",
+   "Token": "0x06001995",
+   "Signature": "Class738/State Class738/<>c::a(Class738)",
+   "OriginalName": "a",
+   "Reason": "Cctor state reader Func<Class738,State> uses argument field0400152D at IL1. Scope-only generated callback; compiler-owned definition spelling unchanged. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/<>c",
+   "Token": "0x06001996",
+   "Signature": "System.Void Class738/<>c::a(Class738,Class738/State)",
+   "OriginalName": "a",
+   "Reason": "Cctor state writer Action<Class738,State> stores second argument into first argument field0400152D at IL2. Scope-only generated callback; compiler-owned definition spelling unchanged. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class738 class738_0",
+    "2: Class738/State state_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class738_0",
+     "HasMetadata": true,
+     "NewName": "linkLayer"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "state_0",
+     "HasMetadata": true,
+     "NewName": "state"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/b",
+   "Token": "0x06001998",
+   "Signature": "System.Boolean Class738/b::b(System.ValueTuple`2<Class818,System.UInt64>)",
+   "OriginalName": "b",
+   "Reason": "ConnectionClosed RemoveAll predicate examines tuple.Message TPCI4/14/15 and compares its DestinationAddress with captured individualAddress; no generated method name change. Scope-only generated callback; compiler-owned definition spelling unchanged. Unresolved local positions 0:System.Int32, 1:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.ValueTuple`2<Class818,System.UInt64> valueTuple_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "valueTuple_0",
+     "HasMetadata": true,
+     "NewName": "queueEntry"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Class1262",
+   "Token": "0x0600199F",
+   "Signature": "System.Void Class738/Class1262::.ctor(System.Int32)",
+   "OriginalName": ".ctor",
+   "Reason": "Iterator .ctor argument1 stores state at IL8; separate Environment.CurrentManagedThreadId stores initialThreadId at IL19.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "initialState"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface62",
+   "Token": "0x0600195B",
+   "Signature": "Knx.Falcon.BusInterfaceFeatures Interface62::imethod_5()",
+   "OriginalName": "imethod_5",
+   "Reason": "Complete native two-member familyDB0A3541F61B19A098F213DE84CCCE511FEFB9B28D37262CA7BE2703254C6287: Interface62 declaration and Class738 implementation. Implementation loads exact busConnector and forwards to meaningful IBusConnector.get_InterfaceFeatures without transformation. Reviewed atomically in same physical Falcon context.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "DB0A3541F61B19A098F213DE84CCCE511FEFB9B28D37262CA7BE2703254C6287",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetInterfaceFeatures",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600197C",
+   "Signature": "Knx.Falcon.BusInterfaceFeatures Class738::imethod_5()",
+   "OriginalName": "imethod_5",
+   "Reason": "Complete native two-member familyDB0A3541F61B19A098F213DE84CCCE511FEFB9B28D37262CA7BE2703254C6287: Interface62 declaration and Class738 implementation. Implementation loads exact busConnector and forwards to meaningful IBusConnector.get_InterfaceFeatures without transformation. Reviewed atomically in same physical Falcon context. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "DB0A3541F61B19A098F213DE84CCCE511FEFB9B28D37262CA7BE2703254C6287",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetInterfaceFeatures",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface62",
+   "Token": "0x0600195C",
+   "Signature": "Knx.Falcon.BusInterfaceConfiguration Interface62::imethod_6()",
+   "OriginalName": "imethod_6",
+   "Reason": "Complete native two-member familyF671E9E012B6BB885C9174CC6AECE91D21CAD8EE4FE17DCA6399570534D4F3E2: Interface62 declaration and Class738 implementation. Implementation loads exact busConnector and forwards to meaningful IBusConnector.get_InterfaceConfiguration without transformation. Reviewed atomically in same physical Falcon context.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "F671E9E012B6BB885C9174CC6AECE91D21CAD8EE4FE17DCA6399570534D4F3E2",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetInterfaceConfiguration",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0600197D",
+   "Signature": "Knx.Falcon.BusInterfaceConfiguration Class738::imethod_6()",
+   "OriginalName": "imethod_6",
+   "Reason": "Complete native two-member familyF671E9E012B6BB885C9174CC6AECE91D21CAD8EE4FE17DCA6399570534D4F3E2: Interface62 declaration and Class738 implementation. Implementation loads exact busConnector and forwards to meaningful IBusConnector.get_InterfaceConfiguration without transformation. Reviewed atomically in same physical Falcon context. Unresolved local positions 0:System.Int16: no unique domain role, generally unused flattened control storage; no placeholder alias assigned.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "F671E9E012B6BB885C9174CC6AECE91D21CAD8EE4FE17DCA6399570534D4F3E2",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetInterfaceConfiguration",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
   }
  ],
  "Types": [
@@ -762607,6 +763935,204 @@
    "NewName": "",
    "Unresolved": true,
    "UnresolvedReason": "Unresolved source reconstruction: native owner SendAndAwaitAckAsync0600191F; trusted AsyncStateMachineAttribute and exact builder.Start at IL53; body06001957. Exact compiler type spelling and source-owner merge are not proven by structural ownership alone; retain original generated type and do not invent a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/a",
+   "Token": "0x02000479",
+   "Signature": "Class738/a",
+   "OriginalName": "a",
+   "Reason": "Non-generated enum supplies the event argument to the asynchronous link-layer state machine. ProcessAsync body060019A7 passes0 for L_Data_req,1 for matching L_Data_con,2 for Timer.ConfirmationTimeout,3 for L_Data_ind; cctor0600196B installs all eight matching state transitions. Preserve State/Timer enum names.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Trigger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/c",
+   "Token": "0x0200047C",
+   "Signature": "Class738/c",
+   "OriginalName": "c",
+   "Reason": "Unresolved source reconstruction: Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/d",
+   "Token": "0x0200047D",
+   "Signature": "Class738/d",
+   "OriginalName": "d",
+   "Reason": "Unresolved source reconstruction: Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/e",
+   "Token": "0x0200047E",
+   "Signature": "Class738/e",
+   "OriginalName": "e",
+   "Reason": "Unresolved source reconstruction: Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Class1262",
+   "Token": "0x0200047F",
+   "Signature": "Class738/Class1262",
+   "OriginalName": "Class1262",
+   "Reason": "Unresolved source reconstruction: Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct842",
+   "Token": "0x02000480",
+   "Signature": "Class738/Struct842",
+   "OriginalName": "Struct842",
+   "Reason": "Unresolved source reconstruction: Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x02000481",
+   "Signature": "Class738/Struct843",
+   "OriginalName": "Struct843",
+   "Reason": "Unresolved source reconstruction: Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/i",
+   "Token": "0x02000482",
+   "Signature": "Class738/i",
+   "OriginalName": "i",
+   "Reason": "Unresolved source reconstruction: Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Exact compiler type spelling and source-owner merge have no current consolidated source witness; retain generated type without inventing a semantic implementation type.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/b",
+   "Token": "0x0200047B",
+   "Signature": "Class738/b",
+   "OriginalName": "b",
+   "Reason": "Unresolved source reconstruction: trusted generated closure captured by ConnectionClosed0600197F local0 and exact RemoveAll predicate06001998. Captured individual address is proven, but compiler type spelling/source-owner merge needs a source witness. Keep original generated type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved source reconstruction: trusted generated closure captured by ConnectionClosed0600197F local0 and exact RemoveAll predicate06001998. Captured individual address is proven, but compiler type spelling/source-owner merge needs a source witness. Keep original generated type.",
    "ReviewDisposition": "unresolved"
   }
  ],
@@ -1129455,6 +1130981,1590 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "acknowledgementAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001527",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class738::a",
+   "OriginalName": "a",
+   "Reason": "Cctor0600196B gets IFalconLogger with Falcon.KnxStack.LL and stores at IL15; accepted GetLogger0600196A returns it.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_logger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001528",
+   "Signature": "Knx.Falcon.Connectors.IBusConnector Class738::d",
+   "OriginalName": "d",
+   "Reason": "Constructor0600196C stores IBusConnector argument1 at IL56. Send body060019A9 calls connector send, StartingAsync subscribes message event, getters expose exact connector features/configuration.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_busConnector",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001529",
+   "Signature": "System.Collections.Generic.Queue`1<System.ValueTuple`2<Class818,System.UInt64>> Class738::e",
+   "OriginalName": "e",
+   "Reason": "TupleElementNamesAttribute names Message/EnqueueTime; QueueRequest0600198B enqueues (message,Class701.b()), body0600199D dequeues and measures queue age, ConnectionClosed filters connected frames for the closed peer.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_sendQueue",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400152A",
+   "Signature": "System.Int32 Class738::int_3",
+   "OriginalName": "int_3",
+   "Reason": "QueueRequest0600198B compares Count then stores increased Count at IL225; log Max queue length uses this field. StartingAsync body060019AB resets it at IL71.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_maxQueueLength",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400152B",
+   "Signature": "Class818 Class738::class818_0",
+   "OriginalName": "class818_0",
+   "Reason": "Send body060019A9 stores message at IL118; ProcessAsync060019A7 accepts confirmations only matching this frame; PublishConfirmation06001991 clears matching pending frame.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_lastSentFrame",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400152C",
+   "Signature": "System.DateTime Class738::dateTime_0",
+   "OriginalName": "dateTime_0",
+   "Reason": "Send body060019A9 stores current time at IL421 after success/failure/no-connector paths. Used for MinTimeBetweenSend delay and confirmation elapsed time. Does not mean last successful send.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_lastSendAttemptTime",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400152D",
+   "Signature": "Class738/State Class738::i",
+   "OriginalName": "i",
+   "Reason": "State.IDLE/WAIT_CON selected by exact cctor reader/writer delegates06001995/96 and asynchronous transition actions.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400152E",
+   "Signature": "Class1245`4<Class738,Class738/State,Class738/a,Class818> Class738::class1245_0",
+   "OriginalName": "class1245_0",
+   "Reason": "Cctor0600196B constructs Class1245 with get/set state delegates, eight AsyncStateTransition entries and logger at IL263; ProcessAsync awaits its trigger dispatch.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_stateMachine",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400152F",
+   "Signature": "Knx.Falcon.Diagnostics.Statistics.StatisticsDefinition Class738::statisticsDefinition_0",
+   "OriginalName": "statisticsDefinition_0",
+   "Reason": "Cctor0600196B constructs StatisticsDefinition LinkLayer with seven counters and ConfTimes/QueueAge histograms; constructor uses it for accepted statistics field04001530.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_statisticsDefinition",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001544",
+   "Signature": "System.TimeSpan Class738::af",
+   "OriginalName": "af",
+   "Reason": "GetResponseTimeout06001990 IL25/33 adds this duration ticks to per-byte ticks*message.Length; constructor chooses200ms or1000ms based on connector type.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_baseResponseTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001545",
+   "Signature": "System.TimeSpan Class738::timeSpan_1",
+   "OriginalName": "timeSpan_1",
+   "Reason": "GetResponseTimeout06001990 IL39-59 multiplies this duration by message.Length before adding base timeout; constructor chooses1/3/10ms based on medium.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_responseTimeoutPerByte",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001546",
+   "Signature": "System.TimeSpan Class738::timeSpan_2",
+   "OriginalName": "timeSpan_2",
+   "Reason": "Accepted accessor get_MinTimeBetweenSend06001974 reads it; send body060019A9 computes required wait and logs Defer send by ... because of MinTimeBetweenSend.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_minTimeBetweenSend",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001547",
+   "Signature": "System.Boolean Class738::ai",
+   "OriginalName": "ai",
+   "Reason": "Exact public Bus.DefendOwnAddress PropertyDef17000147 wrappers0600257B/7C forward to06001976/77. Receive handler06001989 rejects connect addressed to own address with a disconnect frame when enabled.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_defendOwnAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001548",
+   "Signature": "System.Boolean Class738::bool_3",
+   "OriginalName": "bool_3",
+   "Reason": "Exact public Bus.FilterIncomingUnicastMessages PropertyDef17000148 wrappers0600257D/7E forward to06001978/79. ProcessAsync IL752-811 ignores unicast to another individual address when enabled.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_filterIncomingUnicastMessages",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001549",
+   "Signature": "Knx.Falcon.DataSecurity.ISecureReceivingSeqNrService Class738::ak",
+   "OriginalName": "ak",
+   "Reason": "Accepted GetReceivingSeqNrService0600197A reads it and setter0600197B stores ISecureReceivingSeqNrService. ProcessAsync passes service per-source receiving sequence information into mapped SecureDataMessage.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_secureReceivingSeqNrService",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400154A",
+   "Signature": "Class1246`4<Class738,Class738/State,Class738/a,Class818>[] Class738::al",
+   "OriginalName": "al",
+   "Reason": "Cctor0600196B creates eight typed AsyncStateTransition entries, stores array at IL216 and passes it into Class1245 constructor.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "_transitions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001531",
+   "Signature": "System.String Class738::m",
+   "OriginalName": "m",
+   "Reason": "Public literal string SendCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "SendCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001532",
+   "Signature": "System.String Class738::string_3",
+   "OriginalName": "string_3",
+   "Reason": "Public literal string SendFailedCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "SendFailedCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001533",
+   "Signature": "System.String Class738::string_4",
+   "OriginalName": "string_4",
+   "Reason": "Public literal string ReceivedCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ReceivedCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001534",
+   "Signature": "System.String Class738::string_5",
+   "OriginalName": "string_5",
+   "Reason": "Public literal string ConfTimeoutCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ConfTimeoutCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001535",
+   "Signature": "System.String Class738::q",
+   "OriginalName": "q",
+   "Reason": "Public literal string ConfErrorCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ConfErrorCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001536",
+   "Signature": "System.String Class738::string_7",
+   "OriginalName": "string_7",
+   "Reason": "Public literal string ConfRepeatCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ConfRepeatCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001537",
+   "Signature": "System.String Class738::s",
+   "OriginalName": "s",
+   "Reason": "Public literal string IndRepeatCount exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "IndRepeatCountStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001538",
+   "Signature": "System.String Class738::string_9",
+   "OriginalName": "string_9",
+   "Reason": "Public literal string ConfTimes exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ConfTimesStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001539",
+   "Signature": "System.String Class738::string_10",
+   "OriginalName": "string_10",
+   "Reason": "Public literal string QueueAge exactly matches same named StatisticsItemDefinition in cctor0600196B; distinguish declaration from numeric index constants.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "QueueAgeStatisticName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400153A",
+   "Signature": "System.Int32 Class738::int_4",
+   "OriginalName": "int_4",
+   "Reason": "Unresolved: private Int32 literal 0 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 0 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400153B",
+   "Signature": "System.Int32 Class738::int_5",
+   "OriginalName": "int_5",
+   "Reason": "Unresolved: private Int32 literal 1 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 1 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400153C",
+   "Signature": "System.Int32 Class738::x",
+   "OriginalName": "x",
+   "Reason": "Unresolved: private Int32 literal 2 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 2 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400153D",
+   "Signature": "System.Int32 Class738::int_7",
+   "OriginalName": "int_7",
+   "Reason": "Unresolved: private Int32 literal 3 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 3 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400153E",
+   "Signature": "System.Int32 Class738::int_8",
+   "OriginalName": "int_8",
+   "Reason": "Unresolved: private Int32 literal 4 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 4 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x0400153F",
+   "Signature": "System.Int32 Class738::int_9",
+   "OriginalName": "int_9",
+   "Reason": "Unresolved: private Int32 literal 5 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 5 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001540",
+   "Signature": "System.Int32 Class738::int_10",
+   "OriginalName": "int_10",
+   "Reason": "Unresolved: private Int32 literal 6 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 6 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001541",
+   "Signature": "System.Int32 Class738::int_11",
+   "OriginalName": "int_11",
+   "Reason": "Unresolved: private Int32 literal 7 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 7 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738",
+   "Token": "0x04001542",
+   "Signature": "System.Int32 Class738::int_12",
+   "OriginalName": "int_12",
+   "Reason": "Unresolved: private Int32 literal 8 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Unresolved: private Int32 literal 8 agrees with a cctor statistics slot but no retained declaration reference appears in inspected type/descendant IL. Missing unique declaration-to-counter identity binding; inlined value and order alone do not prove its source name.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/a",
+   "Token": "0x04001552",
+   "Signature": "Class738/a Class738/a::a",
+   "OriginalName": "a",
+   "Reason": "Enum declaration Class738/a value0. ProcessAsync body060019A7 dispatches this value for L_Data_req17; cctor0600196B transition table consistently binds that event to its typed handler.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "SendRequest",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/a",
+   "Token": "0x04001553",
+   "Signature": "Class738/a Class738/a::b",
+   "OriginalName": "b",
+   "Reason": "Enum declaration Class738/a value1. ProcessAsync body060019A7 dispatches this value for matching L_Data_con46; cctor0600196B transition table consistently binds that event to its typed handler.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ConfirmationReceived",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/a",
+   "Token": "0x04001554",
+   "Signature": "Class738/a Class738/a::c",
+   "OriginalName": "c",
+   "Reason": "Enum declaration Class738/a value2. ProcessAsync body060019A7 dispatches this value for Timer.ConfirmationTimeout; cctor0600196B transition table consistently binds that event to its typed handler.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "ConfirmationTimedOut",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/a",
+   "Token": "0x04001555",
+   "Signature": "Class738/a Class738/a::d",
+   "OriginalName": "d",
+   "Reason": "Enum declaration Class738/a value3. ProcessAsync body060019A7 dispatches this value for L_Data_ind41; cctor0600196B transition table consistently binds that event to its typed handler.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "FrameReceived",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/b",
+   "Token": "0x04001558",
+   "Signature": "Knx.Falcon.IndividualAddress Class738/b::a",
+   "OriginalName": "a",
+   "Reason": "ConnectionClosed0600197F stores parameter1 into exact closure field at IL8; predicate06001998 compares connected-frame DestinationAddress with this captured address at IL33/38. Match owner parameter alias.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "individualAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/c",
+   "Token": "0x0400155A",
+   "Signature": "System.Int32 Class738/c::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Proven storage role: dispatch/suspension state. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/c",
+   "Token": "0x0400155B",
+   "Signature": "System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<Class738/State> Class738/c::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Proven storage role: AsyncTaskMethodBuilder<State> Start/SetResult/SetException. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "builder",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/c",
+   "Token": "0x0400155C",
+   "Signature": "Class738 Class738/c::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Proven storage role: kickoff parameter1 capture. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/c",
+   "Token": "0x0400155D",
+   "Signature": "Class818 Class738/c::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Proven storage role: kickoff parameter2 capture; incoming confirmation. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "message",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/c",
+   "Token": "0x0400155E",
+   "Signature": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Class738/State> Class738/c::e",
+   "OriginalName": "e",
+   "Reason": "Native structural owner HandleConfirmation0x0600198C; trusted framework state-machine attribute and exact builder.Start at IL45; body0x06001999. Proven storage role: awaits SendNextQueuedMessage State result. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "nextStateAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/d",
+   "Token": "0x04001560",
+   "Signature": "System.Int32 Class738/d::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Proven storage role: dispatch/suspension state. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/d",
+   "Token": "0x04001561",
+   "Signature": "System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<Class738/State> Class738/d::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Proven storage role: AsyncTaskMethodBuilder<State> Start/SetResult/SetException. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "builder",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/d",
+   "Token": "0x04001562",
+   "Signature": "Class738 Class738/d::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Proven storage role: kickoff parameter1 capture. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/d",
+   "Token": "0x04001563",
+   "Signature": "Class818 Class738/d::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Proven storage role: kickoff parameter2 capture, subsequently assigned synthetic negative confirmation at body IL161. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "message",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/d",
+   "Token": "0x04001564",
+   "Signature": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Class738/State> Class738/d::e",
+   "OriginalName": "e",
+   "Reason": "Native structural owner HandleConfirmationTimeout0x0600198D; trusted framework state-machine attribute and exact builder.Start at IL45; body0x0600199B. Proven storage role: awaits SendNextQueuedMessage State result. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "nextStateAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/e",
+   "Token": "0x04001566",
+   "Signature": "System.Int32 Class738/e::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Proven storage role: dispatch/suspension state. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/e",
+   "Token": "0x04001567",
+   "Signature": "System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<Class738/State> Class738/e::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Proven storage role: AsyncTaskMethodBuilder<State> Start/SetResult/SetException. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "builder",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/e",
+   "Token": "0x04001568",
+   "Signature": "Class738 Class738/e::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Proven storage role: kickoff parameter1 capture. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/e",
+   "Token": "0x04001569",
+   "Signature": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter Class738/e::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner SendNextQueuedMessage0x0600198E; trusted framework state-machine attribute and exact builder.Start at IL37; body0x0600199D. Proven storage role: awaits SendAndAwaitConfirmationAsync for dequeued message. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "sendAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Class1262",
+   "Token": "0x0400156B",
+   "Signature": "System.Int32 Class738/Class1262::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Proven storage role: ctor initialState and iterator0/1/-1 transitions. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Class1262",
+   "Token": "0x0400156C",
+   "Signature": "Interface30 Class738/Class1262::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Proven storage role: Current accessors return yielded IBusConnector diagnostic source. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "current",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Class1262",
+   "Token": "0x0400156D",
+   "Signature": "System.Int32 Class738/Class1262::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Proven storage role: ctor Environment.CurrentManagedThreadId and enumerator reuse check. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialThreadId",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Class1262",
+   "Token": "0x0400156E",
+   "Signature": "Class738 Class738/Class1262::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner Interface30.get_AdditionalSources0x06001983; trusted framework state-machine attribute; body0x060019A1. Proven storage role: iterator kickoff captures this and body reads busConnector. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct842",
+   "Token": "0x04001570",
+   "Signature": "System.Int32 Class738/Struct842::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Proven storage role: dispatch/suspension state. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct842",
+   "Token": "0x04001571",
+   "Signature": "System.Runtime.CompilerServices.AsyncTaskMethodBuilder Class738/Struct842::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Proven storage role: AsyncTaskMethodBuilder Start/SetResult/SetException. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "builder",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct842",
+   "Token": "0x04001572",
+   "Signature": "Class743 Class738/Struct842::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Proven storage role: kickoff parameter1 Class743 capture; casts message/timer items. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "item",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct842",
+   "Token": "0x04001573",
+   "Signature": "Class738 Class738/Struct842::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Proven storage role: kickoff captures this. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct842",
+   "Token": "0x04001574",
+   "Signature": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter Class738/Struct842::e",
+   "OriginalName": "e",
+   "Reason": "Native structural owner ProcessAsync0x06001987; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A7. Proven storage role: shared non-generic awaiter for all four state-machine trigger dispatches. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "transitionAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x04001576",
+   "Signature": "System.Int32 Class738/Struct843::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Proven storage role: dispatch/suspension state. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x04001577",
+   "Signature": "System.Runtime.CompilerServices.AsyncTaskMethodBuilder Class738/Struct843::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Proven storage role: AsyncTaskMethodBuilder Start/SetResult/SetException. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "builder",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x04001578",
+   "Signature": "Class738 Class738/Struct843::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Proven storage role: kickoff captures this. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x04001579",
+   "Signature": "Class818 Class738/Struct843::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Proven storage role: kickoff parameter1 capture; sent frame. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "message",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x0400157A",
+   "Signature": "System.Boolean Class738/Struct843::e",
+   "OriginalName": "e",
+   "Reason": "Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Proven storage role: body false at IL58, true after connector send GetResult at IL273; send/failure statistics selection. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "sendSucceeded",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/Struct843",
+   "Token": "0x0400157B",
+   "Signature": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter Class738/Struct843::configuredTaskAwaiter_0",
+   "OriginalName": "configuredTaskAwaiter_0",
+   "Reason": "Native structural owner SendAndAwaitConfirmationAsync0x0600198F; trusted framework state-machine attribute and exact builder.Start at IL45; body0x060019A9. Proven storage role: one shared awaiter slot for MinTimeBetweenSend delay and connector send; both resume paths verified. Source reconstruction remains unverified.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "sendOrDelayAwaiter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/i",
+   "Token": "0x0400157D",
+   "Signature": "System.Int32 Class738/i::a",
+   "OriginalName": "a",
+   "Reason": "Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Proven storage role: dispatch/suspension state. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "state",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/i",
+   "Token": "0x0400157E",
+   "Signature": "System.Runtime.CompilerServices.AsyncTaskMethodBuilder Class738/i::b",
+   "OriginalName": "b",
+   "Reason": "Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Proven storage role: AsyncTaskMethodBuilder Start/SetResult/SetException. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "builder",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/i",
+   "Token": "0x0400157F",
+   "Signature": "Class738 Class738/i::c",
+   "OriginalName": "c",
+   "Reason": "Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Proven storage role: kickoff captures this. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "linkLayer",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class738/i",
+   "Token": "0x04001580",
+   "Signature": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter Class738/i::d",
+   "OriginalName": "d",
+   "Reason": "Native structural owner StartingAsync0x06001984; trusted framework state-machine attribute and exact builder.Start at IL37; body0x060019AB. Proven storage role: awaits generated bridge06001992 to base StartingAsync before queue/event setup. Source reconstruction remains unverified.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "baseStartingAwaiter",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
