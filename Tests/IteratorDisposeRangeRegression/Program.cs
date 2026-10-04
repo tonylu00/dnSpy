@@ -65,6 +65,38 @@ class Program {
             var ranges = analysisType.BaseType!.GetField("ranges", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(analysis)!;
             return ranges.GetType().GetProperty("Item")!.GetValue(ranges, new object[] { node })!;
         }
+        foreach (var code in new[] { ILCode.Cgt, ILCode.Cge, ILCode.Clt, ILCode.Cle })
+        foreach (int offset in new[] { int.MinValue, -100, -4, -1, 0, 1, 4, 100, int.MaxValue })
+        foreach (int threshold in new[] { int.MinValue, int.MinValue + 1, -4, -3, -1, 0, 1, 2, int.MaxValue - 1, int.MaxValue })
+        foreach (bool reversed in new[] { false, true }) foreach (bool inverted in new[] { false, true }) {
+            var selected = new ILLabel { Name = "true" }; var otherwise = new ILLabel { Name = "false" };
+            var input = new ILExpression(ILCode.Sub, null, new ILExpression(ILCode.Ldloc, cachedState), new ILExpression(ILCode.Ldc_I4, unchecked(-offset)));
+            var constant = new ILExpression(ILCode.Ldc_I4, threshold);
+            ILExpression predicate = new(code, null, reversed ? constant : input, reversed ? input : constant);
+            if (inverted) predicate = new ILExpression(ILCode.LogicNot, null, predicate);
+            var body = new List<ILNode> {
+                new ILExpression(ILCode.Stloc, cachedState, new ILExpression(ILCode.Ldfld, field, Load())),
+                new ILExpression(ILCode.Brtrue, selected, predicate), otherwise, new ILExpression(ILCode.Ret, null),
+                selected, new ILExpression(ILCode.Ret, null)
+            };
+            var analysis = Analyze(body); var trueRange = NodeRange(analysis, selected); var falseRange = NodeRange(analysis, otherwise);
+            var samples = new HashSet<int> { int.MinValue, int.MinValue + 1, -100, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 100, int.MaxValue - 1, int.MaxValue,
+                unchecked(threshold - offset - 1), unchecked(threshold - offset), unchecked(threshold - offset + 1),
+                unchecked(int.MinValue - offset), unchecked(int.MaxValue - offset) };
+            for (int i = 0; i < 12; i++) samples.Add((int)random.NextInt64(int.MinValue, (long)int.MaxValue + 1));
+            foreach (int sample in samples) {
+                int shifted = unchecked(sample + offset), left = reversed ? threshold : shifted, right = reversed ? shifted : threshold;
+                bool expected = code == ILCode.Cgt ? left > right : code == ILCode.Cge ? left >= right : code == ILCode.Clt ? left < right : left <= right;
+                if (inverted) expected = !expected;
+                Check(Contains(trueRange, sample) == expected && Contains(falseRange, sample) != expected, "Signed comparison state partition mismatch");
+            }
+        }
+        var evaluationType = Core.GetType("ICSharpCode.Decompiler.ILAst.SymbolicEvaluationContext", true)!;
+        var evaluation = Activator.CreateInstance(evaluationType, field)!;
+        evaluationType.GetMethod("AddStateVariable")!.Invoke(evaluation, new object[] { cachedState });
+        var checkedOffset = new ILExpression(ILCode.Sub_Ovf, null, new ILExpression(ILCode.Ldloc, cachedState), new ILExpression(ILCode.Ldc_I4, 1));
+        var checkedValue = evaluationType.GetMethod("Eval")!.Invoke(evaluation, new object[] { checkedOffset })!;
+        Check(checkedValue.GetType().GetField("Type")!.GetValue(checkedValue)!.ToString() == "Unknown", "Checked arithmetic overflow was erased");
         foreach (bool backwards in new[] { false, true }) {
             var entry = new ILLabel { Name = "entry" }; var dispatch = new ILLabel { Name = "dispatch" };
             var selected = new ILLabel { Name = "selected" }; var end = new ILLabel { Name = "end" };

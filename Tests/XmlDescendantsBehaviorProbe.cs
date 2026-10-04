@@ -19,8 +19,12 @@ class XmlDescendantsBehaviorProbe {
             return Assembly.LoadFrom(path);
         };
         var assembly = Assembly.LoadFrom(Path.GetFullPath(args[0]));
-        Check(assembly.FullName == "Knx.Ets.Xml.ObjectModel, Version=5.6.339.33637, Culture=neutral, PublicKeyToken=61439873ec5e1159", "Exact compatibility identity");
+        Check(assembly.FullName == args[2] && assembly.GetName().Name == "Knx.Ets.Xml.ObjectModel", "Exact physical XML identity");
         Run();
+        RunMemorySegment();
+#if ETS_XML_PARAMETER_ITEMS
+        RunParameterItems();
+#endif
     }
     static void Check(bool value, string message) { if (!value) throw new Exception(message); }
     sealed class Trace : IEnumerable<Element> {
@@ -47,6 +51,101 @@ class XmlDescendantsBehaviorProbe {
     sealed class BaggageNode : Baggage { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
     sealed class HardwareNode : Hardware { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
     sealed class Language : LanguageData { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
+    sealed class Location : Knx.Ets.Xml.ObjectModel.ResourceLocation { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
+    sealed class Access : HawkConfigurationDataMemorySegmentAccessRights { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
+#if ETS_XML_PARAMETER_ITEMS
+    sealed class Memory : MemoryParameter { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
+    sealed class ModuleMemory : ModuleDefMemoryParameter { public Trace Trace; public override IEnumerable<Element> GetDescendants() => Trace.Descendants(); }
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static void RunParameterItems() {
+        var observations = new StringBuilder(); int cases = 0;
+        foreach (bool module in new[] { false, true }) foreach (bool present in new[] { false, true })
+        foreach (int leaves in new[] { 0, 1, 2, 3 }) foreach (string fail in new[] { "", "owner", "acquire", "move", "current", "dispose" })
+        for (int stop = 0; stop <= 8; stop++) {
+            var events = new List<string>(); var failure = new IOException("injected");
+            var trace = new Trace { Name = "item", Fail = fail, Failure = failure, Events = events };
+            Element child = module ? (Element)new ModuleMemory { Trace = trace } : new Memory { Trace = trace };
+            for (int leaf = 0; leaf < leaves; leaf++) trace.Values.Add(new Baggage());
+            var expected = present ? new[] { child }.Concat(trace.Values).ToArray() : new Element[0];
+            Element parameter;
+            if (module) { var value = new ModuleDefParameter(); if (present) value.Item = child; parameter = value; }
+            else { var value = new Knx.Ets.Xml.ObjectModel.Parameter(); if (present) value.Item = child; parameter = value; }
+            var enumerable = parameter.GetDescendants(); var iterator = enumerable.GetEnumerator();
+            Check(events.Count == 0, "Eager parameter-item iteration");
+            var seen = new List<Element>(); string error = "none"; bool exhausted = false;
+            try {
+                for (int step = 0; step < stop; step++) {
+                    if (!iterator.MoveNext()) { exhausted = true; break; }
+                    var current = iterator.Current; int before = events.Count;
+                    Check(ReferenceEquals(current, iterator.Current) && events.Count == before, "Parameter-item Current not cached"); seen.Add(current);
+                }
+                if (exhausted) Check(!iterator.MoveNext(), "Unstable parameter-item exhaustion");
+            }
+            catch (Exception exception) { Check(ReferenceEquals(exception, failure), "Parameter-item exception identity changed"); error = "injected"; }
+            finally {
+                try { iterator.Dispose(); } catch (Exception exception) { Check(ReferenceEquals(exception, failure), "Parameter-item Dispose exception changed"); error += "+dispose"; }
+                int before = events.Count; iterator.Dispose(); Check(events.Count == before, "Parameter-item cleanup repeated");
+            }
+            Check(seen.SequenceEqual(expected.Take(seen.Count)), "Parameter-item traversal prefix changed");
+            int acquired = events.Count(e => e == "item:acquire"), disposed = events.Count(e => e == "item:dispose");
+            Check(acquired <= 1 && disposed <= 1 && disposed <= acquired, "Parameter-item cleanup multiplicity");
+            if (acquired == 1 && fail != "acquire") Check(disposed == 1, "Parameter-item iterator leaked");
+            if (fail.Length == 0 && stop > expected.Length) Check(exhausted && seen.Count == expected.Length, "Complete parameter-item traversal mismatch");
+            observations.Append(module).Append(':').Append(present).Append(':').Append(leaves).Append(':').Append(fail).Append(':').Append(stop).Append('|')
+                .Append(seen.Count).Append('|').Append(error).Append('|').Append(string.Join(",", events)).AppendLine(); cases++;
+        }
+        using (var sha = SHA256.Create()) Console.WriteLine("XML parameter-item cases: " + cases + "; trace SHA256: " + BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(observations.ToString()))).Replace("-", ""));
+    }
+#endif
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static void RunMemorySegment() {
+        var observations = new StringBuilder(); int cases = 0;
+        for (int mask = 0; mask < 4; mask++) foreach (int leaves in new[] { 0, 1, 2, 3 })
+        foreach (string fail in new[] { "", "owner", "acquire", "move", "current", "dispose" })
+        for (int stop = 0; stop <= 12; stop++) {
+            var segment = new HawkConfigurationDataMemorySegment(); var events = new List<string>();
+            var failure = new IOException("injected"); var names = new Dictionary<Element, string>();
+            var expected = new List<Element>(); var traces = new List<Trace>();
+            for (int group = 0; group < 2; group++) {
+                if ((mask & (1 << group)) == 0) continue;
+                var trace = new Trace { Name = group.ToString(), Fail = fail, Failure = failure, Events = events }; traces.Add(trace);
+                Element node;
+                if (group == 0) { var location = new Location { Trace = trace }; segment.Location = location; node = location; }
+                else { var access = new Access { Trace = trace }; segment.AccessRights = access; node = access; }
+                names.Add(node, trace.Name); expected.Add(node);
+                for (int leaf = 0; leaf < leaves; leaf++) {
+                    var element = new Baggage(); trace.Values.Add(element); expected.Add(element); names.Add(element, trace.Name + "/leaf" + leaf);
+                }
+            }
+            var enumerable = segment.GetDescendants(); var iterator = enumerable.GetEnumerator();
+            Check(events.Count == 0, "Eager memory-segment iteration");
+            var seen = new List<Element>(); string error = "none"; bool exhausted = false;
+            try {
+                for (int step = 0; step < stop; step++) {
+                    if (!iterator.MoveNext()) { exhausted = true; break; }
+                    var current = iterator.Current; int before = events.Count;
+                    Check(ReferenceEquals(current, iterator.Current) && events.Count == before, "Memory-segment Current not cached");
+                    seen.Add(current);
+                }
+                if (exhausted) Check(!iterator.MoveNext(), "Unstable memory-segment exhaustion");
+            }
+            catch (Exception exception) { Check(ReferenceEquals(exception, failure), "Memory-segment exception identity changed"); error = "injected"; }
+            finally {
+                try { iterator.Dispose(); } catch (Exception exception) { Check(ReferenceEquals(exception, failure), "Memory-segment Dispose exception changed"); error += "+dispose"; }
+                int before = events.Count; iterator.Dispose(); Check(events.Count == before, "Memory-segment cleanup repeated");
+            }
+            Check(seen.SequenceEqual(expected.Take(seen.Count)), "Memory-segment traversal prefix changed");
+            foreach (var trace in traces) {
+                int acquired = events.Count(e => e == trace.Name + ":acquire"), disposed = events.Count(e => e == trace.Name + ":dispose");
+                Check(acquired <= 1 && disposed <= 1 && disposed <= acquired, "Memory-segment cleanup multiplicity");
+                if (acquired == 1 && fail != "acquire") Check(disposed == 1, "Memory-segment inner iterator leaked");
+            }
+            if (fail.Length == 0 && stop > expected.Count) Check(exhausted && seen.Count == expected.Count, "Complete memory-segment traversal mismatch");
+            observations.Append(mask).Append(':').Append(leaves).Append(':').Append(fail).Append(':').Append(stop).Append('|')
+                .Append(string.Join(",", seen.Select(e => names[e]))).Append('|').Append(error).Append('|').Append(string.Join(",", events)).AppendLine(); cases++;
+        }
+        using (var sha = SHA256.Create()) Console.WriteLine("XML memory-segment cases: " + cases + "; trace SHA256: " + BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(observations.ToString()))).Replace("-", ""));
+    }
     [MethodImpl(MethodImplOptions.NoInlining)]
     static void Run() {
         var observations = new StringBuilder(); int cases = 0;
