@@ -43,5 +43,3 @@ $references=('ICSharpCode.Decompiler','dnlib','dnSpy.Contracts.Logic' | ForEach-
 dotnet run --project "$guards\Guards.csproj" -c Release
 if($LASTEXITCODE -ne 0){throw 'Reference await protocol guards failed.'}
 Write-Output $expected
-
-

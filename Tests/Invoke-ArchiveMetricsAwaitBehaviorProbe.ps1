@@ -32,5 +32,3 @@ foreach($kind in @('original','rebuilt')) {
 if((Get-Content "$OutputDirectory\original.log" -Raw) -cne (Get-Content "$OutputDirectory\rebuilt.log" -Raw)){throw 'Original/rebuilt archive metrics observations differ.'}
 foreach($path in $pins.Keys){if((Get-FileHash $path).Hash -ne $pins[$path]){throw 'Input module changed.'}}
 Get-Content "$OutputDirectory\rebuilt.log"
-
-
