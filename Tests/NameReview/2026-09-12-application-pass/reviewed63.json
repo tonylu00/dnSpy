@@ -401259,7 +401259,120 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "ValidateFirmwarePackageManifest",
-   "ParameterNames": []
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xmlDocument_0",
+     "HasMetadata": true,
+     "NewName": "manifest"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Reflection.Assembly",
+     "NewName": "schemaAssembly"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.String[]",
+     "NewName": "schemaResourceNames"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": "schemaResourceIndex"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.String",
+     "NewName": "schemaResourceName"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.IO.Stream",
+     "NewName": "schemaStream"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Xml.Schema.XmlSchema",
+     "NewName": "schema"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.String",
+     "NewName": "signatureCheckOverride"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Exception",
+     "NewName": "schemaValidationException"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.ValueTuple`2<System.Boolean,System.String[]>",
+     "NewName": "validationResult"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Collections.Generic.List`1<System.String>",
+     "NewName": "signatureErrors"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Security.Cryptography.Xml.SignedXml",
+     "NewName": "signedManifest"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Xml.XmlNodeList",
+     "NewName": "signatureElements"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "System.Nullable`1<System.UInt16>",
+     "NewName": "providerId"
+    },
+    {
+     "Index": 15,
+     "ExpectedType": "System.Collections.Generic.List`1<ot>",
+     "NewName": "providerPublicKeys"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "System.Boolean",
+     "NewName": "signatureValid"
+    },
+    {
+     "Index": 17,
+     "ExpectedType": "System.Collections.Generic.List`1/Enumerator<ot>",
+     "NewName": "publicKeys"
+    },
+    {
+     "Index": 18,
+     "ExpectedType": "System.Security.Cryptography.RSAParameters",
+     "NewName": "publicKeyParameters"
+    },
+    {
+     "Index": 19,
+     "ExpectedType": "System.Security.Cryptography.RSA",
+     "NewName": "rsaPublicKey"
+    },
+    {
+     "Index": 20,
+     "ExpectedType": "System.Exception",
+     "NewName": "signatureException"
+    }
+   ],
+   "Reason": "\nScope review: Private XmlDocument validator loads FwPkgManifest.xsd/xmldsig-core-schema.xsd, validates schema with captured error collection, enforces namespace/root and checks SignedXml using provider firmware-package RSA keys. Existing ledger proposes ValidateFirmwarePackageManifest, while checked map contains ilcfFyJrnFn; restore the supported owner alias with exact map/ledger preimages. Preserve DisableETSFriwareUpdateSignatureCheck spelling and behavior, signature/error branches and canonical <ValidateFirmwarePackageManifest>b__48_N implementations.\nReviewed method correction: Private XmlDocument validator loads FwPkgManifest.xsd/xmldsig-core-schema.xsd, validates schema with captured error collection, enforces namespace/root and checks SignedXml using provider firmware-package RSA keys. Existing ledger proposes ValidateFirmwarePackageManifest, while checked map contains ilcfFyJrnFn; restore the supported owner alias with exact map/ledger preimages. Preserve DisableETSFriwareUpdateSignatureCheck spelling and behavior, signature/error branches and canonical <ValidateFirmwarePackageManifest>b__48_N implementations.",
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "ValidateFirmwarePackageManifest",
+     "PreviousMappedAlias": "ilcfFyJrnFn",
+     "Alias": "ValidateFirmwarePackageManifest",
+     "Evidence": "Private XmlDocument validator loads FwPkgManifest.xsd/xmldsig-core-schema.xsd, validates schema with captured error collection, enforces namespace/root and checks SignedXml using provider firmware-package RSA keys. Existing ledger proposes ValidateFirmwarePackageManifest, while checked map contains ilcfFyJrnFn; restore the supported owner alias with exact map/ledger preimages. Preserve DisableETSFriwareUpdateSignatureCheck spelling and behavior, signature/error branches and canonical <ValidateFirmwarePackageManifest>b__48_N implementations."
+    }
+   ]
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -730832,6 +730945,273 @@
     }
    ],
    "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x06000F81",
+   "Signature": "System.Void kh::.ctor(System.Xml.Linq.XDocument)",
+   "OriginalName": ".ctor",
+   "Reason": "Private manifest constructor immediately passes its XDocument argument to parser 06000F82. Constructor identity is preserved.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "manifest"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x06000F82",
+   "Signature": "System.Void kh::b(System.Xml.Linq.XDocument)",
+   "OriginalName": "b",
+   "Reason": "Private XDocument parser initializes manifest state from named attributes, parses ApplicableTo/AdditionalCondition and FirmwareParts, and selects FriendlyName/ReleaseNotesURL by CurrentCulture or its parent. Exact 519-instruction body; coupled field and local roles reviewed. No parsing/default/culture behavior changes.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "manifest"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.String",
+     "NewName": "urgencyText"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Nullable`1<km>",
+     "NewName": "optionalUrgency"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Nullable`1<System.Boolean>",
+     "NewName": "optionalBoolean"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Nullable`1<System.UInt32>",
+     "NewName": "optionalUnsignedValue"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Xml.Linq.XElement>",
+     "NewName": "manifestSections"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "section"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.String",
+     "NewName": "sectionName"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Collections.Generic.List`1<kc>",
+     "NewName": "additionalConditions"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Xml.Linq.XElement>",
+     "NewName": "sectionElements"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "applicableHardwareElement"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "kd",
+     "NewName": "hardwareApplicability"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.Xml.Linq.XElement>",
+     "NewName": "conditionElements"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "conditionElement"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "kc",
+     "NewName": "condition"
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "firmwarePartElement"
+    },
+    {
+     "Index": 15,
+     "ExpectedType": "System.Xml.Linq.XElement",
+     "NewName": "localizedInfoElement"
+    },
+    {
+     "Index": 16,
+     "ExpectedType": "System.String",
+     "NewName": "language"
+    },
+    {
+     "Index": 17,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 18,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ParseFirmwarePackageManifest",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x06000F83",
+   "Signature": "System.ValueTuple`2<System.Boolean,System.String[]> kh::a(System.Xml.Linq.XDocument)",
+   "OriginalName": "a",
+   "Reason": "Private overload adapts XDocument through CreateReader and XmlDocument.Load, disposes the reader and invokes the XmlDocument validator 06000F84. Legitimate overload retained.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.Linq.XDocument xdocument_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xdocument_0",
+     "HasMetadata": true,
+     "NewName": "manifest"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Xml.XmlDocument",
+     "NewName": "xmlManifest"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Xml.XmlReader",
+     "NewName": "manifestReader"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ValidateFirmwarePackageManifest",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x06000F85",
+   "Signature": "System.Nullable`1<System.UInt16> kh::a(System.Xml.XmlDocument)",
+   "OriginalName": "a",
+   "Reason": "Private helper creates namespace manager for http://knx.org/xml/firmware/10, selects //ns:Firmware, reads ProviderId and UInt16.Parse; returns null when element/attribute is absent.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Xml.XmlDocument xmlDocument_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "xmlDocument_0",
+     "HasMetadata": true,
+     "NewName": "manifest"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Xml.XmlNamespaceManager",
+     "NewName": "namespaces"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Xml.XmlAttribute",
+     "NewName": "providerIdAttribute"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Nullable`1<System.UInt16>",
+     "NewName": "missingProviderId"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "ReadFirmwareProviderId",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
@@ -1120856,6 +1121236,534 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "projectGuid",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001647",
+   "Signature": "log4net.ILog kh::a",
+   "OriginalName": "a",
+   "Reason": "Static initializer 06000F87 IL_0019 stores LogManager.GetLogger with literal Knx.Ets.Hawk.Impl.Firmware.FirmwarePackageManifest; validation paths use log4net severity-specific calls. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Logger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001648",
+   "Signature": "System.Xml.Linq.XNamespace kh::b",
+   "OriginalName": "b",
+   "Reason": "Static initializer 06000F87 IL_0028 stores XNamespace for http://knx.org/xml/firmware/10; parser combines this exact namespace with AdditionalCondition. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "FirmwareNamespace",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001649",
+   "Signature": "System.String kh::c",
+   "OriginalName": "c",
+   "Reason": "Parser 06000F82 IL_005C stores FriendlyName root attribute and IL_047F replaces it from the selected LocalizedInfos language. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "friendlyName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x0400164A",
+   "Signature": "System.Uri kh::d",
+   "OriginalName": "d",
+   "Reason": "Parser 06000F82 IL_0738 stores new Uri from ReleaseNotesURL and IL_04B3 stores the culture-selected release-notes URI. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "releaseNotesUri",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x0400164B",
+   "Signature": "System.Collections.Generic.List`1<kd> kh::e",
+   "OriginalName": "e",
+   "Reason": "Parser 06000F82 IL_0212 creates the list for ApplicableTo and IL_03F7 adds kd records parsed from HardwareReference and AdditionalCondition. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "applicableHardware",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x0400164C",
+   "Signature": "System.Collections.Generic.List`1<ki> kh::list_1",
+   "OriginalName": "list_1",
+   "Reason": "Parser 06000F82 IL_06F2 creates the list for FirmwareParts, then adds ki records with Identifier, Version, MinUpVersion, MaxUpVersion, FileName and Hash. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "firmwareParts",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x0400164D",
+   "Signature": "System.UInt16 kh::ushort_0",
+   "OriginalName": "ushort_0",
+   "Reason": "Parser 06000F82 IL_0097 stores the UInt16 conversion of PackageVersion. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "packageVersion",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x0400164E",
+   "Signature": "System.Nullable`1<km> kh::nullable_0",
+   "OriginalName": "nullable_0",
+   "Reason": "Parser 06000F82 IL_00D8 stores nullable km parsed from the Urgency attribute, retaining the protected enum identity. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "urgency",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x0400164F",
+   "Signature": "System.Boolean kh::i",
+   "OriginalName": "i",
+   "Reason": "Parser 06000F82 IL_0100 stores optional Revoked boolean with GetValueOrDefault. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isRevoked",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001650",
+   "Signature": "System.Version kh::version_0",
+   "OriginalName": "version_0",
+   "Reason": "Parser 06000F82 IL_014D stores Version.Parse of the FirmwareVersion attribute. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "firmwareVersion",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001651",
+   "Signature": "System.Boolean kh::bool_1",
+   "OriginalName": "bool_1",
+   "Reason": "Parser 06000F82 IL_0128 stores optional ProductReplacement boolean. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "productReplacement",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001652",
+   "Signature": "System.Boolean kh::bool_2",
+   "OriginalName": "bool_2",
+   "Reason": "Parser 06000F82 IL_0175 stores optional ApplicationProgramReDownload boolean. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "applicationProgramRedownload",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001653",
+   "Signature": "System.UInt16 kh::m",
+   "OriginalName": "m",
+   "Reason": "Parser 06000F82 IL_001C stores UInt16 ProviderId; private helper 06000F85 also selects //ns:Firmware/@ProviderId. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "providerId",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001654",
+   "Signature": "System.String kh::string_1",
+   "OriginalName": "string_1",
+   "Reason": "Parser 06000F82 IL_003C stores the InternalName attribute. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "internalName",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001655",
+   "Signature": "System.UInt16 kh::ushort_2",
+   "OriginalName": "ushort_2",
+   "Reason": "Parser 06000F82 IL_019E stores the optional RestrictApduLength UInt16 value. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "restrictApduLength",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh",
+   "Token": "0x04001656",
+   "Signature": "System.UInt16 kh::ushort_3",
+   "OriginalName": "ushort_3",
+   "Reason": "Parser 06000F82 IL_01C7 stores the optional RestrictPayloadSize UInt16 value. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "restrictPayloadSize",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kh/a",
+   "Token": "0x0400165D",
+   "Signature": "System.Collections.Generic.List`1<System.Xml.Schema.ValidationEventArgs> kh/a::a",
+   "OriginalName": "a",
+   "Reason": "Validator 06000F84 IL_0269 initializes this captured List<ValidationEventArgs>; callback 06000F8E IL_003A adds only error-severity events and logs warnings separately. Validator reads the list for exception/message results. Native whole-source evidence projects this field into owner 06000F84 and reconstructs callback 06000F8E. Exact private implementation storage; protected public SDK types/getters and metadata-only padding fields remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "schemaValidationErrors",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x0400162F",
+   "Signature": "System.UInt16 kc::a",
+   "OriginalName": "a",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute ObjectType and calls 0x06000F4F; inspected direct setter stores the argument at IL_0002 into 0x0400162F. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "objectType",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x04001630",
+   "Signature": "System.UInt16 kc::b",
+   "OriginalName": "b",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute Instance and calls 0x06000F51; inspected direct setter stores the argument at IL_0002 into 0x04001630. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "objectInstance",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x04001631",
+   "Signature": "System.UInt16 kc::c",
+   "OriginalName": "c",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute PropertyID and calls 0x06000F53; inspected direct setter stores the argument at IL_0002 into 0x04001631. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "propertyId",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x04001632",
+   "Signature": "System.UInt16 kc::d",
+   "OriginalName": "d",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute StartElement and calls 0x06000F55; inspected direct setter stores the argument at IL_0002 into 0x04001632. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "startElement",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x04001633",
+   "Signature": "System.UInt16 kc::e",
+   "OriginalName": "e",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute NumberOfElements and calls 0x06000F57; inspected direct setter stores the argument at IL_0002 into 0x04001633. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "numberOfElements",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x04001634",
+   "Signature": "kk kc::kk_0",
+   "OriginalName": "kk_0",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute Operator and calls 0x06000F59; inspected direct setter stores the argument at IL_0002 into 0x04001634. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "comparisonOperator",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "kc",
+   "Token": "0x04001635",
+   "Signature": "System.Byte[] kc::byte_0",
+   "OriginalName": "byte_0",
+   "Reason": "Firmware manifest parser 06000F82 reads exact AdditionalCondition attribute Value and calls 0x06000F5B; inspected direct setter stores the argument at IL_0002 into 0x04001635. Value is hex-decoded; Operator passes through kl::a with default ==. Private kc storage only; protected public getters/setters, kk enum and XML attribute spelling remain unchanged.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "comparisonValue",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
