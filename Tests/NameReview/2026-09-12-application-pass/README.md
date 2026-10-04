@@ -194,6 +194,24 @@ source. Run `test_sdk_proposal_retirement.py` for stale identity, scope, history
 whitelist and path guards. The v407 review retires 1,567 rejected proposals and
 166 proposed scope aliases; actual checked names and runtime metadata are intact.
 
+Native `SdkContractInspection` also proves inherited protection through complete
+physical CLR families. `checkpoint_naming_block.py --review-only` accepts
+`--retire-rejected-contract-sdk-proposals` for exact prior unapplied proposals or
+`--preserve-sdk-contract-methods` for previously unreviewed methods, together with
+`--contract-sdk-evidence`. The review must bind that report's path/SHA256.
+`contract_sdk_proposal_retirement.py` checks seed/map/manifest hashes, physical
+input hashes, membership hashes and exact SDK symbol identities before recording
+preservation. Existing map entries, incomplete families, stale preimages and
+scope changes are rejected. Proposal history remains intact; these decisions
+add no aliases and make no generated-source reconstruction claim.
+
+Run `test_contract_sdk_proposal_retirement.py <native-fixture-directory>` after
+the de4dotEx native fixture. The v411 contract block retires 59 historical
+proposals and preserves 280 additional methods in 130 complete protected
+families. This reduces whole-tree candidates from 23,211 to 22,874 (337), with
+the map byte-identical. See `sdk-contract-verification-v411.json`; consolidated
+ETS export/build/runtime and ETS 6.4 verification remain pending.
+
 The v408 Bus/connection checkpoint adds 133 coupled aliases (two types, 12
 methods, 34 fields, 38 parameters and 47 locals) and corrects nine earlier names
 that described only a guard, logging or a collision suffix. Complete original

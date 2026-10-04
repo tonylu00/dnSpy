@@ -12,6 +12,7 @@ import shutil
 import xml.etree.ElementTree as ET
 from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal
 from sdk_proposal_retirement import load_sdk_symbols, key as sdk_key, retire_sdk_proposal
+from contract_sdk_proposal_retirement import load_contract_sdk_evidence, retire_contract_sdk_proposal, preserve_contract_sdk_method
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -22,6 +23,11 @@ parser.add_argument('--resolve-reviewed-scoped-definitions', action='store_true'
                     help='Resolve scope-only method definitions with exact prior rationale and native addition proof')
 parser.add_argument('--retire-rejected-sdk-proposals', action='store_true',
                     help='Review-only: retire unapplied proposals protected by the physical map-bound SDK whitelist')
+parser.add_argument('--retire-rejected-contract-sdk-proposals', action='store_true',
+                    help='Review-only: retire unapplied proposals proven protected by native CLR/SDK family evidence')
+parser.add_argument('--contract-sdk-evidence', help='Hash-bound native PhysicalSdkContractProtectionEvidence report')
+parser.add_argument('--preserve-sdk-contract-methods', action='store_true',
+                    help='Review-only: record previously unreviewed methods protected by exact native CLR/SDK families')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
 parser.add_argument('--remove-reviewed-aliases', action='store_true',
@@ -37,9 +43,12 @@ parser.add_argument('--refresh-reviewed-evidence', action='store_true',
 args = parser.parse_args()
 assert not args.refresh_reviewed_evidence or args.review_only, 'Evidence refresh requires a review-only checkpoint'
 assert not args.retire_rejected_sdk_proposals or args.review_only, 'SDK proposal retirement requires a review-only checkpoint'
-state_path, sink = pathlib.Path(args.state), pathlib.Path(args.sink)
-map_path, review_path = pathlib.Path(args.map), pathlib.Path(args.review)
-update_path, check_path = pathlib.Path(args.update), pathlib.Path(args.check)
+assert not args.retire_rejected_contract_sdk_proposals or args.review_only, 'SDK contract retirement requires a review-only checkpoint'
+assert not args.preserve_sdk_contract_methods or args.review_only, 'SDK contract preservation requires a review-only checkpoint'
+assert bool(args.contract_sdk_evidence) == bool(args.retire_rejected_contract_sdk_proposals or args.preserve_sdk_contract_methods), 'Native SDK family evidence requires its explicit flag'
+state_path, sink = pathlib.Path(args.state).resolve(), pathlib.Path(args.sink).resolve()
+map_path, review_path = pathlib.Path(args.map).resolve(), pathlib.Path(args.review).resolve()
+update_path, check_path = pathlib.Path(args.update).resolve(), pathlib.Path(args.check).resolve()
 def read(path):
     return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):
@@ -85,6 +94,13 @@ checked_changes = {(c['Module'], c['Token']): c for c in update['Changes'] if c[
 sdk_symbols = load_sdk_symbols(map_path) if args.retire_rejected_sdk_proposals else {}
 mapped_entries = {sdk_key(module.get('Path'), row.get('Token')): row for module in root.findall('Module') for row in module}
 retired_sdk_proposals = 0
+retired_contract_sdk_proposals = 0
+preserved_sdk_contract_methods = 0
+contract_sdk_evidence = {}
+if args.retire_rejected_contract_sdk_proposals or args.preserve_sdk_contract_methods:
+    binding = review.get('NativeSdkContractEvidence', {})
+    assert pathlib.Path(binding['Path']).resolve() == pathlib.Path(args.contract_sdk_evidence).resolve(), 'Native evidence path differs from review'
+    contract_sdk_evidence = load_contract_sdk_evidence(map_path, args.contract_sdk_evidence, binding['Sha256'], check['ContractReferenceSha256'])
 checked_families = {}
 for method in review['Methods']:
     family = method.get('ContractFamily')
@@ -106,6 +122,22 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('PreserveSdkContractMethod'):
+            assert args.preserve_sdk_contract_methods and kind == 'Methods' and key not in keys, 'New contract preservation requires an unreviewed method and explicit checkpoint flag'
+            sk = sdk_key(*key)
+            recorded = preserve_contract_sdk_method(row, mapped_entries.get(sk), contract_sdk_evidence.get(sk),
+                check['SdkNameWhitelistSha256'], check['ContractReferenceSha256'])
+            keys[key] = len(ledger[kind])
+            ledger[kind].append(recorded)
+            preserved_sdk_contract_methods += 1
+            continue
+        if row.get('RetireRejectedContractSdkProposal'):
+            assert args.retire_rejected_contract_sdk_proposals and kind == 'Methods' and key in keys, 'Contract SDK retirement requires its previous method and explicit checkpoint flag'
+            sk = sdk_key(*key)
+            ledger[kind][keys[key]] = retire_contract_sdk_proposal(ledger[kind][keys[key]], row, mapped_entries.get(sk),
+                contract_sdk_evidence.get(sk), check['SdkNameWhitelistSha256'], check['ContractReferenceSha256'])
+            retired_contract_sdk_proposals += 1
+            continue
         if row.get('RetireRejectedSdkProposal'):
             assert args.retire_rejected_sdk_proposals and key in keys, 'SDK retirement requires its previous ledger proposal and explicit checkpoint flag'
             sk = sdk_key(*key)
@@ -180,6 +212,8 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitUnresolvedResolutions': resolved_rows,
               'ExplicitScopedDefinitionResolutions': scoped_definitions_resolved,
               'ExplicitRejectedSdkProposalRetirements': retired_sdk_proposals,
+              'ExplicitRejectedContractSdkProposalRetirements': retired_contract_sdk_proposals,
+              'ExplicitSdkContractMethodPreservations': preserved_sdk_contract_methods,
               'ExplicitProposalApplications': applied_proposals,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}
