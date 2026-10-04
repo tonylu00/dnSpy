@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-04T21:00:16Z",
+  "UpdatedUtc": "2026-10-04T21:15:43Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -21,12 +21,12 @@
   },
   "Maps": {
     "63": {
-      "Path": "D:\\knx_analysis\\names63-staged-v419.xml",
-      "Sha256": "164BEB8D0E149A1AB7A9A591B01063618128949E41F940BDFAA6B00AFBED0E7A",
-      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v419.json",
-      "NextWave": 420,
+      "Path": "D:\\knx_analysis\\names63-staged-v420.xml",
+      "Sha256": "7BD66E9CC2C0FCBEF69DCB425123B7D998F20E69C7E5C46A041D099CB92D8610",
+      "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v420.json",
+      "NextWave": 421,
       "RowsInMap": {"Types": 1121, "Methods": 13190, "Fields": 5337, "Parameters": 4089, "Locals": 2091},
-      "CountBasis": "v419 adds 214 evidence-backed aliases: 23 methods including two complete CLR families/9 members, 62 fields, 50 parameters and 79 locals. Native preflight/SDK/hash/ledger checks pass; 14 definitions explicitly unresolved. Whole lexical worklist 21,724; no ETS export/build/runtime claim.",
+      "CountBasis": "v419 adds 214 supported transport-chain aliases; v420 corrects two misleading historical method aliases with exact preimages and retains all scopes. Native preflight/SDK/hash/ledger checks pass. Whole lexical worklist 21,724; 14 block definitions explicitly unresolved; no new ETS export/build/runtime claim.",
       "AppliedToSource": false
     },
     "64": {"Path": "D:\\knx_analysis\\application-name-pass01\\names64-staged-v178.xml", "Sha256": "9CAFA6A287CC0A634F54B9DCF554CEA02984254188D0B426A0C475E89EC2419D", "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint64-v178.json", "NextVersion": 179, "RestagedFrom": "names63-staged-v380.xml", "AppliedToSource": false}
@@ -74,8 +74,8 @@
     "Backlog": {
       "ByKind": {"Types": 2361, "Fields": 16321, "Methods": 3042},
       "TopModules": {"Knx.Falcon.dll": 7913, "Knx.Ets.HawkNET.dll": 5482, "Knx.Ets.ObjectModel.dll": 3132, "Knx.DevKit.dll": 1363, "Knx.Ets.Sdk.dll": 571, "all others": 3263},
-      "Shape": "109 physical first-party modules: 27,570 types,121,780 fields,198,727 methods; 165,115 parameters/4,089 aliases and 397,219 locals/2,091 aliases. v419 has 1,121 type/13,190 method/5,337 field aliases. Two scoped-only callbacks and one unapplied historical proposal remain; lexical flags are a work selector.",
-      "Report": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v419-after-transport.json",
+      "Shape": "109 physical first-party modules: 27,570 types,121,780 fields,198,727 methods; 165,115 parameters/4,089 aliases and 397,219 locals/2,091 aliases. v420 has 1,121 type/13,190 method/5,337 field aliases. Two scoped-only callbacks and one unapplied historical proposal remain; lexical flags are a work selector.",
+      "Report": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v420-after-transport-corrections.json",
       "Regenerate": "inventory_physical_scope.py --scope application-physical-scope-v391.json --cli <NameCandidates.dll> --map <current checked map> --ledger reviewed63.json --output <fresh directory>; optional --reuse-inventory <earlier summary> verifies physical/tool/report hashes. Retire filename-conflating backlog.py.",
       "OpenRoute": "Continue 21,724 behavior-based naming candidates in substantial call-chain blocks using cheap checks. Connection-oriented sequence/retry/timer/confirmation chains now have 214 supported aliases and 14 explicit unresolved definitions; five generated owner types remain structurally identified but source merging unverified. Integrate isolated dnSpy c6cb2dc0b, ILSpy 7a328ed1f and de4dotEx d91b4f5c safely around parallel work. Freeze map/scope before whole109 export/build/metadata and staged ETS/SDK/unchanged-App verification; 6.4 follows 6.3.",
       "ExhaustedRoutes": [
@@ -95,12 +95,12 @@
         "type-anchor pairing (6.3 type -> 6.4 type through >=2 already-named method anchors): 21 Falcon + 6 HawkNET = 27 uniquely pairable types out of 2,478 unnamed, and only 129 types tree-wide have >=2 anchors - measured 2026-09-23, route closed, not worth a tool investment"
       ],
       "RemainingNativeCandidates": 21724,
-      "GeneratedOwnerReport": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\generated-owner-inventory-v419-after-transport.json"
+      "GeneratedOwnerReport": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\generated-owner-inventory-v420-after-transport-corrections.json"
     },
     "NextItems": [
       {
         "Task": "whole physical first-party review",
-        "Detail": "v419 names the connection-oriented transport chain with 214 supported aliases and 14 explicit unresolved definitions; both interface families complete. Protected CLR body scopes retain protocol names. Native checks and whole109 hash-bound joins pass; all build/runtime counts remain historical. See connection-oriented-transport-coverage-v419.json; continue substantial blocks then freeze for compilation/restoration/runtime gates."
+        "Detail": "v419 adds 214 supported transport-chain aliases and records 14 unresolved definitions; v420 corrects retry and connect-request aliases while retaining every scope. Both interface families complete. Native checks and current 109-module joins pass; all build/runtime counts remain historical. See connection-oriented-transport-coverage-v419.json and transport-alias-correction-verification-v420.json. Continue substantial blocks then freeze for compilation/restoration/runtime gates."
       },
       {"Task": "whole-tree readability baseline", "Detail": "Measure remaining 6.3/6.4 components and necessary generated leftovers. Falcon current four builder kickoffs are fixed; do not repeat the stale eight-stub investigation."},
       {"Task": "broader unchanged-App and SDK runtime compatibility", "Detail": "Chinese startup, test-mcp persistence and a synthetic password fixture across a fresh process passed in isolated v388. Installed unchanged MCP App initializes but lacks daemon project relay registration; broader APIs remain unproven."},

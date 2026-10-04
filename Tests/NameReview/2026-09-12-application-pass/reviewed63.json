@@ -735438,7 +735438,7 @@
    "Token": "0x06001937",
    "Signature": "System.Void Class737::smethod_9(Class737,Class818)",
    "OriginalName": "smethod_9",
-   "Reason": "Existing HandleAcknowledged retransmits lastSentFrame and increments send retry count; local0 disposable statistics transaction. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+   "Reason": "Existing HandleAcknowledged retransmits lastSentFrame and increments send retry count; local0 disposable statistics transaction. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 1:System.Int32, 2:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.\nReviewed method correction: Native body immediately sends lastSentFrame to lowerLayer, increments sendRetryCount and schedules ACK/connection timers. cctor0600190F installs it for OPEN_WAIT->OPEN_WAIT on triggers12 and17. ProcessAsync0600192D emits17 after ACK timeout while retryCount<retryLimit (IL1481-1499), and12 for retryable incoming sequence/NAK handling (IL1123-1150). It does not accept an acknowledgement; preserved1936 handles confirmation.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -735478,10 +735478,18 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "RetryLastSentFrame",
    "Unresolved": false,
    "UnresolvedReason": "",
-   "ReviewDisposition": "rename"
+   "ReviewDisposition": "rename",
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "HandleAcknowledged",
+     "Alias": "RetryLastSentFrame",
+     "Evidence": "Native body immediately sends lastSentFrame to lowerLayer, increments sendRetryCount and schedules ACK/connection timers. cctor0600190F installs it for OPEN_WAIT->OPEN_WAIT on triggers12 and17. ProcessAsync0600192D emits17 after ACK timeout while retryCount<retryLimit (IL1481-1499), and12 for retryable incoming sequence/NAK handling (IL1123-1150). It does not accept an acknowledgement; preserved1936 handles confirmation."
+    }
+   ]
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -735536,7 +735544,7 @@
    "Token": "0x0600193A",
    "Signature": "System.Void Class737::d(Class737,Class818)",
    "OriginalName": "d",
-   "Reason": "Existing HandleSendDataRequest stores outgoing message DestinationAddress as peer and passes message to lowerLayer. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 0:System.Int32, 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.",
+   "Reason": "Existing HandleSendDataRequest stores outgoing message DestinationAddress as peer and passes message to lowerLayer. Parameters are the StateTransition Action<Class737,Class818> layer and frame; preserve accepted definition names. Unresolved local positions: 0:System.Int32, 1:System.Int16; unused or flattened control storage has no unique domain role in this body; no placeholder aliases assigned.\nReviewed method correction: Native cctor0600190F installs this action for CLOSED0 -> CONNECTING3 on trigger25 at IL2659-2678. ProcessAsync0600192D emits25 on outgoing connect request (IL1160-1164); native ConnectAsync owner06001949 constructs TransportLayerConnectMessage Class821 and enqueues it. Body sets peer DestinationAddress, sends the connect frame and initializes connection/send/receive timers/counters.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -735571,10 +735579,18 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "SendConnectRequest",
    "Unresolved": false,
    "UnresolvedReason": "",
-   "ReviewDisposition": "rename"
+   "ReviewDisposition": "rename",
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "HandleSendDataRequest",
+     "Alias": "SendConnectRequest",
+     "Evidence": "Native cctor0600190F installs this action for CLOSED0 -> CONNECTING3 on trigger25 at IL2659-2678. ProcessAsync0600192D emits25 on outgoing connect request (IL1160-1164); native ConnectAsync owner06001949 constructs TransportLayerConnectMessage Class821 and enqueues it. Body sets peer DestinationAddress, sends the connect frame and initializes connection/send/receive timers/counters."
+    }
+   ]
   },
   {
    "Module": "Knx.Falcon.dll",

@@ -1,0 +1,118 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class737",
+      "Token": "0x06001937",
+      "Signature": "System.Void Class737::smethod_9(Class737,Class818)",
+      "OriginalName": "smethod_9",
+      "Reason": "Native body immediately sends lastSentFrame to lowerLayer, increments sendRetryCount and schedules ACK/connection timers. cctor0600190F installs it for OPEN_WAIT->OPEN_WAIT on triggers12 and17. ProcessAsync0600192D emits17 after ACK timeout while retryCount<retryLimit (IL1481-1499), and12 for retryable incoming sequence/NAK handling (IL1123-1150). It does not accept an acknowledgement; preserved1936 handles confirmation.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class737 class737_0",
+        "2: Class818 class818_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class737_0",
+          "HasMetadata": true,
+          "NewName": "transportLayer"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "class818_1",
+          "HasMetadata": true,
+          "NewName": "message"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1268/b",
+          "NewName": "statisticsUpdate"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "RetryLastSentFrame",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "PreviousLedgerAlias": "",
+      "ExpectedMappedAlias": "HandleAcknowledged"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class737",
+      "Token": "0x0600193A",
+      "Signature": "System.Void Class737::d(Class737,Class818)",
+      "OriginalName": "d",
+      "Reason": "Native cctor0600190F installs this action for CLOSED0 -> CONNECTING3 on trigger25 at IL2659-2678. ProcessAsync0600192D emits25 on outgoing connect request (IL1160-1164); native ConnectAsync owner06001949 constructs TransportLayerConnectMessage Class821 and enqueues it. Body sets peer DestinationAddress, sends the connect frame and initializes connection/send/receive timers/counters.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class737 class737_0",
+        "2: Class818 class818_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class737_0",
+          "HasMetadata": true,
+          "NewName": "transportLayer"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "class818_1",
+          "HasMetadata": true,
+          "NewName": "message"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "SendConnectRequest",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "PreviousLedgerAlias": "",
+      "ExpectedMappedAlias": "HandleSendDataRequest"
+    }
+  ],
+  "Skips": []
+}

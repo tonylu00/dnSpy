@@ -24,6 +24,8 @@ What lives here:
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
 - `connection-oriented-transport-coverage-v419.json` — physical transport-chain
   decisions, complete interface families, native checks and whole-scope joins
+- `transport-alias-correction-verification-v420.json` — exact historical method
+  corrections with preserved scopes and checked ledger/map preimages
 
 Rules:
 
