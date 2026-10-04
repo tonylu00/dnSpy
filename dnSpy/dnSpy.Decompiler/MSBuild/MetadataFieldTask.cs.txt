@@ -25,6 +25,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 module.LoadEverything();
                 changed |= RestoreTupleNames(module);
                 if (!TupleNamesOnly) {
+                changed |= RestoreIteratorDisposal(module);
                 changed |= RestoreProjectedMethodContracts(module);
                 changed |= RestorePropertyNames(module);
                 changed |= RestoreDelegateMethods(module);
@@ -133,6 +134,79 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             if (File.Exists(temporary)) File.Delete(temporary);
             if (File.Exists(temporaryPdb)) File.Delete(temporaryPdb);
         }
+    }
+
+    static bool RestoreIteratorDisposal(ModuleDef module) {
+        const string prefix = "dnSpy.metadata.iterator-dispose.v1|";
+        string Feature(CustomAttribute attribute) => attribute.TypeFullName != "System.Reflection.ObfuscationAttribute" ? null :
+            attribute.NamedArguments.Where(n => n.Name == "Feature").Select(n => n.Value == null ? null : n.Value.ToString()).FirstOrDefault();
+        bool changed = false;
+        var states = new HashSet<TypeDef>();
+        foreach (var owner in module.GetTypes().SelectMany(t => t.Methods)) {
+            var markers = owner.CustomAttributes.Where(a => Feature(a) != null && Feature(a).StartsWith(prefix, StringComparison.Ordinal)).ToArray();
+            if (markers.Length == 0) continue;
+            if (markers.Length != 1 || Feature(markers[0]) != prefix + "ret")
+                throw new InvalidDataException("Invalid iterator disposal instruction.");
+            var attributes = owner.CustomAttributes.Where(a => a.TypeFullName == "System.Runtime.CompilerServices.IteratorStateMachineAttribute").ToArray();
+            var signature = attributes.Length == 1 && attributes[0].ConstructorArguments.Count == 1 ? attributes[0].ConstructorArguments[0].Value as TypeSig : null;
+            var stateReference = signature == null ? null : signature.ToTypeDefOrRef();
+            var state = stateReference == null ? null : stateReference.ResolveTypeDef();
+            if (state == null || state.Module != module || state.DeclaringType != owner.DeclaringType || !IsGeneratedType(state) || !states.Add(state))
+                throw new InvalidDataException("Iterator disposal requires one exact generated local state owner.");
+            var disposals = state.Methods.Where(m => !m.IsStatic && m.MethodSig != null && m.MethodSig.Params.Count == 0 &&
+                m.MethodSig.RetType.ElementType == ElementType.Void && m.Overrides.Any(o => o.MethodDeclaration != null &&
+                    o.MethodDeclaration.DeclaringType.FullName == "System.IDisposable" && o.MethodDeclaration.Name == "Dispose")).ToArray();
+            if (disposals.Length != 1 || !disposals[0].HasBody || disposals[0].Body.ExceptionHandlers.Count != 0)
+                throw new InvalidDataException("Iterator disposal contract is ambiguous or has cleanup regions.");
+            var disposal = disposals[0];
+            var instructions = disposal.Body.Instructions.Where(i => i.OpCode != OpCodes.Nop).ToArray();
+            bool empty = instructions.Length == 1 && instructions[0].OpCode == OpCodes.Ret;
+            if (!empty) {
+                var constructors = state.Methods.Where(m => m.IsInstanceConstructor && m.MethodSig.Params.Count == 1 &&
+                    m.MethodSig.Params[0].ElementType == ElementType.I4 && m.HasBody).ToArray();
+                if (constructors.Length != 1) throw new InvalidDataException("Iterator state constructor is ambiguous.");
+                var constructor = constructors[0];
+                var code = constructor.Body.Instructions;
+                var fields = new HashSet<FieldDef>();
+                for (int i = 2; i < code.Count; i++) {
+                    if (code[i].OpCode != OpCodes.Stfld || !code[i - 1].IsLdarg() || !code[i - 2].IsLdarg()) continue;
+                    var argument = code[i - 1].GetParameter(constructor.Parameters);
+                    var instance = code[i - 2].GetParameter(constructor.Parameters);
+                    var field = ResolveLocalParameterField(code[i].Operand as IField, module);
+                    if (argument != null && !argument.IsHiddenThisParameter && argument.MethodSigIndex == 0 &&
+                        instance != null && instance.IsHiddenThisParameter && field != null && field.DeclaringType == state &&
+                        field.FieldType.ElementType == ElementType.I4) fields.Add(field);
+                }
+                // Roslyn can clear array-loop/reference temporaries before the
+                // terminal state store. The original Dispose is proven empty;
+                // restore that behavior only for pure local reference resets.
+                int tail = instructions.Length - 4;
+                if (tail < 0 || tail % 3 != 0) throw new InvalidDataException("Generated iterator disposal has an unsupported body: " + owner.FullName);
+                var cleared = new HashSet<FieldDef>();
+                for (int i = 0; i < tail; i += 3) {
+                    var reset = ResolveLocalParameterField(instructions[i + 2].Operand as IField, module);
+                    var instance = instructions[i].IsLdarg() ? instructions[i].GetParameter(disposal.Parameters) : null;
+                    var type = reset == null ? null : reset.FieldType.RemovePinnedAndModifiers();
+                    bool reference = type != null && (type.ElementType == ElementType.Class || type.ElementType == ElementType.Object ||
+                        type.ElementType == ElementType.String || type.ElementType == ElementType.SZArray || type.ElementType == ElementType.Array ||
+                        type is GenericInstSig && !type.IsValueType);
+                    if (instance == null || !instance.IsHiddenThisParameter || instructions[i + 1].OpCode != OpCodes.Ldnull ||
+                        instructions[i + 2].OpCode != OpCodes.Stfld || reset == null || reset.DeclaringType != state || reset.IsStatic ||
+                        !reference || !cleared.Add(reset))
+                        throw new InvalidDataException("Generated iterator disposal has an unsupported reference reset: " + owner.FullName);
+                }
+                var target = ResolveLocalParameterField(instructions[tail + 2].Operand as IField, module);
+                var receiver = instructions[tail].IsLdarg() ? instructions[tail].GetParameter(disposal.Parameters) : null;
+                if (fields.Count != 1 || target == null || !fields.Contains(target) || receiver == null || !receiver.IsHiddenThisParameter ||
+                    !instructions[tail + 1].IsLdcI4() || instructions[tail + 1].GetLdcI4Value() != -2 || instructions[tail + 2].OpCode != OpCodes.Stfld || instructions[tail + 3].OpCode != OpCodes.Ret)
+                    throw new InvalidDataException("Generated iterator disposal has an unsupported state write or side effect: " + owner.FullName);
+            }
+            disposal.Body = new CilBody();
+            disposal.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            owner.CustomAttributes.Remove(markers[0]);
+            changed = true;
+        }
+        return changed;
     }
 
     static bool RestoreProtectedCalls(ModuleDef module) {
