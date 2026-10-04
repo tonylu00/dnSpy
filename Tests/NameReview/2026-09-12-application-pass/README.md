@@ -18,8 +18,8 @@ What lives here:
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
-- `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
   and read-only structural candidate joins, with no naming retirement verdict
+- `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 
 Rules:
 
