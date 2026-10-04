@@ -27,11 +27,16 @@ namespace dnSpy_Console {
 			}
 		}
 		public AssemblyDef? Resolve(IAssembly assembly, ModuleDef sourceModule) {
+			return resolver.Resolve(GetEffectiveIdentity(assembly), sourceModule);
+		}
+		// Also used to validate explicit physical bindings before resolving any
+		// target. A redirect belongs to this configuration, not a name-only match.
+		public IAssembly GetEffectiveIdentity(IAssembly assembly) {
 			foreach (var redirect in redirects) {
 				if (!redirect.Matches(assembly)) continue;
-				return resolver.Resolve(new AssemblyNameInfo(assembly.FullName) { Version = redirect.Version }, sourceModule);
+				return new AssemblyNameInfo(assembly.FullName) { Version = redirect.Version };
 			}
-			return resolver.Resolve(assembly, sourceModule);
+			return assembly;
 		}
 		sealed class Redirect {
 			readonly string name, token, culture;

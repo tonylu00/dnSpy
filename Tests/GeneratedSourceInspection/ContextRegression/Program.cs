@@ -7,7 +7,7 @@ if (args.Length != 1 || Directory.Exists(args[0])) throw new ArgumentException("
 string output = Path.GetFullPath(args[0]); Directory.CreateDirectory(output);
 string Hash(string path) { using var stream = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(stream)); }
 string Emit(string file, string name, int version, string? dependency = null) {
-    string path = Path.Combine(output, file);
+    string path = Path.GetFullPath(Path.Combine(output, file));
     using var module = new ModuleDefUser(file) { Mvid = Guid.NewGuid(), Kind = ModuleKind.Dll };
     new AssemblyDefUser(name, new Version(version, 0, 0, 0)).Modules.Add(module);
     var type = new TypeDefUser("Fixture", "Value", module.CorLibTypes.Object.TypeDefOrRef); module.Types.Add(type);
@@ -60,6 +60,28 @@ using (var context = new PinnedSourceContext(Save(configured))) {
     bool rejected = false; try { context.Verify(); } catch (InvalidDataException) { rejected = true; }
     Check(rejected, "config changed during inspection"); File.WriteAllText(config, original);
 }
+var redirectedBinding = configured.DeepClone();
+redirectedBinding["Bindings"] = JsonSerializer.SerializeToNode(new[] { new { Source = first, Identity = redirected, Target = newer, RequestedIdentity = requested } });
+using (var context = new PinnedSourceContext(Save(redirectedBinding))) {
+    Check(context.Resolve(new AssemblyNameInfo(requested), context.FindModule(first))?.ManifestModule.Location == newer, "redirected physical binding");
+    Check(context.Resolutions.Single(r => r.Identity == requested).Status == "explicit-physical-binding", "redirected binding provenance");
+}
+string emptyDirectory = Path.Combine(output, "empty"); Directory.CreateDirectory(emptyDirectory);
+var scoped = manifest.DeepClone();
+scoped["Contexts"] = JsonSerializer.SerializeToNode(new[] { new { Source = first, Directories = new[] { emptyDirectory } } });
+using (var context = new PinnedSourceContext(Save(scoped))) {
+    Check(context.Resolve(new AssemblyNameInfo(redirected), context.FindModule(first)) == null, "unique identity outside source context must not resolve");
+    Check(context.Resolutions.Single().Status == "missing-in-source-context", "outside-context provenance");
+}
+var allScoped = manifest.DeepClone();
+allScoped["RequireSourceContexts"] = true;
+allScoped["Contexts"] = JsonSerializer.SerializeToNode(new[] { left, right, newer, first, second }.Select(p => new { Source = p, Directories = new[] { output } }));
+using (var context = new PinnedSourceContext(Save(allScoped))) {
+    Check(context.Resolve(new AssemblyNameInfo(redirected), context.FindModule(first))?.ManifestModule.Location == newer, "scoped unique target");
+    Check(context.Resolve(new AssemblyNameInfo(requested), context.FindModule(first)) == null, "same-directory twins remain ambiguous");
+    Check(context.Resolutions.Single(r => r.Identity == requested).Status == "ambiguous-in-source-context", "scoped ambiguity provenance");
+    Check(context.Resolve(new AssemblyNameInfo(redirected), null) == null, "required context must not bypass caller scope");
+}
 var mutations = new Dictionary<string, Action<JsonNode>> {
     ["stale-hash"] = n => n["Assemblies"]![0]!["Sha256"] = new string('0', 64),
     ["stale-mvid"] = n => n["Assemblies"]![0]!["Mvid"] = Guid.Empty.ToString(),
@@ -72,7 +94,14 @@ var mutations = new Dictionary<string, Action<JsonNode>> {
     ["missing-binding-source"] = n => n["Bindings"] = JsonSerializer.SerializeToNode(new[] { new { Source = "missing.dll", Identity = requested, Target = left } }),
     ["duplicate-binding"] = n => n["Bindings"] = JsonSerializer.SerializeToNode(Enumerable.Repeat(new { Source = first, Identity = requested, Target = left }, 2)),
     ["stale-config"] = n => n["Configs"] = JsonSerializer.SerializeToNode(new[] { new { Source = first, Path = config, Sha256 = new string('0', 64) } }),
-    ["duplicate-config"] = n => n["Configs"] = JsonSerializer.SerializeToNode(Enumerable.Repeat(new { Source = first, Path = config, Sha256 = Hash(config) }, 2))
+    ["duplicate-config"] = n => n["Configs"] = JsonSerializer.SerializeToNode(Enumerable.Repeat(new { Source = first, Path = config, Sha256 = Hash(config) }, 2)),
+    ["redirect-binding-without-config"] = n => n["Bindings"] = redirectedBinding["Bindings"]!.DeepClone(),
+    ["wrong-redirect-request"] = n => { n["Configs"] = configured["Configs"]!.DeepClone(); n["Bindings"] = redirectedBinding["Bindings"]!.DeepClone(); n["Bindings"]![0]!["RequestedIdentity"] = redirected; },
+    ["binding-outside-context"] = n => { n["Contexts"] = scoped["Contexts"]!.DeepClone(); n["Bindings"] = bound["Bindings"]!.DeepClone(); },
+    ["required-context-missing"] = n => n["RequireSourceContexts"] = true,
+    ["duplicate-context"] = n => n["Contexts"] = JsonSerializer.SerializeToNode(Enumerable.Repeat(new { Source = first, Directories = new[] { output } }, 2)),
+    ["duplicate-search-directory"] = n => n["Contexts"] = JsonSerializer.SerializeToNode(new[] { new { Source = first, Directories = new[] { output, output + Path.DirectorySeparatorChar } } }),
+    ["null-search-contexts"] = n => n["Contexts"] = null
 };
 foreach (var mutation in mutations) {
     var bad = manifest.DeepClone(); mutation.Value(bad); bool rejected = false;
@@ -93,5 +122,72 @@ using (var context = new PinnedSourceContext(Save(manifest))) {
     Check(rejected, "physical module changed during inspection");
 }
 File.WriteAllBytes(left, originalBytes);
+// Exercise preparation with competing physical identities and explicit config
+// overrides. Additional metadata must never silently become source inputs.
+string preparationRoot = Path.Combine(output, "preparation-input"), compatibility = Path.Combine(preparationRoot, "compat"), framework = Path.Combine(output, "framework");
+Directory.CreateDirectory(compatibility); Directory.CreateDirectory(framework);
+string host = Emit("preparation-input/host.dll", "Host", 1, requested);
+string oldDependency = Emit("preparation-input/old.dll", "Shared", 1);
+string oldTwin = Emit("preparation-input/twin.dll", "Shared", 1);
+string compatHost = Emit("preparation-input/compat/host.dll", "CompatHost", 1, requested);
+string compatDependency = Emit("preparation-input/compat/shared.dll", "Shared", 1);
+string frameworkDependency = Emit("framework/shared.dll", "Shared", 3);
+string netModule = Path.Combine(framework, "standalone.dll");
+using (var module = new ModuleDefUser("standalone") { Mvid = Guid.NewGuid(), Kind = ModuleKind.NetModule }) module.Write(netModule);
+string loaderXml = Path.Combine(output, "loaders.xml");
+var loaders = new System.Xml.Linq.XDocument(new System.Xml.Linq.XElement("AssemblyContexts",
+    new System.Xml.Linq.XElement("Context", new System.Xml.Linq.XAttribute("Source", compatHost), new System.Xml.Linq.XAttribute("Directory", compatibility))));
+loaders.Save(loaderXml);
+JsonNode PrepPin(string path, bool export) { var node = JsonSerializer.SerializeToNode(Pin(path))!; node["ExportInput"] = export; return node; }
+var prepSeed = JsonSerializer.SerializeToNode(new { Format = 1, InputDirectory = preparationRoot,
+    Assemblies = new[] { PrepPin(host, true), PrepPin(compatHost, true), PrepPin(oldDependency, false) },
+    Bindings = new[] { new { Source = host, Identity = requested, Target = oldDependency } } })!;
+string prepSeedPath = Save(prepSeed), prepared = Path.Combine(output, "prepared.json");
+string[] prepOptions = ["--contexts=" + loaderXml, "--app-config=" + config, "--framework=" + framework];
+var prepHashes = new[] { host, compatHost, oldDependency, oldTwin, compatDependency, frameworkDependency, netModule }.ToDictionary(p => p, Hash);
+Check(PhysicalContextPreparation.Run(prepSeedPath, prepared, prepOptions) == 0, "native preparation succeeds");
+using (var context = new PinnedSourceContext(prepared)) {
+    Check(context.ExportInputs.Count() == 2 && context.Entries.Length == 6, "only seed source inputs export; new metadata remains read-only");
+    Check(context.RequireSourceContexts && context.SearchContexts.Length == 6, "all prepared physical assemblies scoped");
+    Check(context.Resolve(new AssemblyNameInfo(requested), context.FindModule(host))?.ManifestModule.Location == frameworkDependency, "pinned main redirect precedes identity target selection");
+    Check(context.Resolve(new AssemblyNameInfo(requested), context.FindModule(compatHost))?.ManifestModule.Location == compatDependency, "explicit no-config compatibility source overrides main config");
+    Check(context.ConfigEntries.All(c => c.Source != compatHost && c.Source != compatDependency), "compatibility no-config directory inheritance");
+    Check(context.Resolve(new AssemblyNameInfo(requested), context.FindModule(compatDependency))?.ManifestModule.Location == compatDependency, "compatibility physical self remains distinct");
+}
+using (var report = JsonDocument.Parse(File.ReadAllBytes(prepared + ".preparation.json"))) {
+    Check(report.RootElement.GetProperty("RetainedNetModules").GetArrayLength() == 1, "netmodule retained outside assembly resolver candidates");
+    Check(report.RootElement.GetProperty("OutputSha256").GetString() == Hash(prepared), "published manifest hash bound to preparation evidence");
+    Check(report.RootElement.GetProperty("Requests").EnumerateArray().Any(r => r.GetProperty("Target").ValueKind == JsonValueKind.Null), "missing framework metadata stays explicit");
+}
+Check(prepHashes.All(p => Hash(p.Key) == p.Value), "preparation leaves all fixture binaries untouched");
+// A previously proven twin binding must survive when its original host has no
+// redirect. The same source under a different config is a distinct preparation.
+var unconfiguredLoaders = new System.Xml.Linq.XDocument(loaders);
+unconfiguredLoaders.Root!.Add(new System.Xml.Linq.XElement("Context", new System.Xml.Linq.XAttribute("Source", host), new System.Xml.Linq.XAttribute("Directory", preparationRoot)));
+unconfiguredLoaders.Save(loaderXml);
+string preserved = Path.Combine(output, "preserved.json");
+PhysicalContextPreparation.Run(prepSeedPath, preserved, prepOptions);
+using (var context = new PinnedSourceContext(preserved)) {
+    Check(context.Resolve(new AssemblyNameInfo(requested), context.FindModule(host))?.ManifestModule.Location == oldDependency, "proven exact twin binding retained");
+    Check(context.Entries.Single(p => p.Path == oldTwin).ExportInput == false, "same-identity twin not conflated with source scope");
+}
+void RejectPreparation(string message, string seed, string target, string[] options) {
+    bool rejected = false;
+    try { PhysicalContextPreparation.Run(seed, target, options); } catch (Exception ex) when (ex is InvalidDataException or IOException or ArgumentException or System.Xml.XmlException) { rejected = true; }
+    Check(rejected, "preparation rejects " + message);
+    Check(!File.Exists(target) && !File.Exists(target + ".pending") && !File.Exists(target + ".preparation.json"), "no publication after " + message);
+}
+RejectPreparation("inside-input output", prepSeedPath, Path.Combine(preparationRoot, "forbidden.json"), prepOptions);
+var staleSeed = prepSeed.DeepClone(); staleSeed["Assemblies"]![0]!["Sha256"] = new string('0', 64);
+RejectPreparation("stale seed", Save(staleSeed), Path.Combine(output, "stale-prepared.json"), prepOptions);
+RejectPreparation("missing search directory", prepSeedPath, Path.Combine(output, "missing-directory.json"), prepOptions.Concat(["--support=" + Path.Combine(output, "absent")]).ToArray());
+RejectPreparation("unknown option", prepSeedPath, Path.Combine(output, "unknown-option.json"), prepOptions.Concat(["--unknown=true"]).ToArray());
+unconfiguredLoaders.Root!.Add(new System.Xml.Linq.XElement(unconfiguredLoaders.Root.Elements().First())); unconfiguredLoaders.Save(loaderXml);
+RejectPreparation("duplicate loader source", prepSeedPath, Path.Combine(output, "duplicate-loader.json"), prepOptions);
+File.WriteAllText(loaderXml, "<!DOCTYPE AssemblyContexts [<!ENTITY x SYSTEM 'file:///missing'>]><AssemblyContexts>&x;</AssemblyContexts>");
+RejectPreparation("DTD", prepSeedPath, Path.Combine(output, "dtd.json"), prepOptions);
+string existingHash = Hash(prepared); bool replacementRejected = false;
+try { PhysicalContextPreparation.Run(prepSeedPath, prepared, prepOptions); } catch (IOException) { replacementRejected = true; }
+Check(replacementRejected && Hash(prepared) == existingHash, "existing preparation preserved");
 File.WriteAllText(Path.Combine(output, "proof.json"), JsonSerializer.Serialize(new { Checks = checks, Manifest = manifest, ToolSha256 = Hash(typeof(PinnedSourceContext).Assembly.Location) }, new JsonSerializerOptions { WriteIndented = true }));
 Console.WriteLine($"PASS: {checks} pinned physical-context and redirect guards.");

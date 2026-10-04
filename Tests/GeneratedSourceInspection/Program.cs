@@ -24,7 +24,7 @@ internal static class Program {
 
     static int Main(string[] args) {
         try {
-            if (args.Length < 4) throw new ArgumentException("Usage: GeneratedSourceInspection <actual-plugin-runtime> <input> <new-report> <inspect|self-test|metadata> [--references=<manifest>] [--map=<source-map>] [--root=0xTOKEN|--method=0xTOKEN] [--no-async|--no-yield|--no-anon-methods|--show-all|--declare-state-machines]");
+            if (args.Length < 4) throw new ArgumentException("Usage: GeneratedSourceInspection <actual-plugin-runtime> <input-or-seed> <new-report> <inspect|self-test|metadata|prepare-context>. Inspection: [--references=<manifest>] [--map=<source-map>] [--sdk-source] [--root=0xTOKEN|--method=0xTOKEN] [--no-async|--no-yield|--no-anon-methods|--show-all|--declare-state-machines]. Preparation: --contexts=<loader-xml> --app-config=<config> --framework=<directory> [--support=<directory>].");
             runtime = Path.GetFullPath(args[0]);
             foreach (string name in new[] { "dnlib", "dnSpy.Contracts.Logic", "ICSharpCode.Decompiler" }) {
                 string path = Path.Combine(runtime, name + ".dll");
@@ -51,6 +51,7 @@ internal static class Program {
     }
 
     static int Run(string[] args) {
+        if (args[3] == "prepare-context") return PhysicalContextPreparation.Run(args[1], args[2], args.Skip(4).ToArray());
         string input = Path.GetFullPath(args[1]), output = Path.GetFullPath(args[2]);
         if (File.Exists(output) || Directory.Exists(output)) throw new IOException("Choose a new report path.");
         if (StringComparer.OrdinalIgnoreCase.Equals(input, output) || output.StartsWith(Path.GetDirectoryName(input)! + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
@@ -211,6 +212,9 @@ internal static class Program {
         var report = new {
             Format = 1, Mode = args[3] == "metadata" ? "PhysicalMetadataOnly" : mapPath == null ? "RawMetadataFinalCSharpAst" : "MappedFinalCSharpAst", Input = input, InputSha256 = initialHash, module.Mvid,
             AssemblyIdentity = module.Assembly?.FullNameToken, MapApplied = mapPath != null,
+            AssemblyReferences = module.GetAssemblyRefs().Select(a => new { Token = a.MDToken.Raw, Identity = a.FullName }).ToArray(),
+            TypeReferences = args[3] == "metadata" ? module.GetTypeRefs().Select(t => new { Token = t.MDToken.Raw, t.FullName, AssemblyIdentity = t.DefinitionAssembly?.FullName }).ToArray() : null,
+            MemberReferences = args[3] == "metadata" ? module.GetMemberRefs().Select(m => new { Token = m.MDToken.Raw, m.FullName, AssemblyIdentity = m.DeclaringType?.DefinitionAssembly?.FullName }).ToArray() : null,
             Map = mapPath, MapSha256 = mapHash, NormalizedMapSha256 = normalizedMapHash,
             SdkNameWhitelist = whitelistPath, SdkNameWhitelistSha256 = whitelistHash,
             RestoreMetadataOnlyFields = restoreMetadataOnlyFields,
@@ -218,6 +222,8 @@ internal static class Program {
             ReferenceManifest = references.ManifestPath, ReferenceManifestSha256 = references.ManifestHash,
             PinnedReferences = references.Entries,
             SourceConfigs = references.ConfigEntries,
+            SourceSearchContexts = references.SearchContexts,
+            RequireSourceContexts = references.RequireSourceContexts,
             PhysicalResolutions = references.Resolutions,
             Dependencies = dependencies.OrderBy(p => p.Key, StringComparer.OrdinalIgnoreCase).Select(p => new { Path = p.Key, Sha256 = p.Value }).ToArray(),
             Definitions = originals, Roots = reports, SourceHashes = sourceHashes, SourceOutput = sourceOutput, Checks = checks, ElapsedSeconds = stopwatch.Elapsed.TotalSeconds,

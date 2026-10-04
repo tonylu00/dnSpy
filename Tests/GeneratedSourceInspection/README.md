@@ -14,6 +14,7 @@ dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --ro
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map>
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map> --sdk-source
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> metadata --references=<manifest>
+dotnet GeneratedSourceInspection.dll <runtime> <seed-manifest> <new-context> prepare-context --contexts=<loader-xml> --app-config=<main-config> --framework=<directory> --support=<directory>
 ```
 
 `--method=0x06000005` selects partial member scope. Ordinary decompiler switches
@@ -44,7 +45,8 @@ sets the same `RestoreMetadataOnlyFields` C# context flag used by the actual SDK
 project exporter, including native metadata restoration annotations and field
 filtering. The flag is explicitly recorded; its default is false. This observes
 one C# source view without writing SDK projects/resources or compiling them.
-`metadata` reports physical identity/definitions without AST/source output.
+`metadata` reports physical identity/definitions plus physical AssemblyRef,
+TypeRef and MemberRef tokens/declaring identities without AST/source output.
 No mode retires review candidates, proves semantic names, claims application-wide
 merging or proves compilation/runtime compatibility. Absence in one root's AST is insufficient. A future scope-wide
 consumer must bind mapped source, all physical compatibility contexts, retained
@@ -52,11 +54,16 @@ references, restoration contracts and owner chains before retiring symbols.
 
 The reference manifest has `Format=1`, optional `InputDirectory`, `Assemblies`
 (`Path`, complete `Identity`, `Mvid`, `Sha256`, optional `ExportInput`), optional
-`Bindings` (`Source`, requested complete `Identity`, exact physical `Target`),
-and optional `Configs` (`Source`, config `Path`, `Sha256`). Physically distinct
+`Bindings` (`Source`, effective complete `Identity`, exact physical `Target`,
+optional original `RequestedIdentity`), optional `Configs` (`Source`, config
+`Path`, `Sha256`) and `Contexts` (`Source`, ordered physical `Directories`).
+`RequireSourceContexts=true` rejects incomplete context coverage and disables
+global resolution for callers without a pinned scope. Physically distinct
 assemblies may have the same identity. Only the calling module itself, an exact
-binding or one unique pinned full identity may resolve. Ambiguity stays explicit.
-Bindings must correspond to a source AssemblyRef and the target's exact identity.
+binding or one unique pinned full identity in the first applicable search directory
+may resolve. Legacy manifests without scopes permit a unique global pinned identity.
+Ambiguity stays explicit. Bindings must correspond to a source AssemblyRef after
+its pinned config redirect, the target's exact identity and allowed directory.
 Export inputs must remain inside the pinned root. Mapped inspection requires the
 same map input root and an exact pinned export-input object; dependencies are
 read-only and do not become export inputs.
@@ -67,6 +74,26 @@ the config path, never treat a redirect as general version equivalence. Pins are
 rehashed before publication. Build/run `ContextRegression` with the runtime's
 dnlib and a fresh output directory for twin/self/ambiguity, explicit bindings,
 redirect scope/culture/signing/range and stale hash/MVID/config/manifest guards.
+
+`prepare-context` inventories metadata without executing it. The seed owns the
+export-input flags; additional application/framework/support assemblies remain
+read-only. Explicit `AssemblyContexts/Context` rows specify source and directory,
+with optional config; an absent config explicitly overrides the main config for
+that source. Main-root modules use the supplied main config. Other application
+dependencies inherit a config only from consistent explicit host rows in their
+physical directory; conflicting hosts stay recorded as unresolved context evidence.
+The tool retains seed-proven physical bindings and selects new targets by complete
+identity in ordered directories. Root/framework scans are recursive; explicit
+support directories are not. Reparse points are skipped. Native PE files and
+standalone netmodules retain hashes but cannot become assembly resolver targets.
+No GAC or ambient fallback is used. Fresh outputs must lie outside the input tree;
+pins, configs and preparation inputs are rechecked before publication. The output
+manifest and adjacent `.preparation.json` record unresolved requests, config
+provenance, elapsed time and peak working set. This is metadata context evidence,
+not proof of loader equivalence, source merging or runtime compatibility.
+`ContextRegression` also exercises preparation redirects/no-config overrides,
+competing physical identities, read-only roles, retained netmodules, stale seeds,
+DTD/duplicate contexts and failed publication.
 
 Run `Invoke-Regression.ps1` with `-RuntimeDirectory`, `-Inspector`,
 `-ReferenceManifest` and a fresh `-OutputDirectory`. It builds synthetic fixtures,

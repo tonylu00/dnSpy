@@ -15,6 +15,8 @@ What lives here:
 - `checkpoint-waveNNN.json`, `checkpoint64-vN.json` — accepted per-block records
 - `map-update63.json`, `devkit*63-review-check.json` — last update/check reports
 - `archive/` — the former handoff and README journals (history; do not read to resume)
+- `physical-source-context-verification.json` — pinned preparation, source-context
+  guards, mapped SDK AST observations and explicit missing dependency identities
 
 Rules:
 
