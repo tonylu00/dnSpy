@@ -22,6 +22,9 @@ namespace dnSpy.Contracts.Decompiler {
 	/// Predefined custom data IDs passed to <see cref="IDecompilerOutput.AddCustomData{TData}(string, TData)"/>
 	/// </summary>
 	public static class PredefinedCustomDataIds {
+		/// <summary>C# decompiler final AST observations; requires explicit context opt-in.</summary>
+		public const string GeneratedSourceEvidence = nameof(GeneratedSourceEvidence);
+
 		/// <summary>
 		/// TData = <see cref="MethodDebugInfo"/>
 		/// </summary>

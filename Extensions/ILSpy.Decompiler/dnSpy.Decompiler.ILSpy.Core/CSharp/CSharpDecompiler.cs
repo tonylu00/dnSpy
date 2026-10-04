@@ -233,14 +233,14 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 			var state = CreateAstBuilder(ctx, langSettings.Settings, currentType: type);
 			try {
 				state.AstBuilder.AddType(type);
-				RunTransformsAndGenerateCode(ref state, output, ctx);
+				RunTransformsAndGenerateCode(ref state, output, ctx, completeTypeScope: true);
 			}
 			finally {
 				state.Dispose();
 			}
 		}
 
-		void RunTransformsAndGenerateCode(ref BuilderState state, IDecompilerOutput output, DecompilationContext ctx, IAstTransform? additionalTransform = null) {
+		void RunTransformsAndGenerateCode(ref BuilderState state, IDecompilerOutput output, DecompilationContext ctx, IAstTransform? additionalTransform = null, bool completeTypeScope = false) {
 			var astBuilder = state.AstBuilder;
 			astBuilder.RunTransformations(transformAbortCondition);
 			if (additionalTransform is not null) {
@@ -289,6 +289,10 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 				}
 			}
 			astBuilder.GenerateCode(output);
+			if (ctx.CaptureGeneratedSourceEvidence && output.UsesCustomData)
+				output.AddCustomData(PredefinedCustomDataIds.GeneratedSourceEvidence,
+					GeneratedSourceEvidence.Capture(astBuilder.SyntaxTree, astBuilder.Context.CurrentType,
+						completeTypeScope && additionalTransform == null && transformAbortCondition == null));
 		}
 
 		internal static void AddXmlDocumentation(ref BuilderState state, DecompilerSettings settings, AstBuilder astBuilder) {
@@ -361,6 +365,7 @@ namespace dnSpy.Decompiler.ILSpy.Core.CSharp {
 			state.AstBuilder.Context.CancellationToken = ctx.CancellationToken;
 			state.AstBuilder.Context.CurrentType = currentType;
 			state.AstBuilder.Context.Settings = settings;
+			state.AstBuilder.Context.CaptureGeneratedSourceEvidence = ctx.CaptureGeneratedSourceEvidence;
 			return state;
 		}
 

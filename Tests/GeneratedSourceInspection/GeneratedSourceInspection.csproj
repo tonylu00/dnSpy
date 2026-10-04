@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RuntimeDirectory Condition="'$(RuntimeDirectory)' == ''">$(MSBuildThisFileDirectory)..\..\dnSpy\dnSpy\bin\Release\net10.0-windows</RuntimeDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Fixture.cs" />
+    <Compile Remove="BehaviorProbe.cs" />
+    <Reference Include="dnlib"><HintPath>$(RuntimeDirectory)\dnlib.dll</HintPath></Reference>
+    <Reference Include="dnSpy.Contracts.Logic"><HintPath>$(RuntimeDirectory)\dnSpy.Contracts.Logic.dll</HintPath></Reference>
+    <Reference Include="ICSharpCode.Decompiler"><HintPath>$(RuntimeDirectory)\ICSharpCode.Decompiler.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
