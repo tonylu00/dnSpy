@@ -5,9 +5,11 @@
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NameCandidatesSourceDirectory Condition="'$(NameCandidatesSourceDirectory)' == ''">$(MSBuildThisFileDirectory)..\..\..\de4dotEx\tools\NameCandidates</NameCandidatesSourceDirectory>
     <RuntimeDirectory Condition="'$(RuntimeDirectory)' == ''">$(MSBuildThisFileDirectory)..\..\dnSpy\dnSpy\bin\Release\net10.0-windows</RuntimeDirectory>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(NameCandidatesSourceDirectory)/IteratorKickoffInspection.cs" Link="IteratorKickoffInspection.cs" />
     <Compile Include="../../dnSpy/dnSpy.Console/ApplicationConfigResolver.cs" Link="ApplicationConfigResolver.cs" />
     <Compile Remove="Fixture.cs" />
     <Compile Remove="BehaviorProbe.cs" />

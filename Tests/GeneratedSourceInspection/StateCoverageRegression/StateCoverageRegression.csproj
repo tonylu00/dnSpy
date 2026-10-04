@@ -4,8 +4,10 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NameCandidatesSourceDirectory Condition="'$(NameCandidatesSourceDirectory)' == ''">$(MSBuildThisFileDirectory)..\..\..\..\de4dotEx\tools\NameCandidates</NameCandidatesSourceDirectory>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(NameCandidatesSourceDirectory)/IteratorKickoffInspection.cs" Link="IteratorKickoffInspection.cs" />
     <Compile Include="../StateMachineSourceCoverage.cs" Link="StateMachineSourceCoverage.cs" />
     <Compile Include="../ObservationReportSummary.cs" Link="ObservationReportSummary.cs" />
     <Reference Include="dnlib"><HintPath>$(RuntimeDirectory)/dnlib.dll</HintPath></Reference>

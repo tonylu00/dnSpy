@@ -40,7 +40,15 @@ substitutions retain their exact field binding without mutating shared ILVariabl
 
 The complete `audit-scope` report also joins state-machine source coverage to
 original metadata. Trusted framework state-machine attributes and exact builder
-`Start<T>(ref T)` edges corroborate successful async/iterator witnesses. Canonical
+`Start<T>(ref T)` edges corroborate successful async/iterator witnesses. Attribute-free
+legacy iterators can be corroborated by the portable `IteratorKickoffInspection`
+helper shared with de4dotEx. It accepts the exact local constructed return, receiver
+capture, signed CLR interface/MethodImpl bindings and state/thread initialization;
+it also pins the physical `MoveNext` method matched by the source witness. Unsupported
+forms retain missing evidence. It does not infer ownership from generated spelling
+or from the decompiler's rewrite witness. Set `NameCandidatesSourceDirectory` when
+the de4dotEx checkout is not a sibling of dnSpy.
+Canonical
 source owners follow physical rewrite edges and declared property/event ownership;
 cycles, missing edges and multiple owners remain explicit. Declared state members
 and surviving local or cross-module printed uses have separate statuses. Original
@@ -48,6 +56,10 @@ state fields retain their source-variable bindings in the report. This coverage
 does not establish runtime metadata restoration or semantic local names, and does
 not retire naming candidates. The helper uses only dnlib and System.Text.Json;
 the `StateCoverageRegression` project tests it on .NET 8 without WPF.
+Its optional fourth input is the legacy fixture emitted by
+`de4dotEx/tests/IteratorKickoffInspection`; checks include wrong same-machine methods,
+counterfeit contracts, immutable physical twins and retained-wrapper/inline-caller
+ambiguity. These are metadata/source-join tests, not executable iterator behavior tests.
 Successful async iterators report `AsyncIteratorMethod`, from the actual async/yield
 reconstruction state, including empty async iterators. Ordinary async methods and
 synchronous iterators retain their distinct kinds; disabled/failed rewrites have

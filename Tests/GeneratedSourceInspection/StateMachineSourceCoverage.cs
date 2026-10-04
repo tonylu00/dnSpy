@@ -10,7 +10,7 @@ using dnlib.DotNet.Emit;
 // symbols. The caller must first validate complete physical source coverage.
 internal static class StateMachineSourceCoverage {
     static readonly StringComparer PathComparer = OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
-    internal sealed record Owner(uint Token, string Signature, string Evidence, string Kind);
+    internal sealed record Owner(uint Token, string Signature, string Evidence, string Kind, uint ImplementationToken = 0);
     internal sealed record Witness(uint RootTypeToken, string Kind, uint OwnerToken, uint ImplementationToken, uint ImplementationTypeToken);
     internal sealed record Field(uint Token, string Signature, bool Declared, uint[] PrintedOwners, Binding[] SourceBindings);
     internal sealed record Binding(uint OwnerToken, string SourceName);
@@ -71,11 +71,13 @@ internal static class StateMachineSourceCoverage {
             }
         }
         var machines = new Dictionary<TypeDef, List<Owner>>();
-        void Add(TypeDef type, MethodDef method, string evidence, string kind) {
+        void Add(TypeDef type, MethodDef method, string evidence, string kind, uint implementationToken = 0) {
             if (!machines.TryGetValue(type, out var owners)) machines[type] = owners = new();
-            owners.Add(new(method.MDToken.Raw, method.FullName, evidence, kind));
+            owners.Add(new(method.MDToken.Raw, method.FullName, evidence, kind, implementationToken));
         }
         foreach (var method in module.GetTypes().SelectMany(t => t.Methods)) {
+            if (De4dot.NameCandidates.IteratorKickoffInspection.TryObserve(method, out var iterator, out _))
+                Add(iterator.Machine, method, "DirectIteratorKickoff", "IteratorMethod", iterator.MoveNext.MDToken.Raw);
             foreach (var attribute in method.CustomAttributes) {
                 string? kind = Kind(attribute);
                 if (kind == null) continue;
@@ -99,8 +101,8 @@ internal static class StateMachineSourceCoverage {
                     Add(machine, method, "TrustedFrameworkBuilderStart", "AsyncMethod");
             }
         }
-        // Attribute-free older iterators still produce a physical rewrite witness.
-        // Keep them visible, without manufacturing an independent metadata edge.
+        // Other attribute-free forms still need independent physical proof.
+        // A rewrite witness alone cannot manufacture an ownership edge.
         foreach (var witness in witnesses.Where(w => w.Kind is "AsyncMethod" or "IteratorMethod" or "AsyncIteratorMethod")) {
             var type = (TypeDef)module.ResolveToken(witness.ImplementationTypeToken);
             if (!machines.ContainsKey(type)) machines[type] = new();
@@ -135,7 +137,8 @@ internal static class StateMachineSourceCoverage {
             var owners = pair.Value.Distinct().OrderBy(o => o.Token).ThenBy(o => o.Evidence, StringComparer.Ordinal).ToArray();
             var observed = witnesses.Where(w => w.ImplementationTypeToken == type.MDToken.Raw && w.Kind is "AsyncMethod" or "IteratorMethod" or "AsyncIteratorMethod")
                 .Distinct().OrderBy(w => w.RootTypeToken).ThenBy(w => w.OwnerToken).ToArray();
-            var matched = observed.Where(w => owners.Any(o => o.Token == w.OwnerToken && o.Kind == w.Kind)).ToArray();
+            var matched = observed.Where(w => owners.Any(o => o.Token == w.OwnerToken && o.Kind == w.Kind &&
+                (o.ImplementationToken == 0 || o.ImplementationToken == w.ImplementationToken))).ToArray();
             uint[] members = new IMemberDef[] { type }.Concat(type.Methods).Concat(type.Fields).Concat(type.Properties).Concat(type.Events).Select(d => d.MDToken.Raw).ToArray();
             uint[] declared = members.Where(declarations.Contains).OrderBy(t => t).ToArray(), uses = members.Where(printed.ContainsKey).OrderBy(t => t).ToArray();
             var paths = matched.SelectMany(w => Paths(w.OwnerToken)).DistinctBy(p => string.Join(",", p)).ToArray();

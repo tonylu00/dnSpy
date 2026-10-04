@@ -1,7 +1,7 @@
 using System.Text.Json;
 using dnlib.DotNet;
 
-if (args.Length is < 1 or > 3) throw new ArgumentException("Pass the original GeneratedSourceFixture assembly, optionally the original AsyncIteratorFixture assembly and native observation report.");
+if (args.Length is < 1 or > 4) throw new ArgumentException("Pass the original GeneratedSourceFixture assembly, optionally the original AsyncIteratorFixture assembly, native observation report and legacy iterator fixture.");
 using var module = ModuleDefMD.Load(args[0]);
 var root = module.Types.Single(t => t.Name == "GeneratedSourceFixture");
 var iterator = root.Methods.Single(m => m.Name == "Iterate");
@@ -90,6 +90,12 @@ var asyncReport = JsonSerializer.SerializeToElement(new { Roots = new[] { new {
 var asyncResult = Observe(asyncReport).Single(e => e.TypeToken == T(asyncMachine));
 Check(asyncResult.Status == "MergedSourceObserved", "async attribute and builder kickoff corroborate source");
 Check(asyncResult.Owners.Any(o => o.Evidence == "TrustedFrameworkBuilderStart"), "actual original builder Start shape recognized");
+var shared = Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(other), T(asyncOwner) }, extraWitnesses: new[] {
+    Rewrite(T(other), T(iterator)), Rewrite(T(asyncOwner), T(iterator)), Rewrite(T(other), T(asyncOwner)) }));
+Check(shared.Status == "AmbiguousCanonicalOwners" && shared.CanonicalOwnerPaths.Length == 2,
+    "retained wrapper and inline caller are preserved as distinct source contexts");
+Check(shared.CanonicalOwnerPaths.Select(p=>p[^1]).ToHashSet().SetEquals(new[] { T(other), T(asyncOwner) }),
+    "nested printed contexts never select a canonical owner by spelling or traversal order");
 if (args.Length >= 2) {
     using var asyncIteratorModule = ModuleDefMD.Load(args[1]);
     var iteratorOwner = asyncIteratorModule.Types.Single(t => t.Name == "AsyncIteratorFixture").Methods.Single(m => m.Name == "Range");
@@ -110,7 +116,7 @@ if (args.Length >= 2) {
     Check(IteratorObservation("IteratorMethod").Status == "MissingMatchingBodyWitness", "synchronous iterator witness cannot corroborate an async iterator");
     Check(observation.CanonicalOwnerPaths.Single().SequenceEqual(new[] { T(iteratorOwner) }), "async iterator follows its exact physical source owner");
 }
-if (args.Length == 3) {
+if (args.Length >= 3) {
     using var original = JsonDocument.Parse(File.ReadAllText(args[2]));
     var compact = JsonSerializer.SerializeToElement(ObservationReportSummary.Read(args[2]));
     var native = original.RootElement;
@@ -120,5 +126,34 @@ if (args.Length == 3) {
     Check(compact.GetProperty("FieldBindings").GetInt32() == native.GetProperty("Roots").EnumerateArray().Sum(r => r.GetProperty("FieldBindings").GetArrayLength()), "compact header counts every field binding");
     Check(compact.GetProperty("SourceHashes").GetRawText() == JsonSerializer.Serialize(native.GetProperty("SourceHashes")), "compact header preserves all source hashes");
     Check(!compact.TryGetProperty("PrintedReferences", out _) && !compact.TryGetProperty("Definitions", out _), "compact header does not expand full reference/definition object graphs");
+}
+if (args.Length == 4) {
+    using var legacy = ModuleDefMD.Load(args[3]);
+    var legacyOwner = legacy.Types.Single(t=>t.Name=="Owner").Methods.Single(m=>m.Name=="x");
+    Check(De4dot.NameCandidates.IteratorKickoffInspection.TryObserve(legacyOwner, out var proof, out _), "legacy fixture independently proves its exact physical kickoff");
+    var legacyState = proof!.Machine;
+    StateMachineSourceCoverage.Entry LegacyObservation(string kind = "IteratorMethod", MethodDef? implementation = null, uint? observedOwner = null) {
+        var report = JsonSerializer.SerializeToElement(new { Roots = new[] { new {
+            RootTypeToken = T(legacyOwner.DeclaringType), CompleteTypeScope = true,
+            DeclarationTokens = new[] { T(legacyOwner.DeclaringType), T(legacyOwner) },
+            PrintedReferenceCoverage = true, PrintedReferences = Array.Empty<object>(), FieldBindings = Array.Empty<object>(),
+            BodyWitnesses = new[] { new { Kind = kind, OwnerToken = observedOwner ?? T(legacyOwner),
+                ImplementationToken = T(implementation ?? proof.MoveNext), ImplementationTypeToken = T(legacyState) } }
+        } } });
+        return StateMachineSourceCoverage.Observe(legacy, report).Single(e=>e.TypeToken==T(legacyState));
+    }
+    var result = LegacyObservation();
+    Check(result.Status == "MergedSourceObserved" && result.Owners.Single().Evidence == "DirectIteratorKickoff", "legacy metadata and exact native witness corroborate source");
+    Check(result.Owners.Single().ImplementationToken == T(proof.MoveNext), "independent proof pins the exact implementation definition");
+    Check(result.CanonicalOwnerPaths.Single().SequenceEqual(new[] { T(legacyOwner) }), "legacy owner token preserved");
+    Check(LegacyObservation(implementation: proof.Current).Status == "MissingMatchingBodyWitness", "same-machine Current cannot impersonate MoveNext");
+    Check(LegacyObservation(implementation: proof.Constructor).Status == "MissingMatchingBodyWitness", "same-machine constructor cannot impersonate MoveNext");
+    Check(LegacyObservation("AsyncMethod").Status == "MissingMatchingBodyWitness", "legacy iterator cannot be corroborated as async");
+    Check(LegacyObservation(observedOwner: 0).Status == "MissingMatchingBodyWitness", "unknown source owner cannot corroborate direct kickoff");
+    var initial = legacyOwner.Body.Instructions[0];
+    legacyOwner.Body.Instructions[0] = dnlib.DotNet.Emit.Instruction.Create(dnlib.DotNet.Emit.OpCodes.Ldc_I4_0);
+    Check(LegacyObservation().Status == "MissingIndependentOwnerEvidence", "rewrite observation never repairs invalid physical kickoff evidence");
+    legacyOwner.Body.Instructions[0] = initial;
+    Check(LegacyObservation().Status == "MergedSourceObserved", "restored original fixture corroborates again");
 }
 Console.WriteLine($"PASS: {checks} portable state source coverage checks.");
