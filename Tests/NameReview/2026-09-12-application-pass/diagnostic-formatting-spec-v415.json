@@ -1,0 +1,169 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:/knx_analysis/ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:/knx_analysis/perf-now/application-inventory-v393-01/049-types.json",
+    "D:/knx_analysis/perf-now/application-inventory-v393-01/049-fields.json",
+    "D:/knx_analysis/perf-now/application-inventory-v393-01/049-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0200030C",
+      "NewName": "Knx.Ets.Hawk.Impl.DeviceInfoItems.DeviceInfoItemFilterTable",
+      "Disposition": "rename",
+      "Reason": "Class336 derives from device-info item Class331. Constructor 06000FDC obtains DeviceInfoItem_FilterTableContent resource and ToString 06000FE5 returns FilterTable. Private helpers read bitmap group addresses, format ranges/list and group hex bytes; preserve existing ProcessAsync/IncludeItemAsync/EstimateTimeAsync families.",
+      "ParameterNames": {},
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x02000324",
+      "NewName": "Knx.Ets.Hawk.Impl.DeviceInfoItems.DeviceInfoItemSecuredServiceFamilies",
+      "Disposition": "rename",
+      "Reason": "Class340 derives from device-info item Class331; ToString 06001036 returns DeviceInfoItemSecuredServiceFamilies. Helper 06001035 retrieves SecuredServiceFamily_ labels using Routing/Tunneling/DevMgmt resource suffixes selected by 06001034. Preserve constructor-supplied display title and existing virtual families.",
+      "ParameterNames": {},
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000FE0",
+      "NewName": "FormatFilterTableHex",
+      "Disposition": "rename",
+      "Reason": "Private formatter writes every byte using {0:X02}, inserting a space every 32 bytes. Native incoming physical context is filter-table item Class336. No format or grouping change.",
+      "ParameterNames": {
+        "1": "filterTable"
+      },
+      "LocalNames": {
+        "0": "formattedTable",
+        "1": "byteIndex"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000FE2",
+      "NewName": "FormatGroupAddressRange",
+      "Disposition": "rename",
+      "Reason": "Private formatter calls the supplied UInt16 address formatter for both endpoints, omits the second endpoint for equality, uses a space for adjacent addresses and a hyphen for longer ranges. Called by existing FormatGroupAddressList closure helper; keep exact separator behavior.",
+      "ParameterNames": {
+        "1": "firstAddress",
+        "2": "lastAddress",
+        "3": "formatAddress"
+      },
+      "LocalNames": {
+        "0": "formattedRange",
+        "1": "formattedLastAddress"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000FE3",
+      "NewName": "EnumerateFilterTableGroupAddresses",
+      "Disposition": "rename",
+      "Reason": "Original iterator kickoff creates Class336/e; MoveNext 06000FF2 walks 8 * bitmap.Length bits and yields the UInt16 bit index exactly when set. Owner method is named; generated iterator identities and interface contracts remain intact.",
+      "ParameterNames": {
+        "1": "filterTable"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000FFD",
+      "NewName": "FormatCommunicationObjectGroupAddresses",
+      "Disposition": "rename",
+      "Reason": "Private helper filters Class287 association rows by object index (e0::c), resolves group-address index (e0::d) into ey::d, formats addresses and inserts the sending address first when e0::b is true. Class337 is checked DeviceInfoItemGroupCommunication. Exact physical body; no association/order/spacing changes.",
+      "ParameterNames": {
+        "1": "communicationTables",
+        "2": "objectIndex",
+        "3": "formatAddress"
+      },
+      "LocalNames": {
+        "0": "formattedAddresses",
+        "1": "associations",
+        "2": "association",
+        "3": "formattedAddress"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600101A",
+      "NewName": "FormatSetBitIndices",
+      "Disposition": "rename",
+      "Reason": "Private helper enumerates every BitArray index, collects only true entries, then joins decimal indices with spaces. RfMulti-table owner kept under its already accepted name.",
+      "ParameterNames": {
+        "1": "bits"
+      },
+      "LocalNames": {
+        "0": "setBitIndices",
+        "1": "bitIndex"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06001034",
+      "NewName": "GetSecuredServiceFamilyResourceSuffix",
+      "Disposition": "rename",
+      "Reason": "Private helper returns Routing for input 5, DevMgmt for 3, Tunneling for 4 and empty otherwise. Exact values and fallback verified; caller 06001035 prefixes SecuredServiceFamily_ for ResourceManager lookup.",
+      "ParameterNames": {
+        "1": "serviceFamily"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06001035",
+      "NewName": "GetSecuredServiceFamilyDisplayName",
+      "Disposition": "rename",
+      "Reason": "Private helper joins SecuredServiceFamily_ with resource suffix from 06001034 and invokes Hawk ResourceManager.GetString. Exact resource and lookup behavior remain unchanged.",
+      "ParameterNames": {
+        "1": "serviceFamily"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06001043",
+      "NewName": "FormatFilterTableIndexRange",
+      "Disposition": "rename",
+      "Reason": "Private instance helper formats first/last decimal bit indices: one for equality, space for adjacency, hyphen otherwise. Called by bitmap formatter 06001044 in DeviceInfoItemSegmentCouplerDaFilterTable.",
+      "ParameterNames": {
+        "1": "firstIndex",
+        "2": "lastIndex"
+      },
+      "LocalNames": {
+        "0": "formattedRange",
+        "1": "formattedLastIndex"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06001044",
+      "NewName": "FormatDestinationAddressFilterTable",
+      "Disposition": "rename",
+      "Reason": "Private bitmap formatter scans all bytes least-significant bit first, coalesces consecutive set-bit indices, and sends each run to 06001043; joins runs with spaces and closes a final run at 8 * bitmap.Length - 1. Constructor resource DeviceInfoItem_SegmentCouplerDaFilterTableContent corroborates destination-address filter context.",
+      "ParameterNames": {
+        "1": "filterTable"
+      },
+      "LocalNames": {
+        "0": "byteCount",
+        "1": "rangeStart",
+        "2": "formattedTable",
+        "3": "bitIndex",
+        "4": "formattedRange",
+        "5": "formattedFinalRange"
+      }
+    }
+  ]
+}

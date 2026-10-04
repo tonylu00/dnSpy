@@ -1,0 +1,549 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class336",
+      "Token": "0x0200030C",
+      "Signature": "Class336",
+      "OriginalName": "Class336",
+      "Reason": "Class336 derives from device-info item Class331. Constructor 06000FDC obtains DeviceInfoItem_FilterTableContent resource and ToString 06000FE5 returns FilterTable. Private helpers read bitmap group addresses, format ranges/list and group hex bytes; preserve existing ProcessAsync/IncludeItemAsync/EstimateTimeAsync families.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "Knx.Ets.Hawk.Impl.DeviceInfoItems.DeviceInfoItemFilterTable",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class340",
+      "Token": "0x02000324",
+      "Signature": "Class340",
+      "OriginalName": "Class340",
+      "Reason": "Class340 derives from device-info item Class331; ToString 06001036 returns DeviceInfoItemSecuredServiceFamilies. Helper 06001035 retrieves SecuredServiceFamily_ labels using Routing/Tunneling/DevMgmt resource suffixes selected by 06001034. Preserve constructor-supplied display title and existing virtual families.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "Knx.Ets.Hawk.Impl.DeviceInfoItems.DeviceInfoItemSecuredServiceFamilies",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class336",
+      "Token": "0x06000FE0",
+      "Signature": "System.String Class336::b(System.Byte[])",
+      "OriginalName": "b",
+      "Reason": "Private formatter writes every byte using {0:X02}, inserting a space every 32 bytes. Native incoming physical context is filter-table item Class336. No format or grouping change.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "filterTable"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Text.StringBuilder",
+          "NewName": "formattedTable"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": "byteIndex"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "FormatFilterTableHex",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class336",
+      "Token": "0x06000FE2",
+      "Signature": "System.String Class336::a(System.UInt16,System.UInt16,System.Func`2<System.UInt16,System.String>)",
+      "OriginalName": "a",
+      "Reason": "Private formatter calls the supplied UInt16 address formatter for both endpoints, omits the second endpoint for equality, uses a space for adjacent addresses and a hyphen for longer ranges. Called by existing FormatGroupAddressList closure helper; keep exact separator behavior.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.UInt16 ushort_0",
+        "2: System.UInt16 ushort_1",
+        "3: System.Func`2<System.UInt16,System.String> func_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_0",
+          "HasMetadata": true,
+          "NewName": "firstAddress"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ushort_1",
+          "HasMetadata": true,
+          "NewName": "lastAddress"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "func_0",
+          "HasMetadata": true,
+          "NewName": "formatAddress"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Text.StringBuilder",
+          "NewName": "formattedRange"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.String",
+          "NewName": "formattedLastAddress"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "FormatGroupAddressRange",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class336",
+      "Token": "0x06000FE3",
+      "Signature": "System.Collections.Generic.IEnumerable`1<System.UInt16> Class336::a(System.Byte[])",
+      "OriginalName": "a",
+      "Reason": "Original iterator kickoff creates Class336/e; MoveNext 06000FF2 walks 8 * bitmap.Length bits and yields the UInt16 bit index exactly when set. Owner method is named; generated iterator identities and interface contracts remain intact.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "filterTable"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "EnumerateFilterTableGroupAddresses",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class337",
+      "Token": "0x06000FFD",
+      "Signature": "System.String Class337::a(Class287,System.Int32,System.Func`2<System.UInt16,System.String>)",
+      "OriginalName": "a",
+      "Reason": "Private helper filters Class287 association rows by object index (e0::c), resolves group-address index (e0::d) into ey::d, formats addresses and inserts the sending address first when e0::b is true. Class337 is checked DeviceInfoItemGroupCommunication. Exact physical body; no association/order/spacing changes.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class287 class287_0",
+        "2: System.Int32 int_0",
+        "3: System.Func`2<System.UInt16,System.String> func_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class287_0",
+          "HasMetadata": true,
+          "NewName": "communicationTables"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "objectIndex"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "func_0",
+          "HasMetadata": true,
+          "NewName": "formatAddress"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Text.StringBuilder",
+          "NewName": "formattedAddresses"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Collections.Generic.List`1/Enumerator<e0>",
+          "NewName": "associations"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "e0",
+          "NewName": "association"
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.String",
+          "NewName": "formattedAddress"
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "FormatCommunicationObjectGroupAddresses",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class339",
+      "Token": "0x0600101A",
+      "Signature": "System.String Class339::a(System.Collections.BitArray)",
+      "OriginalName": "a",
+      "Reason": "Private helper enumerates every BitArray index, collects only true entries, then joins decimal indices with spaces. RfMulti-table owner kept under its already accepted name.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Collections.BitArray bitArray_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "bitArray_0",
+          "HasMetadata": true,
+          "NewName": "bits"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Collections.Generic.List`1<System.Int32>",
+          "NewName": "setBitIndices"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": "bitIndex"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "FormatSetBitIndices",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class340",
+      "Token": "0x06001034",
+      "Signature": "System.String Class340::b(System.Byte)",
+      "OriginalName": "b",
+      "Reason": "Private helper returns Routing for input 5, DevMgmt for 3, Tunneling for 4 and empty otherwise. Exact values and fallback verified; caller 06001035 prefixes SecuredServiceFamily_ for ResourceManager lookup.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "serviceFamily"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetSecuredServiceFamilyResourceSuffix",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class340",
+      "Token": "0x06001035",
+      "Signature": "System.String Class340::a(System.Byte)",
+      "OriginalName": "a",
+      "Reason": "Private helper joins SecuredServiceFamily_ with resource suffix from 06001034 and invokes Hawk ResourceManager.GetString. Exact resource and lookup behavior remain unchanged.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "serviceFamily"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetSecuredServiceFamilyDisplayName",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class341",
+      "Token": "0x06001043",
+      "Signature": "System.String Class341::a(System.Int32,System.Int32)",
+      "OriginalName": "a",
+      "Reason": "Private instance helper formats first/last decimal bit indices: one for equality, space for adjacency, hyphen otherwise. Called by bitmap formatter 06001044 in DeviceInfoItemSegmentCouplerDaFilterTable.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Int32 int_0",
+        "2: System.Int32 int_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "int_0",
+          "HasMetadata": true,
+          "NewName": "firstIndex"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_1",
+          "HasMetadata": true,
+          "NewName": "lastIndex"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Text.StringBuilder",
+          "NewName": "formattedRange"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.String",
+          "NewName": "formattedLastIndex"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "FormatFilterTableIndexRange",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+      "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+      "Type": "Class341",
+      "Token": "0x06001044",
+      "Signature": "System.String Class341::a(System.Byte[])",
+      "OriginalName": "a",
+      "Reason": "Private bitmap formatter scans all bytes least-significant bit first, coalesces consecutive set-bit indices, and sends each run to 06001043; joins runs with spaces and closes a final run at 8 * bitmap.Length - 1. Constructor resource DeviceInfoItem_SegmentCouplerDaFilterTableContent corroborates destination-address filter context.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte[] byte_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": "filterTable"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": "byteCount"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": "rangeStart"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Text.StringBuilder",
+          "NewName": "formattedTable"
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int32",
+          "NewName": "bitIndex"
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.String",
+          "NewName": "formattedRange"
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.String",
+          "NewName": "formattedFinalRange"
+        },
+        {
+          "Index": 6,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 7,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "FormatDestinationAddressFilterTable",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Skips": []
+}
