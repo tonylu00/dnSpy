@@ -1,0 +1,382 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json",
+    "D:\\knx_analysis\\naming-v419-falcon-fields01.json",
+    "D:\\knx_analysis\\naming-v419-falcon-types01.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000438",
+      "Reason": "Non-generated internal generic helper uses exact stateAccessor/stateMutator callbacks, ToDictionary over state/trigger keys, TryGetValue and awaits transition callbacks before setting changed target state. Native constructor callers are connection layer060007E7, link layer0600196B and USB interface06001BE6; six process calls from three exact owner bodies. Existing neighboring Class1246 is AsyncStateTransition.",
+      "Disposition": "rename",
+      "NewName": "Knx.Falcon.Impl.Utilities.AsyncStateMachine"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000439",
+      "Reason": "Non-generated readonly value type; fields hold state U and trigger V, ctor0600182C sets both, Equals compares both, GetHashCode combines both; ctor key selector06001832 and body06001833 use it as dictionary key.",
+      "Disposition": "rename",
+      "NewName": "TransitionKey"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0200043A",
+      "Reason": "Preserve meaningful original compiler static-cache type <>c. Exact ldftn06001832 in ctor0600182A IL76 and <>9__5_0 cache bind the key-selector lambda to its constructor owner.",
+      "Disposition": "preserve"
+    },
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0200043B",
+      "Reason": "Unresolved generated source spelling: trusted framework AsyncStateMachineAttribute and exact AsyncTaskMethodBuilder.Start at owner0600182B IL61 bind body06001833. Missing original compiler type name and current consolidated reconstructed-source witness; retain generated type, not an invented semantic helper.",
+      "Disposition": "unresolved"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013A6",
+      "Reason": "Ctor0600182A argument1/null guard literal stateAccessor at IL47; body06001833 invokes with target and captures currentState at IL313/318.",
+      "Disposition": "rename",
+      "NewName": "_stateAccessor"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013A7",
+      "Reason": "Ctor0600182A argument2/null guard literal stateMutator at IL59; body06001833 invokes with target and nextState only when nextState differs at IL174.",
+      "Disposition": "rename",
+      "NewName": "_stateMutator"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013A8",
+      "Reason": "Ctor0600182A argument4 IFalconLogger stored at IL29. No helper logger reads are claimed.",
+      "Disposition": "rename",
+      "NewName": "_logger"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013A9",
+      "Reason": "Ctor0600182A ToDictionary key-selector lambda IL93/98; body06001833 TryGetValue with TransitionKey(currentState,trigger) IL341/348.",
+      "Disposition": "rename",
+      "NewName": "_transitionsByKey"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013AB",
+      "Reason": "Nested key ctor0600182C argument1 U stores IL2; lambda06001832 obtains meaningful get_State as first constructor argument.",
+      "Disposition": "rename",
+      "NewName": "_state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013AC",
+      "Reason": "Nested key ctor0600182C argument2 V stores IL9; lambda06001832 obtains transition trigger as second constructor argument.",
+      "Disposition": "rename",
+      "NewName": "_trigger"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B0",
+      "Reason": "Owner0600182B initializes async protocol state -1 at IL47; body06001833 reads dispatch IL1 and stores resume0/1/completed-2.",
+      "Disposition": "rename",
+      "NewName": "state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B1",
+      "Reason": "Owner0600182B stores AsyncTaskMethodBuilder.Create IL7; Start IL61, body06001833 AwaitUnsafeOnCompleted/SetException/SetResult.",
+      "Disposition": "rename",
+      "NewName": "builder"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B2",
+      "Reason": "Owner0600182B captures this at IL15; body06001833 reads state accessor/mutator and transition dictionary through it.",
+      "Disposition": "rename",
+      "NewName": "stateMachine"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B3",
+      "Reason": "Owner0600182B captures parameter1 T at IL23; body passes it to both actions and state callbacks (IL313/174/233/381).",
+      "Disposition": "rename",
+      "NewName": "target"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B4",
+      "Reason": "Owner0600182B captures parameter2 V at IL31; body06001833 passes it into lookup key at IL336/341.",
+      "Disposition": "rename",
+      "NewName": "trigger"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B5",
+      "Reason": "Owner0600182B captures parameter3 W at IL39; body06001833 passes it as second argument of both action delegates at IL233/381.",
+      "Disposition": "rename",
+      "NewName": "parameter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B6",
+      "Reason": "Body06001833 captures stateAccessor(target) result at IL318; lookup IL330, equality comparison IL59, cleanup IL462/497.",
+      "Disposition": "rename",
+      "NewName": "currentState"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B7",
+      "Reason": "Body06001833 seeds default newState from transition at IL188, replaces with determining-action GetResult at IL149, compares with currentState then passes to stateMutator IL174.",
+      "Disposition": "rename",
+      "NewName": "nextState"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B8",
+      "Reason": "Body06001833 awaits non-result transition action; field saves local3 at IL425 and resumes at IL18, configured task protocol.",
+      "Disposition": "rename",
+      "NewName": "actionAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013B9",
+      "Reason": "Body06001833 awaits state-determining action Task<U>; field saves local6 at IL276, resume GetResult IL139 flows to nextState.",
+      "Disposition": "rename",
+      "NewName": "stateActionAwaiter"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013BB",
+      "Reason": "Both transition constructors06001835/36 parameter1 stores IL8; meaningful original get_State06001837 directly reads IL1. Used to select transition dictionary key.",
+      "Disposition": "rename",
+      "NewName": "_state"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013BC",
+      "Reason": "Both constructors06001835/36 parameter2 stores IL15; exact getter06001838 reads IL1, key selector06001832 passes it into key. Trigger identity corroborated by three caller State/Trigger instantiations.",
+      "Disposition": "rename",
+      "NewName": "_trigger"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013BD",
+      "Reason": "Ctor06001835 argument3 stores IL22; state-determining overload06001836 seeds same field with argument1 before action result overrides it. Body06001833 IL183/188 sets proposed nextState.",
+      "Disposition": "rename",
+      "NewName": "_newState"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013BE",
+      "Reason": "Ctor06001835 argument4 Func<T,W,Task> stores IL30; getter0600183A directly reads; body06001833 invokes at IL381 and awaits without a state result.",
+      "Disposition": "rename",
+      "NewName": "_actionAsync"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013BF",
+      "Reason": "Ctor06001836 argument3 Func<T,W,Task<U>> stores IL29; getter0600183B directly reads; body06001833 invokes IL233 and awaits U into nextState.",
+      "Disposition": "rename",
+      "NewName": "_actionDeterminingNewStateAsync"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013C0",
+      "Reason": "Both transition constructors store explicit String name or format {0}+{1} from state/trigger at IL64/63; accepted get_Name0600183C directly reads.",
+      "Disposition": "rename",
+      "NewName": "_name"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013AD",
+      "Reason": "Preserve original canonical compiler cache field <>9 / <>9__5_0. Constructor0600182A reads cached key-selector delegate and binds exact ldftn06001832 at IL76; no semantic cache alias.",
+      "Disposition": "preserve"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040013AE",
+      "Reason": "Preserve original canonical compiler cache field <>9 / <>9__5_0. Constructor0600182A reads cached key-selector delegate and binds exact ldftn06001832 at IL76; no semantic cache alias.",
+      "Disposition": "preserve"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600182A",
+      "Reason": "Callbacks guarded by exact stateAccessor/stateMutator argument literals; transition array converted to keyed dictionary; logger retained.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "stateAccessor",
+        "2": "stateMutator",
+        "3": "transitions",
+        "4": "logger"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600182B",
+      "Reason": "Trusted owner of06001833 via builder.Start IL61. Reads target state, looks up state+trigger, awaits optional action or state-returning action, updates only changed state. Used by exact connection/link/USB process bodies. Unresolved local positions 1:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "rename",
+      "NewName": "ProcessTriggerAsync",
+      "ParameterNames": {
+        "1": "target",
+        "2": "trigger",
+        "3": "parameter"
+      },
+      "LocalNames": {
+        "0": "stateMachine"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600182C",
+      "Reason": "Readonly key stores state argument1 and trigger argument2 at IL2/9; corroborated by key-selector and lookup constructors.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "state",
+        "2": "trigger"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600182D",
+      "Reason": "Keep meaningful IEquatable Equals contract/other parameter and overload; temporaries load this key state at IL6 and trigger at IL41. Scope-only protected managed body. Unresolved local positions 2:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "state",
+        "1": "trigger"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600182E",
+      "Reason": "Preserve meaningful object Equals override and obj parameter; exact type guard followed by unbox and typed Equals. No protocol definition changes. Unresolved local positions 0:System.Int32, 1:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "preserve",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600182F",
+      "Reason": "Keep meaningful GetHashCode override. Locals0/1 hold state/trigger before constrained hash calls, stateHash*397 xor triggerHash; scope-only managed body. Unresolved local positions 2:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "state",
+        "1": "trigger"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001832",
+      "Reason": "Preserve existing compiler alias <.ctor>b__5_0 and exact constructor lambda binding. Parameter is transition, state/trigger getters construct TransitionKey. Scope-only generated callback. Unresolved local positions 0:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "transition"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001833",
+      "Reason": "Trusted generated body owner0600182B. Native IL traces cached async state, owner, lookup transition, void-action awaiter/awaitable, nextState GetResult temporary, state-returning-action awaiter/awaitable, builder exception. Keep CLR MoveNext/family unchanged; scopes only. Source merging remains unverified. Unresolved local positions 9:System.Int32, 10:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "rename",
+      "LocalNames": {
+        "0": "cachedState",
+        "1": "stateMachine",
+        "2": "transition",
+        "3": "actionAwaiter",
+        "4": "actionAwaitable",
+        "5": "nextState",
+        "6": "stateActionAwaiter",
+        "7": "stateActionAwaitable",
+        "8": "error"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001834",
+      "Reason": "Preserve meaningful explicit CLR SetStateMachine protocol and original stateMachine parameter. Unused flattened local remains unresolved. Unresolved local positions 0:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "preserve",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001835",
+      "Reason": "Fixed-new-state transition overload: exact stores of initial state, trigger, newState, void-result action and explicit/default name.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "state",
+        "2": "trigger",
+        "3": "newState",
+        "4": "actionAsync",
+        "5": "name"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001836",
+      "Reason": "State-determining transition overload: exact stores initial state/trigger, seeds newState from initial state, state-returning action and explicit/default name.",
+      "Disposition": "rename",
+      "ParameterNames": {
+        "1": "state",
+        "2": "trigger",
+        "3": "actionDeterminingNewStateAsync",
+        "4": "name"
+      },
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001837",
+      "Reason": "Preserve meaningful original get_State; direct field read and key selector corroborate role. No invented property or accessor rename. Unresolved local positions 0:System.Int16: no unique role or unused flattened storage; no placeholder assigned.",
+      "Disposition": "preserve",
+      "Inventory": "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json"
+    }
+  ]
+}

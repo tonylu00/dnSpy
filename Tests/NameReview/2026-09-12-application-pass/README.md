@@ -22,6 +22,8 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `asynchronous-state-transition-coverage-v422.json` — shared transition helper
+  naming checkpoint, exact IP/link/USB callers and unresolved owner evidence.
 - `link-layer-coverage-v421.json` — physical queue, timing, filtering and
   confirmation-chain naming checkpoint and unresolved evidence.
 - `connection-oriented-transport-coverage-v419.json` — physical transport-chain
