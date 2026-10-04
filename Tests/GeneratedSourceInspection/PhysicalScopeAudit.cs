@@ -12,6 +12,8 @@ using dnSpy.Contracts.Decompiler;
 // Validates observation coverage against original metadata, never against name
 // spelling or absence of a declaration in one root. No naming decisions/writes.
 internal static class PhysicalScopeAudit {
+    sealed record StateCoverageModule(string Input, string Identity, string Mvid, string Sha256, string Report, string ReportSha256,
+        StateMachineSourceCoverage.Entry[] States);
     static readonly StringComparer Paths = OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
     static string Hash(string path) { using var stream = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(stream)); }
     static string Text(JsonElement value, string name) => value.GetProperty(name).GetString() ?? throw new InvalidDataException("Missing " + name);
@@ -71,6 +73,8 @@ internal static class PhysicalScopeAudit {
         var crossModulePrintedReferences = new Dictionary<(string Path, uint Token), int>();
         var unpinned = new List<object>();
         var unpinnedPrinted = new List<object>();
+        var stateCoverage = new List<StateCoverageModule>();
+        var stateCounts = new Dictionary<string, int>(StringComparer.Ordinal);
         string? normalizedMapHash = null;
         int rootCount = 0, witnessCount = 0, fieldCount = 0, unresolvedCount = 0, nonlocalCount = 0, unknownOwnerCount = 0;
         int printedRootCount = 0, printedRecordCount = 0, printedLocalCount = 0, printedNonlocalCount = 0,
@@ -260,6 +264,8 @@ internal static class PhysicalScopeAudit {
                 Require(printedAudit.GetProperty("UnpinnedDefinitions").GetArrayLength() == localPrintedUnpinned, "Printed module unpinned count mismatch.");
             }
             else Require(localPrintedRoots == 0, "Missing printed module audit.");
+            var states = StateMachineSourceCoverage.Observe(module, report);
+            stateCoverage.Add(new(input, pin.Identity, pin.Mvid, pin.Sha256, reportPath, Text(result, "ReportSha256"), states));
             audits.Add(new { Input = input, pin.Identity, pin.Mvid, pin.Sha256, Report = reportPath, ReportSha256 = Text(result, "ReportSha256"), Roots = actualRoots.Count, Definitions = definitions.Count, BodyWitnesses = localWitnesses, FieldBindings = localFields, PinnedNonlocalUses = localNonlocal, UnresolvedNonlocalUses = localUnresolved,
                 PrintedReferenceCoverage = localPrintedRoots == actualRoots.Count, PrintedRoots = localPrintedRoots, PrintedRecords = localPrintedRecords, LocalPrintedUses = localPrintedUses, PinnedPrintedNonlocalUses = localPrintedNonlocal, UnresolvedPrintedUses = localPrintedUnresolved,
                 PrintedDefinitions = localPrintedDefinitions, PrintedImplementationAnnotations = localPrintedImplementations, UnknownPrintedOwners = localPrintedUnknownOwners, LocalPrintedReferenceTokens = localPrintedTokens.OrderBy(t => t).ToArray(),
@@ -272,6 +278,19 @@ internal static class PhysicalScopeAudit {
             Require(Hash(reportPath) == Text(result, "ReportSha256"), "Native report changed during audit.");
         }
         references.Verify(); VerifyPins();
+        var crossPrintedByModule = new Dictionary<string, HashSet<uint>>(Paths);
+        foreach (var pair in crossModulePrintedReferences) {
+            if (!crossPrintedByModule.TryGetValue(pair.Key.Path, out var tokens)) crossPrintedByModule[pair.Key.Path] = tokens = new();
+            tokens.Add(pair.Key.Token);
+        }
+        for (int i = 0; i < stateCoverage.Count; i++) {
+            var item = stateCoverage[i];
+            crossPrintedByModule.TryGetValue(item.Input, out var crossTokens);
+            var states = item.States.Select(state => StateMachineSourceCoverage.JoinCrossModuleUses(state,
+                token => crossTokens?.Contains(token) == true)).ToArray();
+            stateCoverage[i] = item with { States = states };
+            foreach (var state in states) { stateCounts.TryGetValue(state.Status, out int count); stateCounts[state.Status] = count + 1; }
+        }
         Require(Hash(summaryPath) == summaryHash && Hash(auditor) == auditorHash && (whitelist == null || Hash(whitelist) == whitelistHash), "Scope/whitelist/auditor input changed during audit.");
         Directory.CreateDirectory(Path.GetDirectoryName(output)!);
         var audit = new { Format = 1, Kind = "PhysicalScopeFinalAstCoverageAudit", Auditor = auditor, AuditorSha256 = auditorHash, Summary = summaryPath, SummarySha256 = summaryHash, ReferenceManifest = manifestPath, ReferenceManifestSha256 = pins[manifestPath], SourceMap = mapPath, SourceMapSha256 = pins[mapPath], SdkWhitelist = whitelist, SdkWhitelistSha256 = whitelistHash, NormalizedMapSha256 = normalizedMapHash, Modules = audits, TotalModules = audits.Count, Roots = rootCount, BodyWitnesses = witnessCount, FieldBindings = fieldCount, PinnedNonlocalUses = nonlocalCount, UnresolvedNonlocalUses = unresolvedCount, UnpinnedDefinitions = unpinned, UnknownOwnerRecords = unknownOwnerCount,
@@ -280,6 +299,8 @@ internal static class PhysicalScopeAudit {
             PrintedDefinitions = printedDefinitionCount, PrintedImplementationAnnotations = printedImplementationCount, UnknownPrintedOwners = printedUnknownOwnerCount, UnpinnedPrintedDefinitions = unpinnedPrinted,
             PrintedMetadataOriginRecords = printedMetadataOriginCount, SyntheticPrintedOriginRecords = printedSyntheticOriginCount,
             OriginalBodyContextRebindings = originalBodyContextCount,
+            StateMachineSourceCoverage = new { Modules = stateCoverage, Counts = stateCounts, CandidatesRetired = 0,
+                Limits = "Trusted original state-machine attributes/builder kickoff edges corroborate exact successful body witnesses and canonical source-owner paths. Retained declarations, surviving local/cross-module printed member uses and ambiguous/missing edges remain separate. Cross-module uses are joined only after the complete physical scope audit. This is source coverage, not runtime metadata restoration, SDK compatibility, semantic local naming or candidate retirement." },
             CrossModuleFirstPartyPrintedDefinitions = crossModulePrintedReferences.OrderBy(p => p.Key.Path, Paths).ThenBy(p => p.Key.Token).Select(p => new { Module = p.Key.Path, Token = p.Key.Token, UseRecords = p.Value }).ToArray(),
             Limits = "Complete supplied physical export-input/root/definition/source-hash observation coverage, verified against original metadata. Printed records are classified separately; original reference tokens are re-resolved in their pinned source contexts, while synthetic/unavailable origins have no verified original binding. Legacy or partial writer coverage remains explicit. Final AST witnesses and printed/nonlocal uses are observations only; unpinned, unresolved and unknown-owner records remain explicit. No semantic naming verdict, source retirement, restoration-contract completeness, compiling ETS export or runtime compatibility proof." };
         using (var stream = new FileStream(output, FileMode.CreateNew, FileAccess.Write)) JsonSerializer.Serialize(stream, audit, new JsonSerializerOptions { WriteIndented = true });

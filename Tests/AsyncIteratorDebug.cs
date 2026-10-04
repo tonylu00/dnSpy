@@ -74,14 +74,18 @@ class AsyncIteratorDebug {
                 }
             }
             var before = string.Join("\n", module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).SelectMany(m => m.Body.Instructions).Select(i => i.ToString()));
-            var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method };
+            var context = new DecompilerContext(0, module, null, true) { CurrentType = owner, CurrentMethod = method, CaptureGeneratedSourceEvidence = true };
             if (scenario == "disabled-async") context.Settings.AsyncAwait = false;
             if (scenario == "disabled-yield") context.Settings.YieldReturn = false;
             if (scenario == "unsupported-language") context.SupportsAsyncIterators = false;
             var builder = new AstBuilder(context); builder.AddMethod(method); builder.RunTransformations();
             var declaration = builder.SyntaxTree.Descendants.OfType<MethodDeclaration>().Single();
             bool async = (declaration.Modifiers & Modifiers.Async) != 0;
+            var evidence = GeneratedSourceEvidence.Capture(builder.SyntaxTree, owner, false);
             if (scenario == "original") {
+                var witness = evidence.BodyWitnesses.Single();
+                if (witness.Kind != "AsyncIteratorMethod" || witness.OwnerToken != method.MDToken.Raw || witness.ImplementationToken != move.MDToken.Raw)
+                    throw new Exception("Async iterator witness lost exact reconstruction kind/physical owner: " + name);
                 int yields = name == "Empty" ? 0 : name == "Cancellable" || name == "Items" ? 2 : 1;
                 if (!async || declaration.Descendants.OfType<YieldReturnStatement>().Count() != yields ||
                     !declaration.Descendants.OfType<UnaryOperatorExpression>().Any(e => e.Operator == UnaryOperatorType.Await) ||
@@ -90,7 +94,7 @@ class AsyncIteratorDebug {
                     throw new Exception("Async iterator recovery/debug spans failed: " + name);
                 foreach (var yield in declaration.Descendants.OfType<YieldReturnStatement>())
                     if (!((AstNode)yield).GetAllRecursiveILSpans().Any(s => s.Start < s.End)) throw new Exception("Missing yield span");
-            } else if (async || declaration.Descendants.OfType<YieldReturnStatement>().Any()) throw new Exception("Unsafe reconstruction: " + name + "/" + scenario);
+            } else if (async || declaration.Descendants.OfType<YieldReturnStatement>().Any() || evidence.BodyWitnesses.Any()) throw new Exception("Unsafe reconstruction: " + name + "/" + scenario);
             var after = string.Join("\n", module.GetTypes().SelectMany(t => t.Methods).Where(m => m.HasBody).SelectMany(m => m.Body.Instructions).Select(i => i.ToString()));
             if (before != after) throw new Exception("Source recovery changed input IL");
             checks++;

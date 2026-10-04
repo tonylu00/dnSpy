@@ -51,6 +51,10 @@ internal static class Program {
     }
 
     static int Run(string[] args) {
+        if (args[3] == "report-summary") {
+            if (args.Length != 4) throw new ArgumentException("Report summary accepts one immutable native report and a fresh header output.");
+            return ObservationReportSummary.Run(args[1], args[2]);
+        }
         if (args[3] == "audit-scope") {
             if (args.Length != 4) throw new ArgumentException("Scope audit accepts one complete scope summary and a fresh output.");
             return PhysicalScopeAudit.Run(args[1], args[2]);

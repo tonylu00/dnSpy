@@ -83,6 +83,32 @@ class SourceObservationTests(unittest.TestCase):
         self.assertEqual(no_printed_use['CrossModulePrintedUseRecords'], 0)
         self.assertNotIn('CrossModulePrintedSourceReferenceRetained', no_printed_use['Facts'])
 
+    def test_native_state_status_is_joined_without_retirement(self):
+        entry = {'TypeToken': 0x02000003, 'MemberTokens': [0x02000003, 0x04000001],
+                 'Status': 'MergedSourceObserved', 'Fields': [{'Token': 0x04000001, 'Signature': self.field['Signature']}]}
+        observed = join_candidate(self.field, source_index(self.report), {}, state_coverage={0x02000003: entry})
+        self.assertIn('CanonicalStateMachineSourceObserved', observed['Facts'])
+        self.assertIs(observed['NativeStateMachineSourceCoverage'], entry)
+        self.assertIn('No candidate retirement', observed['Limits'])
+        for status in ('RetainedDeclaration', 'SurvivingSourceUse', 'SurvivingCrossModuleSourceUse',
+                       'MissingMatchingBodyWitness', 'MissingIndependentOwnerEvidence', 'UnresolvedCanonicalOwner'):
+            entry['Status'] = status
+            observed = join_candidate(self.field, source_index(self.report), {}, state_coverage={0x02000003: entry})
+            self.assertIn('StateMachineSourceNeedsReview', observed['Facts'])
+            self.assertNotIn('CanonicalStateMachineSourceObserved', observed['Facts'])
+
+    def test_native_state_membership_and_signature_guards(self):
+        entry = {'TypeToken': 0x02000003, 'MemberTokens': [0x02000003, 0x04000001],
+                 'Status': 'MergedSourceObserved', 'Fields': [{'Token': 0x04000001, 'Signature': self.field['Signature']}]}
+        for mutation in ('type', 'member', 'signature', 'duplicate-field'):
+            changed = copy.deepcopy(entry)
+            if mutation == 'type': changed['TypeToken'] += 1
+            if mutation == 'member': changed['MemberTokens'].remove(0x04000001)
+            if mutation == 'signature': changed['Fields'][0]['Signature'] = 'wrong'
+            if mutation == 'duplicate-field': changed['Fields'].append(changed['Fields'][0])
+            with self.assertRaises(ValueError):
+                join_candidate(self.field, source_index(self.report), {}, state_coverage={0x02000003: changed})
+
 
 if __name__ == '__main__':
     unittest.main()

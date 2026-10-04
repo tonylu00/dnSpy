@@ -13,6 +13,7 @@ dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --re
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --root=0x02000004 --references=<manifest>
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map>
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map> --sdk-source
+dotnet GeneratedSourceInspection.dll <runtime> <native-report> <fresh-header> report-summary
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> metadata --references=<manifest>
 dotnet GeneratedSourceInspection.dll <runtime> <seed-manifest> <new-context> prepare-context --contexts=<loader-xml> --app-config=<main-config> --framework=<directory> --support=<directory>
 dotnet GeneratedSourceInspection.dll <runtime> <complete-scope-summary> <new-audit> audit-scope
@@ -36,6 +37,33 @@ async/iterator and anonymous method witnesses, retained declarations, surviving
 local member references, unresolved references and hoisted-field/source-variable
 bindings. Compressed async lambdas retain their body witness. Captured parameter
 substitutions retain their exact field binding without mutating shared ILVariables.
+
+The complete `audit-scope` report also joins state-machine source coverage to
+original metadata. Trusted framework state-machine attributes and exact builder
+`Start<T>(ref T)` edges corroborate successful async/iterator witnesses. Canonical
+source owners follow physical rewrite edges and declared property/event ownership;
+cycles, missing edges and multiple owners remain explicit. Declared state members
+and surviving local or cross-module printed uses have separate statuses. Original
+state fields retain their source-variable bindings in the report. This coverage
+does not establish runtime metadata restoration or semantic local names, and does
+not retire naming candidates. The helper uses only dnlib and System.Text.Json;
+the `StateCoverageRegression` project tests it on .NET 8 without WPF.
+Successful async iterators report `AsyncIteratorMethod`, from the actual async/yield
+reconstruction state, including empty async iterators. Ordinary async methods and
+synchronous iterators retain their distinct kinds; disabled/failed rewrites have
+no witness. This classification never depends on a compiler attribute's spelling.
+
+`Refresh-PhysicalScope.ps1` refreshes an explicit module list from a hash-checked
+complete base audit while retaining other immutable reports and their producer pins.
+Use `-RequireUnchangedSource` for observation-only fixes. Supply `-Modules` as a
+PowerShell array, then run the native complete `audit-scope` on the new summary;
+refreshing reports alone is not an audit verdict. The refresh never edits application
+inputs, mappings, source or review decisions.
+Both scope drivers read compact native headers rather than expanding all reference
+records in PowerShell. Headers retain physical/map/context pins, root identities,
+source hashes, witness/binding counts and native memory observations. The full native
+reports remain authoritative and are checked again by `audit-scope`. Producer scripts
+are copied into each output directory before their hashes are pinned.
 
 `NonlocalReferences` retains emitted external/unresolved use records with the
 local source owner, requested signature/assembly, originating physical metadata

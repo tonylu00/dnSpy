@@ -1,0 +1,124 @@
+using System.Text.Json;
+using dnlib.DotNet;
+
+if (args.Length is < 1 or > 3) throw new ArgumentException("Pass the original GeneratedSourceFixture assembly, optionally the original AsyncIteratorFixture assembly and native observation report.");
+using var module = ModuleDefMD.Load(args[0]);
+var root = module.Types.Single(t => t.Name == "GeneratedSourceFixture");
+var iterator = root.Methods.Single(m => m.Name == "Iterate");
+var other = root.Methods.Single(m => m.Name == "References");
+TypeDef State(MethodDef owner) => (TypeDef)((TypeDefOrRefSig)owner.CustomAttributes.Single(a =>
+    a.TypeFullName.EndsWith("StateMachineAttribute", StringComparison.Ordinal)).ConstructorArguments[0].Value).TypeDefOrRef;
+var machine = State(iterator);
+var moveNext = machine.Methods.Single(m => m.Name.String.EndsWith("MoveNext", StringComparison.Ordinal));
+uint T(IMDTokenProvider value) => value.MDToken.Raw;
+int checks = 0;
+void Check(bool condition, string name) { checks++; if (!condition) throw new InvalidDataException(name); }
+JsonElement Report(uint owner, uint implementation, uint type, uint[] declared, object[]? uses = null,
+    bool coverage = true, bool complete = true, object[]? extraWitnesses = null, object[]? bindings = null) =>
+    JsonSerializer.SerializeToElement(new { Roots = new[] { new {
+        RootTypeToken = T(root), CompleteTypeScope = complete, DeclarationTokens = declared,
+        PrintedReferenceCoverage = coverage, PrintedReferences = uses ?? Array.Empty<object>(),
+        BodyWitnesses = new object[] { new { Kind = "IteratorMethod", OwnerToken = owner,
+            ImplementationToken = implementation, ImplementationTypeToken = type } }.Concat(extraWitnesses ?? Array.Empty<object>()).ToArray(),
+        FieldBindings = bindings ?? Array.Empty<object>()
+    } } });
+StateMachineSourceCoverage.Entry[] Observe(JsonElement report) => StateMachineSourceCoverage.Observe(module, report);
+StateMachineSourceCoverage.Entry Selected(JsonElement report) => Observe(report).Single(e => e.TypeToken == T(machine));
+JsonElement Good() => Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) });
+var good = Selected(Good());
+Check(good.Status == "MergedSourceObserved", "trusted physical iterator plus canonical owner");
+Check(good.Owners.Single().Token == T(iterator) && good.CanonicalOwnerPaths.Single().SequenceEqual(new[] { T(iterator) }), "exact owner path");
+Check(good.Fields.Select(f => f.Token).SequenceEqual(machine.Fields.OrderBy(f => f.MDToken.Raw).Select(T)), "all original state fields retained in coverage");
+Check(StateMachineSourceCoverage.JoinCrossModuleUses(good, _ => false).Status == "MergedSourceObserved", "no cross-module source use");
+var cross = StateMachineSourceCoverage.JoinCrossModuleUses(good, t => t == T(machine.Fields[0]));
+Check(cross.Status == "SurvivingCrossModuleSourceUse" && cross.CrossModulePrintedMembers.SequenceEqual(new[] { T(machine.Fields[0]) }), "cross-module state-field escape disqualifies merged source review");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator), T(machine) })).Status == "RetainedDeclaration", "retained state type");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator), T(machine.Fields[0]) })).Status == "RetainedDeclaration", "retained state field");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, coverage: false)).Status == "MissingWriterCoverage", "legacy observations never acquire source proof");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root) })).Status == "UnresolvedCanonicalOwner", "unprinted owner with no rewrite path");
+Check(Selected(Report(T(other), T(moveNext), T(machine), new[] { T(root), T(other) })).Status == "MissingMatchingBodyWitness", "different physical owner cannot corroborate state");
+Check(Selected(Report(0, T(moveNext), T(machine), new[] { T(root) })).Status == "MissingMatchingBodyWitness", "unknown observed owner remains explicit and cannot corroborate state");
+object Use(uint token, bool definition = false, bool annotation = false, string? path = null) => new {
+    DefinitionToken = token, OwnerToken = T(other), IsDefinition = definition, IsImplementationAnnotation = annotation,
+    DefinitionModulePath = path ?? module.Location
+};
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, new[] { Use(T(machine)) })).Status == "SurvivingSourceUse", "surviving state type use");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, new[] { Use(T(machine.Fields[0])) })).Status == "SurvivingSourceUse", "surviving state field use");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, new[] { Use(T(machine), annotation: true) })).Status == "MergedSourceObserved", "implementation annotation is not a printed use");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, new[] { Use(T(machine), definition: true) })).Status == "MergedSourceObserved", "printed definition classification remains separate");
+Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, new[] { Use(T(machine), path: module.Location + ".twin") })).Status == "MergedSourceObserved", "same token in another physical module stays separate");
+if (OperatingSystem.IsWindows()) Check(Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, new[] { Use(T(machine), path: module.Location.ToUpperInvariant()) })).Status == "SurvivingSourceUse", "Windows path case cannot hide a local use");
+object Rewrite(uint owner, uint implementation) => new { Kind = "AnonymousMethod", OwnerToken = owner,
+    ImplementationToken = implementation, ImplementationTypeToken = T(root) };
+var chain = Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(other) }, extraWitnesses: new[] { Rewrite(T(other), T(iterator)) }));
+Check(chain.Status == "MergedSourceObserved" && chain.CanonicalOwnerPaths.Single().SequenceEqual(new[] { T(iterator), T(other) }), "nested async/lambda source-owner chain follows physical tokens");
+var cycle = Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root) }, extraWitnesses: new[] { Rewrite(T(other), T(iterator)), Rewrite(T(iterator), T(other)) }));
+Check(cycle.Status == "UnresolvedCanonicalOwner", "cyclic owner chain stays unresolved");
+var bound = Selected(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, bindings: new object[] {
+    new { FieldToken = T(machine.Fields[0]), OwnerToken = T(iterator), SourceName = "item" }
+}));
+Check(bound.Fields.Single(f => f.Token == T(machine.Fields[0])).SourceBindings.Single().SourceName == "item", "hoisted field/source names stay attached to exact field");
+void Reject(JsonElement report, string expected) {
+    try { Observe(report); throw new Exception("Expected rejection: " + expected); }
+    catch (InvalidDataException exception) { Check(exception.Message.Contains(expected, StringComparison.Ordinal), expected); }
+}
+Reject(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, complete: false), "complete type scopes");
+Reject(Report(T(iterator), T(other), T(machine), new[] { T(root), T(iterator) }), "physical definition mismatch");
+Reject(Report(T(iterator), T(moveNext), T(machine), new[] { T(root), T(iterator) }, bindings: new object[] {
+    new { FieldToken = T(iterator), OwnerToken = T(iterator), SourceName = "item" }
+}), "not a local field");
+var originalAttribute = iterator.CustomAttributes.Single(a => a.TypeFullName.EndsWith("StateMachineAttribute", StringComparison.Ordinal));
+other.CustomAttributes.Add(originalAttribute);
+Check(Selected(Good()).Status == "AmbiguousMetadataOwners", "multiple real metadata owners remain ambiguous");
+other.CustomAttributes.Remove(originalAttribute);
+iterator.CustomAttributes.Remove(originalAttribute);
+Check(Selected(Good()).Status == "MissingIndependentOwnerEvidence", "body witness alone never invents a metadata owner");
+iterator.CustomAttributes.Add(originalAttribute);
+var constructor = originalAttribute.Constructor;
+var counterfeit = new TypeRefUser(module, "System.Runtime.CompilerServices", "IteratorStateMachineAttribute", new AssemblyRefUser(new AssemblyNameInfo("FakeRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")));
+originalAttribute.Constructor = new MemberRefUser(module, ".ctor", constructor.MethodSig, counterfeit);
+Check(Selected(Good()).Status == "MissingIndependentOwnerEvidence", "counterfeit framework attribute is not trusted");
+originalAttribute.Constructor = constructor;
+var asyncOwner = root.Methods.Single(m => m.Name == "Await");
+var asyncMachine = State(asyncOwner);
+var asyncMoveNext = asyncMachine.Methods.Single(m => m.Name == "MoveNext");
+var asyncReport = JsonSerializer.SerializeToElement(new { Roots = new[] { new {
+    RootTypeToken = T(root), CompleteTypeScope = true, DeclarationTokens = new[] { T(root), T(asyncOwner) },
+    PrintedReferenceCoverage = true, PrintedReferences = Array.Empty<object>(), FieldBindings = Array.Empty<object>(),
+    BodyWitnesses = new[] { new { Kind = "AsyncMethod", OwnerToken = T(asyncOwner), ImplementationToken = T(asyncMoveNext), ImplementationTypeToken = T(asyncMachine) } }
+} } });
+var asyncResult = Observe(asyncReport).Single(e => e.TypeToken == T(asyncMachine));
+Check(asyncResult.Status == "MergedSourceObserved", "async attribute and builder kickoff corroborate source");
+Check(asyncResult.Owners.Any(o => o.Evidence == "TrustedFrameworkBuilderStart"), "actual original builder Start shape recognized");
+if (args.Length >= 2) {
+    using var asyncIteratorModule = ModuleDefMD.Load(args[1]);
+    var iteratorOwner = asyncIteratorModule.Types.Single(t => t.Name == "AsyncIteratorFixture").Methods.Single(m => m.Name == "Range");
+    var iteratorState = State(iteratorOwner);
+    var iteratorMove = iteratorState.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.Name == "MoveNext"));
+    StateMachineSourceCoverage.Entry IteratorObservation(string kind) {
+        var report = JsonSerializer.SerializeToElement(new { Roots = new[] { new {
+            RootTypeToken = T(iteratorOwner.DeclaringType), CompleteTypeScope = true,
+            DeclarationTokens = new[] { T(iteratorOwner.DeclaringType), T(iteratorOwner) },
+            PrintedReferenceCoverage = true, PrintedReferences = Array.Empty<object>(), FieldBindings = Array.Empty<object>(),
+            BodyWitnesses = new[] { new { Kind = kind, OwnerToken = T(iteratorOwner), ImplementationToken = T(iteratorMove), ImplementationTypeToken = T(iteratorState) } }
+        } } });
+        return StateMachineSourceCoverage.Observe(asyncIteratorModule, report).Single(e => e.TypeToken == T(iteratorState));
+    }
+    var observation = IteratorObservation("AsyncIteratorMethod");
+    Check(observation.Status == "MergedSourceObserved" && observation.Owners.Single().Kind == "AsyncIteratorMethod", "original downlevel async-iterator attribute corroborates exact source kind");
+    Check(IteratorObservation("AsyncMethod").Status == "MissingMatchingBodyWitness", "ordinary async witness cannot corroborate an async iterator");
+    Check(IteratorObservation("IteratorMethod").Status == "MissingMatchingBodyWitness", "synchronous iterator witness cannot corroborate an async iterator");
+    Check(observation.CanonicalOwnerPaths.Single().SequenceEqual(new[] { T(iteratorOwner) }), "async iterator follows its exact physical source owner");
+}
+if (args.Length == 3) {
+    using var original = JsonDocument.Parse(File.ReadAllText(args[2]));
+    var compact = JsonSerializer.SerializeToElement(ObservationReportSummary.Read(args[2]));
+    var native = original.RootElement;
+    Check(compact.GetProperty("InputSha256").GetString() == native.GetProperty("InputSha256").GetString(), "compact header retains original input pin");
+    Check(compact.GetProperty("Roots").GetArrayLength() == native.GetProperty("Roots").GetArrayLength(), "compact header retains every physical root");
+    Check(compact.GetProperty("BodyWitnesses").GetInt32() == native.GetProperty("Roots").EnumerateArray().Sum(r => r.GetProperty("BodyWitnesses").GetArrayLength()), "compact header counts every body witness");
+    Check(compact.GetProperty("FieldBindings").GetInt32() == native.GetProperty("Roots").EnumerateArray().Sum(r => r.GetProperty("FieldBindings").GetArrayLength()), "compact header counts every field binding");
+    Check(compact.GetProperty("SourceHashes").GetRawText() == JsonSerializer.Serialize(native.GetProperty("SourceHashes")), "compact header preserves all source hashes");
+    Check(!compact.TryGetProperty("PrintedReferences", out _) && !compact.TryGetProperty("Definitions", out _), "compact header does not expand full reference/definition object graphs");
+}
+Console.WriteLine($"PASS: {checks} portable state source coverage checks.");

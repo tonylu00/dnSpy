@@ -54,7 +54,7 @@ def source_index(report):
             'States': states, 'Anonymous': anonymous, 'Fields': fields}
 
 
-def join_candidate(candidate, index, cross_references, cross_printed=None):
+def join_candidate(candidate, index, cross_references, cross_printed=None, state_coverage=None):
     ident = token(candidate['Token'])
     definitions = index['Definitions']
     require(ident in definitions and definitions[ident]['FullName'] == candidate['Signature']
@@ -77,6 +77,15 @@ def join_candidate(candidate, index, cross_references, cross_printed=None):
         facts.append('LocalPrintedSourceReferenceRetained')
     if cross_printed is not None and cross_printed.get(ident, 0) > 0:
         facts.append('CrossModulePrintedSourceReferenceRetained')
+    native_state = None if state_coverage is None else state_coverage.get(type_token)
+    if native_state is not None:
+        require(native_state['TypeToken'] == type_token and ident in native_state['MemberTokens'], 'Native state membership mismatch')
+        if candidate['Kind'] == 'Types':
+            require(native_state['Signature'] == candidate['Signature'], 'Native state type signature mismatch')
+        if candidate['Kind'] == 'Fields':
+            matches = [field for field in native_state['Fields'] if field['Token'] == ident]
+            require(len(matches) == 1 and matches[0]['Signature'] == candidate['Signature'], 'Native state field signature mismatch')
+        facts.append('CanonicalStateMachineSourceObserved' if native_state['Status'] == 'MergedSourceObserved' else 'StateMachineSourceNeedsReview')
     if not facts:
         facts.append('NoPositiveSourceObservation')
     return {'Facts': facts, 'StateMachineBodyWitnesses': state, 'AnonymousBodyWitnesses': anonymous,
@@ -85,6 +94,7 @@ def join_candidate(candidate, index, cross_references, cross_printed=None):
             'PrintedReferenceCoverage': index['PrintedCoverage'],
             'CrossModulePrintedReferenceCoverage': cross_printed is not None,
             'CrossModulePrintedUseRecords': None if cross_printed is None else cross_printed.get(ident, 0),
+            'NativeStateMachineSourceCoverage': native_state,
             'ReferenceTokenSemantics': 'Conservative AST member annotations can include declaration identifiers and inlined implementation/debug annotations; not a count or proof of printed member accesses.',
             'Limits': 'Observed source facts only. Absence does not prove merging, semantic names or restoration contracts. No candidate retirement.'}
 
@@ -132,9 +142,22 @@ def main():
             require(key in modules and reference['UseRecords'] > 0, 'Invalid first-party printed reference target/count')
             require(reference['Token'] not in cross_printed[key], 'Duplicate first-party printed reference')
             cross_printed[key][reference['Token']] = reference['UseRecords']
+    native_states = {}
+    if 'StateMachineSourceCoverage' in audit:
+        coverage = audit['StateMachineSourceCoverage']
+        require(coverage['CandidatesRetired'] == 0, 'Source coverage cannot retire candidates')
+        for module in coverage['Modules']:
+            key = path_key(module['Input'])
+            require(key in modules and key not in native_states and all(module[n] == modules[key][n]
+                    for n in ('Identity', 'Mvid', 'Sha256', 'Report', 'ReportSha256')), 'Native state module mismatch')
+            states = {state['TypeToken']: state for state in module['States']}
+            require(len(states) == len(module['States']), 'Duplicate native state type')
+            native_states[key] = states
+        require(set(native_states) == set(modules), 'Incomplete native state scope')
     args.output.mkdir(parents=True)
     output = args.output / 'candidate-source-observations.jsonl'
     counts = collections.Counter(); categories = collections.defaultdict(collections.Counter); module_counts = []
+    state_counts = collections.Counter()
     with output.open('x', encoding='utf-8', newline='\n') as stream:
         for key, module in modules.items():
             require(digest(module['Input']) == module['Sha256'] and digest(module['Report']) == module['ReportSha256'], 'Native physical input/report changed')
@@ -145,7 +168,9 @@ def main():
             if printed_coverage:
                 require(index['PrintedCoverage'] and index['PrintedReferenced'] == set(module['LocalPrintedReferenceTokens']), 'Audited printed module classification mismatch')
             for candidate in candidates[key]:
-                observation = join_candidate(candidate, index, cross[key], cross_printed[key] if printed_coverage else None)
+                observation = join_candidate(candidate, index, cross[key], cross_printed[key] if printed_coverage else None, native_states.get(key))
+                if observation['NativeStateMachineSourceCoverage'] is not None:
+                    state_counts[candidate['Kind'] + ':' + observation['NativeStateMachineSourceCoverage']['Status']] += 1
                 for fact in observation['Facts']:
                     counts[fact] += 1; local[fact] += 1; categories[candidate['Category']][fact] += 1
                 row = dict(candidate, SourceObservations=observation,
@@ -159,6 +184,7 @@ def main():
     summary = {'Format': 1, 'Kind': 'PhysicalGeneratedSourceCandidateObservations', 'Inputs': inputs,
                'Modules': module_counts, 'Candidates': len(seen), 'OverlappingSourceFacts': dict(counts),
                'WholeScopePrintedReferenceCoverage': printed_coverage,
+               'NativeStateSourceCandidateCounts': dict(state_counts),
                'ByStructuralCategory': {k: dict(v) for k, v in categories.items()}, 'Worklist': str(output.resolve()),
                'WorklistSha256': digest(output), 'CandidatesRetired': 0,
                'Limits': 'Whole supplied physical scope source observations joined to structural candidates. Facts overlap. Unknown names, references, owner chains and restoration/runtime contracts require review; absence alone never retires a candidate.'}

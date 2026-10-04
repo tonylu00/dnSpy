@@ -22,6 +22,9 @@ foreach($path in @($ReferenceManifest,$SourceMap,$Inspector)+(Get-ChildItem -Lit
     $pins[$path]=(Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash
 }
 New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
+$producer=Join-Path $OutputDirectory 'producer.ps1'
+Copy-Item -LiteralPath $PSCommandPath -Destination $producer
+$pins[$producer]=(Get-FileHash -LiteralPath $producer).Hash
 $summaryPath=Join-Path $OutputDirectory 'summary.json'
 $results=[Collections.Generic.List[object]]::new()
 $watch=[Diagnostics.Stopwatch]::StartNew()
@@ -43,12 +46,15 @@ try {
         Write-Output "START $($results.Count+1)/$($inputs.Count): $relative"
         & dotnet $Inspector $RuntimeDirectory $modulePin.Path $reportPath inspect "--references=$ReferenceManifest" "--map=$SourceMap" --sdk-source 2>&1 | Tee-Object -FilePath ($reportPath+'.log') | Out-Host
         if($LASTEXITCODE -ne 0){throw "Native inspection failed: $relative"}
-        $report=Get-Content -Raw -LiteralPath $reportPath | ConvertFrom-Json
+        $headerPath=$reportPath+'.header.json'
+        & dotnet $Inspector $RuntimeDirectory $reportPath $headerPath report-summary
+        if($LASTEXITCODE -ne 0){throw 'Native observation summary failed.'}
+        $report=Get-Content -Raw -LiteralPath $headerPath | ConvertFrom-Json
         if(!$report.MapApplied -or !$report.RestoreMetadataOnlyFields -or $report.InputSha256 -ne $modulePin.Sha256 -or $report.Mvid -ne $modulePin.Mvid -or
             $report.AssemblyIdentity -ne $modulePin.Identity -or $report.ReferenceManifestSha256 -ne $pins[$ReferenceManifest] -or $report.MapSha256 -ne $pins[$SourceMap]){throw 'Invalid native physical/source observation binding.'}
         if(@($report.Roots | Where-Object { !$_.CompleteTypeScope -or $_.ModuleMvid -ne $modulePin.Mvid }).Count -ne 0){throw 'Incomplete or foreign AST root.'}
         $results.Add(@{Path=$relative;Input=$modulePin.Path;InputSha256=$modulePin.Sha256;Mvid=$modulePin.Mvid;Identity=$modulePin.Identity;Report=$reportPath;ReportSha256=(Get-FileHash -LiteralPath $reportPath).Hash;
-            Roots=$report.Roots.Count;BodyWitnesses=(@($report.Roots | ForEach-Object BodyWitnesses)).Count;FieldBindings=(@($report.Roots | ForEach-Object FieldBindings)).Count;
+            Roots=$report.Roots.Count;BodyWitnesses=$report.BodyWitnesses;FieldBindings=$report.FieldBindings;
             PinnedNonlocalUses=$report.NonlocalReferenceAudit.PinnedDefinitions;UnresolvedNonlocalUses=$report.NonlocalReferenceAudit.UnresolvedUses;UnpinnedDefinitions=$report.NonlocalReferenceAudit.UnpinnedDefinitions.Count;
             ElapsedSeconds=$report.ElapsedSeconds;PeakChildWorkingSetBytes=$report.PeakWorkingSetBytes})
         $report=$null
