@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using dnlib.DotNet;
 
 if (args.Length is < 1 or > 4) throw new ArgumentException("Pass the original GeneratedSourceFixture assembly, optionally the original AsyncIteratorFixture assembly, native observation report and legacy iterator fixture.");
@@ -96,6 +97,42 @@ Check(shared.Status == "AmbiguousCanonicalOwners" && shared.CanonicalOwnerPaths.
     "retained wrapper and inline caller are preserved as distinct source contexts");
 Check(shared.CanonicalOwnerPaths.Select(p=>p[^1]).ToHashSet().SetEquals(new[] { T(other), T(asyncOwner) }),
     "nested printed contexts never select a canonical owner by spelling or traversal order");
+object OccurrenceRewrite(uint printed, uint implementation, params uint[] path) => new {
+    Kind = "AnonymousMethod", OwnerToken = printed, ImplementationToken = implementation,
+    ImplementationTypeToken = T(root), SourceOwnerPath = path
+};
+JsonElement WithOccurrence(JsonElement report, params uint[] path) {
+    var node = JsonNode.Parse(report.GetRawText())!;
+    node["Roots"]![0]!["BodyWitnesses"]![0]!["SourceOwnerPath"] = JsonSerializer.SerializeToNode(path);
+    return JsonSerializer.SerializeToElement(node);
+}
+var singleOccurrence = Selected(WithOccurrence(Report(T(iterator),T(moveNext),T(machine),new[] {T(root),T(other)},extraWitnesses:new[] {
+    OccurrenceRewrite(T(other),T(iterator),T(other),T(iterator)) }),T(other),T(iterator)));
+Check(singleOccurrence.Status == "MergedSourceObserved" && singleOccurrence.CanonicalOwnerPaths.Single().SequenceEqual(new[] { T(iterator),T(other) }),
+    "corroborated occurrence follows its actual printed context");
+object OtherStateOccurrence() => new { Kind="IteratorMethod", OwnerToken=T(iterator),ImplementationToken=T(moveNext),ImplementationTypeToken=T(machine),
+    SourceOwnerPath=new[] {T(asyncOwner),T(iterator)} };
+JsonElement MultipleOccurrences(bool includeIntermediate = true, bool empty = false) {
+    var rewrites = new List<object> {
+        OccurrenceRewrite(T(other),T(iterator),T(other),T(asyncOwner),T(iterator)),
+        OccurrenceRewrite(T(asyncOwner),T(iterator),T(asyncOwner),T(iterator)),OtherStateOccurrence()
+    };
+    if(includeIntermediate) rewrites.Add(OccurrenceRewrite(T(other),T(asyncOwner),T(other),T(asyncOwner)));
+    return WithOccurrence(Report(T(iterator),T(moveNext),T(machine),new[] {T(root),T(other),T(asyncOwner)},extraWitnesses:rewrites.ToArray()),
+        empty ? Array.Empty<uint>() : new[] {T(other),T(asyncOwner),T(iterator)});
+}
+var multipleOccurrences = Selected(MultipleOccurrences());
+Check(multipleOccurrences.Status == "MergedSourceInMultipleContextsObserved", "separate corroborated printed contexts retain one exact metadata owner");
+Check(multipleOccurrences.CanonicalOwnerPaths.Any(p=>p.SequenceEqual(new[] {T(iterator),T(asyncOwner),T(other)})) &&
+    multipleOccurrences.CanonicalOwnerPaths.Any(p=>p.SequenceEqual(new[] {T(iterator),T(asyncOwner)})), "retained wrapper and enclosing inlined occurrence preserve distinct complete paths");
+Check(StateMachineSourceCoverage.JoinCrossModuleUses(multipleOccurrences,t=>t==T(machine.Fields[0])).Status=="SurvivingCrossModuleSourceUse",
+    "multiple-context source coverage does not hide cross-module state escapes");
+Check(Selected(MultipleOccurrences(includeIntermediate:false)).Status=="AmbiguousCanonicalOwners", "missing intermediate rewrite cannot prove occurrence nesting");
+Check(Selected(MultipleOccurrences(empty:true)).Status=="AmbiguousCanonicalOwners", "empty occurrence path cannot disambiguate a legacy flat graph");
+Reject(WithOccurrence(Good(),T(other),T(iterator)),"physical declaration mismatch");
+Reject(WithOccurrence(Good(),T(iterator),T(other)),"logical owner mismatch");
+Reject(WithOccurrence(Good(),T(iterator),T(other),T(iterator)),"physical declaration mismatch");
+Reject(WithOccurrence(Good(),T(iterator),0x0600FFFF,T(iterator)),"physical declaration mismatch");
 if (args.Length >= 2) {
     using var asyncIteratorModule = ModuleDefMD.Load(args[1]);
     var iteratorOwner = asyncIteratorModule.Types.Single(t => t.Name == "AsyncIteratorFixture").Methods.Single(m => m.Name == "Range");

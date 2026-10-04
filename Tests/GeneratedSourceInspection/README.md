@@ -17,6 +17,7 @@ dotnet GeneratedSourceInspection.dll <runtime> <native-report> <fresh-header> re
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> metadata --references=<manifest>
 dotnet GeneratedSourceInspection.dll <runtime> <seed-manifest> <new-context> prepare-context --contexts=<loader-xml> --app-config=<main-config> --framework=<directory> --support=<directory>
 dotnet GeneratedSourceInspection.dll <runtime> <complete-scope-summary> <new-audit> audit-scope
+dotnet GeneratedSourceInspection.dll <runtime> <original-input> <new-coverage> state-coverage <native-source-report> <producer-inspector.dll>
 ```
 
 `--method=0x06000005` selects partial member scope. Ordinary decompiler switches
@@ -60,6 +61,22 @@ Its optional fourth input is the legacy fixture emitted by
 `de4dotEx/tests/IteratorKickoffInspection`; checks include wrong same-machine methods,
 counterfeit contracts, immutable physical twins and retained-wrapper/inline-caller
 ambiguity. These are metadata/source-join tests, not executable iterator behavior tests.
+Body witnesses retain `SourceOwnerPath`: the emitted declaration followed by the
+enclosing inlined methods, including the current anonymous implementation. Successful
+async/iterator bodies retain each distinct printed nesting path, even when their logical
+metadata owner and state implementation are identical. Each inlined path boundary must
+have a corresponding anonymous-method witness in the same root and occurrence prefix.
+`MergedSourceInMultipleContextsObserved` preserves all corroborated paths and one
+original metadata owner, including a retained wrapper and its inlined caller; it does
+not choose a guessed canonical owner or retire a symbol. Legacy flat observations still
+report ambiguity. Cross-module uses disqualify either merged status.
+
+`state-coverage` performs a focused join against untouched original metadata. It binds
+the input path/hash/MVID/assembly, producing inspector, dependency hashes, map/whitelist,
+context and optional source file. Complete observed roots are required. Its scope is
+only those roots and their witnessed state types; full application scope and cross-module
+uses remain `audit-scope` gates. It supports concrete owner-audit defects without a full
+application export or build.
 Successful async iterators report `AsyncIteratorMethod`, from the actual async/yield
 reconstruction state, including empty async iterators. Ordinary async methods and
 synchronous iterators retain their distinct kinds; disabled/failed rewrites have

@@ -11,7 +11,7 @@ using dnlib.DotNet.Emit;
 internal static class StateMachineSourceCoverage {
     static readonly StringComparer PathComparer = OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
     internal sealed record Owner(uint Token, string Signature, string Evidence, string Kind, uint ImplementationToken = 0);
-    internal sealed record Witness(uint RootTypeToken, string Kind, uint OwnerToken, uint ImplementationToken, uint ImplementationTypeToken);
+    internal sealed record Witness(uint RootTypeToken, string Kind, uint OwnerToken, uint ImplementationToken, uint ImplementationTypeToken, uint[]? SourceOwnerPath = null);
     internal sealed record Field(uint Token, string Signature, bool Declared, uint[] PrintedOwners, Binding[] SourceBindings);
     internal sealed record Binding(uint OwnerToken, string SourceName);
     internal sealed record Entry(uint TypeToken, string Signature, string Status, Owner[] Owners, Witness[] Witnesses,
@@ -48,12 +48,19 @@ internal static class StateMachineSourceCoverage {
         var witnesses = new List<Witness>();
         foreach (var root in roots) {
             uint rootToken = Token(root, "RootTypeToken");
+            var rootDeclarations = root.GetProperty("DeclarationTokens").EnumerateArray().Select(v=>v.GetUInt32()).ToHashSet();
             foreach (var witness in root.GetProperty("BodyWitnesses").EnumerateArray()) {
                 var item = new Witness(rootToken, witness.GetProperty("Kind").GetString()!, Token(witness, "OwnerToken"),
-                    Token(witness, "ImplementationToken"), Token(witness, "ImplementationTypeToken"));
+                    Token(witness, "ImplementationToken"), Token(witness, "ImplementationTypeToken"),
+                    witness.TryGetProperty("SourceOwnerPath", out var occurrence) ? occurrence.EnumerateArray().Select(v=>v.GetUInt32()).ToArray() : null);
                 Require((item.OwnerToken == 0 || module.ResolveToken(item.OwnerToken) is IMemberDef) && module.ResolveToken(item.ImplementationToken) is MethodDef method &&
                     method.Module == module && method.DeclaringType.MDToken.Raw == item.ImplementationTypeToken, "State source witness physical definition mismatch.");
                 witnesses.Add(item);
+                if (item.SourceOwnerPath is { Length: > 0 } path) {
+                    Require(path.Length <= 257 && path.Distinct().Count() == path.Length && rootDeclarations.Contains(path[0]) &&
+                        path.All(t=>module.ResolveToken(t) is IMemberDef definition && definition.Module == module), "Source occurrence path physical declaration mismatch.");
+                    Require(path[^1] == (item.Kind == "AnonymousMethod" ? item.ImplementationToken : item.OwnerToken), "Source occurrence path logical owner mismatch.");
+                }
             }
             foreach (var binding in root.GetProperty("FieldBindings").EnumerateArray()) {
                 uint token = Token(binding, "FieldToken");
@@ -132,6 +139,19 @@ internal static class StateMachineSourceCoverage {
             }
             return found.OrderBy(p => p[^1]).ToArray();
         }
+        bool CorroboratedOccurrence(Witness witness) {
+            if (witness.SourceOwnerPath is not { Length: > 0 } path) return false;
+            // Every inlined boundary must have its own successful native witness
+            // in the same printed root and occurrence prefix. A flat parent graph
+            // or a legacy report cannot establish these nesting relationships.
+            for (int index = 1; index < path.Length; index++) {
+                int length = index + 1;
+                if (!witnesses.Any(w=>w.RootTypeToken == witness.RootTypeToken && w.Kind == "AnonymousMethod" &&
+                    w.OwnerToken == path[0] && w.ImplementationToken == path[index] &&
+                    w.SourceOwnerPath != null && w.SourceOwnerPath.SequenceEqual(path.Take(length)))) return false;
+            }
+            return true;
+        }
         return machines.OrderBy(p => p.Key.MDToken.Raw).Select(pair => {
             TypeDef type = pair.Key;
             var owners = pair.Value.Distinct().OrderBy(o => o.Token).ThenBy(o => o.Evidence, StringComparer.Ordinal).ToArray();
@@ -141,11 +161,14 @@ internal static class StateMachineSourceCoverage {
                 (o.ImplementationToken == 0 || o.ImplementationToken == w.ImplementationToken))).ToArray();
             uint[] members = new IMemberDef[] { type }.Concat(type.Methods).Concat(type.Fields).Concat(type.Properties).Concat(type.Events).Select(d => d.MDToken.Raw).ToArray();
             uint[] declared = members.Where(declarations.Contains).OrderBy(t => t).ToArray(), uses = members.Where(printed.ContainsKey).OrderBy(t => t).ToArray();
-            var paths = matched.SelectMany(w => Paths(w.OwnerToken)).DistinctBy(p => string.Join(",", p)).ToArray();
+            bool occurrenceCoverage = matched.Length != 0 && matched.All(CorroboratedOccurrence);
+            var paths = (occurrenceCoverage ? matched.Select(w=>w.SourceOwnerPath!.Reverse().ToArray()) : matched.SelectMany(w => Paths(w.OwnerToken)))
+                .DistinctBy(p => string.Join(",", p)).OrderBy(p=>string.Join(",",p),StringComparer.Ordinal).ToArray();
             string status = !writerCoverage ? "MissingWriterCoverage" : declared.Length != 0 ? "RetainedDeclaration" : uses.Length != 0 ? "SurvivingSourceUse" :
                 owners.Length == 0 ? "MissingIndependentOwnerEvidence" : owners.Select(o => o.Token).Distinct().Count() != 1 ? "AmbiguousMetadataOwners" :
                 matched.Length == 0 ? "MissingMatchingBodyWitness" : observed.Any(w => !matched.Contains(w)) ? "UnmatchedBodyWitness" :
-                paths.Length == 0 ? "UnresolvedCanonicalOwner" : paths.Select(p => p[^1]).Distinct().Count() != 1 ? "AmbiguousCanonicalOwners" : "MergedSourceObserved";
+                paths.Length == 0 ? "UnresolvedCanonicalOwner" : paths.Select(p => p[^1]).Distinct().Count() != 1 ?
+                    occurrenceCoverage ? "MergedSourceInMultipleContextsObserved" : "AmbiguousCanonicalOwners" : "MergedSourceObserved";
             var stateFields = type.Fields.OrderBy(f => f.MDToken.Raw).Select(f => new Field(f.MDToken.Raw, f.FullName, declarations.Contains(f.MDToken.Raw),
                 printed.TryGetValue(f.MDToken.Raw, out var printedOwners) ? printedOwners.OrderBy(t => t).ToArray() : Array.Empty<uint>(),
                 fields.TryGetValue(f.MDToken.Raw, out var bindings) ? bindings.Distinct().OrderBy(b => b.OwnerToken).ThenBy(b => b.SourceName, StringComparer.Ordinal).ToArray() : Array.Empty<Binding>())).ToArray();
@@ -156,6 +179,6 @@ internal static class StateMachineSourceCoverage {
     internal static Entry JoinCrossModuleUses(Entry entry, Func<uint, bool> used) {
         var members = entry.MemberTokens.Where(used).ToArray();
         return entry with { CrossModulePrintedMembers = members,
-            Status = members.Length != 0 && entry.Status == "MergedSourceObserved" ? "SurvivingCrossModuleSourceUse" : entry.Status };
+            Status = members.Length != 0 && entry.Status is "MergedSourceObserved" or "MergedSourceInMultipleContextsObserved" ? "SurvivingCrossModuleSourceUse" : entry.Status };
     }
 }

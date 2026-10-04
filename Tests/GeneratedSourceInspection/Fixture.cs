@@ -7,6 +7,7 @@ public static class GeneratedSourceFixture {
     public static IEnumerable<T> IterateGeneric<T>(T item) { yield return item; }
     public static async Task<int> Await(Task<int> input) { return await input; }
     public static Func<Task<int>, Task<int>> AsyncLambda() { return async input => await input; }
+    public static Func<Func<Task<int>, Task<int>>> NestedAsyncLambda() { return () => async input => await input; }
     public static Func<int, int> Capture(int offset) { return value => offset + value; }
     public static Func<int, int> Recursive() {
         Func<int, int> recurse = null;

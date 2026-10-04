@@ -25,7 +25,7 @@ public static class BehaviorProbe {
         var marker = new object();
         Check(ReferenceEquals(GeneratedSourceFixture.IterateGeneric(marker).Single(), marker));
         Check(GeneratedSourceFixture.IterateGeneric<object>(null).Single() == null);
-        foreach (var read in new Func<Task<int>, Task<int>>[] { GeneratedSourceFixture.Await, GeneratedSourceFixture.AsyncLambda() }) {
+        foreach (var read in new Func<Task<int>, Task<int>>[] { GeneratedSourceFixture.Await, GeneratedSourceFixture.AsyncLambda(), GeneratedSourceFixture.NestedAsyncLambda()() }) {
             Check(read(Task.FromResult(7)).GetAwaiter().GetResult() == 7);
             var pending = new TaskCompletionSource<int>();
             var result = read(pending.Task); Check(!result.IsCompleted);

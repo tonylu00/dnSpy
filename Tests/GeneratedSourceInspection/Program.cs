@@ -59,6 +59,10 @@ internal static class Program {
             if (args.Length != 4) throw new ArgumentException("Scope audit accepts one complete scope summary and a fresh output.");
             return PhysicalScopeAudit.Run(args[1], args[2]);
         }
+        if (args[3] == "state-coverage") {
+            if (args.Length != 6) throw new ArgumentException("State coverage accepts an original input, fresh output, immutable native source observation and its producing inspector DLL.");
+            return StateSourceCoverageInspection.Run(args[1],args[4],args[5],args[2]);
+        }
         if (args[3] == "prepare-context") return PhysicalContextPreparation.Run(args[1], args[2], args.Skip(4).ToArray());
         string input = Path.GetFullPath(args[1]), output = Path.GetFullPath(args[2]);
         if (File.Exists(output) || Directory.Exists(output)) throw new IOException("Choose a new report path.");
@@ -137,6 +141,8 @@ internal static class Program {
             Check(witnesses.Any(w => w.Kind == "AsyncMethod"), "No successful async body observed.");
             Check(witnesses.Any(w => w.Kind == "AnonymousMethod"), "No successful lambda body observed.");
             Check(witnesses.All(w => module.ResolveToken(w.ImplementationToken) is MethodDef && module.ResolveToken(w.OwnerToken) is IMemberDef), "Witness tokens are not physical definitions.");
+            Check(witnesses.All(w => w.SourceOwnerPath.Count != 0 && w.SourceOwnerPath.All(t => module.ResolveToken(t) is IMemberDef)), "Printed occurrence owner path lost physical definitions.");
+            Check(witnesses.All(w => proof.DeclarationTokens.Contains(w.SourceOwnerPath[0])), "Printed occurrence path is not anchored in an emitted declaration.");
             var awaitOwner = root.Methods.First(m => m.Name == "Await" || m.Name == "Remove");
             var partial = Decompile(decompiler, awaitOwner, true).Evidence!;
             Check(!partial.CompleteTypeScope && partial.BodyWitnesses.Any(w => w.OwnerToken == awaitOwner.MDToken.Raw), "Member-only decompilation claimed complete scope or lost positive witness.");
@@ -164,8 +170,15 @@ internal static class Program {
                 Check(proof.FieldBindings.Any(f => f.OwnerToken == capture.MDToken.Raw && f.SourceName == "offset"), "Captured field-to-source parameter evidence lost.");
                 var anonymousAsync = module.GetTypes().SelectMany(t => t.Methods)
                     .Where(m => m.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.AsyncStateMachineAttribute"))
-                    .Single(m => m.Name.String.Contains("AsyncLambda"));
+                    .Single(m => m.Name.String.Contains("<AsyncLambda>"));
                 Check(witnesses.Any(w => w.Kind == "AsyncMethod" && w.OwnerToken == anonymousAsync.MDToken.Raw), "Compressed async lambda lost body witness.");
+                Check(witnesses.Where(w => w.Kind == "AsyncMethod" && w.OwnerToken == anonymousAsync.MDToken.Raw)
+                    .All(w => w.SourceOwnerPath[0] == root.Methods.Single(m => m.Name == "AsyncLambda").MDToken.Raw && w.SourceOwnerPath[^1] == anonymousAsync.MDToken.Raw),
+                    "Compressed async lambda lost its printed/logical occurrence owners.");
+                var nestedAsync = root.Methods.Single(m => m.Name == "NestedAsyncLambda");
+                var nestedWitnesses = witnesses.Where(w => w.Kind == "AsyncMethod" && w.SourceOwnerPath[0] == nestedAsync.MDToken.Raw).ToArray();
+                Check(nestedWitnesses.Length == 1 && nestedWitnesses[0].SourceOwnerPath.Count == 3 && nestedWitnesses[0].SourceOwnerPath[^1] == nestedWitnesses[0].OwnerToken,
+                    "Nested async lambda lost its enclosing implementation chain.");
                 decompiler.Settings.TryGetOption("yield")!.Value = false;
                 Check(!Decompile(decompiler, root, true).Evidence!.BodyWitnesses.Any(w => w.Kind == "IteratorMethod"), "Disabled iterator rewrite produced a witness.");
                 decompiler.Settings.TryGetOption("yield")!.Value = true;
