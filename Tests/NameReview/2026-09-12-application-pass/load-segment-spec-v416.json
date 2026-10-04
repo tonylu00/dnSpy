@@ -1,0 +1,779 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\049-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\049-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\049-methods.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000702",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Constructor identity retained. 06000703 stores first input in 04000BF4, read by MaskVersionID/ai; second input is the l1 mask model used by GetHawkConfigurationData. Providers supplement resource/feature/interface-object configuration. 06000704 obtains providers from lo application-program flags via 06000705. Configuration selector uint_1 remains unresolved.",
+      "ParameterNames": {
+        "1": "maskVersionId",
+        "2": "maskVersion"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000703",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Constructor identity retained. 06000703 stores first input in 04000BF4, read by MaskVersionID/ai; second input is the l1 mask model used by GetHawkConfigurationData. Providers supplement resource/feature/interface-object configuration. 06000704 obtains providers from lo application-program flags via 06000705. Configuration selector uint_1 remains unresolved.",
+      "ParameterNames": {
+        "1": "maskVersionId",
+        "2": "maskVersion",
+        "4": "configurationProviders"
+      },
+      "LocalNames": {
+        "0": "configurationXml"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000704",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Constructor identity retained. 06000703 stores first input in 04000BF4, read by MaskVersionID/ai; second input is the l1 mask model used by GetHawkConfigurationData. Providers supplement resource/feature/interface-object configuration. 06000704 obtains providers from lo application-program flags via 06000705. Configuration selector uint_1 remains unresolved.",
+      "ParameterNames": {
+        "1": "maskVersionId",
+        "2": "maskVersion",
+        "4": "applicationProgram"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600072F",
+      "NewName": "SelectConfigurationProcedure",
+      "Disposition": "rename",
+      "Reason": "Private selection chain: DeviceAccessTypeToXml selects resource access; filters Procedures by ProcedureType, subtype intersection and Access.Contains; retains highest 06000730 score; exact subtype breaks loop. Load cfg fallback returns empty procedure unless exact score. Selected LdCtrlBase items become Class362 with AppliesTo=all. Boolean meaning beyond bit-64 clearing/ap1 exclusion is unresolved.",
+      "ParameterNames": {
+        "1": "procedureType",
+        "2": "requestedFlags",
+        "4": "deviceAccessType"
+      },
+      "LocalNames": {
+        "0": "resourceAccess",
+        "1": "selectedProcedure",
+        "2": "bestMatchScore",
+        "3": "procedureEnumerator",
+        "4": "candidateProcedure",
+        "5": "candidateFlags",
+        "6": "candidateMatchScore"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000730",
+      "NewName": "ScoreProcedureSubtypeMatch",
+      "Disposition": "rename",
+      "Reason": "Private scoring helper called only by 0600072F. Equal flags score 32; exclusive cfg mismatch or boolean/ap1 exclusion score -32; score is CountSetBits(candidate & requested) minus CountSetBits(candidate & ~requested), with missing par/grp penalty 16. Preserve low-level scoring behavior and unresolved boolean role.",
+      "ParameterNames": {
+        "1": "requestedFlags",
+        "2": "candidateFlags"
+      },
+      "LocalNames": {
+        "0": "matchScore"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000731",
+      "NewName": "CountSetBits",
+      "Disposition": "rename",
+      "Reason": "Private uint helper called by 06000730. Repeatedly tests value & 1, increments accumulator and shifts right until zero. Exactly counts set bits.",
+      "ParameterNames": {
+        "1": "value"
+      },
+      "LocalNames": {
+        "0": "setBitCount"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000732",
+      "NewName": "GetProcedureSubtypeFlags",
+      "Disposition": "rename",
+      "Reason": "Private XML subtype conversion used by 0600072F: all=255, par=1, grp=2, par,grp=3, ap1=191, cfg=786440, unknown=255. Distinct from download-log mode cfg=0; retain both original encodings.",
+      "ParameterNames": {
+        "1": "procedureSubtype"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000733",
+      "NewName": "GetConfigurationFeatureValue",
+      "Disposition": "rename",
+      "Reason": "Private lookup: searches configured Features by Name, then each Class444.GetFeatureValue, then resource-flavour fallback for GroupObjectTable/AssociationTable; returns nullable integer. Local 8 is reused for both resource table flavours. Null construction and unwrap temporaries remain unresolved.",
+      "ParameterNames": {
+        "1": "featureName"
+      },
+      "LocalNames": {
+        "0": "featureEnumerator",
+        "1": "feature",
+        "3": "configurationProviders",
+        "4": "providerIndex",
+        "5": "providerValue",
+        "6": "groupObjectTableResource",
+        "8": "tableFlavour",
+        "10": "associationTableResource"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000794",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Retain checked Parse alias. TextReader.ReadLine builds entry XML with StringBuilder; completed Data fragments become gf entries; returns list.ToArray. Private implementation scope names from exact original IL positions.",
+      "ParameterNames": {
+        "1": "reader"
+      },
+      "LocalNames": {
+        "0": "entries",
+        "1": "entryXml",
+        "2": "line"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06000795",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Retain checked ToXml alias. Writes Data/DateTime/PA/RealMask/Mode and Image nodes, including address-space-dependent attributes and BufferAccess.FormatHex. Procedure Adm1 blocks advance by 16 bytes; native slot 7 stores/increments that offset.",
+      "ParameterNames": {},
+      "LocalNames": {
+        "0": "dataElement",
+        "1": "memoryImages",
+        "2": "imageIndex",
+        "3": "memoryImage",
+        "4": "imageElement",
+        "5": "addressSpace",
+        "6": "procedureElement",
+        "7": "procedureBlockOffset"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600079E",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Private XML-fragment constructor identity retained. XmlDocument.LoadXml wraps Data; reads DateTime/PA/RealMask/Mode; Image Range bounds size buffers; BufferAccess.ParseHex and Buffer.BlockCopy copy data/mask. Adm1 blocks are padded to 16 bytes. Native slot 10 is reused by Image and Adm1 enumerators; slot 11 stores only Image current; Adm1 Current is consumed on stack. Preserve all original substring/default/error behavior.",
+      "ParameterNames": {
+        "1": "logXml"
+      },
+      "LocalNames": {
+        "0": "dataElement",
+        "1": "dateTimeElement",
+        "2": "individualAddressElement",
+        "3": "maskVersionElement",
+        "4": "modeElement",
+        "5": "memoryImages",
+        "6": "procedure",
+        "7": "procedureElement",
+        "8": "maskVersionNumber",
+        "9": "loadOptions",
+        "10": "elementEnumerator",
+        "11": "imageElement",
+        "12": "startAddress",
+        "13": "endAddress",
+        "14": "imageLocation",
+        "15": "memoryImage",
+        "16": "imageDataElement",
+        "17": "imageMaskElement",
+        "18": "imageData",
+        "19": "imageMask",
+        "20": "procedureData",
+        "21": "paddedProcedureBlock",
+        "22": "procedureBlock"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x060007A1",
+      "NewName": "FormatDownloadMode",
+      "Disposition": "rename",
+      "Reason": "Private mode formatter used by CreateImage and XML parser: 255/all, 1/par, 2/grp, 3/par,grp, 191/ap1, 0/cfg; unknown numeric values become empty string. Do not unify with XML procedure subtype cfg mask.",
+      "ParameterNames": {
+        "1": "loadOptions"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x060007A2",
+      "NewName": "ParseDownloadMode",
+      "Disposition": "rename",
+      "Reason": "Private reverse mode conversion used by ToXml: all=255, par=1, grp=2, par,grp=3, ap1=191; cfg and unknown return 0. Preserve checked public aliases and public field contracts.",
+      "ParameterNames": {
+        "1": "mode"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600111C",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Retain checked Apply override alias and contract family. For each application patches resource ApplicationId in memory, WriteProp or TaskSegment. 0600111F encodes 4/5-byte IDs. Reads CurrentApplIdInDevice for preservation path. Native slot 12 iterates both Class399[] write properties and Class373[] task segments, so use common procedureItemIndex.",
+      "ParameterNames": {
+        "1": "imageContext"
+      },
+      "LocalNames": {
+        "0": "applicationIndex",
+        "1": "applicationIdResource",
+        "2": "applicationProgram",
+        "3": "encodedApplicationId",
+        "4": "taskSegmentApplicationId",
+        "5": "applicationIdLocation",
+        "6": "resourceManagementStyle",
+        "8": "currentDeviceApplicationId",
+        "9": "memoryImage",
+        "10": "imageOffset",
+        "11": "writeProperties",
+        "12": "procedureItemIndex",
+        "13": "writeProperty",
+        "14": "taskSegments",
+        "15": "taskSegment",
+        "16": "taskSegmentEnumerator",
+        "17": "fallbackTaskSegment"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600111D",
+      "NewName": "MatchesApplicationIdWriteProperty",
+      "Disposition": "rename",
+      "Reason": "Private predicate called by 0600111C. Requires same PropId, StartElement=1 and Count=1; matches ObjType for Property or ObjIdx for SystemProperty against application-ID location InterfaceObjectRef.",
+      "ParameterNames": {
+        "1": "applicationIdLocation",
+        "2": "writeProperty"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600111E",
+      "NewName": "MatchesApplicationIdTaskSegment",
+      "Disposition": "rename",
+      "Reason": "Private predicate called by application-ID Apply 0600111C. Matches ObjType for Property or LsmIdx for SystemProperty; otherwise Bcu2 permits LsmIdx<=3. Distinct MethodDef from equal-RVA PEI predicate 0600112A; names follow each actual caller/resource.",
+      "ParameterNames": {
+        "1": "imageContext",
+        "2": "applicationIdLocation",
+        "3": "taskSegment"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600111F",
+      "NewName": "EncodeApplicationProgramId",
+      "Disposition": "rename",
+      "Reason": "Private encoder used by 0600111C: five bytes manufacturer high/low, application number high/low, version; four bytes omit manufacturer high; other lengths return null. eg getters correspond to its M-{manufacturer}_A-{number}-{version} ToString and constructor fields; preserve ordering and truncation.",
+      "ParameterNames": {
+        "1": "applicationProgramId",
+        "2": "encodedLength"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x06001129",
+      "NewName": "",
+      "Disposition": "rename",
+      "Reason": "Retain checked Apply override alias and contract family. Resource PeiType receives lo.v byte in a memory image or matching TaskSegment. Native slot 9 reused across primary/fallback enumerations; native slot 1 holds resource management style. Nullable empty-literal/unwrap temporaries unresolved.",
+      "ParameterNames": {
+        "1": "imageContext"
+      },
+      "LocalNames": {
+        "0": "peiTypeResource",
+        "1": "resourceManagementStyle",
+        "4": "applicationIndex",
+        "5": "applicationProgram",
+        "6": "peiType",
+        "7": "peiTypeLocation",
+        "8": "memoryImage",
+        "9": "taskSegmentEnumerator",
+        "10": "taskSegment",
+        "11": "fallbackTaskSegment"
+      }
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x0600112A",
+      "NewName": "MatchesPeiTypeTaskSegment",
+      "Disposition": "rename",
+      "Reason": "Private PEI-type predicate called by 06001129. ObjType/Property, LsmIdx/SystemProperty and Bcu2 LsmIdx<=3 rules match 0600111E but ownership/caller/resource differ; preserve distinct physical tokens and signatures.",
+      "ParameterNames": {
+        "1": "imageContext",
+        "2": "peiTypeLocation",
+        "3": "taskSegment"
+      },
+      "LocalNames": {}
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000BF3",
+      "NewName": "logger",
+      "Disposition": "rename",
+      "Reason": "Private static readonly ILog initialized by LogManager.GetLogger with literal Knx.Ets.Hawk.DeviceProfileInformation."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000BF4",
+      "NewName": "maskVersionId",
+      "Disposition": "rename",
+      "Reason": "Private readonly string set from constructor first input; MaskVersionID/ai returns it and DebuggerDisplay refers to MaskVersionID."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000BF5",
+      "NewName": "maskVersion",
+      "Disposition": "rename",
+      "Reason": "Private readonly l1 mask model set from constructor; Version, MgmtDescriptor01, ManagementModel, MediumTypeID, IsDownwardCompatibleTo and GetHawkConfigurationData uses establish role."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000BF8",
+      "NewName": "configurationProviders",
+      "Disposition": "rename",
+      "Reason": "Private readonly Class444[] receives constructor provider input or empty array. Resource information, feature values and interface objects supplement Hawk configuration."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000BF9",
+      "NewName": "cachedInterfaceObjects",
+      "Disposition": "rename",
+      "Reason": "Private cache lazily built by method_8 from HawkConfigurationData.InterfaceObjects plus provider interface objects matched by ObjectType; later calls return cache."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000C47",
+      "NewName": "logger",
+      "Disposition": "rename",
+      "Reason": "Private static readonly ILog; LogManager literal Knx.Ets.Hawk.DownloadLogData."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04001883",
+      "NewName": "logger",
+      "Disposition": "rename",
+      "Reason": "Private static readonly ILog for PatchApplicationProgramIdTask; original cctor logger owner and Apply diagnostics establish role."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04001891",
+      "NewName": "logger",
+      "Disposition": "rename",
+      "Reason": "Private static readonly ILog for PatchPeiTypeTask; original cctor logger owner and Apply diagnostics establish role."
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Ets.HawkNET.dll",
+      "Token": "0x04000BF6",
+      "NewName": "",
+      "Disposition": "unresolved",
+      "Reason": "Constructor third uint input is stored and passed to l1.GetHawkConfigurationData(uint); protected method_2 returns it. Missing evidence: resolve the l1 selector domain and incoming caller values before distinguishing application version, configuration revision or another selector. Do not infer from type or spelling."
+    }
+  ],
+  "ReviewAnnotations": {
+    "0x06000702": {
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 3,
+            "OriginalName": "uint_1",
+            "MissingEvidence": "Missing evidence: trace the l1.GetHawkConfigurationData uint selector domain and incoming values; constructor forwarding alone does not distinguish application version or configuration selector."
+          }
+        ]
+      }
+    },
+    "0x06000703": {
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 3,
+            "OriginalName": "uint_1",
+            "MissingEvidence": "Missing evidence: trace the l1.GetHawkConfigurationData uint selector domain and incoming values; constructor forwarding alone does not distinguish application version or configuration selector."
+          }
+        ]
+      }
+    },
+    "0x06000704": {
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 3,
+            "OriginalName": "uint_1",
+            "MissingEvidence": "Missing evidence: trace the l1.GetHawkConfigurationData uint selector domain and incoming values; constructor forwarding alone does not distinguish application version or configuration selector."
+          }
+        ]
+      }
+    },
+    "0x0600072F": {
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 3,
+            "OriginalName": "bool_0",
+            "MissingEvidence": "Missing evidence: establish the load boolean domain at upstream callers. Current body clears bit 64 when false and excludes non-exact ap1 when true; those operations alone do not identify one supported domain name."
+          }
+        ],
+        "Locals": [
+          {
+            "Index": 7,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 8,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06000730": {
+      "UnresolvedScopeEvidence": {
+        "Parameters": [
+          {
+            "Sequence": 3,
+            "OriginalName": "bool_0",
+            "MissingEvidence": "Missing evidence: establish the load boolean domain at upstream callers. Current body clears bit 64 when false and excludes non-exact ap1 when true; those operations alone do not identify one supported domain name."
+          }
+        ],
+        "Locals": [
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 2,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06000731": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 2,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06000732": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06000733": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 2,
+            "ExpectedType": "System.Nullable`1<System.Int32>",
+            "MissingEvidence": "Compiler nullable initialization, result transfer or unwrapping temporary; no independent domain responsibility established. Preserve the slot without a speculative semantic alias.",
+            "ObservedInstructionCount": 2
+          },
+          {
+            "Index": 7,
+            "ExpectedType": "System.Nullable`1<Knx.Ets.Xml.ObjectModel.ResourceMgmtStyle>",
+            "MissingEvidence": "Compiler nullable initialization, result transfer or unwrapping temporary; no independent domain responsibility established. Preserve the slot without a speculative semantic alias.",
+            "ObservedInstructionCount": 4
+          },
+          {
+            "Index": 9,
+            "ExpectedType": "Knx.Ets.Xml.ObjectModel.HawkConfigurationDataResourceResourceTypeFlavour",
+            "MissingEvidence": "Compiler nullable initialization, result transfer or unwrapping temporary; no independent domain responsibility established. Preserve the slot without a speculative semantic alias.",
+            "ObservedInstructionCount": 4
+          },
+          {
+            "Index": 11,
+            "ExpectedType": "System.Nullable`1<System.Int32>",
+            "MissingEvidence": "Compiler nullable initialization, result transfer or unwrapping temporary; no independent domain responsibility established. Preserve the slot without a speculative semantic alias.",
+            "ObservedInstructionCount": 2
+          },
+          {
+            "Index": 12,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 13,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06000794": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 3,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 4,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06000795": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 8,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 9,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x0600079E": {
+      "UnresolvedScopeEvidence": {}
+    },
+    "0x060007A1": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x060007A2": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x0600111C": {
+      "ContractFamily": "9DB029ABE039161172589D450579838945D69C0BC501A34E9006A936074A2BA3",
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 7,
+            "ExpectedType": "Knx.Ets.Xml.ObjectModel.ResourceMgmtStyle",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 18,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 19,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x0600111D": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x0600111E": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x0600111F": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x06001129": {
+      "ContractFamily": "9DB029ABE039161172589D450579838945D69C0BC501A34E9006A936074A2BA3",
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 2,
+            "ExpectedType": "Knx.Ets.Xml.ObjectModel.ResourceMgmtStyle",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 3,
+            "ExpectedType": "System.Nullable`1<Knx.Ets.Xml.ObjectModel.HawkConfigurationDataResourceResourceTypeFlavour>",
+            "MissingEvidence": "Compiler nullable initialization, result transfer or unwrapping temporary; no independent domain responsibility established. Preserve the slot without a speculative semantic alias.",
+            "ObservedInstructionCount": 2
+          },
+          {
+            "Index": 12,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 13,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    },
+    "0x0600112A": {
+      "UnresolvedScopeEvidence": {
+        "Locals": [
+          {
+            "Index": 0,
+            "ExpectedType": "System.Int32",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          },
+          {
+            "Index": 1,
+            "ExpectedType": "System.Int16",
+            "MissingEvidence": "No original IL load/store/address reference to this declared slot; no semantic variable to name.",
+            "ObservedInstructionCount": 0
+          }
+        ]
+      }
+    }
+  }
+}
