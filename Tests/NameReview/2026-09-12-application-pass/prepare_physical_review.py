@@ -14,6 +14,18 @@ def prepare(spec):
     root = pathlib.Path(spec['TargetRoot']).resolve()
     requested = {(row['Kind'], row['Module'].replace('\\', '/'), row['Token'].upper())
                  for row in spec['Rows']}
+    sources = {pathlib.Path(source).resolve() for source in spec['Inventories']}
+    choices = {(row['Kind'], row['Module'].replace('\\', '/'), row['Token'].upper()):
+               pathlib.Path(row['Inventory']).resolve()
+               for row in spec['Rows'] if row.get('Inventory')}
+    if not set(choices.values()).issubset(sources):
+        raise ValueError('Selected inventory is not in the bound inventory list')
+    scope_choices = {(row['Kind'], row['Module'].replace('\\', '/'), row['Token'].upper()):
+                     pathlib.Path(row['ScopeInventory']).resolve()
+                     for row in spec['Rows'] if row.get('ScopeInventory')}
+    if not set(scope_choices.values()).issubset(sources) or any(key[0] != 'Methods' for key in scope_choices):
+        raise ValueError('Scope inventory requires a method and a bound input')
+    scope_rows = {}
     index = {}
     for source in spec['Inventories']:
         inventory = json.loads(pathlib.Path(source).read_text(encoding='utf-8-sig'))
@@ -33,6 +45,14 @@ def prepare(spec):
                 # all physical paths still pass the same escape checks.
                 if key not in requested:
                     continue
+                if key in scope_choices and pathlib.Path(source).resolve() == scope_choices[key]:
+                    scoped = copy.deepcopy(original)
+                    scoped['Module'] = relative
+                    if key in scope_rows and scope_rows[key] != scoped:
+                        raise ValueError('Conflicting native scope inventories')
+                    scope_rows[key] = scoped
+                if key in choices and pathlib.Path(source).resolve() != choices[key]:
+                    continue
                 row = copy.deepcopy(original)
                 row['Module'] = relative
                 if key in index and index[key] != row:
@@ -47,6 +67,13 @@ def prepare(spec):
         if key in seen: raise ValueError('Repeated decision: ' + str(key))
         seen.add(key)
         row = copy.deepcopy(index[key])
+        if key in scope_choices:
+            scoped = scope_rows[key]
+            for label in ('Module', 'Identity', 'Mvid', 'Sha256', 'Token', 'Type', 'Signature', 'OriginalName'):
+                if scoped.get(label) != row.get(label):
+                    raise ValueError('Native scope identity differs: ' + label)
+            for label in ('ParameterNames', 'LocalNames'):
+                row[label] = copy.deepcopy(scoped[label])
         physical = root / key[1]
         if key[1] not in hashes:
             hashes[key[1]] = hashlib.sha256(physical.read_bytes()).hexdigest().upper()

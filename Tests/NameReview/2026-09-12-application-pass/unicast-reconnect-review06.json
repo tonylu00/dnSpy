@@ -1,0 +1,2790 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x02000162",
+      "Signature": "Class720",
+      "OriginalName": "Class720",
+      "Reason": "Native Class720 02000162 is an internal IDisposable/IAsyncDisposable session over IUnicastCommunication. Constructor 06000730 creates ControlReceiver, attaches Received, and logs Created session on {0}; static statistics label Session and connection negotiation 06000764 constructs KnxIpConnectionLayer and ConnectRequestFrame. It owns the unicast session and opens management/tunneling connections, including secure-session negotiation. Physical SHA/MVID distinguish this root Falcon from compatibility copies.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "Knx.Falcon.KnxnetIp.KnxIpSession",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Fields": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B3F",
+      "Signature": "Knx.Falcon.Logging.IFalconLogger Class1341::a",
+      "OriginalName": "a",
+      "Reason": "06001E06 initializes this static IFalconLogger through GetLogger(Falcon.UnicastBusConnectorBase); HandleConnectionBroken and reconnect state bodies use it for connection/retry logs.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_logger",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B42",
+      "Signature": "System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> Class1341::d",
+      "OriginalName": "d",
+      "Reason": "Constructor 06001E08 stores argument 8; reconnect MoveNext 06001E4F invokes this Func with endpoint/protocol/cloud data/diagnostics/cancellation at offset 292, yielding IUnicastCommunication for session creation.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_createCommunicationAsync",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B44",
+      "Signature": "Class708 Class1341::class708_0",
+      "OriginalName": "class708_0",
+      "Reason": "06001E4D stores CreateConnectionAsync result; getter 06001E16 returns it, CloseAsync/Dispose detach connection-broken handler and dispose it. Reconnect treats null as not connected.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_connection",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B45",
+      "Signature": "Knx.Falcon.Discovery.IpDeviceDiscoveryResult Class1341::ipDeviceDiscoveryResult_0",
+      "OriginalName": "ipDeviceDiscoveryResult_0",
+      "Reason": "06001E08 argument 3 is IpDeviceDiscoveryResult; 06001E17 returns it. 06001E4F compares rediscovered ControlEndpoint, logs endpoint change, replaces this description, and reads Supports(Core,2) to select TCP.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_deviceDescription",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B46",
+      "Signature": "System.TimeSpan Class1341::timeSpan_0",
+      "OriginalName": "timeSpan_0",
+      "Reason": "Constructor 06001E08 argument 4/getter 06001E18 propagate through derived CreateConnection MoveNext 06001E29/06001E82, session 06000740/41/42, layer ctor 060007E8 argument 3 and field 04000AFC to first-send AcknowledgeTimeout in 0600081E/06000820.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_acknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B47",
+      "Signature": "System.TimeSpan Class1341::i",
+      "OriginalName": "i",
+      "Reason": "Constructor 06001E08 argument 5/getter 06001E19 propagate through derived CreateConnection/session/layer ctor argument 4 to field 04000AFD. RepeatLastFrame MoveNext 0600081A calls getter 060007E5 at offset 139 before rearming AcknowledgeTimeout.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_repeatAcknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B48",
+      "Signature": "System.TimeSpan Class1341::timeSpan_2",
+      "OriginalName": "timeSpan_2",
+      "Reason": "Constructor 06001E08 argument 6/getter 06001E1A propagate through derived CreateConnection/session/layer ctor argument 5 to field 04000AFB. 0600081A/06000820 use its getter 060007E3 when arming ConnectionTimeout.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_connectionTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B49",
+      "Signature": "System.TimeSpan Class1341::timeSpan_3",
+      "OriginalName": "timeSpan_3",
+      "Reason": "06001E08 argument 7 is the configured retry cap. 06001E35 disables retries for negative values, initializes delay=max(cap/64,1 second); 06001E4F doubles current delay capped by this field. It is a maximum, not the first retry interval.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_maxReconnectDelay",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B4A",
+      "Signature": "System.TimeSpan Class1341::timeSpan_4",
+      "OriginalName": "timeSpan_4",
+      "Reason": "06001E35 initializes this retry delay; 06001E4F doubles it subject to 04001B49 and uses it as the next one-shot Timer.Change due time on failure.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_reconnectDelay",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B4B",
+      "Signature": "System.Threading.Timer Class1341::m",
+      "OriginalName": "m",
+      "Reason": "06001E35 creates one-shot Timer targeting generated callback 06001E3A, which awaits TryReconnectAsync; 06001E4F stops it before retry and disposes/clears it on success. DisposeAsync 06001E0C also disposes/clears it.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_reconnectTimer",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x04001B4C",
+      "Signature": "System.Boolean Class1341::bool_0",
+      "OriginalName": "bool_0",
+      "Reason": "DisposeAsync 06001E0C sets this bool true before stopping retries. Handler 06001E1B and state bodies 06001E35/06001E4F guard scheduling/attempts with it. Synchronous Dispose 06001E0D does not set this field; the alias does not assert otherwise.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_disposeRequested",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AFB",
+      "Signature": "System.TimeSpan Class733::timeSpan_0",
+      "OriginalName": "timeSpan_0",
+      "Reason": "Layer ctor 060007E8 stores argument 5 at offset 63; getter 060007E3 returns it. Native 0600081A offset253 and 06000820 offset269 feed it into ConnectionTimeout scheduling, distinct from ACK and keepalive delays.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_connectionTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AFC",
+      "Signature": "System.TimeSpan Class733::q",
+      "OriginalName": "q",
+      "Reason": "Layer ctor 060007E8 stores argument 3 at offset47; getter 060007E4. Native initial-send bodies 0600081E offset58 and 06000820 offset246 use it when arming AcknowledgeTimeout.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_acknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AFD",
+      "Signature": "System.TimeSpan Class733::timeSpan_2",
+      "OriginalName": "timeSpan_2",
+      "Reason": "Layer ctor 060007E8 stores argument 4 at offset55; getter 060007E5. RepeatLastFrame body 0600081A calls it at139 after sending last frame and incrementing repeat statistics, then rearms AcknowledgeTimeout.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_repeatAcknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AFE",
+      "Signature": "System.TimeSpan Class733::s",
+      "OriginalName": "s",
+      "Reason": "060007E8 stores half argument5 or InfiniteTimeSpan at offset112. Getter 060007E6 feeds KeepaliveTimeout in 060007FE and 06000820, separate from ConnectionTimeout.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_keepaliveInterval",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AFF",
+      "Signature": "System.TimeSpan Class733::timeSpan_4",
+      "OriginalName": "timeSpan_4",
+      "Reason": "060007E7 initializes public static readonly TimeSpan from 60000ms. Factories 06001DE1/06001DE3/06001E56 forward it in the connection-timeout position; exact 060007E8 storage and ConnectionTimeout consumers corroborate the role. Declaring Class733 is internal.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "DefaultConnectionTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000B00",
+      "Signature": "System.TimeSpan Class733::timeSpan_5",
+      "OriginalName": "timeSpan_5",
+      "Reason": "060007E7 initializes public static readonly TimeSpan from 1000ms. Factories 06001DE1/06001DE3/06001E56 forward it in first-ack timeout position, corroborated by ctor 060007E8 argument3 and first-send AcknowledgeTimeout consumers.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "DefaultAcknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000B01",
+      "Signature": "System.TimeSpan Class733::timeSpan_6",
+      "OriginalName": "timeSpan_6",
+      "Reason": "060007E7 initializes public static readonly TimeSpan from 3000ms. Factories 06001DE1/06001DE3/06001E56 forward it in repeat-ack timeout position; 0600081A rearms repeat AcknowledgeTimeout with getter 060007E5.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "DefaultRepeatAcknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AF4",
+      "Signature": "Struct761 Class733::i",
+      "OriginalName": "i",
+      "Reason": "Layer constructor 060007E8 stores argument1 at offset32; ConnectRequestFrame construction in session body 06000764 supplies the local HPAI, and connection layer uses this HPAI for outgoing control requests. Distinct peer HPAI field 04000AF6 is preserved for later review.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_localHpai",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AF5",
+      "Signature": "System.Net.IPEndPoint Class733::ipendPoint_0",
+      "OriginalName": "ipendPoint_0",
+      "Reason": "Layer ctor 060007E8 stores argument7 at offset40; session 06000764 passes IUnicastCommunication.get_RemoteEndPoint. UpdateTarget 060007E9 replaces the same endpoint alongside the send delegate; ToString prints it with channel.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_remoteEndpoint",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x04000AF8",
+      "Signature": "System.Func`2<Class754,System.Threading.Tasks.Task> Class733::m",
+      "OriginalName": "m",
+      "Reason": "Layer ctor 060007E8 argument2 stored at119; UpdateTarget 060007E9 replaces this Func<KnxIpFrame,Task>. Session 06000764 supplies its SendFrameAsync method; connection layer awaits delegate to transmit requests and repeat frames.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_sendFrameAsync",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x040009BD",
+      "Signature": "Interface32 Class720::b",
+      "OriginalName": "b",
+      "Reason": "Session ctor 06000730 stores IUnicastCommunication argument1 and attaches its Received event to ControlReceiver. 06000764 uses its local/remote endpoints to construct layer/connect request; session disposal releases it.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_communication",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x040009BE",
+      "Signature": "System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> Class720::c",
+      "OriginalName": "c",
+      "Reason": "Session ctor 06000730 stores Func argument7; invocation creates unicast communications when setting up connection data transport. Same endpoint/protocol/clouddata/diagnostics/cancellation signature as connector 04001B42.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_createCommunicationAsync",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x040009C0",
+      "Signature": "Class715 Class720::e",
+      "OriginalName": "e",
+      "Reason": "Session ctor 06000730 creates MessageFrameReceiver(ControlReceiver), stores it and attaches CommunicationEventsOnReceived to communication.Received; 06000764 registers ConnectionResponse/ConnectionStateResponse/DisconnectRequest control handlers.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_controlReceiver",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x040009C1",
+      "Signature": "System.Collections.Generic.List`1<Class733> Class720::list_0",
+      "OriginalName": "list_0",
+      "Reason": "Session field is initialized List<Class733>; ConnectAsync 06000764 adds each new KnxIpConnectionLayer before ConnectRequest and removes it on failure, while disposal closes retained layers. This is session-owned connection layer storage.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "_connectionLayers",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Methods": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x060007E3",
+      "Signature": "System.TimeSpan Class733::i()",
+      "OriginalName": "i",
+      "Reason": "Native getter returns 04000AFB and ConnectionTimeout consumers prove the value role, but original method is CompilerGenerated/SpecialName with zero property AccessorOwners. The missing property/owner name is not inferred from spelling; retain compiler-owned metadata until exact accessor restoration evidence is available. Field/constructor/caller timeout roles are named independently.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Native getter returns 04000AFB and ConnectionTimeout consumers prove the value role, but original method is CompilerGenerated/SpecialName with zero property AccessorOwners. The missing property/owner name is not inferred from spelling; retain compiler-owned metadata until exact accessor restoration evidence is available. Field/constructor/caller timeout roles are named independently.",
+      "ReviewDisposition": "unresolved"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x060007E4",
+      "Signature": "System.TimeSpan Class733::method_12()",
+      "OriginalName": "method_12",
+      "Reason": "Native getter returns 04000AFC and first-send AcknowledgeTimeout consumers prove the value role, but CompilerGenerated/SpecialName method has zero property AccessorOwners. Missing original property/owner name prevents a compiler-name restoration; no invented semantic generated-member alias.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Native getter returns 04000AFC and first-send AcknowledgeTimeout consumers prove the value role, but CompilerGenerated/SpecialName method has zero property AccessorOwners. Missing original property/owner name prevents a compiler-name restoration; no invented semantic generated-member alias.",
+      "ReviewDisposition": "unresolved"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x060007E5",
+      "Signature": "System.TimeSpan Class733::method_13()",
+      "OriginalName": "method_13",
+      "Reason": "Native getter returns 04000AFD and RepeatLastFrame 0600081A proves repeat acknowledgement value role. CompilerGenerated/SpecialName method has zero property AccessorOwners; original property/owner name missing, so no invented semantic generated-member alias.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Native getter returns 04000AFD and RepeatLastFrame 0600081A proves repeat acknowledgement value role. CompilerGenerated/SpecialName method has zero property AccessorOwners; original property/owner name missing, so no invented semantic generated-member alias.",
+      "ReviewDisposition": "unresolved"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x060007E6",
+      "Signature": "System.TimeSpan Class733::method_14()",
+      "OriginalName": "method_14",
+      "Reason": "Native getter returns 04000AFE and KeepaliveTimeout consumers prove interval role. CompilerGenerated/SpecialName method has zero property AccessorOwners; original property/owner name missing, so preserve exact generated metadata rather than invent a helper alias.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Native getter returns 04000AFE and KeepaliveTimeout consumers prove interval role. CompilerGenerated/SpecialName method has zero property AccessorOwners; original property/owner name missing, so preserve exact generated metadata rather than invent a helper alias.",
+      "ReviewDisposition": "unresolved"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x060007E8",
+      "Signature": "System.Void Class733::.ctor(Struct761,System.Func`2<Class754,System.Threading.Tasks.Task>,System.TimeSpan,System.TimeSpan,System.TimeSpan,Interface64,System.Net.IPEndPoint)",
+      "OriginalName": ".ctor",
+      "Reason": "Native ctor stores p1->04000AF4@32,p7->04000AF5@40,p3->04000AFC@47,p4->04000AFD@55,p5->04000AFB@63,p2->04000AF8@119. ConnectAsync 06000764 supplies localHpai, SendFrameAsync and communication.RemoteEndPoint; timer consumers 0600081A/1E/20 distinguish timeout roles. Constructor name preserved; no locals.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Struct761 struct761_2",
+        "2: System.Func`2<Class754,System.Threading.Tasks.Task> func_1",
+        "3: System.TimeSpan timeSpan_7",
+        "4: System.TimeSpan timeSpan_8",
+        "5: System.TimeSpan timeSpan_9",
+        "6: Interface64 interface64_1",
+        "7: System.Net.IPEndPoint ipendPoint_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "struct761_2",
+          "HasMetadata": true,
+          "NewName": "localHpai"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "sendFrameAsync"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_9",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "ipendPoint_1",
+          "HasMetadata": true,
+          "NewName": "remoteEndpoint"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class733",
+      "Token": "0x060007E9",
+      "Signature": "System.Void Class733::a(System.Func`2<Class754,System.Threading.Tasks.Task>,System.Net.IPEndPoint)",
+      "OriginalName": "a",
+      "Reason": "Meaningful UpdateTarget alias preserved; original body replaces exactly 04000AF8 send delegate and 04000AF5 remote endpoint, established by ctor/session forwarding. No locals.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Func`2<Class754,System.Threading.Tasks.Task> func_1",
+        "2: System.Net.IPEndPoint ipendPoint_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "sendFrameAsync"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ipendPoint_1",
+          "HasMetadata": true,
+          "NewName": "remoteEndpoint"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x06000740",
+      "Signature": "System.Threading.Tasks.Task`1<Class709> Class720::a(System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Threading.CancellationToken)",
+      "OriginalName": "a",
+      "Reason": "Preserve ConnectDeviceManagementAsync. Native state 06000766 creates Class796 device-management CRI and forwards timeout arguments unchanged to ConnectAsync 06000742; body06000764 passes them to layer ctor060007E8, whose timer consumers establish first/repeatACK/connection roles. Generated kickoff/state locals preserved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.TimeSpan timeSpan_4",
+        "2: System.TimeSpan timeSpan_5",
+        "3: System.TimeSpan timeSpan_6",
+        "4: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "timeSpan_4",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class720/Struct727",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x06000741",
+      "Signature": "System.Threading.Tasks.Task`1<Class710> Class720::a(Knx.Falcon.KnxnetIp.TunnelingKnxLayer,System.Nullable`1<Knx.Falcon.IndividualAddress>,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Threading.CancellationToken)",
+      "OriginalName": "a",
+      "Reason": "Preserve ConnectTunnelingAsync. Native state0600076C constructs TunnelingCRI from p1/p2 and forwards timeouts in order to06000742->06000764->060007E8; exact timer consumers distinguish their roles. Generated kickoff locals preserved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.KnxnetIp.TunnelingKnxLayer tunnelingKnxLayer_0",
+        "2: System.Nullable`1<Knx.Falcon.IndividualAddress> nullable_0",
+        "3: System.TimeSpan timeSpan_4",
+        "4: System.TimeSpan timeSpan_5",
+        "5: System.TimeSpan timeSpan_6",
+        "6: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "tunnelingKnxLayer_0",
+          "HasMetadata": true,
+          "NewName": "tunnelingLayer"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "nullable_0",
+          "HasMetadata": true,
+          "NewName": "requestedIndividualAddress"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "timeSpan_4",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class720/Struct730",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x06000742",
+      "Signature": "System.Threading.Tasks.Task`1<Class708> Class720::a(Class794,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Threading.CancellationToken)",
+      "OriginalName": "a",
+      "Reason": "Preserve ConnectAsync. Original state06000764 captures Class794 CRI, creates local Hpai and KnxIpConnectionLayer with same p2/p3/p4 timeout order, then ConnectRequestFrame with CRI. Layer ctor stores to04000AFC/AFD/AFB and first/repeatACK/connection timer consumers corroborate roles. Generated kickoff locals preserved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class794 class794_0",
+        "2: System.TimeSpan timeSpan_4",
+        "3: System.TimeSpan timeSpan_5",
+        "4: System.TimeSpan timeSpan_6",
+        "5: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class794_0",
+          "HasMetadata": true,
+          "NewName": "connectionRequestInformation"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "timeSpan_4",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class720/Struct726",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E07",
+      "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.Discovery.IpDeviceDiscoveryResult> Class1341::a(Knx.Falcon.Configuration.IpUnicastConnectorParameters,System.Threading.CancellationToken,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve DiscoverAsync. Original kickoff captures parameters into Class1341/d; MoveNext06001E43 chooses endpoint/protocol from configuration, awaits ReadDeviceDescriptionAsync and discovery fallback with cancellation and diagnostics. Generated kickoff locals preserved; discovery lambda parameters are reviewed separately.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpUnicastConnectorParameters ipUnicastConnectorParameters_1",
+        "2: System.Threading.CancellationToken cancellationToken_0",
+        "3: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipUnicastConnectorParameters_1",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1341/d",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E08",
+      "Signature": "System.Void Class1341::.ctor(Class720,Knx.Falcon.Configuration.IpUnicastConnectorParameters,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": ".ctor",
+      "Reason": "Native constructor stores p1->04001B43,p2->1B40,p3->1B45,p4->1B46,p5->1B47,p6->1B48,p7->1B49,p8->1B42,p9->1B41. Derived bodies06001E29/1E82 propagate first3timeouts to session/layer constructor; 0600081A/1E/20 timer operations distinguish roles, while reconnect bodies06001E35/1E4F prove maximum delay and communication factory. Constructor name preserved; zero locals.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class720 class720_1",
+        "2: Knx.Falcon.Configuration.IpUnicastConnectorParameters ipUnicastConnectorParameters_1",
+        "3: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "4: System.TimeSpan timeSpan_5",
+        "5: System.TimeSpan timeSpan_6",
+        "6: System.TimeSpan timeSpan_7",
+        "7: System.TimeSpan timeSpan_8",
+        "8: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "9: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class720_1",
+          "HasMetadata": true,
+          "NewName": "session"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ipUnicastConnectorParameters_1",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "maxReconnectDelay"
+        },
+        {
+          "Sequence": 8,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 9,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E09",
+      "Signature": "System.Threading.Tasks.Task Class1341::vmethod_0(System.Threading.CancellationToken)",
+      "OriginalName": "vmethod_0",
+      "Reason": "Preserve OpenAsync and its contract family. Native state06001E4D forwards cancellation to CreateConnectionAsync, stores connection, attaches HandleConnectionBroken and updates state Connected. Generated kickoff locals preserved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "95409932B0841B8ED7C1C5F9A8E3BBB1A42DF0703C3C683D2937F8FC1D7FE51F",
+      "Parameters": [
+        "1: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1341/Struct943",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E0A",
+      "Signature": "System.Threading.Tasks.Task`1<Class708> Class1341::vmethod_1(System.Threading.CancellationToken)",
+      "OriginalName": "vmethod_1",
+      "Reason": "Preserve CreateConnectionAsync and whole family with derived06001DE5/06001E58. Implementations forward this cancellation to session connection operations. Abstract method has no local body.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "5C24D6DC3510087C013BBBC7ED8B644855D5CBDFBAF256E0170585342B1FD758",
+      "Parameters": [
+        "1: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E11",
+      "Signature": "Knx.Falcon.KnxnetIp.ServiceFamily Class1341::vmethod_3()",
+      "OriginalName": "vmethod_3",
+      "Reason": "Exact native editable override family DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663: abstract root06001E11, management06001DEB returns DeviceManagement, tunneling06001E60 returns Tunneling. Reconnect body06001E4F calls family before CreateAsync session negotiation; all3 reviewed atomically.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663",
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "GetServiceFamily",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DEB",
+      "Signature": "Knx.Falcon.KnxnetIp.ServiceFamily Class1342::vmethod_3()",
+      "OriginalName": "vmethod_3",
+      "Reason": "Exact family DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663 with06001E11/06001E60; native body returns ServiceFamily.DeviceManagement for session negotiation. Preserve override signature/identity.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663",
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetServiceFamily",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E60",
+      "Signature": "Knx.Falcon.KnxnetIp.ServiceFamily Class1343::vmethod_3()",
+      "OriginalName": "vmethod_3",
+      "Reason": "Exact family DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663 with06001E11/06001DEB; native body returns ServiceFamily.Tunneling for session negotiation. Preserve override signature/identity.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663",
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetServiceFamily",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E12",
+      "Signature": "System.Byte Class1341::vmethod_4()",
+      "OriginalName": "vmethod_4",
+      "Reason": "Exact native editable byte-return override family241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E. Management06001DEC returns2 and tunneling06001E61 returns1 beside their ServiceFamily getters. Complete static-module reference scan finds no calls to base06001E12; do not claim minimum-version enforcement or supported-device version lookup. All3 reviewed atomically.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E",
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [],
+      "NewName": "GetServiceFamilyVersion",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DEC",
+      "Signature": "System.Byte Class1342::vmethod_4()",
+      "OriginalName": "vmethod_4",
+      "Reason": "Exact family241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E with06001E12/06001E61. Returns2 for paired DeviceManagement family; no proof this value is a minimum or negotiated version. Preserve exact constant and signature.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E",
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetServiceFamilyVersion",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E61",
+      "Signature": "System.Byte Class1343::vmethod_4()",
+      "OriginalName": "vmethod_4",
+      "Reason": "Exact family241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E with06001E12/06001DEC. Returns1 for paired Tunneling family; no proof this value is a minimum or negotiated version. Preserve exact constant and signature.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E",
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetServiceFamilyVersion",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E18",
+      "Signature": "System.TimeSpan Class1341::method_7()",
+      "OriginalName": "method_7",
+      "Reason": "Native body returns04001B46. Derived CreateConnection state06001E29/06001E82 calls this getter before session ConnectDeviceManagement/ConnectTunneling, forwarding to060007E8 argument3. Field04000AFC and initial-send AcknowledgeTimeout consumers prove role.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetAcknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E19",
+      "Signature": "System.TimeSpan Class1341::method_8()",
+      "OriginalName": "method_8",
+      "Reason": "Native body returns04001B47. Derived CreateConnection state06001E29/06001E82 calls it in timeout position2 before session connect; layer04000AFD/getter060007E5 is consumed by RepeatLastFrame0600081A after repeat send to rearm AcknowledgeTimeout.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetRepeatAcknowledgementTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E1A",
+      "Signature": "System.TimeSpan Class1341::method_9()",
+      "OriginalName": "method_9",
+      "Reason": "Native body returns04001B48. Derived CreateConnection state06001E29/06001E82 forwards it in timeout position3 to session->layer ctor060007E8 argument5. Layer04000AFB/getter060007E3 is consumed when arming ConnectionTimeout.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetConnectionTimeout",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E1B",
+      "Signature": "System.Void Class1341::a(System.Object,System.EventArgs)",
+      "OriginalName": "a",
+      "Reason": "Preserve HandleConnectionBroken. EventHandler<EventArgs> attached by OpenAsync06001E4D; body logs Connection Broken, updates state Broken and invokes generated async delegate06001E25 via Task.Run. Sender/eventArgs unused by original body; event contract role is exact.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Object sender",
+        "2: System.EventArgs e"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "sender",
+          "HasMetadata": true,
+          "NewName": "sender"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "e",
+          "HasMetadata": true,
+          "NewName": "eventArgs"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E1C",
+      "Signature": "System.Void Class1341::vmethod_5(Knx.Falcon.BusConnectionState)",
+      "OriginalName": "vmethod_5",
+      "Reason": "Exact editable override family3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304 root06001E1C management06001DFB tunneling06001E71. Root no-op; derived implementations guard invalid transitions then call their private state setters/event notifications. Open/Close/broken/reconnect paths pass Connected/Closed/Broken. All3 named together.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304",
+      "Parameters": [
+        "1: Knx.Falcon.BusConnectionState busConnectionState_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "busConnectionState_0",
+          "HasMetadata": true,
+          "NewName": "connectionState"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "UpdateConnectionState",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DFB",
+      "Signature": "System.Void Class1342::vmethod_5(Knx.Falcon.BusConnectionState)",
+      "OriginalName": "vmethod_5",
+      "Reason": "Exact family3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304. Native override accepts Connected, ignores other transitions when alreadyClosed, then invokes own state setter. This is guarded state update, not unconditional assignment.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304",
+      "Parameters": [
+        "1: Knx.Falcon.BusConnectionState busConnectionState_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "busConnectionState_1",
+          "HasMetadata": true,
+          "NewName": "connectionState"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "UpdateConnectionState",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E71",
+      "Signature": "System.Void Class1343::vmethod_5(Knx.Falcon.BusConnectionState)",
+      "OriginalName": "vmethod_5",
+      "Reason": "Exact family3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304. Native override guards Connected/MediumFailure and existingClosed/error states before own state setter/event notification. Same update responsibility preserves subtype behavior.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304",
+      "Parameters": [
+        "1: Knx.Falcon.BusConnectionState busConnectionState_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "busConnectionState_1",
+          "HasMetadata": true,
+          "NewName": "connectionState"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "UpdateConnectionState",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341",
+      "Token": "0x06001E25",
+      "Signature": "System.Threading.Tasks.Task Class1341::a()",
+      "OriginalName": "a",
+      "Reason": "Withdraw misleading historical semantic alias: generated async implementation06001E25 belongs to HandleConnectionBroken06001E1B through ldftn@36. Its state06001E35 awaits CloseAsync and either logs no reconnect or schedules Timer06001E3A using max(cap/64,1second). Fresh printed SourceOwnerPath preserves both enclosing occurrence paths; no invented generated-member semantic name. Missing original compiler-generated method spelling remains unresolved, while the exact reconstructed handler behavior is retained.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1341/a",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "Withdraw misleading historical semantic alias: generated async implementation06001E25 belongs to HandleConnectionBroken06001E1B through ldftn@36. Its state06001E35 awaits CloseAsync and either logs no reconnect or schedules Timer06001E3A using max(cap/64,1second). Fresh printed SourceOwnerPath preserves both enclosing occurrence paths; no invented generated-member semantic name. Missing original compiler-generated method spelling remains unresolved, while the exact reconstructed handler behavior is retained.",
+      "ReviewDisposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "LogConnectionBrokenWithoutReconnect"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341/<>c",
+      "Token": "0x06001E3A",
+      "Signature": "System.Void Class1341/<>c::a(System.Object)",
+      "OriginalName": "a",
+      "Reason": "Generated TimerCallback implementation retained as compiler-owned member. Original kickoff captures object state; state06001E3C casts it to Class1341, awaits TryReconnectAsync and logs exception. Timer construction06001E35 passes this connector as state. Parameter role named without inventing lambda method name.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Object object_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "object_0",
+          "HasMetadata": true,
+          "NewName": "connectorState"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1341/<>c/a",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341/b",
+      "Token": "0x06001E3E",
+      "Signature": "System.Boolean Class1341/b::d(Knx.Falcon.Discovery.IpDeviceDiscoveryResult)",
+      "OriginalName": "d",
+      "Reason": "Generated discovery predicate retained in its owner. Original body tests IpDeviceDiscoveryResult.SerialNumber and MacAddress against captured connector configuration; its single parameter is the discovered candidate, not a sender.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceDiscoveryResult_0",
+          "HasMetadata": true,
+          "NewName": "discoveredDevice"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Falcon.SerialNumber",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341/b",
+      "Token": "0x06001E3F",
+      "Signature": "System.Boolean Class1341/b::c(Knx.Falcon.Discovery.IpDeviceDiscoveryResult)",
+      "OriginalName": "c",
+      "Reason": "Generated discovery predicate retained in its owner. Original body tests IpDeviceDiscoveryResult.SerialNumber against captured configuration; single parameter is discovered candidate. No semantic lambda method alias.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceDiscoveryResult_0",
+          "HasMetadata": true,
+          "NewName": "discoveredDevice"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Falcon.SerialNumber",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1341/b",
+      "Token": "0x06001E40",
+      "Signature": "System.Boolean Class1341/b::b(Knx.Falcon.Discovery.IpDeviceDiscoveryResult)",
+      "OriginalName": "b",
+      "Reason": "Generated discovery predicate retained in its owner. Original body tests discovered candidate MacAddress against captured configuration. Parameter renamed by exact metadata sequence; lambda implementation name remains compiler-owned.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceDiscoveryResult_0",
+          "HasMetadata": true,
+          "NewName": "discoveredDevice"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DE1",
+      "Signature": "System.Threading.Tasks.Task`1<Class1342> Class1342::a(Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters,Knx.Falcon.ConnectorMode,System.Threading.CancellationToken,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. Native body forwards configuration/mode/cancellation/diagnostics to06001DE2 and supplies layer defaults04000B00/B01/AFF plus AutoReconnect?60seconds:Infinite. Unused Int16 local0 lacks domain evidence and remains unresolved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters ipDeviceManagementConnectorParameters_0",
+        "2: Knx.Falcon.ConnectorMode connectorMode_1",
+        "3: System.Threading.CancellationToken cancellationToken_0",
+        "4: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceManagementConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DE2",
+      "Signature": "System.Threading.Tasks.Task`1<Class1342> Class1342::a(Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters,Knx.Falcon.ConnectorMode,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Threading.CancellationToken,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. Native state06001E2B discovers endpoint, selects communication protocol and forwards exact timeout order into06001DE4; next06001E2D constructs06001DE7->06001E08. Timer consumers prove timeout roles and retry bodies prove max delay. Generated kickoff locals preserved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters ipDeviceManagementConnectorParameters_0",
+        "2: Knx.Falcon.ConnectorMode connectorMode_1",
+        "3: System.TimeSpan timeSpan_5",
+        "4: System.TimeSpan timeSpan_6",
+        "5: System.TimeSpan timeSpan_7",
+        "6: System.TimeSpan timeSpan_8",
+        "7: System.Threading.CancellationToken cancellationToken_0",
+        "8: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceManagementConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "maxReconnectDelay"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 8,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1342/b",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DE3",
+      "Signature": "System.Threading.Tasks.Task`1<Class1342> Class1342::a(Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,Knx.Falcon.ConnectorMode,Interface32,System.Threading.CancellationToken,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload with existing communication. Native forwarding to06001DE4 adds layer defaulttimeouts and max retry delay while preserving configuration/description/mode/communication/cancellation/factory/diagnostics. Int16 local0 has no domain evidence, explicitly unresolved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters ipDeviceManagementConnectorParameters_0",
+        "2: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "3: Knx.Falcon.ConnectorMode connectorMode_1",
+        "4: Interface32 interface32_0",
+        "5: System.Threading.CancellationToken cancellationToken_0",
+        "6: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "7: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceManagementConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "interface32_0",
+          "HasMetadata": true,
+          "NewName": "communication"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DE4",
+      "Signature": "System.Threading.Tasks.Task`1<Class1342> Class1342::a(Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,Knx.Falcon.ConnectorMode,Interface32,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Threading.CancellationToken,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. State06001E2D calls session CreateAsync with supplied IUnicastCommunication and DeviceManagement family, then constructor06001DE7 in exact timeout/factory order and OpenAsync(cancellation). Own generated kickoff locals retained; all timeout roles independently proved by layer timers.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters ipDeviceManagementConnectorParameters_0",
+        "2: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "3: Knx.Falcon.ConnectorMode connectorMode_1",
+        "4: Interface32 interface32_0",
+        "5: System.TimeSpan timeSpan_5",
+        "6: System.TimeSpan timeSpan_6",
+        "7: System.TimeSpan timeSpan_7",
+        "8: System.TimeSpan timeSpan_8",
+        "9: System.Threading.CancellationToken cancellationToken_0",
+        "10: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "11: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceManagementConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "interface32_0",
+          "HasMetadata": true,
+          "NewName": "communication"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 8,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "maxReconnectDelay"
+        },
+        {
+          "Sequence": 9,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 10,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 11,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1342/c",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DE5",
+      "Signature": "System.Threading.Tasks.Task Class1342::vmethod_0(System.Threading.CancellationToken)",
+      "OriginalName": "vmethod_0",
+      "Reason": "Preserve CreateConnectionAsync family. Original state06001E29 forwards base timeout getters06001E18/19/1A and cancellation to ConnectDeviceManagementAsync06000740, attaches message handler and returns management connection. Generated kickoff locals retained.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "95409932B0841B8ED7C1C5F9A8E3BBB1A42DF0703C3C683D2937F8FC1D7FE51F",
+      "Parameters": [
+        "1: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1342/d",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1342",
+      "Token": "0x06001DE7",
+      "Signature": "System.Void Class1342::.ctor(Class720,Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": ".ctor",
+      "Reason": "Constructor preserved. Native body forwards nine arguments in exact same order to06001E08@34 and derives interface features from deviceDescription. First3 timeout roles from060007E8/timer consumers; max delay from06001E35/1E4F. Native local0 is get_HostDeviceDeviceDescriptorType0 result@61. Local1 is Enumerable.First(SupportedServiceFamilies,predicate06001E28 DeviceManagement) result@153, then its ServiceFamilyVersion is stored04001B36@161.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class720 class720_1",
+        "2: Knx.Falcon.Configuration.IpDeviceManagementConnectorParameters ipDeviceManagementConnectorParameters_0",
+        "3: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "4: System.TimeSpan timeSpan_5",
+        "5: System.TimeSpan timeSpan_6",
+        "6: System.TimeSpan timeSpan_7",
+        "7: System.TimeSpan timeSpan_8",
+        "8: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "9: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class720_1",
+          "HasMetadata": true,
+          "NewName": "session"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ipDeviceManagementConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "maxReconnectDelay"
+        },
+        {
+          "Sequence": 8,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 9,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.UInt16",
+          "NewName": "deviceDescriptorType0"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Knx.Falcon.KnxnetIp.SupportedServiceFamily",
+          "NewName": "managementServiceFamily"
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E54",
+      "Signature": "System.Threading.Tasks.Task`1<Class1343> Class1343::a(Knx.Falcon.Configuration.IpTunnelingConnectorParameters,Knx.Falcon.ConnectorMode,System.Threading.CancellationToken,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. Native state06001E86 obtains description/communication then forwards into06001E56 with existing mode/cancellation/diagnostics; generated kickoff locals retained.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpTunnelingConnectorParameters ipTunnelingConnectorParameters_0",
+        "2: Knx.Falcon.ConnectorMode connectorMode_1",
+        "3: System.Threading.CancellationToken cancellationToken_0",
+        "4: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipTunnelingConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1343/c",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E55",
+      "Signature": "System.Threading.Tasks.Task`1<Class1343> Class1343::a(Knx.Falcon.Configuration.IpTunnelingConnectorParameters,Knx.Falcon.ConnectorMode,Interface32,System.Threading.CancellationToken,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. Native state06001E88 discovers device using configuration and caller cancellation and forwards supplied communication/factory/mode/diagnostics to06001E56; generated kickoff locals retained.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpTunnelingConnectorParameters ipTunnelingConnectorParameters_0",
+        "2: Knx.Falcon.ConnectorMode connectorMode_1",
+        "3: Interface32 interface32_0",
+        "4: System.Threading.CancellationToken cancellationToken_0",
+        "5: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "6: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipTunnelingConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "interface32_0",
+          "HasMetadata": true,
+          "NewName": "communication"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1343/d",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E56",
+      "Signature": "System.Threading.Tasks.Task`1<Class1343> Class1343::a(Knx.Falcon.Configuration.IpTunnelingConnectorParameters,Knx.Falcon.ConnectorMode,Interface32,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,System.Threading.CancellationToken,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. Native forwards supplied inputs to06001E57, inserts defaults04000B00/B01/AFF and maxReconnectDelay=AutoReconnect?60seconds:Infinite. Int16 local0 lacks domain evidence and remains unresolved.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpTunnelingConnectorParameters ipTunnelingConnectorParameters_0",
+        "2: Knx.Falcon.ConnectorMode connectorMode_1",
+        "3: Interface32 interface32_0",
+        "4: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "5: System.Threading.CancellationToken cancellationToken_0",
+        "6: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "7: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipTunnelingConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "interface32_0",
+          "HasMetadata": true,
+          "NewName": "communication"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E57",
+      "Signature": "System.Threading.Tasks.Task`1<Class1343> Class1343::a(Knx.Falcon.Configuration.IpTunnelingConnectorParameters,Knx.Falcon.ConnectorMode,Interface32,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Threading.CancellationToken,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": "a",
+      "Reason": "Preserve OpenAsync overload. Native state06001E8A creates Tunneling session then constructor06001E59, forwarding exact timeout/factory/description/mode positions; then OpenAsync(cancellation). All timeout roles corroborated by layer timers; generated kickoff locals retained.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Configuration.IpTunnelingConnectorParameters ipTunnelingConnectorParameters_0",
+        "2: Knx.Falcon.ConnectorMode connectorMode_1",
+        "3: Interface32 interface32_0",
+        "4: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "5: System.TimeSpan timeSpan_5",
+        "6: System.TimeSpan timeSpan_6",
+        "7: System.TimeSpan timeSpan_7",
+        "8: System.TimeSpan timeSpan_8",
+        "9: System.Threading.CancellationToken cancellationToken_0",
+        "10: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "11: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipTunnelingConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "interface32_0",
+          "HasMetadata": true,
+          "NewName": "communication"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 8,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "maxReconnectDelay"
+        },
+        {
+          "Sequence": 9,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        },
+        {
+          "Sequence": 10,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 11,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1343/e",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E58",
+      "Signature": "System.Threading.Tasks.Task`1<Class708> Class1343::vmethod_1(System.Threading.CancellationToken)",
+      "OriginalName": "vmethod_1",
+      "Reason": "Preserve CreateConnectionAsync family. Native state06001E82 forwards base getters06001E18/19/1A and cancellation to ConnectTunnelingAsync06000741 on both device-address selection paths. Generated kickoff locals retained.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": "5C24D6DC3510087C013BBBC7ED8B644855D5CBDFBAF256E0170585342B1FD758",
+      "Parameters": [
+        "1: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": "cancellationToken"
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class1343/a",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1343",
+      "Token": "0x06001E59",
+      "Signature": "System.Void Class1343::.ctor(Class720,Knx.Falcon.Configuration.IpTunnelingConnectorParameters,Knx.Falcon.Discovery.IpDeviceDiscoveryResult,Knx.Falcon.ConnectorMode,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>>,Interface64)",
+      "OriginalName": ".ctor",
+      "Reason": "Preserve constructor name. Native forwards p1/p2/p3/p5/p6/p7/p8/p9/p10 to06001E08@34; p4 retained as connector mode. Timeout storage/consumers and reconnect backoff independently prove responsibilities. Zero locals.",
+      "NeedsReadableName": false,
+      "MappingBlocker": "constructor",
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class720 class720_1",
+        "2: Knx.Falcon.Configuration.IpTunnelingConnectorParameters ipTunnelingConnectorParameters_0",
+        "3: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_1",
+        "4: Knx.Falcon.ConnectorMode connectorMode_1",
+        "5: System.TimeSpan timeSpan_5",
+        "6: System.TimeSpan timeSpan_6",
+        "7: System.TimeSpan timeSpan_7",
+        "8: System.TimeSpan timeSpan_8",
+        "9: System.Func`6<System.Net.IPEndPoint,Knx.Falcon.KnxnetIp.IpProtocol,Class814,Interface64,System.Threading.CancellationToken,System.Threading.Tasks.Task`1<Interface32>> func_1",
+        "10: Interface64 interface64_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class720_1",
+          "HasMetadata": true,
+          "NewName": "session"
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ipTunnelingConnectorParameters_0",
+          "HasMetadata": true,
+          "NewName": "connectorParameters"
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "ipDeviceDiscoveryResult_1",
+          "HasMetadata": true,
+          "NewName": "deviceDescription"
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "connectorMode_1",
+          "HasMetadata": true,
+          "NewName": "connectorMode"
+        },
+        {
+          "Sequence": 5,
+          "OriginalName": "timeSpan_5",
+          "HasMetadata": true,
+          "NewName": "acknowledgementTimeout"
+        },
+        {
+          "Sequence": 6,
+          "OriginalName": "timeSpan_6",
+          "HasMetadata": true,
+          "NewName": "repeatAcknowledgementTimeout"
+        },
+        {
+          "Sequence": 7,
+          "OriginalName": "timeSpan_7",
+          "HasMetadata": true,
+          "NewName": "connectionTimeout"
+        },
+        {
+          "Sequence": 8,
+          "OriginalName": "timeSpan_8",
+          "HasMetadata": true,
+          "NewName": "maxReconnectDelay"
+        },
+        {
+          "Sequence": 9,
+          "OriginalName": "func_1",
+          "HasMetadata": true,
+          "NewName": "createCommunicationAsync"
+        },
+        {
+          "Sequence": 10,
+          "OriginalName": "interface64_1",
+          "HasMetadata": true,
+          "NewName": "diagEventSink"
+        }
+      ],
+      "LocalNames": [],
+      "NewName": "",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Skips": []
+}

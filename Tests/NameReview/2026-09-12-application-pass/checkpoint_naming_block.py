@@ -249,7 +249,7 @@ def encode(value, depth=0):
         return json.dumps(value, ensure_ascii=False)
     children = list(value.values()) if isinstance(value, dict) else value
     compact = json.dumps(value, ensure_ascii=False)
-    if all(not isinstance(v, (dict, list)) for v in children) and len(compact) <= 300:
+    if all(not isinstance(v, (dict, list)) for v in children) and len(compact) <= 400:
         return compact
     indent = '  ' * (depth + 1)
     if isinstance(value, dict):

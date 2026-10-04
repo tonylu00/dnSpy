@@ -1,0 +1,742 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Inventories": [
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-types.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json",
+    "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json",
+    "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json"
+  ],
+  "Rows": [
+    {
+      "Kind": "Types",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x02000162",
+      "NewName": "Knx.Falcon.KnxnetIp.KnxIpSession",
+      "Reason": "Native Class720 02000162 is an internal IDisposable/IAsyncDisposable session over IUnicastCommunication. Constructor 06000730 creates ControlReceiver, attaches Received, and logs Created session on {0}; static statistics label Session and connection negotiation 06000764 constructs KnxIpConnectionLayer and ConnectRequestFrame. It owns the unicast session and opens management/tunneling connections, including secure-session negotiation. Physical SHA/MVID distinguish this root Falcon from compatibility copies.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-types.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B3F",
+      "NewName": "_logger",
+      "Reason": "06001E06 initializes this static IFalconLogger through GetLogger(Falcon.UnicastBusConnectorBase); HandleConnectionBroken and reconnect state bodies use it for connection/retry logs.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B42",
+      "NewName": "_createCommunicationAsync",
+      "Reason": "Constructor 06001E08 stores argument 8; reconnect MoveNext 06001E4F invokes this Func with endpoint/protocol/cloud data/diagnostics/cancellation at offset 292, yielding IUnicastCommunication for session creation.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B44",
+      "NewName": "_connection",
+      "Reason": "06001E4D stores CreateConnectionAsync result; getter 06001E16 returns it, CloseAsync/Dispose detach connection-broken handler and dispose it. Reconnect treats null as not connected.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B45",
+      "NewName": "_deviceDescription",
+      "Reason": "06001E08 argument 3 is IpDeviceDiscoveryResult; 06001E17 returns it. 06001E4F compares rediscovered ControlEndpoint, logs endpoint change, replaces this description, and reads Supports(Core,2) to select TCP.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B46",
+      "NewName": "_acknowledgementTimeout",
+      "Reason": "Constructor 06001E08 argument 4/getter 06001E18 propagate through derived CreateConnection MoveNext 06001E29/06001E82, session 06000740/41/42, layer ctor 060007E8 argument 3 and field 04000AFC to first-send AcknowledgeTimeout in 0600081E/06000820.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B47",
+      "NewName": "_repeatAcknowledgementTimeout",
+      "Reason": "Constructor 06001E08 argument 5/getter 06001E19 propagate through derived CreateConnection/session/layer ctor argument 4 to field 04000AFD. RepeatLastFrame MoveNext 0600081A calls getter 060007E5 at offset 139 before rearming AcknowledgeTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B48",
+      "NewName": "_connectionTimeout",
+      "Reason": "Constructor 06001E08 argument 6/getter 06001E1A propagate through derived CreateConnection/session/layer ctor argument 5 to field 04000AFB. 0600081A/06000820 use its getter 060007E3 when arming ConnectionTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B49",
+      "NewName": "_maxReconnectDelay",
+      "Reason": "06001E08 argument 7 is the configured retry cap. 06001E35 disables retries for negative values, initializes delay=max(cap/64,1 second); 06001E4F doubles current delay capped by this field. It is a maximum, not the first retry interval.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B4A",
+      "NewName": "_reconnectDelay",
+      "Reason": "06001E35 initializes this retry delay; 06001E4F doubles it subject to 04001B49 and uses it as the next one-shot Timer.Change due time on failure.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B4B",
+      "NewName": "_reconnectTimer",
+      "Reason": "06001E35 creates one-shot Timer targeting generated callback 06001E3A, which awaits TryReconnectAsync; 06001E4F stops it before retry and disposes/clears it on success. DisposeAsync 06001E0C also disposes/clears it.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04001B4C",
+      "NewName": "_disposeRequested",
+      "Reason": "DisposeAsync 06001E0C sets this bool true before stopping retries. Handler 06001E1B and state bodies 06001E35/06001E4F guard scheduling/attempts with it. Synchronous Dispose 06001E0D does not set this field; the alias does not assert otherwise.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AFB",
+      "NewName": "_connectionTimeout",
+      "Reason": "Layer ctor 060007E8 stores argument 5 at offset 63; getter 060007E3 returns it. Native 0600081A offset253 and 06000820 offset269 feed it into ConnectionTimeout scheduling, distinct from ACK and keepalive delays.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AFC",
+      "NewName": "_acknowledgementTimeout",
+      "Reason": "Layer ctor 060007E8 stores argument 3 at offset47; getter 060007E4. Native initial-send bodies 0600081E offset58 and 06000820 offset246 use it when arming AcknowledgeTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AFD",
+      "NewName": "_repeatAcknowledgementTimeout",
+      "Reason": "Layer ctor 060007E8 stores argument 4 at offset55; getter 060007E5. RepeatLastFrame body 0600081A calls it at139 after sending last frame and incrementing repeat statistics, then rearms AcknowledgeTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AFE",
+      "NewName": "_keepaliveInterval",
+      "Reason": "060007E8 stores half argument5 or InfiniteTimeSpan at offset112. Getter 060007E6 feeds KeepaliveTimeout in 060007FE and 06000820, separate from ConnectionTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AFF",
+      "NewName": "DefaultConnectionTimeout",
+      "Reason": "060007E7 initializes public static readonly TimeSpan from 60000ms. Factories 06001DE1/06001DE3/06001E56 forward it in the connection-timeout position; exact 060007E8 storage and ConnectionTimeout consumers corroborate the role. Declaring Class733 is internal.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000B00",
+      "NewName": "DefaultAcknowledgementTimeout",
+      "Reason": "060007E7 initializes public static readonly TimeSpan from 1000ms. Factories 06001DE1/06001DE3/06001E56 forward it in first-ack timeout position, corroborated by ctor 060007E8 argument3 and first-send AcknowledgeTimeout consumers.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000B01",
+      "NewName": "DefaultRepeatAcknowledgementTimeout",
+      "Reason": "060007E7 initializes public static readonly TimeSpan from 3000ms. Factories 06001DE1/06001DE3/06001E56 forward it in repeat-ack timeout position; 0600081A rearms repeat AcknowledgeTimeout with getter 060007E5.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AF4",
+      "NewName": "_localHpai",
+      "Reason": "Layer constructor 060007E8 stores argument1 at offset32; ConnectRequestFrame construction in session body 06000764 supplies the local HPAI, and connection layer uses this HPAI for outgoing control requests. Distinct peer HPAI field 04000AF6 is preserved for later review.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AF5",
+      "NewName": "_remoteEndpoint",
+      "Reason": "Layer ctor 060007E8 stores argument7 at offset40; session 06000764 passes IUnicastCommunication.get_RemoteEndPoint. UpdateTarget 060007E9 replaces the same endpoint alongside the send delegate; ToString prints it with channel.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x04000AF8",
+      "NewName": "_sendFrameAsync",
+      "Reason": "Layer ctor 060007E8 argument2 stored at119; UpdateTarget 060007E9 replaces this Func<KnxIpFrame,Task>. Session 06000764 supplies its SendFrameAsync method; connection layer awaits delegate to transmit requests and repeat frames.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040009BD",
+      "NewName": "_communication",
+      "Reason": "Session ctor 06000730 stores IUnicastCommunication argument1 and attaches its Received event to ControlReceiver. 06000764 uses its local/remote endpoints to construct layer/connect request; session disposal releases it.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040009BE",
+      "NewName": "_createCommunicationAsync",
+      "Reason": "Session ctor 06000730 stores Func argument7; invocation creates unicast communications when setting up connection data transport. Same endpoint/protocol/clouddata/diagnostics/cancellation signature as connector 04001B42.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040009C0",
+      "NewName": "_controlReceiver",
+      "Reason": "Session ctor 06000730 creates MessageFrameReceiver(ControlReceiver), stores it and attaches CommunicationEventsOnReceived to communication.Received; 06000764 registers ConnectionResponse/ConnectionStateResponse/DisconnectRequest control handlers.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Fields",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x040009C1",
+      "NewName": "_connectionLayers",
+      "Reason": "Session field is initialized List<Class733>; ConnectAsync 06000764 adds each new KnxIpConnectionLayer before ConnectRequest and removes it on failure, while disposal closes retained layers. This is session-owned connection layer storage.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060007E3",
+      "Disposition": "unresolved",
+      "Reason": "Native getter returns 04000AFB and ConnectionTimeout consumers prove the value role, but original method is CompilerGenerated/SpecialName with zero property AccessorOwners. The missing property/owner name is not inferred from spelling; retain compiler-owned metadata until exact accessor restoration evidence is available. Field/constructor/caller timeout roles are named independently.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060007E4",
+      "Disposition": "unresolved",
+      "Reason": "Native getter returns 04000AFC and first-send AcknowledgeTimeout consumers prove the value role, but CompilerGenerated/SpecialName method has zero property AccessorOwners. Missing original property/owner name prevents a compiler-name restoration; no invented semantic generated-member alias.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060007E5",
+      "Disposition": "unresolved",
+      "Reason": "Native getter returns 04000AFD and RepeatLastFrame 0600081A proves repeat acknowledgement value role. CompilerGenerated/SpecialName method has zero property AccessorOwners; original property/owner name missing, so no invented semantic generated-member alias.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060007E6",
+      "Disposition": "unresolved",
+      "Reason": "Native getter returns 04000AFE and KeepaliveTimeout consumers prove interval role. CompilerGenerated/SpecialName method has zero property AccessorOwners; original property/owner name missing, so preserve exact generated metadata rather than invent a helper alias.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060007E8",
+      "ParameterNames": {
+        "1": "localHpai",
+        "2": "sendFrameAsync",
+        "3": "acknowledgementTimeout",
+        "4": "repeatAcknowledgementTimeout",
+        "5": "connectionTimeout",
+        "6": "diagEventSink",
+        "7": "remoteEndpoint"
+      },
+      "Reason": "Native ctor stores p1->04000AF4@32,p7->04000AF5@40,p3->04000AFC@47,p4->04000AFD@55,p5->04000AFB@63,p2->04000AF8@119. ConnectAsync 06000764 supplies localHpai, SendFrameAsync and communication.RemoteEndPoint; timer consumers 0600081A/1E/20 distinguish timeout roles. Constructor name preserved; no locals.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x060007E9",
+      "ParameterNames": {
+        "1": "sendFrameAsync",
+        "2": "remoteEndpoint"
+      },
+      "Reason": "Meaningful UpdateTarget alias preserved; original body replaces exactly 04000AF8 send delegate and 04000AF5 remote endpoint, established by ctor/session forwarding. No locals.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000740",
+      "ParameterNames": {
+        "1": "acknowledgementTimeout",
+        "2": "repeatAcknowledgementTimeout",
+        "3": "connectionTimeout",
+        "4": "cancellationToken"
+      },
+      "Reason": "Preserve ConnectDeviceManagementAsync. Native state 06000766 creates Class796 device-management CRI and forwards timeout arguments unchanged to ConnectAsync 06000742; body06000764 passes them to layer ctor060007E8, whose timer consumers establish first/repeatACK/connection roles. Generated kickoff/state locals preserved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000741",
+      "ParameterNames": {
+        "1": "tunnelingLayer",
+        "2": "requestedIndividualAddress",
+        "3": "acknowledgementTimeout",
+        "4": "repeatAcknowledgementTimeout",
+        "5": "connectionTimeout",
+        "6": "cancellationToken"
+      },
+      "Reason": "Preserve ConnectTunnelingAsync. Native state0600076C constructs TunnelingCRI from p1/p2 and forwards timeouts in order to06000742->06000764->060007E8; exact timer consumers distinguish their roles. Generated kickoff locals preserved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000742",
+      "ParameterNames": {
+        "1": "connectionRequestInformation",
+        "2": "acknowledgementTimeout",
+        "3": "repeatAcknowledgementTimeout",
+        "4": "connectionTimeout",
+        "5": "cancellationToken"
+      },
+      "Reason": "Preserve ConnectAsync. Original state06000764 captures Class794 CRI, creates local Hpai and KnxIpConnectionLayer with same p2/p3/p4 timeout order, then ConnectRequestFrame with CRI. Layer ctor stores to04000AFC/AFD/AFB and first/repeatACK/connection timer consumers corroborate roles. Generated kickoff locals preserved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E07",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "cancellationToken",
+        "3": "diagEventSink"
+      },
+      "Reason": "Preserve DiscoverAsync. Original kickoff captures parameters into Class1341/d; MoveNext06001E43 chooses endpoint/protocol from configuration, awaits ReadDeviceDescriptionAsync and discovery fallback with cancellation and diagnostics. Generated kickoff locals preserved; discovery lambda parameters are reviewed separately.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E08",
+      "ParameterNames": {
+        "1": "session",
+        "2": "connectorParameters",
+        "3": "deviceDescription",
+        "4": "acknowledgementTimeout",
+        "5": "repeatAcknowledgementTimeout",
+        "6": "connectionTimeout",
+        "7": "maxReconnectDelay",
+        "8": "createCommunicationAsync",
+        "9": "diagEventSink"
+      },
+      "Reason": "Native constructor stores p1->04001B43,p2->1B40,p3->1B45,p4->1B46,p5->1B47,p6->1B48,p7->1B49,p8->1B42,p9->1B41. Derived bodies06001E29/1E82 propagate first3timeouts to session/layer constructor; 0600081A/1E/20 timer operations distinguish roles, while reconnect bodies06001E35/1E4F prove maximum delay and communication factory. Constructor name preserved; zero locals.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E09",
+      "ParameterNames": {
+        "1": "cancellationToken"
+      },
+      "Reason": "Preserve OpenAsync and its contract family. Native state06001E4D forwards cancellation to CreateConnectionAsync, stores connection, attaches HandleConnectionBroken and updates state Connected. Generated kickoff locals preserved.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E0A",
+      "ParameterNames": {
+        "1": "cancellationToken"
+      },
+      "Reason": "Preserve CreateConnectionAsync and whole family with derived06001DE5/06001E58. Implementations forward this cancellation to session connection operations. Abstract method has no local body.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E11",
+      "NewName": "GetServiceFamily",
+      "Reason": "Exact native editable override family DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663: abstract root06001E11, management06001DEB returns DeviceManagement, tunneling06001E60 returns Tunneling. Reconnect body06001E4F calls family before CreateAsync session negotiation; all3 reviewed atomically.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DEB",
+      "NewName": "GetServiceFamily",
+      "Reason": "Exact family DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663 with06001E11/06001E60; native body returns ServiceFamily.DeviceManagement for session negotiation. Preserve override signature/identity.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E60",
+      "NewName": "GetServiceFamily",
+      "Reason": "Exact family DCFD17D4BBC4E33482D7CDFA80C730B482651080C81BEF64DBD1D823B58E9663 with06001E11/06001DEB; native body returns ServiceFamily.Tunneling for session negotiation. Preserve override signature/identity.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E12",
+      "NewName": "GetServiceFamilyVersion",
+      "Reason": "Exact native editable byte-return override family241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E. Management06001DEC returns2 and tunneling06001E61 returns1 beside their ServiceFamily getters. Complete static-module reference scan finds no calls to base06001E12; do not claim minimum-version enforcement or supported-device version lookup. All3 reviewed atomically.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DEC",
+      "NewName": "GetServiceFamilyVersion",
+      "Reason": "Exact family241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E with06001E12/06001E61. Returns2 for paired DeviceManagement family; no proof this value is a minimum or negotiated version. Preserve exact constant and signature.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E61",
+      "NewName": "GetServiceFamilyVersion",
+      "Reason": "Exact family241A66F26524F1D2188F0B861121CD10447EF9EB5BE6497CAD53ED689176122E with06001E12/06001DEC. Returns1 for paired Tunneling family; no proof this value is a minimum or negotiated version. Preserve exact constant and signature.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E18",
+      "NewName": "GetAcknowledgementTimeout",
+      "Reason": "Native body returns04001B46. Derived CreateConnection state06001E29/06001E82 calls this getter before session ConnectDeviceManagement/ConnectTunneling, forwarding to060007E8 argument3. Field04000AFC and initial-send AcknowledgeTimeout consumers prove role.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E19",
+      "NewName": "GetRepeatAcknowledgementTimeout",
+      "Reason": "Native body returns04001B47. Derived CreateConnection state06001E29/06001E82 calls it in timeout position2 before session connect; layer04000AFD/getter060007E5 is consumed by RepeatLastFrame0600081A after repeat send to rearm AcknowledgeTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E1A",
+      "NewName": "GetConnectionTimeout",
+      "Reason": "Native body returns04001B48. Derived CreateConnection state06001E29/06001E82 forwards it in timeout position3 to session->layer ctor060007E8 argument5. Layer04000AFB/getter060007E3 is consumed when arming ConnectionTimeout.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E1B",
+      "ParameterNames": {
+        "1": "sender",
+        "2": "eventArgs"
+      },
+      "Reason": "Preserve HandleConnectionBroken. EventHandler<EventArgs> attached by OpenAsync06001E4D; body logs Connection Broken, updates state Broken and invokes generated async delegate06001E25 via Task.Run. Sender/eventArgs unused by original body; event contract role is exact.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E1C",
+      "NewName": "UpdateConnectionState",
+      "ParameterNames": {
+        "1": "connectionState"
+      },
+      "Reason": "Exact editable override family3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304 root06001E1C management06001DFB tunneling06001E71. Root no-op; derived implementations guard invalid transitions then call their private state setters/event notifications. Open/Close/broken/reconnect paths pass Connected/Closed/Broken. All3 named together.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DFB",
+      "NewName": "UpdateConnectionState",
+      "ParameterNames": {
+        "1": "connectionState"
+      },
+      "Reason": "Exact family3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304. Native override accepts Connected, ignores other transitions when alreadyClosed, then invokes own state setter. This is guarded state update, not unconditional assignment.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E71",
+      "NewName": "UpdateConnectionState",
+      "ParameterNames": {
+        "1": "connectionState"
+      },
+      "Reason": "Exact family3E49D575820BE90B9DE882C77546E49C3F6EAD551F8971EB357D0C0E49875304. Native override guards Connected/MediumFailure and existingClosed/error states before own state setter/event notification. Same update responsibility preserves subtype behavior.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E25",
+      "Disposition": "unresolved",
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "LogConnectionBrokenWithoutReconnect",
+      "Reason": "Withdraw misleading historical semantic alias: generated async implementation06001E25 belongs to HandleConnectionBroken06001E1B through ldftn@36. Its state06001E35 awaits CloseAsync and either logs no reconnect or schedules Timer06001E3A using max(cap/64,1second). Fresh printed SourceOwnerPath preserves both enclosing occurrence paths; no invented generated-member semantic name. Missing original compiler-generated method spelling remains unresolved, while the exact reconstructed handler behavior is retained.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E3A",
+      "ParameterNames": {
+        "1": "connectorState"
+      },
+      "Reason": "Generated TimerCallback implementation retained as compiler-owned member. Original kickoff captures object state; state06001E3C casts it to Class1341, awaits TryReconnectAsync and logs exception. Timer construction06001E35 passes this connector as state. Parameter role named without inventing lambda method name.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E3E",
+      "ParameterNames": {
+        "1": "discoveredDevice"
+      },
+      "Reason": "Generated discovery predicate retained in its owner. Original body tests IpDeviceDiscoveryResult.SerialNumber and MacAddress against captured connector configuration; its single parameter is the discovered candidate, not a sender.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E3F",
+      "ParameterNames": {
+        "1": "discoveredDevice"
+      },
+      "Reason": "Generated discovery predicate retained in its owner. Original body tests IpDeviceDiscoveryResult.SerialNumber against captured configuration; single parameter is discovered candidate. No semantic lambda method alias.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E40",
+      "ParameterNames": {
+        "1": "discoveredDevice"
+      },
+      "Reason": "Generated discovery predicate retained in its owner. Original body tests discovered candidate MacAddress against captured configuration. Parameter renamed by exact metadata sequence; lambda implementation name remains compiler-owned.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DE1",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "connectorMode",
+        "3": "cancellationToken",
+        "4": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. Native body forwards configuration/mode/cancellation/diagnostics to06001DE2 and supplies layer defaults04000B00/B01/AFF plus AutoReconnect?60seconds:Infinite. Unused Int16 local0 lacks domain evidence and remains unresolved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DE2",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "connectorMode",
+        "3": "acknowledgementTimeout",
+        "4": "repeatAcknowledgementTimeout",
+        "5": "connectionTimeout",
+        "6": "maxReconnectDelay",
+        "7": "cancellationToken",
+        "8": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. Native state06001E2B discovers endpoint, selects communication protocol and forwards exact timeout order into06001DE4; next06001E2D constructs06001DE7->06001E08. Timer consumers prove timeout roles and retry bodies prove max delay. Generated kickoff locals preserved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DE3",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "deviceDescription",
+        "3": "connectorMode",
+        "4": "communication",
+        "5": "cancellationToken",
+        "6": "createCommunicationAsync",
+        "7": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload with existing communication. Native forwarding to06001DE4 adds layer defaulttimeouts and max retry delay while preserving configuration/description/mode/communication/cancellation/factory/diagnostics. Int16 local0 has no domain evidence, explicitly unresolved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DE4",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "deviceDescription",
+        "3": "connectorMode",
+        "4": "communication",
+        "5": "acknowledgementTimeout",
+        "6": "repeatAcknowledgementTimeout",
+        "7": "connectionTimeout",
+        "8": "maxReconnectDelay",
+        "9": "cancellationToken",
+        "10": "createCommunicationAsync",
+        "11": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. State06001E2D calls session CreateAsync with supplied IUnicastCommunication and DeviceManagement family, then constructor06001DE7 in exact timeout/factory order and OpenAsync(cancellation). Own generated kickoff locals retained; all timeout roles independently proved by layer timers.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DE5",
+      "ParameterNames": {
+        "1": "cancellationToken"
+      },
+      "Reason": "Preserve CreateConnectionAsync family. Original state06001E29 forwards base timeout getters06001E18/19/1A and cancellation to ConnectDeviceManagementAsync06000740, attaches message handler and returns management connection. Generated kickoff locals retained.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001DE7",
+      "ParameterNames": {
+        "1": "session",
+        "2": "connectorParameters",
+        "3": "deviceDescription",
+        "4": "acknowledgementTimeout",
+        "5": "repeatAcknowledgementTimeout",
+        "6": "connectionTimeout",
+        "7": "maxReconnectDelay",
+        "8": "createCommunicationAsync",
+        "9": "diagEventSink"
+      },
+      "Reason": "Constructor preserved. Native body forwards nine arguments in exact same order to06001E08@34 and derives interface features from deviceDescription. First3 timeout roles from060007E8/timer consumers; max delay from06001E35/1E4F. Native local0 is get_HostDeviceDeviceDescriptorType0 result@61. Local1 is Enumerable.First(SupportedServiceFamilies,predicate06001E28 DeviceManagement) result@153, then its ServiceFamilyVersion is stored04001B36@161.",
+      "LocalNames": {
+        "0": "deviceDescriptorType0",
+        "1": "managementServiceFamily"
+      },
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E54",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "connectorMode",
+        "3": "cancellationToken",
+        "4": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. Native state06001E86 obtains description/communication then forwards into06001E56 with existing mode/cancellation/diagnostics; generated kickoff locals retained.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E55",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "connectorMode",
+        "3": "communication",
+        "4": "cancellationToken",
+        "5": "createCommunicationAsync",
+        "6": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. Native state06001E88 discovers device using configuration and caller cancellation and forwards supplied communication/factory/mode/diagnostics to06001E56; generated kickoff locals retained.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E56",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "connectorMode",
+        "3": "communication",
+        "4": "deviceDescription",
+        "5": "cancellationToken",
+        "6": "createCommunicationAsync",
+        "7": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. Native forwards supplied inputs to06001E57, inserts defaults04000B00/B01/AFF and maxReconnectDelay=AutoReconnect?60seconds:Infinite. Int16 local0 lacks domain evidence and remains unresolved.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E57",
+      "ParameterNames": {
+        "1": "connectorParameters",
+        "2": "connectorMode",
+        "3": "communication",
+        "4": "deviceDescription",
+        "5": "acknowledgementTimeout",
+        "6": "repeatAcknowledgementTimeout",
+        "7": "connectionTimeout",
+        "8": "maxReconnectDelay",
+        "9": "cancellationToken",
+        "10": "createCommunicationAsync",
+        "11": "diagEventSink"
+      },
+      "Reason": "Preserve OpenAsync overload. Native state06001E8A creates Tunneling session then constructor06001E59, forwarding exact timeout/factory/description/mode positions; then OpenAsync(cancellation). All timeout roles corroborated by layer timers; generated kickoff locals retained.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E58",
+      "ParameterNames": {
+        "1": "cancellationToken"
+      },
+      "Reason": "Preserve CreateConnectionAsync family. Native state06001E82 forwards base getters06001E18/19/1A and cancellation to ConnectTunnelingAsync06000741 on both device-address selection paths. Generated kickoff locals retained.",
+      "Inventory": "D:\\knx_analysis\\unicast-reconnect-review01\\families01.json",
+      "ScopeInventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    },
+    {
+      "Kind": "Methods",
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001E59",
+      "ParameterNames": {
+        "1": "session",
+        "2": "connectorParameters",
+        "3": "deviceDescription",
+        "4": "connectorMode",
+        "5": "acknowledgementTimeout",
+        "6": "repeatAcknowledgementTimeout",
+        "7": "connectionTimeout",
+        "8": "maxReconnectDelay",
+        "9": "createCommunicationAsync",
+        "10": "diagEventSink"
+      },
+      "Reason": "Preserve constructor name. Native forwards p1/p2/p3/p5/p6/p7/p8/p9/p10 to06001E08@34; p4 retained as connector mode. Timeout storage/consumers and reconnect backoff independently prove responsibilities. Zero locals.",
+      "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json"
+    }
+  ]
+}
