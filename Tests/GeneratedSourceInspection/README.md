@@ -237,3 +237,13 @@ and hashes, require rebuilt ViewModel/Common/ObjectModel companions in the
 validated run, and retain raw traces. Disposal may race a continuation on another
 thread, so the stable comparison checks its exact count without imposing that
 interthread order. These focused checks do not establish complete ETS/App startup.
+
+`Tests/Invoke-CatchAwaitRegression.ps1` rebuilds catch awaits with nested finally
+cleanup under one and four export workers, comparing 1,728 original behavior
+cases. Its 161 guards require proof that every try/catch path exits, preserve
+reachable dispatch and nested entry regions, and retain removed dispatch spans.
+`Tests/Invoke-BackupCatchAwaitBehaviorProbe.ps1` compares 1,008 cases through the
+exact original backup owner and typed interfaces, with the real base operation
+and error view-model constructor. It bypasses the handler constructor and injects
+proxies for this focused comparison; it does not perform archive or live UI work.
+Each original/rebuilt process records loaded assembly identities, paths and hashes.
