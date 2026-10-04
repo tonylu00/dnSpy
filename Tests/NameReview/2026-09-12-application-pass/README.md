@@ -87,6 +87,23 @@ history; whitelist/family exclusions must not become applied aliases in counts.
 Review preparation retains only requested definitions from native inventories;
 all inventory-root and physical-path escape guards still apply.
 
+`inventory_generated_owners.py --scope <physical-scope.json>`
+`--cli <GeneratedOwnerInspection.dll> --inventory <whole-inventory-summary.json>`
+`--map <checked-map.xml> --ledger <reviewed.json> --output <fresh-directory>`
+joins every remaining candidate to native ownership evidence using physical paths,
+hashes/MVIDs, tokens and signatures. It verifies inputs before and after inspection,
+runs at most two module workers, retains per-module reports and records elapsed
+time and optional observed RSS. `candidate-owners.jsonl` preserves overlapping
+attribute/container/accessor/delegate/state-machine facts and raw operands.
+Distinct owners are counted separately within each evidence kind: an iterator
+accessor's property and kickoff are different roles, not competing kickoffs.
+Unresolved external bindings remain explicit. These facts never retire candidates,
+assign aliases or establish decompiler merging, readability or runtime compatibility.
+`--reuse-inventory <earlier-generated-summary.json>` verifies native report hashes,
+scope, tool/dependencies and every physical input before reuse. The native reports
+do not depend on aliases; the new worklist must still bind the current map, ledger
+and candidate inventory. Do not reuse a stale candidate worklist.
+
 For a corrected rationale, `checkpoint_naming_block.py --review-only`
 `--refresh-reviewed-evidence` requires `PreviousEvidence` with the exact previous
 `Reason` and `UnresolvedReason`. It preserves every naming decision and physical
