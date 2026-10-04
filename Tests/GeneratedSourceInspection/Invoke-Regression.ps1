@@ -53,8 +53,12 @@ $rebuiltStates=Run "$OutputDirectory\rebuilt-states\bin\Release\net48\Probe.exe"
 if($originalStates -ne $rebuiltStates){throw 'Retained implementation behavior differs.'}
 foreach($input in @($fixture,$states)){if((Get-FileHash -LiteralPath $input -Algorithm SHA256).Hash -ne $hashes[$input]){throw 'Fixture input changed.'}}
 function Reject([string[]]$arguments,[string]$message) {
-    $text=& dotnet @arguments 2>&1 | Out-String
-    if($LASTEXITCODE -eq 0 -or $text -notmatch [regex]::Escape($message)){throw "Missing guard: $message`n$text"}
+    # Windows PowerShell turns redirected native stderr into ErrorRecords.
+    # Expected rejection diagnostics must be collected before checking the exit.
+    $previous=$ErrorActionPreference
+    try { $ErrorActionPreference='Continue'; $text=& dotnet @arguments 2>&1 | Out-String; $code=$LASTEXITCODE }
+    finally { $ErrorActionPreference=$previous }
+    if($code -eq 0 -or $text -notmatch [regex]::Escape($message)){throw "Missing guard: $message`n$text"}
 }
 Reject @($Inspector,$RuntimeDirectory,$fixture,"$OutputDirectory\fixture-proof.json",'inspect') 'Choose a new report path'
 $forbidden=Join-Path (Split-Path $fixture) 'forbidden.cs'
@@ -74,4 +78,36 @@ Reject @($Inspector,$RuntimeDirectory,$fixture,"$OutputDirectory\guard-identity.
 foreach($name in @('guard-source.json','guard-options.json','guard-scope.json','guard-reference.json','guard-identity.json')) {
     if(Test-Path -LiteralPath (Join-Path $OutputDirectory $name)){throw 'Rejected operation published a report.'}
 }
+# Exercise the actual map applier and final C# printer for a captured local,
+# including a source alias colliding with a nested lambda parameter. Only this
+# synthetic fixture is exported; application inputs are never changed.
+$proof=Get-Content -Raw "$OutputDirectory\fixture-proof.json" | ConvertFrom-Json
+$field=@($proof.Definitions | Where-Object OriginalName -eq 'recurse')
+if($field.Count -ne 1){throw 'Expected one physical recursive capture field.'}
+$references=Get-Content -Raw $ReferenceManifest | ConvertFrom-Json
+$context=@{Format=1;InputDirectory=(Split-Path $fixture);Assemblies=@(@{Path=$fixture;Identity=$proof.AssemblyIdentity;Mvid=$proof.Mvid;Sha256=$proof.InputSha256;ExportInput=$true})+@($references.Assemblies);Bindings=@();Configs=@()}
+$contextPath="$OutputDirectory\capture-context.json"
+$context | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $contextPath
+foreach($alias in @('countRemaining','value')) {
+    $folder="$OutputDirectory\capture-$alias"
+    New-Item -ItemType Directory -Path $folder | Out-Null
+    $map=[xml]'<SourceNameMap Version="1"/>'
+    $map.DocumentElement.SetAttribute('InputDirectory',(Split-Path $fixture))
+    $module=$map.CreateElement('Module')
+    $module.SetAttribute('Path',[IO.Path]::GetFileName($fixture)); $module.SetAttribute('Mvid',$proof.Mvid); $module.SetAttribute('Sha256',$proof.InputSha256)
+    $row=$map.CreateElement('Field')
+    $row.SetAttribute('Token',('0x{0:X8}' -f $field[0].Token)); $row.SetAttribute('ExpectedName','recurse'); $row.SetAttribute('Signature',$field[0].FullName); $row.SetAttribute('NewName',$alias)
+    $module.AppendChild($row) | Out-Null; $map.DocumentElement.AppendChild($module) | Out-Null
+    $mapPath="$folder\names.xml"; $map.Save($mapPath)
+    Run 'dotnet' @($Inspector,$RuntimeDirectory,$fixture,"$folder\proof.json",'inspect',"--references=$contextPath","--map=$mapPath",'--sdk-source',('--root=0x{0:X8}' -f $proof.Roots[0].RootTypeToken),"--source=$folder\GeneratedSourceFixture.cs") | Out-Null
+    $mapped=Get-Content -Raw "$folder\proof.json" | ConvertFrom-Json
+    $binding=@($mapped.Roots[0].FieldBindings | Where-Object FieldToken -eq $field[0].Token)
+    if($binding.Count -ne 1 -or $binding[0].SourceName -notmatch ('^'+[regex]::Escape($alias)+'[0-9]*$')){throw 'Captured field alias lost.'}
+    if(@($mapped.Roots[0].FieldBindings | Where-Object SourceName -eq 'offset').Count -ne 1){throw 'Captured parameter identity lost.'}
+    Copy-Item -LiteralPath "$PSScriptRoot\BehaviorProbe.cs" -Destination "$folder\BehaviorProbe.cs"
+    Set-Content -LiteralPath "$folder\Probe.csproj" -Value '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize><LangVersion>latest</LangVersion></PropertyGroup></Project>'
+    Run 'dotnet' @('build',"$folder\Probe.csproj",'-c','Release','--nologo','-v','quiet') | Out-Null
+    if((Run "$folder\bin\Release\net48\Probe.exe" @()) -ne $original){throw 'Captured-field alias changed behavior.'}
+}
+if((Get-FileHash -LiteralPath $fixture).Hash -ne $hashes[$fixture]){throw 'Captured alias probe changed fixture input.'}
 'PASS: final AST evidence, original/rebuilt behavior and input preservation.'

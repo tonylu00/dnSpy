@@ -11,6 +11,9 @@ There is no GAC or simple-name fallback. Missing dependencies remain explicit.
 ```
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest>
 dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --root=0x02000004 --references=<manifest>
+dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map>
+dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> inspect --references=<manifest> --map=<source-map> --sdk-source
+dotnet GeneratedSourceInspection.dll <runtime> <input> <new-report> metadata --references=<manifest>
 ```
 
 `--method=0x06000005` selects partial member scope. Ordinary decompiler switches
@@ -32,12 +35,38 @@ local member references, unresolved references and hoisted-field/source-variable
 bindings. Compressed async lambdas retain their body witness. Captured parameter
 substitutions retain their exact field binding without mutating shared ILVariables.
 
-These reports deliberately use `Mode=RawMetadataFinalCSharpAst` and
-`MapApplied=false`. They do **not** apply a source map, retire review candidates,
-prove semantic names, claim application-wide merging or prove compilation/runtime
-compatibility. Absence in one root's AST is insufficient. A future scope-wide
+Raw inspection uses `Mode=RawMetadataFinalCSharpAst` and `MapApplied=false`.
+`--map` invokes the actual native source-map applier across all pinned export
+inputs before decompilation; it uses `Mode=MappedFinalCSharpAst`, binds map/SDK
+whitelist hashes and reports the selected module's aliases. Original definition
+names/tokens and parameter/local alias scopes remain recorded. `--sdk-source`
+sets the same `RestoreMetadataOnlyFields` C# context flag used by the actual SDK
+project exporter, including native metadata restoration annotations and field
+filtering. The flag is explicitly recorded; its default is false. This observes
+one C# source view without writing SDK projects/resources or compiling them.
+`metadata` reports physical identity/definitions without AST/source output.
+No mode retires review candidates, proves semantic names, claims application-wide
+merging or proves compilation/runtime compatibility. Absence in one root's AST is insufficient. A future scope-wide
 consumer must bind mapped source, all physical compatibility contexts, retained
 references, restoration contracts and owner chains before retiring symbols.
+
+The reference manifest has `Format=1`, optional `InputDirectory`, `Assemblies`
+(`Path`, complete `Identity`, `Mvid`, `Sha256`, optional `ExportInput`), optional
+`Bindings` (`Source`, requested complete `Identity`, exact physical `Target`),
+and optional `Configs` (`Source`, config `Path`, `Sha256`). Physically distinct
+assemblies may have the same identity. Only the calling module itself, an exact
+binding or one unique pinned full identity may resolve. Ambiguity stays explicit.
+Bindings must correspond to a source AssemblyRef and the target's exact identity.
+Export inputs must remain inside the pinned root. Mapped inspection requires the
+same map input root and an exact pinned export-input object; dependencies are
+read-only and do not become export inputs.
+
+Configs apply only to their explicit source modules through the existing native
+`ApplicationConfigResolver`. Reports retain requested/effective identities and
+the config path, never treat a redirect as general version equivalence. Pins are
+rehashed before publication. Build/run `ContextRegression` with the runtime's
+dnlib and a fresh output directory for twin/self/ambiguity, explicit bindings,
+redirect scope/culture/signing/range and stale hash/MVID/config/manifest guards.
 
 Run `Invoke-Regression.ps1` with `-RuntimeDirectory`, `-Inspector`,
 `-ReferenceManifest` and a fresh `-OutputDirectory`. It builds synthetic fixtures,
@@ -48,6 +77,11 @@ Native synthetic metadata checks reject terminal Dispose lookalikes with another
 state, another field or an extra side effect. Original and native-decompiled
 sources both compile and execute the same iterator/async/closure behavior probes.
 Output/reference/scope guards must reject without publishing a report.
+The suite also maps one exact captured-field definition through the actual native
+applier. Its checked alias must seed the reconstructed local and every recursive
+reference. A second alias collides with a nested lambda parameter; allocation
+must avoid shadowing. Both SDK C# views compile and reproduce the original 23
+behavior cases, while captured parameter identity and input bytes stay intact.
 
 Current Roslyn emits a no-cleanup iterator Dispose body as `state = -2; return;`.
 The iterator recognizer now accepts only that complete exact pattern and keeps

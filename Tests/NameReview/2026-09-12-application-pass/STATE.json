@@ -1,7 +1,7 @@
 {
   "Format": 1,
   "Kind": "EtsNamePassState",
-  "UpdatedUtc": "2026-10-04T03:32:23Z",
+  "UpdatedUtc": "2026-10-04T04:46:19Z",
   "Read": "The only authoritative state for the ETS 6.3/6.4 pass. Keep this file under 200 lines; history lives in git, long-form notes in archive/.",
   "Pass": {
     "WorkingDir": "D:\\knx_analysis\\application-name-pass01",
@@ -15,7 +15,7 @@
     "Policy": "D:\\knx_analysis\\POLICY.md",
     "Goal": "D:\\knx_analysis\\GOAL.md",
     "RowBuilder": "python D:\\knx_analysis\\perf-now\\build-rows.py --wave <N> --spec <spec.json> | --suggestions <tool-review.json>",
-    "DecompilerFix": "ILSpy b8a44009d exposes opt-in final-AST reconstruction evidence and recognizes current Roslyn terminal iterator Dispose. Actual net48/net10 plugins build; 47 native checks, six rejection guards and 77 original/rebuilt synthetic behavior cases pass. Closure-owner/XAML baseline defects remain fixed.",
+    "DecompilerFix": "ILSpy 36d18c9c8 carries checked capture-field aliases into locals and avoids nested lambda parameter shadowing. Plugins net48/net10 build; 47 native checks, six guards, 77 baseline plus 46 mapped synthetic behavior cases pass. Native delegate Invoke parameter-only fix df529ce7c is committed in the attached isolated worktree; include it in the next exporter build. Closure-owner/XAML baseline remains fixed.",
     "ExporterBuild": "Build the plugin, not the console: dotnet build Extensions/ILSpy.Decompiler/dnSpy.Decompiler.ILSpy/dnSpy.Decompiler.ILSpy.csproj -c Release -f net10.0-windows. dnSpy.Console.csproj does NOT reference the ILSpy submodule, so building it silently leaves ICSharpCode.Decompiler.dll stale and an export then runs the old decompiler.",
     "SdkGuard": "Numeric SDK token identity enforced in de4dotEx 4abea81f and actual dnSpy export. sdk-token-regression01 suite and portable dnSpy SDK guard pass; actual console rejects protected 06000002 before source output. Current 6.3/6.4 map checks pass. Full App/runtime compatibility remains pending."
   },
@@ -85,7 +85,7 @@
       "Shape": "109 physical first-party modules: 27,570 types, 121,780 fields, 198,727 methods; 165,115 parameters/3,851 aliases and 397,219 locals/1,848 aliases. v412 has 1,115 type/13,132 method/5,208 field aliases. Two generated methods remain ScopedOnly.",
       "Report": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v412-after-framework-contracts.json",
       "Regenerate": "inventory_physical_scope.py --scope application-physical-scope-v391.json --cli <NameCandidates.dll> --map <current checked map> --ledger reviewed63.json --output <fresh directory>; optional --reuse-inventory <earlier summary> verifies physical/tool/report hashes. Retire filename-conflating backlog.py.",
-      "OpenRoute": "21,903 candidates unchanged. Raw native AST evidence across three physical Common assemblies records 124 body witnesses and 75 field bindings; 22 witnessed methods remain declared in main Common. No source-map application or candidates retired. See generated-source-evidence-verification.json; next bind mapped source and complete physical contexts before merge decisions.",
+      "OpenRoute": "21,903 candidates unchanged. Mapped SDK C# Common inspection with v412 succeeds: 228 roots, 116 body witnesses, 71 field bindings, 606 definition/431 parameter/153 local aliases. Checked capture names now propagate; original definitions match raw baseline. 113 pinned physical modules include 109 export inputs; 164 missing identity requests and one ambiguity remain explicit. See mapped-generated-source-verification.json. No candidates retired or consolidated export/build/runtime completion.",
       "ExhaustedRoutes": [
         "cross-version transfer by fingerprint/shape/ordinal: shape 4.2%, ordinal 10-40%, literal tiebreak 5 rows - rejected",
         "half-named contract families: 0 of 141,365 (v376)",

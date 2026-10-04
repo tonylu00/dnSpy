@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text;
 using System.Threading;
+using System.Xml;
+using System.Xml.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnSpy.Contracts.Decompiler;
@@ -16,12 +18,13 @@ using ICSharpCode.Decompiler.Ast;
 
 internal static class Program {
     static string runtime = "";
+    static bool restoreMetadataOnlyFields;
     static readonly Dictionary<string, string> dependencies = new(StringComparer.OrdinalIgnoreCase);
     static readonly JsonSerializerOptions json = new() { WriteIndented = true };
 
     static int Main(string[] args) {
         try {
-            if (args.Length < 4) throw new ArgumentException("Usage: GeneratedSourceInspection <actual-plugin-runtime> <input> <new-report> <inspect|self-test> [--root=0xTOKEN|--method=0xTOKEN] [--no-async|--no-yield|--no-anon-methods|--show-all|--declare-state-machines]");
+            if (args.Length < 4) throw new ArgumentException("Usage: GeneratedSourceInspection <actual-plugin-runtime> <input> <new-report> <inspect|self-test|metadata> [--references=<manifest>] [--map=<source-map>] [--root=0xTOKEN|--method=0xTOKEN] [--no-async|--no-yield|--no-anon-methods|--show-all|--declare-state-machines]");
             runtime = Path.GetFullPath(args[0]);
             foreach (string name in new[] { "dnlib", "dnSpy.Contracts.Logic", "ICSharpCode.Decompiler" }) {
                 string path = Path.Combine(runtime, name + ".dll");
@@ -56,6 +59,7 @@ internal static class Program {
         var stopwatch = Stopwatch.StartNew();
         // Only explicitly pinned physical references; no ambient/GAC/name-only fallback.
         string[] options = args.Skip(4).ToArray();
+        restoreMetadataOnlyFields = options.Contains("--sdk-source");
         string? sourceOutput = options.SingleOrDefault(o => o.StartsWith("--source="))?[9..];
         if (sourceOutput != null) {
             sourceOutput = Path.GetFullPath(sourceOutput);
@@ -63,12 +67,28 @@ internal static class Program {
                 sourceOutput.StartsWith(Path.GetDirectoryName(input)! + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
                 throw new IOException("Choose a new source output outside the inspected application tree.");
         }
-        using var references = new PinnedReferences(options.SingleOrDefault(o => o.StartsWith("--references="))?[13..]);
-        using var module = ModuleDefMD.Load(input, new ModuleCreationOptions(references.Context));
+        using var references = new PinnedSourceContext(options.SingleOrDefault(o => o.StartsWith("--references="))?[13..]);
+        using var standaloneModule = references.FindModule(input) == null ? ModuleDefMD.Load(input, new ModuleCreationOptions(references.Context)) : null;
+        var module = references.FindModule(input) ?? standaloneModule!;
         var originals = module.GetTypes().SelectMany(t => new IMemberDef[] { t }.Concat(t.Methods).Concat(t.Fields).Concat(t.Properties).Concat(t.Events))
             .OrderBy(d => d.MDToken.Raw).Select(d => new { Token = d.MDToken.Raw, d.FullName, OriginalName = d.Name.String }).ToArray();
         var decompiler = CreateDecompiler();
-        foreach (string option in options.Where(o => !o.StartsWith("--root=") && !o.StartsWith("--method=") && !o.StartsWith("--references=") && !o.StartsWith("--source="))) {
+        string? mapPath = options.SingleOrDefault(o => o.StartsWith("--map="))?[6..];
+        string? mapHash = null, normalizedMapHash = null, whitelistPath = null, whitelistHash = null;
+        if (mapPath != null) {
+            if (args[3] != "inspect" || !references.ExportInputs.Contains(module)) throw new InvalidDataException("Mapped inspection requires an exact pinned export input and inspect mode.");
+            mapPath = Path.GetFullPath(mapPath); mapHash = Hash(mapPath);
+            using var reader = XmlReader.Create(mapPath, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null });
+            var map = XDocument.Load(reader).Root ?? throw new InvalidDataException("Missing source map root.");
+            if (Path.GetFullPath((string?)map.Attribute("InputDirectory") ?? "") != references.InputDirectory) throw new InvalidDataException("Source map/pinned input directory mismatch.");
+            whitelistPath = (string?)map.Attribute("SdkNameWhitelist");
+            if (whitelistPath != null) { whitelistPath = Path.GetFullPath(whitelistPath, Path.GetDirectoryName(mapPath)!); whitelistHash = Hash(whitelistPath); }
+            string applierPath = Path.Combine(runtime, "dnSpy.Decompiler.dll"); dependencies[applierPath] = Hash(applierPath);
+            var applier = Assembly.LoadFrom(applierPath).GetType("dnSpy.Decompiler.MSBuild.SourceNameMap", true)!.GetMethod("Apply", BindingFlags.Public | BindingFlags.Static)!;
+            string normalized = (string)applier.Invoke(null, new object[] { mapPath, references.ExportInputs.ToArray() })!;
+            normalizedMapHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(normalized)));
+        }
+        foreach (string option in options.Where(o => !o.StartsWith("--root=") && !o.StartsWith("--method=") && !o.StartsWith("--references=") && !o.StartsWith("--source=") && !o.StartsWith("--map=") && o != "--sdk-source")) {
             bool value = !option.StartsWith("--no-");
             string name = option[(value ? 2 : 5)..];
             (decompiler.Settings.TryGetOption(name) ?? throw new ArgumentException("Unknown option: " + option)).Value = value;
@@ -178,18 +198,33 @@ internal static class Program {
             else foreach (var root in rootToken != null ? new[] { (TypeDef)module.ResolveToken(rootToken.Value) } : module.Types.Where(t => !t.IsGlobalModuleType))
                 Record(Decompile(decompiler, root, true));
         }
+        else if (args[3] == "metadata") {
+            if (sourceOutput != null || mapPath != null || options.Any(o => !o.StartsWith("--references=")))
+                throw new ArgumentException("Metadata inspection accepts only pinned references and no source output/map.");
+        }
         else throw new ArgumentException("Unknown command.");
         foreach (var pair in dependencies) if (Hash(pair.Key) != pair.Value) throw new InvalidDataException("Decompiler dependency changed: " + pair.Key);
         references.Verify();
+        if (mapPath != null && (Hash(mapPath) != mapHash || whitelistPath != null && Hash(whitelistPath) != whitelistHash)) throw new InvalidDataException("Source map/whitelist changed.");
         if (Hash(input) != initialHash) throw new InvalidDataException("Physical input changed.");
+        var methods = module.GetTypes().SelectMany(t => t.Methods).OrderBy(m => m.MDToken.Raw).ToArray();
         var report = new {
-            Format = 1, Mode = "RawMetadataFinalCSharpAst", Input = input, InputSha256 = initialHash, module.Mvid,
-            AssemblyIdentity = module.Assembly?.FullNameToken, MapApplied = false,
+            Format = 1, Mode = args[3] == "metadata" ? "PhysicalMetadataOnly" : mapPath == null ? "RawMetadataFinalCSharpAst" : "MappedFinalCSharpAst", Input = input, InputSha256 = initialHash, module.Mvid,
+            AssemblyIdentity = module.Assembly?.FullNameToken, MapApplied = mapPath != null,
+            Map = mapPath, MapSha256 = mapHash, NormalizedMapSha256 = normalizedMapHash,
+            SdkNameWhitelist = whitelistPath, SdkNameWhitelistSha256 = whitelistHash,
+            RestoreMetadataOnlyFields = restoreMetadataOnlyFields,
             ToolSha256 = Hash(Assembly.GetExecutingAssembly().Location), Options = options,
             ReferenceManifest = references.ManifestPath, ReferenceManifestSha256 = references.ManifestHash,
             PinnedReferences = references.Entries,
+            SourceConfigs = references.ConfigEntries,
+            PhysicalResolutions = references.Resolutions,
             Dependencies = dependencies.OrderBy(p => p.Key, StringComparer.OrdinalIgnoreCase).Select(p => new { Path = p.Key, Sha256 = p.Value }).ToArray(),
             Definitions = originals, Roots = reports, SourceHashes = sourceHashes, SourceOutput = sourceOutput, Checks = checks, ElapsedSeconds = stopwatch.Elapsed.TotalSeconds,
+            SourceAliases = module.GetTypes().SelectMany(t => new IMemberDef[] { t }.Concat(t.Methods).Concat(t.Fields)).Where(d => SourceNameAliases.Get(d) != null)
+                .Select(d => new { Token = d.MDToken.Raw, Alias = SourceNameAliases.Get(d), AliasNamespace = d is TypeDef type ? SourceNameAliases.GetAliasNamespace(type) : null }).ToArray(),
+            ParameterAliases = methods.SelectMany(m => m.Parameters.Where(p => p.IsNormalMethodParameter).Select(p => new { MethodToken = m.MDToken.Raw, Sequence = p.MethodSigIndex + 1, OriginalName = p.Name, Alias = SourceNameAliases.GetParameter(p) })).Where(p => p.Alias != null).ToArray(),
+            LocalAliases = methods.Where(m => m.HasBody).SelectMany(m => m.Body.Variables.Select((v, i) => new { MethodToken = m.MDToken.Raw, Index = i, OriginalName = v.Name, Type = v.Type.FullName, Alias = SourceNameAliases.GetLocal(v) })).Where(v => v.Alias != null).ToArray(),
             PeakWorkingSetBytes = Process.GetCurrentProcess().PeakWorkingSet64,
             Limitations = "Read-only AST observations; no application-wide merge verdict, semantic naming, compilation or runtime proof. Only manifest-pinned external dependency resolution."
         };
@@ -221,6 +256,7 @@ internal static class Program {
         var output = new EvidenceOutput(writer);
         var context = sharedContext ?? new DecompilationContext { AsyncMethodBodyDecompilation = false };
         context.CaptureGeneratedSourceEvidence = capture;
+        context.RestoreMetadataOnlyFields = restoreMetadataOnlyFields;
         if (definition is TypeDef type) decompiler.Decompile(type, output, context);
         else if (definition is MethodDef method) decompiler.Decompile(method, output, context);
         else throw new ArgumentException("Expected type or method.");
@@ -228,43 +264,6 @@ internal static class Program {
         return (writer.ToString(), output.Evidence);
     }
     static string Hash(string path) { using var stream = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(stream)); }
-    sealed class PinnedReferences : IAssemblyResolver, IDisposable {
-        public sealed record Entry(string Path, string Identity, string Mvid, string Sha256);
-        sealed class Manifest { public int Format { get; set; } public Entry[] Assemblies { get; set; } = []; }
-        public string? ManifestPath { get; }
-        public string? ManifestHash { get; }
-        public Entry[] Entries { get; } = [];
-        public ModuleContext Context { get; }
-        readonly Dictionary<string, ModuleDefMD> modules = new(StringComparer.Ordinal);
-        public PinnedReferences(string? path) {
-            Context = new ModuleContext(this);
-            if (path == null) return;
-            ManifestPath = Path.GetFullPath(path);
-            ManifestHash = Hash(ManifestPath);
-            var manifest = JsonSerializer.Deserialize<Manifest>(File.ReadAllBytes(ManifestPath));
-            if (manifest?.Format != 1) throw new InvalidDataException("Expected reference manifest Format=1.");
-            Entries = manifest.Assemblies.Select(e => e with { Path = Path.GetFullPath(e.Path, Path.GetDirectoryName(ManifestPath)!) }).ToArray();
-            try {
-                foreach (var entry in Entries) {
-                    byte[] bytes = File.ReadAllBytes(entry.Path);
-                    if (!StringComparer.OrdinalIgnoreCase.Equals(Convert.ToHexString(SHA256.HashData(bytes)), entry.Sha256)) throw new InvalidDataException("Stale reference hash: " + entry.Path);
-                    var loaded = ModuleDefMD.Load(bytes, Context);
-                    if (loaded.Assembly?.FullName != entry.Identity || loaded.Mvid != Guid.Parse(entry.Mvid) || modules.ContainsKey(entry.Identity)) {
-                        loaded.Dispose(); throw new InvalidDataException("Invalid/duplicate reference identity: " + entry.Path);
-                    }
-                    loaded.EnableTypeDefFindCache = true;
-                    modules.Add(entry.Identity, loaded);
-                }
-            }
-            catch { Dispose(); throw; }
-        }
-        public AssemblyDef? Resolve(IAssembly assembly, ModuleDef? sourceModule) => assembly != null && modules.TryGetValue(assembly.FullName, out var found) ? found.Assembly : null;
-        public void Verify() {
-            if (ManifestPath != null && Hash(ManifestPath) != ManifestHash) throw new InvalidDataException("Reference manifest changed.");
-            foreach (var entry in Entries) if (!StringComparer.OrdinalIgnoreCase.Equals(Hash(entry.Path), entry.Sha256)) throw new InvalidDataException("Physical reference changed: " + entry.Path);
-        }
-        public void Dispose() { foreach (var module in modules.Values) module.Dispose(); modules.Clear(); }
-    }
     sealed class EvidenceOutput : TextWriterDecompilerOutput, IDecompilerOutput {
         public GeneratedSourceEvidence? Evidence { get; private set; }
         public EvidenceOutput(TextWriter writer) : base(writer) { }

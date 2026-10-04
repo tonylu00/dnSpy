@@ -238,3 +238,25 @@ zero errors, ledger coverage has no invalid rows, and preparation reproduces
 byte-for-byte. See `falcon-bus-connection-verification-v408.json`. The map is
 staged; consolidated source/build/runtime and unchanged-App verification remain
 pending. The 109-module inventory has 23,292 remaining native candidates.
+
+The mapped source checkpoint is `mapped-generated-source-verification.json`.
+Native SDK C# inspection of Common applies v412 across all 109 pinned export
+inputs, preserving physical compatibility contexts and the SDK whitelist. It
+records 228 roots, 116 positive body witnesses and 71 captured-field bindings;
+606 definition, 431 parameter and 153 local aliases are explicit. Original
+metadata definitions remain byte-for-byte equivalent as report data. The ILSpy
+capture fix uses the checked physical field alias for reconstructed locals and
+avoids nested lambda parameter shadowing. Two mapped synthetic sources compile
+and reproduce 46 additional behavior cases; the 47 native/6 guard/77 baseline
+suite also passes. Plugins for net48/net10 build with zero errors.
+
+`df529ce7c` contains the signed-CLR runtime Invoke parameter-only fix in the
+attached `delegate-source-scope` worktree. Its 34 native guards and SDK export,
+metadata restoration, unchanged caller and stable incremental build pass.
+Primary concurrent SourceNameMap/MethodContractFamilies edits are preserved;
+include the isolated fix in the next exporter build. The portable exact-context
+resolver passes 33 guards and records requested/effective identities with pinned
+per-source config provenance. Missing dependencies and one ambiguous request
+remain explicit. This checkpoint changes no maps or candidate counts and proves
+no application-wide retirement, consolidated ETS build, unchanged ETS Apps or
+ETS 6.4 runtime compatibility.
