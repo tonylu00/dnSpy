@@ -150,9 +150,22 @@ foreign owner tokens, invalid rewrite implementations and hoisted-field bindings
 Nonlocal targets are checked again by physical path/MVID/identity/token/signature;
 missing or unpinned targets and unknown owners stay explicit. The audit also
 indexes first-party definitions retained by other modules' emitted references.
+Printed records are independently counted and classified. Original reference
+tokens are re-resolved in their own pinned source contexts; swapping identical
+physical twins is rejected. In-memory CorLibTypes/imported references without an
+original metadata row remain explicit as synthetic/unavailable origins. The
+auditor compares each root's actual local-use set and every module's printed
+counter with the report. It separately indexes cross-module printed uses, excluding
+declarations and anonymous implementation links. Older AST-only reports still
+pass the AST audit, with partial or absent writer coverage recorded explicitly.
 This establishes observation coverage, not source retirement or runtime behavior.
 `ReferenceRegression/Invoke-ScopeAuditRegression.ps1` exercises these native guards
 with the previously emitted physical-twin fixture.
+`ReferenceRegression/Invoke-GenericOriginRegression.ps1` builds a synthetic fixture
+with generic type fields and reconstructed generic lambdas. Supply the runtime,
+inspector, explicit framework directory and fresh output directory. The audit
+must bind MemberRef and MethodSpec operands through their exact original body
+contexts and reject an altered generic field role. No application inputs change.
 
 Run `Invoke-Regression.ps1` with `-RuntimeDirectory`, `-Inspector`,
 `-ReferenceManifest` and a fresh `-OutputDirectory`. It builds synthetic fixtures,

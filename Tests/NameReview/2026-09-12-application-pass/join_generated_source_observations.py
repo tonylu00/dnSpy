@@ -54,7 +54,7 @@ def source_index(report):
             'States': states, 'Anonymous': anonymous, 'Fields': fields}
 
 
-def join_candidate(candidate, index, cross_references):
+def join_candidate(candidate, index, cross_references, cross_printed=None):
     ident = token(candidate['Token'])
     definitions = index['Definitions']
     require(ident in definitions and definitions[ident]['FullName'] == candidate['Signature']
@@ -75,12 +75,16 @@ def join_candidate(candidate, index, cross_references):
             facts.append(label)
     if index['PrintedCoverage'] and ident in index['PrintedReferenced']:
         facts.append('LocalPrintedSourceReferenceRetained')
+    if cross_printed is not None and cross_printed.get(ident, 0) > 0:
+        facts.append('CrossModulePrintedSourceReferenceRetained')
     if not facts:
         facts.append('NoPositiveSourceObservation')
     return {'Facts': facts, 'StateMachineBodyWitnesses': state, 'AnonymousBodyWitnesses': anonymous,
             'MatchedDelegateOwners': sorted(set(w['OwnerToken'] for w in anonymous) & delegate_owners),
             'FieldBindings': bindings, 'CrossModuleUseRecords': cross_references.get(ident, 0),
             'PrintedReferenceCoverage': index['PrintedCoverage'],
+            'CrossModulePrintedReferenceCoverage': cross_printed is not None,
+            'CrossModulePrintedUseRecords': None if cross_printed is None else cross_printed.get(ident, 0),
             'ReferenceTokenSemantics': 'Conservative AST member annotations can include declaration identifiers and inlined implementation/debug annotations; not a count or proof of printed member accesses.',
             'Limits': 'Observed source facts only. Absence does not prove merging, semantic names or restoration contracts. No candidate retirement.'}
 
@@ -119,6 +123,15 @@ def main():
         key = path_key(reference['Module'])
         require(key in modules, 'Foreign first-party reference target')
         cross[key][reference['Token']] = reference['UseRecords']
+    printed_coverage = audit.get('PrintedReferenceCoverage', False)
+    cross_printed = collections.defaultdict(dict)
+    if printed_coverage:
+        require(all(m.get('PrintedReferenceCoverage', False) for m in modules.values()), 'Incomplete audited writer coverage')
+        for reference in audit['CrossModuleFirstPartyPrintedDefinitions']:
+            key = path_key(reference['Module'])
+            require(key in modules and reference['UseRecords'] > 0, 'Invalid first-party printed reference target/count')
+            require(reference['Token'] not in cross_printed[key], 'Duplicate first-party printed reference')
+            cross_printed[key][reference['Token']] = reference['UseRecords']
     args.output.mkdir(parents=True)
     output = args.output / 'candidate-source-observations.jsonl'
     counts = collections.Counter(); categories = collections.defaultdict(collections.Counter); module_counts = []
@@ -129,8 +142,10 @@ def main():
             require(report['InputSha256'] == module['Sha256'] and report['Mvid'] == module['Mvid'] and report['MapSha256'] == audit['SourceMapSha256'], 'Native module report mismatch')
             local = collections.Counter()
             index = source_index(report)
+            if printed_coverage:
+                require(index['PrintedCoverage'] and index['PrintedReferenced'] == set(module['LocalPrintedReferenceTokens']), 'Audited printed module classification mismatch')
             for candidate in candidates[key]:
-                observation = join_candidate(candidate, index, cross[key])
+                observation = join_candidate(candidate, index, cross[key], cross_printed[key] if printed_coverage else None)
                 for fact in observation['Facts']:
                     counts[fact] += 1; local[fact] += 1; categories[candidate['Category']][fact] += 1
                 row = dict(candidate, SourceObservations=observation,
@@ -143,6 +158,7 @@ def main():
         require(digest(pin['Path']) == pin['Sha256'], 'Join input changed')
     summary = {'Format': 1, 'Kind': 'PhysicalGeneratedSourceCandidateObservations', 'Inputs': inputs,
                'Modules': module_counts, 'Candidates': len(seen), 'OverlappingSourceFacts': dict(counts),
+               'WholeScopePrintedReferenceCoverage': printed_coverage,
                'ByStructuralCategory': {k: dict(v) for k, v in categories.items()}, 'Worklist': str(output.resolve()),
                'WorklistSha256': digest(output), 'CandidatesRetired': 0,
                'Limits': 'Whole supplied physical scope source observations joined to structural candidates. Facts overlap. Unknown names, references, owner chains and restoration/runtime contracts require review; absence alone never retires a candidate.'}

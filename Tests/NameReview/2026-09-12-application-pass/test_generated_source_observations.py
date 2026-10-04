@@ -69,6 +69,20 @@ class SourceObservationTests(unittest.TestCase):
         self.assertIn('LocalSourceReferenceRetained', result['Facts'])
         self.assertNotIn('LocalPrintedSourceReferenceRetained', result['Facts'])
 
+    def test_cross_annotations_and_printed_uses_are_separate(self):
+        index = source_index(self.report)
+        annotation_only = join_candidate(self.field, index, {0x04000001: 3})
+        self.assertIsNone(annotation_only['CrossModulePrintedUseRecords'])
+        self.assertFalse(annotation_only['CrossModulePrintedReferenceCoverage'])
+        self.assertNotIn('CrossModulePrintedSourceReferenceRetained', annotation_only['Facts'])
+        printed = join_candidate(self.field, index, {0x04000001: 3}, {0x04000001: 1})
+        self.assertTrue(printed['CrossModulePrintedReferenceCoverage'])
+        self.assertEqual(printed['CrossModulePrintedUseRecords'], 1)
+        self.assertIn('CrossModulePrintedSourceReferenceRetained', printed['Facts'])
+        no_printed_use = join_candidate(self.field, index, {0x04000001: 3}, {})
+        self.assertEqual(no_printed_use['CrossModulePrintedUseRecords'], 0)
+        self.assertNotIn('CrossModulePrintedSourceReferenceRetained', no_printed_use['Facts'])
+
 
 if __name__ == '__main__':
     unittest.main()

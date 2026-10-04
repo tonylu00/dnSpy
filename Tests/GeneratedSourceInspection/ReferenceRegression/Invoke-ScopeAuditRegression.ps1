@@ -24,6 +24,10 @@ $audit=Read "$OutputDirectory/audit.json"
 Check ($audit.TotalModules -eq 2 -and $audit.Roots -eq 2) 'complete physical/root coverage'
 Check ($audit.PinnedNonlocalUses -eq 8 -and $audit.UnpinnedDefinitions.Count -eq 0) 'exact twin definition coverage'
 Check ($audit.CandidatesRetired -eq 0) 'scope audit makes no naming retirement decision'
+Check ($audit.PrintedReferenceCoverage -and $audit.PrintedRoots -eq 2) 'complete actual C# writer coverage'
+Check ($audit.PrintedRecords -gt 0 -and $audit.PinnedPrintedNonlocalUses -gt 0 -and $audit.PrintedDefinitions -gt 0) 'writer definitions and uses remain separate'
+Check ($audit.PrintedMetadataOriginRecords -gt 0 -and $audit.UnknownPrintedOwners -eq 0 -and $audit.UnpinnedPrintedDefinitions.Count -eq 0) 'original printed bindings use pinned physical metadata'
+Check ($audit.SyntheticPrintedOriginRecords -gt 0) 'in-memory CorLibTypes tokens are not falsely verified as original metadata'
 $serial=0
 function Reject([string]$name,[scriptblock]$summaryMutation,[scriptblock]$reportMutation,[string]$message) {
     $script:serial++; $summary=Read $summaryPath
@@ -55,6 +59,44 @@ Reject 'method as field binding' $null {param($r)$r.Roots[0].FieldBindings=@(@{F
 Reject 'wrong printed root' $null {param($r)$r.SourceHashes[0].RootTypeToken=33554687} 'Printed source hash coverage'
 Reject 'nonhex source hash' $null {param($r)$r.SourceHashes[0].SourceSha256='Z'*64} 'Invalid/duplicate printed source hash'
 Reject 'different normalized map' $null {param($r)$r.NormalizedMapSha256='0'*64} 'normalized mapping differs'
+Reject 'printed records without coverage' $null {param($r)$r.Roots[0].PrintedReferenceCoverage=$false} 'Printed records without writer coverage'
+Reject 'foreign printed owner' $null {param($r)$r.Roots[0].PrintedReferences[0].OwnerToken=33554687} 'Printed owner is not a local definition'
+Reject 'printed source-context twin swap' $null {param($r)
+    $use=@($r.Roots[0].PrintedReferences | Where-Object { $_.DefinitionModulePath -like '*left*Twin.dll' })[0]
+    $use.DefinitionModulePath=$use.DefinitionModulePath.Replace('left','right')
+} 'Printed source-context resolution mismatch'
+Reject 'wrong printed origin signature' $null {param($r)$r.Roots[0].PrintedReferences[0].RequestedSignature='Wrong'} 'Printed reference origin signature mismatch'
+Reject 'wrong printed origin token' $null {param($r)$r.Roots[0].PrintedReferences[0].ReferenceToken=100663297} 'Printed reference origin signature mismatch'
+Reject 'wrong printed target signature' $null {param($r)$r.Roots[0].PrintedReferences[0].DefinitionSignature='Wrong'} 'Printed pinned definition mismatch'
+Reject 'printed local classification mismatch' $null {param($r)$r.Roots[0].PrintedReferenceTokens+=@(33554434)} 'Printed local use token classification mismatch'
+Reject 'duplicate printed local classification' $null {param($r)
+    $r.Roots[0].PrintedReferenceTokens=@(33554434,33554434)
+} 'Printed local use token classification mismatch'
+Reject 'printed definition and implementation overlap' $null {param($r)
+    $use=@($r.Roots[0].PrintedReferences | Where-Object IsDefinition)[0];$use.IsImplementationAnnotation=$true
+} 'Printed definition is also an implementation annotation'
+Reject 'type as printed implementation' $null {param($r)
+    $use=@($r.Roots[0].PrintedReferences | Where-Object IsDefinition)[0];$use.IsDefinition=$false;$use.IsImplementationAnnotation=$true
+} 'Printed implementation annotation is not a local method'
+Reject 'nonlocal printed declaration' $null {param($r)
+    $use=@($r.Roots[0].PrintedReferences | Where-Object { $_.DefinitionModulePath -like '*left*Twin.dll' })[0];$use.IsDefinition=$true
+} 'Printed declaration points outside its source module'
+Reject 'unresolved printed declaration' $null {param($r)
+    $use=@($r.Roots[0].PrintedReferences | Where-Object DefinitionToken -EQ 0)[0];$use.IsDefinition=$true
+} 'Unresolved printed definition/implementation annotation'
+Reject 'missing printed module audit' $null {param($r)$r.Remove('PrintedReferenceAudit')} 'Missing printed module audit'
+Reject 'printed count mismatch' $null {param($r)$r.PrintedReferenceAudit.Records++} 'Printed module audit count mismatch'
+$summary=Read $summaryPath;$report=Read $summary.Results[0].Report
+# Old AST-only observations remain auditable, but never acquire writer coverage.
+foreach($root in $report.Roots){$root.Remove('PrintedReferenceCoverage');$root.Remove('PrintedReferences');$root.Remove('PrintedReferenceTokens')}
+$report.Remove('PrintedReferenceAudit')
+$legacyReport="$OutputDirectory/legacy-report.json";SaveJson $legacyReport $report
+$summary.Results[0].Report=$legacyReport;$summary.Results[0].ReportSha256=(Get-FileHash -LiteralPath $legacyReport).Hash
+$legacySummary="$OutputDirectory/legacy-summary.json";SaveJson $legacySummary $summary
+& dotnet $Inspector $RuntimeDirectory $legacySummary "$OutputDirectory/legacy-audit.json" audit-scope
+Check ($LASTEXITCODE -eq 0) 'legacy AST audit still accepted'
+$legacy=Read "$OutputDirectory/legacy-audit.json"
+Check (!$legacy.PrintedReferenceCoverage -and $legacy.PrintedRoots -eq 1 -and $legacy.CandidatesRetired -eq 0) 'partial writer coverage remains explicit'
 $summary=Read $summaryPath;$report=Read $summary.Results[0].Report
 $use=@($report.Roots[0].NonlocalReferences|Where-Object DefinitionToken -GT 0)[0];$use.DefinitionModulePath=Join-Path $OutputDirectory 'unpinned.dll'
 $reportPath="$OutputDirectory/unpinned-report.json";SaveJson $reportPath $report
