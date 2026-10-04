@@ -70,6 +70,36 @@ class Program {
                 catch (TargetInvocationException error) { Check(error.InnerException is InvalidDataException, "Unexpected rejection: " + mode + ": " + error.InnerException); }
             }
         }
+        foreach (string mode in new[] { "generic-null", "generic-init", "unconstrained", "value-constraint", "wrong-initialized-type", "foreign-generic-owner", "duplicate-reset", "static-reset", "foreign-field", "wrong-receiver", "static-address", "method-variable" }) {
+            using var module = ModuleDefMD.Load(args[0]);
+            var root = module.GetTypes().Single(t => t.Name == "IteratorSplitDispatchFixture");
+            var owner = root.Methods.Single(m => m.Name == "Remaining");
+            var attribute = owner.CustomAttributes.Single(a => a.TypeFullName.EndsWith("IteratorStateMachineAttribute"));
+            var state = ((TypeSig)attribute.ConstructorArguments[0].Value).ToTypeDefOrRef().ResolveTypeDef();
+            var disposal = state.Methods.Single(m => m.Name.String.EndsWith("IDisposable.Dispose"));
+            owner.CustomAttributes.Add(Marker(module, Feature));
+            if (!state.GenericParameters.Any(p => p.Number == 0)) state.GenericParameters.Add(new GenericParamUser(0, GenericParamAttributes.ReferenceTypeConstraint, "T"));
+            state.GenericParameters.Single(p => p.Number == 0).Flags = GenericParamAttributes.ReferenceTypeConstraint;
+            if (mode == "unconstrained") state.GenericParameters[0].Flags = GenericParamAttributes.NonVariant;
+            if (mode == "value-constraint") state.GenericParameters[0].Flags = GenericParamAttributes.NotNullableValueTypeConstraint;
+            TypeSig signature = mode == "method-variable" ? new GenericMVar(0, owner) : new GenericVar(0, mode == "foreign-generic-owner" ? root : state);
+            var field = new FieldDefUser("temporary", new FieldSig(signature), dnlib.DotNet.FieldAttributes.Private);
+            (mode == "foreign-field" ? root : state).Fields.Add(field);
+            if (mode == "static-reset") field.IsStatic = true;
+            var reset = mode == "generic-null" ? new[] { Instruction.Create(OpCodes.Ldarg_0), Instruction.Create(OpCodes.Ldnull), Instruction.Create(OpCodes.Stfld, field) } :
+                new[] { Instruction.Create(mode == "wrong-receiver" ? OpCodes.Ldarg_1 : OpCodes.Ldarg_0), Instruction.Create(mode == "static-address" ? OpCodes.Ldsflda : OpCodes.Ldflda, field),
+                    Instruction.Create(OpCodes.Initobj, mode == "wrong-initialized-type" ? module.CorLibTypes.String.TypeDefOrRef : new TypeSpecUser(signature)) };
+            for (int index = reset.Length - 1; index >= 0; index--) disposal.Body.Instructions.Insert(0, reset[index]);
+            if (mode == "duplicate-reset") for (int index = reset.Length - 1; index >= 0; index--) disposal.Body.Instructions.Insert(0, new Instruction(reset[index].OpCode, reset[index].Operand));
+            if (mode == "generic-null" || mode == "generic-init") {
+                Check((bool)Restore.Invoke(null, new object[] { module })!, "Generic reset was rejected: " + mode);
+                Check(disposal.Body.Instructions.Count == 1 && disposal.Body.Instructions[0].OpCode == OpCodes.Ret, "Generic original empty Dispose not restored");
+                Check(!(bool)Restore.Invoke(null, new object[] { module })!, "Generic restoration not idempotent");
+            } else {
+                try { Restore.Invoke(null, new object[] { module }); throw new Exception("Unsafe generic reset accepted: " + mode); }
+                catch (TargetInvocationException error) { Check(error.InnerException is InvalidDataException, "Unexpected generic rejection: " + mode + ": " + error.InnerException); }
+            }
+        }
         Console.WriteLine("Iterator disposal contract checks: " + checks);
     }
 }

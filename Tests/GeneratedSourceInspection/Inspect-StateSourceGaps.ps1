@@ -4,7 +4,8 @@ param([Parameter(Mandatory)][string] $Worklist,
       [Parameter(Mandatory)][string] $ReferenceManifest,
       [Parameter(Mandatory)][string] $SourceMap,
       [Parameter(Mandatory)][string] $OutputDirectory,
-      [string] $ReuseDirectory)
+      [string] $ReuseDirectory,
+      [string[]] $OwnerTokens)
 $ErrorActionPreference='Stop'
 foreach($name in @('Worklist','RuntimeDirectory','Inspector','ReferenceManifest','SourceMap','OutputDirectory')) {
     Set-Variable -Name $name -Value ([IO.Path]::GetFullPath((Get-Variable -Name $name -ValueOnly)))
@@ -16,6 +17,15 @@ if($work.Kind -ne 'NativeStateSourceCoverageGaps' -or $work.CandidatesRetired -n
 if((Get-FileHash $work.Audit).Hash -ne $work.AuditSha256){throw 'Stale worklist audit.'}
 $rows=@($work.Rows | Where-Object {$_.Status -eq 'RetainedDeclaration'})
 if(!$rows.Count){throw 'No retained state implementations.'}
+$retainedCount=$rows.Count
+if($OwnerTokens) {
+    $selectedTokens=@($OwnerTokens | ForEach-Object {
+        if($_ -notmatch '^0x06[0-9a-fA-F]{6}$'){throw 'Owner filters require exact MethodDef tokens.'}
+        [Convert]::ToUInt32($_.Substring(2),16)
+    } | Sort-Object -Unique)
+    $rows=@($rows | Where-Object {@($_.Owners | Where-Object {$selectedTokens -contains [uint32]$_.Token}).Count -gt 0})
+    foreach($token in $selectedTokens){if(!@($rows.Owners | Where-Object {[uint32]$_.Token -eq $token}).Count){throw 'Owner filter did not match a retained physical row.'}}
+}
 $pins=@{}
 foreach($path in @($Worklist,$Inspector,$ReferenceManifest,$SourceMap,$work.Audit)+(Get-ChildItem $RuntimeDirectory -File -Filter '*.dll' | ForEach-Object FullName)) {$pins[$path]=(Get-FileHash $path).Hash}
 New-Item -ItemType Directory $OutputDirectory | Out-Null
@@ -64,7 +74,7 @@ foreach($row in $rows) {
 }
 foreach($path in $pins.Keys){if((Get-FileHash $path).Hash -ne $pins[$path]){throw "Changed diagnostic pin: $path"}}
 @{Format=1;Kind='RetainedStateOwnerSourceDiagnostics';Status='complete';Pins=$pins;Rows=@($results.ToArray());
-    Owners=$results.Count;ExactWitnesses=@($results | Where-Object ExactWitness).Count;ReusedNativeReports=$reused;ColdChildren=$results.Count-$reused;CandidatesRetired=0;
+    Owners=$results.Count;WorklistRetainedOwners=$retainedCount;OwnerTokenFilter=@($OwnerTokens);ExactWitnesses=@($results | Where-Object ExactWitness).Count;ReusedNativeReports=$reused;ColdChildren=$results.Count-$reused;CandidatesRetired=0;
     Limits='Partial exact-owner diagnostics only. New witnesses do not update whole-scope coverage, prove metadata restoration or retire naming candidates.'
 } | ConvertTo-Json -Depth 12 | Set-Content (Join-Path $OutputDirectory 'summary.json')
 Write-Output "PASS: $($results.Count) retained owners; $(@($results | Where-Object ExactWitness).Count) exact witnesses. No candidates retired."

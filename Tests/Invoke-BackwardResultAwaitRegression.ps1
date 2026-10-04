@@ -22,7 +22,7 @@ foreach($threads in @(1,4)) {
     if($LASTEXITCODE -ne 0){throw 'Backward-result await export failed.'}
     $source=Get-Content (Join-Path $export 'BackwardResultAwaitFixture\BackwardResultAwaitFixture.cs') -Raw
     foreach($name in @('Read','ReadDetached','ReadInlineResume')) {
-        if($source -notmatch ('async Task<int> '+$name+'\(')){throw "Backward-result loop was not reconstructed: $name"}
+        if($source -notmatch ('async (?:global::System.Threading.Tasks\.)?Task<int> '+$name+'\(')){throw "Backward-result loop was not reconstructed: $name"}
     }
     $project=Get-ChildItem -LiteralPath $export -Recurse -Filter '*.csproj' | Select-Object -First 1
     $rebuilt=Join-Path $OutputDirectory "rebuilt-$threads"

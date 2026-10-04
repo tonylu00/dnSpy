@@ -184,14 +184,19 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 if (tail < 0 || tail % 3 != 0) throw new InvalidDataException("Generated iterator disposal has an unsupported body: " + owner.FullName);
                 var cleared = new HashSet<FieldDef>();
                 for (int i = 0; i < tail; i += 3) {
-                    var reset = ResolveLocalParameterField(instructions[i + 2].Operand as IField, module);
+                    bool initialized = instructions[i + 1].OpCode == OpCodes.Ldflda && instructions[i + 2].OpCode == OpCodes.Initobj;
+                    var reset = ResolveLocalParameterField(instructions[i + (initialized ? 1 : 2)].Operand as IField, module);
                     var instance = instructions[i].IsLdarg() ? instructions[i].GetParameter(disposal.Parameters) : null;
                     var type = reset == null ? null : reset.FieldType.RemovePinnedAndModifiers();
+                    var variable = type as GenericVar;
+                    var parameter = variable == null || variable.OwnerType != state ? null : state.GenericParameters.SingleOrDefault(p => p.Number == variable.Number);
                     bool reference = type != null && (type.ElementType == ElementType.Class || type.ElementType == ElementType.Object ||
                         type.ElementType == ElementType.String || type.ElementType == ElementType.SZArray || type.ElementType == ElementType.Array ||
-                        type is GenericInstSig && !type.IsValueType);
-                    if (instance == null || !instance.IsHiddenThisParameter || instructions[i + 1].OpCode != OpCodes.Ldnull ||
-                        instructions[i + 2].OpCode != OpCodes.Stfld || reset == null || reset.DeclaringType != state || reset.IsStatic ||
+                        type is GenericInstSig && !type.IsValueType || parameter != null && parameter.HasReferenceTypeConstraint);
+                    var initializedType = initialized ? instructions[i + 2].Operand as ITypeDefOrRef : null;
+                    bool pureReset = initialized ? initializedType != null && new SigComparer().Equals(type, initializedType.ToTypeSig()) :
+                        instructions[i + 1].OpCode == OpCodes.Ldnull && instructions[i + 2].OpCode == OpCodes.Stfld;
+                    if (instance == null || !instance.IsHiddenThisParameter || !pureReset || reset == null || reset.DeclaringType != state || reset.IsStatic ||
                         !reference || !cleared.Add(reset))
                         throw new InvalidDataException("Generated iterator disposal has an unsupported reference reset: " + owner.FullName);
                 }

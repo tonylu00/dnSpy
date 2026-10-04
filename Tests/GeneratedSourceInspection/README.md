@@ -217,3 +217,10 @@ Current Roslyn emits a no-cleanup iterator Dispose body as `state = -2; return;`
 The iterator recognizer now accepts only that complete exact pattern and keeps
 other bodies on its existing analysis/fallback path. Set `ILSPY_ITERATOR_TRACE=1`
 for analysis diagnostics; it is disabled by default.
+
+`Inspect-StateSourceGaps.ps1 -OwnerTokens 0x0600055C,0x06000E86` limits a cold
+recheck to exact owner MethodDef tokens in the identity-bound retained worklist.
+The summary records both the full retained-row count and selected scope; missing
+or malformed filters fail before output. A token can select multiple physical
+modules, whose identities remain distinct. Filtered witnesses do not change
+whole-scope coverage or retire candidates.
