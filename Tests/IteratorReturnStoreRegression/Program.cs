@@ -17,7 +17,7 @@ class Program {
         var receiver = new ILVariable("this") { OriginalParameter = first.Parameters[0] };
         var foreign = new ILVariable("foreign");
         Func<IMethod, bool> predicate = m => m == first || m == second;
-        foreach (string scenario in new[] { "branch", "leave", "chain", "true", "other-local", "other-receiver", "callvirt", "unknown", "side-effect", "label", "wrong-target", "no-branch", "outside-length", "expression-value" }) {
+        foreach (string scenario in new[] { "branch", "leave", "chain", "true", "other-local", "other-receiver", "callvirt", "unknown", "side-effect", "label", "wrong-target", "no-branch", "outside-length", "expression-value", "nested-before", "nested-between" }) {
             var target = new ILLabel { Name = "return" };
             var store = new ILExpression(ILCode.Stloc, scenario == "other-local" ? otherResult : result,
                 scenario == "expression-value" ? new ILExpression(ILCode.Call, unknown) : new ILExpression(ILCode.Ldc_I4, scenario == "true" ? 1 : 0));
@@ -26,6 +26,9 @@ class Program {
             var callTwo = new ILExpression(ILCode.Call, second, new ILExpression(ILCode.Ldloc, receiver));
             var branch = new ILExpression(scenario == "leave" ? ILCode.Leave : ILCode.Br, scenario == "wrong-target" ? new ILLabel { Name = "other" } : target);
             var body = new List<ILNode> { store, call };
+            var nested = new ILTryCatchBlock { TryBlock = new ILBlock(new List<ILNode> { new ILExpression(ILCode.Call, unknown) }), CatchBlocks = new List<ILTryCatchBlock.CatchBlock>() };
+            if (scenario == "nested-before") body.Insert(0, nested);
+            if (scenario == "nested-between") body.Insert(1, nested);
             if (scenario == "chain") body.Add(callTwo);
             if (scenario == "side-effect") body.Add(new ILExpression(ILCode.Call, unknown));
             if (scenario == "label") body.Add(new ILLabel { Name = "intervening" });
@@ -33,10 +36,10 @@ class Program {
             var snapshot = body.ToArray();
             int length = scenario == "outside-length" ? 2 : body.Count;
             int changed = (int)normalizer.Invoke(null, new object[] { body, length, result, target, predicate })!;
-            bool expected = scenario == "branch" || scenario == "leave" || scenario == "chain";
+            bool expected = scenario == "branch" || scenario == "leave" || scenario == "chain" || scenario == "nested-before";
             Check(changed == (expected ? 1 : 0), "Wrong normalization verdict: " + scenario);
             if (expected) {
-                var ordered = scenario == "chain" ? new ILNode[] { call, callTwo, store, branch } : new ILNode[] { call, store, branch };
+                var ordered = scenario == "chain" ? new ILNode[] { call, callTwo, store, branch } : scenario == "nested-before" ? new ILNode[] { nested, call, store, branch } : new ILNode[] { call, store, branch };
                 Check(body.SequenceEqual(ordered), "Changed helper/branch order or node identities: " + scenario);
                 Check((int)normalizer.Invoke(null, new object[] { body, body.Count, result, target, predicate })! == 0, "Normalization was not idempotent");
             }
