@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `usb-interface-body-coverage-v424.json` — USB feature/read/write/reconnect body
+  scopes, preserved definition identities and explicit unresolved evidence
+- `record_additive_naming_block.py` — reusable additive-block evidence recorder;
+  verifies native reports, preserved aliases and cached whole-scope joins
 - `ip-connection-layer-coverage-v423.json` — IP connection transitions, sequence
   handling, retries, frame envelopes and unresolved generated-owner evidence
 - `asynchronous-state-transition-coverage-v422.json` — shared transition helper
