@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
+  <ItemGroup>
+    <!-- Compose the committed selector with the independently validated map
+         preflight, without compiling another agent's working-tree changes. -->
+    <Compile Include="$(SelectionSourceDirectory)/MapSelection.cs" Link="MapSelection.cs" />
+    <Compile Include="$(SelectionSourceDirectory)/InputPaths.cs" Link="InputPaths.cs" />
+    <Reference Include="NameCandidates"><HintPath>$(ValidatedToolDirectory)/NameCandidates.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
