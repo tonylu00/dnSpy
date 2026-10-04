@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal
 from sdk_proposal_retirement import load_sdk_symbols, key as sdk_key, retire_sdk_proposal
 from contract_sdk_proposal_retirement import load_contract_sdk_evidence, retire_contract_sdk_proposal, preserve_contract_sdk_method
+from framework_contract_preservation import load_framework_contract_evidence, preserve_framework_contract_method
 
 parser = argparse.ArgumentParser(description=__doc__)
 for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
@@ -28,6 +29,9 @@ parser.add_argument('--retire-rejected-contract-sdk-proposals', action='store_tr
 parser.add_argument('--contract-sdk-evidence', help='Hash-bound native PhysicalSdkContractProtectionEvidence report')
 parser.add_argument('--preserve-sdk-contract-methods', action='store_true',
                     help='Review-only: record previously unreviewed methods protected by exact native CLR/SDK families')
+parser.add_argument('--preserve-framework-contract-methods', action='store_true',
+                    help='Review-only: preserve new explicit CLR async/iterator implementations from pinned native proof')
+parser.add_argument('--framework-contract-evidence', help='Hash-bound native PhysicalFrameworkContractEvidence report')
 parser.add_argument('--replace-reviewed-aliases', action='store_true',
                     help='Explicitly replace a reviewed definition/parameter alias using its exact native change report')
 parser.add_argument('--remove-reviewed-aliases', action='store_true',
@@ -46,6 +50,8 @@ assert not args.retire_rejected_sdk_proposals or args.review_only, 'SDK proposal
 assert not args.retire_rejected_contract_sdk_proposals or args.review_only, 'SDK contract retirement requires a review-only checkpoint'
 assert not args.preserve_sdk_contract_methods or args.review_only, 'SDK contract preservation requires a review-only checkpoint'
 assert bool(args.contract_sdk_evidence) == bool(args.retire_rejected_contract_sdk_proposals or args.preserve_sdk_contract_methods), 'Native SDK family evidence requires its explicit flag'
+assert not args.preserve_framework_contract_methods or args.review_only, 'Framework preservation requires a review-only checkpoint'
+assert bool(args.framework_contract_evidence) == bool(args.preserve_framework_contract_methods), 'Native framework proof requires its explicit flag'
 state_path, sink = pathlib.Path(args.state).resolve(), pathlib.Path(args.sink).resolve()
 map_path, review_path = pathlib.Path(args.map).resolve(), pathlib.Path(args.review).resolve()
 update_path, check_path = pathlib.Path(args.update).resolve(), pathlib.Path(args.check).resolve()
@@ -97,6 +103,13 @@ retired_sdk_proposals = 0
 retired_contract_sdk_proposals = 0
 preserved_sdk_contract_methods = 0
 contract_sdk_evidence = {}
+framework_contract_evidence = {}
+preserved_framework_contract_methods = 0
+if args.preserve_framework_contract_methods:
+    binding = review['NativeFrameworkContractEvidence']
+    assert pathlib.Path(binding['Path']).resolve() == pathlib.Path(args.framework_contract_evidence).resolve()
+    assert digest(pathlib.Path(binding['Cli'])) == binding['CliSha256'], 'Native framework inspector changed'
+    framework_contract_evidence = load_framework_contract_evidence(map_path, args.framework_contract_evidence, binding['Sha256'], check['ContractReferenceSha256'])
 if args.retire_rejected_contract_sdk_proposals or args.preserve_sdk_contract_methods:
     binding = review.get('NativeSdkContractEvidence', {})
     assert pathlib.Path(binding['Path']).resolve() == pathlib.Path(args.contract_sdk_evidence).resolve(), 'Native evidence path differs from review'
@@ -122,6 +135,14 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('PreserveFrameworkContractMethod'):
+            assert args.preserve_framework_contract_methods and kind == 'Methods' and key not in keys
+            proof = framework_contract_evidence[sdk_key(*key)]
+            assert row['PreservedExternalFrameworkContract']['ProofSha256'] == review['NativeFrameworkContractEvidence']['Sha256']
+            ledger[kind].append(preserve_framework_contract_method(row, mapped_entries.get(sdk_key(*key)), proof))
+            keys[key] = len(ledger[kind]) - 1
+            preserved_framework_contract_methods += 1
+            continue
         if row.get('PreserveSdkContractMethod'):
             assert args.preserve_sdk_contract_methods and kind == 'Methods' and key not in keys, 'New contract preservation requires an unreviewed method and explicit checkpoint flag'
             sk = sdk_key(*key)
@@ -214,6 +235,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitRejectedSdkProposalRetirements': retired_sdk_proposals,
               'ExplicitRejectedContractSdkProposalRetirements': retired_contract_sdk_proposals,
               'ExplicitSdkContractMethodPreservations': preserved_sdk_contract_methods,
+              'ExplicitFrameworkContractMethodPreservations': preserved_framework_contract_methods,
               'ExplicitProposalApplications': applied_proposals,
               'ContractReferenceSha256': update['ContractReferenceSha256'],
               'ConsolidatedVerification': 'Pending application-wide freeze; no new full audit, binary application, ETS export/build or launch is claimed.'}

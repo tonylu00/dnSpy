@@ -69,6 +69,15 @@ that every prior alias, scope and module binding survives, distinguishes new
 aliases from repeated accepted requests, and checks input/report hashes. This
 read-only verification writes evidence JSON; it does not modify ETS artifacts.
 
+For explicit CLR async/iterator MethodImpl contracts, use the native
+`de4dotEx/tools/FrameworkContractInspection` against the pinned reference manifest.
+`framework_contract_preservation.py` prepares review JSON from an exact spec and
+hash-bound proof. Checkpoint with `--review-only --preserve-framework-contract-methods
+--framework-contract-evidence <proof.json>` after native zero-edit update/check.
+The guard rejects aliases, existing map/ledger definitions, stale inputs, incomplete
+proofs and unsupported roles. It removes the operational marker from the ledger
+while retaining declaration provenance and the unproven source-merging annotation.
+
 Native coverage validates current physical identities and scoped metadata.
 For legacy missing method owners or field signatures stored in `Type`, use native
 `--normalize-review-owners <review> <fresh-review> <fresh-report>` before coverage.
