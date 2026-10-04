@@ -101,6 +101,54 @@ class InventorySelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Scope inventory requires'):
             prepare(self.spec)
 
+    def scope_uncertainty(self):
+        self.spec['Rows'][0].update(NewName='', ParameterNames={'1': 'requestCode'},
+                                   DefinitionOnlyUnresolvedReason='Missing printed source declaration owner witness')
+
+    def test_definition_uncertainty_retains_positive_scopes(self):
+        self.scope_uncertainty()
+        row = prepare(self.spec)['Methods'][0]
+        self.assertTrue(row['Unresolved'])
+        self.assertTrue(row['DefinitionOnlyUnresolved'])
+        self.assertEqual(row['NewName'], '')
+        self.assertEqual(row['ParameterNames'][0]['NewName'], 'requestCode')
+        self.assertIn('Missing printed', row['UnresolvedReason'])
+
+    def test_definition_uncertainty_requires_missing_evidence(self):
+        self.scope_uncertainty()
+        for reason in ('', '  ', None, 3):
+            self.spec['Rows'][0]['DefinitionOnlyUnresolvedReason'] = reason
+            with self.assertRaisesRegex(ValueError, 'Definition-only uncertainty'):
+                prepare(self.spec)
+
+    def test_definition_uncertainty_requires_positive_scopes(self):
+        self.scope_uncertainty()
+        del self.spec['Rows'][0]['ParameterNames']
+        with self.assertRaisesRegex(ValueError, 'supported name'):
+            prepare(self.spec)
+
+    def test_definition_uncertainty_rejects_definition_alias(self):
+        self.scope_uncertainty()
+        self.spec['Rows'][0]['NewName'] = 'InventedOwner'
+        with self.assertRaisesRegex(ValueError, 'Definition-only uncertainty'):
+            prepare(self.spec)
+
+    def test_definition_uncertainty_rejects_other_dispositions(self):
+        self.scope_uncertainty()
+        for disposition in ('preserve', 'unresolved'):
+            self.spec['Rows'][0]['Disposition'] = disposition
+            with self.assertRaisesRegex(ValueError, 'Definition-only uncertainty'):
+                prepare(self.spec)
+
+    def test_definition_uncertainty_rejects_nonmethods(self):
+        self.scope_uncertainty()
+        family = json.loads(self.family.read_text())
+        family['Fields'] = family.pop('Methods')
+        self.family.write_text(json.dumps(family))
+        self.spec['Rows'][0]['Kind'] = 'Fields'
+        with self.assertRaisesRegex(ValueError, 'Definition-only uncertainty'):
+            prepare(self.spec)
+
 
 if __name__ == '__main__':
     unittest.main()

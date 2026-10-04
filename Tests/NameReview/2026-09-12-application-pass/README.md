@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `local-management-usb-feature-coverage-v426.json` — local-interface property,
+  response/timeout/cancellation/readback chains and USB feature/configuration/RF/PL scopes.
+- `definition-only-scopes-verification-v426.json` — guarded native scope aliases
+  on explicitly unresolved definitions, regression cases and historical helper bindings.
 - `usb-bus-connector-coverage-v425.json` — USB open/discovery/disposal/reset
   storage and complete connector-match/local-management send/register/remove families.
 - `parameter-original-name-count-verification-v425.json` — native metadata-name

@@ -81,6 +81,11 @@ def prepare(spec):
         if not decision.get('Reason'): raise ValueError('Behavioral evidence is required')
         row['Reason'] = decision['Reason']
         disposition = decision.get('Disposition', 'rename')
+        definition_reason = decision.get('DefinitionOnlyUnresolvedReason')
+        if 'DefinitionOnlyUnresolvedReason' in decision and (not isinstance(definition_reason, str) or not definition_reason.strip() or key[0] != 'Methods' or disposition != 'rename' or decision.get('NewName')):
+            raise ValueError('Definition-only uncertainty requires a scope-only method rename and missing evidence')
+        if 'DefinitionOnlyUnresolved' in row:
+            row['DefinitionOnlyUnresolved'] = False
         row['ReviewDisposition'] = disposition
         if disposition == 'preserve':
             if decision.get('NewName') or decision.get('ParameterNames') or decision.get('LocalNames'):
@@ -105,6 +110,8 @@ def prepare(spec):
                 raise ValueError('Rename decision requires a supported name')
         else:
             raise ValueError('Unknown disposition: ' + disposition)
+        if definition_reason:
+            row.update(Unresolved=True, DefinitionOnlyUnresolved=True, UnresolvedReason=definition_reason)
         if decision.get('RemoveExistingAlias'):
             if key[0] != 'Methods' or disposition != 'unresolved' or not decision.get('ExpectedAlias'):
                 raise ValueError('Alias withdrawal requires an unresolved method and its exact previous alias')
