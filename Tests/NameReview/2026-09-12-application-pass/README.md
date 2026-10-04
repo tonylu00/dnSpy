@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `usb-bus-connector-coverage-v425.json` — USB open/discovery/disposal/reset
+  storage and complete connector-match/local-management send/register/remove families.
+- `parameter-original-name-count-verification-v425.json` — native metadata-name
+  preservation counts, real alias restoration and actual Falcon replay.
 - `usb-interface-body-coverage-v424.json` — USB feature/read/write/reconnect body
   scopes, preserved definition identities and explicit unresolved evidence
 - `record_additive_naming_block.py` — reusable additive-block evidence recorder;
