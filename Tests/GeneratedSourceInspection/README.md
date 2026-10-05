@@ -282,3 +282,13 @@ exact original backup owner and typed interfaces, with the real base operation
 and error view-model constructor. It bypasses the handler constructor and injects
 proxies for this focused comparison; it does not perform archive or live UI work.
 Each original/rebuilt process records loaded assembly identities, paths and hashes.
+
+`Tests/Invoke-HttpDownloadBehaviorProbe.ps1` calls the original runtime download
+contracts in the original and rebuilt Common assemblies. Its 144 cases cover
+both URI overloads, immediate/delayed transport completion, successful and failed
+status codes, transport errors, cancellation, content-copy errors, response
+disposal, empty/large payloads and pre-existing file tails. It uses the pinned
+ETS host configuration for dependency redirects and records every loaded
+assembly's identity, physical path and hash. The HTTP transport is substituted;
+this does not test network servers, progress callbacks, pooled-client operations
+or live ETS/App compatibility.
