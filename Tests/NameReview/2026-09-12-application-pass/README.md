@@ -22,6 +22,13 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `ip-connection-request-response-coverage-v430.json` — connection setup,
+  request/response listeners, disconnect/disposal, device-management properties
+  and tunneling features; 300 exact aliases with prior names retained. Reconnect
+  and deferred-request dispatch prove the wakeup message role. Twenty-six
+  generated/accessor definitions remain explicitly unresolved. SDK/contract,
+  143 portable tests and 109 cached joins pass; 20,951 candidates remain.
+  Consolidated ETS export/build, printed ownership and runtime checks are pending.
 - `layer-timer-connectionless-dispatch-coverage-v429.json` — shared layer timers,
   worker dispatch, message/event interfaces and connectionless/local transports;
   153 exact aliases with all prior names retained. Synthetic event provenance is
