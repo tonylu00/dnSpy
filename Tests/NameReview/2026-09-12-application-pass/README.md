@@ -43,6 +43,18 @@ What lives here:
   failure cleanup, then returns it. Every other alias/scope/decision is retained;
   SDK/contract and 109-module cached checks pass. Current v468 has not been
   exported; the 109-project build and partial runtime evidence belong to v467.
+- `connection-lifecycle-coverage-v469.json` — adds 223 coupled aliases across
+  connection-oriented, connectionless, local transport/application and disposal
+  chains: two methods, 85 fields, 49 parameters and 87 used locals. All 31 kickoff
+  captures match their parameters; 14 fresh physical method scopes bind. Five
+  generated machines retain their metadata and reconstructed v467 owners; five
+  earlier storage uncertainties remain unchanged. SDK public definitions and
+  parameters, CLR disposal contracts and every prior alias/scope are preserved.
+  Native checks and both cached 109-module joins pass; candidates fall from
+  20,152 to 20,092. Local slot 3 in `0x06000174` holds both a descriptor and a
+  connector APDU length and remains unaliased pending role-specific splitting.
+  Current v469 has not been exported or runtime-tested. Next: APDU/path
+  negotiation, authorization state and memory transfer bounds through callers.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
