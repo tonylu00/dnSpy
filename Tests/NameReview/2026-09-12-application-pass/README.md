@@ -69,14 +69,27 @@ What lives here:
   `firmware-helper-correction-verification-v472.json` records two complete-body
   corrections: `SendEndOfFileAsync` and `SendFileControlWithRetryAsync`. All other
   aliases, scopes and earlier decisions remain intact; its 25 evidence pins pass.
-  Current v472 has not been exported or runtime-tested. Next: finish streaming
-  captures and reconstruct its directly called generated helper in its owner;
-  the frozen export still prints that helper as `Type_30`.
+  Current v472 has not undergone consolidated export or runtime verification.
+  Next: finish the streaming helper's parameters, used locals and capture roles.
   `apdu-security-coverage-v470.json` retains the preceding 171 checked APDU/security
   aliases and memory-ceiling evidence. `prepare_physical_review.py` validates
   position-bound uncertainty with exact parameter/type preimages; its 24 tests
   and the 31 ledger tests passed at v470. Unused kickoff slot 1 in `0x06000106`
   remains explicitly unresolved.
+- `direct-call-closure-verification.json` — ILSpy `4fc8b3970` reconstructs a
+  directly called, nonescaping generated helper as one named callable in its
+  lexical owner. The actual Falcon streaming owner now contains `WriteChunkAsync`
+  and no standalone `Type_30`. The targeted v472 Falcon source compiles with zero
+  errors/2,113 warnings; its SDK audit checks 107 types, 1,082 methods and 354
+  fields with zero issues. Export takes 18.7 seconds and an observed process-tree
+  peak of 630,472,704 bytes (250 ms samples, a lower bound). Native net48/net10
+  builds, 27 synthetic export/unchanged-client checks, 51 fail-closed guards,
+  81,962 concurrent/collectible-cache checks and the prior closure-owner regression
+  pass. Forty-one evidence pins retain these results, including immutable tool
+  and test snapshots. The AST emits a
+  `Func`/`Action` lambda; unsupported generic, recursive, escaping and
+  identity-sensitive cases remain intact. No naming retirement or complete
+  ETS/App runtime compatibility is claimed.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit

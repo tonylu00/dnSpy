@@ -1,0 +1,322 @@
+{
+  "Format": 1,
+  "Kind": "NativeDirectCallClosureReconstructionVerification",
+  "UpdatedUtc": "2026-10-05T15:18:13.979444+00:00",
+  "NativeCommit": "4fc8b3970d23942c9e33abf7c95b7da62b87dee0",
+  "Snapshot": "D:\\knx_analysis\\direct-closure-accepted01",
+  "Map": {
+    "Path": "D:\\knx_analysis\\names63-staged-firmware-corrections-review01-v472.xml",
+    "Sha256": "00B657C62A60F701F4920A1CE706F31EFAF169F62B02630B08BD0CBB67BF0E2E",
+    "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v472.json",
+    "NextWave": 473,
+    "RowsInMap": {
+      "Types": 1202,
+      "Methods": 13454,
+      "Fields": 6918,
+      "Parameters": 5242,
+      "Locals": 5429
+    },
+    "CountBasis": "v472 corrects two proven partial-behavior method aliases:118 ThrowUnresolvableMaSError becomes SendEndOfFileAsync;11F LogRetryAfterError becomes SendFileControlWithRetryAsync from whole original native bodies and exact async owners. Every other alias/scope/ledger decision and earlier annotations retained. Totals1202types/13454methods/6918fields/5242parameters/5429locals unchanged;19907 lexical candidates remain. SDK/contract and109 cached joins pass. Full compile/partial-runtime evidence belongs tov467; corrected map not exported. Naming/owner merging/broaderApps/preservation/6.4pending.",
+    "AppliedToSource": false
+  },
+  "PhysicalModule": {
+    "Path": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+    "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+    "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80"
+  },
+  "ExactOwners": {
+    "Root": "0x06000117",
+    "RootBody": "0x060001B4",
+    "DirectHelper": "0x0600013D",
+    "HelperBody": "0x0600013E",
+    "GeneratedContext": "0x0200001E"
+  },
+  "Result": {
+    "TargetedProjectsCompiled": 1,
+    "CompilerErrors": 0,
+    "Warnings": 2113,
+    "SdkAudit": {
+      "Projects": 1,
+      "Scope": "Pinned SDK whitelist and all exported assembly identities",
+      "Types": 107,
+      "Methods": 1082,
+      "Fields": 354,
+      "IssueCount": 0,
+      "Issues": []
+    },
+    "DirectCallableInstances": 1,
+    "StandaloneType30Removed": true,
+    "CurrentFullMapExported": false,
+    "LexicalCandidatesRemaining": 19907,
+    "WholeRuntimeVerified": false
+  },
+  "Tests": {
+    "ExportAndUnchangedClientChecks": 27,
+    "EligibilityAndRejectionGuards": 51,
+    "ConcurrentAndCollectibleCacheChecks": 81962,
+    "PriorClosureOwnerRegressionPassed": true,
+    "NativeCoreNet48BuildPassed": true,
+    "ActualNet10PluginBuildPassed": true
+  },
+  "ExportMeasurement": {
+    "Command": [
+      "D:\\knx_analysis\\direct-closure-tools01\\dnSpy.Console.exe",
+      "--sdk-project",
+      "--source-name-map",
+      "D:\\knx_analysis\\direct-closure-falcon-map01.xml",
+      "--public-sign",
+      "--threads",
+      "2",
+      "--no-color",
+      "--no-gac",
+      "--app-config",
+      "D:\\knx_analysis\\ETS6.3_api_preserved4\\ETS6N.exe.config",
+      "--assembly-contexts",
+      "D:\\knx_analysis\\direct-closure-falcon-context01.xml",
+      "--asm-path",
+      "C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework\\v4.8",
+      "--asm-path",
+      "C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework\\v4.8\\Facades",
+      "--asm-path",
+      "D:\\knx_analysis\\ETS6.3_api_preserved4",
+      "--asm-path",
+      "D:\\knx_analysis\\ets63-source-dependencies1\\references",
+      "-o",
+      "D:\\knx_analysis\\direct-closure-falcon-export06",
+      "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll"
+    ],
+    "ReturnCode": 0,
+    "ElapsedSeconds": 18.6528770000441,
+    "ObservedPeakProcessTreeRssBytes": 630472704,
+    "Log": "D:\\knx_analysis\\direct-closure-falcon-export06.log",
+    "LogSha256": "261CBDF593191A181F05216E9352222999440C4F068BFE2C33BDBC1BA6CD8A19",
+    "MeasurementLimit": "250ms process-tree samples; observed peak is a lower bound."
+  },
+  "BuildMeasurement": {
+    "Command": [
+      "dotnet",
+      "build",
+      "D:\\knx_analysis\\direct-closure-falcon-export06\\solution.sln",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet"
+    ],
+    "ReturnCode": 0,
+    "ElapsedSeconds": 13.891240200027823,
+    "ObservedPeakProcessTreeRssBytes": 605335552,
+    "Log": "D:\\knx_analysis\\direct-closure-falcon-build02.log",
+    "LogSha256": "D10DBDDC360E1554097D3A3BBDD58A381662226EBADB8FF1202BD50AA37CD25A",
+    "MeasurementLimit": "250ms process-tree samples; observed peak is a lower bound."
+  },
+  "Limits": [
+    "One direct instance helper per trusted private generated context; no generic/ref/pointer/recursive/escaping or identity-sensitive reconstruction.",
+    "Named Func/Action callable uses existing AST lambda pipeline; no local-function AST node.",
+    "Latest full application mappings and real ETS/App behavior are not consolidated or runtime-verified.",
+    "Frozen v467 full109 build and earlier partial runtime observations remain separate; preservation incidents unresolved."
+  ],
+  "NextRoute": "Review streaming117/13D parameters, used locals and captures from fresh native bodies; preserve SDK formal parameter identities. Correct partial helper aliases only from whole behavior. Continue substantial cached application-wide naming blocks, then freeze for consolidated verification;6.4 follows6.3.",
+  "Pins": [
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\00-AstBuilder.cs",
+      "Sha256": "DA3861D09CE39B9C05E5691C5678779FD27F2CC9F52ED8CA088BA6BB8D239F9E",
+      "OriginalPath": "C:\\Users\\tony\\.codex\\worktrees\\protected-scope-aliases\\dnSpy\\Extensions\\ILSpy.Decompiler\\ICSharpCode.Decompiler\\ICSharpCode.Decompiler\\Ast\\AstBuilder.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\01-AstMethodBodyBuilder.cs",
+      "Sha256": "B24F44995FC31293C0D9035219D8186BC0BE2D2383D315A8A78C5F1700A75984",
+      "OriginalPath": "C:\\Users\\tony\\.codex\\worktrees\\protected-scope-aliases\\dnSpy\\Extensions\\ILSpy.Decompiler\\ICSharpCode.Decompiler\\ICSharpCode.Decompiler\\Ast\\AstMethodBodyBuilder.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\02-DelegateConstruction.cs",
+      "Sha256": "CCE4F3FA238F66BBF7327E2FB3094352877BBED13912EA70F15FCBED17C6C1EA",
+      "OriginalPath": "C:\\Users\\tony\\.codex\\worktrees\\protected-scope-aliases\\dnSpy\\Extensions\\ILSpy.Decompiler\\ICSharpCode.Decompiler\\ICSharpCode.Decompiler\\Ast\\Transforms\\DelegateConstruction.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\03-Client.cs",
+      "Sha256": "B769D54BDC4F559E474E4D1CC269C24B949D3CDEF0D873446C3EE4D3F41BDE4C",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureRegression\\Client.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\04-Library.cs",
+      "Sha256": "468264A8118AEA695B3CA758018BF1550BD903E3DF97B3FB1F427A860E26E1C7",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureRegression\\Library.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\05-Program.cs",
+      "Sha256": "A521F1018AE0217231ACE22DDC9E3994B23857E4369A7DCD5BF4B2EB025F9B37",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureRegression\\Program.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\06-Program.cs",
+      "Sha256": "393D1056BF131A5E243B44D853B9C7A8E0D6018851BA5661F07E91FD5CB267AD",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureCacheRegression\\Program.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\07-Safety.cs",
+      "Sha256": "6223B8711616B61117E210C8C0DD90B68FC7BADDFECA7A7A3D922BC85EEAA27B",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureCacheRegression\\Safety.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\08-DirectCallClosureRegression.csproj",
+      "Sha256": "66340B4D294287FB5A4BD33CAC6902065341DD7124AFFED6D5BC373F27BC64E4",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureRegression\\DirectCallClosureRegression.csproj"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\09-DirectCallClosureCacheRegression.csproj",
+      "Sha256": "002703B5E7935F57D72B7EAFEEB5CA314F70ABE696A89AE53378D3B21DB7B841",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureCacheRegression\\DirectCallClosureCacheRegression.csproj"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\10-README.md",
+      "Sha256": "96676886C7D4E66336D49865FC67023A6FEE2C4EC4A89C3885569DC66D17D20F",
+      "OriginalPath": "D:\\git\\dnSpy\\Tests\\DirectCallClosureRegression\\README.md"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\11-direct-closure-plugin-build09.log",
+      "Sha256": "4AB662006EA2B670F6CB9A6F72AD73D4E3BF00186D4632E25711B2F71C0428F8",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-plugin-build09.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\12-direct-closure-core-net48-build02.log",
+      "Sha256": "3F107F07F1CB63DC998509F37E2BBC58130B88D8984C6C5A786BA67DE1DD6951",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-core-net48-build02.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\13-direct-closure-console-build01.log",
+      "Sha256": "73C2DD6F15B651F89941E4A288B2AFAA701E53730D5F5D118A4C096388A5F635",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-console-build01.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\14-direct-closure-regression07.log",
+      "Sha256": "7F5BA1791FBABCEBD1E4DEE7ADD2B9040A0B75B8C8737D76F4A885B3B5219447",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-regression07.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\15-direct-closure-cache-regression03.log",
+      "Sha256": "5B2696AA291353635C8DAC76EB8D21787EA0B015A5A969421A7846995E11254C",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-cache-regression03.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\16-direct-closure-existing-owners01.log",
+      "Sha256": "980BFFE54EA550DC7845022C0A5B29B45F1E82A2D913359BCD28A0B2A094AC68",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-existing-owners01.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\17-direct-closure-falcon-map01.xml",
+      "Sha256": "AF92626C77FA701A01251E99689C00684CE7339E1361F9EB671B0A600DEB6771",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-map01.xml"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\18-direct-closure-falcon-context01.xml",
+      "Sha256": "5B58FDA9DB1B3B98E8044D23CC7238B1D629E1F56EA10A1A49EACC0D6B4065C1",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-context01.xml"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\19-direct-closure-falcon-measurement06.json",
+      "Sha256": "C62154D60ED8A87F3186023CB9DAFB0AFE360DBC2CAF676FEF77694E92330B40",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-measurement06.json"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\20-direct-closure-falcon-build-measurement02.json",
+      "Sha256": "313E5F563093993C5C1A948C4076E7481B496FD1B65074BF610A0D6ECF021707",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-build-measurement02.json"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\21-direct-closure-falcon-export06.log",
+      "Sha256": "261CBDF593191A181F05216E9352222999440C4F068BFE2C33BDBC1BA6CD8A19",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-export06.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\22-direct-closure-falcon-build02.log",
+      "Sha256": "D10DBDDC360E1554097D3A3BBDD58A381662226EBADB8FF1202BD50AA37CD25A",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-build02.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\23-direct-closure-falcon-stage01.json",
+      "Sha256": "56A0C72E329172323DB4D1958B64A32860E87F548AFC50F2CE2E11119385B08E",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-stage01.json"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\24-direct-closure-falcon-sdk01.log",
+      "Sha256": "791537D81D25D41597D2D3DF20931985B2D95ECCDEF1C03F74A2E293247A5868",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-sdk01.log"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\25-naming-v473-streaming-methods01.json",
+      "Sha256": "936581D7A4057A459550576F7D9A0B13EAEA660418793ACEEAAB21A72539CDBF",
+      "OriginalPath": "D:\\knx_analysis\\naming-v473-streaming-methods01.json"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\26-result.json",
+      "Sha256": "91C939D66CD9AC32A292DF3A5E29BDB49D7DEB7AE65353C8F017140E9A679A17",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-sdk01\\result.json"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\27-nc.cs",
+      "Sha256": "A6FCD252BB38265865FDA64220853A0AD70A2050A49B18E74920AB613E9E2285",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-export06\\Knx.Falcon\\nc.cs"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\28-Knx.Falcon.dll",
+      "Sha256": "734FCD353BAA36C0530D4AAB58B9BABCA6FFC3DFC55D8E1D961B7297D2145732",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-falcon-export06\\Knx.Falcon\\bin\\Release\\net48\\Knx.Falcon.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\29-ICSharpCode.Decompiler.dll",
+      "Sha256": "2515F46467E0959CC4A39203DABB313CCB3788CF24DDD779A9CD56D8040E2627",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\ICSharpCode.Decompiler.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\30-dnSpy.Decompiler.ILSpy.x.dll",
+      "Sha256": "D58144D552A72A8E3E13512A0626A1100D8784766D54C0969D3053323A68B4F3",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\dnSpy.Decompiler.ILSpy.x.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\31-dnSpy.Decompiler.ILSpy.Core.dll",
+      "Sha256": "0C3AF98647F1CECA970E498C7F35335894781292A138A8403EFD5337FE7BC33C",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\dnSpy.Decompiler.ILSpy.Core.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\32-dnSpy.Contracts.Logic.dll",
+      "Sha256": "C69C48F9AB45293091472A9834399ECE714654ED350FC07AC3799137926FE2A4",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\dnSpy.Contracts.Logic.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\33-dnSpy.Decompiler.dll",
+      "Sha256": "FE79CD6CB78FF949B7185F48CE274F5B91C36FBC128B83E920ACEF98CB7F0056",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\dnSpy.Decompiler.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\34-dnSpy.Console.dll",
+      "Sha256": "5088972AA9FAD931BEB698C33EFE16B9AAD7A9FA3C399E234275EF48699B8858",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\dnSpy.Console.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\direct-closure-accepted01\\35-dnlib.dll",
+      "Sha256": "566FDAB59C91A3C2EAB14A22B67F01CB3C0CDB48FA9B9B6677E2B32998636EFB",
+      "OriginalPath": "D:\\knx_analysis\\direct-closure-tools01\\dnlib.dll"
+    },
+    {
+      "Path": "D:\\knx_analysis\\names63-staged-firmware-corrections-review01-v472.xml",
+      "Sha256": "00B657C62A60F701F4920A1CE706F31EFAF169F62B02630B08BD0CBB67BF0E2E"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml",
+      "Sha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json",
+      "Sha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v472-firmware-corrections-methods01.json",
+      "Sha256": "6C08A28E7FC010B37410FC49D6FD4BD185B7918772022C1FBB656175B93CF612"
+    }
+  ]
+}
