@@ -22,6 +22,12 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `secure-session-handshake-send-keepalive-coverage-v432.json` — secure key
+  exchange, server/user authentication, connection setup, serialized sending,
+  disposal and timer keepalive chains; 379 exact aliases with prior names retained.
+  Twenty-two generated definitions stay unresolved pending printed owner evidence.
+  SDK/contract checks, 150 portable tests and 109 cached joins pass; 20,823
+  candidates remain. Consolidated ETS export/build/runtime checks are pending.
 - `connection-description-alias-correction-verification-v431.json` — replaces
   historical `ToString2` with `GetConnectionDescription` from endpoint/channel
   formatting, checking distinct ledger/map preimages. Original `ToString` and
