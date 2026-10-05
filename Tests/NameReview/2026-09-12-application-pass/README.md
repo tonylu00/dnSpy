@@ -22,16 +22,19 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `secure-sequence-services-coverage-v450.json` — 113 exact aliases across secure
-  sending/receiving service families, dictionaries, locks, shared counter, clock
-  seed and callback scopes. Interface parameter names match implementations;
-  peeking, allocating and raising a sequence remain distinct.
-  `receiving-sequence-contract-corrections-verification-v449.json` corrects ten
-  synchronous/lookup/update aliases across five complete interface families.
-  All other aliases/scopes remain intact; SDK/contract checks and 109 cached joins
-  pass; 20,543 candidates remain. Boolean/generated uncertainty stays explicit.
-  `public-key-service-graph-context-v450.json` verifies nine native members across
-  Falcon, TelegramRecorderView and Falcon.Monitor for the next connected block.
+- `key-services-cache-decryption-keyring-coverage-v451.json` — 115 exact scope
+  aliases across Falcon, TelegramRecorderView and Falcon.Monitor: key selection,
+  locked cache promotion/eviction, byte comparison, decryption and XML group-key
+  and sequence-counter persistence. Public APIs and canonical generated names
+  remain intact; 17 parameters, 96 locals and two document captures gain names.
+  SDK/contract checks and 109 cached joins pass; 20,543 lexical candidates remain
+  unchanged. Prior aliases and uncertainty records remain intact. Printed source
+  ownership and consolidated ETS/Apps checks remain pending. The next block
+  follows the physical Keyring schema/hash/signature/crypto/XML helper chain.
+  `public-key-service-graph-context-v450.json` binds all nine members of the three
+  public overload families. `secure-sequence-services-coverage-v450.json` and
+  `receiving-sequence-contract-corrections-verification-v449.json` retain the
+  preceding sequence-service naming and synchronous/lookup/update corrections.
   `managed-accessor-scope-verification-v444.json` records the shared tool repair:
   42 native/44 consumer/234 rebuilt checks and two compiled synthetic contexts
   preserve short property names. Consolidated ETS/Apps checks remain pending.
