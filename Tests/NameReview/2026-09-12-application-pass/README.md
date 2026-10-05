@@ -22,17 +22,17 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `memory-transfer-coverage-v463.json` — 143 aliases (one method, 59 fields,
-  30 parameters and 53 used locals) in connected memory read/write and routing-table
-  helpers. Extended CRC checks, delayed read-back, APDU limits, progress, cancellation
-  and state-gated chunk disposal retain their original behavior. Public SDK names
-  and parameters stay intact; four async types await frozen printed-owner evidence.
-  All 53 used slots in 18 selected methods are mapped; 323 fresh method signatures
+- `property-descriptions-coverage-v464.json` — 197 aliases (85 fields,
+  19 parameters and 93 used locals) in 11 async property call chains. Classic and
+  extended descriptions retain selection by ID versus index; count/value readers
+  retain distinct null, returned-failure and thrown-failure paths. Public SDK names
+  and parameters stay intact; 11 async types await frozen printed-owner evidence.
+  All 93 used slots in 24 selected methods are mapped; 64 fresh method signatures
   and scopes match their physical inventory. SDK/contract checks and both 109-module
-  cached joins pass. Lexical candidates fall from 20,491 to 20,443: 44 named candidate
-  definitions plus four types recorded unresolved. Next: property-transfer call chains.
-  `byte-frame-coverage-v462.json`, `tcp-udp-stream-coverage-v461.json` and
-  `async-discovery-helpers-coverage-v460.json` retain preceding evidence and proof links.
+  cached joins pass. Lexical candidates fall from 20,443 to 20,367: 65 named field
+  candidates plus 11 types recorded unresolved. Next: batch property read/write loops.
+  `memory-transfer-coverage-v463.json`, `byte-frame-coverage-v462.json` and
+  `tcp-udp-stream-coverage-v461.json` retain preceding evidence and proof links.
   Printed merging, consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
