@@ -22,19 +22,18 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `byte-frame-coverage-v462.json` — 80 aliases (four methods, nine fields,
-  49 parameters and 18 used locals) in connected byte/frame helpers. UInt48/UInt64
-  array readers match existing span overload names; checksum, raw-frame forwarding,
-  grouped hex formatting/parsing and lazy chunk capture roles are named from IL.
-  Original bounds/null/truncation, regex pair matching, CRC augmentation and chunk
-  size behavior stay intact. All 18 IL-used locals in 52 fresh methods are mapped.
-  The generated chunk iterator type stays explicitly unresolved pending printed owner.
-  SDK/contract checks and both 109-module cached joins pass. Lexical candidates fall
-  from 20,505 to 20,491: 13 named definitions plus one type recorded unresolved.
-  Next: the exact management async caller of CalculateCrc16, then connected transfers.
-  `tcp-udp-stream-coverage-v461.json` retains preceding transport/framer evidence;
-  `async-discovery-helpers-coverage-v460.json` retains discovery/Async scopes and earlier
-  proof links. Printed merging, consolidated ETS/unchanged-App checks and ETS 6.4 pending.
+- `memory-transfer-coverage-v463.json` — 143 aliases (one method, 59 fields,
+  30 parameters and 53 used locals) in connected memory read/write and routing-table
+  helpers. Extended CRC checks, delayed read-back, APDU limits, progress, cancellation
+  and state-gated chunk disposal retain their original behavior. Public SDK names
+  and parameters stay intact; four async types await frozen printed-owner evidence.
+  All 53 used slots in 18 selected methods are mapped; 323 fresh method signatures
+  and scopes match their physical inventory. SDK/contract checks and both 109-module
+  cached joins pass. Lexical candidates fall from 20,491 to 20,443: 44 named candidate
+  definitions plus four types recorded unresolved. Next: property-transfer call chains.
+  `byte-frame-coverage-v462.json`, `tcp-udp-stream-coverage-v461.json` and
+  `async-discovery-helpers-coverage-v460.json` retain preceding evidence and proof links.
+  Printed merging, consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
