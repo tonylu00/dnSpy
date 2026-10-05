@@ -142,6 +142,16 @@ What lives here:
   seed the maximum ID number, while the creator constructs IDs. Every other alias and
   scope is retained. Native SDK/contract checks pass; no new export/build or
   runtime result is claimed. Continue transaction, persistence and caller chains.
+- `persistence-coverage-v480.json` — 131 aliases connect transaction creation,
+  queued actions/enlistments, write suppression, dirty roots and file journals:
+  21 fields, 17 parameters and 93 locals. Original IL for 89 methods supports the
+  roles; 89 unused/write-only slots retain explicit typed uncertainty.
+  `persistence-role-corrections-verification-v481.json` removes two historical
+  numeric suffixes with `EnsureFileTransaction`/`BeginFileTransaction`, and names
+  three persistence predicates from their full conditions and caller branches.
+  Prior aliases, scopes and uncertainty survive. Native SDK/contract checks and
+  cached 109-module joins pass with 19,782 candidates remaining. Current v481 is
+  not exported; full build, broader App/runtime and ETS 6.4 closure remain open.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
