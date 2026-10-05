@@ -22,17 +22,19 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `property-descriptions-coverage-v464.json` — 197 aliases (85 fields,
-  19 parameters and 93 used locals) in 11 async property call chains. Classic and
-  extended descriptions retain selection by ID versus index; count/value readers
-  retain distinct null, returned-failure and thrown-failure paths. Public SDK names
-  and parameters stay intact; 11 async types await frozen printed-owner evidence.
-  All 93 used slots in 24 selected methods are mapped; 64 fresh method signatures
+- `property-transfer-coverage-v465.json` — 191 aliases (97 fields,
+  15 parameters and 79 used locals) in seven async property-transfer chains.
+  Classic writes retain echoed-data verification; extended writes retain confirmed
+  and send-only modes. Each batch loop retains its original chunk sizing, offset
+  updates, progress arithmetic, cancellation and cleanup. Public SDK names and
+  parameters stay intact; seven async types await frozen printed-owner evidence.
+  All 79 used slots in 14 selected methods are mapped; 30 fresh method signatures
   and scopes match their physical inventory. SDK/contract checks and both 109-module
-  cached joins pass. Lexical candidates fall from 20,443 to 20,367: 65 named field
-  candidates plus 11 types recorded unresolved. Next: batch property read/write loops.
-  `memory-transfer-coverage-v463.json`, `byte-frame-coverage-v462.json` and
-  `tcp-udp-stream-coverage-v461.json` retain preceding evidence and proof links.
+  cached joins pass. Lexical candidates fall from 20,367 to 20,283: 77 named field
+  candidates plus seven types recorded unresolved. Next: connected interface-object
+  property discovery and remaining management call chains.
+  `property-descriptions-coverage-v464.json`, `memory-transfer-coverage-v463.json`
+  and `byte-frame-coverage-v462.json` retain preceding evidence and proof links.
   Printed merging, consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
