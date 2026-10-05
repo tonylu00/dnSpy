@@ -343190,7 +343190,7 @@
    "Token": "0x060029D3",
    "Signature": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/DeviceInfo Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::d(Knx.Ets.ObjectModel.Project.IDevice)",
    "OriginalName": "d",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060029D3. Read application limits/model, count sending/non-sending connectors and distinct group addresses into DeviceInfo; null if no application info. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -343202,7 +343202,7 @@
      "Sequence": 1,
      "OriginalName": "idevice_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "device"
     }
    ],
    "LocalNames": [
@@ -343219,7 +343219,28 @@
    ],
    "NewName": "CollectDeviceInfo",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060029D3. Read application limits/model, count sending/non-sending connectors and distinct group addresses into DeviceInfo; null if no application info. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -343230,7 +343251,7 @@
    "Token": "0x060029D4",
    "Signature": "System.UInt32 Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::a(Knx.Ets.ObjectModel.Project.IDevice,Knx.Ets.ObjectModel.Project.IComObjectInstance,Knx.Ets.ObjectModel.Project.IGroupAddress)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060029D4. Build distinct sending addresses from other owners plus proposed address; gather non-sending addresses outside set, add previous sending address if absent and count distinct. Generated capture state retained. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -343244,19 +343265,19 @@
      "Sequence": 1,
      "OriginalName": "idevice_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "device"
     },
     {
      "Sequence": 2,
      "OriginalName": "icomObjectInstance_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "comObjectInstance"
     },
     {
      "Sequence": 3,
      "OriginalName": "igroupAddress_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "groupAddress"
     }
    ],
    "LocalNames": [
@@ -343268,12 +343289,12 @@
     {
      "Index": 1,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupAddress",
-     "NewName": ""
+     "NewName": "previousSendingGroupAddress"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
-     "NewName": ""
+     "NewName": "shiftableGroupAddresses"
     },
     {
      "Index": 3,
@@ -343288,7 +343309,28 @@
    ],
    "NewName": "DetermineShiftableConnectorsCount",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060029D4. Build distinct sending addresses from other owners plus proposed address; gather non-sending addresses outside set, add previous sending address if absent and count distinct. Generated capture state retained. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -343299,7 +343341,7 @@
    "Token": "0x060029D5",
    "Signature": "System.Int32 Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::c(Knx.Ets.ObjectModel.Project.IDevice)",
    "OriginalName": "c",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060029D5. Project all connectors to distinct group addresses and count. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -343311,7 +343353,7 @@
      "Sequence": 1,
      "OriginalName": "idevice_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "device"
     }
    ],
    "LocalNames": [
@@ -343323,7 +343365,23 @@
    ],
    "NewName": "DetermineGroupAddressCount",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060029D5. Project all connectors to distinct group addresses and count. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -343334,7 +343392,7 @@
    "Token": "0x060029D6",
    "Signature": "Knx.Ets.Common.Types.Enumerations.ManagementModels Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::b(Knx.Ets.ObjectModel.Project.IDevice)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060029D6. Look up device MaskVersion Id in master data, return model or None. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -343346,7 +343404,7 @@
      "Sequence": 1,
      "OriginalName": "idevice_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "device"
     }
    ],
    "LocalNames": [
@@ -343358,12 +343416,12 @@
     {
      "Index": 1,
      "ExpectedType": "Knx.Ets.ObjectModel.MasterData.KnxMasterData",
-     "NewName": ""
+     "NewName": "masterData"
     },
     {
      "Index": 2,
      "ExpectedType": "Knx.Ets.ObjectModel.MasterData.MaskVersion",
-     "NewName": ""
+     "NewName": "maskVersion"
     },
     {
      "Index": 3,
@@ -343378,7 +343436,28 @@
    ],
    "NewName": "DetermineManagementModel",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060029D6. Look up device MaskVersion Id in master data, return model or None. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -343389,7 +343468,7 @@
    "Token": "0x060029D7",
    "Signature": "System.UInt32 Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::a(Knx.Ets.ObjectModel.Project.IDevice)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060029D7. Use application com-object-ref cache highest number; else maximum instantiated object Number; else zero. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -343401,7 +343480,7 @@
      "Sequence": 1,
      "OriginalName": "idevice_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "device"
     }
    ],
    "LocalNames": [
@@ -343418,7 +343497,28 @@
    ],
    "NewName": "GetHighestCoNumberFromDevice",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060029D7. Use application com-object-ref cache highest number; else maximum instantiated object Number; else zero. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -349092,7 +349192,7 @@
    "Token": "0x06003352",
    "Signature": "System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.ISegment,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>> Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.ISegment>)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x06003352. Keep RF segments containing a ready slow resender; null if none, otherwise create association snapshot. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -349104,14 +349204,14 @@
      "Sequence": 1,
      "OriginalName": "ienumerable_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "segmentsToCheck"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment>",
-     "NewName": ""
+     "NewName": "resenderSegments"
     },
     {
      "Index": 1,
@@ -349126,7 +349226,28 @@
    ],
    "NewName": "DetermineAssociationsList",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x06003352. Keep RF segments containing a ready slow resender; null if none, otherwise create association snapshot. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -349137,7 +349258,7 @@
    "Token": "0x06003353",
    "Signature": "System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.ISegment,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>> Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment>)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x06003353. ToDictionary maps each segment to CheckSegment association snapshot. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -349149,7 +349270,7 @@
      "Sequence": 1,
      "OriginalName": "list_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "segments"
     }
    ],
    "LocalNames": [
@@ -349161,7 +349282,23 @@
    ],
    "NewName": "CreateAssociationsList",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x06003353. ToDictionary maps each segment to CheckSegment association snapshot. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -349172,7 +349309,7 @@
    "Token": "0x06003358",
    "Signature": "System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>> Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::b(Knx.Ets.ObjectModel.Project.ISegment)",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x06003358. Collect ready transmitters by address. Filter connected receiving objects/interfaces to slow RF receivers in matching domain; project receiver and transmitter addresses into tuple and Add by group-address value. Preserve both Add paths and order. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -349184,19 +349321,19 @@
      "Sequence": 1,
      "OriginalName": "isegment_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "segment"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>",
-     "NewName": ""
+     "NewName": "associationsByAddress"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Collections.Generic.Dictionary`2/Enumerator<Knx.Ets.ObjectModel.Project.IGroupAddress,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>>",
-     "NewName": ""
+     "NewName": "readyAssociationEnumerator"
     },
     {
      "Index": 2,
@@ -349206,32 +349343,32 @@
     {
      "Index": 3,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData>",
-     "NewName": ""
+     "NewName": "receivingComObjects"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IBusInterface>",
-     "NewName": ""
+     "NewName": "receivingBusInterfaces"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>",
-     "NewName": ""
+     "NewName": "comObjectReceiverAddresses"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>",
-     "NewName": ""
+     "NewName": "comObjectTransmitterAddresses"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>",
-     "NewName": ""
+     "NewName": "busInterfaceReceiverAddresses"
     },
     {
      "Index": 8,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>",
-     "NewName": ""
+     "NewName": "busInterfaceTransmitterAddresses"
     },
     {
      "Index": 9,
@@ -349246,7 +349383,28 @@
    ],
    "NewName": "CheckSegment",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x06003358. Collect ready transmitters by address. Filter connected receiving objects/interfaces to slow RF receivers in matching domain; project receiver and transmitter addresses into tuple and Add by group-address value. Preserve both Add paths and order. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 9,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 10,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -349257,7 +349415,7 @@
    "Token": "0x06003359",
    "Signature": "System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.IGroupAddress,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>> Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(Knx.Ets.ObjectModel.Project.ISegment)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x06003359. Filter addressed Ready transmitters in same RF domain; accumulate output/bidirectional connected objects, order sending connectors by object number, deduplicate parent devices per address; include bus-interface associations. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -349269,7 +349427,7 @@
      "Sequence": 1,
      "OriginalName": "isegment_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "segment"
     }
    ],
    "LocalNames": [
@@ -349281,37 +349439,37 @@
     {
      "Index": 1,
      "ExpectedType": "System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.IGroupAddress,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>>",
-     "NewName": ""
+     "NewName": "transmittersByGroupAddress"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>",
-     "NewName": ""
+     "NewName": "readyTransmitters"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData>",
-     "NewName": ""
+     "NewName": "sendingComObjects"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Collections.Generic.List`1/Enumerator<Knx.Ets.ObjectModel.Project.IDevice>",
-     "NewName": ""
+     "NewName": "deviceEnumerator"
     },
     {
      "Index": 5,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IDevice",
-     "NewName": ""
+     "NewName": "device"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.ConnectorData>",
-     "NewName": ""
+     "NewName": "connectorEnumerator"
     },
     {
      "Index": 7,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.ConnectorData",
-     "NewName": ""
+     "NewName": "connectorData"
     },
     {
      "Index": 8,
@@ -349326,7 +349484,28 @@
    ],
    "NewName": "DetermineReadyAssociations",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x06003359. Filter addressed Ready transmitters in same RF domain; accumulate output/bidirectional connected objects, order sending connectors by object number, deduplicate parent devices per address; include bus-interface associations. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 8,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 9,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -349337,7 +349516,7 @@
    "Token": "0x0600335B",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x0600335B. Require nonparked Slow receiver and any ready transmitter in same RF domain; generated capture untouched. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -349350,13 +349529,13 @@
      "Sequence": 1,
      "OriginalName": "comObjectInstanceNonDefaultData_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "comObjectData"
     },
     {
      "Sequence": 2,
      "OriginalName": "list_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "readyTransmitters"
     }
    ],
    "LocalNames": [
@@ -349368,7 +349547,7 @@
     {
      "Index": 1,
      "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFRxCapabilities>",
-     "NewName": ""
+     "NewName": "receiveCapabilities"
     },
     {
      "Index": 2,
@@ -349388,7 +349567,33 @@
    ],
    "NewName": "CheckReceivingAssociation",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x0600335B. Require nonparked Slow receiver and any ready transmitter in same RF domain; generated capture untouched. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -349399,7 +349604,7 @@
    "Token": "0x0600335C",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(Knx.Ets.ObjectModel.Project.IBusInterface,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x0600335C. Require nonparked Slow interface parent and any ready transmitter in same RF domain; generated capture untouched. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -349412,13 +349617,13 @@
      "Sequence": 1,
      "OriginalName": "ibusInterface_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "busInterface"
     },
     {
      "Sequence": 2,
      "OriginalName": "list_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "readyTransmitters"
     }
    ],
    "LocalNames": [
@@ -349430,7 +349635,7 @@
     {
      "Index": 1,
      "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFRxCapabilities>",
-     "NewName": ""
+     "NewName": "receiveCapabilities"
     },
     {
      "Index": 2,
@@ -349450,7 +349655,33 @@
    ],
    "NewName": "CheckBusInterface",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x0600335C. Require nonparked Slow interface parent and any ready transmitter in same RF domain; generated capture untouched. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -350315,7 +350546,7 @@
    "Token": "0x060033E1",
    "Signature": "System.Void Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060033E1. Reset legacy-ready cache for selected devices and supplied segments; raise slow-resender eligibility for ReadyFast receivers, excluding selected devices in additional segment pass. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -350325,27 +350556,27 @@
     {
      "Index": 0,
      "ExpectedType": "System.Collections.Generic.List`1/Enumerator<Knx.Ets.ObjectModel.Project.IDevice>",
-     "NewName": ""
+     "NewName": "deviceEnumerator"
     },
     {
      "Index": 1,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IDevice",
-     "NewName": ""
+     "NewName": "device"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.IDevice>",
-     "NewName": ""
+     "NewName": "readyFastDeviceEnumerator"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Collections.Generic.List`1/Enumerator<Knx.Ets.ObjectModel.Project.ISegment>",
-     "NewName": ""
+     "NewName": "segmentEnumerator"
     },
     {
      "Index": 4,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IDevice",
-     "NewName": ""
+     "NewName": "readyFastDevice"
     },
     {
      "Index": 5,
@@ -350360,7 +350591,28 @@
    ],
    "NewName": "Reset",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060033E1. Reset legacy-ready cache for selected devices and supplied segments; raise slow-resender eligibility for ReadyFast receivers, excluding selected devices in additional segment pass. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -372494,7 +372746,7 @@
    "Token": "0x060042C5",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nReviewed method correction: Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. True if main types match OR mismatch callback approves; used as assignment gate42C4. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -372517,7 +372769,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "CheckIfDptMainTypeMatch",
+   "NewName": "CanChangeDatapointType",
    "Unresolved": false,
    "UnresolvedReason": ""
   },
@@ -383618,7 +383870,7 @@
    "Token": "0x060050B8",
    "Signature": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Operations.Validators.IValidator> Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::b()",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Original ObjectModel FBA7D888/e025be0a 0x060050B8. Build split/merge, broken, lock, security-table and communication-limit validators for target connector. Preserve meaningful definitions, overloads and generated owners.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -383628,7 +383880,7 @@
     {
      "Index": 0,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Operations.Validators.IValidator>",
-     "NewName": ""
+     "NewName": "validators"
     },
     {
      "Index": 1,
@@ -383638,7 +383890,23 @@
    ],
    "NewName": "CreateValidators",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a 0x060050B8. Build split/merge, broken, lock, security-table and communication-limit validators for target connector. Preserve meaningful definitions, overloads and generated owners."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -803616,6 +803884,2754 @@
      "OriginalName": "iconnector_0",
      "HasMetadata": true,
      "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation",
+   "Token": "0x060042C4",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation::SpecializedExecute()",
+   "OriginalName": "SpecializedExecute",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060042C4. Only write new datatype when absent, no connectors, or42C5 match/confirmation gate permits. Own Undo/Redo bodies empty; framework restoration is a separate contract. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "changeAllowed"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation/<>c",
+   "Token": "0x060042CB",
+   "Signature": "Knx.Ets.ObjectModel.Project.DptIdRefs Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation/<>c::<CheckIfDptMainTypeMatch>b__6_0(Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData)",
+   "OriginalName": "<CheckIfDptMainTypeMatch>b__6_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060042CB. Project connected nondefault com object to DatapointTypes references. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData comObjectInstanceNonDefaultData_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "comObjectInstanceNonDefaultData_0",
+     "HasMetadata": true,
+     "NewName": "comObjectData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x060050BA",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::SpecializedExecute()",
+   "OriginalName": "SpecializedExecute",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060050BA. EnsureExclusiveSending may force target true if no alternative. Assign effective result under undo suppression, notify plugin if sender identity changes, invalidate communication loaded, update RF eligibility and dirty target/device. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "effectiveSend"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.UndoRedo.UndoRedoEnable/Frame",
+     "NewName": "undoDisabledScope"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x060050BB",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::a()",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060050BB. When enabling, turn off another sender. When disabling, promote first other connector; if none, return true to retain target as sender. Both flag changes suppress undo. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Boolean",
+     "NewName": "effectiveSend"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.IConnector",
+     "NewName": "otherSendingConnector"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.ObjectModel.UndoRedo.UndoRedoEnable/Frame",
+     "NewName": "undoDisabledScope"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.IConnector",
+     "NewName": "replacementSendingConnector"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x060050BC",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::SpecializedUndo()",
+   "OriginalName": "SpecializedUndo",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060050BC. If changed, restore previous sender true and new sender false when distinct, then undo RF helper. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.UndoRedo.UndoRedoEnable/Frame",
+     "NewName": "undoDisabledScope"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x060050BD",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::SpecializedRedo()",
+   "OriginalName": "SpecializedRedo",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060050BD. If changed, previous sender false and new sender true when distinct, then redo RF helper. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.UndoRedo.UndoRedoEnable/Frame",
+     "NewName": "undoDisabledScope"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x060050BF",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::b(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "b",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060050BF. Predicate requires Send and reference inequality with target. Prior IsSending alias omits other-connector condition. Preserve meaningful definitions, overloads and generated owners.\nReviewed method correction: Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. Requires Send and reference inequality with target; selects old sender to disable in50BB. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_3",
+     "HasMetadata": true,
+     "NewName": "candidateConnector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "IsOtherSendingConnector",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "IsSending",
+     "Alias": "IsOtherSendingConnector",
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. Requires Send and reference inequality with target; selects old sender to disable in50BB. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts."
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x060050C0",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::a(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060050C0. Predicate uses reference inequality with target to select replacement when disabling. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_3",
+     "HasMetadata": true,
+     "NewName": "candidateConnector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator",
+   "Token": "0x060029D0",
+   "Signature": "Knx.Ets.ObjectModel.Operations.ValidationResult Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::Validate()",
+   "OriginalName": "Validate",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029D0. Skip limit check when plugin handles communication limits; Bcu1/2 path fails when29D1 returns false. Other model branches currently succeed. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/DeviceInfo",
+     "NewName": "deviceInfo"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.Common.Types.Enumerations.ManagementModels",
+     "NewName": "managementModel"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator",
+   "Token": "0x060029D1",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::b(Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/DeviceInfo)",
+   "OriginalName": "b",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029D1. True means group/association limits fit directly or with shiftable entries. Address count above254 fails. Existing inverse alias corrected separately. Preserve meaningful definitions, overloads and generated owners.\nReviewed method correction: Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. True accepts bounded counts, false yields AssociationLimitReached in29D0. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/DeviceInfo deviceInfo_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "deviceInfo_0",
+     "HasMetadata": true,
+     "NewName": "deviceInfo"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "FitsAssociationLimits",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "ExceedsAssociationLimits",
+     "Alias": "FitsAssociationLimits",
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. True accepts bounded counts, false yields AssociationLimitReached in29D0. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts."
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator",
+   "Token": "0x060029D2",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::a(Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/DeviceInfo)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029D2. Compute ComObjectCount minus SendingCount, then minimum with shiftable connectors. Subtract shiftable entries before static/dynamic association-limit comparisons; no mutation of connector Send flags here. Preserve meaningful definitions, overloads and generated owners.\nReviewed method correction: Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. Calculates possible shift count then returns static/dynamic bounds;29D1 consumes boolean acceptance. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/DeviceInfo deviceInfo_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "deviceInfo_0",
+     "HasMetadata": true,
+     "NewName": "deviceInfo"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt32",
+     "NewName": "unusedSendingEntries"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt32",
+     "NewName": "shiftableEntries"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "FitsAssociationLimitsWithShiftableConnectors",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "UpdateDeviceInfoWithShiftableConnectors",
+     "Alias": "FitsAssociationLimitsWithShiftableConnectors",
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. Calculates possible shift count then returns static/dynamic bounds;29D1 consumes boolean acceptance. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts."
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c",
+   "Token": "0x060029EF",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c::<CollectDeviceInfo>b__6_0(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<CollectDeviceInfo>b__6_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029EF. CollectDeviceInfo counts Send true. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c",
+   "Token": "0x060029F0",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c::<CollectDeviceInfo>b__6_1(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<CollectDeviceInfo>b__6_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F0. CollectDeviceInfo counts Send false. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c",
+   "Token": "0x060029F1",
+   "Signature": "Knx.Ets.ObjectModel.Project.IGroupAddress Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c::<DetermineShiftableConnectorsCount>b__7_1(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<DetermineShiftableConnectorsCount>b__7_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F1. Project filtered other sending connector to group address. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c",
+   "Token": "0x060029F2",
+   "Signature": "Knx.Ets.ObjectModel.Project.IGroupAddress Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c::<DetermineShiftableConnectorsCount>b__7_3(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<DetermineShiftableConnectorsCount>b__7_3",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F2. Project filtered non-sending connector to group address. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c",
+   "Token": "0x060029F3",
+   "Signature": "Knx.Ets.ObjectModel.Project.IGroupAddress Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c::<DetermineGroupAddressCount>b__8_0(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<DetermineGroupAddressCount>b__8_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F3. Project connector to group address for distinct count. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c",
+   "Token": "0x060029F4",
+   "Signature": "System.UInt32 Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c::<GetHighestCoNumberFromDevice>b__10_0(Knx.Ets.ObjectModel.Project.IComObjectInstance)",
+   "OriginalName": "<GetHighestCoNumberFromDevice>b__10_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F4. Select object Number for maximum fallback. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IComObjectInstance icomObjectInstance_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "icomObjectInstance_0",
+     "HasMetadata": true,
+     "NewName": "comObjectInstance"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c__DisplayClass7_0",
+   "Token": "0x060029F6",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c__DisplayClass7_0::<DetermineShiftableConnectorsCount>b__0(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<DetermineShiftableConnectorsCount>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F6. Keep sending connector whose parent owner differs from captured com object. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c__DisplayClass7_0",
+   "Token": "0x060029F7",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c__DisplayClass7_0::<DetermineShiftableConnectorsCount>b__2(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "<DetermineShiftableConnectorsCount>b__2",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F7. Keep nonsending connector whose address absent from captured sending set. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_0",
+     "HasMetadata": true,
+     "NewName": "connector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c__DisplayClass9_0",
+   "Token": "0x060029F9",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator/<>c__DisplayClass9_0::<DetermineManagementModel>b__0(Knx.Ets.ObjectModel.MasterData.MaskVersion)",
+   "OriginalName": "<DetermineManagementModel>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060029F9. Compare mask Id with captured device.MaskVersion. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.MasterData.MaskVersion maskVersion_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "maskVersion_0",
+     "HasMetadata": true,
+     "NewName": "maskVersion"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x06002B77",
+   "Signature": "Knx.Ets.ObjectModel.Operations.ValidationResult Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::SpecializedValidate()",
+   "OriginalName": "SpecializedValidate",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06002B77. Select resulting sending connector/secure address; pass devices list to MaxTableCheck, then attach its reported devices to limit failure. DeviceAddress.HasValue gates check. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
+     "NewName": "secureGroupAddresses"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.IConnector",
+     "NewName": "resultingSendingConnector"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>",
+     "NewName": "devicesExceedingLimit"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Nullable`1<System.Byte>",
+     "NewName": "deviceAddress"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x06002B78",
+   "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress> Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::a(Knx.Ets.ObjectModel.Interfaces.IConnector&)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06002B78. Out target when enabling, first other owner connector when disabling; return its secure singleton address or null. Existing TryFindConnector name omits address result. Preserve meaningful definitions, overloads and generated owners.\nReviewed method correction: Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. Returns secure address enumerable/null, with planned resulting sending connector as out parameter; does not return boolean. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector& iconnector_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_1",
+     "HasMetadata": true,
+     "NewName": "resultingSendingConnector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetSecureGroupAddressesForSendingConnector",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "TryFindConnector",
+     "Alias": "GetSecureGroupAddressesForSendingConnector",
+     "Evidence": "Original ObjectModel FBA7D888/e025be0a complete native bodies and sole in-module caller inspection. Returns secure address enumerable/null, with planned resulting sending connector as out parameter; does not return boolean. Preserve signatures, original behavior, existing scopes, generated owners and external runtime contracts."
+    }
+   ]
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x06002B79",
+   "Signature": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress> Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::a(Knx.Ets.ObjectModel.Project.IGroupAddress)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06002B79. Return singleton address only when IsGaSecure, else null. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IGroupAddress igroupAddress_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupAddress_0",
+     "HasMetadata": true,
+     "NewName": "groupAddress"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x06002B7A",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::a(Knx.Ets.ObjectModel.Interfaces.IConnector)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06002B7A. Exclude target by reference identity for replacement search. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.IConnector iconnector_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iconnector_1",
+     "HasMetadata": true,
+     "NewName": "candidateConnector"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater",
+   "Token": "0x060033E0",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater::Update(System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment>)",
+   "OriginalName": "Update",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033E0. Combine stored supplied affected segments with segments of nonparked selected devices; Distinct feeds config resetter. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment> affectedSegments"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "affectedSegments",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment>",
+     "NewName": "segmentsToCheck"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033E6",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<.ctor>b__3_0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<.ctor>b__3_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033E6. Require RF segment and present Ready transmitter or present Slow receiver capabilities. Nullable enum temporaries retained by exact slots. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.ISegment",
+     "NewName": "segment"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFTxCapabilities>",
+     "NewName": "transmitCapabilities"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFTxCapabilities",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFRxCapabilities>",
+     "NewName": "receiveCapabilities"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFTxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033E7",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<.ctor>b__3_1(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<.ctor>b__3_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033E7. Constructor excludes parked device when selecting snapshot segments. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033E8",
+   "Signature": "Knx.Ets.ObjectModel.Project.ISegment Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<.ctor>b__3_2(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<.ctor>b__3_2",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033E8. Constructor projects selected device segment. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033E9",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<Update>b__4_0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<Update>b__4_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033E9. Update excludes parked device when selecting current segments. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033EA",
+   "Signature": "Knx.Ets.ObjectModel.Project.ISegment Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<Update>b__4_1(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<Update>b__4_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033EA. Update projects selected device segment. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033EB",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<Reset>b__5_0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<Reset>b__5_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033EB. Reset predicate requires present ReadyFast receiver capability. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFRxCapabilities>",
+     "NewName": "receiveCapabilities"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c",
+   "Token": "0x060033EC",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater/<>c::<Reset>b__5_1(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<Reset>b__5_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060033EC. Additional-segment reset predicate requires present ReadyFast receiver capability. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFRxCapabilities>",
+     "NewName": "receiveCapabilities"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFRxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler",
+   "Token": "0x06003354",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::DoIt(System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment>)",
+   "OriginalName": "DoIt",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003354. Compare only current segments also in original snapshot; if associations differ, clear medium config loaded on first ready slow resender. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment> segmentsToCheck"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "segmentsToCheck",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.ISegment,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>>",
+     "NewName": "currentAssociationsBySegment"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.Dictionary`2/Enumerator<Knx.Ets.ObjectModel.Project.ISegment,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>>",
+     "NewName": "segmentEnumerator"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.KeyValuePair`2<Knx.Ets.ObjectModel.Project.ISegment,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>>",
+     "NewName": "segmentAssociations"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>",
+     "NewName": "originalAssociations"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.IDevice",
+     "NewName": "resender"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler",
+   "Token": "0x06003355",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003355. Compare counts/key sets, then order-sensitive SequenceEqual for receiver and transmitter lists. False temporary exits protected enumeration; all equal returns true. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>> dictionary_1",
+    "2: System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>> dictionary_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "dictionary_1",
+     "HasMetadata": true,
+     "NewName": "originalAssociations"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "dictionary_2",
+     "HasMetadata": true,
+     "NewName": "currentAssociations"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.Dictionary`2/Enumerator<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>",
+     "NewName": "associationEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.KeyValuePair`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>",
+     "NewName": "association"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "entriesMatch"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler",
+   "Token": "0x0600335A",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a(System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>,System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.IGroupAddress,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>>)",
+   "OriginalName": "a",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600335A. Walk device bus interfaces/connectors and append distinct parent device to each group-address entry. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice> list_0",
+    "2: System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.IGroupAddress,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice>> dictionary_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "list_0",
+     "HasMetadata": true,
+     "NewName": "devices"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "dictionary_1",
+     "HasMetadata": true,
+     "NewName": "transmittersByGroupAddress"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1/Enumerator<Knx.Ets.ObjectModel.Project.IDevice>",
+     "NewName": "deviceEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.IBusInterface>",
+     "NewName": "busInterfaceEnumerator"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.BusInterfaceConnector>",
+     "NewName": "connectorEnumerator"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.BusInterfaceConnector",
+     "NewName": "busInterfaceConnector"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x0600335F",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<DetermineAssociationsList>b__3_0(Knx.Ets.ObjectModel.Project.ISegment)",
+   "OriginalName": "<DetermineAssociationsList>b__3_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600335F. RF segment contains at least one ready slow resender. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ISegment isegment_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "isegment_0",
+     "HasMetadata": true,
+     "NewName": "segment"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003360",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<DetermineAssociationsList>b__3_1(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<DetermineAssociationsList>b__3_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003360. Predicate reads IsReadySlowResender. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003362",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<DoIt>b__5_0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<DoIt>b__5_0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003362. DoIt selects first ready slow resender for flag reset. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003363",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<CheckSegment>b__9_1(Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData)",
+   "OriginalName": "<CheckSegment>b__9_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003363. Accept input or bidirectional group-object direction. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData comObjectInstanceNonDefaultData_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "comObjectInstanceNonDefaultData_0",
+     "HasMetadata": true,
+     "NewName": "comObjectData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003364",
+   "Signature": "Knx.Ets.ObjectModel.Project.IndividualAddress Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<CheckSegment>b__9_3(Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData)",
+   "OriginalName": "<CheckSegment>b__9_3",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003364. Project receiving object parent individual address. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData comObjectInstanceNonDefaultData_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "comObjectInstanceNonDefaultData_0",
+     "HasMetadata": true,
+     "NewName": "comObjectData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003365",
+   "Signature": "Knx.Ets.ObjectModel.Project.IndividualAddress Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<CheckSegment>b__9_4(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<CheckSegment>b__9_4",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003365. Project ready transmitter individual address for object tuple. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003366",
+   "Signature": "Knx.Ets.ObjectModel.Project.IndividualAddress Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<CheckSegment>b__9_5(Knx.Ets.ObjectModel.Project.IBusInterface)",
+   "OriginalName": "<CheckSegment>b__9_5",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003366. Project receiving interface parent individual address. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IBusInterface ibusInterface_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ibusInterface_0",
+     "HasMetadata": true,
+     "NewName": "busInterface"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003367",
+   "Signature": "Knx.Ets.ObjectModel.Project.IndividualAddress Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<CheckSegment>b__9_6(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<CheckSegment>b__9_6",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003367. Project ready transmitter individual address for interface tuple. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x06003368",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<DetermineReadyAssociations>b__10_1(Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData)",
+   "OriginalName": "<DetermineReadyAssociations>b__10_1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003368. Require connectors and output/bidirectional object direction. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ComObjectInstanceNonDefaultData comObjectInstanceNonDefaultData_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "comObjectInstanceNonDefaultData_0",
+     "HasMetadata": true,
+     "NewName": "comObjectData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x0600336A",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<DetermineReadyAssociations>b__10_4(Knx.Ets.ObjectModel.Project.ConnectorData)",
+   "OriginalName": "<DetermineReadyAssociations>b__10_4",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600336A. Filter snapshot connectors by Send. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ConnectorData connectorData_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connectorData_0",
+     "HasMetadata": true,
+     "NewName": "connectorData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c",
+   "Token": "0x0600336B",
+   "Signature": "System.UInt32 Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c::<DetermineReadyAssociations>b__10_3(Knx.Ets.ObjectModel.Project.ConnectorData)",
+   "OriginalName": "<DetermineReadyAssociations>b__10_3",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600336B. Order sending connectors by parent object Number. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ConnectorData connectorData_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "connectorData_0",
+     "HasMetadata": true,
+     "NewName": "connectorData"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass10_0",
+   "Token": "0x0600336D",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass10_0::<DetermineReadyAssociations>b__0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<DetermineReadyAssociations>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600336D. Require assigned device address, equal segment RF domain and present Ready transmitter capability. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "device"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<System.Byte>",
+     "NewName": "deviceAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Nullable`1<Knx.Ets.Common.Types.Enumerations.RFTxCapabilities>",
+     "NewName": "transmitCapabilities"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFTxCapabilities",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.RFTxCapabilities",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass12_0",
+   "Token": "0x0600336F",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass12_0::<CheckReceivingAssociation>b__0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<CheckReceivingAssociation>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600336F. Compare transmitter domain with captured receiving object parent domain. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "readyTransmitter"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass13_0",
+   "Token": "0x06003371",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass13_0::<CheckBusInterface>b__0(Knx.Ets.ObjectModel.Project.IDevice)",
+   "OriginalName": "<CheckBusInterface>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003371. Compare transmitter domain with captured receiving interface parent domain. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IDevice idevice_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "idevice_0",
+     "HasMetadata": true,
+     "NewName": "readyTransmitter"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass9_0",
+   "Token": "0x06003374",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler/<>c__DisplayClass9_0::<CheckSegment>b__2(Knx.Ets.ObjectModel.Project.IBusInterface)",
+   "OriginalName": "<CheckSegment>b__2",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06003374. Pass candidate interface and captured ready-transmitter list to CheckBusInterface. Preserve meaningful definitions, overloads and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IBusInterface ibusInterface_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ibusInterface_0",
+     "HasMetadata": true,
+     "NewName": "busInterface"
     }
    ],
    "LocalNames": [
@@ -1244271,6 +1247287,468 @@
    "Unresolved": true,
    "UnresolvedReason": "UnlinkConnectorOperation IMessageBus field a has no constructor assignment or read in all 34 original owner/generated methods inspected. Type alone does not establish a messaging role. Need physical cross-module/reflection use or original semantic evidence before assigning a readable name. Preserve field and runtime metadata.",
    "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation",
+   "Token": "0x04001D2F",
+   "Signature": "Knx.Ets.ObjectModel.Project.IGroupAddress Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. ChangeGroupAddressDatapoint42C2 stores inputs;42C4 changes datapoint if42C5 accepts matching main types or mismatch callback result. Public input names retained.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "groupAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation",
+   "Token": "0x04001D30",
+   "Signature": "Knx.Ets.ObjectModel.Interfaces.INamedDomObject Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation::b",
+   "OriginalName": "b",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. ChangeGroupAddressDatapoint42C2 stores inputs;42C4 changes datapoint if42C5 accepts matching main types or mismatch callback result. Public input names retained.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "newDatapointType",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation",
+   "Token": "0x04001D31",
+   "Signature": "System.Func`1<System.Boolean> Knx.Ets.ObjectModel.Operations.GroupAddress.ChangeGroupAddressDatapointOperation::c",
+   "OriginalName": "c",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. ChangeGroupAddressDatapoint42C2 stores inputs;42C4 changes datapoint if42C5 accepts matching main types or mismatch callback result. Public input names retained.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "confirmDatapointMismatch",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x040024FC",
+   "Signature": "Knx.Ets.ObjectModel.Interfaces.IConnector Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connector",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x040024FD",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::b",
+   "OriginalName": "b",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "requestedSend",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x040024FE",
+   "Signature": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::c",
+   "OriginalName": "c",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "rfResenderUpdater",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x040024FF",
+   "Signature": "Knx.Ets.ObjectModel.Operations.IFlagHandler Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::d",
+   "OriginalName": "d",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "flagHandler",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x04002500",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::e",
+   "OriginalName": "e",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "previousSend",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x04002501",
+   "Signature": "Knx.Ets.ObjectModel.Interfaces.IConnector Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::iconnector_1",
+   "OriginalName": "iconnector_1",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "previousSendingConnector",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation",
+   "Token": "0x04002502",
+   "Signature": "Knx.Ets.ObjectModel.Interfaces.IConnector Knx.Ets.ObjectModel.Operations.Connectors.SetSendingOperation::iconnector_2",
+   "OriginalName": "iconnector_2",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. SetSending50B7 builds shared flag/RF helpers.50BA records old Send, captures sending connectors before/after exclusivity change, invokes plugin ChangedAssociation, invalidates communication-loaded state.50BC/50BD reverse/reapply saved senders when requested differs from old flag.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "newSendingConnector",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator",
+   "Token": "0x04000CD3",
+   "Signature": "Knx.Ets.ObjectModel.Project.IGroupAddress Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. Group communication validator29CF stores proposed address and owner.29D0 collects parent device limits;29D4 computes sending-address set after proposed change.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "groupAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator",
+   "Token": "0x04000CD4",
+   "Signature": "Knx.Ets.ObjectModel.Project.IComObjectInstance Knx.Ets.ObjectModel.Operations.Validators.CheckSetSendingGroupCommunicationValidator::b",
+   "OriginalName": "b",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. Group communication validator29CF stores proposed address and owner.29D0 collects parent device limits;29D4 computes sending-address set after proposed change.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "comObjectInstance",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x04000DFB",
+   "Signature": "Knx.Ets.ObjectModel.Interfaces.IConnector Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. Security validator2B76 stores target flag/connector/service and parent device.2B77 skips unchanged or unsecured/unaddressed devices; checks resulting secure sending-address table.2B78 chooses target if enabling, first other connector if disabling.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "connector",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x04000DFC",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::b",
+   "OriginalName": "b",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. Security validator2B76 stores target flag/connector/service and parent device.2B77 skips unchanged or unsecured/unaddressed devices; checks resulting secure sending-address table.2B78 chooses target if enabling, first other connector if disabling.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "requestedSend",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x04000DFD",
+   "Signature": "Knx.Ets.ObjectModel.Operations.KnxSecure.ISecurityGrpFlagService Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::c",
+   "OriginalName": "c",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. Security validator2B76 stores target flag/connector/service and parent device.2B77 skips unchanged or unsecured/unaddressed devices; checks resulting secure sending-address table.2B78 chooses target if enabling, first other connector if disabling.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "securityGroupFlagService",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator",
+   "Token": "0x04000DFE",
+   "Signature": "Knx.Ets.ObjectModel.Project.IDevice Knx.Ets.ObjectModel.Operations.Validators.SetSendingMaxSecurityIndividualAddressEntriesValidator::d",
+   "OriginalName": "d",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. Security validator2B76 stores target flag/connector/service and parent device.2B77 skips unchanged or unsecured/unaddressed devices; checks resulting secure sending-address table.2B78 chooses target if enabling, first other connector if disabling.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "parentDevice",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater",
+   "Token": "0x04001305",
+   "Signature": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IDevice> Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. RF updater33DF filters RF-segment devices whose transmitter is Ready or receiver Slow; builds config snapshot on nonparked segments.33E0 captures supplied affected segments (or empty), refreshes eligibility and compares combined segment config; Undo/Redo refresh then delegate flag state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "readyOrSlowDevices",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater",
+   "Token": "0x04001306",
+   "Signature": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater::b",
+   "OriginalName": "b",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. RF updater33DF filters RF-segment devices whose transmitter is Ready or receiver Slow; builds config snapshot on nonparked segments.33E0 captures supplied affected segments (or empty), refreshes eligibility and compares combined segment config; Undo/Redo refresh then delegate flag state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "configFlagResetter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater",
+   "Token": "0x04001307",
+   "Signature": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.ISegment> Knx.Ets.ObjectModel.Operations.RfMulti.RfReadySlowResenderUpdater::c",
+   "OriginalName": "c",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. RF updater33DF filters RF-segment devices whose transmitter is Ready or receiver Slow; builds config snapshot on nonparked segments.33E0 captures supplied affected segments (or empty), refreshes eligibility and compares combined segment config; Undo/Redo refresh then delegate flag state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "affectedSegments",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler",
+   "Token": "0x0400129D",
+   "Signature": "Knx.Ets.ObjectModel.Operations.IFlagHandler Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. ResetCfg3351 snapshots original per-segment address associations.3354 compares current against original and clears medium configuration loaded flag of first ready slow resender when association entries differ.3356/3357 forward shared flag Undo/Redo.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "flagHandler",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler",
+   "Token": "0x0400129E",
+   "Signature": "System.Collections.Generic.Dictionary`2<Knx.Ets.ObjectModel.Project.ISegment,System.Collections.Generic.Dictionary`2<Knx.Ets.Common.Types.GroupAddressValue,System.Tuple`2<System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>,System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IndividualAddress>>>> Knx.Ets.ObjectModel.Operations.RfMulti.ResetCfgFlagHandler::b",
+   "OriginalName": "b",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and complete helper/operation sources. ResetCfg3351 snapshots original per-segment address associations.3354 compares current against original and clears medium configuration loaded flag of first ready slow resender when association entries differ.3356/3357 forward shared flag Undo/Redo.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "originalAssociationsBySegment",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
   }
  ],
  "Skips": [],
