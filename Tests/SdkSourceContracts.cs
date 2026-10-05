@@ -26,7 +26,7 @@ class Program {
  string relative=(string)p.Attribute("Project"); var x=XDocument.Load(Path.Combine(args[0],relative)).Root;
  string tfm=x.Descendants("TargetFramework").Single().Value, name=x.Descendants("AssemblyName").Single().Value;
  string ext=x.Descendants("OutputType").Single().Value=="Library"?".dll":".exe";
- string binary=stagedOutputs==null ? Directory.GetFiles(Path.Combine(args[0],Path.GetDirectoryName(relative),"bin"),name+ext,SearchOption.AllDirectories).Single(f=>f.EndsWith(Path.Combine("Release",tfm,name+ext),StringComparison.OrdinalIgnoreCase)) : stagedOutputs[Path.GetFullPath((string)p.Attribute("Source"))];
+ string binary=stagedOutputs==null ? ExportBuildOutput.Resolve(args[0],relative,name+ext) : stagedOutputs[Path.GetFullPath((string)p.Attribute("Source"))];
  using var input=ModuleDefMD.Load((string)p.Attribute("Source")); using var output=ModuleDefMD.Load(binary); projects++;
  HashSet<uint> protectedTokens=null;
  if(sdkModules!=null) {

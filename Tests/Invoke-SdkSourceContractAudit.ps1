@@ -11,6 +11,7 @@ $output=[IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Path $output | Out-Null
 '<Project/>' | Set-Content (Join-Path $output 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'SdkSourceContracts.cs') -Destination $output
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Shared/ExportBuildOutput.cs') -Destination $output
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $output 'Audit.csproj')
 dotnet build (Join-Path $output 'Audit.csproj') -c Release --nologo -v quiet
 if($LASTEXITCODE){throw 'Contract audit build failed.'}

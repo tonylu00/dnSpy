@@ -16,7 +16,7 @@ $binaryRoot=Join-Path $project 'bin\Release\net48'
 New-Item -ItemType Directory -Path $binaryRoot | Out-Null
 $binary=Join-Path $binaryRoot 'Fixture.dll'
 Copy-Item -LiteralPath $original -Destination $binary
-'<Project><PropertyGroup><TargetFramework>net48</TargetFramework><AssemblyName>Fixture</AssemblyName><OutputType>Library</OutputType></PropertyGroup></Project>' | Set-Content (Join-Path $project 'Fixture.csproj')
+'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><AssemblyName>Fixture</AssemblyName><OutputType>Library</OutputType></PropertyGroup></Project>' | Set-Content (Join-Path $project 'Fixture.csproj')
 $escaped=[Security.SecurityElement]::Escape($original)
 "<Export><Project Source=`"$escaped`" Project=`"Fixture\Fixture.csproj`"/></Export>" | Set-Content (Join-Path $export 'dnspy-export-map.xml')
 $audit=Join-Path $output 'audit'
@@ -46,3 +46,4 @@ foreach($kind in 'BaseType','GenericFlags','ParameterFlags','ParameterDefault','
 }
 if(@($result.Issues | Where-Object Kind -eq FieldConstant).Count -ne 2){throw 'Both enum and string constants must be checked.'}
 'PASS identical contracts accepted; inheritance, generics, parameters, enum/string constants and event semantics changes rejected.'
+exit 0

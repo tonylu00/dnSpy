@@ -32,16 +32,14 @@ try {
         var settings = XDocument.Load(project);
         string Setting(string name) => settings.Descendants().First(e => e.Name.LocalName == name).Value;
         var name = Setting("AssemblyName") + (Setting("OutputType") == "Library" ? ".dll" : ".exe");
-        var suffix = Path.Combine("Release", Setting("TargetFramework"), name);
-        var bin = Path.Combine(Path.GetDirectoryName(project), "bin");
-        var binaries = Directory.GetFiles(bin, name, SearchOption.AllDirectories)
-            .Where(p => p.EndsWith(suffix, OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)).ToArray();
-        if (binaries.Length != 1) throw new InvalidDataException($"Expected one Release binary for {project}; found {binaries.Length}");
+        var binary = ExportBuildOutput.Resolve(export, Required(matches[0], "Project"), name);
         var bytes = File.ReadAllBytes(input);
         if (!StringComparer.OrdinalIgnoreCase.Equals(Convert.ToHexString(SHA256.HashData(bytes)), Required(row, "Sha256")))
             throw new InvalidDataException($"Stale map hash: {input}");
         using var before = ModuleDefMD.Load(bytes);
-        using var after = ModuleDefMD.Load(binaries[0]);
+        using var after = ModuleDefMD.Load(binary);
+        if (before.Assembly.FullName != after.Assembly.FullName)
+            throw new InvalidDataException($"Rebuilt assembly identity mismatch: {binary}");
         if (!Guid.TryParse(Required(row, "Mvid"), out var mvid) || before.Mvid != mvid)
             throw new InvalidDataException($"Stale map MVID: {input}");
         modules++;

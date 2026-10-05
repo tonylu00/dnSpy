@@ -488,7 +488,10 @@ namespace dnSpy.Decompiler.MSBuild {
 			if (type.IsGlobalModuleType)
 				return false;
 
-			if (type.Namespace == "XamlGeneratedNamespace" && type.Name == "GeneratedInternalTypeHelper")
+			// Raw BAML is not compiled again, so SDK exports must retain its
+			// original helper. Only a XAML compilation can regenerate that type.
+			if (type.Namespace == "XamlGeneratedNamespace" && type.Name == "GeneratedInternalTypeHelper" &&
+				(!Options.DecompilationContext.RestoreMetadataOnlyFields || hasXamlClasses))
 				return false;
 
 			// Don't include attribute types added by the compiler.

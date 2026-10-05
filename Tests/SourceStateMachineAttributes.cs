@@ -9,8 +9,7 @@ foreach(var row in rows){
  var xml=XDocument.Load(project);
  string Value(string n)=>xml.Descendants().First(x=>x.Name.LocalName==n).Value;
  var tfm=Value("TargetFramework");var name=Value("AssemblyName");var ext=Value("OutputType")=="Library"?".dll":".exe";
- var suffix=Path.Combine("Release",tfm,name+ext);
- var path=Directory.GetFiles(Path.Combine(Path.GetDirectoryName(project)!,"bin"),name+ext,SearchOption.AllDirectories).Single(p=>p.EndsWith(suffix,StringComparison.OrdinalIgnoreCase));
+ var path=ExportBuildOutput.Resolve(root,(string)row.Attribute("Project")!,name+ext);
  using var module=ModuleDefMD.Load(path);var count=0;var external=0;var issues=new List<string>();
  foreach(var method in module.GetTypes().SelectMany(t=>t.Methods))foreach(var attribute in method.CustomAttributes){
   if(attribute.TypeFullName!="System.Runtime.CompilerServices.AsyncStateMachineAttribute"&&attribute.TypeFullName!="System.Runtime.CompilerServices.IteratorStateMachineAttribute"&&attribute.TypeFullName!="System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute")continue;

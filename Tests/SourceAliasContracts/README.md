@@ -11,7 +11,12 @@ dotnet run --project Tests/SourceAliasContracts/SourceAliasContracts.csproj -c R
 ```
 
 The export must contain `dnspy-export-map.xml`, `dnspy-source-name-map.xml`, and
-exactly one matching Release output per mapped project. Input hash, MVID,
+an existing Release output at each mapped project's evaluated MSBuild `TargetPath`.
+The audit uses `dotnet msbuild -getProperty:TargetPath` without running build targets;
+shared application layouts and architecture-specific outputs therefore follow the
+actual project configuration. Project and output paths must stay inside the export
+tree and the output filename must match. Stray same-named `bin` files are ignored.
+Input hash, MVID,
 token, name and signature must match the map. Reports use a new path; an
 existing report is never overwritten. Exit 0 means all mapped runtime names
 were restored, 1 means missing or ambiguous output names, and 2 means invalid

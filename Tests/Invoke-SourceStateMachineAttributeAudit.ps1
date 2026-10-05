@@ -9,6 +9,7 @@ $output=[IO.Path]::GetFullPath($OutputDirectory)
 New-Item -ItemType Directory -Path $output | Out-Null
 '<Project/>' | Set-Content (Join-Path $output 'Directory.Build.props')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'SourceStateMachineAttributes.cs') -Destination $output
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Shared/ExportBuildOutput.cs') -Destination $output
 "<Project Sdk=`"Microsoft.NET.Sdk`"><PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup><ItemGroup><Reference Include=`"dnlib`"><HintPath>$dnlib</HintPath></Reference></ItemGroup></Project>" | Set-Content (Join-Path $output 'Audit.csproj')
 dotnet build (Join-Path $output 'Audit.csproj') -c Release --nologo -v quiet
 if($LASTEXITCODE){throw 'State-machine audit build failed.'}
