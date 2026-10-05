@@ -22,6 +22,13 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `connection-description-alias-correction-verification-v431.json` — replaces
+  historical `ToString2` with `GetConnectionDescription` from endpoint/channel
+  formatting, checking distinct ledger/map preimages. Original `ToString` and
+  all other aliases/scopes/decisions are retained; SDK/contract checks, 150
+  portable tests and 109 cached joins pass. Consolidated ETS checks are pending.
+- `record_method_alias_corrections.py` — reusable correction evidence recorder
+  with explicit preimages and guards against unintended alias/scope/ledger edits.
 - `ip-connection-request-response-coverage-v430.json` — connection setup,
   request/response listeners, disconnect/disposal, device-management properties
   and tunneling features; 300 exact aliases with prior names retained. Reconnect
