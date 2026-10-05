@@ -22,10 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `cemi-message-factory-monitor-coverage-v441.json` — cEMI factories, telegram
-  comparison/formatting and TP/RF busmonitor conversion; 145 exact aliases
-  preserve prior names and behavior. One cache/medium API role remains unresolved.
-  SDK/contract checks and 109 cached joins pass; consolidated ETS checks remain pending.
+- `additional-info-codec-coverage-v442.json` — factory-connected PL/BiBat,
+  busmonitor status, timestamps/delay, RF and opaque additional-information codecs;
+  62 exact aliases preserve every prior name. SDK/contract checks and 109 cached
+  joins pass; timestamp/delay units and consolidated ETS checks remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
