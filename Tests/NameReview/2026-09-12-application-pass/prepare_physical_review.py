@@ -127,6 +127,32 @@ def prepare(spec):
                 raise ValueError('Resolution requires a named definition and previous unresolved evidence')
             row['ResolveExistingUnresolved'] = True
             row['PreviousUnresolvedEvidence'] = decision['PreviousUnresolvedEvidence']
+        if 'UnresolvedScopeEvidence' in decision:
+            evidence = decision['UnresolvedScopeEvidence']
+            if key[0] != 'Methods' or not isinstance(evidence, dict) or set(evidence) - {'Parameters', 'Locals'}:
+                raise ValueError('Unresolved scope evidence requires a method and known scope sections')
+            if not any(evidence.values()):
+                raise ValueError('Unresolved scope evidence requires missing evidence')
+            for section, label, position, preimage in (
+                    ('Parameters', 'ParameterNames', 'Sequence', 'OriginalName'),
+                    ('Locals', 'LocalNames', 'Index', 'ExpectedType')):
+                entries = evidence.get(section, [])
+                if not isinstance(entries, list):
+                    raise ValueError('Unresolved scope evidence requires position lists')
+                seen_positions = set()
+                for entry in entries:
+                    if (not isinstance(entry, dict) or set(entry) != {position, preimage, 'MissingEvidence'} or
+                            type(entry[position]) is not int or not isinstance(entry['MissingEvidence'], str) or
+                            not entry['MissingEvidence'].strip()):
+                        raise ValueError('Unresolved scope evidence requires exact positions, preimages and missing evidence')
+                    slot = entry[position]
+                    matches = [s for s in row.get(label, []) if s[position] == slot]
+                    if slot in seen_positions or len(matches) != 1 or matches[0].get(preimage) != entry[preimage]:
+                        raise ValueError('Unresolved scope position is duplicate, absent or stale')
+                    if matches[0].get('NewName'):
+                        raise ValueError('Unresolved scope position cannot carry an alias')
+                    seen_positions.add(slot)
+            row['UnresolvedScopeEvidence'] = copy.deepcopy(evidence)
         result[key[0]].append(row)
     return result
 

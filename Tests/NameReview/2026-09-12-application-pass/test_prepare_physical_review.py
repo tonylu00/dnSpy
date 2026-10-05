@@ -162,5 +162,69 @@ class InventorySelectionTests(unittest.TestCase):
             prepare(self.spec)
 
 
+class UnresolvedScopeEvidenceTests(unittest.TestCase):
+    write = InventorySelectionTests.write
+
+    def setUp(self):
+        InventorySelectionTests.setUp(self)
+        row = dict(self.row, LocalNames=[dict(Index=0, ExpectedType='System.UInt16', NewName=''),
+                                        dict(Index=1, ExpectedType='System.Byte[]', NewName='')])
+        self.write('family.json', row)
+        self.spec['Rows'][0]['UnresolvedScopeEvidence'] = dict(
+            Locals=[dict(Index=0, ExpectedType='System.UInt16', MissingEvidence='Descriptor and APDU roles reuse one slot; split ownership is unproven.')])
+
+    def test_exact_local_uncertainty_keeps_independent_aliases(self):
+        self.spec['Rows'][0]['LocalNames'] = {'1': 'responseData'}
+        row = prepare(self.spec)['Methods'][0]
+        self.assertEqual(row['UnresolvedScopeEvidence'], self.spec['Rows'][0]['UnresolvedScopeEvidence'])
+        self.assertEqual(row['LocalNames'][0]['NewName'], '')
+        self.assertEqual(row['LocalNames'][1]['NewName'], 'responseData')
+        row['UnresolvedScopeEvidence']['Locals'][0]['MissingEvidence'] = 'changed result'
+        self.assertNotEqual(row['UnresolvedScopeEvidence'], self.spec['Rows'][0]['UnresolvedScopeEvidence'])
+
+    def test_stale_type_and_missing_slot_rejected(self):
+        entry = self.spec['Rows'][0]['UnresolvedScopeEvidence']['Locals'][0]
+        for replacement in (dict(entry, ExpectedType='System.Byte'), dict(entry, Index=7)):
+            self.spec['Rows'][0]['UnresolvedScopeEvidence']['Locals'] = [replacement]
+            with self.assertRaisesRegex(ValueError, 'duplicate, absent or stale'):
+                prepare(self.spec)
+
+    def test_duplicate_position_rejected(self):
+        entries = self.spec['Rows'][0]['UnresolvedScopeEvidence']['Locals']
+        entries.append(copy.deepcopy(entries[0]))
+        with self.assertRaisesRegex(ValueError, 'duplicate, absent or stale'):
+            prepare(self.spec)
+
+    def test_positive_alias_conflict_rejected(self):
+        self.spec['Rows'][0]['LocalNames'] = {'0': 'maxApduLength'}
+        with self.assertRaisesRegex(ValueError, 'cannot carry an alias'):
+            prepare(self.spec)
+
+    def test_parameter_preimage_rejected_and_retained(self):
+        self.spec['Rows'][0]['UnresolvedScopeEvidence'] = dict(
+            Parameters=[dict(Sequence=1, OriginalName='wrongArg', MissingEvidence='Domain meaning unknown')])
+        with self.assertRaisesRegex(ValueError, 'duplicate, absent or stale'):
+            prepare(self.spec)
+        self.spec['Rows'][0]['UnresolvedScopeEvidence']['Parameters'][0]['OriginalName'] = 'arg'
+        self.assertEqual(prepare(self.spec)['Methods'][0]['UnresolvedScopeEvidence'], self.spec['Rows'][0]['UnresolvedScopeEvidence'])
+
+    def test_evidence_is_required_and_unknown_keys_rejected(self):
+        evidence = copy.deepcopy(self.spec['Rows'][0]['UnresolvedScopeEvidence'])
+        for replacement in ({}, {'Locals': []}, {'Fields': []}, [], {'Locals': 'zero'}):
+            self.spec['Rows'][0]['UnresolvedScopeEvidence'] = replacement
+            with self.assertRaises(ValueError):
+                prepare(self.spec)
+        for reason in ('', ' ', None, 4):
+            self.spec['Rows'][0]['UnresolvedScopeEvidence'] = copy.deepcopy(evidence)
+            self.spec['Rows'][0]['UnresolvedScopeEvidence']['Locals'][0]['MissingEvidence'] = reason
+            with self.assertRaises(ValueError):
+                prepare(self.spec)
+        self.spec['Rows'][0]['UnresolvedScopeEvidence'] = evidence
+        for position in (True, '0', -1):
+            self.spec['Rows'][0]['UnresolvedScopeEvidence']['Locals'][0]['Index'] = position
+            with self.assertRaises(ValueError):
+                prepare(self.spec)
+
+
 if __name__ == '__main__':
     unittest.main()
