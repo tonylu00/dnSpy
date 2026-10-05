@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `session-frames-cloud-websocket-coverage-v435.json` — session-frame layouts,
+  immutable cloud configuration and WebSocket connect/send/receive/disposal
+  scopes; 94 exact additions retain every prior name. SDK/contract checks and
+  109 cached joins pass; 20,807 candidates remain. Full ETS checks are pending.
 - `session-status-scoped-withdrawal-verification-v434.json` — native atomic
   withdrawal of an unsupported callback definition alias with four proven new
   body scopes. Every other alias and decision is retained. Full native checks,
