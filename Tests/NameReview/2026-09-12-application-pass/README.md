@@ -118,9 +118,19 @@ What lives here:
   `VerifyBusyReplyLength` and `VerifyBusyTimeoutReplyLength`. The normal reply,
   polling and four/six-byte checks follow complete original IL and callers;
   thirty evidence pins retain every other alias, scope and annotation. Native
-  SDK/contract checks and cached joins pass. Next: the synchronous status-byte
-  virtual family, then substantial whole-application caller chains. Current
-  v476 has no consolidated export or runtime claim.
+  SDK/contract checks and cached joins pass. The v473/v475 specs contained 91
+  uncertainty annotations under an unsupported key; the original ledger omitted
+  them. `scope-evidence-repair-verification01.json` verifies their restoration
+  across 65 methods with byte-identical map and unchanged aliases. It binds all
+  111 historical v473-v476 evidence pins, using exact retained helper versions
+  where current tooling has changed. Unknown decision keys now fail preparation.
+- `chunk-status-family-verification-v477.json` — corrects both members of the
+  synchronous virtual family to `VerifyChunkStatusBytes`. Complete native family
+  checks, exact historical preimages and final map identities guard the atomic
+  correction; existing scope names and uncertainty survive. The 69 focused
+  guards pass; both cached 109-module joins retain 19,846 candidates. Continue
+  substantial whole-application caller chains. Current v477 has no consolidated
+  export or runtime claim; the last full solution build remains v467.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
@@ -185,6 +195,8 @@ What lives here:
   portable tests and 109 cached joins pass. Consolidated ETS checks are pending.
 - `record_method_alias_corrections.py` — reusable correction evidence recorder
   with explicit preimages and guards against unintended alias/scope/ledger edits.
+  Complete virtual-family corrections require matching native changes and final
+  map membership. New proofs snapshot mutable Python controls with exact hashes.
 - `ip-connection-request-response-coverage-v430.json` — connection setup,
   request/response listeners, disconnect/disposal, device-management properties
   and tunneling features; 300 exact aliases with prior names retained. Reconnect
@@ -292,6 +304,8 @@ markers. No earlier scoped alias may be discarded.
 normalizes native inventory roots to exact application-relative physical paths
 and validates current hashes. Specs support evidence-backed aliases, explicit
 preservation and unresolved decisions; unresolved rows cannot carry aliases.
+Unknown decision keys are rejected. Review-only scope evidence repair requires
+exact previous evidence, typed positions, unchanged map bytes and checked aliases.
 It writes review JSON only. Run `python test_physical_review.py` for its guards.
 Native `--update-map` and `--check-map` remain required before checkpointing.
 

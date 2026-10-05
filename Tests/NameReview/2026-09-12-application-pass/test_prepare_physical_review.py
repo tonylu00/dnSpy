@@ -40,6 +40,28 @@ class InventorySelectionTests(unittest.TestCase):
         self.assertIsNone(row['MappingBlocker'])
         self.assertEqual(row['Signature'], self.row['Signature'])
 
+    def test_historical_alias_preimages_are_retained(self):
+        self.spec['Rows'][0].update(PreviousLedgerAlias='', ExpectedMappedAlias='OldAlias')
+        row = prepare(self.spec)['Methods'][0]
+        self.assertEqual(row['PreviousLedgerAlias'], '')
+        self.assertEqual(row['ExpectedMappedAlias'], 'OldAlias')
+
+    def test_incomplete_historical_alias_preimages_are_rejected(self):
+        for values in ({'PreviousLedgerAlias': ''}, {'ExpectedMappedAlias': 'OldAlias'},
+                       {'PreviousLedgerAlias': '', 'ExpectedMappedAlias': ''}):
+            spec = copy.deepcopy(self.spec)
+            spec['Rows'][0].update(values)
+            with self.assertRaises(ValueError):
+                prepare(spec)
+
+    def test_unknown_decision_fields_fail_before_evidence_can_be_dropped(self):
+        for key in ('ScopeUnresolvedEvidence', 'UnresolvedScopeEvidance', 'ContractFamily', 'PreviousEvidence'):
+            with self.subTest(key=key):
+                spec = copy.deepcopy(self.spec)
+                spec['Rows'][0][key] = {'Locals': []}
+                with self.assertRaisesRegex(ValueError, 'Unknown decision keys: ' + key):
+                    prepare(spec)
+
     def test_explicit_ordinary_keeps_blocker(self):
         self.spec['Rows'][0]['Inventory'] = str(self.ordinary)
         self.assertEqual(prepare(self.spec)['Methods'][0]['MappingBlocker'], self.row['MappingBlocker'])

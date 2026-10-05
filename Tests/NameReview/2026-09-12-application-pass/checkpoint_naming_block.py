@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal
+from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal, validate_scope_evidence_only, refresh_scope_evidence
 from sdk_proposal_retirement import load_sdk_symbols, key as sdk_key, retire_sdk_proposal
 from contract_sdk_proposal_retirement import load_contract_sdk_evidence, retire_contract_sdk_proposal, preserve_contract_sdk_method
 from framework_contract_preservation import load_framework_contract_evidence, preserve_framework_contract_method
@@ -44,7 +44,11 @@ parser.add_argument('--review-only', action='store_true',
                     help='Checkpoint preservation/unresolved decisions with no aliases and a byte-identical checked map')
 parser.add_argument('--refresh-reviewed-evidence', action='store_true',
                     help='Review-only rationale correction with exact previous evidence and unchanged naming decisions')
+parser.add_argument('--refresh-reviewed-scope-evidence', action='store_true',
+                    help='Review-only addition of missing positional uncertainty with unchanged aliases and exact preimages')
 args = parser.parse_args()
+assert not args.refresh_reviewed_scope_evidence or args.review_only, 'Scope evidence refresh requires a review-only checkpoint'
+assert not (args.refresh_reviewed_scope_evidence and args.refresh_reviewed_evidence), 'Choose one evidence refresh mode'
 assert not args.refresh_reviewed_evidence or args.review_only, 'Evidence refresh requires a review-only checkpoint'
 assert not args.retire_rejected_sdk_proposals or args.review_only, 'SDK proposal retirement requires a review-only checkpoint'
 assert not args.retire_rejected_contract_sdk_proposals or args.review_only, 'SDK contract retirement requires a review-only checkpoint'
@@ -68,7 +72,8 @@ assert check['BaseMapSha256'] == digest(map_path), 'Stale final map check'
 assert update['Success'] and check['Success'] and not update['Errors'] and not check['Errors']
 if args.review_only:
     assert args.block and all(c.isalnum() or c in '-_' for c in args.block), 'Invalid review checkpoint filename'
-    validate_review_only(review, update['Changes'], previous['Sha256'], digest(map_path))
+    validator = validate_scope_evidence_only if args.refresh_reviewed_scope_evidence else validate_review_only
+    validator(review, update['Changes'], previous['Sha256'], digest(map_path))
 else:
     assert update['Changes'] and all(c['Requested'] == c['Applied'] for c in update['Changes']), 'Rejected or suffixed name'
 assert review['ContractReferenceSha256'] == update['ContractReferenceSha256'] == check['ContractReferenceSha256']
@@ -93,6 +98,7 @@ merged_rows = 0
 scoped_definitions_resolved = 0
 replaced_rows = 0
 refreshed_rows = 0
+scope_evidence_rows = 0
 removed_rows = 0
 resolved_rows = 0
 applied_proposals = 0
@@ -117,7 +123,7 @@ if args.retire_rejected_contract_sdk_proposals or args.preserve_sdk_contract_met
 checked_families = {}
 for method in review['Methods']:
     family = method.get('ContractFamily')
-    if not (method.get('ResolveExistingUnresolved') or method.get('ApplyExistingProposal')) or not family or family in checked_families:
+    if not (method.get('ResolveExistingUnresolved') or method.get('ApplyExistingProposal') or args.replace_reviewed_aliases) or not family or family in checked_families:
         continue
     members = [m for m in review['Methods'] if m.get('ContractFamily') == family]
     member_keys = {(m['Module'], m['Token']) for m in members}
@@ -135,6 +141,11 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if args.refresh_reviewed_scope_evidence:
+            assert kind == 'Methods' and key in keys, 'Scope evidence refresh requires an existing method'
+            ledger[kind][keys[key]] = refresh_scope_evidence(ledger[kind][keys[key]], row, checked_scopes.get(key, {}))
+            scope_evidence_rows += 1
+            continue
         if row.get('PreserveFrameworkContractMethod'):
             assert args.preserve_framework_contract_methods and kind == 'Methods' and key not in keys
             proof = framework_contract_evidence[sdk_key(*key)]
@@ -206,7 +217,7 @@ for kind in ('Types', 'Methods', 'Fields'):
                 continue
             if args.replace_reviewed_aliases and kind == 'Methods' and row.get('NewName') and row['NewName'] != base_names.get(key, ''):
                 ledger[kind][keys[key]] = replace_method_alias(ledger[kind][keys[key]], row, base_names.get(key, ''),
-                                                             checked_changes.get(key), checked_scopes.get(key, {}), scope_replacements.get(key, {}))
+                                                             checked_changes.get(key), checked_scopes.get(key, {}), scope_replacements.get(key, {}), checked_families.get(row.get('ContractFamily')))
                 replaced_rows += 1
                 continue
             assert args.merge_reviewed_scopes and kind == 'Methods', 'Existing row requires explicit reviewed scope merge'
@@ -229,6 +240,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'ExplicitScopeMerges': merged_rows,
               'ExplicitAliasReplacements': replaced_rows,
               'ExplicitEvidenceRefreshes': refreshed_rows,
+              'ExplicitScopeEvidenceRefreshes': scope_evidence_rows,
               'ExplicitAliasWithdrawals': removed_rows,
               'ExplicitUnresolvedResolutions': resolved_rows,
               'ExplicitScopedDefinitionResolutions': scoped_definitions_resolved,

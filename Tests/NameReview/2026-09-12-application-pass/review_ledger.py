@@ -22,6 +22,92 @@ def require_identity(previous, reviewed):
             raise ValueError('Ledger identity differs: ' + key)
 
 
+def validate_scope_evidence_only(review, changes, base_sha, checked_sha):
+    if changes or not base_sha or base_sha != checked_sha:
+        raise ValueError('Scope evidence refresh requires a byte-identical checked map')
+    if review.get('Types') or review.get('Fields') or not review.get('Methods'):
+        raise ValueError('Scope evidence refresh requires method rows only')
+    for row in review['Methods']:
+        if not row.get('Reason') or not row.get('UnresolvedScopeEvidence') or 'PreviousScopeEvidence' not in row:
+            raise ValueError('Scope evidence refresh requires exact prior evidence')
+
+
+def refresh_scope_evidence(previous, reviewed, checked_scopes):
+    """Add missing positional uncertainty without changing any naming decision."""
+    require_identity(previous, reviewed)
+    expected = dict(Reason=previous.get('Reason', ''),
+                    UnresolvedScopeEvidence=previous.get('UnresolvedScopeEvidence', {}))
+    if reviewed.get('PreviousScopeEvidence') != expected or not reviewed.get('Reason'):
+        raise ValueError('Scope evidence refresh requires exact prior evidence')
+    if bool(previous.get('Unresolved')) != bool(reviewed.get('Unresolved')):
+        raise ValueError('Scope evidence refresh cannot change unresolved status')
+    if previous.get('UnresolvedReason', '') != reviewed.get('UnresolvedReason', ''):
+        raise ValueError('Scope evidence refresh cannot change unresolved rationale')
+    if reviewed.get('NewName') or any(e.get('NewName') for label in ('ParameterNames', 'LocalNames') for e in reviewed.get(label, [])):
+        raise ValueError('Scope evidence refresh cannot request aliases')
+    incoming = reviewed.get('UnresolvedScopeEvidence')
+    if not isinstance(incoming, dict) or set(incoming) - {'Parameters', 'Locals'} or not any(incoming.values()):
+        raise ValueError('Scope evidence refresh requires positional missing evidence')
+    current = copy.deepcopy(previous.get('UnresolvedScopeEvidence', {}))
+    result = copy.deepcopy(previous)
+    added = 0
+    for section, label, position, preimage, checked_key in (
+            ('Parameters', 'ParameterNames', 'Sequence', 'OriginalName', 'ExpectedName'),
+            ('Locals', 'LocalNames', 'Index', 'ExpectedType', 'ExpectedType')):
+        entries, reviewed_entries = previous.get(label, []), reviewed.get(label, [])
+        inventory = {p[position]: p for p in reviewed_entries}
+        old_inventory = {p[position]: p for p in entries}
+        if len(inventory) != len(reviewed_entries) or len(old_inventory) != len(entries):
+            raise ValueError('Duplicate scope inventory position')
+        if any(slot not in inventory or
+               {k: v for k, v in inventory[slot].items() if k != 'NewName'} !=
+               {k: v for k, v in entry.items() if k != 'NewName'}
+               for slot, entry in old_inventory.items()):
+            raise ValueError('Scope evidence refresh cannot change a naming decision: ' + label)
+        imported = set(inventory) - set(old_inventory)
+        # Older ledgers omit unused native local inventories. Only import an
+        # unaliased position whose exact type/name is also reviewed as unknown.
+        if any(inventory[slot].get('NewName') for slot in imported):
+            raise ValueError('Scope evidence refresh cannot introduce an alias')
+        for slot, entry in old_inventory.items():
+            if entry.get('NewName'):
+                checked = checked_scopes.get((label, slot), {})
+                if checked.get('NewName') != entry['NewName'] or checked.get(checked_key) != entry.get(preimage):
+                    raise ValueError('Scope evidence refresh lost a checked alias')
+        merged = {e[position]: e for e in current.get(section, [])}
+        seen = set()
+        if not isinstance(incoming.get(section, []), list):
+            raise ValueError('Scope evidence refresh requires position lists')
+        for entry in incoming.get(section, []):
+            if (not isinstance(entry, dict) or set(entry) != {position, preimage, 'MissingEvidence'} or
+                    type(entry[position]) is not int or not isinstance(entry['MissingEvidence'], str) or
+                    not entry['MissingEvidence'].strip()):
+                raise ValueError('Scope evidence refresh requires exact positions and missing evidence')
+            slot = entry[position]
+            if slot in seen or slot not in inventory or entry[preimage] != inventory[slot].get(preimage):
+                raise ValueError('Scope evidence refresh position is duplicate, absent or stale')
+            if old_inventory.get(slot, {}).get('NewName') or checked_scopes.get((label, slot), {}).get('NewName'):
+                raise ValueError('Scope evidence refresh cannot mark an aliased position unresolved')
+            if slot in merged and merged[slot] != entry:
+                raise ValueError('Scope evidence refresh cannot overwrite earlier missing evidence')
+            added += slot not in merged
+            merged[slot] = copy.deepcopy(entry)
+            seen.add(slot)
+        if not imported <= seen:
+            raise ValueError('New scope positions require positional missing evidence')
+        if imported:
+            result[label] = copy.deepcopy(entries + [e for e in reviewed_entries if e[position] in imported])
+        if merged:
+            current[section] = [e for _, e in sorted(merged.items())]
+    if not added:
+        raise ValueError('Scope evidence refresh has no missing annotations to add')
+    result['UnresolvedScopeEvidence'] = current
+    result.setdefault('ScopeEvidenceReviews', []).append(dict(
+        PreviousUnresolvedScopeEvidence=copy.deepcopy(expected['UnresolvedScopeEvidence']), Evidence=reviewed['Reason']))
+    result['Reason'] = expected['Reason'] + '\nScope evidence review: ' + reviewed['Reason']
+    return result
+
+
 def refresh_evidence(previous, reviewed):
     """Replace reviewed rationale only, with explicit preimages and no decision change."""
     require_identity(previous, reviewed)
@@ -207,11 +293,42 @@ def apply_proposal(previous, reviewed, mapped_name, checked_change, checked_name
     return result
 
 
-def replace_method_alias(previous, reviewed, mapped_name, checked_change, checked_scopes, replacements=None):
+def validate_contract_correction(reviewed, proof):
+    """A replacement must cover the same complete native family and final map."""
+    family = reviewed.get('ContractFamily')
+    if not family or not proof or proof.get('Id') != family:
+        raise ValueError('Contract correction requires its checked complete family')
+    groups = [proof.get(k, []) for k in ('ReviewedMembers', 'Changes', 'FinalRows')]
+    keys = [{(r['Module'], r['Token']) for r in rows} for rows in groups]
+    if (not keys[0] or keys[0] != keys[1] or keys[0] != keys[2] or
+            any(len(rows) != len(keyset) for rows, keyset in zip(groups, keys)) or
+            (reviewed['Module'], reviewed['Token']) not in keys[0]):
+        raise ValueError('Contract correction cannot accept a partial or duplicated family')
+    changes = {(r['Module'], r['Token']): r for r in groups[1]}
+    final = {(r['Module'], r['Token']): r for r in groups[2]}
+    for member in groups[0]:
+        key = (member['Module'], member['Token'])
+        change, mapped = changes[key], final[key]
+        if (member.get('ContractFamily') != family or member.get('NewName') != reviewed['NewName'] or
+                member.get('MappingBlocker') or not change.get('Before') or change['Before'] == reviewed['NewName'] or
+                any(change.get(k) != v for k, v in (
+                    ('Kind', 'ContractMethod'), ('Action', None), ('Requested', reviewed['NewName']), ('Applied', reviewed['NewName'])))):
+            raise ValueError('Contract correction requires exact unblocked native replacements')
+        for k, value in (('ContractFamily', family), ('NewName', reviewed['NewName']),
+                         ('Signature', member['Signature']), ('ExpectedName', member['OriginalName']),
+                         ('Mvid', member['Mvid']), ('Sha256', member['Sha256'])):
+            if mapped.get(k) != value:
+                raise ValueError('Contract correction final identity differs: ' + k)
+
+
+def replace_method_alias(previous, reviewed, mapped_name, checked_change, checked_scopes, replacements=None, checked_family=None):
     """Correct a method alias while retaining and checking earlier scope decisions."""
     require_identity(previous, reviewed)
+    kind = 'ContractMethod' if reviewed.get('ContractFamily') else 'Method'
+    if kind == 'ContractMethod':
+        validate_contract_correction(reviewed, checked_family)
     if not checked_change or any(checked_change.get(key) != value for key, value in
-                                 (('Kind', 'Method'), ('Module', reviewed['Module']), ('Token', reviewed['Token']))):
+                                 (('Kind', kind), ('Module', reviewed['Module']), ('Token', reviewed['Token']))):
         raise ValueError('Method replacement requires its exact native definition change')
     # The generic guard checks current alias, physical identity and exact native
     # before/requested/applied values. Its fresh-row result must not replace the
@@ -240,6 +357,12 @@ def replace_method_alias(previous, reviewed, mapped_name, checked_change, checke
             if not checked or checked.get('NewName') != entry['NewName'] or checked.get(expected_key) != entry.get(inventory_key):
                 raise ValueError('Method correction lost a checked scope decision: ' + label)
     result['NewName'] = reviewed['NewName']
+    if kind == 'ContractMethod':
+        result.setdefault('ContractFamilyReviews', []).append(dict(
+            PreviousContractFamily=previous.get('ContractFamily'), PreviousMappingBlocker=previous.get('MappingBlocker'),
+            ContractFamily=reviewed['ContractFamily'], Evidence=reviewed['Reason']))
+        result['ContractFamily'] = reviewed['ContractFamily']
+        result['MappingBlocker'] = reviewed.get('MappingBlocker')
     if previous.get('NewName') != mapped_name:
         result.setdefault('LedgerAliasCorrections', []).append(checked_replacement['LedgerAliasCorrections'][-1])
     result['Reason'] = (result.get('Reason') or '') + '\nReviewed method correction: ' + reviewed['Reason']

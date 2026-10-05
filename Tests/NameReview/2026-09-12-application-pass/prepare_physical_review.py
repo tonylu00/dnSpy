@@ -10,7 +10,20 @@ import json
 import pathlib
 
 
+DECISION_KEYS = {
+    'Kind', 'Module', 'Token', 'Inventory', 'ScopeInventory', 'Reason',
+    'Disposition', 'NewName', 'ParameterNames', 'LocalNames',
+    'DefinitionOnlyUnresolvedReason', 'RemoveExistingAlias', 'ExpectedAlias',
+    'PreviousLedgerAlias', 'ExpectedMappedAlias', 'ResolveExistingUnresolved',
+    'PreviousUnresolvedEvidence', 'UnresolvedScopeEvidence', 'PreviousScopeEvidence',
+}
+
+
 def prepare(spec):
+    for decision in spec['Rows']:
+        unknown = set(decision) - DECISION_KEYS
+        if unknown:
+            raise ValueError('Unknown decision keys: ' + ', '.join(sorted(unknown)))
     root = pathlib.Path(spec['TargetRoot']).resolve()
     requested = {(row['Kind'], row['Module'].replace('\\', '/'), row['Token'].upper())
                  for row in spec['Rows']}
@@ -122,6 +135,13 @@ def prepare(spec):
                     raise ValueError('Historical alias withdrawal requires exact ledger and mapped aliases')
                 row['PreviousLedgerAlias'] = decision['PreviousLedgerAlias']
                 row['ExpectedMappedAlias'] = decision['ExpectedMappedAlias']
+        elif any(key in decision for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias')):
+            if (disposition != 'rename' or not row['NewName'] or
+                    not isinstance(decision.get('PreviousLedgerAlias'), str) or
+                    not isinstance(decision.get('ExpectedMappedAlias'), str) or not decision['ExpectedMappedAlias']):
+                raise ValueError('Historical alias correction requires exact ledger and mapped preimages')
+            row['PreviousLedgerAlias'] = decision['PreviousLedgerAlias']
+            row['ExpectedMappedAlias'] = decision['ExpectedMappedAlias']
         if decision.get('ResolveExistingUnresolved'):
             if disposition != 'rename' or not row['NewName'] or not decision.get('PreviousUnresolvedEvidence'):
                 raise ValueError('Resolution requires a named definition and previous unresolved evidence')
@@ -153,6 +173,10 @@ def prepare(spec):
                         raise ValueError('Unresolved scope position cannot carry an alias')
                     seen_positions.add(slot)
             row['UnresolvedScopeEvidence'] = copy.deepcopy(evidence)
+        if 'PreviousScopeEvidence' in decision:
+            if 'UnresolvedScopeEvidence' not in row or not isinstance(decision['PreviousScopeEvidence'], dict):
+                raise ValueError('Scope evidence refresh requires current and previous evidence')
+            row['PreviousScopeEvidence'] = copy.deepcopy(decision['PreviousScopeEvidence'])
         result[key[0]].append(row)
     return result
 

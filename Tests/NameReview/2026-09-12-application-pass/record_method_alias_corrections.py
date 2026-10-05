@@ -8,12 +8,13 @@ import copy
 import json
 from pathlib import Path
 import shutil
+import xml.etree.ElementTree as ET
 
 from record_additive_naming_block import aliases, digest, encode, read, require
-from review_ledger import require_identity
+from review_ledger import require_identity, validate_contract_correction
 
 
-def verify_corrections(before, after, prior, current, review, changes, expected):
+def verify_corrections(before, after, prior, current, review, changes, expected, family_proofs=None):
     require(bool(expected), 'No corrections supplied')
     keys = [(r['Module'], 'Method', r['Token'], '') for r in expected]
     require(len(keys) == len(set(keys)), 'Duplicate correction')
@@ -32,6 +33,10 @@ def verify_corrections(before, after, prior, current, review, changes, expected)
         require_identity(old, row)
         require_identity(old, new)
         require(not old.get('Unresolved') and not row.get('Unresolved'), 'Unresolved alias correction')
+        family = row.get('ContractFamily')
+        if family:
+            require(e.get('ContractFamily') == family, 'Expected contract family differs')
+            validate_contract_correction(row, (family_proofs or {}).get(family))
         require(old['NewName'] == e['PreviousLedgerAlias'] and before.get(key) == e['MappedAlias'], 'Wrong preimage')
         require(row['NewName'] == new['NewName'] == e['NewName'] != e['MappedAlias'], 'Wrong replacement')
         if old['NewName'] != e['MappedAlias']:
@@ -44,11 +49,17 @@ def verify_corrections(before, after, prior, current, review, changes, expected)
             require(not any(k in row for k in ('PreviousLedgerAlias', 'ExpectedMappedAlias')), 'Stale historical preimages')
         exact = [c for c in changes if (c['Module'], c['Token']) == short]
         require(len(exact) == 1 and all(exact[0].get(k) == v for k, v in
-                dict(Kind='Method', Before=e['MappedAlias'], Requested=e['NewName'], Applied=e['NewName']).items()), 'Wrong native replacement')
+                dict(Kind='ContractMethod' if family else 'Method', Before=e['MappedAlias'], Requested=e['NewName'], Applied=e['NewName']).items()), 'Wrong native replacement')
         for label in ('ParameterNames', 'LocalNames'):
             require(new.get(label, []) == old.get(label, []), 'Scope inventory changed')
         retained = set(old) | set(new)
         retained -= {'NewName', 'Reason', 'LedgerAliasCorrections'}
+        if family:
+            retained -= {'ContractFamily', 'MappingBlocker', 'ContractFamilyReviews'}
+            require(new.get('ContractFamily') == family and new.get('MappingBlocker') == row.get('MappingBlocker'), 'Family correction lost native contract evidence')
+            require(new.get('ContractFamilyReviews') == old.get('ContractFamilyReviews', []) + [dict(
+                PreviousContractFamily=old.get('ContractFamily'), PreviousMappingBlocker=old.get('MappingBlocker'),
+                ContractFamily=family, Evidence=row['Reason'])], 'Family correction lost historical evidence')
         require(all(new.get(k) == old.get(k) for k in retained), 'Correction changed a prior annotation')
         require(new.get('Reason') == (old.get('Reason') or '') + '\nReviewed method correction: ' + row['Reason'], 'Correction lost historical evidence')
         wanted[key] = e['NewName']
@@ -84,7 +95,19 @@ def verify(config):
     for name, key in (('SdkWhitelist63', 'SdkNameWhitelistSha256'), ('ContractReferences63', 'ContractReferenceSha256')):
         binding = state['Compatibility'][name]
         require(digest(binding['Path']) == binding['Sha256'] == check[key], 'Compatibility binding differs')
-    verify_corrections(aliases(checkpoint['PreviousMap']['Path']), aliases(mapping['Path']), prior, ledger, review, update['Changes'], config['ExpectedCorrections'])
+    family_proofs = {}
+    root = ET.parse(mapping['Path']).getroot()
+    for row in review['Methods']:
+        family = row.get('ContractFamily')
+        if not family or family in family_proofs:
+            continue
+        members = [r for r in review['Methods'] if r.get('ContractFamily') == family]
+        keys = {(r['Module'], r['Token']) for r in members}
+        family_proofs[family] = dict(Id=family, ReviewedMembers=members,
+            Changes=[c for c in update['Changes'] if c['Kind'] == 'ContractMethod' and (c['Module'], c['Token']) in keys],
+            FinalRows=[dict(r.attrib, Module=m.get('Path'), Mvid=m.get('Mvid'), Sha256=m.get('Sha256'))
+                       for m in root.findall('Module') for r in m.findall('Method') if r.get('ContractFamily') == family])
+    verify_corrections(aliases(checkpoint['PreviousMap']['Path']), aliases(mapping['Path']), prior, ledger, review, update['Changes'], config['ExpectedCorrections'], family_proofs)
     require(checkpoint['AcceptedDecisions'] == checkpoint['ExplicitAliasReplacements'] == len(config['ExpectedCorrections']), 'Checkpoint differs')
     for path in config['EvidenceFiles']:
         require(Path(path).is_file(), 'Missing evidence: ' + path)
@@ -111,6 +134,16 @@ def record(config, config_path):
     progress[config['ProgressKey']] = str(proof_path)
     pins = [Path(p) for p in config['EvidenceFiles']] + [Path(config_path), Path(__file__), Path(__file__).with_name('record_additive_naming_block.py'), Path(__file__).with_name('review_ledger.py'), Path(config['Checkpoint']), Path(checkpoint['Map']['Path']), Path(checkpoint['PreviousMap']['Path']), Path(checkpoint['Review']['Path']), Path(checkpoint['UpdateReport']), Path(checkpoint['CheckReport'])]
     snapshot.mkdir(parents=True, exist_ok=False)
+    control_bindings = []
+    for index, path in enumerate(pins):
+        if path.suffix == '.py':
+            destination = snapshot / 'controls' / (digest(path)[:16] + '-' + path.name)
+            destination.parent.mkdir(exist_ok=True)
+            if not destination.exists():
+                shutil.copyfile(path, destination)
+            require(digest(destination) == digest(path), 'Control snapshot differs')
+            control_bindings.append(dict(SourcePath=str(path), Path=str(destination), Sha256=digest(path)))
+            pins[index] = destination
     for key, destination in destinations.items():
         shutil.copyfile(config[key], destination)
         pins.append(destination)
@@ -121,6 +154,7 @@ def record(config, config_path):
         shutil.copyfile(sink / name, snapshot / name)
         pins.append(snapshot / name)
     proof = dict(Format=1, Kind='PhysicalMethodAliasCorrectionVerification', Map=checkpoint['Map'], Snapshot=str(snapshot),
+                 ControlBindings=control_bindings,
                  Pins=[dict(Path=str(p), Sha256=digest(p)) for p in dict.fromkeys(pins)], Corrections=copy.deepcopy(config['ExpectedCorrections']),
                  EveryOtherAliasAndScopePreserved=True, EveryOtherLedgerDecisionPreserved=True, NativeSuccess=True,
                  WholeScope=dict(Modules=len(inventory['Modules']), Remaining=inventory['RemainingNativeCandidates'], InventoryNativeCalls=0, OwnerNativeCalls=0, InventorySeconds=inventory['ElapsedSeconds'], OwnerSeconds=owners['ElapsedSeconds']),
