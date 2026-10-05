@@ -902,7 +902,6 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             target[key] = name;
             markers.Add(attribute);
         }
-        if (markers.Count == 0) return false;
         // v2 instructions carry the parameter list and arity, so two overloads of
         // one type may share an alias and still restore independently.
         Func<IMethod, string> signatureOf = method => {
@@ -923,6 +922,30 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             return string.Join("|", new[] { owner.FullName, assembly.Name.String, assembly.Version.ToString(), assembly.Culture.String ?? "" }
                 .Concat(parts).Select(encode));
         };
+        // A reconstructed auto-property creates fresh compiler storage. The
+        // field-targeted marker binds its exact compiled field, including in a
+        // generic owner; do not guess its name from a compiler naming pattern.
+        var automaticMarkers = new Dictionary<FieldDef, CustomAttribute>();
+        if (!methods) foreach (var field in module.GetTypes().SelectMany(t => t.Fields)) {
+            foreach (var attribute in field.CustomAttributes) {
+                if (attribute.TypeFullName != "System.Reflection.ObfuscationAttribute") continue;
+                var feature = attribute.NamedArguments.FirstOrDefault(a => a.Name == "Feature");
+                string text = feature == null || feature.Value == null ? null : feature.Value.ToString();
+                const string automaticPrefix = "dnSpy.metadata.automatic-field.v1|";
+                if (text == null || !text.StartsWith(automaticPrefix, StringComparison.Ordinal)) continue;
+                var name = new UTF8String(Convert.FromBase64String(text.Substring(automaticPrefix.Length)));
+                if (UTF8String.IsNullOrEmpty(name) || automaticMarkers.ContainsKey(field) || !field.IsPrivate ||
+                    !field.CustomAttributes.Any(a => a.TypeFullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"))
+                    throw new InvalidDataException("Invalid automatic property storage instruction.");
+                string key = keyFor(field.DeclaringType, new[] { field.Name.String });
+                UTF8String previous;
+                if (maps.TryGetValue(key, out previous) && previous != name)
+                    throw new InvalidDataException("Conflicting automatic property storage name.");
+                maps[key] = name;
+                automaticMarkers.Add(field, attribute);
+            }
+        }
+        if (markers.Count == 0 && automaticMarkers.Count == 0) return false;
         Func<ITypeDefOrRef, string, IMethod, UTF8String> resolve = (owner, name, method) => {
             UTF8String found;
             var unqualified = keyFor(owner, new[] { name });
@@ -975,6 +998,7 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             else ((MethodDef)entry.Key).Name = entry.Value;
         }
         foreach (var marker in markers) module.Assembly.CustomAttributes.Remove(marker);
+        foreach (var marker in automaticMarkers) marker.Key.CustomAttributes.Remove(marker.Value);
         return true;
     }
 
