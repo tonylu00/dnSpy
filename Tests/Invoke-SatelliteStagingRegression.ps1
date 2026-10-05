@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory)][string]$DnSpyConsole, [Parameter(Mandatory)][string]$OutputDirectory)
+﻿param([Parameter(Mandatory)][string]$DnSpyConsole, [Parameter(Mandatory)][string]$OutputDirectory, [switch]$ApplicationLayout)
 $ErrorActionPreference = 'Stop'
 if (Test-Path -LiteralPath $OutputDirectory) { throw 'Choose a new output directory.' }
 $inputRoot = Join-Path $OutputDirectory 'input'
@@ -48,13 +48,34 @@ class Program {
     if ($LASTEXITCODE -ne 0) { throw 'Original satellite lookup failed.' }
 }
 $inputs = @('Current','Compatibility') | ForEach-Object { Join-Path $inputRoot "$_\Fixture.exe" }
+# A legitimate neutral assembly can have the same filename as a satellite.
+# Build it independently, then include it in each shared output bin.
+$neutral = Join-Path $OutputDirectory 'NeutralLibrary'
+New-Item -ItemType Directory -Path $neutral | Out-Null
+'public class NeutralLibraryMarker {}' | Set-Content (Join-Path $neutral 'Marker.cs')
+'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><AssemblyName>Fixture.resources</AssemblyName></PropertyGroup></Project>' | Set-Content (Join-Path $neutral 'Neutral.csproj')
+dotnet build (Join-Path $neutral 'Neutral.csproj') -c Release --nologo -v quiet
+if ($LASTEXITCODE) { throw 'Neutral suffix fixture build failed.' }
 foreach ($threads in @(1,4)) {
     $export = Join-Path $OutputDirectory "export-$threads"
-    & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export @inputs
+    $layoutArguments = @()
+    if ($ApplicationLayout) { $layoutArguments = @('--app-layout') }
+    & $DnSpyConsole --no-color --sdk-project --threads $threads -o $export @layoutArguments @inputs
     if ($LASTEXITCODE -ne 0) { throw 'Export failed.' }
     $solution = Get-ChildItem -LiteralPath $export -Filter '*.sln' | Select-Object -First 1
     dotnet build $solution.FullName -c Release --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Rebuild failed.' }
+    [xml]$exportMap = Get-Content (Join-Path $export 'dnspy-export-map.xml')
+    foreach ($entry in $exportMap.DnSpyExportMap.Project) {
+        $target = & dotnet msbuild (Join-Path $export $entry.Project) -p:Configuration=Release -getProperty:TargetPath -nologo -verbosity:quiet
+        if ($LASTEXITCODE) { throw 'Fixture output lookup failed.' }
+        Copy-Item -LiteralPath (Join-Path $neutral 'bin/Release/net48/Fixture.resources.dll') -Destination (Join-Path (Split-Path $target) 'Fixture.resources.dll')
+        # "cv" is a valid culture name but may also be a compatibility tree.
+        # Nested outputs cannot become this parent's satellite candidates.
+        $nestedContext = Join-Path (Split-Path $target) 'cv/compatibility'
+        New-Item -ItemType Directory -Path $nestedContext -Force | Out-Null
+        Copy-Item -LiteralPath (Join-Path $neutral 'bin/Release/net48/Fixture.resources.dll') -Destination (Join-Path $nestedContext 'Fixture.resources.dll')
+    }
     $staged = Join-Path $OutputDirectory "staged-$threads"
     & (Join-Path $PSScriptRoot '..\Build\Stage-RecompiledTree.ps1') -InputDirectory $inputRoot -ExportDirectory $export -OutputDirectory $staged
     foreach ($variant in @('Current','Compatibility')) {
@@ -77,7 +98,8 @@ foreach ($threads in @(1,4)) {
     }
     if (!$rejected -or (Test-Path $undeclared)) { throw 'Undeclared source root was not rejected before staging' }
     $satellite = Get-ChildItem -LiteralPath $export -Recurse -File -Filter 'Fixture.resources.dll' |
-        Where-Object FullName -like '*\bin\Release\*' | Select-Object -First 1
+        Where-Object { $_.FullName -notmatch '\\obj\\' -and ($ApplicationLayout -or $_.FullName -like '*\bin\Release\*') -and
+            [Reflection.AssemblyName]::GetAssemblyName($_.FullName).CultureName } | Select-Object -First 1
     $savedSatellite = $satellite.FullName + '.saved'
     Move-Item -LiteralPath $satellite.FullName -Destination $savedSatellite
     $incompleteOutput = Join-Path $OutputDirectory "incomplete-$threads"

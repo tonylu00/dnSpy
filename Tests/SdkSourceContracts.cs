@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Xml.Linq;
+using System.Security.Cryptography;
 using dnlib.DotNet;
 class Program {
  static bool Visible(TypeDef t) => t.DeclaringType == null ? t.IsPublic : Visible(t.DeclaringType) && (t.IsNestedPublic || t.IsNestedFamily || t.IsNestedFamilyOrAssembly);
@@ -11,14 +12,37 @@ class Program {
  static int Main(string[] args) {
  var issues = new List<object>(); int projects=0, types=0, methods=0, fields=0;
  var comparer=new SigComparer();
+ Dictionary<string,string> stagedOutputs=null;
+ Dictionary<string,XElement> sdkModules=null;
+ if(args.Length>1) {
+  using var manifest=JsonDocument.Parse(File.ReadAllText(args[1]));
+  string original=Path.GetFullPath(manifest.RootElement.GetProperty("Input").GetString());
+  stagedOutputs=manifest.RootElement.GetProperty("Overlays").EnumerateArray().Where(r=>r.GetProperty("Kind").GetString()=="Assembly")
+   .ToDictionary(r=>Path.GetFullPath(Path.Combine(original,r.GetProperty("Relative").GetString())),r=>r.GetProperty("Built").GetString(),StringComparer.OrdinalIgnoreCase);
+  if(args.Length>2) sdkModules=XDocument.Load(args[2]).Root.Elements("Module")
+   .ToDictionary(m=>Path.GetFullPath(Path.Combine(original,(string)m.Attribute("Path"))),m=>m,StringComparer.OrdinalIgnoreCase);
+ }
  foreach(var p in XDocument.Load(Path.Combine(args[0], "dnspy-export-map.xml")).Root.Elements("Project")) {
  string relative=(string)p.Attribute("Project"); var x=XDocument.Load(Path.Combine(args[0],relative)).Root;
  string tfm=x.Descendants("TargetFramework").Single().Value, name=x.Descendants("AssemblyName").Single().Value;
  string ext=x.Descendants("OutputType").Single().Value=="Library"?".dll":".exe";
- string binary=Directory.GetFiles(Path.Combine(args[0],Path.GetDirectoryName(relative),"bin"),name+ext,SearchOption.AllDirectories).Single(f=>f.EndsWith(Path.Combine("Release",tfm,name+ext),StringComparison.OrdinalIgnoreCase));
+ string binary=stagedOutputs==null ? Directory.GetFiles(Path.Combine(args[0],Path.GetDirectoryName(relative),"bin"),name+ext,SearchOption.AllDirectories).Single(f=>f.EndsWith(Path.Combine("Release",tfm,name+ext),StringComparison.OrdinalIgnoreCase)) : stagedOutputs[Path.GetFullPath((string)p.Attribute("Source"))];
  using var input=ModuleDefMD.Load((string)p.Attribute("Source")); using var output=ModuleDefMD.Load(binary); projects++;
+ HashSet<uint> protectedTokens=null;
+ if(sdkModules!=null) {
+  string source=Path.GetFullPath((string)p.Attribute("Source"));
+  protectedTokens=new HashSet<uint>();
+  if(sdkModules.TryGetValue(source,out var sdk)) {
+   string hash=Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(source)));
+   if(input.Assembly.FullName!=(string)sdk.Attribute("Identity") || input.Mvid!=Guid.Parse((string)sdk.Attribute("Mvid")) || hash!=(string)sdk.Attribute("Sha256"))
+    throw new InvalidDataException("SDK whitelist physical identity mismatch: "+source);
+   protectedTokens.UnionWith(sdk.Elements("Symbol").Select(s=>Convert.ToUInt32(((string)s.Attribute("Token")).Substring(2),16)));
+  }
+ }
+ bool Selected(IMDTokenProvider member) => protectedTokens==null || protectedTokens.Contains(member.MDToken.Raw);
  var lookup=output.GetTypes().ToLookup(t=>t.FullName);
  void Issue(string kind,string member,string before,string after) => issues.Add(new {Project=relative,Kind=kind,Member=member,Before=before,After=after});
+ if(input.Assembly.FullName!=output.Assembly.FullName) Issue("AssemblyIdentity",input.Name,input.Assembly.FullName,output.Assembly.FullName);
  void Generics(string owner,IList<GenericParam> before,IList<GenericParam> after) {
   if(before.Count!=after.Count) {Issue("GenericCount",owner,before.Count.ToString(),after.Count.ToString());return;}
   for(int i=0;i<before.Count;i++) {
@@ -30,14 +54,14 @@ class Program {
     Issue("GenericConstraints",owner+" #"+i,string.Join(";",bc.Select(c=>c.FullName)),string.Join(";",ac.Select(c=>c.FullName)));
   }
  }
- foreach(var t in input.GetTypes().Where(Visible)) {
+ foreach(var t in input.GetTypes().Where(t=>protectedTokens==null?Visible(t):Selected(t))) {
  types++; var matches=lookup[t.FullName].ToArray(); if(matches.Length!=1) {Issue("TypeMissingOrAmbiguous",t.FullName,"1",matches.Length.ToString());continue;} var o=matches[0];
 if(t.Attributes!=o.Attributes) Issue("TypeFlags",t.FullName,t.Attributes.ToString(),o.Attributes.ToString());
  if(!comparer.Equals(t.BaseType,o.BaseType)) Issue("BaseType",t.FullName,t.BaseType?.FullName,o.BaseType?.FullName);
  if(t.Interfaces.Count!=o.Interfaces.Count || t.Interfaces.Any(i=>o.Interfaces.Count(j=>comparer.Equals(i.Interface,j.Interface))!=1))
   Issue("Interfaces",t.FullName,string.Join(";",t.Interfaces.Select(i=>i.Interface.FullName)),string.Join(";",o.Interfaces.Select(i=>i.Interface.FullName)));
  Generics(t.FullName,t.GenericParameters,o.GenericParameters);
- foreach(var m in t.Methods.Where(Visible)) { methods++; var ms=o.Methods.Where(n=>n.Name==m.Name && comparer.Equals(n.MethodSig,m.MethodSig)).ToArray();
+ foreach(var m in t.Methods.Where(m=>protectedTokens==null?Visible(m):Selected(m))) { methods++; var ms=o.Methods.Where(n=>n.Name==m.Name && comparer.Equals(n.MethodSig,m.MethodSig)).ToArray();
  if(ms.Length!=1) { var prop=t.Properties.FirstOrDefault(p=>p.GetMethods.Contains(m)||p.SetMethods.Contains(m)||p.OtherMethods.Contains(m)); var evt=t.Events.FirstOrDefault(e=>e.AddMethod==m||e.RemoveMethod==m||e.InvokeMethod==m||e.OtherMethods.Contains(m)); Issue(prop!=null?"PropertyAccessorMissing":evt!=null?"EventAccessorMissing":"MethodMissingOrAmbiguous",m.FullName,prop?.FullName??evt?.FullName??"1",ms.Length.ToString()); }
  else if(ms[0].Attributes!=m.Attributes) Issue("MethodFlags",m.FullName,m.Attributes.ToString(),ms[0].Attributes.ToString());
  if(ms.Length==1) {
@@ -53,20 +77,20 @@ if(t.Attributes!=o.Attributes) Issue("TypeFlags",t.FullName,t.Attributes.ToStrin
   }
  }
  }
- foreach(var property in t.Properties) {
+ foreach(var property in t.Properties.Where(p=>protectedTokens==null || p.GetMethods.Concat(p.SetMethods).Concat(p.OtherMethods).Any(Selected))) {
   var ps=o.Properties.Where(n=>n.Name==property.Name && comparer.Equals(n.PropertySig,property.PropertySig)).ToArray();
   if(ps.Length!=1) { Issue("PropertyRow",property.FullName,property.PropertySig.ToString()+" flags="+property.PropertySig.CallingConvention, string.Join("; ",o.Properties.Where(n=>n.Name==property.Name).Select(n=>n.PropertySig.ToString()+" flags="+n.PropertySig.CallingConvention))); continue; }
   if(ps[0].Attributes!=property.Attributes) Issue("PropertyFlags",property.FullName,property.Attributes.ToString(),ps[0].Attributes.ToString());
   if(ps[0].GetMethod?.Name!=property.GetMethod?.Name || ps[0].SetMethod?.Name!=property.SetMethod?.Name) Issue("PropertySemantics",property.FullName,property.GetMethod?.Name+"|"+property.SetMethod?.Name,ps[0].GetMethod?.Name+"|"+ps[0].SetMethod?.Name);
  }
- foreach(var e in t.Events) {
+ foreach(var e in t.Events.Where(e=>protectedTokens==null || new[]{e.AddMethod,e.RemoveMethod,e.InvokeMethod}.Concat(e.OtherMethods).Where(m=>m!=null).Any(Selected))) {
   var es=o.Events.Where(n=>n.Name==e.Name && comparer.Equals(n.EventType,e.EventType)).ToArray();
   if(es.Length!=1) { Issue("EventRow",e.FullName,"1",es.Length.ToString()); continue; }
   if(es[0].Attributes!=e.Attributes) Issue("EventFlags",e.FullName,e.Attributes.ToString(),es[0].Attributes.ToString());
   if(es[0].AddMethod?.Name!=e.AddMethod?.Name || es[0].RemoveMethod?.Name!=e.RemoveMethod?.Name || es[0].InvokeMethod?.Name!=e.InvokeMethod?.Name)
    Issue("EventSemantics",e.FullName,e.AddMethod?.Name+"|"+e.RemoveMethod?.Name+"|"+e.InvokeMethod?.Name,es[0].AddMethod?.Name+"|"+es[0].RemoveMethod?.Name+"|"+es[0].InvokeMethod?.Name);
  }
- foreach(var f in t.Fields.Where(f=>f.IsPublic||f.IsFamily||f.IsFamilyOrAssembly)) { fields++; var fs=o.Fields.Where(n=>n.Name==f.Name && comparer.Equals(n.FieldSig,f.FieldSig)).ToArray();
+ foreach(var f in t.Fields.Where(f=>protectedTokens==null?(f.IsPublic||f.IsFamily||f.IsFamilyOrAssembly):Selected(f))) { fields++; var fs=o.Fields.Where(n=>n.Name==f.Name && comparer.Equals(n.FieldSig,f.FieldSig)).ToArray();
  if(fs.Length!=1) Issue("FieldMissingOrAmbiguous",f.FullName,"1",fs.Length.ToString());
  else if(fs[0].Attributes!=f.Attributes) Issue("FieldFlags",f.FullName,f.Attributes.ToString(),fs[0].Attributes.ToString());
  if(fs.Length==1 && (f.HasConstant!=fs[0].HasConstant || f.HasConstant &&
@@ -75,7 +99,7 @@ if(t.Attributes!=o.Attributes) Issue("TypeFlags",t.FullName,t.Attributes.ToStrin
  }
  }
  }
- Console.WriteLine(JsonSerializer.Serialize(new {Projects=projects,Types=types,Methods=methods,Fields=fields,IssueCount=issues.Count,Issues=issues},new JsonSerializerOptions{WriteIndented=true}));
+ Console.WriteLine(JsonSerializer.Serialize(new {Projects=projects,Scope=sdkModules==null?"All visible contracts":"Pinned SDK whitelist and all exported assembly identities",Types=types,Methods=methods,Fields=fields,IssueCount=issues.Count,Issues=issues},new JsonSerializerOptions{WriteIndented=true}));
  return issues.Count == 0 ? 0 : 1;
  }
 }

@@ -52,13 +52,16 @@ foreach ($entry in $map.DnSpyExportMap.Project) {
     $project = [IO.Path]::GetFullPath((Join-Path $ExportDirectory $entry.Project))
     $null = RelativeWithin $ExportDirectory $project
     $name = $entry.AssemblyName + [IO.Path]::GetExtension($entry.Source)
-    $bin = Join-Path (Split-Path $project) 'bin'
-    $configurationSegment = '\' + $Configuration + '\'
-    $outputs = @(Get-ChildItem -LiteralPath $bin -Recurse -File | Where-Object {
-        $_.Name -eq $name -and $_.FullName.IndexOf($configurationSegment, [StringComparison]::OrdinalIgnoreCase) -ge 0
-    })
-    if ($outputs.Count -ne 1) { throw "Ambiguous or missing build output for $project" }
-    $built = $outputs[0].FullName
+    # Resolve this physical project's output through MSBuild. Application
+    # layout exports share a bin tree containing distinct compatibility files.
+    $target = @(& dotnet msbuild $project "-p:Configuration=$Configuration" -getProperty:TargetPath -nologo -verbosity:quiet)
+    if ($LASTEXITCODE -ne 0 -or $target.Count -ne 1 -or [string]::IsNullOrWhiteSpace($target[0])) { throw "Cannot resolve exact build output for $project" }
+    $built = [IO.Path]::GetFullPath($target[0].Trim())
+    $null = RelativeWithin $ExportDirectory $built
+    if (!(Test-Path -LiteralPath $built -PathType Leaf) -or [IO.Path]::GetFileName($built) -ne $name) { throw "Missing or unexpected build output for $project" }
+    $sourceIdentity = [Reflection.AssemblyName]::GetAssemblyName($sourcePath)
+    $builtIdentity = [Reflection.AssemblyName]::GetAssemblyName($built)
+    if ($builtIdentity.Name -ne $sourceIdentity.Name -or $builtIdentity.Version -ne $sourceIdentity.Version -or $builtIdentity.CultureName -ne $sourceIdentity.CultureName) { throw "Build output identity mismatch for $project" }
     if ($referenceOnly) {
         $references.Add([pscustomobject]@{ Source=$sourcePath; InputHash=(Get-FileHash -LiteralPath $sourcePath).Hash; Built=$built; Hash=(Get-FileHash -LiteralPath $built).Hash })
         continue
@@ -69,7 +72,15 @@ foreach ($entry in $map.DnSpyExportMap.Project) {
     # Their signing identity must match the rebuilt parent, not the original parent.
     $identity = [Reflection.AssemblyName]::GetAssemblyName($built)
     $satelliteName = $entry.AssemblyName + '.resources.dll'
-    foreach ($satellite in Get-ChildItem -LiteralPath (Split-Path $built) -Recurse -File | Where-Object Name -eq $satelliteName) {
+    # Shared application bins can contain an unrelated neutral library whose
+    # name ends in .resources.dll, as well as satellites for nested CV contexts.
+    # Only culture subdirectories of this physical output own its satellites.
+    $satellites = @(foreach ($cultureDirectory in Get-ChildItem -LiteralPath (Split-Path $built) -Directory) {
+        try { $cultureName = [Globalization.CultureInfo]::GetCultureInfo($cultureDirectory.Name).Name } catch { continue }
+        if (!$cultureName) { continue }
+        Get-ChildItem -LiteralPath $cultureDirectory.FullName -File | Where-Object Name -eq $satelliteName
+    })
+    foreach ($satellite in $satellites) {
         $satIdentity = [Reflection.AssemblyName]::GetAssemblyName($satellite.FullName)
         $culture = $satIdentity.CultureName
         if (!$culture -or $satIdentity.Name -ne ($identity.Name + '.resources') -or
