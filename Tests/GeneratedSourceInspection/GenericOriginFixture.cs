@@ -2,6 +2,11 @@ using System;
 using System.Collections.Concurrent;
 
 public static class GenericOriginFixture {
+    public static int StaticCounter;
+    public sealed class Receiver<T> {
+        public T Value;
+        public Func<T> Capture(bool read) { return () => read ? Value : default(T); }
+    }
     public sealed class Pair<TFirst, TSecond> {
         public TFirst First;
         public TSecond Second;

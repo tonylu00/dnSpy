@@ -54,10 +54,31 @@ try{$ErrorActionPreference='Continue';$diagnostics=& dotnet $Inspector $RuntimeD
 finally{$ErrorActionPreference=$oldPreference}
 $diagnostics | Set-Content "$OutputDirectory/rejected.log"
 if($code -eq 0 -or (Test-Path -LiteralPath $target) -or $diagnostics -notmatch 'Printed reference origin signature mismatch'){throw 'Wrong generic field role was accepted or published.'}
+foreach($mutation in @('unknown-kind','wrong-expression','static-receiver')) {
+    $receiverSummary=Read "$OutputDirectory/scope/summary.json"
+    $receiverReport=Read $receiverSummary.Results[0].Report
+    $receiver=@($receiverReport.Roots[0].FieldBindings | Where-Object { $_.BindingKind -eq 'CapturedReceiver' })
+    if($receiver.Count -eq 0){throw 'Generic captured receiver has no native binding.'}
+    if($mutation -eq 'unknown-kind') {$receiver[0].BindingKind='UnprovenReceiver';$expected='Unknown hoisted binding kind'}
+    elseif($mutation -eq 'wrong-expression') {$receiver[0].SourceName='other';$expected='Captured receiver requires'}
+    else {
+        $static=@($receiverReport.Definitions | Where-Object {$_.FullName -eq 'System.Int32 GenericOriginFixture::StaticCounter'})
+        if($static.Count -ne 1){throw 'Synthetic static-field guard target missing.'}
+        $receiver[0].FieldToken=$static[0].Token;$expected='Captured receiver requires'
+    }
+    $receiverReportPath="$OutputDirectory/$mutation-report.json";Save $receiverReportPath $receiverReport
+    $receiverSummary.Results[0].Report=$receiverReportPath;$receiverSummary.Results[0].ReportSha256=(Get-FileHash $receiverReportPath).Hash
+    $receiverSummaryPath="$OutputDirectory/$mutation-summary.json";Save $receiverSummaryPath $receiverSummary
+    $receiverOutput="$OutputDirectory/$mutation-rejected.json"
+    try {$ErrorActionPreference='Continue';$diagnostics=& dotnet $Inspector $RuntimeDirectory $receiverSummaryPath $receiverOutput audit-scope 2>&1|Out-String;$code=$LASTEXITCODE}
+    finally {$ErrorActionPreference=$oldPreference}
+    $diagnostics | Set-Content "$OutputDirectory/$mutation-rejected.log"
+    if($code -eq 0 -or (Test-Path $receiverOutput) -or $diagnostics -notmatch $expected){throw "Invalid receiver evidence accepted: $mutation"}
+}
 Save "$OutputDirectory/proof.json" @{
-    Format=1;Success=$true;Checks=2;Audit="$OutputDirectory/audit.json";AuditSha256=(Get-FileHash "$OutputDirectory/audit.json").Hash
+    Format=1;Success=$true;Checks=5;Audit="$OutputDirectory/audit.json";AuditSha256=(Get-FileHash "$OutputDirectory/audit.json").Hash
     Inspector=$Inspector;InspectorSha256=(Get-FileHash -LiteralPath $Inspector).Hash
     OriginalBodyContextRebindings=$audit.OriginalBodyContextRebindings
-    Cases=@('generic type field context and reconstructed lambda MemberRef/MethodSpec contexts','wrong generic field role rejected without publishing')
+    Cases=@('generic type field context and reconstructed lambda MemberRef/MethodSpec contexts','wrong generic field role rejected without publishing','unknown field binding kind rejected','non-this receiver expression rejected','static receiver field rejected')
 }
 Write-Output 'PASS: generic original-reference contexts and rejection of incorrect generic roles.'

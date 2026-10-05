@@ -23,6 +23,8 @@ public static class GeneratedSourceFixture {
         public int this[int offset] { get { return Value + offset; } }
         public int Read() { return Value; }
         public Func<int> GetReader() { return Read; }
+        public Func<int> CaptureThis(int offset) { return () => Value + offset; }
+        public Func<Func<int>> NestedCaptureThis(int offset) { return () => () => Value + offset; }
         public static ReferenceValue operator +(ReferenceValue first, ReferenceValue second) {
             return new ReferenceValue(first.Value + second.Value);
         }

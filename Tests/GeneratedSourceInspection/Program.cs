@@ -186,6 +186,15 @@ internal static class Program {
                 Check(proof.PrintedReferences.Any(r => r.OwnerToken == recursive.MDToken.Raw && r.IsImplementationAnnotation && r.Form == "Keyword" && r.Text == "delegate"), "Anonymous delegate implementation link was not explicitly classified.");
                 Check(proof.PrintedReferences.Where(r => r.IsImplementationAnnotation).All(r => !proof.PrintedReferenceTokens.Contains(r.DefinitionToken)), "Anonymous implementation links counted as printed calls.");
                 var referenceValue = root.NestedTypes.Single(t => t.Name == "ReferenceValue");
+                foreach (string receiverOwnerName in new[] { "CaptureThis", "NestedCaptureThis" }) {
+                    var receiverOwner = referenceValue.Methods.Single(m => m.Name == receiverOwnerName);
+                    var receiverBindings = proof.FieldBindings.Where(f => f.OwnerToken == receiverOwner.MDToken.Raw && f.BindingKind == "CapturedReceiver").ToArray();
+                    Check(receiverBindings.Length > 0 && receiverBindings.All(f => f.SourceName == "this" &&
+                        module.ResolveToken(f.FieldToken) is FieldDef field && !field.IsStatic && field.FieldType.ToTypeDefOrRef().ResolveTypeDef() == referenceValue),
+                        "Captured receiver lost its exact original field/owner identity: " + receiverOwnerName);
+                    Check(proof.FieldBindings.Any(f => f.OwnerToken == receiverOwner.MDToken.Raw && f.BindingKind == "Variable" && f.SourceName == "offset"),
+                        "Captured parameter was confused with a receiver: " + receiverOwnerName);
+                }
                 var sourceReferences = proof.PrintedReferences.Where(r => !r.IsDefinition && !r.IsImplementationAnnotation).ToArray();
                 uint Token(string name) => referenceValue.Methods.Single(m => m.Name == name).MDToken.Raw;
                 Check(sourceReferences.Any(r => r.DefinitionToken == Token("Read") && r.Form == "Identifier"), "Named method-group reference lost.");

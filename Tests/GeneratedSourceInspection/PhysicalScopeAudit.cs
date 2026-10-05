@@ -131,6 +131,13 @@ internal static class PhysicalScopeAudit {
                 foreach (var field in root.GetProperty("FieldBindings").EnumerateArray()) {
                     Owner(field); Require(definitions.TryGetValue(Token(field, "FieldToken"), out var definition) && definition is FieldDef, "Hoisted binding is not an original field.");
                     Require(!string.IsNullOrEmpty(Text(field, "SourceName")), "Empty hoisted source variable name."); localFields++;
+                    if (field.TryGetProperty("BindingKind", out var bindingKind)) {
+                        string kind = bindingKind.GetString() ?? "";
+                        Require(kind == "Variable" || kind == "CapturedReceiver", "Unknown hoisted binding kind.");
+                        if (kind == "CapturedReceiver")
+                            Require(Text(field, "SourceName") == "this" && definition is FieldDef receiverField && !receiverField.IsStatic && Token(field, "OwnerToken") != 0,
+                                "Captured receiver requires a nonstatic original field, a source owner and this expression.");
+                    }
                 }
                 foreach (var use in root.GetProperty("NonlocalReferences").EnumerateArray()) {
                     Owner(use); uint token = Token(use, "DefinitionToken");

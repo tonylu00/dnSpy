@@ -11,6 +11,11 @@ Read first:
 What lives here:
 
 - `progress.json` — tool-facing record of the current map paths and checkpoint
+- `captured-receiver-verification-v492.json` — native observation now records
+  fields replaced by `this` separately from captured variables. Four actual ETS
+  fields gain exact owner evidence across three roots whose compiled source is
+  unchanged. Native, behavioral and malformed-evidence checks pass; this does
+  not waive runtime contracts or replace the pending whole-scope source audit.
 - `timing-context-verification-v493.json` — naming-only checkpoint: 82 aliases
   connect UTC timing, CoAP settings and OSCORE context factories; the historical
   `GetTickCount642` collision becomes `GetElapsedMilliseconds`. Native SDK and

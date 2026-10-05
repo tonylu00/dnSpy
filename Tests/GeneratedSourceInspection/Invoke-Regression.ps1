@@ -84,6 +84,8 @@ foreach($name in @('guard-source.json','guard-options.json','guard-scope.json','
 $proof=Get-Content -Raw "$OutputDirectory\fixture-proof.json" | ConvertFrom-Json
 $field=@($proof.Definitions | Where-Object OriginalName -eq 'recurse')
 if($field.Count -ne 1){throw 'Expected one physical recursive capture field.'}
+$captureOwner=@($proof.Definitions | Where-Object { $_.OriginalName -eq 'Capture' -and $_.FullName -match ' GeneratedSourceFixture::Capture\(System.Int32\)$' })
+if($captureOwner.Count -ne 1){throw 'Expected one physical Capture owner.'}
 $references=Get-Content -Raw $ReferenceManifest | ConvertFrom-Json
 $readonlyReferences=@($references.Assemblies | ForEach-Object {
     @{Path=$_.Path;Identity=$_.Identity;Mvid=$_.Mvid;Sha256=$_.Sha256;ExportInput=$false}
@@ -106,7 +108,7 @@ foreach($alias in @('countRemaining','value')) {
     $mapped=Get-Content -Raw "$folder\proof.json" | ConvertFrom-Json
     $binding=@($mapped.Roots[0].FieldBindings | Where-Object FieldToken -eq $field[0].Token)
     if($binding.Count -ne 1 -or $binding[0].SourceName -notmatch ('^'+[regex]::Escape($alias)+'[0-9]*$')){throw 'Captured field alias lost.'}
-    if(@($mapped.Roots[0].FieldBindings | Where-Object SourceName -eq 'offset').Count -ne 1){throw 'Captured parameter identity lost.'}
+    if(@($mapped.Roots[0].FieldBindings | Where-Object { $_.SourceName -eq 'offset' -and $_.OwnerToken -eq $captureOwner[0].Token }).Count -ne 1){throw 'Captured parameter identity lost.'}
     Copy-Item -LiteralPath "$PSScriptRoot\BehaviorProbe.cs" -Destination "$folder\BehaviorProbe.cs"
     Set-Content -LiteralPath "$folder\Probe.csproj" -Value '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><Optimize>true</Optimize><LangVersion>latest</LangVersion></PropertyGroup></Project>'
     Run 'dotnet' @('build',"$folder\Probe.csproj",'-c','Release','--nologo','-v','quiet') | Out-Null

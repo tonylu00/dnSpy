@@ -41,6 +41,14 @@ public static class BehaviorProbe {
         Check(GeneratedSourceFixture.Recursive()(8) == 8);
         Check(new GeneratedSourceFixture.State_NotGenerated { field_1 = 29 }.MoveNext() == 29);
         Check(GeneratedSourceFixture.References() == 17);
+        for (int value = -4; value <= 4; value++) {
+            var receiver = new GeneratedSourceFixture.ReferenceValue(value);
+            var captured = receiver.CaptureThis(7);
+            var nested = receiver.NestedCaptureThis(-3)();
+            Check(captured() == value + 7 && nested() == value - 3);
+            receiver.Value += 11;
+            Check(captured() == value + 18 && nested() == value + 8);
+        }
         Console.WriteLine("PASS: " + checks + " generated-source behavior checks.");
     }
 }

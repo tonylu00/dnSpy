@@ -229,6 +229,12 @@ Run `Invoke-Regression.ps1` with `-RuntimeDirectory`, `-Inspector`,
 checks observation/source determinism and opt-in isolation, disabled transforms,
 partial scope, generated-looking real names, compressed async lambdas, captured
 fields, and retained type/member/signature/shared-fallback/public implementations.
+Captured receiver substitutions carry `BindingKind=CapturedReceiver` and the
+literal source expression `this`, separately from `Variable` bindings. They
+retain exact physical field and source-owner tokens, including nested lambdas;
+they do not authorize removal of runtime storage. The fixture checks receiver
+mutation after capture and opt-in source equality. The generic-origin audit
+rejects unknown binding kinds, non-`this` expressions and static receiver fields.
 Native synthetic metadata checks reject terminal Dispose lookalikes with another
 state, another field or an extra side effect. Original and native-decompiled
 sources both compile and execute the same iterator/async/closure behavior probes.
