@@ -1,0 +1,343 @@
+{
+  "Format": 1,
+  "Kind": "PhysicalNamingBlockVerification",
+  "Block": "v499",
+  "Map": {
+    "Path": "D:\\knx_analysis\\names63-staged-point-components-review02-v499.xml",
+    "Sha256": "2B674C7458E0FEBA04381F21671B2CF446A0F1C99F2FC90534B8D23DE081A795",
+    "Modules": 76,
+    "Rows": {
+      "Types": 1226,
+      "Methods": 13681,
+      "Fields": 7582,
+      "Parameters": 6579,
+      "Locals": 6053
+    }
+  },
+  "Snapshot": "D:\\knx_analysis\\point-components-accepted-v499",
+  "AcceptedEdits": 349,
+  "AddedAliases": 348,
+  "CorrectedAliases": [
+    {
+      "Token": "0x0600212A",
+      "Before": "CreateTransportForIoTProfile",
+      "After": "ParseOscoreAccessToken",
+      "Reason": "Group operations call SendGroupValueRequest with Write/Read/Response service types; group observers are Guid sets per GroupId, starting LinkLocal and SiteLocal listening on first registration and stopping on final removal. Event add/remove use Combine/Remove and CompareExchange; received payloads are parsed and raised. Security authenticates via SPAKE, manages POST/GET/DELETE /auth/at entries and creates OSCORE access tokens from CBOR profile/scope/confirmation keys. Class1348/06001F0A explicitly logs the third authentication argument as OSCORE ID; the other string remains unproven. Software-update operations use /swu/pkgqurl, /swu/protocol, /swu/maxdefer, /swu/method, /a/swu, /swu/update, /swu/pkgbytes, /swu/pkgv, /swu/state, /swu/result and /swu/lastupdate. Class1348/06001F24 slices packageData with offset/length and formats po/ps. The existing firmware-name implementation throws NotImplementedException; logger value 1 versus stack write 0 for TriggerSoftwareUpdate is preserved. Existing GetVersion/GetPackages share pkgv and remain unchanged. ParseOscoreAccessToken corrects a transport alias because every successful path constructs v2 access token using v3 confirmation key, while DTLS throws. No behavior is changed."
+    }
+  ],
+  "AliasKinds": {
+    "Parameter": 211,
+    "Local": 20,
+    "Method": 30,
+    "Type": 3,
+    "Field": 84
+  },
+  "AllOtherPriorAliasesPreserved": true,
+  "UnreviewedLedgerRowsPreserved": true,
+  "NativeChecks": "PASS",
+  "PhysicalModules": 109,
+  "NativeInventoryCalls": 0,
+  "RemainingBefore": 19125,
+  "RemainingAfter": 19012,
+  "ReviewedDecisions": 184,
+  "CompleteRenamedFamilies": {
+    "7EAC9AB01BF49FC94FAB9CB4DE3046F70DF0E6C335493F0DBC28DD1B155A0FFB": [
+      "0x06002078",
+      "0x060020FF"
+    ],
+    "69B99CDEA8D530EA7D87AE5BF743855842853C999A6271F2D68136805B8D142C": [
+      "0x06002079",
+      "0x06002100"
+    ],
+    "0D0CF3B6860731493A193D2E98C1012CD94FB37C636125A9A36E3A86FC398317": [
+      "0x0600207A",
+      "0x06002101"
+    ],
+    "244BD2033C7096BADC87A4BEC323C4C090FE7BFFAB90B9BB91AAB2512F0B9E81": [
+      "0x0600207B",
+      "0x06002102"
+    ],
+    "A5F723077EE9452E73205DDB42C4A9C84CF51C17EFA5644C501C492C8A8243BF": [
+      "0x0600207C",
+      "0x06002103"
+    ],
+    "9F92993578E1DA38BBD365891015C5662524899821F180456A639B2C0DD6CCD0": [
+      "0x0600207D",
+      "0x06002105"
+    ],
+    "07E761DF9B220C22D56C1EFCF392FB95EAA865A8D3E953D04D2158705FB84FEF": [
+      "0x0600207E",
+      "0x06002106"
+    ],
+    "4999247BF046E827EF7EAF5C6D70B972D3610CBC305D545102278153FA7FBF14": [
+      "0x06002085",
+      "0x06002123"
+    ],
+    "CA733382E0229888E20378A8BBA4AC4FFDB0D9F552BC5B08D787F6582D3EE4A2": [
+      "0x06002086",
+      "0x06002124"
+    ],
+    "06DB806411B70DE53993434B83A2A13CD22A9FBBE8BC8C708BC59ABB30F5187B": [
+      "0x06002087",
+      "0x06002125"
+    ],
+    "846BA9FCA969997D416FBFCC4C10818B70C2CB05A422C136C5B1AAF1CD57566F": [
+      "0x06002088",
+      "0x06002127"
+    ],
+    "D2DD23438B4C7F41F6E490E63557141A550BBFA70EA176C2E642BEF9E56C7DEB": [
+      "0x06002089",
+      "0x06002128"
+    ],
+    "32699D0F9335A6DE413B95504E6D9E35B4B1B2C2FD0F76FF70C458B781694CC7": [
+      "0x0600208A",
+      "0x06002140"
+    ],
+    "1D22D45B0E50325BD192133023F06831613E53817A1B45F49B60A4EE43FCA7AB": [
+      "0x0600208B",
+      "0x06002141"
+    ],
+    "461D979128B1F1A745D261AF2D5ED3936BA6DA583E92CFE8CBA64E465DACAA4B": [
+      "0x0600208C",
+      "0x06002142"
+    ],
+    "48E4FC0DEDB22E2458D49841F8675F9245B1D1760692F9F81FC50A7DEEF132C3": [
+      "0x0600208D",
+      "0x06002143"
+    ],
+    "FDA2C7BC6ABA45A1908F680E85D758CB770B81A4E49631C9257D451E2ABD9EFF": [
+      "0x0600208E",
+      "0x06002144"
+    ],
+    "A68A180D3C02A83BAD77D38F6DAA59C23835754AC412B4A6E18ACF3F5F6A5939": [
+      "0x0600208F",
+      "0x06002145"
+    ],
+    "4443A6A98CB4ADF90AB916C1BBD7D3279B793AB2C3C7662983FE1DFE3FCB9103": [
+      "0x06002090",
+      "0x06002146"
+    ],
+    "9BCA58F9DC9F3B9854E64FF8A38BBF2FABFD4B29378CA18F8B67624EAAF35E38": [
+      "0x06002091",
+      "0x06002147"
+    ],
+    "5969AD81D2A2F3FCF648AAF96C4C268D4750F03369D770A1F137742671B39FF9": [
+      "0x06002092",
+      "0x06002148"
+    ],
+    "5D3EFCEB7D97ECC9C3671793FD0E93232A6549FA9B97C74084FD2D21A4867391": [
+      "0x06002093",
+      "0x06002149"
+    ],
+    "73389C4627D4D82BCDC5C5ACADAA640E20073831C6049A83AB85E0990143E4D8": [
+      "0x06002094",
+      "0x0600214A"
+    ],
+    "C6BDB484351F59B9D6875114A086D65EB5B931FC0BBB0E1128836C649BE0A047": [
+      "0x06002095",
+      "0x0600214B"
+    ],
+    "6D2577D32DC3FAEF1AB380937A9E51E3230164EDD6741B50AD1C584170953B88": [
+      "0x06002096",
+      "0x0600214C"
+    ],
+    "4B43891A7178567984D35CD37DCD7FA5E41896F39F91B227D7E0C12DF243C1E4": [
+      "0x06002097",
+      "0x0600214D"
+    ],
+    "6DDFDBC5085C63C7B49D68136090A742EC6FC2965B7D9BBC229410ECD7975D95": [
+      "0x06002098",
+      "0x0600214E"
+    ],
+    "34188670151887142907DF0F1650827B6AA5C82978059540FA5AC6D7E37F183C": [
+      "0x06002099",
+      "0x0600214F"
+    ],
+    "F72499F12A8716C2333C28EAD0548CE15C42FB87725B61CF2DF8FA08E914320E": [
+      "0x0600209A",
+      "0x06002150"
+    ]
+  },
+  "UnresolvedFields": [
+    {
+      "Token": "0x04001EBB",
+      "Signature": "Class1393/a Class1393/e::a_0",
+      "Reason": "Exact Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8 / e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native v499 IL, v4 complete family graph, frozen v492 source and exact AST owner witnesses. Final AST proves captured storage but no unique direct argument/copy trace established; requires source live-range/producer evidence."
+    },
+    {
+      "Token": "0x04001EBC",
+      "Signature": "System.String Class1393/e::string_0",
+      "Reason": "Exact Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8 / e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native v499 IL, v4 complete family graph, frozen v492 source and exact AST owner witnesses. Final AST proves captured storage but no unique direct argument/copy trace established; requires source live-range/producer evidence."
+    },
+    {
+      "Token": "0x04001ED1",
+      "Signature": "System.Collections.Generic.IEnumerator`1<np> Class1393/Struct987::ienumerator_0",
+      "Reason": "Exact Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8 / e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native v499 IL, v4 complete family graph, frozen v492 source and exact AST owner witnesses. Final AST proves captured storage but no unique direct argument/copy trace established; requires source live-range/producer evidence."
+    }
+  ],
+  "UncertainLocals": 87,
+  "ForeignTrackedDiffSha256": "E300F2FBF518F3178C924C09D7DAB3FA01B4F2A8A23B87D45A271019C6308DDA",
+  "Pins": [
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-spec02.json",
+      "Sha256": "1914E93F153C5FA0114C1B11BC614A22DB096E2DA76A994658640F3B5743B42B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\prepare-v499-point-components02.py",
+      "Sha256": "DF046A2AA08DB74A51811407347525A07657A5DC2B7A0C491D85CE2C4C04436D"
+    },
+    {
+      "Path": "D:\\knx_analysis\\record-v499-point-components02.py",
+      "Sha256": "0EE431457E3F0DB847FAF27875B4809B314AE80CAFCB6C9AC89361065DF1848E"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-ledger-before01.json",
+      "Sha256": "BD79BC8AAD97BE7AA337DAEFA4976BE5DDD62FFE3CE3F3A5A3441ADD8D029F06"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-evidence02.json",
+      "Sha256": "131346BA1024B6A0DD12323B6C9F8CA16645F0AC64B3F175EB0DB81AEE96399B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-bodies01.json",
+      "Sha256": "8244EB0D3E2F15686D15E1771898A73F165B6E552DDD888B725103B7C1B3926B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\resource-helpers-async-contract-diagnostic01.json",
+      "Sha256": "F9F0D039F2FC522EA02A5DA4050215114B4653D30729498C62E9B87E92CA4127"
+    },
+    {
+      "Path": "D:\\knx_analysis\\consolidated-v492-receiver-source-refresh01\\native\\Knx.Falcon.dll.json",
+      "Sha256": "32467AC45FE326E7E6F5777216948AEED37756DC8D542727E120D6CBA7493DA2"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v499.json",
+      "Sha256": "71154AEEBB514C662C8EA6F86A01BCA5694A3B5B33012F7FC9DA4C903B64D07B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\names63-staged-point-components-review02-v499.xml",
+      "Sha256": "2B674C7458E0FEBA04381F21671B2CF446A0F1C99F2FC90534B8D23DE081A795"
+    },
+    {
+      "Path": "D:\\knx_analysis\\names63-staged-point-network-review02-v498.xml",
+      "Sha256": "18D806DDEEBF1466AC86419EBFFD0216E546AFC2021866D7B4599A40EB584CFC"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-review02.json",
+      "Sha256": "816C1D7DE1B0B1ED1FAE2EF0C358DA7D386246C40B0C7BDDF672B216E8AF3124"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-update02.json",
+      "Sha256": "19E8BC3FB3026C77665AF8A45EB93A5DE4D22382EBBAAF2DC2A668281FBAEC9A"
+    },
+    {
+      "Path": "D:\\knx_analysis\\naming-v499-point-components-check02.json",
+      "Sha256": "AA8036580726C48AEF5CF75E47A2A522B5B681B65D2F439DAF438E86B9139E6C"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\declaration-scope-verification-v494.json",
+      "Sha256": "0FD0A37714CC666B6EC9748B8A1E43A435670D557611C3330A61358F3A933B8A"
+    },
+    {
+      "Path": "D:\\knx_analysis\\declaration-scope-native-build04\\bin\\NameCandidates\\release\\NameCandidates.dll",
+      "Sha256": "BD1E82D0001DEF7D69E91B7685F07CF3E022E9A9A363E63EE9208374E9571E9D"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-types.json",
+      "Sha256": "0FFC753DD5FE18B0084B1FEFE241FE1112001FA7BD1148DCBC0CCD46BBD5E912"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-methods.json",
+      "Sha256": "64039A08EEDE4F9B73D6F24BCEA40D517F658EAD708AE4C42D85CFE21E40F050"
+    },
+    {
+      "Path": "D:\\knx_analysis\\perf-now\\application-inventory-v393-01\\087-fields.json",
+      "Sha256": "49C2BC9E682D4991332B22E2C2ED84F545FADB126FF7102FBC064D86682E9FC3"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\prepare_physical_review.py",
+      "Sha256": "6B272687F185DEFD8D79CEB34F61996154D44D21FAAA407D291CC8FD12C42582"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint_naming_block.py",
+      "Sha256": "BB08347F41CDABE48EE953205B9DB8BFE890DA6B44F55E18082F8BB2C59DBB16"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\review_ledger.py",
+      "Sha256": "62CD0B429C20253A15C6DD12653F1A05D71237C0FD9C4D263E019E245948B59B"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Class1388.cs",
+      "Sha256": "6CA8FB8B553F3DABF623562AFD274F66B28378398AF53C9132FB0CB4379117EF"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Class1393.cs",
+      "Sha256": "51A2AB47CCA835C95387A4434FF323A7CF1508242CA77503832F6385C5A755E3"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Class1398.cs",
+      "Sha256": "6150A31F9DFB068419D548865420E2B70D294E944BA6039C3899E973C9F2780E"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Class1348.cs",
+      "Sha256": "A1D75CEA6BFFBF74008BA63C17BAC2B4E88F412F0F19ED2EAA551D39D6572E70"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Class1360.cs",
+      "Sha256": "A95453ED09087B52ED27BA45D12CB4D75C77901947D1BE29E695D99415AB20BD"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Interface95.cs",
+      "Sha256": "12364781A952217A1BC3D37D11880086FB9DDA1641B859ED1AAF5B58C6EF69EF"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Interface97.cs",
+      "Sha256": "8095A7F8C90C2EC3E7B1BC4D78E8B4F3CEF4DF014D68BA8D54923CE2C3B18261"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Interface98.cs",
+      "Sha256": "62E95C3664D2F05593AE11C52C2354F0F49EA1E2D31BF6B8C6CD5C5536BE073C"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Interface75.cs",
+      "Sha256": "7F57864540ACBB4E2181F09BEB85838FE78368BC8FF3F0955EEAB7F270D96E37"
+    },
+    {
+      "Path": "D:\\knx_analysis\\ets63-consolidated-v492-auto-export03\\Knx.Falcon\\Interface76.cs",
+      "Sha256": "03D975377D1BC4C6605FEDC437BA0304E12732B55BFEBEA80347C89D30360BF8"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml",
+      "Sha256": "D0CEC1E57AAA5B7373209D86C63142F1816915A9769E5FEB3A0A73E9C9B46459"
+    },
+    {
+      "Path": "D:\\knx_analysis\\application-name-pass01\\contract-references63-v4.json",
+      "Sha256": "5DBBF82395C86D03E3643E21B4D65EA153A1215E358FACC530E761E313C670ED"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-inventory-v499-after-point-components.json",
+      "Sha256": "0EDC759AF2C8C0A87F846170162DC4A8BF162DCB3106033B358E56F6F6DF0C84"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\generated-owner-inventory-v499-after-point-components.json",
+      "Sha256": "D043D2D047F203B6E359E618D7A46AABD673D3F8C3C78C1BA908D4971345DC53"
+    },
+    {
+      "Path": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\point-components-native-coverage-v499.json",
+      "Sha256": "68859F66720844CCB134FB5928842DFCD201D246506DCEF77A0AC0DE6D27F76A"
+    },
+    {
+      "Path": "D:\\knx_analysis\\point-components-accepted-v499\\STATE.json",
+      "Sha256": "5634483777A2143E0CBC22E0BFA4087D30128BBC78583FF9567C23F0BF452450"
+    },
+    {
+      "Path": "D:\\knx_analysis\\point-components-accepted-v499\\progress.json",
+      "Sha256": "DB453D5CDE2B4984E359EC8C2D0C6DBB43BFB91FD2C87FE36F474156BCD473D1"
+    },
+    {
+      "Path": "D:\\knx_analysis\\point-components-accepted-v499\\reviewed63.json",
+      "Sha256": "5CF4B31C15791F1C4C9A63ED1D64249621F82E799C4BF344693FA19A6E6E2B52"
+    }
+  ],
+  "Limits": "Naming-only checkpoint. No ETS source/binary patches, export, build or launch. No generated contract retirement. The lexical review queue includes explicitly unresolved decisions and is not a count of whole-application readability or runtime correctness. Frozen v492 remains the separately verified full build/partialruntime baseline."
+}

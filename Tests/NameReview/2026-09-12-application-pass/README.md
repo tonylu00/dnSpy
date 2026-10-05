@@ -10,6 +10,14 @@ Read first:
 
 What lives here:
 
+- `point-components-verification-v499.json` — current naming checkpoint: 348 new
+  aliases across group communication, access-token security and software update,
+  plus the behavior-backed `ParseOscoreAccessToken` correction. All 29 interface
+  families have consistent declaration and implementation scopes. Native SDK
+  and contract checks and both cached 109-module inventories pass; 19,012 lexical
+  candidates remain. Three captured fields, one SPAKE argument and residual
+  locals retain explicit uncertainty. v499 is unexported; v492 remains the last
+  actual full build and partial runtime baseline.
 - `progress.json` — tool-facing record of the current map paths and checkpoint
 - `automatic-field-source-verification-v492.json` — completed 109-module source
   audit and join to the actual compiled files: 3,834 of 3,912 strict metadata
