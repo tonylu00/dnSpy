@@ -279,12 +279,20 @@ def resolve_scoped_definition(previous, reviewed, mapped_name, checked_change, c
     return result
 
 
-def remove_method_alias(previous, reviewed, mapped_name, checked_change, checked_name):
+def remove_method_alias(previous, reviewed, mapped_name, checked_change, checked_name, checked_scopes=None):
     """Record a native-checked withdrawal without replaying its operational marker."""
     if previous is not None:
         require_identity(previous, reviewed)
-        if previous.get('Unresolved') or previous.get('NewName') != mapped_name:
+        if previous.get('Unresolved'):
             raise ValueError('Alias withdrawal requires the current ledger/map decision')
+        historical = previous.get('NewName') != mapped_name
+        if historical and (not previous.get('NewName') or reviewed.get('PreviousLedgerAlias') != previous['NewName'] or
+                           reviewed.get('ExpectedMappedAlias') != mapped_name):
+            raise ValueError('Historical alias withdrawal requires exact ledger and mapped preimages')
+        if not historical and any(key in reviewed for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias')):
+            raise ValueError('Historical alias withdrawal annotations are stale')
+    elif any(key in reviewed for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias')):
+        raise ValueError('Historical alias withdrawal requires a previous ledger row')
     if not mapped_name or checked_name or not reviewed.get('RemoveExistingAlias') or reviewed.get('ExpectedAlias') != mapped_name:
         raise ValueError('Alias withdrawal requires exact current and final map names')
     if not reviewed.get('Unresolved') or reviewed.get('NewName') or not reviewed.get('Reason') or not reviewed.get('UnresolvedReason'):
@@ -293,15 +301,32 @@ def remove_method_alias(previous, reviewed, mapped_name, checked_change, checked
             ('Action', 'RemoveAlias'), ('Kind', 'Method'), ('Module', reviewed['Module']), ('Token', reviewed['Token']),
             ('Before', mapped_name), ('Requested', ''), ('Applied', ''))):
         raise ValueError('Alias withdrawal requires the exact native removal report')
-    for record in (previous, reviewed):
-        if record and any(scope.get('NewName') for label in ('ParameterNames', 'LocalNames') for scope in record.get(label, [])):
+    def scopes(record):
+        result = {}
+        for label, position, expected in (('ParameterNames', 'Sequence', 'OriginalName'), ('LocalNames', 'Index', 'ExpectedType')):
+            for scope in (record or {}).get(label, []):
+                if not scope.get('NewName'): continue
+                key = (label, scope[position])
+                if key in result: raise ValueError('Alias withdrawal has duplicate scopes')
+                result[key] = (scope[expected], scope['NewName'])
+        return result
+    old_scopes, retained = scopes(previous), scopes(reviewed)
+    if old_scopes or retained:
+        if not reviewed.get('DefinitionOnlyUnresolved') or not retained or (previous is not None and old_scopes != retained):
             raise ValueError('Alias withdrawal cannot discard accepted scope names')
+        actual = {key: (value.get('ExpectedName') if key[0] == 'ParameterNames' else value.get('ExpectedType'), value.get('NewName'))
+                  for key, value in (checked_scopes or {}).items()}
+        if actual != retained:
+            raise ValueError('Alias withdrawal requires exact checked retained scopes')
+    elif reviewed.get('DefinitionOnlyUnresolved'):
+        raise ValueError('Definition-only uncertainty requires retained scopes')
     result = copy.deepcopy(previous if previous is not None else reviewed)
-    for key in ('RemoveExistingAlias', 'ExpectedAlias'):
+    for key in ('RemoveExistingAlias', 'ExpectedAlias', 'PreviousLedgerAlias', 'ExpectedMappedAlias'):
         result.pop(key, None)
     result.update(NewName='', Unresolved=True, NeedsReadableName=True, ReviewDisposition='unresolved',
                   Reason=reviewed['Reason'], UnresolvedReason=reviewed['UnresolvedReason'])
-    result.setdefault('AliasWithdrawals', []).append(dict(Alias=mapped_name, PreviousReason=(previous or {}).get('Reason', ''),
+    if retained: result['DefinitionOnlyUnresolved'] = True
+    result.setdefault('AliasWithdrawals', []).append(dict(Alias=mapped_name, PreviousLedgerAlias=(previous or {}).get('NewName', ''), PreviousReason=(previous or {}).get('Reason', ''),
                                                        Evidence=reviewed['Reason']))
     return result
 

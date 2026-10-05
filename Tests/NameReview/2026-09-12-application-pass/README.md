@@ -22,6 +22,12 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `scoped-generated-alias-withdrawal-verification-v428.json` — removes the
+  unsupported listener `set_LocalIPAddress` alias with exact map/ledger preimages,
+  retaining the known `message` scope and explicit owner uncertainty. Native
+  commit 1276712b passes the full suite/33 focused assertions; 143 portable
+  checks and 109 cached joins pass. Previous helper snapshots resolve historical
+  proof bindings; consolidated ETS verification remains pending.
 - `application-layer-confirmed-service-coverage-v427.json` — complete application-layer
   contracts, ordinary request contexts, timeout helpers and remote/local
   acknowledgement, response, security, reconnect and translation chains;

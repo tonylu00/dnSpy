@@ -113,10 +113,15 @@ def prepare(spec):
         if definition_reason:
             row.update(Unresolved=True, DefinitionOnlyUnresolved=True, UnresolvedReason=definition_reason)
         if decision.get('RemoveExistingAlias'):
-            if key[0] != 'Methods' or disposition != 'unresolved' or not decision.get('ExpectedAlias'):
+            if key[0] != 'Methods' or (disposition != 'unresolved' and not definition_reason) or not decision.get('ExpectedAlias'):
                 raise ValueError('Alias withdrawal requires an unresolved method and its exact previous alias')
             row['RemoveExistingAlias'] = True
             row['ExpectedAlias'] = decision['ExpectedAlias']
+            if any(key in decision for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias')):
+                if not decision.get('PreviousLedgerAlias') or decision.get('ExpectedMappedAlias') != decision['ExpectedAlias']:
+                    raise ValueError('Historical alias withdrawal requires exact ledger and mapped aliases')
+                row['PreviousLedgerAlias'] = decision['PreviousLedgerAlias']
+                row['ExpectedMappedAlias'] = decision['ExpectedMappedAlias']
         if decision.get('ResolveExistingUnresolved'):
             if disposition != 'rename' or not row['NewName'] or not decision.get('PreviousUnresolvedEvidence'):
                 raise ValueError('Resolution requires a named definition and previous unresolved evidence')

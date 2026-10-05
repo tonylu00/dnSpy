@@ -187,7 +187,7 @@ for kind in ('Types', 'Methods', 'Fields'):
         if row.get('RemoveExistingAlias'):
             assert args.remove_reviewed_aliases and kind == 'Methods', 'Alias withdrawal requires explicit checkpoint authorization'
             old = ledger[kind][keys[key]] if key in keys else None
-            recorded = remove_method_alias(old, row, base_names.get(key, ''), checked_changes.get(key), final_names.get(key, ''))
+            recorded = remove_method_alias(old, row, base_names.get(key, ''), checked_changes.get(key), final_names.get(key, ''), checked_scopes.get(key, {}))
             if key in keys:
                 ledger[kind][keys[key]] = recorded
             else:

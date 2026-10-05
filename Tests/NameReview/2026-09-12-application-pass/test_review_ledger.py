@@ -443,5 +443,57 @@ class LedgerScopeMergeTests(unittest.TestCase):
         reviewed.update(ParameterNames=[], LocalNames=[], UnresolvedReason='')
         with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '')
 
+    def test_scoped_alias_withdrawal_retains_every_checked_scope(self):
+        reviewed = copy.deepcopy(self.old)
+        reviewed.update(RemoveExistingAlias=True, ExpectedAlias='HistoricalAlias', NewName='', Unresolved=True,
+                        DefinitionOnlyUnresolved=True, Reason='Unsupported generated definition alias',
+                        UnresolvedReason='Missing printed declaration witness')
+        change = dict(Action='RemoveAlias', Kind='Method', Module='a.dll', Token='0x06000001',
+                      Before='HistoricalAlias', Requested='', Applied='')
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        result = remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '', checked)
+        self.assertTrue(result['Unresolved'])
+        self.assertTrue(result['DefinitionOnlyUnresolved'])
+        self.assertEqual(self.old['ParameterNames'], result['ParameterNames'])
+        self.assertEqual(self.old['LocalNames'], result['LocalNames'])
+        self.assertNotIn('RemoveExistingAlias', result)
+        for label in ('ParameterNames', 'LocalNames'):
+            bad = copy.deepcopy(reviewed); bad[label] = []
+            with self.subTest(label=label), self.assertRaises(ValueError):
+                remove_method_alias(self.old, bad, 'HistoricalAlias', change, '', checked)
+        for key in checked:
+            bad = dict(checked); del bad[key]
+            with self.subTest(missing=key), self.assertRaises(ValueError):
+                remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '', bad)
+        bad = copy.deepcopy(reviewed); bad['ParameterNames'][0]['NewName'] = 'invented'
+        with self.assertRaises(ValueError): remove_method_alias(self.old, bad, 'HistoricalAlias', change, '', checked)
+        bad = copy.deepcopy(reviewed); bad['LocalNames'].append(copy.deepcopy(bad['LocalNames'][0]))
+        with self.assertRaises(ValueError): remove_method_alias(self.old, bad, 'HistoricalAlias', change, '', checked)
+        with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '', {})
+        fresh = remove_method_alias(None, reviewed, 'HistoricalAlias', change, '', checked)
+        self.assertEqual(reviewed['ParameterNames'], fresh['ParameterNames'])
+
+    def test_historical_scoped_withdrawal_requires_both_alias_preimages(self):
+        previous = copy.deepcopy(self.old); previous['NewName'] = 'OldLedgerProposal'
+        reviewed = copy.deepcopy(previous)
+        reviewed.update(RemoveExistingAlias=True, ExpectedAlias='HistoricalAlias', NewName='', Unresolved=True,
+                        DefinitionOnlyUnresolved=True, Reason='Unsupported generated alias', UnresolvedReason='Missing owner witness',
+                        PreviousLedgerAlias='OldLedgerProposal', ExpectedMappedAlias='HistoricalAlias')
+        change = dict(Action='RemoveAlias', Kind='Method', Module='a.dll', Token='0x06000001',
+                      Before='HistoricalAlias', Requested='', Applied='')
+        checked = {('ParameterNames', 1): dict(ExpectedName='a', NewName='count'),
+                   ('LocalNames', 0): dict(ExpectedType='System.Int32', NewName='total')}
+        result = remove_method_alias(previous, reviewed, 'HistoricalAlias', change, '', checked)
+        self.assertEqual('OldLedgerProposal', result['AliasWithdrawals'][0]['PreviousLedgerAlias'])
+        self.assertEqual('HistoricalAlias', result['AliasWithdrawals'][0]['Alias'])
+        for key in ('PreviousLedgerAlias', 'ExpectedMappedAlias'):
+            self.assertNotIn(key, result)
+            for value in ('', 'stale'):
+                with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                    remove_method_alias(previous, dict(reviewed, **{key: value}), 'HistoricalAlias', change, '', checked)
+        with self.assertRaises(ValueError): remove_method_alias(None, reviewed, 'HistoricalAlias', change, '', checked)
+        with self.assertRaises(ValueError): remove_method_alias(self.old, reviewed, 'HistoricalAlias', change, '', checked)
+
 
 if __name__ == '__main__': unittest.main()

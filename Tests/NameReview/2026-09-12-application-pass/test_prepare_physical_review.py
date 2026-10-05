@@ -114,6 +114,18 @@ class InventorySelectionTests(unittest.TestCase):
         self.assertEqual(row['ParameterNames'][0]['NewName'], 'requestCode')
         self.assertIn('Missing printed', row['UnresolvedReason'])
 
+    def test_scoped_withdrawal_requires_definition_uncertainty_and_exact_alias(self):
+        self.scope_uncertainty()
+        self.spec['Rows'][0].update(RemoveExistingAlias=True, ExpectedAlias='WrongGeneratedName')
+        row = prepare(self.spec)['Methods'][0]
+        self.assertTrue(row['RemoveExistingAlias'])
+        self.assertTrue(row['DefinitionOnlyUnresolved'])
+        self.assertEqual('WrongGeneratedName', row['ExpectedAlias'])
+        self.assertEqual('requestCode', row['ParameterNames'][0]['NewName'])
+        del self.spec['Rows'][0]['DefinitionOnlyUnresolvedReason']
+        with self.assertRaisesRegex(ValueError, 'Alias withdrawal'):
+            prepare(self.spec)
+
     def test_definition_uncertainty_requires_missing_evidence(self):
         self.scope_uncertainty()
         for reason in ('', '  ', None, 3):
