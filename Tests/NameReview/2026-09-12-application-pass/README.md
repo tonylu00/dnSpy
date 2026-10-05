@@ -22,20 +22,19 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `async-discovery-helpers-coverage-v460.json` — 210 used local aliases across 43
-  connected IP discovery and Falcon.Async methods: streaming, description loading,
-  filtering, mapping, collection, ForEach, Using and RunSync. Meaningful definitions,
-  parameters, overloads, cancellation, disposal and ValueTask protocols are retained.
-  Channel cancellation ends enumeration normally; synchronous Using disposes its
-  saved resource copy. Exact physical body/scope bindings and SDK/contract checks
-  pass; both 109-module cached joins make zero native calls. Lexical candidates
-  remain 20,513 because this block names scopes within already meaningful definitions.
-  `ip-discovery-coverage-v458.json` retains preceding result/network/response evidence;
-  `discovery-handler-withdrawal-verification-v459.json` removes the misleading receive
-  callback alias while preserving its 12 locals. That callback and closure async entry
-  await printed-owner evidence; the native-protected description callback stays for audit.
-  Next: communication factory and management call chains, comparing completed scopes.
-  Printed source merging, consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
+- `tcp-udp-stream-coverage-v461.json` — 62 aliases (seven framer fields, three
+  parameters and 52 used locals) across TCP/UDP streaming, connection and disposal.
+  All 253 IL-used locals in 206 fresh connected methods have accepted mappings.
+  Original frame boundary/compaction, TCP timeout/cancellation cleanup and UDP
+  disconnected-service behavior are retained. The generated Extract iterator type
+  is explicitly unresolved until frozen printed-owner evidence exists; CLR protocols
+  and prior mappings stay intact. SDK/contract checks and both 109-module cached joins
+  pass. Lexical candidates fall from 20,513 to 20,505: seven fields named and one type
+  marked unresolved, not eight semantic completions. Next: connected byte/frame helpers.
+  `async-discovery-helpers-coverage-v460.json` retains 210 discovery/Async local aliases;
+  `ip-discovery-coverage-v458.json` and `discovery-handler-withdrawal-verification-v459.json`
+  retain preceding evidence and the receive callback correction. Printed source merging,
+  consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
