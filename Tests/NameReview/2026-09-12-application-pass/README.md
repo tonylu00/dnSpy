@@ -22,11 +22,12 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `secure-group-timer-scopes-coverage-v443.json` — 30 used-local aliases across
-  three exact timer async owners and transition-key equality/hash; prior names
-  and framework proofs retained. `Trigger.E11` remains unresolved. The preceding
-  `additional-info-codec-coverage-v442.json` covers 62 codec aliases. SDK/contract
-  checks and 109 cached joins pass; consolidated ETS checks remain pending.
+- `secure-message-ccm-chain-coverage-v444.json` — 172 exact aliases across cEMI
+  selectors, secure payload/MAC/plaintext/nonce/sequence/results and CCM consumers;
+  all prior names retained. SDK/contract checks and 109 cached joins pass.
+  `managed-accessor-scope-verification-v444.json` records the shared tool repair:
+  42 native/44 consumer/234 rebuilt checks and two compiled synthetic contexts
+  preserve short property names. Consolidated ETS/Apps checks remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
