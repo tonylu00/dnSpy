@@ -65,9 +65,13 @@ What lives here:
   reset. Subservice 255 remains unnamed with missing domain evidence; retry
   local slot 4 in `0x060001A4` holds both exception dispatch and a prior counter
   and needs native role-specific splitting. Native checks and both cached
-  109-module joins pass; candidates fall from 20,033 to 19,907. Current v471 has
-  not been exported or runtime-tested. Next: correct the proven partial-behavior
-  aliases for EndOfFile and file-control retries, then finish streaming captures.
+  109-module joins pass; candidates fall from 20,033 to 19,907.
+  `firmware-helper-correction-verification-v472.json` records two complete-body
+  corrections: `SendEndOfFileAsync` and `SendFileControlWithRetryAsync`. All other
+  aliases, scopes and earlier decisions remain intact; its 25 evidence pins pass.
+  Current v472 has not been exported or runtime-tested. Next: finish streaming
+  captures and reconstruct its directly called generated helper in its owner;
+  the frozen export still prints that helper as `Type_30`.
   `apdu-security-coverage-v470.json` retains the preceding 171 checked APDU/security
   aliases and memory-ceiling evidence. `prepare_physical_review.py` validates
   position-bound uncertainty with exact parameter/type preimages; its 24 tests
