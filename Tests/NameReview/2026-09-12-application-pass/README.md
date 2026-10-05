@@ -22,19 +22,20 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `ip-discovery-coverage-v458.json` — 98 aliases (four captured fields, 19 parameters
-  and 75 used locals) across discovery results, network selection, response merging,
-  request sending and description loading; 86 method definitions reviewed. Meaningful
-  APIs, overloads, null/default results, cancellation and iterator protocols are retained.
-  `discovery-handler-withdrawal-verification-v459.json` removes the synchronous receive
-  callback's misleading `DiscoverAsync` alias, preserving all 12 accepted locals.
-  Its definition and the closure async entry await printed-owner evidence; the native
-  guard retains the existing compiler-pattern description callback alias for audit.
-  SDK/contract checks and 109 cached joins pass; 20,513 lexical candidates remain.
-  Next: large async discovery bodies and description communication, comparing completed
-  scopes first. `service-families-tunnelling-coverage-v457.json` retains the preceding
-  family/version and tunnelling evidence. Printed source merging, consolidated ETS/Apps
-  checks and ETS 6.4 remain pending.
+- `async-discovery-helpers-coverage-v460.json` — 210 used local aliases across 43
+  connected IP discovery and Falcon.Async methods: streaming, description loading,
+  filtering, mapping, collection, ForEach, Using and RunSync. Meaningful definitions,
+  parameters, overloads, cancellation, disposal and ValueTask protocols are retained.
+  Channel cancellation ends enumeration normally; synchronous Using disposes its
+  saved resource copy. Exact physical body/scope bindings and SDK/contract checks
+  pass; both 109-module cached joins make zero native calls. Lexical candidates
+  remain 20,513 because this block names scopes within already meaningful definitions.
+  `ip-discovery-coverage-v458.json` retains preceding result/network/response evidence;
+  `discovery-handler-withdrawal-verification-v459.json` removes the misleading receive
+  callback alias while preserving its 12 locals. That callback and closure async entry
+  await printed-owner evidence; the native-protected description callback stays for audit.
+  Next: communication factory and management call chains, comparing completed scopes.
+  Printed source merging, consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
