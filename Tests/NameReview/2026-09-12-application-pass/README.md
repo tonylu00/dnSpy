@@ -15,6 +15,19 @@ What lives here:
 - `checkpoint-waveNNN.json`, `checkpoint64-vN.json` — accepted per-block records
 - `map-update63.json`, `devkit*63-review-check.json` — last update/check reports
 - `archive/` — the former handoff and README journals (history; do not read to resume)
+- `consolidated-v467-verification.json` — frozen 109-project solution compiles with
+  zero errors; exact staging and SDK whitelist audits pass. Chinese startup,
+  unchanged ETS AI MCP 4.15 SDK reads, history persistence across a fresh process
+  and protected fixture reopening are observed. Naming and broader App/6.4
+  compatibility remain open. The report explicitly records the unrelated `test`
+  project autosave without an exact preimage, the initially ineffective store
+  isolation, and an unbacked global App configuration rewrite. Follow its pinned
+  evidence and current `STATE.json`; these partial results do not close the goal.
+- `consolidate_export.py` — portable immutable-input freeze and native full-scope
+  export/build orchestration, with bounded worker counts and sampled process-tree
+  memory measurements. It never edits ETS source or binaries. Each run requires
+  fresh output paths; use the committed isolated native runtime and exact physical
+  contexts recorded in the freeze.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
