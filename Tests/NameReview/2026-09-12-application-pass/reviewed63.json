@@ -296449,7 +296449,7 @@
    "Token": "0x06001D5E",
    "Signature": "Knx.Falcon.SerialNumber Class1336::d()",
    "OriginalName": "d",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Six-byte slot0 gets prefix00FA and four random bytes, passed to SerialNumber ctor06002797; original generation unchanged.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -296459,7 +296459,7 @@
     {
      "Index": 0,
      "ExpectedType": "System.Byte[]",
-     "NewName": ""
+     "NewName": "serialNumberBytes"
     },
     {
      "Index": 1,
@@ -467616,7 +467616,7 @@
    "Token": "0x06001D66",
    "Signature": "System.Boolean Class1336::a(Class815)",
    "OriginalName": "a",
-   "Reason": "Uses the bus message directly or reparses its raw data, then tests its system-broadcast flag. Parse failures retain their original propagation behavior.",
+   "Reason": "Uses the bus message directly or reparses its raw data, then tests its system-broadcast flag. Parse failures retain their original propagation behavior.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Fallback cEMI decode06000A6E uses exact initobj nullable medium/default domain slots1/2; existing busMessage slot0 retained.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -467637,6 +467637,16 @@
      "Index": 0,
      "ExpectedType": "Class818",
      "NewName": "busMessage"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.KnxMediumType>",
+     "NewName": "mediumType"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Knx.Falcon.DomainAddress",
+     "NewName": "domainAddress"
     }
    ],
    "NewName": "IsSystemBroadcast",
@@ -472268,7 +472278,7 @@
    "Token": "0x06001D5B",
    "Signature": "Class754 Class1336::b(Class754)",
    "OriginalName": "b",
-   "Reason": "With a routing key, records secure-send statistics, allocates a message tag, captures group time, constructs an authenticated wrapper and notifies the timer of that send. Otherwise records a plain send and returns the original frame.",
+   "Reason": "With a routing key, records secure-send statistics, allocates a message tag, captures group time, constructs an authenticated wrapper and notifies the timer of that send. Otherwise records a plain send and returns the original frame.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Statistics.Update leases slot2 plaintext branch counter3, slot3 secure branch counter5; disposal boundaries unchanged.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -472294,6 +472304,16 @@
      "Index": 1,
      "ExpectedType": "System.UInt64",
      "NewName": "timestamp"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Class1268/b",
+     "NewName": "plainFrameStatistics"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class1268/b",
+     "NewName": "secureFrameStatistics"
     }
    ],
    "NewName": "WrapOutgoingRoutingFrame",
@@ -472309,7 +472329,7 @@
    "Token": "0x06001D5C",
    "Signature": "System.Void Class1336::a(Class778)",
    "OriginalName": "a",
-   "Reason": "When a routing key exists, records notification statistics and forwards timestamp/serial/tag to the group timer. The caller has already checked authenticity.",
+   "Reason": "When a routing key exists, records notification statistics and forwards timestamp/serial/tag to the group timer. The caller has already checked authenticity.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Statistics.Update slot0 holds timer-notification receive update and increments counter0 before disposal.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -472325,7 +472345,13 @@
      "NewName": "notification"
     }
    ],
-   "LocalNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1268/b",
+     "NewName": "notificationStatistics"
+    }
+   ],
    "NewName": "HandleTimerNotify",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -472339,7 +472365,7 @@
    "Token": "0x06001D56",
    "Signature": "Class815 Class1336::c(Class754)",
    "OriginalName": "c",
-   "Reason": "Returns messages carried by routing indication/system-broadcast frames. Busy frames update send pacing under the connector lock; lost/unknown frames update diagnostics and return null. Unknown frames invoke the unhandled-frame delegate.",
+   "Reason": "Returns messages carried by routing indication/system-broadcast frames. Busy frames update send pacing under the connector lock; lost/unknown frames update diagnostics and return null. Unknown frames invoke the unhandled-frame delegate.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Statistics.Update result captures disposed update leases; slot3 only lost-message branch increments13, slot5 busy increments12 and slot8 unhandled increments10; original counters unchanged.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -472385,6 +472411,21 @@
      "Index": 7,
      "ExpectedType": "System.Boolean",
      "NewName": "lockTaken"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Class1268/b",
+     "NewName": "lostMessageStatistics"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "Class1268/b",
+     "NewName": "busyStatistics"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "Class1268/b",
+     "NewName": "unhandledStatistics"
     }
    ],
    "NewName": "HandleRoutingPayloadFrame",
@@ -473647,7 +473688,7 @@
    "Token": "0x06001D65",
    "Signature": "Class1336/SystemBroadcastClass Class1336::a(Class818,Class1336/b)",
    "OriginalName": "a",
-   "Reason": "FilterOff accepts immediately. IP-router filtering requires APCI and accepts network-parameter read/response with object type 0, PID 11 and first test byte 1; serial-number domain writes with a four-byte domain; or system-broadcast secure sync/data-with-confidentiality services. Other inputs are invalid. Retains the unchecked first test-byte access.",
+   "Reason": "FilterOff accepts immediately. IP-router filtering requires APCI and accepts network-parameter read/response with object type 0, PID 11 and first test byte 1; serial-number domain writes with a four-byte domain; or system-broadcast secure sync/data-with-confidentiality services. Other inputs are invalid. Retains the unchecked first test-byte access.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. DomainAddressWrite getter supplies slot3 DomainAddress, length comparison follows; original filtering retained.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -473695,6 +473736,11 @@
      "Index": 5,
      "ExpectedType": "Class941",
      "NewName": "networkParameterResponse"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Falcon.DomainAddress",
+     "NewName": "domainAddress"
     }
    ],
    "NewName": "ClassifySystemBroadcastMessage",
@@ -476027,7 +476073,7 @@
    "Token": "0x06001D79",
    "Signature": "System.Boolean Class1336/c::c(System.Net.NetworkInformation.NetworkInterface)",
    "OriginalName": "c",
-   "Reason": "Requires IPv4 support and any unicast address matching the captured local address; caches the address predicate.",
+   "Reason": "Requires IPv4 support and any unicast address matching the captured local address; caches the address predicate.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Delegate temporary slot0 constructed from ldftn1D7A, cached in matchesLocalAddress field and consumed by Enumerable.Any; prior generated aliases retained.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -476043,7 +476089,13 @@
      "NewName": "networkInterface"
     }
    ],
-   "LocalNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Func`2<System.Net.NetworkInformation.UnicastIPAddressInformation,System.Boolean>",
+     "NewName": "matchesLocalAddress"
+    }
+   ],
    "NewName": "HasLocalIpv4Address",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -476057,7 +476109,7 @@
    "Token": "0x06001D38",
    "Signature": "System.Void Class1336::b(System.Object,EventArgs4)",
    "OriginalName": "b",
-   "Reason": "Forwards normal multicast frames, excluding system broadcasts when a dedicated receiver exists. When discovery visibility is enabled, answers non-extended search requests with local interface/device data; uses a fixed fallback MAC if no interface matches. Route-back requests use the source endpoint. The UDP SendAsync result is not awaited and the client is disposed immediately.",
+   "Reason": "Forwards normal multicast frames, excluding system broadcasts when a dedicated receiver exists. When discovery visibility is enabled, answers non-extended search requests with local interface/device data; uses a fixed fallback MAC if no interface matches. Route-back requests use the source endpoint. The UDP SendAsync result is not awaited and the client is disposed immediately.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Multicast event receives sender/event args and search request ControlEndPoint supplies slot8 HPAI; routing/back-source selection preserved. Preserve meaningful original event parameter names sender/e and earlier ledger preservation decisions.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -476120,6 +476172,11 @@
      "Index": 7,
      "ExpectedType": "System.Net.IPEndPoint",
      "NewName": "responseEndpoint"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "Struct761",
+     "NewName": "controlEndpoint"
     }
    ],
    "NewName": "OnMulticastReceived",
@@ -478498,7 +478555,7 @@
    "Token": "0x06001D3D",
    "Signature": "System.Threading.Tasks.Task`1<System.Nullable`1<System.Boolean>> Class1336::imethod_10(System.Threading.CancellationToken)",
    "OriginalName": "imethod_10",
-   "Reason": "Unsupported implementation returns a completed Task with a null nullable Boolean; cancellation is unused.",
+   "Reason": "Unsupported implementation returns a completed Task with a null nullable Boolean; cancellation is unused.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. initobj Nullable<Boolean> local0 returned in Task.FromResult; unsupported programming-mode query remains null.",
    "NeedsReadableName": false,
    "MappingBlocker": null,
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -478514,7 +478571,13 @@
      "NewName": "cancellationToken"
     }
    ],
-   "LocalNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<System.Boolean>",
+     "NewName": "programmingMode"
+    }
+   ],
    "NewName": "ReadLocalProgrammingModeAsync",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -717932,7 +717995,7 @@
    "Token": "0x06001D76",
    "Signature": "System.Void Class1336/a/a::d()",
    "OriginalName": "d",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D74 and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -717943,37 +718006,37 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336/a",
-     "NewName": ""
+     "NewName": "limiter"
     },
     {
      "Index": 2,
      "ExpectedType": "System.TimeSpan",
-     "NewName": ""
+     "NewName": "sendInterval"
     },
     {
      "Index": 3,
      "ExpectedType": "System.DateTime",
-     "NewName": ""
+     "NewName": "currentTime"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "delayAwaiter"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "delayAwaitable"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 7,
@@ -718083,7 +718146,7 @@
    "Token": "0x06001D7B",
    "Signature": "System.Void Class1336/d::d()",
    "OriginalName": "d",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D3B and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -718094,32 +718157,32 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336",
-     "NewName": ""
+     "NewName": "connector"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable/ConfiguredValueTaskAwaiter",
-     "NewName": ""
+     "NewName": "disposeAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Threading.Tasks.ValueTask",
-     "NewName": ""
+     "NewName": "disposeTask"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable",
-     "NewName": ""
+     "NewName": "disposeAwaitable"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 6,
@@ -718229,7 +718292,7 @@
    "Token": "0x06001D7D",
    "Signature": "System.Void Class1336/e::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D37 and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -718240,27 +718303,27 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336",
-     "NewName": ""
+     "NewName": "connector"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "openAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "openAwaitable"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 5,
@@ -718370,7 +718433,7 @@
    "Token": "0x06001D81",
    "Signature": "System.Void Class1336/Struct925::i()",
    "OriginalName": "i",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D36 and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -718381,27 +718444,27 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336",
-     "NewName": ""
+     "NewName": "connector"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "openAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "openAwaitable"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 5,
@@ -718511,7 +718574,7 @@
    "Token": "0x06001D83",
    "Signature": "System.Void Class1336/Struct926::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D3E and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Transport result reused for both multicast communications; cleanup flag tracks exceptional open exit and deferred disposals.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -718522,67 +718585,67 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336",
-     "NewName": ""
+     "NewName": "connector"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable/ConfiguredValueTaskAwaiter",
-     "NewName": ""
+     "NewName": "disposeAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Threading.Tasks.ValueTask",
-     "NewName": ""
+     "NewName": "disposeTask"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable",
-     "NewName": ""
+     "NewName": "disposeAwaitable"
     },
     {
      "Index": 5,
      "ExpectedType": "Interface31",
-     "NewName": ""
+     "NewName": "communication"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Interface31>",
-     "NewName": ""
+     "NewName": "transportAwaiter"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1<Interface31>",
-     "NewName": ""
+     "NewName": "transportAwaitable"
     },
     {
      "Index": 8,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "openAwaiter"
     },
     {
      "Index": 9,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "openAwaitable"
     },
     {
      "Index": 10,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "openException"
     },
     {
      "Index": 11,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "cleanupRequired"
     },
     {
      "Index": 12,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 13,
@@ -718692,7 +718755,7 @@
    "Token": "0x06001D87",
    "Signature": "System.Void Class1336/Struct928::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D50 and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -718703,37 +718766,37 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336",
-     "NewName": ""
+     "NewName": "connector"
     },
     {
      "Index": 2,
      "ExpectedType": "Class818",
-     "NewName": ""
+     "NewName": "busMessage"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "operationAwaiter"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "operationAwaitable"
     },
     {
      "Index": 5,
      "ExpectedType": "Knx.Falcon.InvalidKnxMessageException",
-     "NewName": ""
+     "NewName": "invalidMessageException"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 7,
@@ -718843,7 +718906,7 @@
    "Token": "0x06001D89",
    "Signature": "System.Void Class1336/Struct929::e()",
    "OriginalName": "e",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D6B and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -718854,27 +718917,27 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1336",
-     "NewName": ""
+     "NewName": "connector"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "operationAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "operationAwaitable"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "exception"
     },
     {
      "Index": 5,
@@ -757868,6 +757931,840 @@
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class774",
+   "Token": "0x060008F8",
+   "Signature": "System.Byte Class774::d()",
+   "OriginalName": "d",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads payload header byte0, paired ctor writes6.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_StructureLength",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class774",
+   "Token": "0x060008F9",
+   "Signature": "System.Byte Class774::c()",
+   "OriginalName": "c",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads byte header+1; formatter08FC labels DeviceState.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_DeviceState",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class774",
+   "Token": "0x060008FA",
+   "Signature": "System.UInt16 Class774::b()",
+   "OriginalName": "b",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads UInt16 header+2; formatter labels Wait; RecordRoutingBusy stores value in busyWaitMilliseconds, GetNextSendInterval uses FromMilliseconds.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_WaitTime",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class774",
+   "Token": "0x060008FB",
+   "Signature": "System.UInt16 Class774::a()",
+   "OriginalName": "a",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads UInt16 header+4; formatter08FC labels Ctrl.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_ControlField",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class775",
+   "Token": "0x060008FF",
+   "Signature": "Class815 Class775::b()",
+   "OriginalName": "b",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Lazy cEMI factory06000A6E on payload.ToArray with null medium/default domain; caches parsed message and copies IsTransportSecured. Consumer1D56 returns result. Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Factory call06000A6E consumes exact nullable medium/default domain initobj slots0/1; unused flattening slots2/3 remain unnamed.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.KnxMediumType>",
+     "NewName": "mediumType"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.DomainAddress",
+     "NewName": "domainAddress"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_Message",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class775",
+   "Token": "0x06000900",
+   "Signature": "System.ArraySegment`1<System.Byte> Class775::a()",
+   "OriginalName": "a",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Returns unchanged base payload ArraySegment, paired message producer08FE supplies KnxMessage.RawData.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_CemiData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class776",
+   "Token": "0x06000904",
+   "Signature": "System.Byte Class776::c()",
+   "OriginalName": "c",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads payload header byte0; lost-frame ctor0903 writes4.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_StructureLength",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class776",
+   "Token": "0x06000905",
+   "Signature": "System.Byte Class776::b()",
+   "OriginalName": "b",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads payload byte1, formatter0907 labels DeviceState.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_DeviceState",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class776",
+   "Token": "0x06000906",
+   "Signature": "System.UInt16 Class776::a()",
+   "OriginalName": "a",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Reads payload UInt16+2; paired ctor0903 and formatter0907 Lost prove count.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_LostMessageCount",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class777",
+   "Token": "0x0600090A",
+   "Signature": "Class815 Class777::b()",
+   "OriginalName": "b",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Lazy cEMI factory06000A6E on payload.ToArray with null medium/default domain; caches parsed message and copies IsTransportSecured. Consumer1D56 returns result. Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Factory call06000A6E consumes exact nullable medium/default domain initobj slots0/1; unused flattening slots2/3 remain unnamed.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<Knx.Falcon.KnxMediumType>",
+     "NewName": "mediumType"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Falcon.DomainAddress",
+     "NewName": "domainAddress"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_Message",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class777",
+   "Token": "0x0600090B",
+   "Signature": "System.ArraySegment`1<System.Byte> Class777::a()",
+   "OriginalName": "a",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Returns unchanged base payload ArraySegment; ctor0909 provides KnxMessage.RawData.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_CemiData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class774",
+   "Token": "0x060008F7",
+   "Signature": "System.Void Class774::.ctor(System.Byte,System.UInt16,System.UInt16)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Writes structure length6, deviceState at+1, waitTime at+2, controlField at+4; no scope guesses from spelling.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte byte_1",
+    "2: System.UInt16 ushort_0",
+    "3: System.UInt16 ushort_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "deviceState"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "waitTime"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "ushort_1",
+     "HasMetadata": true,
+     "NewName": "controlField"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class775",
+   "Token": "0x060008FE",
+   "Signature": "System.Void Class775::.ctor(Class815)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Passes message.RawData to base frame and retains same message field.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class815 class815_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class815_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class776",
+   "Token": "0x06000903",
+   "Signature": "System.Void Class776::.ctor(System.Byte,System.UInt16)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Writes structure length4, device state byte1 and lost count UInt16+2, formatter0907 corroborates.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Byte byte_1",
+    "2: System.UInt16 ushort_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "byte_1",
+     "HasMetadata": true,
+     "NewName": "deviceState"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "ushort_0",
+     "HasMetadata": true,
+     "NewName": "lostMessageCount"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class777",
+   "Token": "0x06000909",
+   "Signature": "System.Void Class777::.ctor(Class815)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Passes message.RawData to base frame and caches identical message.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class815 class815_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class815_1",
+     "HasMetadata": true,
+     "NewName": "message"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x06001D3B",
+   "Signature": "System.Threading.Tasks.ValueTask Class1336::DisposeAsync()",
+   "OriginalName": "DisposeAsync",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. AsyncValueTaskMethodBuilder.Start<Class1336/d> consumes exact kickoff local0; owner DisposeAsync metadata unchanged.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class1336/d",
+     "NewName": "stateMachine"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x06001D3C",
+   "Signature": "System.Void Class1336::Dispose()",
+   "OriginalName": "Dispose",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Calls DisposeAsync, ConfigureAwait(false), GetAwaiter then GetResult through exact slots0/1/2.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Threading.Tasks.ValueTask",
+     "NewName": "disposeTask"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable",
+     "NewName": "disposeAwaitable"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable/ConfiguredValueTaskAwaiter",
+     "NewName": "disposeAwaiter"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x06001D4C",
+   "Signature": "System.Void Class1336::add_PropertyChanged(System.ComponentModel.PropertyChangedEventHandler)",
+   "OriginalName": "add_PropertyChanged",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Original PropertyChanged accessor retains CLR name. Current handlers slot0, expected snapshot slot1 and combined/removed replacement slot2 feed Interlocked.CompareExchange retry loop; value parameter carries subscription.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.ComponentModel.PropertyChangedEventHandler value"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "value",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.ComponentModel.PropertyChangedEventHandler",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.ComponentModel.PropertyChangedEventHandler",
+     "NewName": "expectedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.ComponentModel.PropertyChangedEventHandler",
+     "NewName": "updatedHandlers"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336",
+   "Token": "0x06001D4D",
+   "Signature": "System.Void Class1336::remove_PropertyChanged(System.ComponentModel.PropertyChangedEventHandler)",
+   "OriginalName": "remove_PropertyChanged",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Original PropertyChanged accessor retains CLR name. Current handlers slot0, expected snapshot slot1 and combined/removed replacement slot2 feed Interlocked.CompareExchange retry loop; value parameter carries subscription.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.ComponentModel.PropertyChangedEventHandler value"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "value",
+     "HasMetadata": true,
+     "NewName": "handler"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.ComponentModel.PropertyChangedEventHandler",
+     "NewName": "currentHandlers"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.ComponentModel.PropertyChangedEventHandler",
+     "NewName": "expectedHandlers"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.ComponentModel.PropertyChangedEventHandler",
+     "NewName": "updatedHandlers"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336/Struct924",
+   "Token": "0x06001D7F",
+   "Signature": "System.Void Class1336/Struct924::System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext()",
+   "OriginalName": "System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D35 and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Transport result reused for both multicast communications; cleanup flag tracks exceptional open exit and deferred disposals.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "state"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class1336",
+     "NewName": "connector"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Interface31",
+     "NewName": "communication"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Interface31>",
+     "NewName": "transportAwaiter"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1<Interface31>",
+     "NewName": "transportAwaitable"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": "cleanupRequired"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Class1336>",
+     "NewName": "openAwaiter"
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1<Class1336>",
+     "NewName": "openAwaitable"
+    },
+    {
+     "Index": 8,
+     "ExpectedType": "System.Exception",
+     "NewName": "openException"
+    },
+    {
+     "Index": 9,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable/ConfiguredValueTaskAwaiter",
+     "NewName": "disposeAwaiter"
+    },
+    {
+     "Index": 10,
+     "ExpectedType": "System.Threading.Tasks.ValueTask",
+     "NewName": "disposeTask"
+    },
+    {
+     "Index": 11,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable",
+     "NewName": "disposeAwaitable"
+    },
+    {
+     "Index": 12,
+     "ExpectedType": "System.Exception",
+     "NewName": "exception"
+    },
+    {
+     "Index": 13,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 14,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1336/i",
+   "Token": "0x06001D85",
+   "Signature": "System.Void Class1336/i::System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext()",
+   "OriginalName": "System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Exact AsyncStateMachineAttribute owner 0x06001D5D and native builder/awaiter/resume/exception paths prove independent local roles. Local0 reads state; local1 owner receiver; awaitable/awaiter slots follow ConfigureAwait/GetAwaiter/GetResult and stored awaiter fields; EH slots feed builder.SetException. Retain generated definitions and historical aliases; this review does not claim frozen printed owner reconstruction. Shared operation awaiter names cover send and rate-limit awaits where both reuse one slot.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "state"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class1336",
+     "NewName": "connector"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Class1268/b",
+     "NewName": "notificationStatistics"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
+     "NewName": "operationAwaiter"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
+     "NewName": "operationAwaitable"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "exception"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
   }
  ],
  "Types": [
@@ -787518,6 +788415,94 @@
    "Unresolved": true,
    "UnresolvedReason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native87 bodies naming-v439-selector-connection-methods01.json and three native protocol-enum type reports; retain runtime metadata/contracts and original algorithms. CompilerGenerated iterator type has exact IteratorStateMachineAttribute owner06000935, constructor and body0600093C; owner newobj@1/capture@8. Native states/current/offset/DIB captures are independently proven. Missing frozen printed iterator-owner/type declaration correspondence and canonical source naming; no invented type ordinal/semantic alias.",
    "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class773",
+   "Token": "0x020001AC",
+   "Signature": "Class773",
+   "OriginalName": "Class773",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Factory060006F7 uses ctor08CB for unrecognized/failed decoding; formatter08CC labels UNKNOWN_{0:X4} and prints unchanged full bytes.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.KnxnetIp.Frames.UnknownKnxIpFrame",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class774",
+   "Token": "0x020001B6",
+   "Signature": "Class774",
+   "OriginalName": "Class774",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Ctor08F7 uses ROUTING_BUSY1330 and six-byte structure; formatter08FC proves device state/wait/control roles; consumer1D56 feeds getter08FA into RecordRoutingBusy1D73.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingBusyFrame",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class775",
+   "Token": "0x020001B7",
+   "Signature": "Class775",
+   "OriginalName": "Class775",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Ctor08FE selects ROUTING_INDICATION1328, obtains message RawData and caches message; decoder08FF creates cEMI message and copies transport security; producer1D5A/consumer1D56 corroborate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingIndicationFrame",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class777",
+   "Token": "0x020001B9",
+   "Signature": "Class777",
+   "OriginalName": "Class777",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Ctor0909 selects ROUTING_SYSTEM_BROADCAST1331 and caches message. Decoder090A creates cEMI message/copies security; native receive callback1D39 and dispatch1D56 corroborate.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.KnxnetIp.Frames.Routing.RoutingSystemBroadcastFrame",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
   }
  ],
  "Fields": [
@@ -1174957,6 +1175942,50 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "currentInformation",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class775",
+   "Token": "0x04000BBD",
+   "Signature": "Class815 Class775::a",
+   "OriginalName": "a",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Corresponding routing ctor08FE/0909 stores input KnxMessage; lazy decoder08FF/090A caches the parsed payload in same field, preserves null and transport-security behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "message",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class777",
+   "Token": "0x04000BC0",
+   "Signature": "Class815 Class777::a",
+   "OriginalName": "a",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native routing/connector report naming-v440-routing-connector-methods01.json and native ServiceCode enum report bind bodies, exact owners and byte layouts. Keep runtime metadata/contracts, existing aliases, original null/security/exception guards and algorithms. Corresponding routing ctor08FE/0909 stores input KnxMessage; lazy decoder08FF/090A caches the parsed payload in same field, preserves null and transport-security behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "message",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
