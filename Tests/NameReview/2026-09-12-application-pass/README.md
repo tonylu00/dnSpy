@@ -22,6 +22,15 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `application-layer-confirmed-service-coverage-v427.json` — complete application-layer
+  contracts, ordinary request contexts, timeout helpers and remote/local
+  acknowledgement, response, security, reconnect and translation chains;
+  470 actual aliases, all prior names retained, 109 cached joins, 24 generated
+  definitions explicitly unresolved; consolidated ETS verification pending.
+- `retained-definition-verification-v427.json` — native updater commit 1cf93161
+  preserves restated family/ordinary aliases while validating new scopes;
+  unchanged ETS map bytes, exact edit counts, full native suite, 19 focused
+  assertions and 140 portable checks pass. Primary tool integration pending.
 - `local-management-usb-feature-coverage-v426.json` — local-interface property,
   response/timeout/cancellation/readback chains and USB feature/configuration/RF/PL scopes.
 - `definition-only-scopes-verification-v426.json` — guarded native scope aliases
