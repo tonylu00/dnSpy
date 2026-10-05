@@ -11,6 +11,12 @@ Read first:
 What lives here:
 
 - `progress.json` — tool-facing record of the current map paths and checkpoint
+- `timing-context-verification-v493.json` — naming-only checkpoint: 82 aliases
+  connect UTC timing, CoAP settings and OSCORE context factories; the historical
+  `GetTickCount642` collision becomes `GetElapsedMilliseconds`. Native SDK and
+  contract checks and both 109-module cached joins pass, leaving 19,658 naming
+  candidates. Configured-interval semantics and 46 local slots retain explicit
+  uncertainty. v493 is unexported; the compiled/runtime baseline remains v492.
 - `automatic-field-verification-v492.json` — latest 109-project source build,
   public/SDK audits and 878 restored automatic-property storage contracts.
 - `automatic-field-runtime-v492.json` — latest staged Chinese startup, protected

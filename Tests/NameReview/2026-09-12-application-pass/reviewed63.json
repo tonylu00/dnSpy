@@ -284237,7 +284237,7 @@
    "Token": "0x060005F3",
    "Signature": "System.UInt64 Class701::b()",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Wraps GetTickCount64; fallback extends unsigned Environment.TickCount with a wrap counter. Replace historical collision suffix, keeping the P/Invoke intact.\nReviewed method correction: Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Wraps GetTickCount64; fallback extends unsigned Environment.TickCount with a wrap counter. Replace historical collision suffix, keeping the P/Invoke intact.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -284247,12 +284247,12 @@
     {
      "Index": 0,
      "ExpectedType": "System.UInt32",
-     "NewName": ""
+     "NewName": "tickCountLow"
     },
     {
      "Index": 1,
      "ExpectedType": "System.UInt64",
-     "NewName": ""
+     "NewName": "tickCount"
     },
     {
      "Index": 2,
@@ -284265,9 +284265,38 @@
      "NewName": ""
     }
    ],
-   "NewName": "GetTickCount64",
+   "NewName": "GetElapsedMilliseconds",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Wraps GetTickCount64; fallback extends unsigned Environment.TickCount with a wrap counter. Replace historical collision suffix, keeping the P/Invoke intact."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "GetTickCount64",
+     "PreviousMappedAlias": "GetTickCount642",
+     "Alias": "GetElapsedMilliseconds",
+     "Evidence": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Wraps GetTickCount64; fallback extends unsigned Environment.TickCount with a wrap counter. Replace historical collision suffix, keeping the P/Invoke intact."
+    }
+   ]
   },
   {
    "Module": "Knx.Falcon.dll",
@@ -809438,6 +809467,1873 @@
      }
     ]
    }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x060005F0",
+   "Signature": "System.Void Class701::GetSystemTimePreciseAsFileTime(System.Int64&)",
+   "OriginalName": "GetSystemTimePreciseAsFileTime",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Preserve the Kernel32 import name; its out Int64 is passed to DateTime.FromFileTimeUtc in 0x060005F2.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int64& long_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "long_0",
+     "HasMetadata": true,
+     "NewName": "fileTime"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x060005F1",
+   "Signature": "System.UInt64 Class701::GetTickCount64()",
+   "OriginalName": "GetTickCount64",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Preserve the exact meaningful Kernel32 import entry point GetTickCount64.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "preserve"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x060005F2",
+   "Signature": "System.DateTime Class701::c()",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Returns precise UTC file time or DateTime.UtcNow fallback, optionally scaled from an anchor when the factor exceeds one.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.DateTime",
+     "NewName": "utcNow"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int64",
+     "NewName": "fileTime"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.TimeSpan",
+     "NewName": "elapsedSinceScaleAnchor"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetUtcNow",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x060005F4",
+   "Signature": "System.Int32 Class701::a()",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Reads the factor multiplied into UTC elapsed time by 0x060005F2.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_TimeScaleFactor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x060005F5",
+   "Signature": "System.Void Class701::a(System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Stores the UTC time scale factor and resets its anchor to DateTime.MinValue.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_1",
+     "HasMetadata": true,
+     "NewName": "timeScaleFactor"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_TimeScaleFactor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface57",
+   "Token": "0x06001806",
+   "Signature": "System.DateTime Interface57::imethod_0()",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Complete physical CLR family 8AFC4239DE71A6593FF4E90A71095E330E269EDC7BF62255B4E0F590DC132E55; implementation delegates to Timing UTC helper and caller subtracts last UTC response.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "8AFC4239DE71A6593FF4E90A71095E330E269EDC7BF62255B4E0F590DC132E55",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetUtcNow",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1240",
+   "Token": "0x06001807",
+   "Signature": "System.DateTime Class1240::imethod_0()",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Complete physical CLR family 8AFC4239DE71A6593FF4E90A71095E330E269EDC7BF62255B4E0F590DC132E55; implementation delegates to Timing UTC helper and caller subtracts last UTC response.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "8AFC4239DE71A6593FF4E90A71095E330E269EDC7BF62255B4E0F590DC132E55",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetUtcNow",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001554",
+   "Signature": "Class1150 Class1150::smethod_0()",
+   "OriginalName": "smethod_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Returns the singleton CoapTransmissionParameters initialized with the ordinary default values.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_Default",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001555",
+   "Signature": "System.TimeSpan Class1150::method_0()",
+   "OriginalName": "method_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as AcknowledgementTimeout; getter and setter access the same field. Default 2 seconds; setter rejects values <= zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_AcknowledgementTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001556",
+   "Signature": "System.Void Class1150::b(System.TimeSpan)",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as AcknowledgementTimeout; getter and setter access the same field. Default 2 seconds; setter rejects values <= zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.TimeSpan timeSpan_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timeSpan_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_AcknowledgementTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001557",
+   "Signature": "System.Double Class1150::e()",
+   "OriginalName": "e",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as AcknowledgementTimeoutRandomnessFactor; getter and setter access the same field. Default 1.5; setter rejects values < 1. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_AcknowledgementTimeoutRandomnessFactor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001558",
+   "Signature": "System.Void Class1150::b(System.Double)",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as AcknowledgementTimeoutRandomnessFactor; getter and setter access the same field. Default 1.5; setter rejects values < 1. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Double double_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "double_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_AcknowledgementTimeoutRandomnessFactor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001559",
+   "Signature": "System.Int32 Class1150::d()",
+   "OriginalName": "d",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as MaximumNumberOfRetransmissions; getter and setter access the same field. Default 4; setter rejects values < zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_MaximumNumberOfRetransmissions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0600155A",
+   "Signature": "System.Void Class1150::b(System.Int32)",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as MaximumNumberOfRetransmissions; getter and setter access the same field. Default 4; setter rejects values < zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_MaximumNumberOfRetransmissions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0600155B",
+   "Signature": "System.Int32 Class1150::c()",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as NumberOfSimultaneousOutstandingInteractions; getter and setter access the same field. Default 1; setter rejects values < zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_NumberOfSimultaneousOutstandingInteractions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0600155C",
+   "Signature": "System.Void Class1150::a(System.Int32)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as NumberOfSimultaneousOutstandingInteractions; getter and setter access the same field. Default 1; setter rejects values < zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Int32 int_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "int_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_NumberOfSimultaneousOutstandingInteractions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0600155D",
+   "Signature": "System.TimeSpan Class1150::b()",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as DefaultLeisure; getter and setter access the same field. Default 5 seconds; setter rejects values <= zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_DefaultLeisure",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0600155E",
+   "Signature": "System.Void Class1150::a(System.TimeSpan)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as DefaultLeisure; getter and setter access the same field. Default 5 seconds; setter rejects values <= zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.TimeSpan timeSpan_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "timeSpan_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_DefaultLeisure",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0600155F",
+   "Signature": "System.Double Class1150::a()",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as ProbingRate; getter and setter access the same field. Default 1 byte/second; setter stores without a range check. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_ProbingRate",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001560",
+   "Signature": "System.Void Class1150::a(System.Double)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as ProbingRate; getter and setter access the same field. Default 1 byte/second; setter stores without a range check. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Double double_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "double_2",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_ProbingRate",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x06001561",
+   "Signature": "System.String Class1150::ToString()",
+   "OriginalName": "ToString",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Keep the meaningful Object.ToString override and its original formatting.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "preserve",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1363",
+   "Token": "0x06001F97",
+   "Signature": "Class1150 Class1363::a(Class989,Interface57)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Requires context method_1 and enabled sleepy-device configuration; requires nonzero discovered real-time sleep cycle, skips a response within ten seconds, otherwise sets timeout to cycle + five seconds and randomness to 1.1. Exceptions yield null.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class989 class989_0",
+    "2: Interface57 interface57_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class989_0",
+     "HasMetadata": true,
+     "NewName": "context"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "interface57_0",
+     "HasMetadata": true,
+     "NewName": "timeSource"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<System.TimeSpan>",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.TimeSpan",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "Class1150",
+     "NewName": "transmissionParameters"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Nullable`1<System.DateTime>",
+     "NewName": "lastResponseTime"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.DateTime",
+     "NewName": "utcNow"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "CreateIfRequired",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Nullable`1<System.TimeSpan>",
+      "MissingEvidence": "The physical slot is reused for distinct nullable intervals / elapsed time or threshold values. A single semantic local alias would conflate roles; split live-range ownership evidence is needed."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.TimeSpan",
+      "MissingEvidence": "The physical slot is reused for distinct nullable intervals / elapsed time or threshold values. A single semantic local alias would conflate roles; split live-range ownership evidence is needed."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     },
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FB4",
+   "Signature": "Class989 Class989::smethod_0()",
+   "OriginalName": "smethod_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Allocates a fresh ordinary context with SerialNumber.None via 0x06000FC8; does not return a shared singleton.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "CreateWithoutSerialNumber",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FB5",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.String> Class989::m()",
+   "OriginalName": "m",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Returns the static factory producing lowercase hex with prefix 0c.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_DefaultOscoreContextIdFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FB6",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> Class989::smethod_2()",
+   "OriginalName": "smethod_2",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Returns the static factory parsing the default context identifier as hex.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_DefaultOscoreContextIdBytesFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FB7",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.String> Class989::smethod_3()",
+   "OriginalName": "smethod_3",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Returns the static factory hashing serial bytes plus EtsIoTPointApiTempAtId, base64 encoding, stripping slashes and taking seven characters.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_TemporaryOscoreContextIdFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FB8",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> Class989::smethod_4()",
+   "OriginalName": "smethod_4",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Returns the static factory UTF8-encoding the temporary context identifier.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_TemporaryOscoreContextIdBytesFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC0",
+   "Signature": "System.String Class989::e()",
+   "OriginalName": "e",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Invokes the instance string factory on the serial number.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_OscoreContextId",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC1",
+   "Signature": "System.Byte[] Class989::d()",
+   "OriginalName": "d",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Invokes the instance byte factory on the serial number.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_OscoreContextIdBytes",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC2",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.String> Class989::c()",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Returns the instance string factory supplied at construction.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_OscoreContextIdFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC3",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> Class989::b()",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Returns the instance byte factory supplied at construction.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_OscoreContextIdBytesFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FB9",
+   "Signature": "Knx.Falcon.SerialNumber Class989::i()",
+   "OriginalName": "i",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Reads the readonly SerialNumber set by both context constructors and used by identifier factories.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_SerialNumber",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FBC",
+   "Signature": "System.Nullable`1<System.TimeSpan> Class989::method_3()",
+   "OriginalName": "method_3",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Reads the interval set by discovery 0x0600217D immediately after the literal Real Time Sleep Cycle of device; factory adds five seconds to this exact interval.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "get_RealTimeSleepCycle",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FBD",
+   "Signature": "System.Void Class989::a(System.Nullable`1<System.TimeSpan>)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Stores the discovered real-time sleep cycle passed at IL366 by 0x0600217D, then used to adjust sleepy-device acknowledgement timeout.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Nullable`1<System.TimeSpan> nullable_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nullable_3",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_RealTimeSleepCycle",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FBF",
+   "Signature": "System.Void Class989::a(System.Nullable`1<System.DateTime>)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Preserve existing method alias; stores the UTC response time used by the recency guard.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Nullable`1<System.DateTime> nullable_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nullable_3",
+     "HasMetadata": true,
+     "NewName": "value"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "set_LastResponseTime",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC4",
+   "Signature": "System.Void Class989::.ctor(Knx.Falcon.SerialNumber,System.Func`2<Knx.Falcon.SerialNumber,System.String>,System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]>)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Constructor stores the serial number and both identifier factories.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_1",
+    "2: System.Func`2<Knx.Falcon.SerialNumber,System.String> func_6",
+    "3: System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> func_7"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_1",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_6",
+     "HasMetadata": true,
+     "NewName": "oscoreContextIdFactory"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "func_7",
+     "HasMetadata": true,
+     "NewName": "oscoreContextIdBytesFactory"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC5",
+   "Signature": "System.Void Class989::.ctor(Knx.Falcon.SerialNumber)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Constructor delegates with the ordinary identifier factories and the supplied serial number.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_1",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC6",
+   "Signature": "Class989 Class989::a(Class989)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Preserve existing method alias; copies serial/timing/last-response state and substitutes temporary identifier factories.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class989 class989_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "class989_0",
+     "HasMetadata": true,
+     "NewName": "context"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "TemporaryCredentialContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FC8",
+   "Signature": "Class989 Class989::a(Knx.Falcon.SerialNumber)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Allocates an ordinary context using the supplied serial number and default identifier factories.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_1",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "Create",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989/<>c",
+   "Token": "0x06000FCC",
+   "Signature": "System.String Class989/<>c::d(Knx.Falcon.SerialNumber)",
+   "OriginalName": "d",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Generated static factory lambda reconstructed in its owning field initializer; name the input together with that owner.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Generated factory lambda has an observed field-initializer owner; retain the implementation name until canonical owner retirement is proven. No independent method alias is invented.",
+   "ReviewDisposition": "rename",
+   "DefinitionOnlyUnresolved": true,
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989/<>c",
+   "Token": "0x06000FCD",
+   "Signature": "System.Byte[] Class989/<>c::c(Knx.Falcon.SerialNumber)",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Generated static factory lambda reconstructed in its owning field initializer; name the input together with that owner.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Generated factory lambda has an observed field-initializer owner; retain the implementation name until canonical owner retirement is proven. No independent method alias is invented.",
+   "ReviewDisposition": "rename",
+   "DefinitionOnlyUnresolved": true,
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989/<>c",
+   "Token": "0x06000FCE",
+   "Signature": "System.String Class989/<>c::b(Knx.Falcon.SerialNumber)",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Generated static factory lambda reconstructed in its owning field initializer; name the input together with that owner.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Generated factory lambda has an observed field-initializer owner; retain the implementation name until canonical owner retirement is proven. No independent method alias is invented.",
+   "ReviewDisposition": "rename",
+   "DefinitionOnlyUnresolved": true,
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989/<>c",
+   "Token": "0x06000FCF",
+   "Signature": "System.Byte[] Class989/<>c::a(Knx.Falcon.SerialNumber)",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Generated static factory lambda reconstructed in its owning field initializer; name the input together with that owner.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Generated factory lambda has an observed field-initializer owner; retain the implementation name until canonical owner retirement is proven. No independent method alias is invented.",
+   "ReviewDisposition": "rename",
+   "DefinitionOnlyUnresolved": true,
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FBA",
+   "Signature": "System.Nullable`1<System.TimeSpan> Class989::method_1()",
+   "OriginalName": "method_1",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Configured nullable interval comes from Class604 setter and Hawk application-program data (lo::a), unlike the logged discovered real-time cycle. Exact configuration/schema property meaning is not yet pinned; need the cross-module provider-to-lo setter witness before naming.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Configured nullable interval comes from Class604 setter and Hawk application-program data (lo::a), unlike the logged discovered real-time cycle. Exact configuration/schema property meaning is not yet pinned; need the cross-module provider-to-lo setter witness before naming.",
+   "ReviewDisposition": "unresolved",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x06000FBB",
+   "Signature": "System.Void Class989::b(System.Nullable`1<System.TimeSpan>)",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Configured nullable interval comes from Class604 setter and Hawk application-program data (lo::a), unlike the logged discovered real-time cycle. Exact configuration/schema property meaning is not yet pinned; need the cross-module provider-to-lo setter witness before naming.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Nullable`1<System.TimeSpan> nullable_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nullable_3",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Configured nullable interval comes from Class604 setter and Hawk application-program data (lo::a), unlike the logged discovered real-time cycle. Exact configuration/schema property meaning is not yet pinned; need the cross-module provider-to-lo setter witness before naming.",
+   "ReviewDisposition": "unresolved",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No semantic data-flow role for this residual local is established in the inspected body; do not invent a name from its primitive type. A live-use/owner witness is required."
+     }
+    ]
+   }
   }
  ],
  "Types": [
@@ -841769,6 +843665,72 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "Knx.Falcon.KnxMessages.ApplicationLayer.CheckChunkBlockResponseMessage",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Interface57",
+   "Token": "0x02000432",
+   "Signature": "Interface57",
+   "OriginalName": "Interface57",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. One DateTime-returning contract, implemented by Class1240 and injected into the sleepy-device factory for UTC recency checks.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.IUtcTimeSource",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1240",
+   "Token": "0x02000433",
+   "Signature": "Class1240",
+   "OriginalName": "Class1240",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Implements Interface57 by returning Class701::c(), preserving the timing helper scale behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.TimingUtcTimeSource",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1363",
+   "Token": "0x02000595",
+   "Signature": "Class1363",
+   "OriginalName": "Class1363",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. The sole factory selects sleepy-device CoAP acknowledgement timeout using real-time sleep cycle and response recency, returning null when not required or on failure.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Falcon.IoT.Stack.Coap.Configuration.SleepyDeviceTransmissionParametersFactory",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
@@ -1250642,6 +1252604,512 @@
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x040008C6",
+   "Signature": "System.Boolean Class701::a",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Set for Unix or missing precise time import; selects DateTime.UtcNow.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "useUtcNowFallback",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x040008C7",
+   "Signature": "System.Boolean Class701::b",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Set for Unix or missing GetTickCount64; selects Environment.TickCount extension.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "useTickCountFallback",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x040008C8",
+   "Signature": "System.UInt32 Class701::c",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Previous unsigned Environment.TickCount used to detect wraparound.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "previousTickCount",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x040008C9",
+   "Signature": "System.UInt32 Class701::d",
+   "OriginalName": "d",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Incremented when the new low tick count is smaller, shifted left by 32.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "tickCountWrapCount",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x040008CA",
+   "Signature": "System.Int32 Class701::e",
+   "OriginalName": "e",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Initialized to one and multiplies UTC elapsed time when greater than one.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "timeScaleFactor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class701",
+   "Token": "0x040008CB",
+   "Signature": "System.DateTime Class701::dateTime_0",
+   "OriginalName": "dateTime_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. First UTC sample after reset; added to scaled elapsed time.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "timeScaleAnchor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x04001105",
+   "Signature": "Class1150 Class1150::a",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Static readonly singleton allocated in the type initializer and returned by 0x06001554.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultParameters",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0400110A",
+   "Signature": "System.TimeSpan Class1150::timeSpan_1",
+   "OriginalName": "timeSpan_1",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as AcknowledgementTimeout; getter and setter access the same field. Default 2 seconds; setter rejects values <= zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "acknowledgementTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x04001109",
+   "Signature": "System.Double Class1150::e",
+   "OriginalName": "e",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as AcknowledgementTimeoutRandomnessFactor; getter and setter access the same field. Default 1.5; setter rejects values < 1. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "acknowledgementTimeoutRandomnessFactor",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x04001108",
+   "Signature": "System.Int32 Class1150::d",
+   "OriginalName": "d",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as MaximumNumberOfRetransmissions; getter and setter access the same field. Default 4; setter rejects values < zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "maximumNumberOfRetransmissions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x04001107",
+   "Signature": "System.Int32 Class1150::c",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as NumberOfSimultaneousOutstandingInteractions; getter and setter access the same field. Default 1; setter rejects values < zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "numberOfSimultaneousOutstandingInteractions",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x04001106",
+   "Signature": "System.TimeSpan Class1150::b",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as DefaultLeisure; getter and setter access the same field. Default 5 seconds; setter rejects values <= zero. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultLeisure",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1150",
+   "Token": "0x0400110B",
+   "Signature": "System.Double Class1150::double_1",
+   "OriginalName": "double_1",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. ToString 0x06001561 labels this exact getter as ProbingRate; getter and setter access the same field. Default 1 byte/second; setter stores without a range check. Preserve actual comparisons even where error text differs.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "probingRate",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D4B",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.String> Class989::a",
+   "OriginalName": "a",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Default lowercase hexadecimal identifier string factory.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultOscoreContextIdFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D4C",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> Class989::b",
+   "OriginalName": "b",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Parses the default identifier string as hex bytes.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "defaultOscoreContextIdBytesFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D4D",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.String> Class989::c",
+   "OriginalName": "c",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Temporary SHA256/base64/truncation identifier factory.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "temporaryOscoreContextIdFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D4E",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> Class989::d",
+   "OriginalName": "d",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Temporary identifier UTF8 byte factory.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "temporaryOscoreContextIdBytesFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D4F",
+   "Signature": "Knx.Falcon.SerialNumber Class989::e",
+   "OriginalName": "e",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Readonly serial supplied to all identifier factories.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "serialNumber",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D51",
+   "Signature": "System.Nullable`1<System.TimeSpan> Class989::nullable_1",
+   "OriginalName": "nullable_1",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Discovery log and setter prove the real-time sleep-cycle interval.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "realTimeSleepCycle",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D52",
+   "Signature": "System.Nullable`1<System.DateTime> Class989::nullable_2",
+   "OriginalName": "nullable_2",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. UTC timestamp written by UpdateLastResponseReceivedTimestamp.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "lastResponseTime",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D53",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.String> Class989::i",
+   "OriginalName": "i",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Instance string factory selected by ordinary or temporary construction.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "oscoreContextIdFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D54",
+   "Signature": "System.Func`2<Knx.Falcon.SerialNumber,System.Byte[]> Class989::func_5",
+   "OriginalName": "func_5",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. IoTContext identifier string is assigned to IoTLogMetaData.OscoreContextId by 0x060017B8 and used as the credential dictionary key in 0x06001F7E; byte representation keys sender sequence numbers in 0x0600156E. Instance byte factory selected by ordinary or temporary construction.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "oscoreContextIdBytesFactory",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class989",
+   "Token": "0x04000D50",
+   "Signature": "System.Nullable`1<System.TimeSpan> Class989::nullable_0",
+   "OriginalName": "nullable_0",
+   "Reason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Configured nullable interval comes from Class604 setter and Hawk application-program data (lo::a), unlike the logged discovered real-time cycle. Exact configuration/schema property meaning is not yet pinned; need the cross-module provider-to-lo setter witness before naming.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical Falcon AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8, MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80; native timing-context-bodies01 and timing-callers02 reports corroborate frozen v492 auto-export03 source. Configured nullable interval comes from Class604 setter and Hawk application-program data (lo::a), unlike the logged discovered real-time cycle. Exact configuration/schema property meaning is not yet pinned; need the cross-module provider-to-lo setter witness before naming.",
+   "ReviewDisposition": "unresolved"
   }
  ],
  "Skips": [],
