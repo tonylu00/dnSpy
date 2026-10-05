@@ -10,7 +10,15 @@ Read first:
 
 What lives here:
 
-- `stack-resources-verification-v501.json` — current naming checkpoint: 314 new
+- `discovery-group-verification-v502.json` — current naming checkpoint: 304 new
+  aliases connect multicast discovery, group reception and OSCORE context providers
+  across 21 complete contract families. Eight method-name corrections describe
+  the actual send/register/receive behavior. Native SDK/contract checks and both
+  cached 109-module inventories pass; 18,709 lexical candidates remain. The two
+  discovery-loop captures have exact producer evidence. The stop-listening entry
+  point remains unresolved because its native body still joins the group. v502
+  is unexported; v492 remains the full-build and partial runtime baseline.
+- `stack-resources-verification-v501.json` — preceding naming checkpoint: 314 new
   aliases connect endpoint/token stores, REST requests, authentication/resource
   events and response correlation across 19 complete contract families. All prior
   aliases are preserved. Native SDK/contract checks and both cached 109-module
