@@ -22,18 +22,17 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `connector-root-conversion-coverage-v455.json` — 64 aliases (two converter types,
-  one parameter and 61 locals) across root Keyring loading, reflected connection-string
-  conversion, Eiblib DNS and Eiblib/IoT/USB comparisons; eight meaningful stateless
-  methods preserved. IPAddress/PhysicalAddress parsing, construction and byte/string
-  conversion establish the type roles. Original reflection/property/serialization
-  contracts and anomaly-storage uncertainty remain intact. SDK/contract checks and
-  109 cached joins pass; 20,528 lexical candidates remain. Next: cloud interface data
-  and its actual cloud caller. `connector-security-coverage-v454.json` retains the
-  preceding 105 scopes; `keyring-device-security-coverage-v453.json` and
-  `keyring-signature-correction-verification-v452.json` retain Keyring naming and
-  signature evidence. Printed source merging, consolidated ETS/Apps checks and
-  ETS 6.4 remain pending.
+- `service-families-tunnelling-coverage-v457.json` — 29 aliases across service-family
+  support/version checks, DIB encoding/decoding and tunnelling-slot projections.
+  `family-predicate-withdrawal-verification-v456.json` removes two misleading
+  `Equals` aliases and adds two proven parameters. Empty-input results, byte-narrowed
+  lengths and default-struct lookup behavior are retained. Generated predicates,
+  selectors and capture types without printed-owner evidence remain unresolved.
+  SDK/contract checks and 109 cached joins pass; 20,518 lexical candidates remain.
+  Next: 57 fresh IpDeviceDiscoveryResult bodies, comparing existing map scopes first.
+  `connector-root-conversion-coverage-v455.json` retains the preceding 64 aliases;
+  completed cloud-interface and WebSocket mappings are preserved. Printed source
+  merging, consolidated ETS/Apps checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
