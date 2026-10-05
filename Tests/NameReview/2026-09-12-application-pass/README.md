@@ -22,21 +22,22 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `property-discovery-coverage-v466.json` — 192 aliases (five methods,
-  88 fields, three parameters and 96 used locals) across ten async interface-object,
-  function-property, ADC and group-object call chains plus their reply codecs.
-  Cache lookup keeps the original count-probe exception handling, fixed batch
-  advancement and individual-read fallback. Classic and extended function calls
-  retain their different reply-error rules; send-only calls await no response.
-  Public SDK names and parameters stay intact, including prior F0/F2 uncertainties.
-  Eleven generated types, one decoder definition and one Boolean wire-flag meaning
-  remain explicitly unresolved. All 96 used slots in 24 selected methods are mapped;
-  49 fresh method signatures/scopes and 89 fields match their physical inventories.
-  SDK/contract checks and both 109-module cached joins pass. Lexical candidates fall
-  from 20,283 to 20,195: 75 named definitions and 13 explicit uncertainties.
-  Next: connected restart/network-parameter calls and shared request/reply dispatch.
-  `property-transfer-coverage-v465.json`, `property-descriptions-coverage-v464.json`
-  and `memory-transfer-coverage-v463.json` retain preceding evidence and proof links.
+- `restart-network-coverage-v467.json` — 115 aliases (six methods,
+  42 fields, 20 parameters and 47 used locals) across five async restart,
+  network-parameter and retry chains, forwarding, request preparation and codecs.
+  Retry retains cloned attempts, temporary-error/timeout delays and the final
+  original request. Restart retains suppression and finally restoration of both
+  retry settings; confirmed restart returns process time without waiting for it.
+  Existing codec/event aliases, SDK names/parameters and F7/F8 uncertainties stay
+  intact. Five generated types and one private cache-reset method remain explicitly
+  unresolved. All 47 used slots in 20 selected methods are mapped; 45 fresh method
+  signatures/scopes and 42 fields match their physical inventories. SDK/contract
+  checks and both 109-module cached joins pass. Lexical candidates fall from 20,195
+  to 20,152: 37 named definitions and six explicit uncertainties. Next: freeze the
+  accumulated v467 mappings for consolidated physical source and build verification,
+  repair concrete compiler gaps in the tools, then resume whole-application naming.
+  `property-discovery-coverage-v466.json`, `property-transfer-coverage-v465.json`
+  and `property-descriptions-coverage-v464.json` retain preceding proof links.
   Printed merging, consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
