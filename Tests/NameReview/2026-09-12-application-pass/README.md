@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
+  decoder/constructor/formatter naming; 51 exact aliases preserve prior names
+  and original offset/code behavior. SDK/contract checks and 109 cached joins
+  pass; printed lambda ownership and consolidated ETS checks remain pending.
 - `discovery-frames-multicast-coverage-v437.json` — description-frame layouts,
   multicast lifecycle and independently proven captures/scopes; 91 exact aliases
   retain every prior name. Twelve definitions record missing evidence. SDK/contract
