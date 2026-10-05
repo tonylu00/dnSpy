@@ -22,6 +22,12 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `cloud-connector-getter-correction-verification-v436.json` — corrects the
+  map-only connector-ID getter while checking absence of a prior ledger row.
+  The target-serial getter and every other alias/scope/decision are retained;
+  SDK/contract checks, 175 portable checks and 109 cached joins pass.
+- `record_definition_alias_corrections.py` — reusable correction verifier for
+  both reviewed aliases and historical map aliases with no prior ledger row.
 - `session-frames-cloud-websocket-coverage-v435.json` — session-frame layouts,
   immutable cloud configuration and WebSocket connect/send/receive/disposal
   scopes; 94 exact additions retain every prior name. SDK/contract checks and
