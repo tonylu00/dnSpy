@@ -10,7 +10,18 @@ Read first:
 
 What lives here:
 
-- `point-components-verification-v499.json` — current naming checkpoint: 348 new
+- `spake-verification-v500.json` — current naming checkpoint: 317 new aliases
+  connect the SPAKE prover/verifier flows, password derivation, point arithmetic,
+  transcript, key schedule and network callbacks. Exact native producers establish
+  twelve more captured-field roles; the authentication password uncertainty is
+  resolved. Native SDK/contract checks pass. Remaining closure/local uncertainty
+  is recorded explicitly; source/build/runtime verification remains at v492.
+- `checkpoint_scope_evidence_completion.py` — ledger checkpoint entry point that
+  also retires the last unresolved scope entry when a native-checked alias resolves
+  it. It preserves historical evidence and extends the immutable older helpers.
+  `scope-evidence-reconciliation-v500.json` records the exact historical replay
+  used to repair one existing ledger row. All 71 ledger regressions pass.
+- `point-components-verification-v499.json` — preceding naming checkpoint: 348 new
   aliases across group communication, access-token security and software update,
   plus the behavior-backed `ParseOscoreAccessToken` correction. All 29 interface
   families have consistent declaration and implementation scopes. Native SDK
