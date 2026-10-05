@@ -22,15 +22,16 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `secure-application-layer-coverage-v447.json` — 137 exact aliases across secure
-  key selection, decryption/replay checks, sync factories, callback captures and
-  receiving sequence snapshots. Update UTC and reception context stay distinct.
-  `secure-decrypt-alias-correction-verification-v445.json`,
-  `secure-sync-response-alias-correction-verification-v446.json` and
-  `sending-sequence-allocation-correction-verification-v448.json` correct five
-  misleading method aliases, including the complete allocation contract family.
+- `secure-sequence-services-coverage-v450.json` — 113 exact aliases across secure
+  sending/receiving service families, dictionaries, locks, shared counter, clock
+  seed and callback scopes. Interface parameter names match implementations;
+  peeking, allocating and raising a sequence remain distinct.
+  `receiving-sequence-contract-corrections-verification-v449.json` corrects ten
+  synchronous/lookup/update aliases across five complete interface families.
   All other aliases/scopes remain intact; SDK/contract checks and 109 cached joins
-  pass. The contract correction recorder passes 35 tests; 20,564 candidates remain.
+  pass; 20,543 candidates remain. Boolean/generated uncertainty stays explicit.
+  `public-key-service-graph-context-v450.json` verifies nine native members across
+  Falcon, TelegramRecorderView and Falcon.Monitor for the next connected block.
   `managed-accessor-scope-verification-v444.json` records the shared tool repair:
   42 native/44 consumer/234 rebuilt checks and two compiled synthetic contexts
   preserve short property names. Consolidated ETS/Apps checks remain pending.
