@@ -22,17 +22,19 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `service-families-tunnelling-coverage-v457.json` — 29 aliases across service-family
-  support/version checks, DIB encoding/decoding and tunnelling-slot projections.
-  `family-predicate-withdrawal-verification-v456.json` removes two misleading
-  `Equals` aliases and adds two proven parameters. Empty-input results, byte-narrowed
-  lengths and default-struct lookup behavior are retained. Generated predicates,
-  selectors and capture types without printed-owner evidence remain unresolved.
-  SDK/contract checks and 109 cached joins pass; 20,518 lexical candidates remain.
-  Next: 57 fresh IpDeviceDiscoveryResult bodies, comparing existing map scopes first.
-  `connector-root-conversion-coverage-v455.json` retains the preceding 64 aliases;
-  completed cloud-interface and WebSocket mappings are preserved. Printed source
-  merging, consolidated ETS/Apps checks and ETS 6.4 remain pending.
+- `ip-discovery-coverage-v458.json` — 98 aliases (four captured fields, 19 parameters
+  and 75 used locals) across discovery results, network selection, response merging,
+  request sending and description loading; 86 method definitions reviewed. Meaningful
+  APIs, overloads, null/default results, cancellation and iterator protocols are retained.
+  `discovery-handler-withdrawal-verification-v459.json` removes the synchronous receive
+  callback's misleading `DiscoverAsync` alias, preserving all 12 accepted locals.
+  Its definition and the closure async entry await printed-owner evidence; the native
+  guard retains the existing compiler-pattern description callback alias for audit.
+  SDK/contract checks and 109 cached joins pass; 20,513 lexical candidates remain.
+  Next: large async discovery bodies and description communication, comparing completed
+  scopes first. `service-families-tunnelling-coverage-v457.json` retains the preceding
+  family/version and tunnelling evidence. Printed source merging, consolidated ETS/Apps
+  checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins

@@ -1,0 +1,123 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Knx.Falcon.Discovery.IpDeviceDiscovery/<>c__DisplayClass36_0",
+      "Token": "0x06002967",
+      "Signature": "System.Void Knx.Falcon.Discovery.IpDeviceDiscovery/<>c__DisplayClass36_0::method_0(System.Object,EventArgs4)",
+      "OriginalName": "method_0",
+      "Reason": "Synchronous receive-event handler: parses search responses, locks discovered-results list, detects same-device DIB additions, merges them, then writes to channel; nested interpret/receive errors and closed-writer handling retained. Native async sender06002969 subscribes/unsubscribes handler at ldftn648/729; this is not an async entry method. Withdraw prior generated alias without inventing a replacement; original runtime metadata remains intact.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Object sender",
+        "2: EventArgs4 e"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "sender",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "e",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Net.IPEndPoint",
+          "NewName": "localEndpoint"
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "Class786",
+          "NewName": "searchResponse"
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "Knx.Falcon.Discovery.IpDeviceDiscovery/<>c__DisplayClass36_1",
+          "NewName": "responseContext"
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Net.NetworkInformation.NetworkInterface",
+          "NewName": "networkAdapter"
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Boolean",
+          "NewName": "duplicateResponse"
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.Collections.Generic.List`1<Knx.Falcon.Discovery.IpDeviceDiscoveryResult>",
+          "NewName": "discoveredResults"
+        },
+        {
+          "Index": 6,
+          "ExpectedType": "System.Boolean",
+          "NewName": "lockTaken"
+        },
+        {
+          "Index": 7,
+          "ExpectedType": "Knx.Falcon.Discovery.IpDeviceDiscoveryResult",
+          "NewName": "previousResult"
+        },
+        {
+          "Index": 8,
+          "ExpectedType": "System.Threading.Tasks.ValueTask",
+          "NewName": "pendingWrite"
+        },
+        {
+          "Index": 9,
+          "ExpectedType": "System.Runtime.CompilerServices.ValueTaskAwaiter",
+          "NewName": "writeAwaiter"
+        },
+        {
+          "Index": 10,
+          "ExpectedType": "System.Exception",
+          "NewName": "interpretationException"
+        },
+        {
+          "Index": 11,
+          "ExpectedType": "System.Exception",
+          "NewName": "receiveException"
+        },
+        {
+          "Index": 12,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 13,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "",
+      "Unresolved": true,
+      "UnresolvedReason": "missing-printed-owner-witness: trusted generated capture type and exact native event subscription are known, but no frozen printed declaration/anonymous-owner binding supports this alias or a replacement. Synchronous receive-event handler: parses search responses, locks discovered-results list, detects same-device DIB additions, merges them, then writes to channel; nested interpret/receive errors and closed-writer handling retained. Native async sender06002969 subscribes/unsubscribes handler at ldftn648/729; this is not an async entry method.",
+      "ReviewDisposition": "rename",
+      "DefinitionOnlyUnresolved": true,
+      "RemoveExistingAlias": true,
+      "ExpectedAlias": "DiscoverAsync"
+    }
+  ],
+  "Skips": []
+}
