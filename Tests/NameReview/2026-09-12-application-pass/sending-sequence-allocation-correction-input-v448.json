@@ -1,0 +1,101 @@
+{
+  "Format": 1,
+  "State": "D:\\knx_analysis\\STATE.json",
+  "Sink": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
+  "ExpectedModules": 109,
+  "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v448.json",
+  "PreviousLedger": "D:\\knx_analysis\\naming-v448-sending-allocation-correction-ledger-before01.json",
+  "NativeCoverage": "D:\\knx_analysis\\naming-v448-sending-allocation-correction-native-coverage01.json",
+  "Inventory": "D:\\knx_analysis\\perf-now\\application-inventory-v448-sending-allocation-correction01\\summary.json",
+  "Owners": "D:\\knx_analysis\\perf-now\\generated-owner-v448-sending-allocation-correction01\\summary.json",
+  "Snapshot": "D:\\knx_analysis\\sending-allocation-correction-accepted-v448",
+  "ProofName": "sending-sequence-allocation-correction-verification-v448.json",
+  "ProgressKey": "SendingSequenceAllocationCorrectionVerification",
+  "ExpectedRemaining": 20564,
+  "ExpectedCorrections": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A57",
+      "PreviousLedgerAlias": null,
+      "MappedAlias": "LogSequenceNumberExhausted",
+      "NewName": "AllocateNextSequenceNumber"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06001A5F",
+      "PreviousLedgerAlias": null,
+      "MappedAlias": "LogSequenceNumberExhausted",
+      "NewName": "AllocateNextSequenceNumber"
+    }
+  ],
+  "Copies": {
+    "Inventory": "application-inventory-v448-after-sending-allocation-correction.json",
+    "Owners": "generated-owner-inventory-v448-after-sending-allocation-correction.json",
+    "NativeCoverage": "sending-sequence-allocation-correction-native-coverage-v448.json"
+  },
+  "CountBasis": "v448 corrects complete physical2-member sending sequence family1A57/1A5F from LogSequenceNumberExhausted to AllocateNextSequenceNumber. Native Interlocked.Increment returns allocated UInt48 sequence; exhaustion rolls back with Decrement and throws; no logger call. All other aliases/scopes/decisions retained. Totals1,177types/13,405methods/6,217fields/4,894parameters/3,962locals unchanged. SDK/manifest and109 cached joins pass;20,564 candidates remain. v447added137 connected secure application-layer aliases. Consolidated ETS/Apps/6.4 pending.",
+  "NextRoute": "Extend substantial sending/receiving sequence-service families/fields/scopes from fresh native v445/v447/v448 evidence. Allocation1A57/1A5F now corrected;1A58/1A60 reads current+1 without increment,1A59/1A61 atomically raises stored current to requestedNext-1 then sets a Boolean whose full producer/caller meaning remains to inspect. Receiving service self-name Falcon.DefaultSecureReceivingSeqNrService and snapshot update UtcNow/context are verified; retain original runtime interfaces/overloads. Then remaining physical modules; freeze whole109 mappings before consolidated source/build/metadata/staged ETS/unchanged-App validation; ETS6.4 follows ETS6.3.",
+  "Detail": "v448 corrects2 sending allocation family aliases; native exact allocation/rollback/exhaustion semantics and encrypt/callback callers prove role. All other aliases/scopes retained;109 cached joins and SDK/manifest pass;20,564 candidates remain. v447adds137 connected secure-layer/snapshot scopes. Sequence service blocks and consolidated ETS/Apps/6.4 pending.",
+  "UnresolvedDetail": "Generated callback definitions await frozen printed owner/declaration bindings; existing1A8C/F missing definition evidence remains explicit. Unused flattening/string storage and diagnostic collection1A6D remain unresolved. Sending service Boolean full caller meaning requires inspection; do not infer synchronization solely from setter. Whole ETS/Apps/6.4 pending.",
+  "EvidenceFacts": {
+    "PhysicalModule": "Knx.Falcon.dll",
+    "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+    "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+    "Family": "4EEDFBA1C03883B00F2D89C3FE7B968A7F372A5ADA34DB05038A35A6EABF7A21",
+    "CompleteFamilyMembers": [
+      "06001A57",
+      "06001A5F"
+    ],
+    "Allocation": "06001A57 Interlocked.Increment(field0400160E), returns value below2^48; at exhaustion decrements and throws InvalidOperationException. Native exact body has no logger call.",
+    "Consumers": "06001A77 Encrypt and06001A8B secure-message reassign call interface1A5F to allocate distinct secure-data sequences.",
+    "DistinctPeek": "06001A58 reads current via Interlocked.Read and returns+1 without increment, with separate UInt48 bound.",
+    "HistoricalPreimages": "Both exact mapped aliases LogSequenceNumberExhausted checked; neither physical row existed in previous ledger, absence is checked; complete family reviewed.",
+    "EveryOtherAliasAndScopePreserved": true,
+    "PortableBaseline": {
+      "Tests": 175,
+      "MapVersion": 436,
+      "HelpersUnchanged": true
+    },
+    "WholeRuntimeProven": false,
+    "ContractRecorderRegression": {
+      "Tests": 35,
+      "NewContractTests": 11,
+      "OlderPinnedRecordersUnchanged": true
+    }
+  },
+  "EvidenceFiles": [
+    "D:\\knx_analysis\\naming-v448-sending-sequence-families01.json",
+    "D:\\knx_analysis\\naming-v447-sending-service-type01.json",
+    "D:\\knx_analysis\\naming-v447-sequence-service-methods01.json",
+    "D:\\knx_analysis\\naming-v445-secure-protocol-type01.json",
+    "D:\\knx_analysis\\naming-v445-secure-protocol-methods01.json",
+    "D:\\knx_analysis\\naming-v445-sending-sequence-interface01.json",
+    "D:\\knx_analysis\\naming-v448-sending-allocation-correction-ledger-before01.json",
+    "D:\\knx_analysis\\naming-v448-sending-allocation-correction-spec01.json",
+    "D:\\knx_analysis\\naming-v445-worktree-before01.json",
+    "D:\\knx_analysis\\naming-v436-definition-corrections-portable-regression01.log",
+    "D:\\knx_analysis\\ETS6.3_api_preserved4\\Knx.Falcon.dll",
+    "D:\\knx_analysis\\application-name-pass01\\contract-references63-v3.json",
+    "D:\\knx_analysis\\application-name-pass01\\sdk-name-whitelist63-v2.xml",
+    "D:\\knx_analysis\\scope-accessor-native-build14\\bin\\NameCandidates\\release\\NameCandidates.dll",
+    "D:\\knx_analysis\\review-alias-removal-build01\\bin\\NameCandidates\\release\\NameCandidates.dll",
+    "D:\\knx_analysis\\generated-owner-build07\\bin\\Release\\net8.0\\GeneratedOwnerInspection.dll",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-physical-scope-v391.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint_naming_block.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\inventory_physical_scope.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\inventory_generated_owners.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\prepare_physical_review.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\secure-application-layer-coverage-v447.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\secure-decrypt-alias-correction-verification-v445.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\secure-sync-response-alias-correction-verification-v446.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\managed-accessor-scope-verification-v444.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\test_record_contract_alias_corrections.py",
+    "D:\\knx_analysis\\naming-v448-contract-correction-regression01.log"
+  ],
+  "Spec": "D:\\knx_analysis\\naming-v448-sending-allocation-correction-spec01.json",
+  "Shape": "109 physical first-party modules; v448unchanged aliases1,177types/13,405methods/6,217fields/4,894parameters/3,962locals. Complete2-member allocation family correction;20,564 candidates unchanged. Counts do not prove readability/runtime compatibility.",
+  "FamilyInventory": {
+    "Path": "D:\\knx_analysis\\naming-v448-sending-sequence-families01.json",
+    "Sha256": "C6610383EA100BC5E29FC26B1A8B2C640006BEC175D74F168BB69F26A5DA56AD"
+  }
+}

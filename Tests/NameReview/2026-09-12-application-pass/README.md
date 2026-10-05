@@ -22,9 +22,15 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `secure-message-ccm-chain-coverage-v444.json` — 172 exact aliases across cEMI
-  selectors, secure payload/MAC/plaintext/nonce/sequence/results and CCM consumers;
-  all prior names retained. SDK/contract checks and 109 cached joins pass.
+- `secure-application-layer-coverage-v447.json` — 137 exact aliases across secure
+  key selection, decryption/replay checks, sync factories, callback captures and
+  receiving sequence snapshots. Update UTC and reception context stay distinct.
+  `secure-decrypt-alias-correction-verification-v445.json`,
+  `secure-sync-response-alias-correction-verification-v446.json` and
+  `sending-sequence-allocation-correction-verification-v448.json` correct five
+  misleading method aliases, including the complete allocation contract family.
+  All other aliases/scopes remain intact; SDK/contract checks and 109 cached joins
+  pass. The contract correction recorder passes 35 tests; 20,564 candidates remain.
   `managed-accessor-scope-verification-v444.json` records the shared tool repair:
   42 native/44 consumer/234 rebuilt checks and two compiled synthetic contexts
   preserve short property names. Consolidated ETS/Apps checks remain pending.
