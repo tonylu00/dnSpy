@@ -10,7 +10,15 @@ Read first:
 
 What lives here:
 
-- `spake-verification-v500.json` — current naming checkpoint: 317 new aliases
+- `stack-resources-verification-v501.json` — current naming checkpoint: 314 new
+  aliases connect endpoint/token stores, REST requests, authentication/resource
+  events and response correlation across 19 complete contract families. All prior
+  aliases are preserved. Native SDK/contract checks and both cached 109-module
+  inventories pass; 18,776 lexical candidates remain. The previously unknown
+  stack-resource argument and both response-queue tasks have exact evidence;
+  ambiguous local slots remain unresolved. v501 is unexported; v492 remains the
+  actual full-build and partial runtime baseline.
+- `spake-verification-v500.json` — preceding naming checkpoint: 317 new aliases
   connect the SPAKE prover/verifier flows, password derivation, point arithmetic,
   transcript, key schedule and network callbacks. Exact native producers establish
   twelve more captured-field roles; the authentication password uncertainty is
