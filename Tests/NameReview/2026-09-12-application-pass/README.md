@@ -11,6 +11,12 @@ Read first:
 What lives here:
 
 - `progress.json` — tool-facing record of the current map paths and checkpoint
+- `automatic-field-source-verification-v492.json` — completed 109-module source
+  audit and join to the actual compiled files: 3,834 of 3,912 strict metadata
+  differences have exact compiled-source owner/binding evidence; 78 lack direct
+  evidence in this baseline. All differences remain unresolved runtime contracts.
+  Five settings source mismatches contain only the added `partial` modifier.
+  The audit retains 5,421 unresolved printed references and retires no candidates.
 - `captured-receiver-verification-v492.json` — native observation now records
   fields replaced by `this` separately from captured variables. Four actual ETS
   fields gain exact owner evidence across three roots whose compiled source is
