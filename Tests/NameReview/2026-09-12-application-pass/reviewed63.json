@@ -471726,7 +471726,7 @@
    "Token": "0x06001DB1",
    "Signature": "System.Void Class1339::smethod_1(Class1339,Class1339/a)",
    "OriginalName": "smethod_1",
-   "Reason": "Advances to the context timestamp. Completes synchronization only for a matching local serial/tag or trust-first-response mode.",
+   "Reason": "Advances to the context timestamp. Completes synchronization only for a matching local serial/tag or trust-first-response mode.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. UpdateTimerAndCheckSyncResponse default local0 Struct827 completes validResponseCompletion after serial/tag or trust-mode checks.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -471749,7 +471749,13 @@
      "NewName": "context"
     }
    ],
-   "LocalNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Struct827",
+     "NewName": "completionResult"
+    }
+   ],
    "NewName": "UpdateTimerAndCheckSyncResponse",
    "Unresolved": false,
    "UnresolvedReason": ""
@@ -719208,7 +719214,7 @@
    "Token": "0x06001DD8",
    "Signature": "System.Void Class1339/b::d()",
    "OriginalName": "d",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. Exact owner06001DA7 AsyncStateMachineAttribute points to Class1339/b. Body reads state and timer fields; notify awaitable/awaiter wrap SendTimerNotifyAsync; local4/5 pair Monitor.Enter/Exit; local6 ChooseNotifyDelay drives UTC initial time and SetupNotifyTimer; local7 reaches builder.SetException.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -719219,42 +719225,42 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1339",
-     "NewName": ""
+     "NewName": "timer"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "notifyAwaiter"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "notifyAwaitable"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Object",
-     "NewName": ""
+     "NewName": "syncRoot"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Boolean",
-     "NewName": ""
+     "NewName": "lockTaken"
     },
     {
      "Index": 6,
      "ExpectedType": "System.UInt64",
-     "NewName": ""
+     "NewName": "initialDelayMilliseconds"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 8,
@@ -719364,7 +719370,7 @@
    "Token": "0x06001DDC",
    "Signature": "System.Void Class1339/d::d()",
    "OriginalName": "d",
-   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.",
+   "Reason": "Preserve original MethodImpl body metadata: explicit CLR protocol System.Void System.Runtime.CompilerServices.IAsyncStateMachine::MoveNext() resolves to pinned mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089 / 0x060050D8. Instantiated signature matches the exact body; preserve the interface contract rather than infer semantic aliases. Native generated-owner evidence records the owner separately; canonical source merging remains unproven.\nScope review: Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. Exact owner06001DA8 points to Class1339/d. local2 current UTC milliseconds; local3 initial-notify time plus keeper/follower latency margin; local4 TimeSpan.FromMilliseconds of remaining window after original Timing factor. local5/6 wrap WithTimeout(validResponseCompletion); local7/8 wrap forced SendTimerNotifyAsync. local9 default Struct827 completes response signal after hasValidResponse, local10 reaches SetException. Timeout catches, trusts and original signed conversions remain unchanged.",
    "NeedsReadableName": false,
    "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
    "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
@@ -719375,57 +719381,57 @@
     {
      "Index": 0,
      "ExpectedType": "System.Int32",
-     "NewName": ""
+     "NewName": "state"
     },
     {
      "Index": 1,
      "ExpectedType": "Class1339",
-     "NewName": ""
+     "NewName": "timer"
     },
     {
      "Index": 2,
      "ExpectedType": "System.UInt64",
-     "NewName": ""
+     "NewName": "currentMilliseconds"
     },
     {
      "Index": 3,
      "ExpectedType": "System.UInt64",
-     "NewName": ""
+     "NewName": "responseDeadlineMilliseconds"
     },
     {
      "Index": 4,
      "ExpectedType": "System.TimeSpan",
-     "NewName": ""
+     "NewName": "responseTimeout"
     },
     {
      "Index": 5,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<Struct827>",
-     "NewName": ""
+     "NewName": "responseAwaiter"
     },
     {
      "Index": 6,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1<Struct827>",
-     "NewName": ""
+     "NewName": "responseAwaitable"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
-     "NewName": ""
+     "NewName": "sendAwaiter"
     },
     {
      "Index": 8,
      "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
-     "NewName": ""
+     "NewName": "sendAwaitable"
     },
     {
      "Index": 9,
      "ExpectedType": "Struct827",
-     "NewName": ""
+     "NewName": "completionResult"
     },
     {
      "Index": 10,
      "ExpectedType": "System.Exception",
-     "NewName": ""
+     "NewName": "error"
     },
     {
      "Index": 11,
@@ -761165,6 +761171,154 @@
     }
    ],
    "NewName": "get_Timestamp",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1339/c",
+   "Token": "0x06001DDA",
+   "Signature": "System.Void Class1339/c::System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext()",
+   "OriginalName": "System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. Exact owner06001DC1 points to Class1339/c. Body reads state/timer; local2 two random bytes decoded to UInt16 lastNotificationTag, then passes timestamp/serial/tag or reply serial/tag to sendTimerNotify delegate. local3/4 ConfigureAwait/GetAwaiter drive send, local5 reaches SetException. Do not alias explicit MoveNext definition.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "state"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Class1339",
+     "NewName": "timer"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Byte[]",
+     "NewName": "messageTagBytes"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable/ConfiguredTaskAwaiter",
+     "NewName": "sendAwaiter"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Runtime.CompilerServices.ConfiguredTaskAwaitable",
+     "NewName": "sendAwaitable"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Exception",
+     "NewName": "error"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1250`4/a",
+   "Token": "0x06001862",
+   "Signature": "System.Boolean Class1250`4/a::Equals(Class1250`4/a<T,U,V,W>)",
+   "OriginalName": "Equals",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. IEquatable TransitionKey.Equals loads field state(U) and trigger(V) into locals0/1 before constrained Object.Equals comparisons with other key. Preserve original Equals and other parameter.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Class1250`4/a<T,U,V,W> other"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "other",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "U",
+     "NewName": "state"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "V",
+     "NewName": "trigger"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1250`4/a",
+   "Token": "0x06001864",
+   "Signature": "System.Int32 Class1250`4/a::GetHashCode()",
+   "OriginalName": "GetHashCode",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. CLR TransitionKey.GetHashCode loads state(U) and trigger(V) into locals0/1 for constrained hashes; combines state hash times397 xor trigger hash. No arithmetic or CLR definition changes.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "U",
+     "NewName": "state"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "V",
+     "NewName": "trigger"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
@@ -1178590,6 +1178744,28 @@
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Falcon.dll",
+   "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+   "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+   "Type": "Class1339/Trigger",
+   "Token": "0x04001B16",
+   "Signature": "Class1339/Trigger Class1339/Trigger::E11",
+   "OriginalName": "E11",
+   "Reason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. Trigger.E11 is literal value10. The reviewed transition initialization and dispatch bodies do not establish an event role. Preserve actual value and existing enum members; spelling alone is not evidence.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical Knx.Falcon SHA256 AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8/MVID e2c7c4ad-03fb-4dbd-9c21-881277f71c80. Native91 group-timer/notify bodies plus17 transition/key bodies are pinned in naming-v443-group-timer-methods01.json and naming-v443-state-transition-methods01.json. Preserve all existing definitions, runtime MethodImpl/CLR contracts, state transitions, timing arithmetic, lock/error semantics and generated owners. Trigger.E11 is literal value10. The reviewed transition initialization and dispatch bodies do not establish an event role. Preserve actual value and existing enum members; spelling alone is not evidence.",
+   "ReviewDisposition": "unresolved"
   }
  ],
  "Skips": [],

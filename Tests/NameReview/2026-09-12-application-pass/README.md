@@ -22,10 +22,11 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `additional-info-codec-coverage-v442.json` — factory-connected PL/BiBat,
-  busmonitor status, timestamps/delay, RF and opaque additional-information codecs;
-  62 exact aliases preserve every prior name. SDK/contract checks and 109 cached
-  joins pass; timestamp/delay units and consolidated ETS checks remain pending.
+- `secure-group-timer-scopes-coverage-v443.json` — 30 used-local aliases across
+  three exact timer async owners and transition-key equality/hash; prior names
+  and framework proofs retained. `Trigger.E11` remains unresolved. The preceding
+  `additional-info-codec-coverage-v442.json` covers 62 codec aliases. SDK/contract
+  checks and 109 cached joins pass; consolidated ETS checks remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
