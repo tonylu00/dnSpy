@@ -22,6 +22,11 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `session-status-scoped-withdrawal-verification-v434.json` — native atomic
+  withdrawal of an unsupported callback definition alias with four proven new
+  body scopes. Every other alias and decision is retained. Full native checks,
+  65 focused assertions, 158 portable tests and 109 cached joins pass; printed
+  ownership and consolidated ETS build/runtime compatibility remain pending.
 - `secure-session-definition-corrections-verification-v433.json` — session-key
   getter, full secure-handshake overload and exact connect/disconnect predicate
   corrections, with every other alias/scope/decision retained. Native SDK/contract
