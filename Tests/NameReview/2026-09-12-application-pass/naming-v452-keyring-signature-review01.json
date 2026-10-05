@@ -1,0 +1,85 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class1287",
+      "Token": "0x06001AB7",
+      "Signature": "System.Void Class1287::a(System.Xml.Linq.XDocument,Knx.Falcon.SecureBuffer)",
+      "OriginalName": "a",
+      "Reason": "Native 06001AB7 serializes root with recursive06001ABC, optionally appends password hash as base64 BinaryWriter string, SHA256.ComputeHash then Take(16), and SetAttributeValue(Signature,base64 result). Only null doc/missing root paths throw, no logging call. Actual SaveDeviceSequenceCounters06002AB5 calls this signing method before XML Save. Replace misleading historical LogMissingRootElement; no prior ledger row or scope aliases exist.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Xml.Linq.XDocument xdocument_0",
+        "2: Knx.Falcon.SecureBuffer secureBuffer_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "xdocument_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "secureBuffer_0",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Xml.Linq.XElement",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.IO.MemoryStream",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.IO.BinaryWriter",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Security.Cryptography.SHA256",
+          "NewName": ""
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Byte[]",
+          "NewName": ""
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 6,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "SetXmlSignature",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Skips": []
+}

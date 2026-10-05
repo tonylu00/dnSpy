@@ -22,15 +22,18 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `key-services-cache-decryption-keyring-coverage-v451.json` — 115 exact scope
-  aliases across Falcon, TelegramRecorderView and Falcon.Monitor: key selection,
-  locked cache promotion/eviction, byte comparison, decryption and XML group-key
-  and sequence-counter persistence. Public APIs and canonical generated names
-  remain intact; 17 parameters, 96 locals and two document captures gain names.
-  SDK/contract checks and 109 cached joins pass; 20,543 lexical candidates remain
-  unchanged. Prior aliases and uncertainty records remain intact. Printed source
-  ownership and consolidated ETS/Apps checks remain pending. The next block
-  follows the physical Keyring schema/hash/signature/crypto/XML helper chain.
+- `keyring-device-security-coverage-v453.json` — 138 exact aliases across Keyring
+  schema/hash/signature/password/AES helpers, the recursive signature-element
+  encoder, thread random-byte/integer producers and device-key/counter loading:
+  five methods, nine fields, 27 parameters and 97 locals. Prior ECDH/PBKDF2 and
+  key-service scopes remain intact; three generated definitions record missing
+  printed-owner evidence. `keyring-signature-correction-verification-v452.json`
+  corrects the historical signature setter alias from its body and actual caller.
+  SDK/contract checks and 109 cached joins pass; 20,529 lexical candidates remain.
+  Printed source ownership and consolidated ETS/Apps checks remain pending. The
+  next block follows Interface/Devices/Backbone connector-security consumers.
+  `key-services-cache-decryption-keyring-coverage-v451.json` retains the preceding
+  115 recorder/monitor/group-security scope aliases across three physical modules.
   `public-key-service-graph-context-v450.json` binds all nine members of the three
   public overload families. `secure-sequence-services-coverage-v450.json` and
   `receiving-sequence-contract-corrections-verification-v449.json` retain the
