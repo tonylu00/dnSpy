@@ -105,6 +105,17 @@ What lives here:
   scope and annotation, including the new streaming scopes. Native SDK/contract
   checks and both cached joins pass. Current v474 has no consolidated export or
   runtime claim. Next: firmware message/accessor scopes and caller chains.
+- `streaming-message-coverage-v475.json` — adds 127 aliases: the paired
+  `CheckChunkBlockResponseMessage` type, four buffer/block accessors, 103
+  parameters and 19 used locals. Eighty-two scopes bind against 105 original
+  message bodies and two inlined predicate targets. Constructor/setter names
+  follow serialized buffers, block/chunk/status fields and response processing;
+  no unused local receives an invented role. The stream byte at data offset +2
+  remains explicitly unresolved. All prior aliases/scopes are retained; native
+  checks and both cached 109-module joins pass with 19,846 candidates remaining.
+  Next: exact corrections for complete response handlers and busy-reply length
+  validators, then review the synchronous status-byte virtual family. Current
+  v475 has no consolidated export or runtime claim.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
