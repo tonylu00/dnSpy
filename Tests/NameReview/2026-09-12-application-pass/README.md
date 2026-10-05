@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `discovery-frames-multicast-coverage-v437.json` — description-frame layouts,
+  multicast lifecycle and independently proven captures/scopes; 91 exact aliases
+  retain every prior name. Twelve definitions record missing evidence. SDK/contract
+  checks and 109 cached joins pass; consolidated ETS build/runtime remains pending.
 - `cloud-connector-getter-correction-verification-v436.json` — corrects the
   map-only connector-ID getter while checking absence of a prior ledger row.
   The target-serial getter and every other alias/scope/decision are retained;
