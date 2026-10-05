@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `selector-remote-connection-coverage-v439.json` — selector, remote-frame and
+  CRI/CRD producer/consumer naming; 91 exact aliases preserve prior names and
+  original layouts. SDK/contract checks and 109 cached joins pass; two iterator
+  type definitions and consolidated ETS verification remain unresolved.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
