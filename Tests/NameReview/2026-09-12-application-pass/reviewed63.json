@@ -792804,7 +792804,7 @@
    "Token": "0x06000167",
    "Signature": "System.Void Knx.Ets.ObjectModel.FilteredRefDomCollection::a()",
    "OriginalName": "a",
-   "Reason": "Exact original ObjectModel FBA7D888/e025be0a body 0x06000167. Monitor.Enter uses0/byref1; lazy index population under lock; finally tests1/exits0. Preserve existing meaningful method/type/formal names and SDK/runtime metadata.",
+   "Reason": "Exact original ObjectModel FBA7D888/e025be0a body 0x06000167. Monitor.Enter uses0/byref1; lazy index population under lock; finally tests1/exits0. Preserve existing meaningful method/type/formal names and SDK/runtime metadata.\nReviewed method correction: Exact physical ObjectModel FBA7D888/e025be0a original167 entire body: Monitor lock protects check of field4F; IL0017 branches straight to exit when index already exists. Only null branch constructs index and adds FilteredItems via16F callback. Count164, Enumerator163, Has169, Item16A, Populate15F and Remove160 require initialized index; method does not rebuild existing content. Correct RebuildIndex to EnsureIndexInitialized while retaining indexLock/lockTaken aliases, uncertainty, generated owners and runtime contracts.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -792833,7 +792833,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "EnsureIndexInitialized",
    "DefinitionOnlyUnresolved": false,
    "Unresolved": false,
    "UnresolvedReason": "",
@@ -792851,7 +792851,15 @@
       "MissingEvidence": "No original IL instruction references this local slot; no behavioral role can be inferred."
      }
     ]
-   }
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "RebuildIndex",
+     "Alias": "EnsureIndexInitialized",
+     "Evidence": "Exact physical ObjectModel FBA7D888/e025be0a original167 entire body: Monitor lock protects check of field4F; IL0017 branches straight to exit when index already exists. Only null branch constructs index and adds FilteredItems via16F callback. Count164, Enumerator163, Has169, Item16A, Populate15F and Remove160 require initialized index; method does not rebuild existing content. Correct RebuildIndex to EnsureIndexInitialized while retaining indexLock/lockTaken aliases, uncertainty, generated owners and runtime contracts."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -797675,6 +797683,1444 @@
      {
       "Index": 1,
       "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.DomObject",
+   "Token": "0x060000E1",
+   "Signature": "System.Void Knx.Ets.ObjectModel.DomObject::OnPropertyChanged(System.Object,System.Object,System.String)",
+   "OriginalName": "OnPropertyChanged",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060000E1. Only LastModified non-null unequal values are subtracted as DateTime; absolute milliseconds suppress changes below1000. Slot0 holds signed difference before Math.Abs. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Object oldValue",
+    "2: System.Object newValue",
+    "3: System.String propertyName"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "oldValue",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "newValue",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "propertyName",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.TimeSpan",
+     "NewName": "lastModifiedDifference"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Slot is only written, never read in original IL; residual control-flow storage has no established semantic source role."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.RefDomCollection",
+   "Token": "0x06000175",
+   "Signature": "Knx.Ets.ObjectModel.IDomObject Knx.Ets.ObjectModel.RefDomCollection::get_Parent()",
+   "OriginalName": "get_Parent",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000175. WeakReference.TryGetTarget yields parent, or returns null. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.INamedDomObject",
+     "NewName": "parent"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.RefDomCollection",
+   "Token": "0x06000176",
+   "Signature": "System.Void Knx.Ets.ObjectModel.RefDomCollection::NotifyChanges(System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>,System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>)",
+   "OriginalName": "NotifyChanges",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000176. Filter added and removed lists separately through virtual relevance methods; populate/remove with events when nonempty. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject> added",
+    "2: System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject> removed"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "added",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "removed",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>",
+     "NewName": "relevantAddedObjects"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>",
+     "NewName": "relevantRemovedObjects"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.FilteredRefDomCollection/<>c__DisplayClass15_0",
+   "Token": "0x06000181",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.FilteredRefDomCollection/<>c__DisplayClass15_0::<Populate>b__0(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "<Populate>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000181. Populate predicate excludes objects whose Id already exists in filtered index. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject inamedDomObject_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "inamedDomObject_0",
+     "HasMetadata": true,
+     "NewName": "domObject"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.FilteredRefDomCollection/<>c__DisplayClass15_0",
+   "Token": "0x06000182",
+   "Signature": "System.Void Knx.Ets.ObjectModel.FilteredRefDomCollection/<>c__DisplayClass15_0::<Populate>b__1(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "<Populate>b__1",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000182. Add object to filtered index; derive index, flush nonadjacent prior batch, then append object to next batch. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject domObject"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObject",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "addedIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.FilteredRefDomCollection/<>c__DisplayClass16_0",
+   "Token": "0x06000184",
+   "Signature": "System.Void Knx.Ets.ObjectModel.FilteredRefDomCollection/<>c__DisplayClass16_0::<Remove>b__0(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "<Remove>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000184. Capture index before removal only while eventing and not resetting; coalesce same-position removals, flag Reset when index missing. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject domObject"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObject",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "removedIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.FilteredRefDomCollection",
+   "Token": "0x06000168",
+   "Signature": "System.Void Knx.Ets.ObjectModel.FilteredRefDomCollection::InitialPopulateWithoutEventing<T>(System.Collections.Generic.IEnumerable`1<T>)",
+   "OriginalName": "InitialPopulateWithoutEventing",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000168. Replace filtered index; enumerate supplied objects and add each by Id; dispose enumerator. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<T> newObjects"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "newObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<T>",
+     "NewName": "objectEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "T",
+     "NewName": "domObject"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.StoringRefDomCollection",
+   "Token": "0x0600043B",
+   "Signature": "System.Void Knx.Ets.ObjectModel.StoringRefDomCollection::Populate(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>,System.Boolean)",
+   "OriginalName": "Populate",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600043B. Under RefDomCollection.LockObject materialize inputs then callback443 inserts/replaces each object and optionally raises Add. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject> domObjects",
+    "2: System.Boolean raiseEvents"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "raiseEvents",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.StoringRefDomCollection/<>c__DisplayClass4_0",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Object",
+     "NewName": "collectionLock"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>",
+     "NewName": "objectsToPopulate"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.StoringRefDomCollection",
+   "Token": "0x0600043C",
+   "Signature": "System.Void Knx.Ets.ObjectModel.StoringRefDomCollection::Remove(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>,System.Boolean)",
+   "OriginalName": "Remove",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600043C. Under RefDomCollection.LockObject materialize inputs then callback445 removes each object and optionally raises Remove. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject> objects",
+    "2: System.Boolean raiseEvents"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "objects",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "raiseEvents",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.StoringRefDomCollection/<>c__DisplayClass5_0",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Object",
+     "NewName": "collectionLock"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>",
+     "NewName": "objectsToRemove"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.StoringRefDomCollection",
+   "Token": "0x0600043D",
+   "Signature": "System.Void Knx.Ets.ObjectModel.StoringRefDomCollection::Populate(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "Populate",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x0600043D. Insert or replace single object by Id under RefDomCollection.LockObject. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject domObject"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObject",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Object",
+     "NewName": "collectionLock"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.StoringRefDomCollection/<>c__DisplayClass5_0",
+   "Token": "0x06000445",
+   "Signature": "System.Void Knx.Ets.ObjectModel.StoringRefDomCollection/<>c__DisplayClass5_0::<Remove>b__0(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "<Remove>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06000445. Record current index from dictionary keys before removal, then pass it to Remove event. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject domObject"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObject",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "removedIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2",
+   "Token": "0x06001519",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2::Synchronize()",
+   "OriginalName": "Synchronize",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001519. Select associated objects absent from local index, select indexed objects absent from associated dictionary, pass respective sequences to Populate/Remove. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass6_0<TParent,TAssociated>",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>",
+     "NewName": "addedObjects"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>",
+     "NewName": "removedObjects"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass13_0",
+   "Token": "0x06001D87",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass13_0::<Has>b__0(TAssociated)",
+   "OriginalName": "<Has>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001D87. Has predicate compares supplied associated object.Id to captured requested id. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: TAssociated gparam_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "gparam_0",
+     "HasMetadata": true,
+     "NewName": "associatedObject"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass16_0",
+   "Token": "0x06001D89",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass16_0::<Populate>b__0(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "<Populate>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001D89. Insert absent associated object and invoke AfterObjectAdd; derive index and coalesce consecutive Add events. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject domObject"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObject",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "addedIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass18_0",
+   "Token": "0x06001D8B",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass18_0::<Remove>b__0(Knx.Ets.ObjectModel.Interfaces.INamedDomObject)",
+   "OriginalName": "<Remove>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001D8B. For present object capture index before BeforeObjectRemove/removal; coalesce Remove events or flag Reset when no index. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject domObject"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObject",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": "removedIndex"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass6_0",
+   "Token": "0x06001D8D",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2/<>c__DisplayClass6_0::<Synchronize>b__0(System.Collections.Generic.KeyValuePair`2<TAssociated,System.Boolean>)",
+   "OriginalName": "<Synchronize>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001D8D. Read entry.Key and use its Id to determine absence from associatedObjectsById. Boolean value role not inferred. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.KeyValuePair`2<TAssociated,System.Boolean> entry"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "entry",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "TAssociated",
+     "NewName": "associatedObject"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.ConnectorRefCollection",
+   "Token": "0x060017BB",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.ConnectorRefCollection::.ctor(Knx.Ets.ObjectModel.Project.IGroupAddress)",
+   "OriginalName": ".ctor",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060017BB. Naming.Connectors NamingPair is stored then its ShortName passed to base collection constructor. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.IGroupAddress parent"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "parent",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.Xml.RegistrationRelevanceInformation.NamingPair",
+     "NewName": "connectorNaming"
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.ConnectorRefCollection",
+   "Token": "0x060017BE",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.ConnectorRefCollection::Populate(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>,System.Boolean)",
+   "OriginalName": "Populate",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060017BE. After base population enumerate concrete connectors and add ComObjectInstanceRefId/GroupAddressId map entries; notify group-address ConnectorsChanged. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject> domObjects",
+    "2: System.Boolean withEvents"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "domObjects",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "withEvents",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.Connector>",
+     "NewName": "connectorEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Connector",
+     "NewName": "connector"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.ConnectorRefCollection",
+   "Token": "0x060017BF",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.ConnectorRefCollection::Remove(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject>,System.Boolean)",
+   "OriginalName": "Remove",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060017BF. After base removal enumerate concrete connectors and remove project address-map entries; notify ConnectorsChanged with null. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Interfaces.INamedDomObject> objects",
+    "2: System.Boolean raiseEvents"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "objects",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "raiseEvents",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.Connector>",
+     "NewName": "connectorEnumerator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.Connector",
+     "NewName": "connector"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.ConnectorRefCollection/<>c__DisplayClass1_0",
+   "Token": "0x060017C5",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.ConnectorRefCollection/<>c__DisplayClass1_0::<Populate>b__0(Knx.Ets.Ids.Project.ComObjectInstanceRefId)",
+   "OriginalName": "<Populate>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x060017C5. Lookup or cache device active com-object collection by DeviceId; resolve ref/module Id and populate connectors at parent group address. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.Ids.Project.ComObjectInstanceRefId coId"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "coId",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.ActiveComObjectsAggregateCollection",
+     "NewName": "activeComObjectInstances"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.GroupAddressRefCollection",
+   "Token": "0x06001B8F",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Project.GroupAddressRefCollection::.ctor(Knx.Ets.ObjectModel.Interfaces.INamedDomObject,Knx.Ets.ObjectModel.IObjectContext,Knx.Ets.ObjectModel.IFactory)",
+   "OriginalName": ".ctor",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001B8F. Naming.GroupAddressRef NamingPair is stored then ShortName passed to base collection constructor. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Interfaces.INamedDomObject parent",
+    "2: Knx.Ets.ObjectModel.IObjectContext objectContext",
+    "3: Knx.Ets.ObjectModel.IFactory creator"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "parent",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "objectContext",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "creator",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.Xml.RegistrationRelevanceInformation.NamingPair",
+     "NewName": "groupAddressRefNaming"
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.GroupAddressRefCollection",
+   "Token": "0x06001B94",
+   "Signature": "Knx.Ets.ObjectModel.Project.GroupAddressRef Knx.Ets.ObjectModel.Project.GroupAddressRefCollection::get_Item(Knx.Ets.Ids.Project.GroupAddressId)",
+   "OriginalName": "get_Item",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001B94. Capture requested Id, lock collection, FirstOrDefault by reference.GroupAddress.Id, return selected reference after Monitor finally. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.Ids.Project.GroupAddressId id"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "id",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupAddressRefCollection/<>c__DisplayClass7_0",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Object",
+     "NewName": "collectionLock"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Boolean",
+     "NewName": "lockTaken"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupAddressRef",
+     "NewName": "matchingGroupAddressRef"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.GroupAddressRefCollection/<>c__DisplayClass7_0",
+   "Token": "0x06001B99",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Project.GroupAddressRefCollection/<>c__DisplayClass7_0::<get_Item>b__0(Knx.Ets.ObjectModel.Project.GroupAddressRef)",
+   "OriginalName": "<get_Item>b__0",
+   "Reason": "Original ObjectModel FBA7D888/e025be0a 0x06001B99. Indexer predicate compares supplied reference.GroupAddress.Id with captured requested Id. Preserve named inputs, legitimate overloads, previous aliases and generated owners.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.GroupAddressRef groupAddressRef_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "groupAddressRef_0",
+     "HasMetadata": true,
+     "NewName": "groupAddressRef"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
       "MissingEvidence": "No original IL instruction references the slot; no behavioral role inferred."
      }
     ]
@@ -1236746,6 +1238192,50 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "ids",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.SynchronizationContext",
+   "Token": "0x0400011C",
+   "Signature": "Knx.Ets.ObjectModel.Project.Project Knx.Ets.ObjectModel.SynchronizationContext::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and whole source. SynchronizationContext446 stores project;448-44D access Store, installation collections and address style through it. Preserve contracts.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "project",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2",
+   "Token": "0x04000460",
+   "Signature": "Knx.Ets.ObjectModel.DomDictionaryWithIndexer Knx.Ets.ObjectModel.Project.InMemoryRefCollection`2::a",
+   "OriginalName": "a",
+   "Reason": "Physical ObjectModel FBA7D888/e025be0a original IL and whole source. InMemoryRefCollection1516 creates index and populates GetAssociatedObjects keys;1519 synchronizes additions/removals,1521/1523 update index via callbacks and invoke association hooks.151B/151D enumerate/count it. Preserve contracts.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "associatedObjectsById",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
