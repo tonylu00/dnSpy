@@ -1,0 +1,125 @@
+{
+  "Format": 1,
+  "State": "D:\\knx_analysis\\STATE.json",
+  "Sink": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
+  "ExpectedModules": 109,
+  "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v433.json",
+  "PreviousLedger": "D:/knx_analysis/naming-v433-session-corrections-ledger-before01.json",
+  "NativeCoverage": "D:/knx_analysis/naming-v433-session-corrections-native-coverage01.json",
+  "Inventory": "D:/knx_analysis/perf-now/application-inventory-v433-session-corrections01/summary.json",
+  "Owners": "D:/knx_analysis/perf-now/generated-owner-v433-session-corrections01/summary.json",
+  "Snapshot": "D:/knx_analysis/session-corrections-accepted-v433",
+  "ProofName": "secure-session-definition-corrections-verification-v433.json",
+  "ProgressKey": "SecureSessionDefinitionCorrectionsVerification",
+  "ExpectedRemaining": 20823,
+  "ExpectedCorrections": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600073D",
+      "PreviousLedgerAlias": "GetEncryptedBuffer",
+      "MappedAlias": "GetEncryptedBuffer",
+      "NewName": "GetSessionKey"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x0600073F",
+      "PreviousLedgerAlias": "LogMissingSessionResponse",
+      "MappedAlias": "LogMissingSessionResponse",
+      "NewName": "EstablishSecureSessionAsync"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000744",
+      "PreviousLedgerAlias": "Equals",
+      "MappedAlias": "Equals",
+      "NewName": "IsConnectOrDisconnectFrame"
+    }
+  ],
+  "Copies": {
+    "Inventory": "application-inventory-v433-after-session-corrections.json",
+    "Owners": "generated-owner-inventory-v433-after-session-corrections.json",
+    "NativeCoverage": "secure-session-definition-corrections-native-coverage-v433.json"
+  },
+  "CountBasis": "v433 corrects three ordinary session definition aliases: GetEncryptedBuffer to GetSessionKey, LogMissingSessionResponse to EstablishSecureSessionAsync and Equals to IsConnectOrDisconnectFrame. Exact key derivation/credential separation, full TCP/ECDH/server/user handshake and four native service-code constants prove roles. Every other alias/scope and ledger decision retained. Totals stay1,145 types/13,295 methods/6,137 fields/4,588 parameters/3,494 locals. Current native SDK/manifest and109 cached joins pass; 150 portable guards passed at preceding v432 without helper changes. 20,823 candidates remain; full ETS/Apps/6.4 pending.",
+  "NextRoute": "Continue20,823 behavior-based candidates. First withdraw unsupported generated0600075C lKthryjUsy0 with exact current map preimage and native retained-scope guard; bind frame/secure-wrapper/plain-status/decrypted-status scopes and explicit missing printed owner evidence. Then continue SessionRequest/SessionStatus frames, cloud interface data and cloud/unicast client producer/consumer chains in substantial blocks. Use isolated CLI12 de4dotEx1276712b and dnSpy c6cb2dc0b/ILSpy7a328ed1f without overwriting primary parallel work. Freeze maps/scope before whole109 export/build/metadata restoration and staged ETS/SDK/unchanged-App checks; ETS6.4 follows ETS6.3.",
+  "Detail": "v433 exact session key getter, secure-handshake overload and connect/disconnect service predicate corrections retain every other alias/scope/decision. Native SDK/manifest and109 cached joins pass using validated150-test portable helpers. See secure-session-definition-corrections-verification-v433.json; consolidated ETS verification pending.",
+  "UnresolvedDetail": "20,823 candidates remain. v432 16 generated types/six callbacks await printed-owner witnesses; independent147 captures/storage and224 formal/local aliases are established. Generated callback0600075C lKthryjUsy0 still needs explicit withdrawal and scoped uncertainty. Private timeout040009CF lacks observed consumer; dead constants/flattening locals unnamed. Historical two scope-only callbacks and unapplied CvNext060003C9 remain; whole ETS/Apps/6.4 pending.",
+  "EvidenceFacts": {
+    "PhysicalModule": "Knx.Falcon.dll",
+    "PhysicalSourceSha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+    "SessionKey": {
+      "Getter": "0x0600073D",
+      "Field": "0x040009C7",
+      "DerivationBody": "0x06000762",
+      "DerivationOffset": 494,
+      "StoreOffset": 509,
+      "SeparateCredentialFields": [
+        "0x040009C3",
+        "0x040009C4"
+      ],
+      "WrapperConsumer": "0x06000774",
+      "WrapperConstructorOffset": 243
+    },
+    "SecureHandshake": {
+      "Kickoff": "0x0600073F",
+      "Body": "0x06000762",
+      "ExistingWrapper": "0x0600073E",
+      "LegalOverloadRetained": true,
+      "Steps": [
+        "TCP requirement",
+        "Reset session",
+        "ECDH request/response",
+        "Derive session key",
+        "Validate server MAC",
+        "Authenticate user",
+        "Validate SessionStatus"
+      ],
+      "NoResponseLogIsTimeoutBranchOnly": true
+    },
+    "ConnectDisconnectPredicate": {
+      "Method": "0x06000744",
+      "ServiceCodeConstants": {
+        "CONNECT_REQUEST": 517,
+        "CONNECT_RESPONSE": 518,
+        "DISCONNECT_REQUEST": 521,
+        "DISCONNECT_RESPONSE": 522
+      },
+      "RangeSubtractOffsets": [
+        8,
+        20
+      ],
+      "ReceiveCaller": "0x06000743",
+      "SendSelectorCaller": "0x06000761",
+      "DoesNotPerformEquality": true
+    },
+    "PortableRegressionBaseline": {
+      "MapVersion": 432,
+      "Tests": 150,
+      "Log": "D:/knx_analysis/naming-v432-session-portable-regression01.log",
+      "HelpersUnchangedSinceBaseline": true
+    },
+    "WholeRuntimeProven": false,
+    "GeneratedDefinitionAliasesChanged": false
+  },
+  "EvidenceFiles": [
+    "D:/knx_analysis/naming-v432-session-type01.json",
+    "D:/knx_analysis/naming-v432-session-methods01.json",
+    "D:/knx_analysis/naming-v433-service-code-type01.json",
+    "D:/knx_analysis/managed-body-scope-falcon-inventory02.json",
+    "D:/knx_analysis/naming-v433-session-corrections-ledger-before01.json",
+    "D:/knx_analysis/naming-v433-session-corrections-native-coverage01.json",
+    "D:/knx_analysis/naming-v432-session-portable-regression01.log",
+    "D:/knx_analysis/ETS6.3_api_preserved4/Knx.Falcon.dll",
+    "D:/knx_analysis/application-name-pass01/contract-references63-v3.json",
+    "D:/knx_analysis/application-name-pass01/sdk-name-whitelist63-v2.xml",
+    "D:/knx_analysis/scoped-withdrawal-native-build12/bin/NameCandidates/release/NameCandidates.dll",
+    "D:/knx_analysis/review-alias-removal-build01/bin/NameCandidates/release/NameCandidates.dll",
+    "D:/knx_analysis/generated-owner-build07/bin/Release/net8.0/GeneratedOwnerInspection.dll",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\application-physical-scope-v391.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint_naming_block.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\inventory_physical_scope.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\inventory_generated_owners.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\test_record_method_alias_corrections.py",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\secure-session-handshake-send-keepalive-coverage-v432.json"
+  ]
+}

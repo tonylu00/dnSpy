@@ -22,6 +22,10 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `secure-session-definition-corrections-verification-v433.json` — session-key
+  getter, full secure-handshake overload and exact connect/disconnect predicate
+  corrections, with every other alias/scope/decision retained. Native SDK/contract
+  checks and 109 cached joins pass; validated portable helpers remain unchanged.
 - `secure-session-handshake-send-keepalive-coverage-v432.json` — secure key
   exchange, server/user authentication, connection setup, serialized sending,
   disposal and timer keepalive chains; 379 exact aliases with prior names retained.

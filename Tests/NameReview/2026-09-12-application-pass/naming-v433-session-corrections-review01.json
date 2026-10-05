@@ -1,0 +1,131 @@
+{
+  "Format": 1,
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Methods": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x0600073D",
+      "Signature": "Knx.Falcon.EncryptedBuffer Class720::c()",
+      "OriginalName": "c",
+      "Reason": "Native session getter073D returns exactly field040009C7. Session state0762 derives a session key from ECDH shared secret through Class1291::a at494 and stores EncryptedBuffer at509; the same key is passed to SetDecryptionKey521, Session response callback075C DecryptUsingSessionKey and secure wrapper constructor0774 at243. User password hash040009C3 and device authentication code hash040009C4 are separate fields with different MAC consumers. Replace ambiguous GetEncryptedBuffer by GetSessionKey, preserving its runtime original c and all other aliases/scopes. Physical evidence naming-v432-session-methods01.json binds hash/MVID/token/signature; no script modifies ETS or maps.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetSessionKey",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x0600073F",
+      "Signature": "System.Threading.Tasks.Task Class720::a(Knx.Falcon.Discovery.IpDeviceDiscoveryResult,System.Threading.CancellationToken)",
+      "OriginalName": "a",
+      "Reason": "Native kickoff073F starts Class720/e with discovery/cancellation fields; body0762 requires TCP, resets session, generates ECDH private/public keys1931/1954, sends SessionRequest318, awaits SessionResponse, derives/stores session key494/509, validates server MAC with deviceAuthenticationCodeHash, sends SessionAuthenticate1509/1050 and awaits/checks SessionStatus840. No SessionResponse/No SessionStatus log only timeout branches. EstablishSecureSessionAsync describes the full operation and matches existing ordinary wrapper073E overload; retain the wrapper and generated protocol/owner names. Previous scopes and captured names from v432 stay unchanged. Physical evidence naming-v432-session-methods01.json binds hash/MVID/token/signature; no script modifies ETS or maps.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Falcon.Discovery.IpDeviceDiscoveryResult ipDeviceDiscoveryResult_0",
+        "2: System.Threading.CancellationToken cancellationToken_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ipDeviceDiscoveryResult_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "cancellationToken_0",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Class720/e",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "EstablishSecureSessionAsync",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "Class720",
+      "Token": "0x06000744",
+      "Signature": "System.Boolean Class720::a(Class754)",
+      "OriginalName": "a",
+      "Reason": "Native static predicate0744 reads frame.Service at1 then compares unsigned ranges service-517 <=1 and service-521 <=1 at8/20, returning true only for 517,518,521,522. Original ServiceCode enum binds these to CONNECT_REQUEST/CONNECT_RESPONSE/DISCONNECT_REQUEST/DISCONNECT_RESPONSE. Caller0743 forwards matching received frames to connection layers; generated sender0761 selects shared control client for this predicate and data client otherwise. It does no object/frame equality comparison. Replace Equals with precise IsConnectOrDisconnectFrame; preserve existing frame formal/serviceCode local and unrelated Equals/ToString contracts. Physical evidence naming-v432-session-methods01.json binds hash/MVID/token/signature; no script modifies ETS or maps.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Class754 class754_1"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "class754_1",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Falcon.KnxnetIp.ServiceCode",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "IsConnectOrDisconnectFrame",
+      "Unresolved": false,
+      "UnresolvedReason": ""
+    }
+  ],
+  "Types": [],
+  "Fields": [],
+  "Skips": []
+}
