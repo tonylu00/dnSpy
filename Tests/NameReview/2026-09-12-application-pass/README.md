@@ -22,6 +22,14 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
+- `layer-timer-connectionless-dispatch-coverage-v429.json` — shared layer timers,
+  worker dispatch, message/event interfaces and connectionless/local transports;
+  153 exact aliases with all prior names retained. Synthetic event provenance is
+  checked through disconnect producers, confirmation forwarding and waiter error
+  branches. Seven definitions remain explicitly unresolved, including a redundant
+  diagnostic field whose invented collision suffix was rejected. SDK/contract
+  checks, 143 portable tests and 109 cached joins pass; 21,057 candidates remain.
+  Consolidated ETS export/build, printed ownership and runtime checks are pending.
 - `scoped-generated-alias-withdrawal-verification-v428.json` — removes the
   unsupported listener `set_LocalIPAddress` alias with exact map/ledger preimages,
   retaining the known `message` scope and explicit owner uncertainty. Native
