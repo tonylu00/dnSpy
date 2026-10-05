@@ -113,9 +113,14 @@ What lives here:
   no unused local receives an invented role. The stream byte at data offset +2
   remains explicitly unresolved. All prior aliases/scopes are retained; native
   checks and both cached 109-module joins pass with 19,846 candidates remaining.
-  Next: exact corrections for complete response handlers and busy-reply length
-  validators, then review the synchronous status-byte virtual family. Current
-  v475 has no consolidated export or runtime claim.
+  `response-helper-correction-verification-v476.json` corrects four partial
+  aliases to `ProcessFileControlResponse`, `ProcessFileStreamResponse`,
+  `VerifyBusyReplyLength` and `VerifyBusyTimeoutReplyLength`. The normal reply,
+  polling and four/six-byte checks follow complete original IL and callers;
+  thirty evidence pins retain every other alias, scope and annotation. Native
+  SDK/contract checks and cached joins pass. Next: the synchronous status-byte
+  virtual family, then substantial whole-application caller chains. Current
+  v476 has no consolidated export or runtime claim.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit

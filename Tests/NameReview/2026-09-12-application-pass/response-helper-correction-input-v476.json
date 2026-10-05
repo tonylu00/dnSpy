@@ -1,0 +1,87 @@
+{
+  "Format": 1,
+  "State": "D:\\knx_analysis\\STATE.json",
+  "Sink": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass",
+  "ExpectedModules": 109,
+  "Checkpoint": "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\checkpoint-naming-v476.json",
+  "PreviousLedger": "D:\\knx_analysis\\naming-v476-response-corrections-ledger-before01.json",
+  "NativeCoverage": "D:\\knx_analysis\\naming-v476-response-corrections-native-coverage01.json",
+  "Inventory": "D:\\knx_analysis\\application-inventory-v476-response-corrections01\\summary.json",
+  "Owners": "D:\\knx_analysis\\generated-owner-v476-response-corrections01\\summary.json",
+  "Snapshot": "D:\\knx_analysis\\response-corrections-accepted-v476",
+  "ProofName": "response-helper-correction-verification-v476.json",
+  "ProgressKey": "ResponseHelperCorrections",
+  "ExpectedRemaining": 19846,
+  "ExpectedCorrections": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000BAC",
+      "PreviousLedgerAlias": "ThrowFileControlUnresolvableReturnCode",
+      "MappedAlias": "ThrowFileControlUnresolvableReturnCode",
+      "NewName": "ProcessFileControlResponse"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000C7D",
+      "PreviousLedgerAlias": "ThrowFileStreamUnresolvableReturnCode",
+      "MappedAlias": "ThrowFileStreamUnresolvableReturnCode",
+      "NewName": "ProcessFileStreamResponse"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000BAE",
+      "PreviousLedgerAlias": "ThrowUnresolvableResponseInIdle",
+      "MappedAlias": "ThrowUnresolvableResponseInIdle",
+      "NewName": "VerifyBusyReplyLength"
+    },
+    {
+      "Module": "Knx.Falcon.dll",
+      "Token": "0x06000BAF",
+      "PreviousLedgerAlias": "ThrowUnresolvableResponse",
+      "MappedAlias": "ThrowUnresolvableResponse",
+      "NewName": "VerifyBusyTimeoutReplyLength"
+    }
+  ],
+  "Copies": {
+    "Inventory": "application-inventory-v476-after-response-corrections.json",
+    "Owners": "generated-owner-inventory-v476-after-response-corrections.json",
+    "NativeCoverage": "response-corrections-native-coverage-v476.json"
+  },
+  "CountBasis": "v476 corrects4partial method aliases: BAC/C7D now ProcessFileControlResponse/ProcessFileStreamResponse;BAE/BAF now VerifyBusyReplyLength/VerifyBusyTimeoutReplyLength. Full original IL and caller code prove state advancement, normal processing and exact4/6byte checks. Every prior alias/scope/annotation retained, includingv47369 andv475127aliases. Totals1203types/13458methods/6951fields/5349parameters/5480locals;19846candidates unchanged. NativeSDK/contract and109cached joins pass; noexport/runtime perblock. Directclosure targetedFalcon proofv472; full109compile/partialruntimev467. Next exactBB0/BEC family review then whole-app call chains. BroaderApps/preservation/6.4pending.",
+  "NextRoute": "Review exact complete BB0/BEC status-byte virtual family and remove invalid Async alias suffix with preimage guards; propagate source aliases through overrides and keep runtime metadata. Then move substantial naming blocks through whole-app caller chains with cached109joins. Offset+2stream byte remains unresolved. Native role splitting needed1B4slot5/1A4slot4/174slot3; storage/subservice255 retained. Consolidate aftermappingfreeze; v467 preservation incidents/broaderApps/6.4 remainopen.",
+  "Detail": "v473-v476 streaming/message chain196new aliases and5complete-behavior corrections committed/verified; SDK and all prior scopes retained. Next exact synchronous status-byte virtualfamily, then whole-app blocks. Currentmap has no consolidated export/runtime.",
+  "UnresolvedDetail": "BB0/BEC synchronous status-byte family requires exact complete contract review. Stream offset+2byte domainmeaning absent; unusedformals/locals and earlier mixedlocals/storage/subservice255 remainunresolved. Broaderownership/Apps/preservation/6.4pending.",
+  "EvidenceFacts": {
+    "Operations": [
+      "Synchronous file-control response processing and polling state updates",
+      "Synchronous stream response processing and polling state updates",
+      "Verify four-byte busy reply length",
+      "Verify six-byte busy-timeout reply length"
+    ],
+    "BaseLengthValidator": {
+      "Token": "0x06000B02",
+      "OriginalSignature": "System.Void Class823::b(System.Byte)",
+      "SourceAlias": "VerifyLengthEqualTo",
+      "Behavior": "Throws InvalidKnxMessageException only when message.Length != required length; accepted Reason uses CheckLength as a role description."
+    },
+    "EveryOtherAliasAndScopePreserved": true,
+    "WholeRuntimeProven": false
+  },
+  "EvidenceFiles": [
+    "D:\\knx_analysis\\naming-v476-response-corrections-spec01.json",
+    "D:\\knx_analysis\\naming-v476-response-corrections-ledger-before01.json",
+    "D:\\knx_analysis\\naming-v475-streaming-messages-methods01.json",
+    "D:\\knx_analysis\\naming-v475-streaming-messages-binding01.json",
+    "D:\\knx_analysis\\naming-v476-message-length-validators01.json",
+    "D:\\knx_analysis\\naming-v471-firmware-bodies01.json",
+    "D:\\knx_analysis\\managed-body-scope-falcon-inventory02.json",
+    "D:\\knx_analysis\\direct-closure-falcon-export06\\Knx.Falcon\\Class823.cs",
+    "D:\\knx_analysis\\direct-closure-falcon-export06\\Knx.Falcon\\Class854.cs",
+    "D:\\knx_analysis\\direct-closure-falcon-export06\\Knx.Falcon\\Class868.cs",
+    "D:\\knx_analysis\\direct-closure-falcon-export06\\Knx.Falcon\\nc.cs",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\streaming-message-coverage-v475.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\direct-call-closure-verification.json",
+    "D:\\git\\dnSpy\\Tests\\NameReview\\2026-09-12-application-pass\\consolidated-v467-verification.json"
+  ],
+  "Spec": "D:\\knx_analysis\\naming-v476-response-corrections-spec01.json"
+}
