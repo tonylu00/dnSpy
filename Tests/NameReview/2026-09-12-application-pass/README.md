@@ -90,6 +90,17 @@ What lives here:
   `Func`/`Action` lambda; unsupported generic, recursive, escaping and
   identity-sensitive cases remain intact. No naming retirement or complete
   ETS/App runtime compatibility is claimed.
+- `streaming-scope-coverage-v473.json` — adds 69 aliases across the complete
+  block/chunk streaming chain: 33 fields, four private parameters and 32 used
+  locals. Four captures match the original argument stores; twelve public SDK
+  captures retain their names. Three generated types retain implementation
+  metadata and the proven native reconstruction owns their emitted source.
+  Five unused slots have no inferred names; `0x060001B4` slot 5 holds an awaited
+  offset and three counter roles and remains unresolved pending native splitting.
+  Every prior alias, scope and storage uncertainty is retained. Native map/SDK
+  checks and both cached 109-module joins pass; candidates fall to 19,863.
+  This checkpoint has no new export or runtime claim. The helper's existing
+  singular alias will be corrected against its exact ledger/map preimages.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
