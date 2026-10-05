@@ -11,6 +11,13 @@ Read first:
 What lives here:
 
 - `progress.json` — tool-facing record of the current map paths and checkpoint
+- `automatic-field-verification-v492.json` — latest 109-project source build,
+  public/SDK audits and 878 restored automatic-property storage contracts.
+- `automatic-field-runtime-v492.json` — latest staged Chinese startup, protected
+  fixture reopening, SDK history persistence and partial unchanged-App checks.
+  All 4,630 protected files were restored; 55 installed App files are unchanged.
+  Broader behavior and the recurring MyKNX shutdown error remain unresolved.
+  Fresh source inspection is tracked by `STATE.json`; naming coverage is open.
 - `reviewed63.json` — cumulative behavioural review ledger (the row-level evidence)
 - `checkpoint-waveNNN.json`, `checkpoint64-vN.json` — accepted per-block records
 - `map-update63.json`, `devkit*63-review-check.json` — last update/check reports
