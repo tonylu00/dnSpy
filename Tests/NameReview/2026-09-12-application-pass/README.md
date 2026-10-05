@@ -99,8 +99,12 @@ What lives here:
   offset and three counter roles and remains unresolved pending native splitting.
   Every prior alias, scope and storage uncertainty is retained. Native map/SDK
   checks and both cached 109-module joins pass; candidates fall to 19,863.
-  This checkpoint has no new export or runtime claim. The helper's existing
-  singular alias will be corrected against its exact ledger/map preimages.
+  `streaming-helper-correction-verification-v474.json` corrects the helper to
+  `WriteChunksAsync`: the complete loop processes all requested chunks and
+  returns the final offset. Its 26 evidence pins retain every other alias,
+  scope and annotation, including the new streaming scopes. Native SDK/contract
+  checks and both cached joins pass. Current v474 has no consolidated export or
+  runtime claim. Next: firmware message/accessor scopes and caller chains.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit

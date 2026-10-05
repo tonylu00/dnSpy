@@ -1,0 +1,74 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "92F3CAEBC070E7304914F56C2DF7537C67B6D9AB33C687B6DDD2A6B6FE7D1EBA",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Falcon.dll",
+      "Identity": "Knx.Falcon, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e2c7c4ad-03fb-4dbd-9c21-881277f71c80",
+      "Sha256": "AE5442B931FAA1FC61B6CDBEC69F6286BB442270C432CF27B856E6D127EFD6D8",
+      "Type": "nc/b",
+      "Token": "0x0600013D",
+      "Signature": "System.Threading.Tasks.Task`1<System.Int32> nc/b::method_0(System.Byte,System.Int32,System.Int32,System.Collections.BitArray)",
+      "OriginalName": "method_0",
+      "Reason": "Exact physical Falcon AE5442B9/e2c7c4ad original13D kickoff,13E body and117/1B4 caller prove the whole operation: iterate chunkIndex from0 while less than chunkCount; skip completedChunks bits but advance streamOffset; slice, retry and send missing chunks; delete/throw on failure; return final offset after all chunks. Helper belongs inside117 lexical owner, proven native4fc8b3970. Singular WriteChunkAsync misdescribes a loop over all requested chunks. Preserve all four private parameter aliases, local0, unused-slot annotation, other map/ledger decisions, SDK names and contracts.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Byte byte_0",
+        "2: System.Int32 int_3",
+        "3: System.Int32 int_4",
+        "4: System.Collections.BitArray bitArray_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "byte_0",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "int_3",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 3,
+          "OriginalName": "int_4",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 4,
+          "OriginalName": "bitArray_0",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "nc/b/a",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "WriteChunksAsync",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Skips": []
+}
