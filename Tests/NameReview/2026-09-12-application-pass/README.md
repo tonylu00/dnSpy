@@ -55,21 +55,24 @@ What lives here:
   connector APDU length and remains unaliased pending role-specific splitting.
   Current v469 has not been exported or runtime-tested. Next: APDU/path
   negotiation, authorization state and memory transfer bounds through callers.
-- `apdu-security-coverage-v470.json` — adds 171 coupled aliases across APDU
-  negotiation, descriptor reads, authorization/key writes and secure sequence
-  synchronization: three methods, 61 fields, ten parameters and 97 used locals.
-  All 21 fresh method scopes bind; nine private/internal parameter captures match
-  and 13 public SDK captures remain unchanged. Ten generated machines retain
-  exact owners and original metadata; ten earlier storage uncertainties remain
-  unchanged. Fresh read/write callers prove the standard-memory 63-byte and
-  user-memory 15-byte limits; router memory uses a separate 11-byte ceiling.
-  `prepare_physical_review.py` now validates position-bound uncertainty with
-  exact parameter/type preimages and rejects stale, duplicate or aliased slots.
-  Its 24 tests and the 31 ledger tests pass. Unused kickoff slot 1 in
-  `0x06000106` remains explicitly unresolved. Native checks and both cached
-  109-module joins pass; candidates fall from 20,092 to 20,033. Current v470 has
-  not been exported or runtime-tested. Next: request preparation, response
-  classification, memory scopes and secure application-layer helpers.
+- `firmware-control-coverage-v471.json` — adds 345 coupled file-control aliases:
+  21 message/extension types, seven methods, 138 fields, 23 parameters and 156
+  used locals. All 24 fresh method scopes bind; 22 private/internal captures
+  match their parameters and 20 public SDK captures remain unchanged. Fourteen
+  generated machines retain exact owners and original metadata; fourteen earlier
+  storage uncertainties remain unchanged. The disconnect reset's historical
+  uncertainty is resolved through the authorization-level producer, getter and
+  reset. Subservice 255 remains unnamed with missing domain evidence; retry
+  local slot 4 in `0x060001A4` holds both exception dispatch and a prior counter
+  and needs native role-specific splitting. Native checks and both cached
+  109-module joins pass; candidates fall from 20,033 to 19,907. Current v471 has
+  not been exported or runtime-tested. Next: correct the proven partial-behavior
+  aliases for EndOfFile and file-control retries, then finish streaming captures.
+  `apdu-security-coverage-v470.json` retains the preceding 171 checked APDU/security
+  aliases and memory-ceiling evidence. `prepare_physical_review.py` validates
+  position-bound uncertainty with exact parameter/type preimages; its 24 tests
+  and the 31 ledger tests passed at v470. Unused kickoff slot 1 in `0x06000106`
+  remains explicitly unresolved.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
