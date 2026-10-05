@@ -22,25 +22,18 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `keyring-device-security-coverage-v453.json` — 138 exact aliases across Keyring
-  schema/hash/signature/password/AES helpers, the recursive signature-element
-  encoder, thread random-byte/integer producers and device-key/counter loading:
-  five methods, nine fields, 27 parameters and 97 locals. Prior ECDH/PBKDF2 and
-  key-service scopes remain intact; three generated definitions record missing
-  printed-owner evidence. `keyring-signature-correction-verification-v452.json`
-  corrects the historical signature setter alias from its body and actual caller.
-  SDK/contract checks and 109 cached joins pass; 20,529 lexical candidates remain.
-  Printed source ownership and consolidated ETS/Apps checks remain pending. The
-  next block follows Interface/Devices/Backbone connector-security consumers.
-  `key-services-cache-decryption-keyring-coverage-v451.json` retains the preceding
-  115 recorder/monitor/group-security scope aliases across three physical modules.
-  `public-key-service-graph-context-v450.json` binds all nine members of the three
-  public overload families. `secure-sequence-services-coverage-v450.json` and
-  `receiving-sequence-contract-corrections-verification-v449.json` retain the
-  preceding sequence-service naming and synchronous/lookup/update corrections.
-  `managed-accessor-scope-verification-v444.json` records the shared tool repair:
-  42 native/44 consumer/234 rebuilt checks and two compiled synthetic contexts
-  preserve short property names. Consolidated ETS/Apps checks remain pending.
+- `connector-security-coverage-v454.json` — 105 scope aliases (nine parameters,
+  96 locals) across 33 physical Falcon methods, connecting Interface/Devices/
+  Backbone Keyring loading with discovery/DNS awaits, connection-string security
+  persistence and shared password derivation/Rijndael helpers. Meaningful public
+  and canonical generated definitions remain intact. SDK/contract checks and 109
+  cached joins pass; lexical candidates remain 20,529. The next block follows
+  root Keyring-loading overloads and property-based connection-string conversion.
+  `keyring-device-security-coverage-v453.json` retains the preceding 138 aliases
+  and generated-owner uncertainty; `keyring-signature-correction-verification-v452.json`
+  retains the signature setter correction. `managed-accessor-scope-verification-v444.json`
+  records the shared accessor repair and compiled synthetic compatibility probes.
+  Printed source merging, consolidated ETS/Apps checks and ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
