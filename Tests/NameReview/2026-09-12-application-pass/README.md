@@ -22,18 +22,18 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `connector-security-coverage-v454.json` — 105 scope aliases (nine parameters,
-  96 locals) across 33 physical Falcon methods, connecting Interface/Devices/
-  Backbone Keyring loading with discovery/DNS awaits, connection-string security
-  persistence and shared password derivation/Rijndael helpers. Meaningful public
-  and canonical generated definitions remain intact. SDK/contract checks and 109
-  cached joins pass; lexical candidates remain 20,529. The next block follows
-  root Keyring-loading overloads and property-based connection-string conversion.
-  `keyring-device-security-coverage-v453.json` retains the preceding 138 aliases
-  and generated-owner uncertainty; `keyring-signature-correction-verification-v452.json`
-  retains the signature setter correction. `managed-accessor-scope-verification-v444.json`
-  records the shared accessor repair and compiled synthetic compatibility probes.
-  Printed source merging, consolidated ETS/Apps checks and ETS 6.4 remain pending.
+- `connector-root-conversion-coverage-v455.json` — 64 aliases (two converter types,
+  one parameter and 61 locals) across root Keyring loading, reflected connection-string
+  conversion, Eiblib DNS and Eiblib/IoT/USB comparisons; eight meaningful stateless
+  methods preserved. IPAddress/PhysicalAddress parsing, construction and byte/string
+  conversion establish the type roles. Original reflection/property/serialization
+  contracts and anomaly-storage uncertainty remain intact. SDK/contract checks and
+  109 cached joins pass; 20,528 lexical candidates remain. Next: cloud interface data
+  and its actual cloud caller. `connector-security-coverage-v454.json` retains the
+  preceding 105 scopes; `keyring-device-security-coverage-v453.json` and
+  `keyring-signature-correction-verification-v452.json` retain Keyring naming and
+  signature evidence. Printed source merging, consolidated ETS/Apps checks and
+  ETS 6.4 remain pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
