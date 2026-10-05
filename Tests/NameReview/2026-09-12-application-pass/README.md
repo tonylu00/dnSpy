@@ -131,6 +131,17 @@ What lives here:
   guards pass; both cached 109-module joins retain 19,846 candidates. Continue
   substantial whole-application caller chains. Current v477 has no consolidated
   export or runtime claim; the last full solution build remains v467.
+- `objectmodel-core-coverage-v478.json` — 96 coupled aliases across blob storage,
+  object/reference collections, progress reporting and ID generation: 46 fields,
+  16 parameters and 34 locals. Full original IL, physical inventories and 16
+  existing exported types support the roles; public names and overloads survive.
+  Forty unused slots, one reused Boolean and one write-only slot retain typed
+  uncertainty. Both cached 109-module joins leave 19,800 naming candidates.
+  `objectmodel-id-selector-verification-v479.json` corrects `CreateUniqueIds` to
+  `GetExistingObjectsForIdType`: the helper selects existing collections used to
+  seed the maximum ID number, while the creator constructs IDs. Every other alias and
+  scope is retained. Native SDK/contract checks pass; no new export/build or
+  runtime result is claimed. Continue transaction, persistence and caller chains.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit
