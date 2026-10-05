@@ -27,7 +27,22 @@ What lives here:
   export/build orchestration, with bounded worker counts and sampled process-tree
   memory measurements. It never edits ETS source or binaries. Each run requires
   fresh output paths; use the committed isolated native runtime and exact physical
-  contexts recorded in the freeze.
+  contexts recorded in the freeze. Format 2 snapshots mutable control files and
+  its own code; run with the retained `Orchestrator` path. `verify <freeze>` checks
+  pinned bytes and application/runtime/compile-reference file sets without export.
+  `test_consolidate_export.py` passes 28 isolation and drift guards.
+- `consolidated-v467-replay-freeze-verification.json` — replay freeze07 retains
+  byte-identical v467 map, accepted ledger, physical contexts, SDK contracts,
+  exporter runtime and native evidence with 1,066 verified pins. The legacy
+  freeze06 pointed to the live ledger and helper; their later edits invalidate
+  its current verification. Its build-completion result and 17 pinned historical
+  reports remain intact. This repair performs no additional ETS export/build.
+- `connectionless-factory-correction-verification-v468.json` — corrects the
+  map-only Falcon factory alias to `OpenConnectionlessAsync`. Its exact generated
+  owner creates and configures the connection, handles descriptor fallback and
+  failure cleanup, then returns it. Every other alias/scope/decision is retained;
+  SDK/contract and 109-module cached checks pass. Current v468 has not been
+  exported; the 109-project build and partial runtime evidence belong to v467.
 - `physical-source-context-verification.json` — pinned preparation, source-context
   guards, mapped SDK AST observations and explicit missing dependency identities
 - `generated-source-scope-verification.json` — native whole-scope observation audit

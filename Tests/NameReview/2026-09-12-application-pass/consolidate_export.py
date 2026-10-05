@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import time
 import xml.etree.ElementTree as ET
@@ -33,10 +34,37 @@ def fresh_json(path, value):
 
 
 def freeze(config, output):
-    if Path(output).exists() or Path(output).with_suffix(".contexts.xml").exists():
+    snapshot = Path(output).resolve().with_suffix(".inputs")
+    if Path(output).exists() or Path(output).with_suffix(".contexts.xml").exists() or snapshot.exists():
         raise ValueError("Fresh freeze and context manifest paths required")
     config = Path(config).resolve()
     spec = read(config)
+    original_controls = {key: str(Path(spec[key]).resolve()) for key in
+                         ("Scope", "ReferenceManifest", "Map", "Ledger", "SdkWhitelist", "ContractReferences", "NativeCheck", "SdkAudit", "Packages")}
+    # Mutable review ledgers and orchestration code must not invalidate a
+    # completed freeze when naming resumes. Copies retain exact bytes; no map
+    # contents, application inputs or binaries are rewritten.
+    snapshot.mkdir()
+    controls = {}
+
+    def retain(path, name):
+        source = Path(path).resolve()
+        target = snapshot / name
+        expected = digest(source)
+        shutil.copyfile(source, target)
+        if digest(source) != expected or digest(target) != expected:
+            raise ValueError("Control input changed during snapshot: " + str(source))
+        controls[str(source)] = {"Path": str(target), "Sha256": expected}
+        return str(target)
+
+    for key in ("Scope", "ReferenceManifest", "Map", "Ledger", "SdkWhitelist", "ContractReferences", "NativeCheck", "SdkAudit", "Packages"):
+        spec[key] = retain(spec[key], key + Path(spec[key]).suffix)
+    spec["AdditionalPins"] = [retain(path, f"additional-{index}" + Path(path).suffix)
+                              for index, path in enumerate(spec.get("AdditionalPins", []))]
+    code = retain(__file__, "consolidate_export.py")
+    original_config = retain(config, "source-config.json")
+    config = snapshot / "config.json"
+    fresh_json(config, spec)
     scope, context = read(spec["Scope"]), read(spec["ReferenceManifest"])
     tree = Path(scope["Root"]).resolve()
     source_map = ET.parse(spec["Map"]).getroot()
@@ -59,10 +87,14 @@ def freeze(config, output):
         pins[path] = value
 
     pin(config)
-    pin(__file__)
+    pin(code)
     for key in ("Scope", "ReferenceManifest", "Map", "Ledger", "SdkWhitelist", "ContractReferences", "NativeCheck", "SdkAudit", "Packages"):
         pin(spec[key])
     pin(spec["SdkWhitelist"], source_map.get("SdkNameWhitelistSha256"))
+    # Maps may refer to the original whitelist/contract path internally. Keep
+    # these authoritative paths pinned as well as their immutable copies.
+    for key in ("SdkWhitelist", "ContractReferences"):
+        pin(original_controls[key], pins[str(Path(spec[key]).resolve())])
     for key in ("NativeCheck", "SdkAudit"):
         report = read(spec[key])
         map_hash = report.get("MapSha256") if key == "SdkAudit" else report.get("BaseMapSha256")
@@ -84,15 +116,19 @@ def freeze(config, output):
     for path in tree_files:
         pin(path)
     runtime = Path(spec["Runtime"])
-    for path in runtime.rglob("*"):
-        if path.is_file():
-            pin(path)
+    runtime_files = sorted(str(p.resolve()) for p in runtime.rglob("*") if p.is_file())
+    for path in runtime_files:
+        pin(path)
     for path in spec.get("AdditionalPins", []):
         pin(path)
+    reference_files = {}
     for directory in spec.get("CompileReferenceDirectories", []):
-        for path in Path(directory).iterdir():
-            if path.is_file() and path.suffix.lower() in (".dll", ".exe"):
-                pin(path)
+        directory = str(Path(directory).resolve())
+        reference_files[directory] = sorted(str(p.resolve()) for p in Path(directory).iterdir()
+                                            if p.is_file() and p.suffix.lower() in (".dll", ".exe"))
+        for path in reference_files[directory]:
+            pin(path)
+    pin(original_config)
 
     # Translate the already pinned per-input contexts, including newly included
     # compatibility assemblies. Scripts only prepare tool input manifests.
@@ -112,7 +148,10 @@ def freeze(config, output):
     with contexts_path.open("xb") as stream:
         ET.ElementTree(doc).write(stream, encoding="utf-8", xml_declaration=True)
     pin(contexts_path)
-    value = {"Format": 1, "Kind": "FrozenApplicationExportInputs", "Config": spec,
+    value = {"Format": 2, "Kind": "FrozenApplicationExportInputs", "Config": spec,
+             "ControlSnapshots": controls, "Orchestrator": code,
+             "OriginalConfig": original_config, "RuntimeFiles": runtime_files,
+             "CompileReferenceFiles": reference_files,
              "InputRoot": str(tree), "TreeFiles": tree_files, "Modules": modules,
              "AssemblyContexts": str(contexts_path), "SupportDirectories": sorted(support), "Pins": pins,
              "Limits": "Immutable naming/physical input freeze; no compilation or runtime verdict."}
@@ -127,6 +166,15 @@ def verify(frozen):
     files = sorted(str(p.resolve()) for p in Path(frozen["InputRoot"]).rglob("*") if p.is_file())
     if files != frozen["TreeFiles"]:
         raise ValueError("Original application tree file set changed")
+    if "RuntimeFiles" in frozen:
+        files = sorted(str(p.resolve()) for p in Path(frozen["Config"]["Runtime"]).rglob("*") if p.is_file())
+        if files != frozen["RuntimeFiles"]:
+            raise ValueError("Exporter runtime file set changed")
+    for directory, expected in frozen.get("CompileReferenceFiles", {}).items():
+        files = sorted(str(p.resolve()) for p in Path(directory).iterdir()
+                       if p.is_file() and p.suffix.lower() in (".dll", ".exe"))
+        if files != expected:
+            raise ValueError("Compile reference file set changed: " + directory)
 
 
 def measured(command, environment, log):
@@ -159,6 +207,8 @@ def measured(command, environment, log):
 def run(freeze_path, output, report):
     frozen = read(freeze_path)
     verify(frozen)
+    if frozen.get("Orchestrator") and digest(__file__) != frozen["Pins"][frozen["Orchestrator"]]:
+        raise ValueError("Run with the snapshotted orchestrator: " + frozen["Orchestrator"])
     out, report = Path(output).resolve(), Path(report).resolve()
     if out.exists() or report.exists():
         raise ValueError("Fresh export directory and result report required")
@@ -209,8 +259,14 @@ if __name__ == "__main__":
     execute.add_argument("freeze")
     execute.add_argument("output")
     execute.add_argument("report")
+    inspect = commands.add_parser("verify")
+    inspect.add_argument("freeze")
     args = parser.parse_args()
     if args.action == "freeze":
         freeze(args.config, args.output)
+    elif args.action == "verify":
+        frozen = read(args.freeze)
+        verify(frozen)
+        print(f"VERIFIED: {len(frozen['Pins'])} frozen file pins; no compilation or runtime verdict", flush=True)
     else:
         raise SystemExit(run(args.freeze, args.output, args.report))
