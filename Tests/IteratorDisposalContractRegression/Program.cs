@@ -70,7 +70,7 @@ class Program {
                 catch (TargetInvocationException error) { Check(error.InnerException is InvalidDataException, "Unexpected rejection: " + mode + ": " + error.InnerException); }
             }
         }
-        foreach (string mode in new[] { "generic-null", "generic-init", "unconstrained", "value-constraint", "wrong-initialized-type", "foreign-generic-owner", "duplicate-reset", "static-reset", "foreign-field", "wrong-receiver", "static-address", "method-variable" }) {
+        foreach (string mode in new[] { "generic-null", "generic-init", "value-init", "value-null", "value-wrong-type", "unconstrained", "value-constraint", "wrong-initialized-type", "foreign-generic-owner", "duplicate-reset", "static-reset", "foreign-field", "wrong-receiver", "static-address", "method-variable" }) {
             using var module = ModuleDefMD.Load(args[0]);
             var root = module.GetTypes().Single(t => t.Name == "IteratorSplitDispatchFixture");
             var owner = root.Methods.Single(m => m.Name == "Remaining");
@@ -83,15 +83,20 @@ class Program {
             if (mode == "unconstrained") state.GenericParameters[0].Flags = GenericParamAttributes.NonVariant;
             if (mode == "value-constraint") state.GenericParameters[0].Flags = GenericParamAttributes.NotNullableValueTypeConstraint;
             TypeSig signature = mode == "method-variable" ? new GenericMVar(0, owner) : new GenericVar(0, mode == "foreign-generic-owner" ? root : state);
+            if (mode.StartsWith("value-") && mode != "value-constraint") {
+                var temporary = new TypeDefUser("ConcreteTemporary", module.CorLibTypes.GetTypeRef("System", "ValueType"));
+                temporary.Attributes = dnlib.DotNet.TypeAttributes.Sealed | dnlib.DotNet.TypeAttributes.SequentialLayout;
+                module.Types.Add(temporary); signature = new ValueTypeSig(temporary);
+            }
             var field = new FieldDefUser("temporary", new FieldSig(signature), dnlib.DotNet.FieldAttributes.Private);
             (mode == "foreign-field" ? root : state).Fields.Add(field);
             if (mode == "static-reset") field.IsStatic = true;
-            var reset = mode == "generic-null" ? new[] { Instruction.Create(OpCodes.Ldarg_0), Instruction.Create(OpCodes.Ldnull), Instruction.Create(OpCodes.Stfld, field) } :
+            var reset = mode == "generic-null" || mode == "value-null" ? new[] { Instruction.Create(OpCodes.Ldarg_0), Instruction.Create(OpCodes.Ldnull), Instruction.Create(OpCodes.Stfld, field) } :
                 new[] { Instruction.Create(mode == "wrong-receiver" ? OpCodes.Ldarg_1 : OpCodes.Ldarg_0), Instruction.Create(mode == "static-address" ? OpCodes.Ldsflda : OpCodes.Ldflda, field),
-                    Instruction.Create(OpCodes.Initobj, mode == "wrong-initialized-type" ? module.CorLibTypes.String.TypeDefOrRef : new TypeSpecUser(signature)) };
+                    Instruction.Create(OpCodes.Initobj, mode == "wrong-initialized-type" || mode == "value-wrong-type" ? module.CorLibTypes.String.TypeDefOrRef : new TypeSpecUser(signature)) };
             for (int index = reset.Length - 1; index >= 0; index--) disposal.Body.Instructions.Insert(0, reset[index]);
             if (mode == "duplicate-reset") for (int index = reset.Length - 1; index >= 0; index--) disposal.Body.Instructions.Insert(0, new Instruction(reset[index].OpCode, reset[index].Operand));
-            if (mode == "generic-null" || mode == "generic-init") {
+            if (mode == "generic-null" || mode == "generic-init" || mode == "value-init") {
                 Check((bool)Restore.Invoke(null, new object[] { module })!, "Generic reset was rejected: " + mode);
                 Check(disposal.Body.Instructions.Count == 1 && disposal.Body.Instructions[0].OpCode == OpCodes.Ret, "Generic original empty Dispose not restored");
                 Check(!(bool)Restore.Invoke(null, new object[] { module })!, "Generic restoration not idempotent");
@@ -99,6 +104,57 @@ class Program {
                 try { Restore.Invoke(null, new object[] { module }); throw new Exception("Unsafe generic reset accepted: " + mode); }
                 catch (TargetInvocationException error) { Check(error.InnerException is InvalidDataException, "Unexpected generic rejection: " + mode + ": " + error.InnerException); }
             }
+        }
+        if (args.Length > 1) {
+            foreach (string mode in new[] { "factory", "local", "wrong-state", "side-effect", "cleanup", "incoming-return", "escaping-state", "not-generated", "wrong-interface", "duplicate-constructor", "missing-constructor" }) {
+                using var module = ModuleDefMD.Load(args[1]);
+                var owner = module.GetTypes().SelectMany(t => t.Methods).First(m => m.CustomAttributes.Any(a =>
+                    a.NamedArguments.Any(n => n.Name == "Feature" && n.Value?.ToString() == Feature)));
+                Check(!owner.CustomAttributes.Any(a => a.TypeFullName.EndsWith("IteratorStateMachineAttribute")), "Downlevel fixture has modern ownership attribute");
+                // One owner at a time, so a rejection cannot be hidden by an
+                // unrelated factory being restored earlier in the same module.
+                foreach (var other in module.GetTypes().SelectMany(t => t.Methods).Where(m => m != owner))
+                    foreach (var marker in other.CustomAttributes.Where(a => a.NamedArguments.Any(n => n.Name == "Feature" && n.Value?.ToString() == Feature)).ToArray()) other.CustomAttributes.Remove(marker);
+                var creation = owner.Body.Instructions.Single(i => i.OpCode == OpCodes.Newobj);
+                var state = ((IMethod)creation.Operand).ResolveMethodDef().DeclaringType;
+                switch (mode) {
+                case "local":
+                    var local = new Local(state.ToTypeSig()); owner.Body.Variables.Add(local);
+                    int end = owner.Body.Instructions.Count - 1;
+                    owner.Body.Instructions.Insert(end++, Instruction.Create(OpCodes.Stloc, local));
+                    owner.Body.Instructions.Insert(end, Instruction.Create(OpCodes.Ldloc, local)); break;
+                case "wrong-state": owner.Body.Instructions.First(i => i.IsLdcI4()).OpCode = OpCodes.Ldc_I4_1; break;
+                case "side-effect": owner.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Call, owner)); break;
+                case "cleanup": owner.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Finally)); break;
+                case "incoming-return":
+                    owner.Body.Instructions.Insert(owner.Body.Instructions.Count - 1, Instruction.Create(OpCodes.Ldarg_0)); break;
+                case "escaping-state":
+                    var capture = owner.Body.Instructions.Single(i => i.OpCode == OpCodes.Stfld);
+                    int captureIndex = owner.Body.Instructions.IndexOf(capture);
+                    owner.Body.Instructions[captureIndex - 1] = Instruction.Create(OpCodes.Dup); break;
+                case "not-generated": state.CustomAttributes.Clear(); break;
+                case "wrong-interface": state.Interfaces.Clear(); break;
+                case "duplicate-constructor": owner.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Newobj, (IMethod)creation.Operand)); break;
+                case "missing-constructor": creation.Operand = null; break;
+                }
+                if (mode == "factory" || mode == "local") {
+                    Check((bool)Restore.Invoke(null, new object[] { module })!, "Downlevel factory rejected: " + mode);
+                    Check(!(bool)Restore.Invoke(null, new object[] { module })!, "Downlevel restoration not idempotent");
+                    Check(state.Methods.Single(m => m.Overrides.Any(o => o.MethodDeclaration.DeclaringType.FullName == "System.IDisposable")).Body.Instructions.All(i => i.OpCode == OpCodes.Ret), "Downlevel Dispose not restored");
+                } else {
+                    try { Restore.Invoke(null, new object[] { module }); throw new Exception("Unsafe downlevel factory accepted: " + mode); }
+                    catch (TargetInvocationException error) { Check(error.InnerException is InvalidDataException, "Unexpected factory rejection: " + mode + ": " + error.InnerException); }
+                }
+            }
+        }
+        if (args.Length > 2) {
+            using var module = ModuleDefMD.Load(args[2]);
+            Check((bool)Restore.Invoke(null, new object[] { module })!, "Concrete ETS iterator resets rejected");
+            var owner = module.GetTypes().SelectMany(t => t.Methods).Single(m => m.Name == "CreateSendFrames");
+            var attribute = owner.CustomAttributes.Single(a => a.TypeFullName.EndsWith("IteratorStateMachineAttribute"));
+            var state = ((TypeSig)attribute.ConstructorArguments[0].Value).ToTypeDefOrRef().ResolveTypeDef();
+            Check(state.Methods.Single(m => m.Name.String.EndsWith("IDisposable.Dispose")).Body.Instructions.All(i => i.OpCode == OpCodes.Ret), "Concrete value cleanup survived empty disposal contract");
+            Check(!(bool)Restore.Invoke(null, new object[] { module })!, "Concrete module restoration not idempotent");
         }
         Console.WriteLine("Iterator disposal contract checks: " + checks);
     }

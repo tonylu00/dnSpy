@@ -58,6 +58,7 @@ namespace dnSpy.Decompiler.MSBuild {
 		// PackageReference item instead of a HintPath reference to the input tree, so the
 		// third-party library keeps its original usage and is never recompiled from source.
 		static readonly Dictionary<string, (string Id, string Version)> packageMap = LoadPackageMap();
+		static readonly PackageAssemblyIdentity packageIdentities = new PackageAssemblyIdentity();
 
 		static Dictionary<string, (string Id, string Version)> LoadPackageMap() {
 			var result = new Dictionary<string, (string Id, string Version)>(StringComparer.OrdinalIgnoreCase);
@@ -81,8 +82,11 @@ namespace dnSpy.Decompiler.MSBuild {
 			return result;
 		}
 
-		static bool TryWritePackageReference(XmlWriter writer, string assemblyName) {
+		static bool TryWritePackageReference(XmlWriter writer, string assemblyName, AssemblyDef? assembly, string framework) {
 			if (!packageMap.TryGetValue(assemblyName, out var package))
+				return false;
+			if (assembly is null || !NuGetPackageLocator.GetPossibleNuGetPackageLocations(package.Id.ToLowerInvariant(), package.Version.ToLowerInvariant())
+				.SelectMany(locations => locations).Any(directory => packageIdentities.Matches(directory, framework, assemblyName, assembly.FullNameToken)))
 				return false;
 			writer.WriteStartElement("PackageReference");
 			writer.WriteAttributeString("Include", package.Id);
@@ -297,7 +301,7 @@ namespace dnSpy.Decompiler.MSBuild {
 						if (asm is not null && ExistsInProject(asm.ManifestModule.Location))
 							continue;
 						hash.Add(r.Name);
-						if (TryWritePackageReference(writer, r.Name))
+						if (TryWritePackageReference(writer, r.Name, asm, moniker))
 							continue;
 						var hintPath = GetHintPath(asm);
 						writer.WriteStartElement("Reference");
@@ -317,8 +321,8 @@ namespace dnSpy.Decompiler.MSBuild {
 						if (hash.Contains(r) || AssemblyExistsInProject(r))
 							continue;
 						hash.Add(r);
-						if (TryWritePackageReference(writer, r))
-							continue;
+						// Extra references have no resolved physical identity to compare.
+						// Keep them as references instead of trusting a package label.
 						writer.WriteStartElement("Reference");
 						writer.WriteAttributeString("Include", IdentifierEscaper.Escape(r));
 						writer.WriteEndElement();

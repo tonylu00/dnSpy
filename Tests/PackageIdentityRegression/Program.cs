@@ -1,0 +1,77 @@
+using System.Reflection;
+using dnlib.DotNet;
+using dnSpy.Decompiler.MSBuild;
+
+if (args.Length != 1) throw new ArgumentException("Usage: PackageIdentityRegression <fresh-directory>");
+string root = Path.GetFullPath(args[0]);
+if (Directory.Exists(root)) throw new IOException("Choose a fresh fixture directory.");
+Directory.CreateDirectory(root);
+var matcher = new PackageAssemblyIdentity();
+int checks = 0;
+void Check(bool condition, string description) { checks++; if (!condition) throw new Exception(description); }
+byte[] vendor = typeof(object).Assembly.GetName().GetPublicKey();
+byte[] other = typeof(ModuleDef).Assembly.GetName().GetPublicKey();
+string Asset(string package, string asset, int version = 7, byte[] key = null, string culture = "", string name = "Shared.Contract") {
+    string path = Path.Combine(root, package, asset, "Shared.Contract.dll");
+    Directory.CreateDirectory(Path.GetDirectoryName(path));
+    using var module = new ModuleDefUser("Shared.Contract.dll") { Kind = ModuleKind.Dll };
+    new AssemblyDefUser(name, new Version(version, 0, 0, 0), new PublicKey(key ?? vendor), culture).Modules.Add(module);
+    module.Write(path);
+    return path;
+}
+string original = Asset("original", "lib/net48");
+string identity = AssemblyName.GetAssemblyName(original).FullName;
+bool Match(string package, string tfm = "net48", string expected = null) => matcher.Matches(Path.Combine(root, package), tfm, "Shared.Contract", expected ?? identity);
+Check(Match("original"), "Exact runtime identity should use the package.");
+Asset("version", "lib/net48", version: 8);
+Asset("vendor", "lib/net48", key: other);
+Asset("culture", "lib/net48", culture: "fr");
+Asset("name", "lib/net48", name: "Other.Contract");
+Asset("unsigned", "lib/net48", key: Array.Empty<byte>());
+foreach (string package in new[] { "version", "vendor", "culture", "name", "unsigned", "missing" })
+    Check(!Match(package), "Simple name cannot authorize " + package + " replacement.");
+Asset("nearest-bad", "lib/net45");
+Asset("nearest-bad", "lib/net48", version: 8);
+Check(!Match("nearest-bad"), "Do not search more distant assets to hide a nearest-group mismatch.");
+Asset("nearest-good", "lib/net45", version: 8);
+Asset("nearest-good", "lib/net48");
+Check(Match("nearest-good"), "The nearest compatible asset establishes the runtime identity.");
+Asset("standard", "lib/netstandard2.0");
+Check(Match("standard"), "Framework compatibility must permit matching .NET Standard assets.");
+Check(!Match("standard", "net35"), "An incompatible matching asset cannot authorize a package.");
+Asset("ref-good", "lib/net45");
+Asset("ref-good", "ref/net45");
+Check(Match("ref-good"), "Matching compile and runtime identities should pass.");
+Asset("ref-bad", "lib/net45");
+Asset("ref-bad", "ref/net45", version: 8);
+Check(!Match("ref-bad"), "A matching runtime cannot hide a different compile identity.");
+Asset("runtime-bad", "lib/net45", version: 8);
+Asset("runtime-bad", "ref/net45");
+Check(!Match("runtime-bad"), "A matching compile identity cannot hide a different runtime.");
+Asset("ref-only", "ref/net45");
+Check(!Match("ref-only"), "A compile-only package cannot replace an application runtime binary.");
+Asset("empty-ref", "lib/net45");
+Directory.CreateDirectory(Path.Combine(root, "empty-ref", "ref", "net48"));
+File.WriteAllText(Path.Combine(root, "empty-ref", "ref", "net48", "_._"), "");
+Check(!Match("empty-ref"), "Empty nearest ref groups must not silently fall back to lib.");
+Asset("empty-lib", "lib/net45");
+Directory.CreateDirectory(Path.Combine(root, "empty-lib", "lib", "net48"));
+Check(!Match("empty-lib"), "Empty nearest runtime groups must not select older matching assets.");
+Asset("rid", "lib/net45");
+Asset("rid", "runtimes/win/lib/net45", version: 8);
+Check(!Match("rid"), "Unproven RID-specific runtime selection must retain the original binary.");
+Asset("unrelated-rid", "lib/net45");
+string unrelated = Asset("unrelated-rid", "runtimes/win/lib/net45", name: "Other.Contract");
+File.Move(unrelated, Path.Combine(Path.GetDirectoryName(unrelated), "Other.Contract.dll"));
+Check(Match("unrelated-rid"), "Unrelated RID-specific assets do not change this assembly's selection.");
+Asset("bad-image", "lib/net48");
+File.WriteAllText(Path.Combine(root, "bad-image", "lib", "net48", "Shared.Contract.dll"), "invalid PE");
+Check(!Match("bad-image"), "Invalid package images must fall back without breaking export.");
+Check(!Match("original", "unsupported-target"), "Unsupported target cannot establish compatibility.");
+Check(!Match("original", "net48", AssemblyName.GetAssemblyName(Path.Combine(root, "version", "lib", "net48", "Shared.Contract.dll")).FullName), "Cache keys must include the full expected identity.");
+Check(!matcher.Matches(Path.Combine(root, "original"), "net48", "../Shared.Contract", identity), "Reject non-file assembly names.");
+Check(!matcher.Matches(Path.Combine(root, "original"), "", "Shared.Contract", identity), "Require an exact project target framework.");
+// Concurrent callers must produce the same decisions for distinct physical contexts.
+Parallel.For(0, 200, i => { if (Match(i % 2 == 0 ? "original" : "version") != (i % 2 == 0)) throw new Exception("Cache merged distinct physical packages."); });
+Check(true, "Parallel physical cache checks completed.");
+Console.WriteLine($"PASS: {checks} package identity/framework guards; 200 concurrent physical cache checks.");

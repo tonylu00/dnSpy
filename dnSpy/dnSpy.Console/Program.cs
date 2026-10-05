@@ -45,10 +45,29 @@ namespace dnSpy_Console {
 
 	static class Program {
 		static int Main(string[] args) {
+			if (args.Length > 0 && args[0] == "--resolve-missing-references") {
+				try {
+					if (args.Length < 3) throw new ArgumentException("Usage: dnSpy.Console --resolve-missing-references <export-directory> <binary-directory> [more-directories]");
+					var resolutions = MissingCompileReferenceResolver.Resolve(args[1], args.Skip(2));
+					foreach (var binding in resolutions)
+						Console.WriteLine(binding.Project + "\n  " + binding.Identity + "\n  " + binding.Source + " SHA256=" + binding.SourceHash + "\n  -> " + binding.Target + " MVID=" + binding.TargetMvid + " SHA256=" + binding.TargetHash);
+					Console.WriteLine("Resolved " + resolutions.Count + " exact physical compile references.");
+					return 0;
+				}
+				catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+			}
 			if (args.Length > 0 && args[0] == "--refresh-compile-references") {
 				try {
 					if (args.Length != 2) throw new ArgumentException("Usage: dnSpy.Console --refresh-compile-references <export-directory>");
 					Console.WriteLine("Refreshed compile-reference support in " + CompileReferenceProjectSupport.Refresh(args[1]) + " exported projects.");
+					return 0;
+				}
+				catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+			}
+			if (args.Length > 0 && args[0] == "--refresh-metadata-support") {
+				try {
+					if (args.Length != 2) throw new ArgumentException("Usage: dnSpy.Console --refresh-metadata-support <export-directory>");
+					Console.WriteLine("Refreshed metadata restoration support in " + MetadataFieldProjectSupport.Refresh(args[1]) + " exported projects.");
 					return 0;
 				}
 				catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
@@ -347,6 +366,8 @@ namespace dnSpy_Console {
 			}
 		}
 		static readonly UsageInfo[] usageInfos = new UsageInfo[] {
+			new UsageInfo("--resolve-missing-references", "DIRECTORY BINARY-DIRECTORY...", "Resolve omitted compile references by original full identity against explicit binary directories; standalone command."),
+			new UsageInfo("--refresh-metadata-support", "DIRECTORY", "Refresh embedded metadata restoration tasks without decompiling source; use as a standalone command."),
 			new UsageInfo("--refresh-compile-references", "DIRECTORY", "Refresh compile-reference build support in exported projects without decompiling source; use as a standalone command."),
 			new UsageInfo("--source-name-map", "FILE", "Use checked source aliases while restoring original runtime names (SDK export)."),
 			new UsageInfo("--public-sign", null, "Export SDK projects with original public-key identity; no valid cryptographic signature is produced."),

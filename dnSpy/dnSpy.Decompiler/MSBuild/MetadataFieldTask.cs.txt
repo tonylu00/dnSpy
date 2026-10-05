@@ -151,6 +151,10 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             var signature = attributes.Length == 1 && attributes[0].ConstructorArguments.Count == 1 ? attributes[0].ConstructorArguments[0].Value as TypeSig : null;
             var stateReference = signature == null ? null : signature.ToTypeDefOrRef();
             var state = stateReference == null ? null : stateReference.ResolveTypeDef();
+            // .NET 4.0 and earlier have no IteratorStateMachineAttribute.
+            // Bind a downlevel compiler factory by its local constructor and
+            // branchless capture stores, never by a generated type's spelling.
+            if (attributes.Length == 0) state = FindLocalIteratorFactoryState(module, owner);
             if (state == null || state.Module != module || state.DeclaringType != owner.DeclaringType || !IsGeneratedType(state) || !states.Add(state))
                 throw new InvalidDataException("Iterator disposal requires one exact generated local state owner.");
             var disposals = state.Methods.Where(m => !m.IsStatic && m.MethodSig != null && m.MethodSig.Params.Count == 0 &&
@@ -179,7 +183,9 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                 }
                 // Roslyn can clear array-loop/reference temporaries before the
                 // terminal state store. The original Dispose is proven empty;
-                // restore that behavior only for pure local reference resets.
+                // restore that behavior only for pure local resets. Concrete
+                // value temporaries can also be cleared with exact initobj;
+                // this never calls a struct constructor or cleanup method.
                 int tail = instructions.Length - 4;
                 if (tail < 0 || tail % 3 != 0) throw new InvalidDataException("Generated iterator disposal has an unsupported body: " + owner.FullName);
                 var cleared = new HashSet<FieldDef>();
@@ -196,9 +202,10 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
                     var initializedType = initialized ? instructions[i + 2].Operand as ITypeDefOrRef : null;
                     bool pureReset = initialized ? initializedType != null && new SigComparer().Equals(type, initializedType.ToTypeSig()) :
                         instructions[i + 1].OpCode == OpCodes.Ldnull && instructions[i + 2].OpCode == OpCodes.Stfld;
+                    bool concreteValue = initialized && type != null && type.IsValueType && !(type is GenericVar) && !(type is GenericMVar);
                     if (instance == null || !instance.IsHiddenThisParameter || !pureReset || reset == null || reset.DeclaringType != state || reset.IsStatic ||
-                        !reference || !cleared.Add(reset))
-                        throw new InvalidDataException("Generated iterator disposal has an unsupported reference reset: " + owner.FullName);
+                        (!reference && !concreteValue) || fields.Contains(reset) || !cleared.Add(reset))
+                        throw new InvalidDataException("Generated iterator disposal has an unsupported local reset: " + owner.FullName);
                 }
                 var target = ResolveLocalParameterField(instructions[tail + 2].Operand as IField, module);
                 var receiver = instructions[tail].IsLdarg() ? instructions[tail].GetParameter(disposal.Parameters) : null;
@@ -212,6 +219,69 @@ public sealed class DnSpyRestoreMetadataFields : Microsoft.Build.Utilities.Task 
             changed = true;
         }
         return changed;
+    }
+
+    static TypeDef FindLocalIteratorFactoryState(ModuleDef module, MethodDef owner) {
+        if (!owner.HasBody || owner.Body.ExceptionHandlers.Count != 0) return null;
+        var code = owner.Body.Instructions.Where(i => i.OpCode != OpCodes.Nop).ToArray();
+        if (code.Length < 3 || code.Last().OpCode != OpCodes.Ret || code.Count(i => i.OpCode == OpCodes.Ret) != 1) return null;
+        var creations = code.Where(i => i.OpCode == OpCodes.Newobj).ToArray();
+        if (creations.Length != 1) return null;
+        var reference = creations[0].Operand as IMethod;
+        var constructor = reference == null ? null : ResolveLocalGeneratedMethod(module, reference);
+        var state = constructor == null ? null : constructor.DeclaringType;
+        if (state == null || state.Module != module || state.DeclaringType != owner.DeclaringType ||
+            !IsGeneratedType(state) || !constructor.IsInstanceConstructor || constructor.MethodSig.Params.Count != 1 ||
+            constructor.MethodSig.Params[0].ElementType != ElementType.I4) return null;
+        int position = Array.IndexOf(code, creations[0]);
+        if (position < 1 || !code[position - 1].IsLdcI4() ||
+            (code[position - 1].GetLdcI4Value() != -2 && code[position - 1].GetLdcI4Value() != 0)) return null;
+        var returned = owner.MethodSig.RetType.RemovePinnedAndModifiers();
+        var generic = returned as GenericInstSig;
+        var contract = generic == null ? returned.ToTypeDefOrRef() : generic.GenericType.TypeDefOrRef;
+        var assembly = contract == null ? null : contract.DefinitionAssembly;
+        string token = assembly == null ? null : PublicKeyBase.ToPublicKeyToken(assembly.PublicKeyOrToken)?.ToString();
+        bool framework = assembly != null && ((assembly.Name == "mscorlib" && token == "b77a5c561934e089") ||
+            (assembly.Name == "System.Runtime" && token == "b03f5f7f11d50a3a") ||
+            (assembly.Name == "System.Private.CoreLib" && token == "7cec85d7bea7798e"));
+        if (contract == null || (contract.FullName != "System.Collections.IEnumerable" &&
+            contract.FullName != "System.Collections.Generic.IEnumerable`1") ||
+            !framework || !state.Interfaces.Any(i => new SigComparer().Equals(i.Interface, returned.ToTypeDefOrRef()))) return null;
+        // Prove that the sole newly constructed state is returned and that
+        // captures only write into that state. Locals cannot substitute an
+        // incoming iterator or let the new object escape through another field.
+        var stack = new Stack<bool>();
+        var locals = new Dictionary<Local, bool>();
+        foreach (var instruction in code) {
+            if (instruction.OpCode == OpCodes.Newobj) {
+                if (stack.Count == 0 || stack.Pop()) return null;
+                stack.Push(true); continue;
+            }
+            if (instruction.OpCode == OpCodes.Ret) return stack.Count == 1 && stack.Pop() ? state : null;
+            if (instruction.OpCode == OpCodes.Dup) {
+                if (stack.Count == 0) return null;
+                stack.Push(stack.Peek()); continue;
+            }
+            if (instruction.IsLdarg() || instruction.IsLdcI4()) { stack.Push(false); continue; }
+            if (instruction.IsLdloc()) {
+                var local = instruction.GetLocal(owner.Body.Variables);
+                bool value;
+                if (local == null || !locals.TryGetValue(local, out value)) return null;
+                stack.Push(value); continue;
+            }
+            if (instruction.IsStloc()) {
+                var local = instruction.GetLocal(owner.Body.Variables);
+                if (local == null || stack.Count == 0) return null;
+                locals[local] = stack.Pop(); continue;
+            }
+            if (instruction.OpCode == OpCodes.Stfld) {
+                var field = ResolveLocalParameterField(instruction.Operand as IField, module);
+                if (field == null || field.IsStatic || field.DeclaringType != state || stack.Count < 2 || stack.Pop() || !stack.Pop()) return null;
+                continue;
+            }
+            return null;
+        }
+        return null;
     }
 
     static bool RestoreProtectedCalls(ModuleDef module) {

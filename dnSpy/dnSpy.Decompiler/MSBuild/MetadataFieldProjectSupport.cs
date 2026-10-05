@@ -2,11 +2,59 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
+using System.Collections.Generic;
+using FileAttributes = System.IO.FileAttributes;
 using dnlib.DotNet;
 using dnSpy.Contracts.Decompiler;
 
 namespace dnSpy.Decompiler.MSBuild {
-	static class MetadataFieldProjectSupport {
+	public static class MetadataFieldProjectSupport {
+		static IEnumerable<string> Projects(string directory) {
+			foreach (var file in Directory.EnumerateFiles(directory, "*.csproj"))
+				if ((File.GetAttributes(file) & FileAttributes.ReparsePoint) == 0) yield return file;
+			foreach (var child in Directory.EnumerateDirectories(directory)) {
+				var name = Path.GetFileName(child);
+				if ((File.GetAttributes(child) & FileAttributes.ReparsePoint) != 0 || name.Equals("bin", StringComparison.OrdinalIgnoreCase) || name.Equals("obj", StringComparison.OrdinalIgnoreCase)) continue;
+				foreach (var file in Projects(child)) yield return file;
+			}
+		}
+		/// <summary>Refreshes the embedded restoration task in exported projects without changing their source or project files.</summary>
+		public static int Refresh(string directory) {
+			string root = Path.GetFullPath(directory);
+			if (!Directory.Exists(root)) throw new DirectoryNotFoundException(root);
+			if ((File.GetAttributes(root) & FileAttributes.ReparsePoint) != 0) throw new InvalidDataException("Export root cannot be a directory link.");
+			int count = 0;
+			foreach (var file in Projects(root)) {
+				if (Path.GetFileNameWithoutExtension(file).EndsWith("_wpftmp", StringComparison.OrdinalIgnoreCase)) continue;
+				var project = XDocument.Load(file).Root ?? throw new InvalidDataException("Project root missing: " + file);
+				var tasks = project.Elements().Where(e => e.Name.LocalName == "UsingTask" && (string?)e.Attribute("TaskName") == "DnSpyRestoreMetadataFields").ToArray();
+				if (tasks.Length == 0) continue;
+				if (tasks.Length != 1 || (string?)tasks[0].Attribute("TaskFactory") != "RoslynCodeTaskFactory" ||
+					!tasks[0].Descendants().Any(e => e.Name.LocalName == "Code" && (string?)e.Attribute("Source") == "$(MSBuildProjectDirectory)/.dnspy-metadata/RestoreFields.cs"))
+					throw new InvalidDataException("Unexpected restoration task contract: " + file);
+				string support = Path.Combine(Path.GetDirectoryName(file)!, ".dnspy-metadata");
+				string source = Path.Combine(support, "RestoreFields.cs");
+				if (!Directory.Exists(support) || !File.Exists(source)) throw new InvalidDataException("Exported restoration support missing: " + file);
+				if ((File.GetAttributes(support) & FileAttributes.ReparsePoint) != 0 || (File.GetAttributes(source) & FileAttributes.ReparsePoint) != 0)
+					throw new InvalidDataException("Restoration support cannot be a link: " + file);
+				WriteTaskSource(support);
+				count++;
+			}
+			return count;
+		}
+		static void WriteTaskSource(string directory) {
+			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))
+			using (var output = File.Create(Path.Combine(directory, "RestoreFields.cs")))
+				(input ?? throw new InvalidOperationException("Metadata field task resource missing.")).CopyTo(output);
+			// Reuse the BAML reader/writer, including deferred-record offsets, in
+			// the self-contained restoration task. Preserve each source's license.
+			foreach (var name in new[] { "BamlDocument", "BamlRecords", "BamlReader", "BamlWriter" }) {
+				using var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild." + name + ".cs");
+				using var reader = new StreamReader(input ?? throw new InvalidOperationException("BAML task source missing: " + name));
+				File.AppendAllText(Path.Combine(directory, "RestoreFields.cs"), "\nnamespace DnSpyMetadataBamlSupport {\n" + reader.ReadToEnd() + "\n}\n");
+			}
+		}
 		static string GetDnlibCopyPath() {
 			// The exported project's inline build task compiles against the target project's
 			// reference assemblies. dnlib's net6.0 flavor references System.Runtime 6.0.0.0,
@@ -18,10 +66,10 @@ namespace dnSpy.Decompiler.MSBuild {
 			return File.Exists(sidecar) ? sidecar : assemblyPath;
 		}
 
-		public static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
+		internal static bool Required(Project project) => project.Options.DecompilationContext.RestoreMetadataOnlyFields &&
 			(project.Module.GetTypes().Any(t => !t.IsGlobalModuleType) || project.Module.GetMemberRefs().Any(r => r.IsMethodRef) || MetadataMethodNames.GetMappings(project.Module).Length != 0 || MetadataFieldNames.GetMappings(project.Module).Length != 0 || MetadataProtectedCalls.Required(project.Module) || MetadataEntryPoint.GetName(project.Module) != null || MetadataTypeNames.GetMappings(project.Module).Length != 0 || MetadataDelegateMethods.GetMappings(project.Module).Length != 0 || MetadataRawExceptions.GetRequestedName(project.Module) != null || MetadataUncheckedReferences.GetRequestedName(project.Module) != null || project.Module.GetTypes().Any(t => MetadataAttributeUsages.GetUsage(t) != null) ||
 			project.Module.GetTypes().SelectMany(t => t.Fields).Any(MetadataOnlyFields.Contains));
-		public static void Write(Project project, XmlWriter writer) {
+		internal static void Write(Project project, XmlWriter writer) {
 			if (project.Options.DecompilationContext.RestoreMetadataOnlyFields) {
 				CompileReferenceProjectSupport.Write(project.Directory, writer);
 				// WPF's temporary compilation invokes CoreCompile directly. Resolve
@@ -150,16 +198,7 @@ namespace dnSpy.Decompiler.MSBuild {
 				"Protected-call stubs allow nested source code to reach hidden, nonvirtual protected methods within the same module. The task redirects calls (including generic method specifications) to the original methods and removes the stubs from runtime assemblies. Original access flags, names and bodies remain unchanged; reference assemblies retain the compilation stubs. Unexpected inherited generic declaring-type references fail explicitly.\n" +
 				"The task requires an unsigned output or explicit PublicSign=true, and RoslynCodeTaskFactory (provided by modern MSBuild/.NET SDKs). Public signing retains identity only, not a valid cryptographic signature. It is idempotent for incremental builds. dnlib.dll is the metadata reader/writer dependency.\n" +
 				"Only supported, unreferenced private/compiler-controlled string fields are handled; other unrepresentable metadata remains visible as a source error.\n");
-			using (var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild.MetadataFieldTask.cs.txt"))
-			using (var output = File.Create(Path.Combine(directory, "RestoreFields.cs")))
-				(input ?? throw new InvalidOperationException("Metadata field task resource missing.")).CopyTo(output);
-			// Reuse the BAML reader/writer, including deferred-record offsets, in
-			// the self-contained restoration task. Preserve each source's license.
-			foreach (var name in new[] { "BamlDocument", "BamlRecords", "BamlReader", "BamlWriter" }) {
-				using var input = typeof(MetadataFieldProjectSupport).Assembly.GetManifestResourceStream("dnSpy.Decompiler.MSBuild." + name + ".cs");
-				using var reader = new StreamReader(input ?? throw new InvalidOperationException("BAML task source missing: " + name));
-				File.AppendAllText(Path.Combine(directory, "RestoreFields.cs"), "\nnamespace DnSpyMetadataBamlSupport {\n" + reader.ReadToEnd() + "\n}\n");
-			}
+			WriteTaskSource(directory);
 			writer.WriteStartElement("UsingTask");
 			writer.WriteAttributeString("TaskName", "DnSpyRestoreMetadataFields");
 			writer.WriteAttributeString("TaskFactory", "RoslynCodeTaskFactory");
