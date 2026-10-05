@@ -22,19 +22,19 @@ What lives here:
 - `printed-reference-verification.json` — token-writer bindings and targeted mapped-source verification
 - `iterator-region-order-verification.json` — 39 exact iterator-owner witnesses,
   synthetic cleanup traces, actual CvNext source compilation and unchanged-caller probes
-- `tcp-udp-stream-coverage-v461.json` — 62 aliases (seven framer fields, three
-  parameters and 52 used locals) across TCP/UDP streaming, connection and disposal.
-  All 253 IL-used locals in 206 fresh connected methods have accepted mappings.
-  Original frame boundary/compaction, TCP timeout/cancellation cleanup and UDP
-  disconnected-service behavior are retained. The generated Extract iterator type
-  is explicitly unresolved until frozen printed-owner evidence exists; CLR protocols
-  and prior mappings stay intact. SDK/contract checks and both 109-module cached joins
-  pass. Lexical candidates fall from 20,513 to 20,505: seven fields named and one type
-  marked unresolved, not eight semantic completions. Next: connected byte/frame helpers.
-  `async-discovery-helpers-coverage-v460.json` retains 210 discovery/Async local aliases;
-  `ip-discovery-coverage-v458.json` and `discovery-handler-withdrawal-verification-v459.json`
-  retain preceding evidence and the receive callback correction. Printed source merging,
-  consolidated ETS/unchanged-App checks and ETS 6.4 remain pending.
+- `byte-frame-coverage-v462.json` — 80 aliases (four methods, nine fields,
+  49 parameters and 18 used locals) in connected byte/frame helpers. UInt48/UInt64
+  array readers match existing span overload names; checksum, raw-frame forwarding,
+  grouped hex formatting/parsing and lazy chunk capture roles are named from IL.
+  Original bounds/null/truncation, regex pair matching, CRC augmentation and chunk
+  size behavior stay intact. All 18 IL-used locals in 52 fresh methods are mapped.
+  The generated chunk iterator type stays explicitly unresolved pending printed owner.
+  SDK/contract checks and both 109-module cached joins pass. Lexical candidates fall
+  from 20,505 to 20,491: 13 named definitions plus one type recorded unresolved.
+  Next: the exact management async caller of CalculateCrc16, then connected transfers.
+  `tcp-udp-stream-coverage-v461.json` retains preceding transport/framer evidence;
+  `async-discovery-helpers-coverage-v460.json` retains discovery/Async scopes and earlier
+  proof links. Printed merging, consolidated ETS/unchanged-App checks and ETS 6.4 pending.
 - `discovery-information-codecs-coverage-v438.json` — connected DIB/SRP
   decoder/constructor/formatter naming; 51 exact aliases preserve prior names
   and original offset/code behavior. SDK/contract checks and 109 cached joins
