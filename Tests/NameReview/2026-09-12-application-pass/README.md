@@ -10,7 +10,21 @@ Read first:
 
 What lives here:
 
-- `discovery-group-verification-v502.json` — current naming checkpoint: 304 new
+- `point-discovery-verification-v503.json` — current naming checkpoint: 158 new
+  aliases and 14 behavior-backed corrections connect mDNS service records,
+  serial-number lookup and concurrent CoAP/mDNS endpoint discovery across six
+  complete families. Thirty-four captures have exact native producer evidence;
+  twelve formerly unresolved fields now have proven source roles. Native
+  SDK/contract checks and both cached 109-module inventories pass; 18,641 lexical
+  candidates remain. Three closure containers and 62 local slots retain explicit
+  uncertainty. v503 is unexported; v492 remains the full-build and partial runtime
+  baseline.
+- `checkpoint_original_parameters.py` — extends the checkpoint entry point to
+  preserve an original parameter name when the map correctly omits a redundant
+  rename. Exact physical native reports verify the input hash, assembly identity,
+  MVID, method token/signature and parameter sequence/spelling. The actual
+  discovery callback retains `sender`; all 79 ledger regressions pass.
+- `discovery-group-verification-v502.json` — preceding naming checkpoint: 304 new
   aliases connect multicast discovery, group reception and OSCORE context providers
   across 21 complete contract families. Eight method-name corrections describe
   the actual send/register/receive behavior. Native SDK/contract checks and both
