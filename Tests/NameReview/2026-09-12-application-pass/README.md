@@ -10,6 +10,14 @@ Read first:
 
 What lives here:
 
+- `consolidated-v505-verification.json` — the fresh actual 109-project ETS 6.3
+  solution compiles with zero errors and 17,689 warnings. Staging preserves the
+  original tree and overlays 379 rebuilt assemblies/satellites in a separate copy.
+  All visible contracts and the pinned SDK audit have zero differences. Strict
+  alias verification retains 4,462 unresolved metadata differences (550 newly
+  checked definitions, no prior differences removed). Source-owner inspection
+  remains live in session 17351; its summary and continuation commands are in
+  STATE.json. Current-build runtime and unchanged-App tests remain pending.
 - `reserved-accessor-verification-v505.json` — fixes the one CS0082 exposed by
   the actual v504 solution build. Falcon's ordinary configuration storage method
   is now `SetInterfaceConfiguration`; its former alias occupied the setter slot
@@ -18,8 +26,8 @@ What lives here:
   native suite, 17 source-consumer cases, nine invalid-alias repairs and tool builds
   pass. Fresh Falcon source builds with zero errors; visible contracts have zero
   differences. Its 3,197 strict metadata differences remain open. Fresh v505 full
-  verification covers 109 physical inputs and 1,050 frozen file pins; consult
-  STATE.json and the recorded session/result before inferring completion.
+  verification covers 109 physical inputs and 1,050 frozen file pins; its full
+  compile/staging result is recorded in the consolidated proof above.
 - `consolidated-v504-freeze-verification.json` — immutable start observation for
   the earlier 1,046-pin run. Its actual 109-project build failed with one CS0082;
   it is retained as the compiler-defect reproduction, not a successful build.
