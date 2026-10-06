@@ -15,8 +15,21 @@ What lives here:
   tree and 1,062 frozen input pins remain intact. The staged tree contains 109
   assemblies and 270 satellites; visible and SDK contract audits report zero
   issues. The strict audit retains 4,483 unresolved differences, including 21
-  newly checked captured fields and anonymous methods. Whole-scope source
-  inspection continues in the existing session recorded in `STATE.json`.
+  newly checked captured fields and anonymous methods.
+- `consolidated-v516-source-verification.json` — complete inspection of 109
+  physical assemblies records 16,345 roots, 21,074 body witnesses and 14,698
+  captured-field bindings. The actual compiled export has 16,330 exact root
+  source joins; five hash mismatches and four split fragments remain explicit.
+  All 21 new strict differences have exact compiled-source witnesses (12
+  anonymous methods and nine captured fields), with no runtime waiver. The
+  audit retains 5,114 unresolved printed uses and all 4,483 strict differences.
+- `consolidated-v516-original-control-comparison.json` — rechecks 65 proof
+  pins and 550 original baseline files. The retained original-binary control
+  reproduces the same active-App project-close exception, open project and
+  absence of blocking dialogs. Three Bulk tabs exactly match the original;
+  serial UI descendants differ. This historical control includes VirtualDongle
+  and staged automation hooks; it establishes neither the cause nor full
+  compatibility. The earlier partial-runtime proof remains immutable.
 - `consolidated-v516-runtime-verification.json` — three staged runs through
   KNX-ETS-MCP observe Chinese languages, the unchanged MCP App, normal project
   save/reopen with 29 devices and 502 group addresses, and password-protected
@@ -25,8 +38,8 @@ What lives here:
   Active MCP workspace closure raises `InvalidOperationException`; closure from
   another workspace succeeds. All 4,630 backed-up files are restored exactly
   after every phase, with ExtendedLogging disabled and no owned ETS processes
-  remaining. Populated protected projects, original close/UI controls, broader
-  Apps and whole runtime compatibility on v516 remain unverified.
+  remaining. Populated protected projects, serial UI and close root cause,
+  broader Apps and whole runtime compatibility on v516 remain unverified.
 - `generic-arity-exporter-verification.json` — fixes the full-name collision
   guard in the isolated native dnSpy exporter. Nongeneric and generic types may
   share a readable name when their own generic arities differ. Both net48 and
