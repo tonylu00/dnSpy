@@ -10,6 +10,12 @@ Read first:
 
 What lives here:
 
+- `reset-programming-naming-verification-v508.json` — 55 aliases cover device
+  restart and programming-mode scan/wait handling, including six complete
+  contract families. Status-text selection follows both actual task callers;
+  it is not assumed to represent an active wait. Native checks pass and cached
+  109-module joins report 18,524 remaining lexical candidates. Continue with
+  individual-address download; v505 remains the build/runtime baseline.
 - `device-unload-naming-verification-v507.json` — 92 aliases connect unload
   flags and completed goals, programming-mode checks, secure device access and
   task callers. Three complete contract families include the seven-member
