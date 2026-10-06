@@ -10,7 +10,16 @@ Read first:
 
 What lives here:
 
-- `point-discovery-verification-v503.json` — current naming checkpoint: 158 new
+- `managed-stack-verification-v504.json` — current naming checkpoint: 268 new
+  aliases connect lifecycle, REST/configuration/security/update payloads and
+  point-API monitor correlation across 35 complete interface families. All prior
+  aliases are preserved; the native SDK/contract checks and both cached
+  109-module inventories pass. There are 18,623 lexical candidates remaining.
+  Firmware-name updates still throw the original `NotImplementedException`;
+  46 residual local slots remain unresolved. Next: consolidate the accumulated
+  v493–v504 changes into a fresh export/build with HTTP dependency context02.
+  The last full-build and partial runtime baseline remains v492.
+- `point-discovery-verification-v503.json` — preceding naming checkpoint: 158 new
   aliases and 14 behavior-backed corrections connect mDNS service records,
   serial-number lookup and concurrent CoAP/mDNS endpoint discovery across six
   complete families. Thirty-four captures have exact native producer evidence;
