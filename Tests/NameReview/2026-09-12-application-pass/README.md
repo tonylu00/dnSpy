@@ -10,12 +10,19 @@ Read first:
 
 What lives here:
 
-- `consolidated-v504-freeze-verification.json` — fresh consolidated export/build
-  started from 1,046 verified file pins and the current tested exporter, with the
-  exact HTTP dependency context02. It covers all 109 first-party physical modules.
-  The proof records the live session and process identity at observation; check
-  that handle and the result report before inferring completion or restarting.
-  v504 compilation and runtime remain unverified until those jobs and audits pass.
+- `reserved-accessor-verification-v505.json` — fixes the one CS0082 exposed by
+  the actual v504 solution build. Falcon's ordinary configuration storage method
+  is now `SetInterfaceConfiguration`; its former alias occupied the setter slot
+  reserved by a getter-only property. Native de4dotEx and dnSpy preflight reject
+  reserved property/event signatures while preserving valid overloads. The full
+  native suite, 17 source-consumer cases, nine invalid-alias repairs and tool builds
+  pass. Fresh Falcon source builds with zero errors; visible contracts have zero
+  differences. Its 3,197 strict metadata differences remain open. Fresh v505 full
+  verification covers 109 physical inputs and 1,050 frozen file pins; consult
+  STATE.json and the recorded session/result before inferring completion.
+- `consolidated-v504-freeze-verification.json` — immutable start observation for
+  the earlier 1,046-pin run. Its actual 109-project build failed with one CS0082;
+  it is retained as the compiler-defect reproduction, not a successful build.
 - `managed-stack-verification-v504.json` — current naming checkpoint: 268 new
   aliases connect lifecycle, REST/configuration/security/update payloads and
   point-API monitor correlation across 35 complete interface families. All prior
