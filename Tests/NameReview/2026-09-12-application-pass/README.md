@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `image-metadata-naming-verification-v513.json` — 115 aliases connect the
+  SDK OSCORE report getters, saved-image stamps and binary serialization. The
+  System B object-stamp name follows an explicit ETS4-format log and actual
+  segment-table callers. Native IL supports 71 local scopes; SDK getter names
+  and public parameters remain intact. Native checks pass and cached joins
+  cover 109 physical modules with 18,364 remaining lexical candidates. This
+  block is naming-only; v505 remains the build and partial runtime baseline.
 - `image-table-naming-verification-v512.json` — 146 aliases connect eleven
   table/conversion helper types with the configuration-image creator. Names
   follow actual chunking, association flags, parameter formats, router security
