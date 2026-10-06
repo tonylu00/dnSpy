@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `configuration-image-naming-verification-v511.json` — 128 aliases connect
+  the image model, creator, serializer and writer, including two complete
+  interface families and 42 supported local scopes. Table payloads follow actual
+  write calls; the router counter follows the secure sequence-number service.
+  The SDK-protected application-ID names and public parameter names stay intact.
+  Native checks pass; cached 109-module joins report 18,424 lexical candidates.
+  This block is naming-only; v505 remains the build/runtime baseline.
 - `application-download-naming-verification-v510.json` — 86 aliases connect
   state-machine unload/start/load-complete, polling and timeout behavior with
   application download, hardware checking and fingerprint storage. Three new
