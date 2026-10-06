@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `device-info-naming-verification-v517.json` — 123 coupled aliases name the
+  IoT XML section hierarchy, its complete five-member resource-population
+  override family, table storage, getters/setters, typed inputs and proven
+  formatting locals. Native SDK/contract checks report zero errors and no
+  suffixes. Cached joins cover 109 physical modules with 18,268 remaining
+  lexical candidates. Unassigned control/state-machine slots retain explicit
+  missing evidence. This is naming-only; v516 remains the consolidated baseline.
 - `consolidated-v516-verification.json` — the frozen v516 ETS 6.3 solution
   compiles all 109 projects with zero errors and 17,689 warnings. The original
   tree and 1,062 frozen input pins remain intact. The staged tree contains 109
