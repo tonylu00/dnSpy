@@ -10,6 +10,31 @@ Read first:
 
 What lives here:
 
+- `consolidated-v516-verification.json` — the frozen v516 ETS 6.3 solution
+  compiles all 109 projects with zero errors and 17,689 warnings. The original
+  tree and 1,062 frozen input pins remain intact. The staged tree contains 109
+  assemblies and 270 satellites; visible and SDK contract audits report zero
+  issues. The strict audit retains 4,483 unresolved differences, including 21
+  newly checked captured fields and anonymous methods. Whole-scope source
+  inspection continues in the existing session recorded in `STATE.json`.
+- `consolidated-v516-runtime-verification.json` — three staged runs through
+  KNX-ETS-MCP observe Chinese languages, the unchanged MCP App, normal project
+  save/reopen with 29 devices and 502 group addresses, and password-protected
+  empty-fixture history persistence across a fresh process. Three Bulk Linker
+  tabs match v505; serial-device contents match but UI descendant counts differ.
+  Active MCP workspace closure raises `InvalidOperationException`; closure from
+  another workspace succeeds. All 4,630 backed-up files are restored exactly
+  after every phase, with ExtendedLogging disabled and no owned ETS processes
+  remaining. Populated protected projects, original close/UI controls, broader
+  Apps and whole runtime compatibility on v516 remain unverified.
+- `generic-arity-exporter-verification.json` — fixes the full-name collision
+  guard in the isolated native dnSpy exporter. Nongeneric and generic types may
+  share a readable name when their own generic arities differ. Both net48 and
+  net10 fixtures export and rebuild, restore original type identities, and run
+  an unchanged compiled caller. Five invalid maps are rejected on each runtime,
+  including same-arity duplicates and mistaken inherited generic arity. The
+  former exporter reproduces the failure. No mapping names change and primary
+  concurrent tool edits remain intact; the consolidated v516 build now passes.
 - `lsm-predicate-naming-verification-v516.json` — exact native withdrawal of
   `IsNewSegmentIndex` from anonymous predicate `0600078D`, plus its proven
   `lsmIndex` input. The body checks membership in the set of LSMs with image
