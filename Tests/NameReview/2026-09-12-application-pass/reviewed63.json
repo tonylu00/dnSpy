@@ -860035,7 +860035,7 @@
    "Token": "0x06000D02",
    "Signature": "System.Void Class470::.ctor(l6,fb,Class319,Class468,Interface24`2<Knx.Ets.Hawk.Impl.IoT.Tasks.LoadDevice.IndividualAddressDownload.IoTIndividualAddressDownloadStage,Enum30>)",
    "OriginalName": ".ctor",
-   "Reason": "Exact HawkNET 2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3 / d921dd2e-6cba-4c73-b5a4-241bb5a0d52b. Native v506 method inspection and v4 complete families; frozen v505 compiled source. Class487 E54 stores the next stage, appends it to history and measures elapsed UTC time for the previous stage; initial and finished sentinels come from its constructor. E5E sets the stage weight/step total, resets completed steps and accumulates previous weights; E5B computes weight*completed/total. E5F reports an absolute completed-step count. E60 requests ProgrammingMode and E61 clears UserAction. Class474 and Class497 add explicit IoTApplicationProgramDownloadGoals after successful operations, proving the generic completed-goal list. E62 formats stage text with the optional sleep-cycle text; E66 obtains application-program data through Class319/0600064C and converts the device sleep duration to seconds. Class457 passes initial/finished enum sentinels and its GetInfoTextForStage callback. Keep SDK-protected e8 unchanged, preserve existing aliases, exception swallowing, Dictionary.Add behavior, progress arithmetic and cancellation semantics. Native constructor parameter forwards the shared task-state object to its matching field.",
+   "Reason": "Exact HawkNET 2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3 / d921dd2e-6cba-4c73-b5a4-241bb5a0d52b. Native v506 method inspection and v4 complete families; frozen v505 compiled source. Class487 E54 stores the next stage, appends it to history and measures elapsed UTC time for the previous stage; initial and finished sentinels come from its constructor. E5E sets the stage weight/step total, resets completed steps and accumulates previous weights; E5B computes weight*completed/total. E5F reports an absolute completed-step count. E60 requests ProgrammingMode and E61 clears UserAction. Class474 and Class497 add explicit IoTApplicationProgramDownloadGoals after successful operations, proving the generic completed-goal list. E62 formats stage text with the optional sleep-cycle text; E66 obtains application-program data through Class319/0600064C and converts the device sleep duration to seconds. Class457 passes initial/finished enum sentinels and its GetInfoTextForStage callback. Keep SDK-protected e8 unchanged, preserve existing aliases, exception swallowing, Dictionary.Add behavior, progress arithmetic and cancellation semantics. Native constructor parameter forwards the shared task-state object to its matching field.\nScope review: Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Delegates to full constructor with shared taskState and new programming-mode manager.",
    "NeedsReadableName": false,
    "MappingBlocker": "constructor",
    "ScopedMappingBlocker": null,
@@ -860052,7 +860052,7 @@
      "Sequence": 1,
      "OriginalName": "l6_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "deviceData"
     },
     {
      "Sequence": 2,
@@ -860064,13 +860064,13 @@
      "Sequence": 3,
      "OriginalName": "class319_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "deviceDataContext"
     },
     {
      "Sequence": 4,
      "OriginalName": "class468_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "loadDeviceDelegates"
     },
     {
      "Sequence": 5,
@@ -860087,27 +860087,42 @@
    "UnresolvedScopeEvidence": {
     "Parameters": [
      {
-      "Sequence": 1,
-      "OriginalName": "l6_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
       "Sequence": 2,
       "OriginalName": "fb_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
-      "Sequence": 3,
-      "OriginalName": "class319_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
-      "Sequence": 4,
-      "OriginalName": "class468_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+      "MissingEvidence": "Broad protected bus abstraction lacks a more precise parameter responsibility in this chain."
      }
-    ]
-   }
+    ],
+    "Locals": []
+   },
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {
+      "Parameters": [
+       {
+        "Sequence": 1,
+        "OriginalName": "l6_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 2,
+        "OriginalName": "fb_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 3,
+        "OriginalName": "class319_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 4,
+        "OriginalName": "class468_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       }
+      ]
+     },
+     "Evidence": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Delegates to full constructor with shared taskState and new programming-mode manager."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.HawkNET.dll",
@@ -860118,7 +860133,7 @@
    "Token": "0x06000D03",
    "Signature": "System.Void Class470::.ctor(l6,fb,Class319,Class468,Interface24`2<Knx.Ets.Hawk.Impl.IoT.Tasks.LoadDevice.IndividualAddressDownload.IoTIndividualAddressDownloadStage,Enum30>,Interface10)",
    "OriginalName": ".ctor",
-   "Reason": "Exact HawkNET 2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3 / d921dd2e-6cba-4c73-b5a4-241bb5a0d52b. Native v506 method inspection and v4 complete families; frozen v505 compiled source. Class487 E54 stores the next stage, appends it to history and measures elapsed UTC time for the previous stage; initial and finished sentinels come from its constructor. E5E sets the stage weight/step total, resets completed steps and accumulates previous weights; E5B computes weight*completed/total. E5F reports an absolute completed-step count. E60 requests ProgrammingMode and E61 clears UserAction. Class474 and Class497 add explicit IoTApplicationProgramDownloadGoals after successful operations, proving the generic completed-goal list. E62 formats stage text with the optional sleep-cycle text; E66 obtains application-program data through Class319/0600064C and converts the device sleep duration to seconds. Class457 passes initial/finished enum sentinels and its GetInfoTextForStage callback. Keep SDK-protected e8 unchanged, preserve existing aliases, exception swallowing, Dictionary.Add behavior, progress arithmetic and cancellation semantics. Native constructor parameter forwards the shared task-state object to its matching field.",
+   "Reason": "Exact HawkNET 2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3 / d921dd2e-6cba-4c73-b5a4-241bb5a0d52b. Native v506 method inspection and v4 complete families; frozen v505 compiled source. Class487 E54 stores the next stage, appends it to history and measures elapsed UTC time for the previous stage; initial and finished sentinels come from its constructor. E5E sets the stage weight/step total, resets completed steps and accumulates previous weights; E5B computes weight*completed/total. E5F reports an absolute completed-step count. E60 requests ProgrammingMode and E61 clears UserAction. Class474 and Class497 add explicit IoTApplicationProgramDownloadGoals after successful operations, proving the generic completed-goal list. E62 formats stage text with the optional sleep-cycle text; E66 obtains application-program data through Class319/0600064C and converts the device sleep duration to seconds. Class457 passes initial/finished enum sentinels and its GetInfoTextForStage callback. Keep SDK-protected e8 unchanged, preserve existing aliases, exception swallowing, Dictionary.Add behavior, progress arithmetic and cancellation semantics. Native constructor parameter forwards the shared task-state object to its matching field.\nScope review: Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stores exact inputs, constructs inner handlers, captures initial programming state and derives initial-serial Boolean.",
    "NeedsReadableName": false,
    "MappingBlocker": "constructor",
    "ScopedMappingBlocker": null,
@@ -860136,7 +860151,7 @@
      "Sequence": 1,
      "OriginalName": "l6_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "deviceData"
     },
     {
      "Sequence": 2,
@@ -860148,13 +860163,13 @@
      "Sequence": 3,
      "OriginalName": "class319_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "deviceDataContext"
     },
     {
      "Sequence": 4,
      "OriginalName": "class468_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "loadDeviceDelegates"
     },
     {
      "Sequence": 5,
@@ -860166,7 +860181,7 @@
      "Sequence": 6,
      "OriginalName": "interface10_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "programmingModeManager"
     }
    ],
    "LocalNames": [],
@@ -860177,32 +860192,47 @@
    "UnresolvedScopeEvidence": {
     "Parameters": [
      {
-      "Sequence": 1,
-      "OriginalName": "l6_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
       "Sequence": 2,
       "OriginalName": "fb_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
-      "Sequence": 3,
-      "OriginalName": "class319_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
-      "Sequence": 4,
-      "OriginalName": "class468_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
-     },
-     {
-      "Sequence": 6,
-      "OriginalName": "interface10_1",
-      "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+      "MissingEvidence": "Broad protected bus abstraction lacks a more precise parameter responsibility in this chain."
      }
-    ]
-   }
+    ],
+    "Locals": []
+   },
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {
+      "Parameters": [
+       {
+        "Sequence": 1,
+        "OriginalName": "l6_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 2,
+        "OriginalName": "fb_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 3,
+        "OriginalName": "class319_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 4,
+        "OriginalName": "class468_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       },
+       {
+        "Sequence": 6,
+        "OriginalName": "interface10_1",
+        "MissingEvidence": "Outside the reviewed task-state argument flow; original role remains unproven in this block."
+       }
+      ]
+     },
+     "Evidence": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stores exact inputs, constructs inner handlers, captures initial programming state and derives initial-serial Boolean."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.HawkNET.dll",
@@ -863403,6 +863433,2207 @@
       "Index": 1,
       "ExpectedType": "System.Int16",
       "MissingEvidence": "No distinct source-level role for this exact native slot; generated state/control scaffolding remains with its owner. C52 local0 is reused for wait and scan TimeSpan values, so one specific role would be misleading."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface16",
+   "Token": "0x06000CEC",
+   "Signature": "Interface10 Interface16::imethod_0()",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Returns constructor-injected IIoTProgrammingModeManager field04001365, used by task06000D27 to select status text.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "A0AC1B50DA8BD41E477409EB69C47CD069A8E10B8E7D33C8B6D3CDCCF106A76F",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetProgrammingModeManager",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CF2",
+   "Signature": "Interface10 Class470::imethod_0()",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Returns constructor-injected IIoTProgrammingModeManager field04001365, used by task06000D27 to select status text.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "A0AC1B50DA8BD41E477409EB69C47CD069A8E10B8E7D33C8B6D3CDCCF106A76F",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetProgrammingModeManager",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface16",
+   "Token": "0x06000CED",
+   "Signature": "System.TimeSpan Interface16::imethod_1()",
+   "OriginalName": "imethod_1",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly5second field04001368 is passed through ny.d to nh.n2 at target address before mapping IoTPingResponse.None/SingleDevice/MultipleDevices.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "8B7D1E594064A740CD15795559136A694465D1F00B1A46BF88B07ECA9219416C",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "GetAddressAvailabilityTimeout",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CF5",
+   "Signature": "System.TimeSpan Class470::imethod_1()",
+   "OriginalName": "imethod_1",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly5second field04001368 is passed through ny.d to nh.n2 at target address before mapping IoTPingResponse.None/SingleDevice/MultipleDevices.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "8B7D1E594064A740CD15795559136A694465D1F00B1A46BF88B07ECA9219416C",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetAddressAvailabilityTimeout",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface16",
+   "Token": "0x06000CEF",
+   "Signature": "System.Boolean Interface16::imethod_3()",
+   "OriginalName": "imethod_3",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly0400136A is assigned by constructor06000D03 from initial programming state serial != SerialNumber.None; no broader lifecycle semantics are inferred.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "05FBB21CBC4C2ADED743757A51A7EAFA4980EF69CC91114A3941A7558DEF1F4A",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "HasInitialSerialNumber",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CF7",
+   "Signature": "System.Boolean Class470::imethod_3()",
+   "OriginalName": "imethod_3",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly0400136A is assigned by constructor06000D03 from initial programming state serial != SerialNumber.None; no broader lifecycle semantics are inferred.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "05FBB21CBC4C2ADED743757A51A7EAFA4980EF69CC91114A3941A7558DEF1F4A",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "HasInitialSerialNumber",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface16",
+   "Token": "0x06000CF0",
+   "Signature": "System.Void Interface16::imethod_4()",
+   "OriginalName": "imethod_4",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. 06000CF8 passes constructor-captured programming state04001371 to l6.SetProgrammingState. Actual recovery caller06000D25 logs Restoring Programming State to before the Task was started.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "B2D99F80F74647E9316CA932B3538681D4C5E43E840E2DCBFB77EA2EB9510BDE",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "RestoreInitialProgrammingState",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CF8",
+   "Signature": "System.Void Class470::imethod_4()",
+   "OriginalName": "imethod_4",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. 06000CF8 passes constructor-captured programming state04001371 to l6.SetProgrammingState. Actual recovery caller06000D25 logs Restoring Programming State to before the Task was started.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "B2D99F80F74647E9316CA932B3538681D4C5E43E840E2DCBFB77EA2EB9510BDE",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "RestoreInitialProgrammingState",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface16",
+   "Token": "0x06000CEE",
+   "Signature": "System.Boolean Interface16::imethod_2()",
+   "OriginalName": "imethod_2",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly Boolean04001369 has no explicit assignment or observed semantic use; interface/implementation have0static incoming references in this physical module. Missing named counterpart or behavioral consumer. Do not rename it from spelling alone.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "72F1DFD6626DCF2AE0E17610CF5B721A2030A6174753DB2CB21CA988BBA693FC",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly Boolean04001369 has no explicit assignment or observed semantic use; interface/implementation have0static incoming references in this physical module. Missing named counterpart or behavioral consumer. Do not rename it from spelling alone.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CF6",
+   "Signature": "System.Boolean Class470::imethod_2()",
+   "OriginalName": "imethod_2",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly Boolean04001369 has no explicit assignment or observed semantic use; interface/implementation have0static incoming references in this physical module. Missing named counterpart or behavioral consumer. Do not rename it from spelling alone.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "72F1DFD6626DCF2AE0E17610CF5B721A2030A6174753DB2CB21CA988BBA693FC",
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly Boolean04001369 has no explicit assignment or observed semantic use; interface/implementation have0static incoming references in this physical module. Missing named counterpart or behavioral consumer. Do not rename it from spelling alone.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface16",
+   "Token": "0x06000CF1",
+   "Signature": "System.Threading.Tasks.Task Interface16::imethod_5(nz)",
+   "OriginalName": "imethod_5",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve PerformIoTDeviceIndividualizationProcedure. Operation token flows through availability, serial checking, authentication, occupied-address handling/write, programming-state storage and programming-mode shutdown.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "8F39DE9CAAE65104FA04BE20C14C3189A8F6BE473ECE18CFE7054344DE9DFDB3",
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "PerformIoTDeviceIndividualizationProcedure",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D04",
+   "Signature": "System.Threading.Tasks.Task Class470::imethod_5(nz)",
+   "OriginalName": "imethod_5",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve PerformIoTDeviceIndividualizationProcedure. Operation token flows through availability, serial checking, authentication, occupied-address handling/write, programming-state storage and programming-mode shutdown.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "8F39DE9CAAE65104FA04BE20C14C3189A8F6BE473ECE18CFE7054344DE9DFDB3",
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/e",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "PerformIoTDeviceIndividualizationProcedure",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/e",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface17",
+   "Token": "0x06000D2F",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.SerialNumber> Interface17::imethod_0(nz)",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve RetrieveSerialNumberViaProgrammingModeAndPerformChecks. It uses a direct provider or the programming-mode search, validates changed/known serial through callbacks and returns the selected serial.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "221E91C7D4FA69342488F07E2641DAF291A3EFC9623F41E7885ABFCD715FCC91",
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "RetrieveSerialNumberViaProgrammingModeAndPerformChecks",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D35",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.SerialNumber> Class472::imethod_0(nz)",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve RetrieveSerialNumberViaProgrammingModeAndPerformChecks. It uses a direct provider or the programming-mode search, validates changed/known serial through callbacks and returns the selected serial.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "221E91C7D4FA69342488F07E2641DAF291A3EFC9623F41E7885ABFCD715FCC91",
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class472/e",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "RetrieveSerialNumberViaProgrammingModeAndPerformChecks",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class472/e",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Interface18",
+   "Token": "0x06000D44",
+   "Signature": "System.Threading.Tasks.Task Interface18::imethod_0(Knx.Falcon.IndividualAddress,Knx.Falcon.SerialNumber,nz)",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve HandleIndividualAddressBeingAlreadyOccupiedAsync. Read actual address of target serial; when different from desired address, obtain user approval to unload the occupant, then invoke the address-write callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "F2A9F9E4BEC477D6CE6A908CD8144F16FDBB56B41B0BC26EA7ADE3244C705656",
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress individualAddress_0",
+    "2: Knx.Falcon.SerialNumber serialNumber_0",
+    "3: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "targetAddress"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "targetSerialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "HandleIndividualAddressBeingAlreadyOccupiedAsync",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D4D",
+   "Signature": "System.Threading.Tasks.Task Class473::imethod_0(Knx.Falcon.IndividualAddress,Knx.Falcon.SerialNumber,nz)",
+   "OriginalName": "imethod_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve HandleIndividualAddressBeingAlreadyOccupiedAsync. Read actual address of target serial; when different from desired address, obtain user approval to unload the occupant, then invoke the address-write callback.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "F2A9F9E4BEC477D6CE6A908CD8144F16FDBB56B41B0BC26EA7ADE3244C705656",
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress individualAddress_0",
+    "2: Knx.Falcon.SerialNumber serialNumber_0",
+    "3: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "targetAddress"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "targetSerialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class473/b",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "HandleIndividualAddressBeingAlreadyOccupiedAsync",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class473/b",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CFB",
+   "Signature": "l6 Class470::e()",
+   "OriginalName": "e",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored l6 used for project programming/security/network data.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDeviceData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CFC",
+   "Signature": "Class319 Class470::d()",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored Class319 device/application context.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDeviceDataContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000CFF",
+   "Signature": "ls Class470::a()",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Returns state captured before individualization; failure restores this same object without new clone semantics.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetInitialProgrammingState",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x06000D1F",
+   "Signature": "Interface16 Class460::a()",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Returns IIoTIndividualAddressDownloader used by task execution and recovery.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetIndividualAddressDownloader",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D30",
+   "Signature": "Interface10 Class472::e()",
+   "OriginalName": "e",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored manager performs serial discovery.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetProgrammingModeManager",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D31",
+   "Signature": "l6 Class472::d()",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored l6 supplies known serial.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDeviceData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D32",
+   "Signature": "Class319 Class472::c()",
+   "OriginalName": "c",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored Class319 supplies known-device context.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDeviceDataContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D33",
+   "Signature": "Class468 Class472::b()",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored IoTLoadDeviceDelegates supplies providers and approval callbacks.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetLoadDeviceDelegates",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D45",
+   "Signature": "Class468 Class473::method_0()",
+   "OriginalName": "method_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored delegates supply occupying-device unload approval.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetLoadDeviceDelegates",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D47",
+   "Signature": "l6 Class473::d()",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored l6 used by secure access helper.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDeviceData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D48",
+   "Signature": "Class319 Class473::c()",
+   "OriginalName": "c",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stored Class319 forwarded to secure access helper.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetDeviceDataContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D49",
+   "Signature": "System.Func`4<Knx.Falcon.SerialNumber,Knx.Falcon.IndividualAddress,nz,System.Threading.Tasks.Task> Class473::b()",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Constructor06000D03 supplies ldftn06000D0A; handler invokes this delegate with target serial/address/token after successful occupant unload.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetWriteIndividualAddressCallback",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D01",
+   "Signature": "System.Threading.Tasks.Task`1<nh> Class470::b(nz)",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Forwards token to fb.fw and returns disposable nh discovery interface; consumer pings/retrieves occupant at the target address.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetIoTDeviceDiscoveryAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D4B",
+   "Signature": "System.Threading.Tasks.Task`1<nh> Class473::a(nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Forwards token to fb.fw and returns disposable nh discovery interface; consumer pings/retrieves occupant at the target address.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "GetIoTDeviceDiscoveryAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D0B",
+   "Signature": "System.Void Class470::a(Knx.Falcon.SerialNumber)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Sets StoringSerialNumberAndUpdatingProgrammingState; native local0 is ls, sets serial and programming flag plus tool-key bytes from device security config, then stores via l6.SetProgrammingState.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "ls",
+     "NewName": "programmingState"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "StoreSerialNumberAndProgrammingState",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D37",
+   "Signature": "System.Threading.Tasks.Task Class472::c(Knx.Falcon.SerialNumber)",
+   "OriginalName": "c",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Calls existing DoesUserWantToDownloadToDeviceInProgrammingModeWhichHasDifferentSerialNumberThanInProjectData; false throws OperationCanceledException, true returns.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class472/b",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "RequireDifferentSerialNumberDownloadApprovalAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class472/b",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D39",
+   "Signature": "System.Threading.Tasks.Task Class472::a(Knx.Falcon.SerialNumber)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. The serial argument selects a Class319 object, compares it with current context, and passes it to an optional HawkTask delegate. The object ownership/project relationship and approval contract are not yet established; do not invent an assignment/reuse name.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class472/a",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. The serial argument selects a Class319 object, compares it with current context, and passes it to an optional HawkTask delegate. The object ownership/project relationship and approval contract are not yet established; do not invent an assignment/reuse name.",
+   "ReviewDisposition": "rename",
+   "DefinitionOnlyUnresolved": true,
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class472/a",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x06000D22",
+   "Signature": "System.Void Class460::.ctor(l6,fb,System.IProgress`1<e8>)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Task convenience constructor creates device context and load delegates.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: l6 l6_0",
+    "2: fb fb_0",
+    "3: System.IProgress`1<e8> iprogress_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "l6_0",
+     "HasMetadata": true,
+     "NewName": "deviceData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "fb_0",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "iprogress_0",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 2,
+      "OriginalName": "fb_0",
+      "MissingEvidence": "Broad protected bus abstraction lacks a more precise parameter responsibility in this chain."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x06000D23",
+   "Signature": "System.Void Class460::.ctor(l6,fb,Class319,Class468,System.IProgress`1<e8>)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Task constructor forwards context/progress to base and creates the downloader.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: l6 l6_0",
+    "2: fb fb_0",
+    "3: Class319 class319_0",
+    "4: Class468 class468_0",
+    "5: System.IProgress`1<e8> iprogress_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "l6_0",
+     "HasMetadata": true,
+     "NewName": "deviceData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "fb_0",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "class319_0",
+     "HasMetadata": true,
+     "NewName": "deviceDataContext"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "class468_0",
+     "HasMetadata": true,
+     "NewName": "loadDeviceDelegates"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "iprogress_0",
+     "HasMetadata": true,
+     "NewName": "progress"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 2,
+      "OriginalName": "fb_0",
+      "MissingEvidence": "Broad protected bus abstraction lacks a more precise parameter responsibility in this chain."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x06000D24",
+   "Signature": "System.Threading.Tasks.Task Class460::vmethod_2(nz)",
+   "OriginalName": "vmethod_2",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve PerformTaskInternal; forwards token to individualization.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "33C8CA0CF0E7E6042EDDC4715B961925259CA304CE9DF9A3B57F2D7D65FBAB06",
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "PerformTaskInternal",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x06000D25",
+   "Signature": "System.Threading.Tasks.Task Class460::vmethod_3(System.Exception,nz)",
+   "OriginalName": "vmethod_3",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve RecoverInCaseOfException; logs and restores initial programming state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": "2F0723E3EC944E8CAF1172EE7C8E080E37602D5A2933DAB2DFCD25D71D094E0C",
+   "Parameters": [
+    "1: System.Exception exception_0",
+    "2: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "exception_0",
+     "HasMetadata": true,
+     "NewName": "exception"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "RecoverInCaseOfException",
+   "DefinitionOnlyUnresolved": false,
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D34",
+   "Signature": "System.Void Class472::.ctor(l6,Class319,Class468,Interface10)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Directly stores exact typed inputs in serial retriever/checker.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: l6 l6_1",
+    "2: Class319 class319_1",
+    "3: Class468 class468_1",
+    "4: Interface10 interface10_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "l6_1",
+     "HasMetadata": true,
+     "NewName": "deviceData"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "class319_1",
+     "HasMetadata": true,
+     "NewName": "deviceDataContext"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "class468_1",
+     "HasMetadata": true,
+     "NewName": "loadDeviceDelegates"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "interface10_1",
+     "HasMetadata": true,
+     "NewName": "programmingModeManager"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D4C",
+   "Signature": "System.Void Class473::.ctor(fb,l6,Class319,Class468,System.Func`4<Knx.Falcon.SerialNumber,Knx.Falcon.IndividualAddress,nz,System.Threading.Tasks.Task>)",
+   "OriginalName": ".ctor",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Stores dependencies and callback supplied from actual WriteIndividualAddressToDevice06000D0A.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: fb fb_1",
+    "2: l6 l6_1",
+    "3: Class319 class319_1",
+    "4: Class468 class468_1",
+    "5: System.Func`4<Knx.Falcon.SerialNumber,Knx.Falcon.IndividualAddress,nz,System.Threading.Tasks.Task> func_1"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "fb_1",
+     "HasMetadata": true,
+     "NewName": ""
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "l6_1",
+     "HasMetadata": true,
+     "NewName": "deviceData"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "class319_1",
+     "HasMetadata": true,
+     "NewName": "deviceDataContext"
+    },
+    {
+     "Sequence": 4,
+     "OriginalName": "class468_1",
+     "HasMetadata": true,
+     "NewName": "loadDeviceDelegates"
+    },
+    {
+     "Sequence": 5,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "writeIndividualAddressAsync"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Parameters": [
+     {
+      "Sequence": 1,
+      "OriginalName": "fb_1",
+      "MissingEvidence": "Broad protected bus abstraction lacks a more precise parameter responsibility in this chain."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D05",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> Class470::a(Knx.Falcon.IndividualAddress,nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress individualAddress_0",
+    "2: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "targetAddress"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/b",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "CheckIfIndividualAddressIsOccupied",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/b",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D06",
+   "Signature": "System.Threading.Tasks.Task`1<Knx.Falcon.SerialNumber> Class470::a(nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/Struct458",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "RetrieveSerialNumberViaProgrammingModeAndPerformChecks",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/Struct458",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D07",
+   "Signature": "System.Threading.Tasks.Task Class470::b(Knx.Falcon.SerialNumber,nz)",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0",
+    "2: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/a",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "AuthenticateDeviceAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/a",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D09",
+   "Signature": "System.Threading.Tasks.Task Class470::a(Knx.Falcon.IndividualAddress,Knx.Falcon.SerialNumber,nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress individualAddress_0",
+    "2: Knx.Falcon.SerialNumber serialNumber_0",
+    "3: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "targetAddress"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "targetSerialNumber"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/d",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "HandleIndividualAddressBeingAlreadyOccupiedAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/d",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D0A",
+   "Signature": "System.Threading.Tasks.Task Class470::a(Knx.Falcon.SerialNumber,Knx.Falcon.IndividualAddress,nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0",
+    "2: Knx.Falcon.IndividualAddress individualAddress_0",
+    "3: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "individualAddress"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/Struct460",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "WriteIndividualAddressToDevice",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/Struct460",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x06000D0C",
+   "Signature": "System.Threading.Tasks.Task Class470::a(Knx.Falcon.SerialNumber,nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0",
+    "2: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class470/Struct459",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "TurnOffProgrammingModeAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class470/Struct459",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x06000D38",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> Class472::b(Knx.Falcon.SerialNumber)",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.SerialNumber serialNumber_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "serialNumber_0",
+     "HasMetadata": true,
+     "NewName": "serialNumber"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class472/c",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "DoesUserWantToDownloadToDeviceInProgrammingModeWhichHasDifferentSerialNumberThanInProjectData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class472/c",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D4E",
+   "Signature": "System.Threading.Tasks.Task Class473::b(Knx.Falcon.IndividualAddress,nz)",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress individualAddress_0",
+    "2: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "occupiedAddress"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class473/d",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "UnloadConflictingDeviceIfDesiredByUserOrThrow",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class473/d",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x06000D50",
+   "Signature": "System.Threading.Tasks.Task`1<System.Boolean> Class473::a(Knx.Falcon.IndividualAddress,nz)",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Preserve the meaningful existing method name. Exact parameters flow into target-address/serial operations or IoT tracing/cancellation; argument roles are corroborated by native state owner and readable unchanged Falcon calls.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Falcon.IndividualAddress individualAddress_0",
+    "2: nz nz_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "individualAddress_0",
+     "HasMetadata": true,
+     "NewName": "occupiedAddress"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "nz_0",
+     "HasMetadata": true,
+     "NewName": "operationToken"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Class473/c",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "TryUnloadingOccupyingDevice",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Class473/c",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated state/control kickoff slot has no supported separate source-level role; keep with reconstructed owner rather than inventing an alias."
      }
     ]
    }
@@ -897431,6 +899662,28 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "Knx.Ets.Hawk.Impl.IoT.Tasks.Reset.IoTDeviceRestartTask",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Enum30",
+   "Token": "0x0200027E",
+   "Signature": "Enum30",
+   "OriginalName": "Enum30",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Generic completed-goal enum records successful availability check and serial retrieval/check; remaining three values stay explicitly unresolved.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "Knx.Ets.Hawk.Impl.IoT.Tasks.LoadDevice.IndividualAddressDownload.IoTIndividualAddressDownloadGoals",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
@@ -1323360,6 +1325613,534 @@
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x04001365",
+   "Signature": "Interface10 Class470::a",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Constructor-injected manager with matching getter.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "programmingModeManager",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x04001368",
+   "Signature": "System.TimeSpan Class470::d",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. 5second timeout used by target-address ping.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "addressAvailabilityTimeout",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x0400136A",
+   "Signature": "System.Boolean Class470::bool_1",
+   "OriginalName": "bool_1",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Computed from initial serial !=None.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "hasInitialSerialNumber",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x0400136B",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class470::ifalconLogger_0",
+   "OriginalName": "ifalconLogger_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. StaticLogger.Factory.GetLogger uses exact individual-address task literal.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "logger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x0400136D",
+   "Signature": "l6 Class470::i",
+   "OriginalName": "i",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Constructor-stored l6 device data.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x0400136E",
+   "Signature": "Class319 Class470::class319_0",
+   "OriginalName": "class319_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Constructor-stored Class319 context.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceDataContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x0400136F",
+   "Signature": "Class468 Class470::class468_0",
+   "OriginalName": "class468_0",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Constructor-stored IoTLoadDeviceDelegates.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "loadDeviceDelegates",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x04001371",
+   "Signature": "ls Class470::m",
+   "OriginalName": "m",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Constructor stores GetProgrammingState; recovery restores same stored state.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialProgrammingState",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x040013C5",
+   "Signature": "Knx.Falcon.Logging.IFalconLogger Class460::a",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Static logger returned by existing GetFalconLogger. Exact factory category is IoTIndividualAddressDownloadTask; the inherited IoTHawkTask logger already has its own meaningful alias, so preserve the distinction without a numeric suffix.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "individualAddressDownloadLogger",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class460",
+   "Token": "0x040013C6",
+   "Signature": "Interface16 Class460::b",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Task constructor creates downloader and calls it during execution/recovery.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "individualAddressDownloader",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x040013E8",
+   "Signature": "Interface10 Class472::a",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Serial checker manager dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "programmingModeManager",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x040013E9",
+   "Signature": "l6 Class472::b",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Serial checker project data dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x040013EA",
+   "Signature": "Class319 Class472::c",
+   "OriginalName": "c",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Serial checker context dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceDataContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class472",
+   "Token": "0x040013EB",
+   "Signature": "Class468 Class472::d",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Serial checker provider/approval dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "loadDeviceDelegates",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x0400140D",
+   "Signature": "Class468 Class473::a",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Occupied-address handler approval dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "loadDeviceDelegates",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x0400140F",
+   "Signature": "l6 Class473::c",
+   "OriginalName": "c",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Occupied-address handler project data dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceData",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x04001410",
+   "Signature": "Class319 Class473::d",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Occupied-address handler context dependency.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceDataContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class473",
+   "Token": "0x04001411",
+   "Signature": "System.Func`4<Knx.Falcon.SerialNumber,Knx.Falcon.IndividualAddress,nz,System.Threading.Tasks.Task> Class473::e",
+   "OriginalName": "e",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Exact ldftn06000D0A callback supplied by downloader and invoked after occupant unload.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "writeIndividualAddressAsync",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Enum30",
+   "Token": "0x040013C0",
+   "Signature": "Enum30 Enum30::a",
+   "OriginalName": "a",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30value0 added after address ping response is interpreted.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "IndividualAddressAvailabilityChecked",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Enum30",
+   "Token": "0x040013C1",
+   "Signature": "Enum30 Enum30::b",
+   "OriginalName": "b",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30value1 added after serial retrieval/checking returns.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "SerialNumberRetrievedAndChecked",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Class470",
+   "Token": "0x04001369",
+   "Signature": "System.Boolean Class470::e",
+   "OriginalName": "e",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly Boolean has no explicit assignment and its getter family has0static callers; semantic purpose is missing.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Readonly Boolean has no explicit assignment and its getter family has0static callers; semantic purpose is missing.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Enum30",
+   "Token": "0x040013C2",
+   "Signature": "Enum30 Enum30::c",
+   "OriginalName": "c",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30 values2/3/4 have no demonstrated use in all compiled first-party HawkNET sources; native inspected address/state chain only appends values0/1. Missing exact behavioral use or named counterpart.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30 values2/3/4 have no demonstrated use in all compiled first-party HawkNET sources; native inspected address/state chain only appends values0/1. Missing exact behavioral use or named counterpart.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Enum30",
+   "Token": "0x040013C3",
+   "Signature": "Enum30 Enum30::d",
+   "OriginalName": "d",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30 values2/3/4 have no demonstrated use in all compiled first-party HawkNET sources; native inspected address/state chain only appends values0/1. Missing exact behavioral use or named counterpart.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30 values2/3/4 have no demonstrated use in all compiled first-party HawkNET sources; native inspected address/state chain only appends values0/1. Missing exact behavioral use or named counterpart.",
+   "ReviewDisposition": "unresolved"
+  },
+  {
+   "Module": "Knx.Ets.HawkNET.dll",
+   "Identity": "Knx.Ets.HawkNET, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "d921dd2e-6cba-4c73-b5a4-241bb5a0d52b",
+   "Sha256": "2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3",
+   "Type": "Enum30",
+   "Token": "0x040013C4",
+   "Signature": "Enum30 Enum30::e",
+   "OriginalName": "e",
+   "Reason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30 values2/3/4 have no demonstrated use in all compiled first-party HawkNET sources; native inspected address/state chain only appends values0/1. Missing exact behavioral use or named counterpart.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": true,
+   "UnresolvedReason": "Physical HawkNET SHA2326F1FBF2725E97F0E2F071EA54747323811C37FDACB3AD16A8EA3316E750D3/MVIDd921dd2e-6cba-4c73-b5a4-241bb5a0d52b; v509 native101-method/state/caller inspection, v4 complete families and frozen compiled v505 sources. Enum30 values2/3/4 have no demonstrated use in all compiled first-party HawkNET sources; native inspected address/state chain only appends values0/1. Missing exact behavioral use or named counterpart.",
+   "ReviewDisposition": "unresolved"
   }
  ],
  "Skips": [],

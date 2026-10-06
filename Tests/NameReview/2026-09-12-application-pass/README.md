@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `address-download-naming-verification-v509.json` — 103 aliases connect the
+  individual-address task, serial checker and occupied-address handler. Four
+  new complete families name the manager, ping timeout, initial serial flag and
+  programming-state restoration; three existing families gain supported scopes.
+  Seven definitions remain explicitly unresolved. Native checks pass and cached
+  109-module joins report 18,485 remaining lexical candidates. No source export
+  or new runtime verification was performed for this naming block.
 - `reset-programming-naming-verification-v508.json` — 55 aliases cover device
   restart and programming-mode scan/wait handling, including six complete
   contract families. Status-text selection follows both actual task callers;
