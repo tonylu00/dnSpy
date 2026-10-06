@@ -1,0 +1,200 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "5DBBF82395C86D03E3643E21B4D65EA153A1215E358FACC530E761E313C670ED",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.MoveGroupAddressStrategy",
+      "Token": "0x060027DC",
+      "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.MoveGroupAddressStrategy::a(System.UInt16,System.UInt16)",
+      "OriginalName": "a",
+      "Reason": "Exact physical source/native complete-body correction. Get2 performs unchecked UInt16(address-rangeStart), and allocation caller passes source start or zero for special start one. The name must describe arithmetic, not a collision suffix.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.UInt16 ushort_1",
+        "2: System.UInt16 ushort_2"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_1",
+          "HasMetadata": true,
+          "NewName": ""
+        },
+        {
+          "Sequence": 2,
+          "OriginalName": "ushort_2",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetRangeOffset",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.MoveGroupAddressStrategy",
+      "Token": "0x060027DD",
+      "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.MoveGroupAddressStrategy::a(Knx.Ets.ObjectModel.Project.IGroupAddress)",
+      "OriginalName": "a",
+      "Reason": "Exact physical source/native complete-body correction. GetNewAddress returns groupAddress.Address minus targetRangeStart; constructor feeds this selector into occupied addresses of MoveAddressStrategy. It does not allocate a new address.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.ObjectModel.Project.IGroupAddress igroupAddress_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "igroupAddress_0",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "GetOccupiedAddressOffset",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "PreviousLedgerAlias": "",
+      "ExpectedMappedAlias": "GetNewAddress"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.Validators.SplitFreeGroupRangeValidator",
+      "Token": "0x06002BB1",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.SplitFreeGroupRangeValidator::a(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupRange>)",
+      "OriginalName": "a",
+      "Reason": "Exact physical source/native complete-body correction. AreRangesSplittable returns true when any child range inclusively contains splitPosition, ORs recursive child results; Validate maps true to CollisionWithChildRanges and false to success. Prior name reverses the boolean implication.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupRange> ienumerable_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ienumerable_0",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Boolean",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.IGroupRange>",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRanges.FreeGroupRange",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "AnyChildRangeContainsSplitPosition",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "PreviousLedgerAlias": "",
+      "ExpectedMappedAlias": "AreRangesSplittable"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.Devices.ResetParameterValuesToDefaultOperation",
+      "Token": "0x06004F8B",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Devices.ResetParameterValuesToDefaultOperation::method_3(Knx.Ets.ObjectModel.Project.ParameterInstance)",
+      "OriginalName": "method_3",
+      "Reason": "Exact physical source/native complete-body correction. ShouldResetParameter returns (CompletionStatus Locked OR Accepted) AND CustomerAdjustable.GetValueOrDefault. Execute and five anonymous predicates negate this result before ResetToDefault; true protects customer-adjustable values rather than requesting reset.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: Knx.Ets.ObjectModel.Project.ParameterInstance parameterInstance_0"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "parameterInstance_0",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Nullable`1<System.Boolean>",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "IsProtectedCustomerAdjustableParameter",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Skips": []
+}

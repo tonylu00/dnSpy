@@ -259309,7 +259309,7 @@
    "Token": "0x060027DC",
    "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.MoveGroupAddressStrategy::a(System.UInt16,System.UInt16)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name\nScope review: Physical group-address operation/converter chain. Parameter roles and local slots follow exact typed native operands, constructor storage, subtraction/addition, bounds/overlap checks, address rebinding and undo/redo branches in complete pinned bodies; original meaningful names and existing aliases remain.",
+   "Reason": "short-unrecognized-name\nScope review: Physical group-address operation/converter chain. Parameter roles and local slots follow exact typed native operands, constructor storage, subtraction/addition, bounds/overlap checks, address rebinding and undo/redo branches in complete pinned bodies; original meaningful names and existing aliases remain.\nReviewed method correction: Exact physical source/native complete-body correction. Get2 performs unchecked UInt16(address-rangeStart), and allocation caller passes source start or zero for special start one. The name must describe arithmetic, not a collision suffix.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -259338,7 +259338,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "Get2",
+   "NewName": "GetRangeOffset",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ScopeEvidenceReviews": [
@@ -879839,7 +879839,7 @@
    "Token": "0x060027DD",
    "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.MoveGroupAddressStrategy::a(Knx.Ets.ObjectModel.Project.IGroupAddress)",
    "OriginalName": "a",
-   "Reason": "Physical group-address operation/converter chain. Parameter roles and local slots follow exact typed native operands, constructor storage, subtraction/addition, bounds/overlap checks, address rebinding and undo/redo branches in complete pinned bodies; original meaningful names and existing aliases remain.",
+   "Reason": "Physical group-address operation/converter chain. Parameter roles and local slots follow exact typed native operands, constructor storage, subtraction/addition, bounds/overlap checks, address rebinding and undo/redo branches in complete pinned bodies; original meaningful names and existing aliases remain.\nReviewed method correction: Exact physical source/native complete-body correction. GetNewAddress returns groupAddress.Address minus targetRangeStart; constructor feeds this selector into occupied addresses of MoveAddressStrategy. It does not allocate a new address.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -879862,7 +879862,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "GetOccupiedAddressOffset",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename",
@@ -879874,7 +879874,15 @@
       "MissingEvidence": "Generated closure/control scaffold slot has no independently proven semantic source value; retain exact physical slot/type without assigning a fabricated name."
      }
     ]
-   }
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "GetNewAddress",
+     "Alias": "GetOccupiedAddressOffset",
+     "Evidence": "Exact physical source/native complete-body correction. GetNewAddress returns groupAddress.Address minus targetRangeStart; constructor feeds this selector into occupied addresses of MoveAddressStrategy. It does not allocate a new address."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -879885,7 +879893,7 @@
    "Token": "0x06002BB1",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Validators.SplitFreeGroupRangeValidator::a(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupRange>)",
    "OriginalName": "a",
-   "Reason": "Physical group-address operation/converter chain. Parameter roles and local slots follow exact typed native operands, constructor storage, subtraction/addition, bounds/overlap checks, address rebinding and undo/redo branches in complete pinned bodies; original meaningful names and existing aliases remain.",
+   "Reason": "Physical group-address operation/converter chain. Parameter roles and local slots follow exact typed native operands, constructor storage, subtraction/addition, bounds/overlap checks, address rebinding and undo/redo branches in complete pinned bodies; original meaningful names and existing aliases remain.\nReviewed method correction: Exact physical source/native complete-body correction. AreRangesSplittable returns true when any child range inclusively contains splitPosition, ORs recursive child results; Validate maps true to CollisionWithChildRanges and false to success. Prior name reverses the boolean implication.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -879928,7 +879936,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "AnyChildRangeContainsSplitPosition",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename",
@@ -879945,7 +879953,15 @@
       "MissingEvidence": "Generated closure/control scaffold slot has no independently proven semantic source value; retain exact physical slot/type without assigning a fabricated name."
      }
     ]
-   }
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "AreRangesSplittable",
+     "Alias": "AnyChildRangeContainsSplitPosition",
+     "Evidence": "Exact physical source/native complete-body correction. AreRangesSplittable returns true when any child range inclusively contains splitPosition, ORs recursive child results; Validate maps true to CollisionWithChildRanges and false to success. Prior name reverses the boolean implication."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -881079,6 +881095,53 @@
      }
     ]
    }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Devices.ResetParameterValuesToDefaultOperation",
+   "Token": "0x06004F8B",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Devices.ResetParameterValuesToDefaultOperation::method_3(Knx.Ets.ObjectModel.Project.ParameterInstance)",
+   "OriginalName": "method_3",
+   "Reason": "Exact physical source/native complete-body correction. ShouldResetParameter returns (CompletionStatus Locked OR Accepted) AND CustomerAdjustable.GetValueOrDefault. Execute and five anonymous predicates negate this result before ResetToDefault; true protects customer-adjustable values rather than requesting reset.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ParameterInstance parameterInstance_0"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "parameterInstance_0",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Nullable`1<System.Boolean>",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "IsProtectedCustomerAdjustableParameter",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
   }
  ],
  "Types": [
