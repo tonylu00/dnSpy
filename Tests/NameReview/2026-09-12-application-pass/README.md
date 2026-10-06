@@ -10,6 +10,12 @@ Read first:
 
 What lives here:
 
+- `load-callbacks-naming-verification-v520.json` — 56 coupled aliases name
+  private load callbacks, their storage and accessors, controller inputs and
+  progress allocation. Actual prompt/abort branches establish the callback
+  roles; public SDK delegate and accessor identities remain protected.
+  Native checks and cached 109-module joins pass with 18,235 remaining lexical
+  candidates. Control/scaffold uncertainties remain explicit; naming-only.
 - `task-entry-contract-corrections-verification-v519.json` — two complete
   interface/implementation families (four members) now use `PerformTaskAsync`
   and `PerformLoadDeviceTaskAsync`. Full execution, fault/cancel recovery and
