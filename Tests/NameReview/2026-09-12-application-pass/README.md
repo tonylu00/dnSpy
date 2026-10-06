@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `image-table-naming-verification-v512.json` — 146 aliases connect eleven
+  table/conversion helper types with the configuration-image creator. Names
+  follow actual chunking, association flags, parameter formats, router security
+  and individual-address comparison. Overloads and meaningful existing aliases
+  are preserved; 46 local scopes use native slot evidence. Native checks pass
+  and cached 109-module joins report 18,377 remaining lexical candidates. No
+  consolidated export/build or runtime verification is claimed for this block.
 - `configuration-image-naming-verification-v511.json` — 128 aliases connect
   the image model, creator, serializer and writer, including two complete
   interface families and 42 supported local scopes. Table payloads follow actual
