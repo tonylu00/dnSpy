@@ -10,6 +10,15 @@ Read first:
 
 What lives here:
 
+- `differential-profile-naming-verification-v514.json` — 132 aliases cover
+  differential-image serialization, CRC-protected stamp extraction, equal-run
+  masking, load-control filtering and private provider selection. Native IL
+  supports 109 local scopes, including shared segment-table entry slots and
+  exact task-control kinds. SDK profile type, method and public parameter names
+  remain protected; two older unresolved SDK methods await separate native
+  preservation review before scope aliases. Native checks and cached joins
+  cover 109 modules with 18,362 remaining lexical candidates. Naming-only;
+  v505 remains the compiled and partially runtime-tested baseline.
 - `image-metadata-naming-verification-v513.json` — 115 aliases connect the
   SDK OSCORE report getters, saved-image stamps and binary serialization. The
   System B object-stamp name follows an explicit ETS4-format log and actual
