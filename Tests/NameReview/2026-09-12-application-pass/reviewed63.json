@@ -259367,7 +259367,7 @@
    "Token": "0x06002D4C",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::a(System.UInt16)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.\nReviewed method correction: Exact physical address allocation complete-body and caller correction. IsAddressFree2 checks only address>=rangeStart AND address<=rangeEnd and serves NumberOfAvailableAddresses count predicate; it never tests usedAddresses.Contains. Separate public IsAddressFree also excludes occupied values.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -259389,7 +259389,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "IsAddressFree2",
+   "NewName": "IsWithinAddressRange",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ScopeEvidenceReviews": [
@@ -345970,7 +345970,7 @@
    "Token": "0x06002D47",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.\nReviewed method correction: Exact physical address allocation complete-body and caller correction. Append path tracks occupied addresses above a signed Int16 running boundary, increments the boundary, reserves its address when not above rangeEnd, otherwise falls back to first/last-free. Preserve original signed overflow and iteration behavior; the name denotes append operation rather than claiming a corrected maximum search.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -346008,7 +346008,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "ForwardToHighestFree",
+   "NewName": "NextAfterOccupiedAddresses",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ScopeEvidenceReviews": [
@@ -881603,7 +881603,7 @@
    "Token": "0x06002D35",
    "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b(System.UInt16)",
    "OriginalName": "b",
-   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.\nReviewed method correction: Exact physical address allocation complete-body and caller correction. WrapIntoRange clamps requestedOffset to maximumAddresses, returns it when rangeStart is1, otherwise adds rangeStart and parses UInt16 with rangeEnd fallback. There is no circular wrap.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -881641,7 +881641,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "TranslateClampedRangeOffset",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename",
@@ -881663,7 +881663,15 @@
       "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
      }
     ]
-   }
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "WrapIntoRange",
+     "Alias": "TranslateClampedRangeOffset",
+     "Evidence": "Exact physical address allocation complete-body and caller correction. WrapIntoRange clamps requestedOffset to maximumAddresses, returns it when rangeStart is1, otherwise adds rangeStart and parses UInt16 with rangeEnd fallback. There is no circular wrap."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -881835,7 +881843,7 @@
    "Token": "0x06002D46",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b()",
    "OriginalName": "b",
-   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.\nReviewed method correction: Exact physical address allocation complete-body and caller correction. NextAlternating scans from allocationStartAddress up to rangeEnd, reserving first unused address, then falls back to first/last-free scan according to fallbackAllocation. It does not alternate between directions.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ScopedMappingBlocker": null,
@@ -881859,7 +881867,7 @@
      "NewName": ""
     }
    ],
-   "NewName": "",
+   "NewName": "NextFromConfiguredStart",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename",
@@ -881876,7 +881884,15 @@
       "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
      }
     ]
-   }
+   },
+   "LedgerAliasCorrections": [
+    {
+     "PreviousLedgerAlias": "",
+     "PreviousMappedAlias": "NextAlternating",
+     "Alias": "NextFromConfiguredStart",
+     "Evidence": "Exact physical address allocation complete-body and caller correction. NextAlternating scans from allocationStartAddress up to rangeEnd, reserving first unused address, then falls back to first/last-free scan according to fallbackAllocation. It does not alternate between directions."
+    }
+   ]
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -882084,6 +882100,53 @@
      }
     ]
    }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.MoveAddressStrategy",
+   "Token": "0x060027D0",
+   "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.MoveAddressStrategy::Get(System.UInt16)",
+   "OriginalName": "Get",
+   "Reason": "Exact physical address allocation complete-body and caller correction. Alias ThrowNoMoreFreeAddresses hides successful behavior: under FirstFree, preserve and reserve the current free address; otherwise Next allocates and returns Address; only exhaustion throws. MoveDevice/MoveGroupAddress callers request an allocated address.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt16 currentAddress"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "currentAddress",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    }
+   ],
+   "NewName": "AllocateAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
   }
  ],
  "Types": [

@@ -1,0 +1,242 @@
+{
+  "Format": 1,
+  "Kind": "SymbolReview",
+  "TargetRoot": "D:\\knx_analysis\\ETS6.3_api_preserved4",
+  "ContractReferenceSha256": "5DBBF82395C86D03E3643E21B4D65EA153A1215E358FACC530E761E313C670ED",
+  "Types": [],
+  "Fields": [],
+  "Methods": [
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.MoveAddressStrategy",
+      "Token": "0x060027D0",
+      "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.MoveAddressStrategy::Get(System.UInt16)",
+      "OriginalName": "Get",
+      "Reason": "Exact physical address allocation complete-body and caller correction. Alias ThrowNoMoreFreeAddresses hides successful behavior: under FirstFree, preserve and reserve the current free address; otherwise Next allocates and returns Address; only exhaustion throws. MoveDevice/MoveGroupAddress callers request an allocated address.",
+      "NeedsReadableName": false,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.UInt16 currentAddress"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "currentAddress",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        }
+      ],
+      "NewName": "AllocateAddress",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+      "Token": "0x06002D35",
+      "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b(System.UInt16)",
+      "OriginalName": "b",
+      "Reason": "Exact physical address allocation complete-body and caller correction. WrapIntoRange clamps requestedOffset to maximumAddresses, returns it when rangeStart is1, otherwise adds rangeStart and parses UInt16 with rangeEnd fallback. There is no circular wrap.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.UInt16 ushort_3"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_3",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.UInt16",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "TranslateClampedRangeOffset",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "PreviousLedgerAlias": "",
+      "ExpectedMappedAlias": "WrapIntoRange"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+      "Token": "0x06002D46",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b()",
+      "OriginalName": "b",
+      "Reason": "Exact physical address allocation complete-body and caller correction. NextAlternating scans from allocationStartAddress up to rangeEnd, reserving first unused address, then falls back to first/last-free scan according to fallbackAllocation. It does not alternate between directions.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.UInt16",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "NextFromConfiguredStart",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename",
+      "PreviousLedgerAlias": "",
+      "ExpectedMappedAlias": "NextAlternating"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+      "Token": "0x06002D47",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::a()",
+      "OriginalName": "a",
+      "Reason": "Exact physical address allocation complete-body and caller correction. Append path tracks occupied addresses above a signed Int16 running boundary, increments the boundary, reserves its address when not above rangeEnd, otherwise falls back to first/last-free. Preserve original signed overflow and iteration behavior; the name denotes append operation rather than claiming a corrected maximum search.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [],
+      "ParameterNames": [],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy/<>c__DisplayClass42_0",
+          "NewName": ""
+        },
+        {
+          "Index": 1,
+          "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.UInt16>",
+          "NewName": ""
+        },
+        {
+          "Index": 2,
+          "ExpectedType": "System.Func`2<System.UInt16,System.Boolean>",
+          "NewName": ""
+        },
+        {
+          "Index": 3,
+          "ExpectedType": "System.UInt16",
+          "NewName": ""
+        },
+        {
+          "Index": 4,
+          "ExpectedType": "System.Int32",
+          "NewName": ""
+        },
+        {
+          "Index": 5,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "NextAfterOccupiedAddresses",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    },
+    {
+      "Module": "Knx.Ets.ObjectModel.dll",
+      "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+      "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+      "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+      "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+      "Token": "0x06002D4C",
+      "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::a(System.UInt16)",
+      "OriginalName": "a",
+      "Reason": "Exact physical address allocation complete-body and caller correction. IsAddressFree2 checks only address>=rangeStart AND address<=rangeEnd and serves NumberOfAvailableAddresses count predicate; it never tests usedAddresses.Contains. Separate public IsAddressFree also excludes occupied values.",
+      "NeedsReadableName": true,
+      "MappingBlocker": null,
+      "ScopedMappingBlocker": null,
+      "ContractFamily": null,
+      "Parameters": [
+        "1: System.UInt16 ushort_3"
+      ],
+      "ParameterNames": [
+        {
+          "Sequence": 1,
+          "OriginalName": "ushort_3",
+          "HasMetadata": true,
+          "NewName": ""
+        }
+      ],
+      "LocalNames": [
+        {
+          "Index": 0,
+          "ExpectedType": "System.Int16",
+          "NewName": ""
+        }
+      ],
+      "NewName": "IsWithinAddressRange",
+      "Unresolved": false,
+      "UnresolvedReason": "",
+      "ReviewDisposition": "rename"
+    }
+  ],
+  "Skips": []
+}
