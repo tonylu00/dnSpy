@@ -10,6 +10,12 @@ Read first:
 
 What lives here:
 
+- `task-entry-contract-corrections-verification-v519.json` — two complete
+  interface/implementation families (four members) now use `PerformTaskAsync`
+  and `PerformLoadDeviceTaskAsync`. Full execution, fault/cancel recovery and
+  subtask orchestration replace aliases that named only logging branches.
+  Native family/SDK checks and cached 109-module joins pass. Every other alias
+  and scope is preserved; v516 remains the consolidated build/runtime baseline.
 - `device-info-reader-corrections-verification-v518.json` — four existing
   logging-path aliases now describe complete general, application, group and
   router section reads. Exact ledger/map preimages, all other aliases and
