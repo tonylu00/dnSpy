@@ -10,6 +10,16 @@ Read first:
 
 What lives here:
 
+- `consolidated-v505-runtime-verification.json` — staged ETS 6.3 starts in
+  Chinese and loads unchanged ETS AI MCP 4.15 and Bulk Linker 6.4.8702. The
+  cloned test-mcp retains its history after restart. A populated password-protected
+  duplicate opens in two fresh processes with 29 devices and 502 group addresses;
+  a history entry written inside it also persists. All four Bulk Linker tabs match
+  the earlier rebuilt baseline; the serial tab still has 24 additional text
+  descendants versus the original control. Each of three test phases restores
+  all 4,630 protected files exactly. Original project/App trees and unrelated
+  changes are preserved. Broader App operations, strict metadata differences,
+  MyKNX/App-update errors, complete naming coverage and ETS 6.4 remain open.
 - `consolidated-v505-verification.json` — the fresh actual 109-project ETS 6.3
   solution compiles with zero errors and 17,689 warnings. Staging preserves the
   original tree and overlays 379 rebuilt assemblies/satellites in a separate copy.
@@ -17,7 +27,7 @@ What lives here:
   alias verification retains 4,462 unresolved metadata differences (550 newly
   checked definitions, no prior differences removed). Source-owner inspection
   remains live in session 17351; its summary and continuation commands are in
-  STATE.json. Current-build runtime and unchanged-App tests remain pending.
+  STATE.json. Partial current-build runtime evidence is recorded above.
 - `reserved-accessor-verification-v505.json` — fixes the one CS0082 exposed by
   the actual v504 solution build. Falcon's ordinary configuration storage method
   is now `SetInterfaceConfiguration`; its former alias occupied the setter slot
