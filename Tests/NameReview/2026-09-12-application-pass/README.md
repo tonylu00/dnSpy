@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `task-state-naming-verification-v506.json` — 117 aliases across the IoT task
+  state chain: one type, 41 methods, 19 fields, 50 parameters and six locals.
+  Eight complete interface families share names with their implementations;
+  existing aliases and SDK contracts are preserved. Native update, map and ledger
+  checks pass. Hash-verified cached joins cover 109 physical modules and reduce
+  remaining lexical candidates from 18,623 to 18,585. This is a naming checkpoint;
+  v505 remains the compiled and partially runtime-verified baseline.
 - `consolidated-v505-source-verification.json` — fresh native inspection and
   reference audit cover all 109 physical first-party modules and 16,345 source
   roots, with zero unpinned definitions or unknown owners. There are 16,330 exact
@@ -19,7 +26,7 @@ What lives here:
   state-owner and 491 field-binding observations; 58 lack direct source evidence.
   All differences remain unresolved. No naming candidates are retired by these
   observations. Inspection and audit jobs are finished; continue substantial
-  naming blocks from v505 using the routes in STATE.json.
+  naming blocks using the current map and routes in STATE.json.
 - `consolidated-v505-runtime-verification.json` — staged ETS 6.3 starts in
   Chinese and loads unchanged ETS AI MCP 4.15 and Bulk Linker 6.4.8702. The
   cloned test-mcp retains its history after restart. A populated password-protected
