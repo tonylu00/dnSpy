@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `device-unload-naming-verification-v507.json` — 92 aliases connect unload
+  flags and completed goals, programming-mode checks, secure device access and
+  task callers. Three complete contract families include the seven-member
+  device serial-number family. One unused enum sentinel remains explicitly
+  unresolved. Native checks pass; cached 109-module joins report 18,541 remaining
+  lexical candidates. v506 and v507 add 209 aliases together, without another
+  source export or runtime claim. Continue from v507 using STATE.json.
 - `task-state-naming-verification-v506.json` — 117 aliases across the IoT task
   state chain: one type, 41 methods, 19 fields, 50 parameters and six locals.
   Eight complete interface families share names with their implementations;
