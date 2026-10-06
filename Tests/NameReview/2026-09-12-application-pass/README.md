@@ -10,6 +10,16 @@ Read first:
 
 What lives here:
 
+- `configuration-providers-naming-verification-v515.json` — 94 aliases connect
+  six provider types, their complete cache-key method family, resource storage,
+  captured filters and the actual profile-cache caller. The dictionary-key use
+  determines the family name. The portable ledger now accepts checked body
+  scopes on older unknown definitions while retaining their uncertainty and
+  exact prior evidence; 69 tests pass. Two protected SDK methods gain nine
+  locals without public-name edits. Native checks pass and cached joins cover
+  109 modules with 18,322 lexical candidates. Naming-only; fourteen definition
+  names remain explicitly unresolved in this block. Withdraw the misleading
+  `IsNewSegmentIndex` anonymous-predicate alias next.
 - `differential-profile-naming-verification-v514.json` — 132 aliases cover
   differential-image serialization, CRC-protected stamp extraction, equal-run
   masking, load-control filtering and private provider selection. Native IL

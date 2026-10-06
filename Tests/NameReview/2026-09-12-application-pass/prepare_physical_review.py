@@ -16,6 +16,7 @@ DECISION_KEYS = {
     'DefinitionOnlyUnresolvedReason', 'RemoveExistingAlias', 'ExpectedAlias',
     'PreviousLedgerAlias', 'ExpectedMappedAlias', 'ResolveExistingUnresolved',
     'PreviousUnresolvedEvidence', 'UnresolvedScopeEvidence', 'PreviousScopeEvidence',
+    'MergeExistingUnresolvedScopes', 'PreviousUnresolvedScopeDecision',
 }
 
 
@@ -177,6 +178,13 @@ def prepare(spec):
             if 'UnresolvedScopeEvidence' not in row or not isinstance(decision['PreviousScopeEvidence'], dict):
                 raise ValueError('Scope evidence refresh requires current and previous evidence')
             row['PreviousScopeEvidence'] = copy.deepcopy(decision['PreviousScopeEvidence'])
+        if decision.get('MergeExistingUnresolvedScopes'):
+            if not definition_reason or not isinstance(decision.get('PreviousUnresolvedScopeDecision'), dict):
+                raise ValueError('Unresolved scope merge requires retained definition uncertainty and prior scopes')
+            row['MergeExistingUnresolvedScopes'] = True
+            row['PreviousUnresolvedScopeDecision'] = copy.deepcopy(decision['PreviousUnresolvedScopeDecision'])
+        elif 'PreviousUnresolvedScopeDecision' in decision:
+            raise ValueError('Prior unresolved scopes require an explicit merge decision')
         result[key[0]].append(row)
     return result
 

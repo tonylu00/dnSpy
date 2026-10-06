@@ -40,6 +40,26 @@ class InventorySelectionTests(unittest.TestCase):
         self.assertIsNone(row['MappingBlocker'])
         self.assertEqual(row['Signature'], self.row['Signature'])
 
+    def test_unresolved_scope_merge_requires_explicit_prior_decision(self):
+        decision = self.spec['Rows'][0]
+        decision.pop('NewName')
+        decision.update(ParameterNames={'1': 'copiedByteCount'},
+                        DefinitionOnlyUnresolvedReason='Owner role remains unknown',
+                        MergeExistingUnresolvedScopes=True,
+                        PreviousUnresolvedScopeDecision={'Reason': 'prior', 'LocalNames': []})
+        row = prepare(self.spec)['Methods'][0]
+        self.assertTrue(row['Unresolved'])
+        self.assertTrue(row['DefinitionOnlyUnresolved'])
+        self.assertTrue(row['MergeExistingUnresolvedScopes'])
+        self.assertEqual(decision['PreviousUnresolvedScopeDecision'], row['PreviousUnresolvedScopeDecision'])
+        for key in ('DefinitionOnlyUnresolvedReason', 'PreviousUnresolvedScopeDecision'):
+            bad = copy.deepcopy(self.spec)
+            del bad['Rows'][0][key]
+            with self.subTest(key=key), self.assertRaises(ValueError): prepare(bad)
+        bad = copy.deepcopy(self.spec)
+        del bad['Rows'][0]['MergeExistingUnresolvedScopes']
+        with self.assertRaises(ValueError): prepare(bad)
+
     def test_historical_alias_preimages_are_retained(self):
         self.spec['Rows'][0].update(PreviousLedgerAlias='', ExpectedMappedAlias='OldAlias')
         row = prepare(self.spec)['Methods'][0]

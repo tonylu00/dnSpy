@@ -454,6 +454,41 @@ def remove_method_alias(previous, reviewed, mapped_name, checked_change, checked
     return result
 
 
+def merge_unresolved_scopes(previous, reviewed, mapped_name, checked_scopes=None):
+    """Add native-checked body names without resolving an unknown definition."""
+    require_identity(previous, reviewed)
+    if (int(previous['Token'], 16) >> 24 != 6 or not previous.get('Unresolved') or
+            previous.get('NewName') or mapped_name or not previous.get('UnresolvedReason') or
+            not reviewed.get('MergeExistingUnresolvedScopes') or not reviewed.get('DefinitionOnlyUnresolved') or
+            not reviewed.get('Unresolved') or reviewed.get('NewName') or not reviewed.get('UnresolvedReason') or
+            not reviewed.get('Reason')):
+        raise ValueError('Unresolved scope merge requires an explicitly retained unknown method definition')
+    if reviewed.get('PreviousUnresolvedScopeDecision') != proposal_preimage(previous):
+        raise ValueError('Unresolved scope merge requires exact prior rationale and scopes')
+    for label, position, preimage, expected in (
+            ('ParameterNames', 'Sequence', 'OriginalName', 'ExpectedName'),
+            ('LocalNames', 'Index', 'ExpectedType', 'ExpectedType')):
+        for document in (previous, reviewed):
+            entries = document.get(label, [])
+            if len({entry[position] for entry in entries}) != len(entries):
+                raise ValueError('Duplicate unresolved scope position: ' + label)
+            for entry in entries:
+                if not entry.get('NewName'):
+                    continue
+                checked = (checked_scopes or {}).get((label, entry[position]))
+                if (not checked or checked.get('NewName') != entry['NewName'] or
+                        checked.get(expected) != entry.get(preimage)):
+                    raise ValueError('Unresolved scope requires exact native-checked identity: ' + label)
+    old, incoming = copy.deepcopy(previous), copy.deepcopy(reviewed)
+    old['Unresolved'] = incoming['Unresolved'] = False
+    result = merge_scopes(old, incoming, '', checked_scopes)
+    result.update(Unresolved=True, DefinitionOnlyUnresolved=True,
+                  UnresolvedReason=previous['UnresolvedReason'], NeedsReadableName=previous.get('NeedsReadableName', True))
+    result.setdefault('UnresolvedScopeMerges', []).append(dict(
+        PreviousDecision=proposal_preimage(previous), Evidence=reviewed['Reason']))
+    return result
+
+
 def merge_scopes(previous, reviewed, mapped_name, checked_scopes=None, replacements=None):
     require_identity(previous, reviewed)
     if reviewed.get('Unresolved') or previous.get('Unresolved'):

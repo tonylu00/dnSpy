@@ -10,7 +10,7 @@ import json
 import pathlib
 import shutil
 import xml.etree.ElementTree as ET
-from review_ledger import merge_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal, validate_scope_evidence_only, refresh_scope_evidence
+from review_ledger import merge_scopes, merge_unresolved_scopes, replace_alias, replace_method_alias, remove_method_alias, resolve_unresolved, resolve_scoped_definition, validate_review_only, refresh_evidence, apply_proposal, validate_scope_evidence_only, refresh_scope_evidence
 from sdk_proposal_retirement import load_sdk_symbols, key as sdk_key, retire_sdk_proposal
 from contract_sdk_proposal_retirement import load_contract_sdk_evidence, retire_contract_sdk_proposal, preserve_contract_sdk_method
 from framework_contract_preservation import load_framework_contract_evidence, preserve_framework_contract_method
@@ -20,6 +20,8 @@ for name in ('state', 'sink', 'map', 'review', 'update', 'check', 'block'):
     parser.add_argument('--' + name, required=True)
 parser.add_argument('--merge-reviewed-scopes', action='store_true',
                     help='Explicitly merge new parameter/local decisions into existing physical ledger rows')
+parser.add_argument('--merge-reviewed-unresolved-scopes', action='store_true',
+                    help='Add checked body scopes while retaining an existing unknown method definition')
 parser.add_argument('--resolve-reviewed-scoped-definitions', action='store_true',
                     help='Resolve scope-only method definitions with exact prior rationale and native addition proof')
 parser.add_argument('--retire-rejected-sdk-proposals', action='store_true',
@@ -95,6 +97,7 @@ checked_scopes = {(module.get('Path'), row.get('Token')):
                   for scope in row.findall(tag)}
                  for module in root.findall('Module') for row in module}
 merged_rows = 0
+unresolved_scope_merges = 0
 scoped_definitions_resolved = 0
 replaced_rows = 0
 refreshed_rows = 0
@@ -141,6 +144,12 @@ for kind in ('Types', 'Methods', 'Fields'):
     keys = {(r['Module'], r['Token']): i for i, r in enumerate(ledger[kind])}
     for row in review[kind]:
         key = (row['Module'], row['Token'])
+        if row.get('MergeExistingUnresolvedScopes'):
+            assert args.merge_reviewed_unresolved_scopes and kind == 'Methods' and key in keys
+            assert not final_names.get(key, '') and not base_names.get(key, ''), 'Unknown definition must stay unmapped'
+            ledger[kind][keys[key]] = merge_unresolved_scopes(ledger[kind][keys[key]], row, '', checked_scopes.get(key, {}))
+            unresolved_scope_merges += 1
+            continue
         if args.refresh_reviewed_scope_evidence:
             assert kind == 'Methods' and key in keys, 'Scope evidence refresh requires an existing method'
             ledger[kind][keys[key]] = refresh_scope_evidence(ledger[kind][keys[key]], row, checked_scopes.get(key, {}))
@@ -238,6 +247,7 @@ checkpoint = {'Format': 1, 'Kind': 'ReviewCheckpoint' if args.review_only else '
               'AcceptedDecisions': len(update['Changes']), 'SdkNameWhitelistSha256': update['SdkNameWhitelistSha256'],
               'ReviewedDecisions': sum(len(review[kind]) for kind in ('Types', 'Fields', 'Methods')),
               'ExplicitScopeMerges': merged_rows,
+              'ExplicitUnresolvedScopeMerges': unresolved_scope_merges,
               'ExplicitAliasReplacements': replaced_rows,
               'ExplicitEvidenceRefreshes': refreshed_rows,
               'ExplicitScopeEvidenceRefreshes': scope_evidence_rows,
