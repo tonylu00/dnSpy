@@ -10,6 +10,15 @@ Read first:
 
 What lives here:
 
+- `lsm-predicate-naming-verification-v516.json` — exact native withdrawal of
+  `IsNewSegmentIndex` from anonymous predicate `0600078D`, plus its proven
+  `lsmIndex` input. The body checks membership in the set of LSMs with image
+  data; `RemoveWhere` uses it to protect those LSMs from control removal.
+  Original generated entry naming remains explicitly unresolved. Every other
+  alias, scope and ledger decision is preserved; eight proof tests and native
+  checks pass. Cached joins cover 109 modules with 18,322 lexical candidates.
+  Freeze v516 for consolidated export/build after eleven naming blocks since
+  v505; the previous build/runtime baseline is still v505.
 - `configuration-providers-naming-verification-v515.json` — 94 aliases connect
   six provider types, their complete cache-key method family, resource storage,
   captured filters and the actual profile-cache caller. The dictionary-key use
