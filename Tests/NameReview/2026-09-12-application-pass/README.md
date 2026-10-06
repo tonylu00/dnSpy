@@ -10,6 +10,11 @@ Read first:
 
 What lives here:
 
+- `device-info-reader-corrections-verification-v518.json` — four existing
+  logging-path aliases now describe complete general, application, group and
+  router section reads. Exact ledger/map preimages, all other aliases and
+  scope decisions are preserved. Native checks and cached 109-module joins
+  pass; 18,268 lexical candidates remain. This correction is naming-only.
 - `device-info-naming-verification-v517.json` — 123 coupled aliases name the
   IoT XML section hierarchy, its complete five-member resource-population
   override family, table storage, getters/setters, typed inputs and proven
