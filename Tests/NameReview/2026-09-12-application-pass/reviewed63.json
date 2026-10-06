@@ -259367,7 +259367,7 @@
    "Token": "0x06002D4C",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::a(System.UInt16)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -259379,7 +259379,7 @@
      "Sequence": 1,
      "OriginalName": "ushort_3",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "address"
     }
    ],
    "LocalNames": [
@@ -259389,9 +259389,25 @@
      "NewName": ""
     }
    ],
-   "NewName": "IsAddressFree",
+   "NewName": "IsAddressFree2",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -345954,7 +345970,7 @@
    "Token": "0x06002D47",
    "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -345969,17 +345985,17 @@
     {
      "Index": 1,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<System.UInt16>",
-     "NewName": ""
+     "NewName": "usedAddressesEnumerator"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Func`2<System.UInt16,System.Boolean>",
-     "NewName": ""
+     "NewName": "isAboveHighestUsedAddress"
     },
     {
      "Index": 3,
      "ExpectedType": "System.UInt16",
-     "NewName": ""
+     "NewName": "usedAddress"
     },
     {
      "Index": 4,
@@ -345994,7 +346010,33 @@
    ],
    "NewName": "ForwardToHighestFree",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy/<>c__DisplayClass42_0",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -346005,7 +346047,7 @@
    "Token": "0x06002D79",
    "Signature": "Knx.Ets.ObjectModel.Project.IGroupRange Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::b()",
    "OriginalName": "b",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -346015,62 +346057,62 @@
     {
      "Index": 0,
      "ExpectedType": "System.Linq.IOrderedEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupAddress>",
-     "NewName": ""
+     "NewName": "roomAddressesDescending"
     },
     {
      "Index": 1,
      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.GroupAddressStyle",
-     "NewName": ""
+     "NewName": "groupAddressStyle"
     },
     {
      "Index": 2,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "twoLevelMainGroupAllocation"
     },
     {
      "Index": 3,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRange",
-     "NewName": ""
+     "NewName": "createdTwoLevelMainGroup"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Types.Range>",
-     "NewName": ""
+     "NewName": "occupiedFreeRanges"
     },
     {
      "Index": 5,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "freeRangeAllocation"
     },
     {
      "Index": 6,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRange",
-     "NewName": ""
+     "NewName": "createdFreeRange"
     },
     {
      "Index": 7,
      "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Types.Range>",
-     "NewName": ""
+     "NewName": "initialFreeRange"
     },
     {
      "Index": 8,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IGroupRange>",
-     "NewName": ""
+     "NewName": "mainGroupsDescending"
     },
     {
      "Index": 9,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRanges.IThreeLevelMainGroup",
-     "NewName": ""
+     "NewName": "threeLevelMainGroup"
     },
     {
      "Index": 10,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "middleGroupAllocation"
     },
     {
      "Index": 11,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupRange",
-     "NewName": ""
+     "NewName": "fallbackRange"
     },
     {
      "Index": 12,
@@ -346085,7 +346127,28 @@
    ],
    "NewName": "Initialize",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 12,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 13,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -346096,7 +346159,7 @@
    "Token": "0x06002D7A",
    "Signature": "Knx.Ets.ObjectModel.Project.IGroupRange Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::a(System.Collections.Generic.IEnumerable`1<Knx.Ets.ObjectModel.Project.IGroupRange>,Knx.Ets.ObjectModel.Project.GroupRanges.IThreeLevelMainGroup&)",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -346109,40 +346172,40 @@
      "Sequence": 1,
      "OriginalName": "ienumerable_1",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "mainGroups"
     },
     {
      "Sequence": 2,
      "OriginalName": "ithreeLevelMainGroup_0",
      "HasMetadata": true,
-     "NewName": ""
+     "NewName": "mainGroup"
     }
    ],
    "LocalNames": [
     {
      "Index": 0,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "mainGroupAllocation"
     },
     {
      "Index": 1,
      "ExpectedType": "System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Project.IGroupRange>",
-     "NewName": ""
+     "NewName": "mainGroupCandidates"
     },
     {
      "Index": 2,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.IGroupRange>",
-     "NewName": ""
+     "NewName": "mainGroupsEnumerator"
     },
     {
      "Index": 3,
      "ExpectedType": "System.Collections.Generic.IEnumerator`1<Knx.Ets.ObjectModel.Project.IGroupRange>",
-     "NewName": ""
+     "NewName": "availableChildRangesEnumerator"
     },
     {
      "Index": 4,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupRange",
-     "NewName": ""
+     "NewName": "availableChildRange"
     },
     {
      "Index": 5,
@@ -346157,7 +346220,28 @@
    ],
    "NewName": "FallBackForThreeLevelGroupStructure",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 5,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -346168,7 +346252,7 @@
    "Token": "0x06002D7B",
    "Signature": "System.Void Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::a()",
    "OriginalName": "a",
-   "Reason": "short-unrecognized-name",
+   "Reason": "short-unrecognized-name\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
    "NeedsReadableName": true,
    "MappingBlocker": null,
    "ContractFamily": null,
@@ -346178,62 +346262,62 @@
     {
      "Index": 0,
      "ExpectedType": "Knx.Ets.Common.Types.Enumerations.GroupAddressStyle",
-     "NewName": ""
+     "NewName": "groupAddressStyle"
     },
     {
      "Index": 1,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "twoLevelMainGroupAllocation"
     },
     {
      "Index": 2,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRange",
-     "NewName": ""
+     "NewName": "createdTwoLevelMainGroup"
     },
     {
      "Index": 3,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupRange",
-     "NewName": ""
+     "NewName": "replacementRange"
     },
     {
      "Index": 4,
      "ExpectedType": "System.Collections.Generic.IEnumerable`1<Knx.Ets.Common.Types.Range>",
-     "NewName": ""
+     "NewName": "occupiedFreeRanges"
     },
     {
      "Index": 5,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "freeRangeAllocation"
     },
     {
      "Index": 6,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRange",
-     "NewName": ""
+     "NewName": "createdFreeRange"
     },
     {
      "Index": 7,
      "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.IAddressStrategy",
-     "NewName": ""
+     "NewName": "nextGroupAllocation"
     },
     {
      "Index": 8,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupRange",
-     "NewName": ""
+     "NewName": "availableThreeLevelRange"
     },
     {
      "Index": 9,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.GroupRanges.IThreeLevelMainGroup",
-     "NewName": ""
+     "NewName": "threeLevelMainGroup"
     },
     {
      "Index": 10,
      "ExpectedType": "System.Collections.Generic.List`1<Knx.Ets.ObjectModel.Project.IGroupRange>",
-     "NewName": ""
+     "NewName": "mainGroupsDescending"
     },
     {
      "Index": 11,
      "ExpectedType": "Knx.Ets.ObjectModel.Project.IGroupRange",
-     "NewName": ""
+     "NewName": "fallbackRange"
     },
     {
      "Index": 12,
@@ -346248,7 +346332,28 @@
    ],
    "NewName": "SearchNextAvailableRange",
    "Unresolved": false,
-   "UnresolvedReason": ""
+   "UnresolvedReason": "",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 12,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 13,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444562,8 +444667,31 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "AssignTargetRange",
-   "ParameterNames": [],
-   "Reason": "assigns the TargetRange field, resolving it through Initialize when the argument is null, records the range in the used list, resets the address strategy and marks the range valid; the body behind get_TargetRange, set_TargetRange and Next"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupRange_1",
+     "HasMetadata": true,
+     "NewName": "targetRange"
+    }
+   ],
+   "Reason": "assigns the TargetRange field, resolving it through Initialize when the argument is null, records the range in the used list, resets the address strategy and marks the range valid; the body behind get_TargetRange, set_TargetRange and Next\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444577,8 +444705,54 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "CreateThreeLevelMiddleGroup",
-   "ParameterNames": [],
-   "Reason": "runs an AddThreeLevelMiddleGroupOperation for the given main group with the given address strategy and returns the created range, or null when validation or execution fails; called by Initialize and SearchNextAvailableRange"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ithreeLevelMainGroup_0",
+     "HasMetadata": true,
+     "NewName": "mainGroup"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "iaddressStrategy_0",
+     "HasMetadata": true,
+     "NewName": "addressStrategy"
+    }
+   ],
+   "Reason": "runs an AddThreeLevelMiddleGroupOperation for the given main group with the given address strategy and returns the created range, or null when validation or execution fails; called by Initialize and SearchNextAvailableRange\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.GroupRanges.AddThreeLevelMiddleGroupOperation",
+     "NewName": "addMiddleGroupOperation"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.INamedDomObject",
+     "NewName": "createdMiddleGroup"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444592,8 +444766,48 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "CreateThreeLevelMainGroup",
-   "ParameterNames": [],
-   "Reason": "runs an AddThreeLevelMainGroupOperation on the installation and returns the created ThreeLevelMainGroup, or null on failure; called by Initialize, FallBackForThreeLevelGroupStructure and SearchNextAvailableRange"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iaddressStrategy_0",
+     "HasMetadata": true,
+     "NewName": "addressStrategy"
+    }
+   ],
+   "Reason": "runs an AddThreeLevelMainGroupOperation on the installation and returns the created ThreeLevelMainGroup, or null on failure; called by Initialize, FallBackForThreeLevelGroupStructure and SearchNextAvailableRange\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.GroupRanges.AddThreeLevelMainGroupOperation",
+     "NewName": "addMainGroupOperation"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.INamedDomObject",
+     "NewName": "createdMainGroup"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444607,8 +444821,48 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "CreateFreeGroupRange",
-   "ParameterNames": [],
-   "Reason": "runs an AddFreeGroupRangeOperation on the installation and returns the created GroupRange, or null on failure; called by Initialize and the free-style branch of SearchNextAvailableRange"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iaddressStrategy_0",
+     "HasMetadata": true,
+     "NewName": "addressStrategy"
+    }
+   ],
+   "Reason": "runs an AddFreeGroupRangeOperation on the installation and returns the created GroupRange, or null on failure; called by Initialize and the free-style branch of SearchNextAvailableRange\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.GroupRanges.AddFreeGroupRangeOperation",
+     "NewName": "addFreeRangeOperation"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.INamedDomObject",
+     "NewName": "createdFreeRange"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444622,8 +444876,48 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "CreateTwoLevelMainGroup",
-   "ParameterNames": [],
-   "Reason": "runs an AddTwoLevelMainGroupOperation on the installation and returns the created GroupRange, or null on failure; called by the two-level branches of Initialize and SearchNextAvailableRange"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "iaddressStrategy_0",
+     "HasMetadata": true,
+     "NewName": "addressStrategy"
+    }
+   ],
+   "Reason": "runs an AddTwoLevelMainGroupOperation on the installation and returns the created GroupRange, or null on failure; called by the two-level branches of Initialize and SearchNextAvailableRange\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.GroupRanges.AddTwoLevelMainGroupOperation",
+     "NewName": "addMainGroupOperation"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "Knx.Ets.ObjectModel.Interfaces.INamedDomObject",
+     "NewName": "createdMainGroup"
+    }
+   ],
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444637,8 +444931,31 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "IsUnusedRangeWithFreeAddresses",
-   "ParameterNames": [],
-   "Reason": "true when the range is not in the used list and has free group addresses; the final fallback scan of Initialize"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupRange_1",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Reason": "true when the range is not in the used list and has free group addresses; the final fallback scan of Initialize\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444652,8 +444969,36 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "IsUnusedLeafRangeWithFreeAddresses",
-   "ParameterNames": [],
-   "Reason": "true when the range is not used, has free group addresses and has no child ranges; the leaf fallback scan of Initialize"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupRange_1",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Reason": "true when the range is not used, has free group addresses and has no child ranges; the leaf fallback scan of Initialize\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444667,8 +445012,31 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "IsUnusedChildRangeWithFreeAddresses",
-   "ParameterNames": [],
-   "Reason": "true when the range is not used and has free group addresses; the child scan of FallBackForThreeLevelGroupStructure"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupRange_1",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Reason": "true when the range is not used and has free group addresses; the child scan of FallBackForThreeLevelGroupStructure\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444682,8 +445050,31 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "IsUnusedRangeWithFreeAddressesForTwoLevelStyle",
-   "ParameterNames": [],
-   "Reason": "true when the range is not used and has free group addresses; the two-level fallback scan of SearchNextAvailableRange"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupRange_1",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Reason": "true when the range is not used and has free group addresses; the two-level fallback scan of SearchNextAvailableRange\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -444697,8 +445088,31 @@
    "MappingBlocker": null,
    "ContractFamily": null,
    "NewName": "IsUnusedRangeWithFreeAddressesForFreeStyle",
-   "ParameterNames": [],
-   "Reason": "true when the range is not used and has free group addresses; the free-style fallback scan of SearchNextAvailableRange"
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "igroupRange_1",
+     "HasMetadata": true,
+     "NewName": "groupRange"
+    }
+   ],
+   "Reason": "true when the range is not used and has free group addresses; the free-style fallback scan of SearchNextAvailableRange\nScope review: Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "ScopeEvidenceReviews": [
+    {
+     "PreviousUnresolvedScopeEvidence": {},
+     "Evidence": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches."
+    }
+   ],
+   "UnresolvedScopeEvidence": {
+    "Parameters": [],
+    "Locals": [
+     {
+      "Index": 0,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   },
   {
    "Module": "Knx.Ets.ObjectModel.dll",
@@ -881142,6 +881556,534 @@
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.MoveDeviceAddressStrategy",
+   "Token": "0x060027D1",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.MoveDeviceAddressStrategy::.ctor(Knx.Ets.ObjectModel.Project.ILine)",
+   "OriginalName": ".ctor",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.ObjectModel.Project.ILine line"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "line",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.Collections.Generic.List`1<System.UInt16>",
+     "NewName": "occupiedDeviceAddresses"
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x06002D35",
+   "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b(System.UInt16)",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt16 ushort_3"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ushort_3",
+     "HasMetadata": true,
+     "NewName": "requestedOffset"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "absoluteAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x06002D42",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::ForwardToNextAddress()",
+   "OriginalName": "ForwardToNextAddress",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "candidateAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Boolean",
+     "NewName": "allocationSucceeded"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x06002D44",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::d()",
+   "OriginalName": "d",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "candidateAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x06002D45",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::c()",
+   "OriginalName": "c",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "candidateAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x06002D46",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b()",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "candidateAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 1,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x06002D48",
+   "Signature": "System.Collections.Generic.IList`1<System.UInt16> Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::Preview(System.UInt16)",
+   "OriginalName": "Preview",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ScopedMappingBlocker": "virtual-or-override: use --review-families for complete contract review",
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.UInt16 count"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "count",
+     "HasMetadata": true,
+     "NewName": ""
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+     "NewName": "previewAllocator"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.Collections.Generic.List`1<System.UInt16>",
+     "NewName": "previewAddresses"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Collections.Generic.List`1/Enumerator<System.UInt16>",
+     "NewName": "usedAddressesEnumerator"
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.UInt16",
+     "NewName": "usedAddress"
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": "addedAddressCount"
+    },
+    {
+     "Index": 5,
+     "ExpectedType": "System.UInt16",
+     "NewName": "allocatedAddress"
+    },
+    {
+     "Index": 6,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 7,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 6,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 7,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy",
+   "Token": "0x06002D8D",
+   "Signature": "System.Void Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy::.ctor(System.Collections.Generic.IEnumerable`1<System.Nullable`1<System.Byte>>,System.Func`1<System.Boolean>,Knx.Ets.Common.Types.Strategies.AddressAllocations)",
+   "OriginalName": ".ctor",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": false,
+   "MappingBlocker": "constructor",
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: System.Collections.Generic.IEnumerable`1<System.Nullable`1<System.Byte>> ienumerable_0",
+    "2: System.Func`1<System.Boolean> func_1",
+    "3: Knx.Ets.Common.Types.Strategies.AddressAllocations addressAllocations_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "ienumerable_0",
+     "HasMetadata": true,
+     "NewName": "existingDeviceAddresses"
+    },
+    {
+     "Sequence": 2,
+     "OriginalName": "func_1",
+     "HasMetadata": true,
+     "NewName": "isCouplerProvider"
+    },
+    {
+     "Sequence": 3,
+     "OriginalName": "addressAllocations_2",
+     "HasMetadata": true,
+     "NewName": "allocationMode"
+    }
+   ],
+   "LocalNames": [],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy",
+   "Token": "0x06002D92",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy::b(Knx.Ets.Common.Types.Strategies.AddressAllocations)",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation parameter/local roles follow exact native argument storage and stloc/ldloc operands: first/last-free candidate scans, append/start-with fallback, preview copy/reservation, coupler address zero, and room-based typed main/middle/free-range creation and fallback. Whole source body and exact static callers are pinned. Preserve existing meaningful method names and original unsupported strategy branches.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [
+    "1: Knx.Ets.Common.Types.Strategies.AddressAllocations addressAllocations_2"
+   ],
+   "ParameterNames": [
+    {
+     "Sequence": 1,
+     "OriginalName": "addressAllocations_2",
+     "HasMetadata": true,
+     "NewName": "allocationMode"
+    }
+   ],
+   "LocalNames": [
+    {
+     "Index": 0,
+     "ExpectedType": "System.UInt16",
+     "NewName": "maximumDeviceAddress"
+    },
+    {
+     "Index": 1,
+     "ExpectedType": "System.UInt16",
+     "NewName": "candidateDeviceAddress"
+    },
+    {
+     "Index": 2,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    },
+    {
+     "Index": 3,
+     "ExpectedType": "System.Int16",
+     "NewName": ""
+    },
+    {
+     "Index": 4,
+     "ExpectedType": "System.Int32",
+     "NewName": ""
+    }
+   ],
+   "NewName": "",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename",
+   "UnresolvedScopeEvidence": {
+    "Locals": [
+     {
+      "Index": 2,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 3,
+      "ExpectedType": "System.Int16",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     },
+     {
+      "Index": 4,
+      "ExpectedType": "System.Int32",
+      "MissingEvidence": "Generated/control/state-machine scaffold slot lacks an independently proven domain value; retain exact slot/type without a fabricated semantic name."
+     }
+    ]
+   }
   }
  ],
  "Types": [
@@ -1344943,6 +1345885,424 @@
    "ParameterNames": [],
    "LocalNames": [],
    "NewName": "progressManager",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.MoveAddressStrategy",
+   "Token": "0x04000B71",
+   "Signature": "Knx.Ets.Common.Types.Strategies.AddressAllocations Knx.Ets.ObjectModel.Operations.MoveAddressStrategy::a",
+   "OriginalName": "a",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor stores allocation mode; keep-current-address fast path applies only to FirstFree.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "allocationMode",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.MoveAddressStrategy",
+   "Token": "0x04000B72",
+   "Signature": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy Knx.Ets.ObjectModel.Operations.MoveAddressStrategy::b",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor creates AddressStrategy; free checks, reservation and Next/address reads all delegate to it.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "addressStrategy",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.MoveDeviceAddressStrategy",
+   "Token": "0x04000B73",
+   "Signature": "Knx.Ets.ObjectModel.Operations.MoveAddressStrategy Knx.Ets.ObjectModel.Operations.MoveDeviceAddressStrategy::a",
+   "OriginalName": "a",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Line constructor initializes MoveAddressStrategy from occupied device addresses and Get delegates non-coupler allocation.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "deviceAddressAllocator",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.MoveDeviceAddressStrategy",
+   "Token": "0x04000B74",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.MoveDeviceAddressStrategy::b",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor tests occupied address zero; Get assigns zero to first coupler then marks it used.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "couplerAddressUsed",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F0F",
+   "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::b",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor stores requested start; Reset recalculates/clamps allocation start from it.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "requestedStartAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F10",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::c",
+   "OriginalName": "c",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor stores option; StartWith decides initial used addresses and fallback getter checks it.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "keepExistingGroupRange",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F11",
+   "Signature": "Knx.Ets.Common.Types.Strategies.AddressAllocations Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::d",
+   "OriginalName": "d",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor stores fallback policy; both start-with and append fallback choose first/last-free behavior.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "fallbackAllocation",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F13",
+   "Signature": "System.UInt16 Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::rangeEnd",
+   "OriginalName": "rangeEnd",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Original field rangeEnd stores clamped requested start, exposed by get_StartAddress and used by start-with scan/preview, not the upper boundary. Other physical rangeEnd field remains meaningful and unrenamed.",
+   "NeedsReadableName": false,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "allocationStartAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F16",
+   "Signature": "System.Collections.Generic.IEnumerable`1<System.UInt16> Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::i",
+   "OriginalName": "i",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor/Reset snapshot initial occupancy; fallback getter compares current address against this original set.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "initialOccupiedAddresses",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F19",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::bool_1",
+   "OriginalName": "bool_1",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Next stores capacity check then actual allocation success and returns this bool; Reset restores true.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "canAllocateAddress",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy",
+   "Token": "0x04000F1A",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.AddressStrategy::m",
+   "OriginalName": "m",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Initially true and Reset sets true; ForwardToNextAddress clears it after entering allocation-mode selection, then later calls may continue cyclic scanning.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "restartAllocation",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy",
+   "Token": "0x04000F28",
+   "Signature": "Knx.Ets.ObjectModel.Project.IBuildingPart Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::a",
+   "OriginalName": "a",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Initialize reads buildingPart.AllGroupAddresses to choose range of highest existing room address.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "buildingPart",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy",
+   "Token": "0x04000F29",
+   "Signature": "Knx.Ets.ObjectModel.IObjectContext Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::b",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Range creation and fallback read project factory, installation collections and group-address style from context.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "objectContext",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy",
+   "Token": "0x04000F2B",
+   "Signature": "System.Boolean Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::d",
+   "OriginalName": "d",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. AssignTargetRange sets true; Next checks target capacity, searches another range and stores actual address allocation result.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "canAllocateAddressInTargetRange",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy",
+   "Token": "0x04000F2C",
+   "Signature": "System.Collections.Generic.IList`1<Knx.Ets.ObjectModel.Project.IGroupRange> Knx.Ets.ObjectModel.Operations.Strategies.CreateNewInThisRoomAddressStrategy::e",
+   "OriginalName": "e",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. AssignTargetRange appends target; every fallback predicate excludes this collection.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "visitedRanges",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy",
+   "Token": "0x04000F34",
+   "Signature": "System.Func`1<System.Boolean> Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy::a",
+   "OriginalName": "a",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Build passes isCoupler callback; allocation checks it before reserving device address zero.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "isCouplerProvider",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy",
+   "Token": "0x04000F35",
+   "Signature": "Knx.Ets.Common.Types.Strategies.AddressAllocations Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy::b",
+   "OriginalName": "b",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor stores allocation; Next forwards it to NextByAllocation.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "allocationMode",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy",
+   "Token": "0x04000F36",
+   "Signature": "System.Collections.Generic.List`1<System.Byte> Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy::c",
+   "OriginalName": "c",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Constructor imports non-null addresses; allocation reserves zero or first unused device address in this byte list.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "usedDeviceAddresses",
+   "Unresolved": false,
+   "UnresolvedReason": "",
+   "ReviewDisposition": "rename"
+  },
+  {
+   "Module": "Knx.Ets.ObjectModel.dll",
+   "Identity": "Knx.Ets.ObjectModel, Version=6.3.7959.0, Culture=neutral, PublicKeyToken=61439873ec5e1159",
+   "Mvid": "e025be0a-618a-459d-9e26-8a90315dea82",
+   "Sha256": "FBA7D888A6770FDA55FD0E4E43A77700C01F66A31A1DA6FAD169A4DC296212A1",
+   "Type": "Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy",
+   "Token": "0x04000F37",
+   "Signature": "System.Nullable`1<System.UInt16> Knx.Ets.ObjectModel.Operations.Strategies.DeviceAddressStrategy::d",
+   "OriginalName": "d",
+   "Reason": "Coupled address allocation behavior in complete pinned physical bodies. Allocation stores nullable chosen address or clears it on exhaustion; getter returns Value or throws before valid Next.",
+   "NeedsReadableName": true,
+   "MappingBlocker": null,
+   "ScopedMappingBlocker": null,
+   "ContractFamily": null,
+   "Parameters": [],
+   "ParameterNames": [],
+   "LocalNames": [],
+   "NewName": "currentDeviceAddress",
    "Unresolved": false,
    "UnresolvedReason": "",
    "ReviewDisposition": "rename"
