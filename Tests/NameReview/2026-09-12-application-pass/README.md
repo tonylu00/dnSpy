@@ -10,6 +10,13 @@ Read first:
 
 What lives here:
 
+- `application-download-naming-verification-v510.json` — 86 aliases connect
+  state-machine unload/start/load-complete, polling and timeout behavior with
+  application download, hardware checking and fingerprint storage. Three new
+  complete families and scopes on existing families are checked. Cached joins
+  cover 109 physical modules with 18,471 remaining lexical candidates. Prior
+  names and SDK contracts are preserved; v505 remains the compiled and partially
+  runtime-tested baseline. Continue configuration image creation and writing.
 - `address-download-naming-verification-v509.json` — 103 aliases connect the
   individual-address task, serial checker and occupied-address handler. Four
   new complete families name the manager, ping timeout, initial serial flag and
