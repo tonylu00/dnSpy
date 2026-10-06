@@ -10,6 +10,16 @@ Read first:
 
 What lives here:
 
+- `consolidated-v505-source-verification.json` — fresh native inspection and
+  reference audit cover all 109 physical first-party modules and 16,345 source
+  roots, with zero unpinned definitions or unknown owners. There are 16,330 exact
+  compiled-source joins; five settings hash mismatches and four split-file records
+  retain the prior baseline's counts. Printed unresolved uses fall from 5,421 to
+  5,114. The 4,462 strict metadata differences have 1,228 body-owner, 2,685
+  state-owner and 491 field-binding observations; 58 lack direct source evidence.
+  All differences remain unresolved. No naming candidates are retired by these
+  observations. Inspection and audit jobs are finished; continue substantial
+  naming blocks from v505 using the routes in STATE.json.
 - `consolidated-v505-runtime-verification.json` — staged ETS 6.3 starts in
   Chinese and loads unchanged ETS AI MCP 4.15 and Bulk Linker 6.4.8702. The
   cloned test-mcp retains its history after restart. A populated password-protected
@@ -25,9 +35,8 @@ What lives here:
   original tree and overlays 379 rebuilt assemblies/satellites in a separate copy.
   All visible contracts and the pinned SDK audit have zero differences. Strict
   alias verification retains 4,462 unresolved metadata differences (550 newly
-  checked definitions, no prior differences removed). Source-owner inspection
-  remains live in session 17351; its summary and continuation commands are in
-  STATE.json. Partial current-build runtime evidence is recorded above.
+  checked definitions, no prior differences removed). Completed source-owner
+  inspection and partial current-build runtime evidence are recorded above.
 - `reserved-accessor-verification-v505.json` — fixes the one CS0082 exposed by
   the actual v504 solution build. Falcon's ordinary configuration storage method
   is now `SetInterfaceConfiguration`; its former alias occupied the setter slot
