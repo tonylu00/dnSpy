@@ -2,6 +2,10 @@
 
 For the user-requested staged ETS6.3 migration task, follow
 `D:/git/dnSpy/Tests/NameReview/ResumeWorkflow/PREPARE_ETS63_MACOS_SOURCE.txt`.
+That short goal references `D:/git/ets63-source/MIGRATION_WORKFLOW.txt` for the
+complete instructions. First update the actual implementation repository to the
+latest accepted live baseline, verify it and commit the refresh before migration;
+comparison alone is insufficient. Preserve existing work and accepted inputs.
 The saved workflow/Git setup is complete only as setup; migration is NOT STARTED.
 The future chat must reconcile the baseline and recover editable UI resources,
 implement .NET 10 native Avalonia and pass Windows build/startup/selected original

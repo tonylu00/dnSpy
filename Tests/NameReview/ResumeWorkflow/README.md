@@ -5,6 +5,11 @@ implement .NET 10 native Avalonia on Windows first, pass the original selected U
 and cloned-project save/reopen workflows, then validate the same source/core
 workflows on actual macOS. Use `PREPARE_ETS63_MACOS_SOURCE.txt` and the compact
 starting references in `D:/knx_analysis/ets63-macos-source-preparation/START.json`.
+The saved prompt is now a short goal referencing the complete execution rules in
+`D:/git/ets63-source/MIGRATION_WORKFLOW.txt`. Its mandatory first step is an actual
+update of `D:/git/ets63-source` to the latest accepted baseline from live authority,
+followed by provenance/reference checks and a separate baseline commit. Merely
+comparing the older snapshot with a newer export does not satisfy that prerequisite.
 The current work is saved workflow/Git setup only; migration is NOT STARTED. Invoke
 the saved prompt in a future chat to create its persistent goal and execute it.
 
