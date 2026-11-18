@@ -72,7 +72,9 @@ namespace dnSpy.Decompiler.MSBuild {
 					string? contract = (string?)row.Attribute("ContractFamily");
 					if (member is MethodDef method) {
 						string? blocker = name == null ? MethodContractFamilies.ScopedMethodBlocker(method) : MethodContractFamilies.MethodBlocker(method);
-						if (blocker != null || contract == null && method.IsVirtual) throw new InvalidDataException("Unsupported source method alias: " + (blocker ?? "requires a complete contract family"));
+                        if (blocker != null || contract == null && method.IsVirtual &&
+                            !(name == null && MethodContractFamilies.SupportsDelegateInvokeParameters(method)))
+                            throw new InvalidDataException("Unsupported source method alias: " + (blocker ?? "requires a complete contract family"));
 						// A property/event accessor cannot choose a name: C# binds it
 						// to its row only through the conventional name derived from
 						// that row, so the map's row must carry exactly that name.

@@ -113,11 +113,24 @@ namespace SourceNameMapping {
         // Parameter/local aliases do not change the constructor's runtime name.
         // Share this rule with the exporter so an accepted review is consumable.
         public static string ScopedMethodBlocker(MethodDef method) {
+            if (SupportsDelegateInvokeParameters(method)) return null;
             if (method.IsConstructor && method.HasBody && method.IsIL && method.IsManaged &&
                 !method.IsPinvokeImpl && !method.HasImplMap && !method.IsRuntime &&
                 !method.IsVirtual && !method.HasOverrides) return null;
             return MethodBlocker(method);
         }
+        // C# emits a delegate declaration from Invoke's signature. Its parameter
+        // aliases do not rename the runtime slot or form an override family.
+        // Keep other runtime methods and malformed delegate shapes protected.
+        public static bool SupportsDelegateInvokeParameters(MethodDef method) =>
+            method.Name == "Invoke" && method.IsRuntime && method.IsManaged &&
+            method.IsPublic && method.IsVirtual && method.IsNewSlot && !method.IsStatic &&
+            !method.HasBody && (uint)method.RVA == 0 && !method.HasOverrides &&
+            !method.IsPinvokeImpl && !method.HasImplMap && !method.HasGenericParameters &&
+            method.DeclaringType?.IsSealed == true && !method.DeclaringType.IsInterface &&
+            method.DeclaringType.BaseType?.FullName == "System.MulticastDelegate" &&
+            method.MethodSig != null && method.MethodSig.HasThis &&
+            !method.MethodSig.ExplicitThis && !method.MethodSig.IsVarArg;
         public static string MethodBlocker(MethodDef method) {
             if (method.IsConstructor) return "constructor";
             if (method.IsRuntimeSpecialName || method.Name.String.StartsWith("op_", StringComparison.Ordinal)) return "accessor-operator-or-runtime-special-name";
