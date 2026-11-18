@@ -1,0 +1,17 @@
+"""Bind the complete generic TaskExtensions wait/cancellation/async-void component for native proof."""
+import argparse
+from pathlib import Path
+from continue_readability import checked,fresh,pin,read,run
+p=argparse.ArgumentParser(description=__doc__)
+for name in ('state','component','comparison','output'):p.add_argument('--'+name,type=Path,required=True)
+a=p.parse_args();assert not a.output.exists();s=read(a.state);c=read(s['Naming']['BlockCursor']);component=read(a.component);comparison=read(a.comparison);review=checked(comparison['Component'])
+assert component['Root']=='aqr' and component['NativeMethods']==10 and component['OriginalRemainingCount']==11 and review['Component']==pin(a.component) and comparison['Root']=='aqr' and comparison['InputsPreserved']
+assert {row['OriginalToken'] for row in comparison['Rows']}=={'0x06000061','0x06000062','0x06000064'}
+assert comparison['Rows'][0]['Status']=='no exact candidate' and all(row['Status']=='unsupported body' for row in comparison['Rows'][1:])
+assert pin(comparison['Compiled']['Path'])==comparison['Compiled'];types=checked(component['NativeTypes'])['Types'];assert len(types)==4 and sum(len(t['Methods']) for t in types)==10
+a.output.mkdir();tool=['dotnet','D:/knx_analysis/contract-original-name-native-build01/NameCandidates.dll'];current_types=a.output/'compiled-types.json';run(tool+['--inspect-type',comparison['Compiled']['Path'],'aqr'],current_types)
+current=read(current_types)['Types'];tokens=[m['Token'] for t in current if t['Type']=='aqr' or t['Type'].startswith('aqr/') for m in t['Methods']];bodies=a.output/'compiled-complete-bodies.json';run(tool+['--inspect-methods',comparison['Compiled']['Path'],*tokens],bodies)
+fresh(a.output/'protocols.json',dict(Kind='WholeGenericTaskExtensionsOwnerProtocols',Component=pin(a.component),SourceReview=comparison['Component'],Comparison=pin(a.comparison),OriginalModule=component['Module'],OriginalTypes=component['NativeTypes'],OriginalCompleteBodies=component['NativeBodies'],Compiled=comparison['Compiled'],CompiledTypes=pin(current_types),CompiledCompleteBodies=pin(bodies),OwnerSource=review['ActualCurrentOwnerSource'],WholeOwnerTypes=4,WholeOwnerMethods=10,FixedFindingsPending=11,FindingsRetired=0,NewDiscovery=[],SourceEdited=False,
+    GenericWaitOwnerToken='0x0600005C',GenericObserveOwnerToken='0x0600005F',CancelCallbackToken='0x06000061',AsyncVoidMoveToken='0x06000062',WaitMoveToken='0x06000064',
+    RequiredNativeProof=['Resolve constructed generic capture references and one CancellationTokenSource callback through the actual WaitAsync state owner;compiler ordinals cannot identify it.','Compare both complete original/current state protocols,entry/resume states,exception filters,finally/disposal and all live generic field roles;preserve async-void exception delivery and rethrow behavior.','Prove capture allocation lifetime relative to argument validation/default/negative/finite timeout paths and cancellation registration;do not move allocation or cleanup from partial pattern matches.','Use bounded original/rebuilt completed/faulted/canceled/pending task probes,timeout and cancellation races,dispose/callback lifetime and async-void synchronization context;hardware/installed ETS remain separate.','Restore complete original callback/frame/state/field/parameter metadata only after proof;all eleven fixed findings remain pending actual source/cohort acceptance.']))
+print(dict(Owner='TaskExtensions/aqr',OriginalMethods=10,FixedFindingsPending=11,FindingsRetired=0,Output=str(a.output/'protocols.json')))

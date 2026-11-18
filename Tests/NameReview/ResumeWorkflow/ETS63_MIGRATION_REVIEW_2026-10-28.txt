@@ -1,0 +1,92 @@
+ETS6.3 migration review - 2026-10-28
+
+Scope: read-only code/checkpoint investigation, current official framework documentation, and goal/instruction updates only. No migration implementation, build, original/native UI launch, hardware operation, cleanup or message to another chat was performed by this review. The existing migration chat remains active; its code, Git index and live checkpoint must be preserved.
+
+Findings
+
+1. The actual source refresh is complete, not pending.
+Commit 72ed4380f09a6712779a737b94700860a83b3faa refreshed D:/git/ets63-source to the accepted 127-project baseline. The seven input pins in BASELINE_PROVENANCE.json were rehashed successfully. Repeating the source refresh would discard time and risk ongoing work. Historical START/setup instructions still said NOT STARTED and must not be treated as live progress.
+
+2. Scope and implementation restrictions explain missing functions.
+The older goal excluded KNX/IP/commissioning and allowed safe placeholders, while the live checkpoint later requested connection/download. The native operation profile still rejects hardware/network/device operations:
+D:/git/ets63-source/Migration/Host/Desktop/Operations/SelectedOriginalOperationAdmission.cs:38
+D:/git/ets63-source/Migration/Host/Desktop/Operations/README.md:11
+Device browsing exists, but startup supplies unavailable add/drag-drop/lifecycle/context actions:
+D:/git/ets63-source/Migration/Host/Desktop/Startup/NativeSelectedProjectBootstrap.cs:177
+Device deletion explicitly rejects the unported DCA lifecycle:
+D:/git/ets63-source/Migration/Host/Desktop/Bootstrap/NativeUnavailableDesktopActions.cs:54
+The original parameter dialog and template selector are preserved but not registered in native views; ContentStage provenance excludes parameter/DCA initialization:
+D:/git/ets63-source/Migration/Presentation/ContentStage/PROVENANCE.json:1658
+D:/git/ets63-source/Migration/Host/Desktop/OriginalViewRegistry.cs:92
+Bus options/refresh are unavailable, and Download is disabled:
+D:/git/ets63-source/Migration/Host/Desktop/Startup/NativeStartupDeviceBoundaries.cs:22
+D:/git/ets63-source/Migration/UI/Views/ShellViews.cs:278
+These are functional integration gaps. Changing the UI framework alone would not implement them.
+
+3. Resource recovery was mistaken for sufficient UI migration progress.
+593 recovered XAML resources are reference inputs. The current shell is mostly handwritten:
+D:/git/ets63-source/Migration/UI/Views/ShellViews.cs:27
+The original shell derives its structure from RadTabbedWindow and a substantial control template:
+D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.Ui.UserControls/Windows/mainwindow.xaml:1
+D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.Ui.UserControls/resourcedictionaries/radtabbedwindowdictionary.xaml:1334
+Existing Python scripts extract five grid descriptions and labels; they are useful partial conversion machinery, not a complete layout/style/behavior converter:
+D:/knx_analysis/ets63-macos-source-preparation/native-ui-next/prepare_detail_specs.py:24
+D:/knx_analysis/ets63-macos-source-preparation/native-ui/generate_control_labels.py:25
+The corrective path is repeatable XML-aware conversion, explicit control/behavior mappings and original/native screenshot plus interaction checks. No fresh visual comparison was performed by this review.
+
+4. Tiny workflow quotas are independent of real disk protection.
+D:/knx_analysis/ets63-macos-source-preparation/host-desktop/desktop47-preparation01/common47.py:9 defines CAP=65536; lines 16-20 reject preparation writes beyond it.
+FINAL_HANDOFF.txt:2 in the same directory reports a 6,792,486-byte effective plan and 226,271,135-byte build envelope. Lines 5/8 additionally constrain preparation to 65,536 bytes and publication/sealing to 196,608 bytes.
+Those artifact quotas are not required by the user's disk-space objective. The new instructions remove byte-packing/minification as an acceptance task and preserve actual free-space protection, aggregate retention and useful estimates with headroom.
+The live retention snapshot observed 164 roots, 60,126 files and 19,148,102,740 logical bytes. These are point-in-time counts during an active job, not a deletion manifest. No data was deleted.
+
+5. Progress is real but does not establish required functional acceptance.
+Recent commits include lifetime/MCP fixes and Comments/RTF work, not only cosmetic edits. No reliable evidence of comment-only size shrinking was found. Comments can name an actual UI feature.
+The inspected checkpoint recorded Windows46 compilation qualification but no full UI acceptance. Its latest UI attempt selected group 7 instead of requested GA721. The active chat snapshot showed Windows47 compilation admission, not app/UI execution. Receipts and repeated plan/seal stages must not substitute for missing functionality.
+
+6. Tablets have not been implemented.
+The native desktop project explicitly targets win-x64:
+D:/git/ets63-source/Migration/Host/Desktop/Build/Knx.Ets.NativeDesktop.csproj:16
+Its startup uses desktop lifetime/Win32. No Android/iOS application targets were found among Migration projects. Windows RichEdit/input dependencies need portable/platform implementations. The checkpoint contains tablet preparation requirements, not tablet execution acceptance.
+
+Framework judgement
+
+Recommendation: retain .NET 10/native Avalonia for this ETS migration.
+This is a source-based architectural judgement, not a new benchmark or a claim that every original control ports automatically.
+
+Avalonia:
+- Closer to the original WPF control hierarchy, MVVM, templates and desktop layout concepts.
+- Existing model integration, native view adapters and partial generators remain reusable.
+- Supports the requested desktop/mobile targets, with platform-specific lifetime/input/storage/hardware work still required.
+- Styling/triggers, Telerik behaviors, rich text and some controls require explicit conversion/adapters.
+
+MAUI:
+- Supports Windows, Android and iOS; its macOS implementation uses Mac Catalyst.
+- Native-control handlers are attractive when platform-native mobile presentation is the primary design target.
+- It would require more adaptation of this WPF/Telerik desktop UI and replacement of Avalonia-specific adapters. It does not resolve original project identity, persistence, missing device operations or KNX transport.
+- It is a credible alternative for a deliberate mobile-first redesign, which is different from the user's present original-layout migration requirement.
+
+Representative source:
+D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.Ui.UserControls/DetailView/devicedetailview.xaml:129
+Editable DataGrid plus styles, multiselect, drag/drop, clipboard, context actions and MultiBinding.
+D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.UI.ParameterDialog/View/parameterdialog.xaml:35
+Dynamic parameter templates; tree/selection/scroll/splitter/page templates and FlowDocument help.
+D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.Ui.UserControls/Controls/compactconnectionmanager.xaml:37
+DockPanel, dropdown, state triggers, grouped items, commands and multibinding.
+D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.Ui.UserControls/Networking/userconfirmationforfulldownload.xaml:13
+Conventional layout and commands; the missing live download path is mainly service integration.
+
+Official sources checked 2026-10-28:
+https://docs.avaloniaui.net/docs/migration/wpf/
+https://docs.avaloniaui.net/docs/migration/wpf/styling
+https://docs.avaloniaui.net/docs/migration/wpf/controls
+https://docs.avaloniaui.net/docs/supported-platforms
+https://learn.microsoft.com/en-us/dotnet/maui/supported-platforms?view=net-maui-10.0
+https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/?view=net-maui-10.0
+https://learn.microsoft.com/en-us/dotnet/ios/troubleshooting/xcode-requirement
+https://developer.android.com/develop/connectivity/usb/host
+https://developer.apple.com/documentation/technotes/tn3179-understanding-local-network-privacy
+https://developer.apple.com/documentation/driverkit/creating-drivers-for-ipados
+
+The revised M1-M11 contract is D:/git/ets63-source/MIGRATION_WORKFLOW.txt.
+Actual platform versions/packages, Apple signing/entitlements and selected USB capabilities must be verified for the chosen hardware; framework platform support alone does not prove ETS compatibility.

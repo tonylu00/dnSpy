@@ -1,0 +1,13 @@
+"""Publish lifetime proof separately from native rewrite and original state-body equivalence."""
+import argparse
+import copy
+from pathlib import Path
+from continue_readability import now,pin,publish_navigation,read
+p=argparse.ArgumentParser(description=__doc__)
+for name in ('state','lifetime','negative-proof','output'):p.add_argument('--'+name,type=Path,required=True)
+a=p.parse_args();assert not a.output.exists();before=pin(a.state);s=read(a.state);c=copy.deepcopy(read(s['Naming']['BlockCursor']));proof=read(a.lifetime);negative=read(a.negative_proof)
+assert proof['InstructionsExplored']==271 and proof['SuspensionStates']==[0,1,2] and proof['InstructionsPreserved'] and proof['CaptureInitializationPreservedAcrossSuspension'] and proof['DelegateCacheInitializationVerified'] and proof['FindingsRetired']==0 and len(negative['Rejected'])==6 and negative['NativeTool']['Sha256']==proof['Inspector']['Sha256'] and Path(negative['NativeTool']['Path']).resolve()==Path(proof['Inspector']['Path']).resolve()
+a.output.mkdir();c.update(UpdatedUtc=now(),CurrentStage='http-progress-async-lifetime-prerequisites-proved',CompletedStage=True,BroaderReadabilityGoalClosed=False,Running=[]);c['PreparedHttpDownloadOwner'].update(LifetimeProtocols=proof['Protocols'],AsyncCaptureLifetimeProof=pin(a.lifetime),UnsafeLifetimeFixtures=pin(a.negative_proof),CurrentCaptureLifetimeProved=True,OriginalCurrentStateBodyEquivalencePending=True,NativeCaptureReconstructionPending=True,FixedOriginalFindingsPending=25,FindingsRetired=0)
+command=f'python D:/git/dnSpy/Tests/NameReview/ResumeWorkflow/prepare_http_native_capture_contract.py --state {a.state.as_posix()} --lifetime {a.lifetime.as_posix()} --negative-proof {a.negative_proof.as_posix()} --output D:/knx_analysis/http-native-capture-contract01'
+c['NextItems'][0]=dict(Task='prepare the complete identity-bound HTTP native capture reconstruction contract',Detail=command);c['NextCommand']=command;c['Status']='Active broader goal. Current HTTP capture lifetime validated across initial/three resume states,all271 instructions,two finally regions/catch and delegate cache;6 unsafe lifetime fixtures rejected,12 callback behavior cases preserved. Original/current async state-body equivalence and native rewrite remain pending;all25 HTTP findings stay unresolved. Private53 resolved/7376 pending plus96 prior discoveries,reconstruction40290,ETS6.4 transfer,seven source-root reconciliation and broader installed runtime remain open.'
+publish_navigation(a.state,before,s,a.output/'cursor-http-lifetime-proved.json',c);print(dict(CurrentLifetimeProved=True,Instructions=271,UnsafeFixturesRejected=6,FixedFindingsPending=25,FindingsRetired=0,NextCommand=command,OverallComplete=False))

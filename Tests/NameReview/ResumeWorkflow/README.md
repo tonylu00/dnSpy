@@ -1,48 +1,80 @@
-# ETS6.3 staged migration and historical naming resume
+# ETS6.3 functional migration workflow (2026-11-02)
 
-Current user objective (2026-10-25): reconcile an ETS6.3 source/resource baseline,
-implement .NET 10 native Avalonia on Windows first, pass the original selected UI
-and cloned-project save/reopen workflows, then validate the same source/core
-workflows on actual macOS. Use `PREPARE_ETS63_MACOS_SOURCE.txt` and the compact
-starting references in `D:/knx_analysis/ets63-macos-source-preparation/START.json`.
-The saved prompt is now a short goal referencing the complete execution rules in
-`D:/git/ets63-source/MIGRATION_WORKFLOW.txt`. Its mandatory first step is an actual
-update of `D:/git/ets63-source` to the latest accepted baseline from live authority,
-followed by provenance/reference checks and a separate baseline commit. Merely
-comparing the older snapshot with a newer export does not satisfy that prerequisite.
-The current work is saved workflow/Git setup only; migration is NOT STARTED. Invoke
-the saved prompt in a future chat to create its persistent goal and execute it.
+The short goal is PREPARE_ETS63_MACOS_SOURCE.txt. Its full milestone contract is
+D:/git/ets63-source/MIGRATION_WORKFLOW.txt. The source refresh already passed in
+commit 72ed4380; resume from the live MIGRATION_CHECKPOINT.json in
+D:/knx_analysis/ets63-macos-source-preparation and preserve ongoing work.
 
-Use `D:/codex-worktrees/ets-disposition-workflow/dnSpy` for tooling and this
-`D:/git/dnSpy/Tests/NameReview/ResumeWorkflow` directory for shared helpers.
-`D:/git/ets63-source` is the migration implementation/source Git workspace,
-initialized in place around an older existing snapshot. Reconcile it with the
-current accepted export before use; its older source/XAML is not verified current.
-Keep the accepted tree unchanged. Recount current BAML and prove the existing
-optional `dnSpy.BamlDecompiler.x` recovery path before a full resource recovery.
-Windows build, startup, original layout/navigation, selected UI interaction and
-data roundtrip must pass without selected-flow blockers before macOS-specific
-implementation. Cross-compilation does not prove macOS execution; an unavailable
-Mac remains a blocker. Use native Avalonia, not XPF, with safe service/hardware
-placeholders. KNX/IP follows UI, USB follows KNX/IP; ETS6.4, full commissioning,
-every feature and universal Windows Apps compatibility are outside the initial goal.
+The bounded parameter edit/save/normal-close/fresh-process-reopen flow passed.
+Reuse its evidence and current connection/download/catalog/application-update work.
+The current PC goal ends at PC_HANDOFF_READY in the handoff contract. Fix the
+project-open modal and Download clipping; source-build Falcon/retained backends
+and verify their selected outputs in a bounded Windows baseline. Old naming/
+NuGet skips are not portability acceptance. Deliver portable source/fixture/
+dependencies and MACOS_CONTINUATION.txt, then complete this PC goal and STOP.
+Keep unfinished diagnostics/product/platform work for the Mac continuation;
+full M8/M9-M11 and actual Mac execution are not required before leaving. Remove
+working Token/RVA comments after redirecting token-based preparers; preserve required
+semantic restoration support. Retain all named device/product, tunneling/routing/
+USB and security gates without another naming/export chain. Preserve master data, the online
+product catalog and required APIs/authentication/update/download/import/cache.
+Master-data and catalog startup updates each have a saved switch, OFF by default
+when unset. Use cached data without update traffic or network delays when disabled.
+Preserve manual updates/online catalog actions; enabled updates must not block
+startup and must respect metered/cellular preferences.
+Remove application licensing/activation, telemetry and unrelated cloud integrations;
+keep shared dependencies required by retained functions, local data/security,
+KNX Secure and native MCP. The workflow's product-data clarification overrides
+earlier blanket local-only/cloud-removal instructions.
 
-This staged goal supersedes the old full-audit execution scope for this task.
-`CONTINUE_FULL_GOAL.txt`, historical STATE/GOAL/cursor/pins and unaccepted
-Source07/08/09 remain preserved; do not resume or rewrite their obligations
-automatically. The naming STATE and receipts supply accepted-input evidence.
-Keep compact migration progress in `D:/knx_analysis/ets63-macos-source-preparation`.
-Existing storage and preservation safeguards below still apply to all stages,
-including implementation-workspace build outputs and intermediates.
+The toolbar/connection-dialog/Download correction is required within the current
+connection slice, not deferred shell polish. Restore original glyphs, groups and
+responsive labels, the compact connection popup with dedicated manager dialogs,
+and the Download split-button/menu (main action Partial). Use consumed Python
+conversion and paired screenshot/interaction checks. The bounded findings and
+existing capture paths are in ETS63_TOOLBAR_GAP_REVIEW_2026-10-30.txt; the detailed
+workflow is authoritative. These saved requirements do not claim a runtime fix.
 
-`migration-setup/START.snapshot.json` and
-`migration-setup/worktree-AGENTS.snapshot.md` are versioned setup-time copies of
-the external starting references and parent worktree guidance. Their operational
-locations remain `D:/knx_analysis/ets63-macos-source-preparation/START.json` and
-`D:/codex-worktrees/ets-disposition-workflow/AGENTS.md`. The copies preserve this
-setup in Git; they are not a second live progress cursor. Revalidate live bindings
-before execution. The source repository's initial commit preserves the existing
-older source/resources and does not claim acceptance or migration completion.
+The 2026-10-31 connection/detail correction and Mac development handoff are in
+D:/git/ets63-source/CONNECTION_AND_MACOS_HANDOFF.txt. Require usable selected-row
+manager/detail layouts, applicable APDU/SN/IP/KNX fields and real Test behavior.
+The user has ETS in Parallels on the Mac for future reference comparisons.
+Version the verified "test" project P-01C0 as the specified Git fixture; preserve
+protection and keep mutable stores/actual credentials outside Git. Restore the
+KNX security sidebar's certificate/FDSK, project protection, confirmation and
+applicable IP-security workflows. After PC_HANDOFF_READY, continue remaining work
+and native Mac validation in the next goal, independent of VM/ETS runtime services.
+Preserve existing work, references and host-appropriate disk safeguards.
+
+The user authorizes safe unused generated-build retirement on 2026-10-29. Apply
+the full workflow's Build retirement protocol with fresh exact-path dependency
+and ownership checks. Retain current builds/providers, original/source data and
+evidence; retire proven obsolete payloads without new archives or arbitrary size
+caps. Legacy generic preservation labels are not permanent dependencies. The
+active owner must serialize cleanup and reconcile the live retention ledger.
+
+Use .NET 10/native Avalonia and preserve original ETS UI layout and functions.
+Original ETS may be opened for reference screenshots; use repeatable Python XAML
+conversion with explicit adapters instead of a redesigned handwritten shell.
+M1-M11 remain the overall roadmap: storage-policy correction, references, conversion, device management,
+parameters, connection manager, real download, integrated Windows acceptance,
+then actual macOS, Android tablet and iPadOS validation.
+
+Device/KNX-IP/download exclusions and tablet-preparation-only completion in older
+instructions are superseded. Artifact sizes are not optimization targets:
+forecasts may grow with measured work; keep actual C: 10 GiB / D: 15 GiB reserves,
+peak headroom, aggregate retention and ownership protection. Remove arbitrary
+source/preparation/publication caps. Do not minify useful code/comments/diagnostics
+or bypass the storage guard. M1 describes the required budget-policy correction.
+
+The review and framework comparison are in ETS63_MIGRATION_REVIEW_2026-10-28.txt.
+START.json and migration-setup snapshots retain historical starting evidence;
+they do not supply current progress or override the revised contract. No active
+checkpoint, old naming STATE/GOAL/pins, producer or unrelated work is to be reset.
+
+The storage history below explains earlier safeguards/implementation. Where it
+describes fixed artifact quotas, the 2026-10-28 policy above takes precedence;
+actual free-space, path, process and accepted-input protections remain in force.
 
 Storage prevention (2026-10-18): run `python storage_guard.py status` before heavy
 work. `brief` also reports free space and reserve readiness. All new bulk output

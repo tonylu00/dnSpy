@@ -1,25 +1,96 @@
-# Current ETS task routing (2026-10-25)
+# Current ETS migration routing (2026-11-02)
 
-For the user-requested staged ETS6.3 migration task, follow
-`D:/git/dnSpy/Tests/NameReview/ResumeWorkflow/PREPARE_ETS63_MACOS_SOURCE.txt`.
-That short goal references `D:/git/ets63-source/MIGRATION_WORKFLOW.txt` for the
-complete instructions. First update the actual implementation repository to the
-latest accepted live baseline, verify it and commit the refresh before migration;
-comparison alone is insufficient. Preserve existing work and accepted inputs.
-The saved workflow/Git setup is complete only as setup; migration is NOT STARTED.
-The future chat must reconcile the baseline and recover editable UI resources,
-implement .NET 10 native Avalonia and pass Windows build/startup/selected original
-UI/data-roundtrip gates before macOS-specific implementation, then test the same
-source/core workflows on actual macOS. An unavailable Mac remains a blocker.
-Use `D:/codex-worktrees/ets-disposition-workflow/dnSpy` for tooling, the shared
-helpers beside the prompt, and `D:/git/ets63-source` as the migration
-implementation/source Git workspace. Its existing older snapshot must be
-reconciled with current accepted inputs before use; keep the accepted tree unchanged.
-Do not automatically resume the historical ETS63/64 every-symbol audit or Source09
-sequence. Preserve historical STATE/GOAL/cursor/pins and unaccepted Source07/08/09.
-`D:/knx_analysis/STATE.json` supplies accepted input bindings; compact migration
-progress belongs in `D:/knx_analysis/ets63-macos-source-preparation`. The saved
-prompt defines completion and deferred scope. All storage/preservation rules apply.
+Follow the short goal at
+D:/git/dnSpy/Tests/NameReview/ResumeWorkflow/PREPARE_ETS63_MACOS_SOURCE.txt
+and the detailed milestone contract at D:/git/ets63-source/MIGRATION_WORKFLOW.txt.
+The current baseline refresh is already committed as 72ed4380; verify relevant
+provenance and reuse it instead of resetting migration work. Read live progress
+from D:/knx_analysis/ets63-macos-source-preparation/MIGRATION_CHECKPOINT.json;
+START.json and setup snapshots are historical references.
+
+The current PC goal is bounded by PC_HANDOFF_READY in
+CONNECTION_AND_MACOS_HANDOFF.txt. Fix the original project-open progress modal and
+Download split-button geometry, preserve recoverable dialogs, and source-build
+Falcon plus retained application/backend dependencies from editable code. Prove
+actual runtime selection; the old naming/NuGet skip map is not a portability pass.
+Prepare the tested Windows baseline, Git fixture, portable inputs and compact
+MACOS_CONTINUATION.txt. Complete this PC goal and STOP when that gate passes.
+Full M8/M9-M11 and an actual Mac run are not prerequisites for leaving this PC.
+Keep all remaining diagnostics/device/catalog/security/platform work explicit in
+the continuation; do not mark the overall universal app complete. Reuse current
+working original-derived models/XAML/services and avoid stale compiler snapshots.
+Remove dnSpy Token/RVA/RID/File Offset display comments and redundant banners from
+owned working source after redirecting tag-dependent preparers to preserved
+reference inputs/member maps. Keep currently consumed semantic restoration support
+until its semantics are replaced; no blanket metadata/attribute deletion. Do not
+restart naming, full-source export or publication chains for comment cleanup.
+Retain the three named DeviceInfo/catalog/application-update gates and all
+connection/security/platform requirements for the overall roadmap; incomplete
+rows continue on Mac after this PC's handoff, without false passes.
+
+The toolbar/connection-dialog/Download correction in MIGRATION_WORKFLOW.txt is
+required within that connection slice, not deferrable shell polish. Restore the
+original toolbar groups, glyphs and responsive labels via consumed Python XAML
+conversion; keep only the compact connection selector/popup in the toolbar and
+use dedicated management dialogs. Restore the Download icon split-button: main
+action Partial, separate arrow/menu with original operation ordering and command
+states. Preserve attached project/panel ownership. Require paired screenshots and
+interaction checks; construction tests or disabled placeholders do not pass.
+
+Follow D:/git/ets63-source/CONNECTION_AND_MACOS_HANDOFF.txt for PC_HANDOFF_READY
+and the retained connection requirements: original manager layout and details with
+APDU/SN/IP/KNX fields and the real selected-editor Test lifecycle. Reuse existing
+converted views; a simplified status flyout or unselected screenshot is insufficient.
+The user has a Mac with ETS in Parallels for screenshots/comparisons; full reference
+capture before leaving this PC is not a gate. Version the verified actual "test"
+project P-01C0 as the Git fixture specified in that contract; keep mutable stores
+and real credentials outside Git. Restore device-sidebar KNX security workflows,
+including certificate/FDSK, project protection, confirmation and applicable IP
+security, preserving original conditional states and persistence. These are not
+application licensing. Stop this PC goal at PC_HANDOFF_READY; the next Mac goal
+qualifies native execution independent of VM/ETS and completes the remaining
+roadmap. Keep references recoverable; do not copy historical generations or count
+VM ETS as native acceptance.
+
+Preserve KNX master data (knxmaster/knx_master.xml) and the online product catalog,
+including required acquisition/update, API/authentication, download/import and cache.
+Give each dataset its own saved startup auto-update switch, OFF by default when
+unset. With updates off, start from cached data without update requests or delay;
+retain manual updates and intentional online catalog use. Opted-in updates must
+not block startup; respect metered/cellular limits and preserve valid data on cancel.
+These override earlier blanket local-only/cloud-removal wording. Remove application
+licensing/activation/dongle-entitlement gates, telemetry and unrelated cloud features;
+keep shared dependencies required by master data/catalog or other retained functions.
+Preserve local import/export, project security, KNX Secure, device safety, diagnostics,
+native MCP, original/reference inputs and third-party notices. Follow the detailed
+product-data preservation clarification and acceptance in MIGRATION_WORKFLOW.txt.
+
+The user also authorizes retirement of freshly verified unused generated builds.
+Follow the detailed workflow's Build retirement protocol. Preserve current/live
+dependencies, source, originals, checkpoints and evidence; stale generic retention
+labels do not permanently pin every old runtime. Serialize with the owning task,
+use a fresh exact-path manifest and never delete uncertain or active inputs.
+
+Use .NET 10/native Avalonia. Preserve original ETS UI structure via original-app
+screenshots and repeatable Python XAML conversion; do not redesign the UI.
+The overall roadmap still includes device management, parameters, diagnostics,
+connections/download, integrated Windows and native Mac/tablet acceptance.
+Keep stable M1-M11 evidence and native MCP work; transfer unfinished rows at the
+finite PC handoff instead of requiring them all to finish here.
+Earlier exclusions of KNX/IP/download and tablet-preparation-only scope are superseded.
+
+Disk protection means actual free-space reserves, aggregate retention and reasonable
+peak forecasts. Keep 10 GiB on C: and 15 GiB on D: plus peak headroom before heavy
+work. No arbitrary source/binary/metadata quotas or comment minification. The
+detailed M1 instructions govern correction of hard budget behavior; preserve real
+reserve, ownership, path and integrity protections. Historical quota wording below
+does not override this clarification. Do not bypass guards or detach producers.
+
+Preserve existing code/Git history, unrelated work, originals, current builds,
+checkpoints, accepted evidence, archives and Source07/08/09. Use D: tooling and
+scratch paths from the detailed file. Do not reset historical state, start another
+owner's producer, or message other conversations. Editing/reading these goal files
+alone does not authorize starting migration execution.
 
 # ETS workflow disk budget
 

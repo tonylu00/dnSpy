@@ -1,0 +1,19 @@
+"""Bind the entire generic multi-helper capture environment before native restoration."""
+import argparse
+from pathlib import Path
+from continue_readability import checked,fresh,pin,read,run
+p=argparse.ArgumentParser(description=__doc__)
+for name in ('state','component','comparison','regression','output'):p.add_argument('--'+name,type=Path,required=True)
+a=p.parse_args();assert not a.output.exists();s=read(a.state);c=read(s['Naming']['BlockCursor']);component=read(a.component);comparison=read(a.comparison);regression=read(a.regression)
+assert component['Root']=='as0' and component['NativeMethods']==6 and component['OriginalRemainingCount']==6 and comparison['Root']=='as0' and len(comparison['Rows'])==3
+assert all(len(r['ControlFlowEquivalentCandidates'])==1 and r['ControlFlowEquivalentCandidates'][0]['ExactAcyclicControlFlow'] for r in comparison['Rows'])
+assert regression['CompleteAcyclicBodyVerified'] and regression['Captures']==2 and regression['InstructionsPreserved'] and len(regression['Rejected'])==6
+build=checked(c['Completed']['New109ProjectBuild']);compiled=Path(build['Export'])/'bin/Knx.Ets.Common.dll';assert pin(compiled)==comparison['Compiled']==regression['Compiled']
+a.output.mkdir();types=a.output/'compiled-types.json';bodies=a.output/'compiled-bodies.json';native=['dotnet','D:/knx_analysis/contract-original-name-native-build01/NameCandidates.dll'];run(native+['--inspect-type',str(compiled),'as0'],types);rows=[t for t in read(types)['Types'] if t['Type']=='as0' or t['Type'].startswith('as0/')];assert len(rows)==2
+run(native+['--inspect-methods',str(compiled),*[m['Token'] for t in rows for m in t['Methods']]],bodies)
+old=checked(component['NativeTypes']);old_frame=next(t for t in old['Types'] if t['Type']=='as0/a');new_frame=next(t for t in rows if t['Type'].startswith('as0/'))
+reader='D:/knx_analysis/capture-environment-reference-native-build03/NameCandidates.dll';original_refs=a.output/'original-frame-references.json';compiled_refs=a.output/'compiled-frame-references.json'
+run(['dotnet',reader,'--inspect-environment-references',component['Module']['Input'],str(original_refs),old_frame['Token']],a.output/'original-reference-reader.log');run(['dotnet',reader,'--inspect-environment-references',str(compiled),str(compiled_refs),new_frame['Token']],a.output/'compiled-reference-reader.log')
+fresh(a.output/'shared-generic-capture-protocols.json',dict(Kind='FixedSharedGenericCaptureOwnerProtocols',Component=pin(a.component),Comparison=pin(a.comparison),ControlFlowRegression=pin(a.regression),CurrentBuild=c['Completed']['New109ProjectBuild'],OriginalModule=component['Module'],Compiled=pin(compiled),OriginalTypes=component['NativeTypes'],OriginalCompleteBodies=component['NativeBodies'],CompiledTypes=pin(types),CompiledCompleteBodies=pin(bodies),OriginalReferences=pin(original_refs),CompiledReferences=pin(compiled_refs),ReferenceReader=pin(reader),OriginalOwnerToken='0x060002CA',OriginalFrameToken='0x020000A8',OriginalHelperTokens=['0x060002CC','0x060002CD','0x060002CE'],OriginalCaptureTokens=['0x0400022C','0x0400022D'],FixedFindings=component['FixedOriginalRemainingFindings'],OriginalTypesCount=2,OriginalMethods=6,
+    NativeTreatmentRequired='Restore the whole two-parameter generic frame,three helper identities and two captures atomically,using argument-initialization/source-target capture roles and verified event-add/event-remove/event-dispatch bodies. Update live constructed TypeSpecs/MemberRefs without changing instructions. Current ordinary single-capture contracts do not authorize this shape.',FindingsResolved=0,NewDiscovery=[],SourceEdited=False,MetadataIdentityRestored=False))
+print(dict(WholeTypes=2,WholeMethods=6,HelperBodiesVerified=3,Captures=2,FixedFindingsPending=6,MetadataRestorationPending=True,Output=str(a.output/'shared-generic-capture-protocols.json')))

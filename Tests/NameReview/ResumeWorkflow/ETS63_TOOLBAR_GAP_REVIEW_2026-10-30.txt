@@ -1,0 +1,113 @@
+ETS6.3 toolbar gap review - 2026-10-30
+
+Scope
+Read-only application/reference investigation followed by saved workflow, routing
+and prompt corrections. The user explicitly selected workflow/prompt-only changes.
+No application code change, build/test, app launch, live bus operation, cleanup,
+staging, commit, live checkpoint rewrite or message to the migration chat.
+The active chat remained in progress and was using the original ETS session.
+Existing original captures were inspected; no new runtime parity test was run.
+
+Conclusion
+The reported gaps are present in current native source. The original toolbar was
+not structurally converted: the shell converter extracts its height while the
+visible Wunderbar is reconstructed manually. The handwritten composition adds a
+connection console, replaces original icon controls with ordinary text buttons
+and leaves Download as an unbound disabled placeholder. The checked suites cover
+generated style/geometry and control construction, not toolbar parity.
+Earlier workflow wording deferred nonblocking shell polish behind connections;
+without an explicit toolbar interaction contract, that left these gaps open.
+The corrected workflow makes this bounded toolbar/dialog/menu work part of the
+current connection slice, without restarting M3 or delaying it for unrelated UI.
+
+Current implementation evidence
+All paths in this section are relative to D:/git/ets63-source.
+- Migration/UI/Views/ShellViews.cs:363-438: handwritten Wunderbar. Lines369-370
+  use literal navigation characters;384 inserts OriginalLocalConnectionEntry;
+  387-391/434-437 create ordinary text actions;388 hard-disables Download without
+  a command or popup. Connection controls also precede the panel actions instead
+  of occupying the original global connection group.
+- Migration/UI/ConnectionDialogs/Manager/OriginalLocalConnectionEntry.cs:52-64:
+  Select, status/warning, Test, Read Mask, Disconnect and Manage are inline.
+- Migration/UI/ConnectionDialogs/Manager/NativeConfiguredConnectionManagerPresenter.cs:53:
+  a real dedicated modal already exists. Its generated OriginalConfiguredConnectionsView.axaml
+  has profile list/editor/management controls. Reuse and finish this integration.
+- Migration/Host/Desktop/Startup/NativeDesktopRuntime.LocalConnections.cs:103:
+  invocation depends on an attached original panel origin. Moving presentation
+  must preserve project/panel ownership and service/lifetime admission.
+- Migration/XamlConversion/Shell/convert_shell.py:43,60,91-106: reads the original
+  dictionary, extracts toolbar height, emits styles/metrics/tab/caption families;
+  no toolbar control tree. Generated evidence alone does not affect the live UI.
+- Migration/XamlConversion/Shell/test_shell.py:13-54: style/geometry/reproducibility.
+  Migration/UI/Checks/Program.cs:173-176: constructs Wunderbar without original
+  view models and explicitly records UiInteractionAcceptance=false.
+- Migration/UI/Contracts/NativeUiServices.cs:39 and
+  Migration/Host/Desktop/OriginalGlyphProvider.cs:26: reuse existing glyph support,
+  qualifying the original toolbar-specific keys rather than adding substitutes.
+These line references describe the inspected working tree, which has concurrent
+uncommitted implementation changes; recheck the bounded region before editing.
+
+Original toolbar contract
+W = D:/git/ets63-source/Migration/OriginalWpf/Knx.Ets.Ui.UserControls/Controls/wunderbar.dictionary.xaml
+- W:413-471: height41, root margin4, Back/Forward/separator, expanding breadcrumb,
+  panel actions, separator and global actions.
+- W:473-745 then1103-1276: navigation/breadcrumb; contextual Add, Delete,
+  Download, Diagnostics, parameter-help/changes/defaults; global Undo, Panels,
+  Connections, Project Details, Close Project, Settings and Help. Original Login
+  remains subject to the current excluded-application/cloud scope.
+- Original Knx.Ets.Ui.UserControls/Controls/Wunderbar.cs:106,139-192,256-258:
+  labels collapse and global actions overflow when breadcrumb space narrows.
+  Preserve original responsive icon/text behavior, not permanent text buttons or
+  a blanket icon-only replacement. Localized tooltips/accessibility still matter.
+- W:23-25 imports original Glyphs.xaml. Original KNX font:
+  D:/git/ets63-source/Knx.Ets.Ui.Assets/fonts/knx-iconfont.ttf.
+  Keys include KnxGlyphPlus/Close/Download/Diagnose/Undo/Floor/Info/Clear/Settings/Help.
+
+Connections
+- W:1103-1130: compact selected connection icon/menu; hidden label, tooltip name.
+- W:1138-1186: popup Automatic/generic, discovered interfaces, configured project
+  interfaces, Manage configured connections; configuration actions remain attached.
+- Original Knx.Ets.ViewModel/OnlineOperations/ConnectionManager.cs:332-353 opens
+  separate Automatic, Local Interface and Manage Configured Connections dialogs.
+- OriginalWpf/Knx.Ets.Ui.UserControls/Dialogs/manageconfiguredconnectionsdialog.xaml:
+  335 add/type;423-448 delete/import/export;450-468 list/search;519-582 editor/Test;
+  604-612 OK/Cancel. Detailed connection operations belong in their appropriate
+  dialogs/views, not an expanded horizontal console in the main toolbar.
+
+Download
+- W:159-181: distinct main ButtonPart and PART_DropDown.
+- W:572-580: main face is DownloadIcon, DownloadCommand, parameter Partial.
+- W:582-605 popup order: All, Partial, PhysicalAddress,
+  PhysicalAddressOverwrite, Application, then conditional
+  ReadCustomerAdjustableParameters. Do not show the conditional item universally.
+- Knx.Ets.ViewModel/ContextMenu/DownloadOperationsMenuViewModel.cs:44 invokes
+  StartDownloadAsync with the selected type;225-238 qualifies selection/readiness.
+- Knx.Ets.CustomControls/KnxSplitButton.cs:385,431-436 wires and opens the arrow.
+Opening/dismissing the popup must not program a device. Actual programming remains
+the explicitly authorized M7 action; this review supplies no new hardware result.
+
+Existing original captures inspected
+Root: D:/knx_analysis/workflow-scratch/ets63-original-ui-reference04/screenshots
+- 06-original-download-menu.jpg: full original toolbar and opened menu.
+- 06-original-download-menu-popup.jpg: five currently visible download choices.
+- 07-original-connection-selector-popup.jpg: compact connection selection popup.
+- 08-original-configured-connections.jpg: dedicated modal, owner dimmed behind it.
+Index:
+D:/knx_analysis/ets63-macos-source-preparation/host-desktop/original-native-references01/references.json
+Download at182-220; connections at224-284. Existing references are ETS6.3 build7959,
+zh-CN,1024x786; matching DPI was not established. Pale/disabled menu entries in a
+capture do not prove operation readiness. Use original command conditions.
+
+Required next implementation and acceptance
+Follow the detailed toolbar correction in D:/git/ets63-source/MIGRATION_WORKFLOW.txt.
+Extend consumed Python conversion/adapters, preserve original glyphs/layout and
+responsive behavior, restore compact connection popup/dedicated dialogs, and wire
+the Download split-button/menu with separate operations and command states.
+Batch related changes in the existing owned build. Check comparable original/native
+captures at normal/narrow width plus actual popup/dialog/close/cancel interactions.
+Verify main Download routes Partial and arrow opens without transfer; qualify each
+menu operation at the command boundary before any authorized hardware execution.
+Record rendering, interaction and actual transport/programming as separate results.
+Keep M3/M6/M7 open where evidence is absent; retain accepted parameter work.
+Continue the full Windows-first/platform goal and existing product-data/update,
+ownership and disk safeguards. Do not create another prerequisite/build chain.

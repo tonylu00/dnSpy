@@ -1,0 +1,13 @@
+"""Record native snapshot implementation separately from original identity acceptance."""
+import argparse
+import copy
+from pathlib import Path
+from continue_readability import now,pin,publish_navigation,read
+p=argparse.ArgumentParser(description=__doc__)
+for name in ('state','fixture','progress-behavior','http-behavior','output'):p.add_argument('--'+name,type=Path,required=True)
+a=p.parse_args();assert not a.output.exists();before=pin(a.state);s=read(a.state);c=copy.deepcopy(read(s['Naming']['BlockCursor']));fixture=read(a.fixture);progress=read(a.progress_behavior);http=read(a.http_behavior)
+assert fixture['FindingsRetired']==0 and len(fixture['RejectedUnsafePreparations'])==6 and fixture['ExistingInstructionsRetained'] and fixture['HandlerBoundariesRetained'] and progress['Cases']==12 and http['Cases']==144 and progress['OriginalRebuiltObservationsEqual'] and http['OriginalRebuiltObservationsEqual'];a.output.mkdir()
+c.update(UpdatedUtc=now(),CurrentStage='http-progress-native-snapshot-fixture-verified',CompletedStage=True,BroaderReadabilityGoalClosed=False,Running=[]);c['PreparedHttpDownloadOwner'].update(NativeSnapshotFixture=pin(a.fixture),NativeSnapshotProgressBehavior=pin(a.progress_behavior),NativeSnapshotHttpBehavior=pin(a.http_behavior),NativeSnapshotImplemented=True,NativeExporterIntegrationPending=True,FixedOriginalFindingsPending=25,FindingsRetired=0)
+command=f'python D:/git/dnSpy/Tests/NameReview/ResumeWorkflow/prepare_http_snapshot_identity_protocols.py --state {a.state.as_posix()} --fixture {a.fixture.as_posix()} --progress-behavior {a.progress_behavior.as_posix()} --http-behavior {a.http_behavior.as_posix()} --output D:/knx_analysis/http-snapshot-identity-protocols01'
+c['NextItems'][0]=dict(Task='bind tested HTTP native snapshot for identity restoration and exporter integration',Detail=command);c['NextCommand']=command;c['Status']='Active broader goal. Native HTTP direct-progress snapshot implemented and staged:three reads redirected,six initialization instructions added,handler/instruction identities retained;6 unsafe preparations rejected,12 progress and144 HTTP behavior cases match original. Exporter integration,original capture identities and three async state-body/field contracts remain pending;all25 HTTP findings stay unresolved. Overall private53 resolved/7376 pending plus96 prior discoveries,reconstruction40290,ETS6.4 transfer,seven source-root reconciliation and broader installed runtime remain open.'
+publish_navigation(a.state,before,s,a.output/'cursor-http-snapshot-next.json',c);print(dict(NativeSnapshotImplemented=True,BehaviorCases=156,FixedFindingsPending=25,FindingsRetired=0,NextCommand=command,OverallComplete=False))
